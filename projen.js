@@ -10,7 +10,7 @@ const project = new JsiiProject({
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
   bin: {
-    projen: 'bin/projen.js'
+    projen: 'bin/projen'
   },
   dependencies: {
     yaml: Semver.caret('1.9.2')

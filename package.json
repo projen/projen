@@ -9,7 +9,7 @@
     "url": "https://github.com/eladb/projen.git"
   },
   "bin": {
-    "projen": "bin/projen.js"
+    "projen": "bin/projen"
   },
   "scripts": {
     "projen": "node projen.js && yarn install",
