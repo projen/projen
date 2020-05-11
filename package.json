@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/eladb/projen.git"
   },
+  "bin": {
+    "projen": "bin/projen.js"
+  },
   "scripts": {
     "projen": "node projen.js && yarn install",
     "compile": "jsii",
