@@ -3,6 +3,7 @@ import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
+import { GENERATION_DISCLAIMER } from './common';
 
 export interface DependencyOptions {
   readonly bundledDependencies?: string[];
@@ -43,7 +44,7 @@ export class NodeProject extends Project {
     super(options);
 
     this.manifest = {
-      '//': 'this file was synthesized by cdkfs - do not modify by hand',
+      '//': GENERATION_DISCLAIMER,
       name: options.name,
       version: options.version ?? '0.0.0',
       description: options.description,

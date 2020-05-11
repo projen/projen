@@ -1,6 +1,7 @@
 import { Construct } from 'constructs';
 import { File } from './file';
 import * as YAML from 'yaml';
+import { GENERATION_DISCLAIMER } from './common';
 
 export interface GithubWorkflowOptions {
   /**
@@ -42,6 +43,9 @@ export class GithubWorkflow extends File {
       jobs: this.jobs,
     };
 
-    return YAML.stringify(workflow);
+    return [
+      `# ${GENERATION_DISCLAIMER}`,
+      YAML.stringify(workflow),
+    ].join('\n')
   }
 }
