@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/eladb/projen/compare/v0.1.6...v0.1.7) (2020-05-11)
+
+
+### Features
+
+* allow tokens in rendered files ([0876dcd](https://github.com/eladb/projen/commit/0876dcd85c7221faa02be6a7890818cf2108ea4e))
+* eslint npm script ([dae0c83](https://github.com/eladb/projen/commit/dae0c83ed1530f4293ad709f4c7fb44e51d69d59))
+* nodeProject.addTestCommands(...commands) ([5a08eb0](https://github.com/eladb/projen/commit/5a08eb059b2e8cddace44bb2f7ed5719e4eaef59))
+* run eslint as a test ([d873704](https://github.com/eladb/projen/commit/d8737040d6a977047193f2d905d17f01d2c2b360))
+
 ### [0.1.6](https://github.com/eladb/projen/compare/v0.1.5...v0.1.6) (2020-05-11)
 
 
