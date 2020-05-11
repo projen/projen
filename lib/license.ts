@@ -3,20 +3,20 @@ import { FileBase } from './file';
 import * as fs from 'fs';
 
 export class License extends FileBase {
-  private readonly buffer: Buffer;
+  private readonly text: string;
 
   constructor(scope: Construct, spdx: string) {
     super(scope, 'LICENSE');
 
-    const text = `${__dirname}/license-text/${spdx}.txt`;
-    if (!fs.existsSync(text)) {
+    const textFile = `${__dirname}/license-text/${spdx}.txt`;
+    if (!fs.existsSync(textFile)) {
       throw new Error(`unsupported license ${spdx}`);
     }
 
-    this.buffer = fs.readFileSync(text);
+    this.text = fs.readFileSync(textFile, 'utf-8');
   }
 
-  protected get data(): unknown {
-    return this.buffer;
+  protected get data(): string {
+    return this.text;
   }
 }

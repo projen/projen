@@ -16,7 +16,7 @@ const project = new JsiiProject({
   },
   bundledDependencies: [ 'yaml' ],
   peerDependencies: {
-    constructs: Semver.caret('3.0.3'),
+    constructs: Semver.caret('2.0.1'),
   },
   projenDevDependency: false, // because I am projen
 });

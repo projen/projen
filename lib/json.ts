@@ -9,7 +9,7 @@ export class JsonFile extends FileBase {
     this.obj = obj;
   }
 
-  protected get data(): any {
+  protected get data() {
     return JSON.stringify(this.obj, undefined, 2);
   }
 }

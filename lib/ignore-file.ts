@@ -18,7 +18,7 @@ export class IgnoreFile extends FileBase {
     this.includes.push(...patterns);
   }
 
-  protected get data(): unknown {
+  protected get data(): string {
     return [
       `# ${GENERATION_DISCLAIMER}`,
       ...this.excludes,

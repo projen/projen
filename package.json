@@ -26,7 +26,7 @@
     "email": "benisrae@amazon.com"
   },
   "devDependencies": {
-    "constructs": "3.0.3",
+    "constructs": "2.0.1",
     "jsii": "^1.5.0",
     "jsii-diff": "^1.5.0",
     "jsii-pacmak": "^1.5.0",
@@ -41,7 +41,7 @@
     "standard-version": "^8.0.0"
   },
   "peerDependencies": {
-    "constructs": "^3.0.3"
+    "constructs": "^2.0.1"
   },
   "dependencies": {
     "yaml": "^1.9.2"

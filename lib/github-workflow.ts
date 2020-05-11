@@ -36,7 +36,7 @@ export class GithubWorkflow extends FileBase {
     };
   }
 
-  public get data(): any {
+  public get data() {
     const workflow = {
       name: this.name,
       on: this.events,
