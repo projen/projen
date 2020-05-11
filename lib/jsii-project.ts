@@ -1,10 +1,10 @@
-import { NodeProject, DependencyOptions } from './node-project';
+import { NodeProject, CommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { GithubWorkflow } from './github-workflow';
 import { Construct } from 'constructs';
 
-export interface JsiiProjectOptions extends DependencyOptions {
+export interface JsiiProjectOptions extends CommonOptions {
   /**
    * @default "."
    */

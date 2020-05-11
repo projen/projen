@@ -5,15 +5,16 @@ import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER } from './common';
 
-export interface DependencyOptions {
+export interface CommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
   readonly devDependencies?: Record<string, Semver>;
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
+  readonly bin?: Record<string, string>;
 }
 
-export interface NodeProjectOptions extends ProjectOptions, DependencyOptions {
+export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly name: string;
   readonly version?: string;
   readonly description?: string;
@@ -36,6 +37,7 @@ export class NodeProject extends Project {
   private readonly dependencies: Record<string, string> = { };
   private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string> = { };
+  private readonly bin: Record<string, string> = { };
 
   private readonly manifest: any;
 
@@ -53,6 +55,7 @@ export class NodeProject extends Project {
         type: 'git',
         url: options.repository,
       },
+      bin: this.bin,
       scripts: this.scripts,
       author: {
         name: options.authorName,
@@ -84,6 +87,14 @@ export class NodeProject extends Project {
     this.addScripts({ projen: 'node projen.js && yarn install' });
     this.npmignore.exclude('projen.js');
     this.gitignore.include('projen.js');
+
+    this.addBins(options.bin ?? { });
+  }
+
+  public addBins(bins: Record<string, string>) {
+    for (const [ k, v ] of Object.entries(bins)) {
+      this.bin[k] = v;
+    }
   }
 
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
