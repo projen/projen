@@ -1,16 +1,15 @@
 {
-  "name": "jsii-library-template",
-  "version": "1.1.0",
-  "description": "Template for jsii libraries",
+  "//": "this file was synthesized by cdkfs - do not modify by hand",
+  "name": "projen",
+  "version": "0.1.0",
+  "description": "A new generation of a project generator",
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eladb/jsii-library-template.git"
+    "url": "https://github.com/eladb/projen.git"
   },
-  "author": "Elad Ben-Israel <benisrae@amazon.com>",
-  "license": "Apache-2.0",
   "scripts": {
+    "projen": "node projen.js && yarn install",
     "compile": "jsii",
     "watch": "jsii -w",
     "test": "echo ok",
@@ -19,33 +18,34 @@
     "bump": "standard-version",
     "build": "yarn compile && yarn test && yarn run package"
   },
+  "author": {
+    "name": "Elad Ben-Israel",
+    "email": "benisrae@amazon.com"
+  },
   "devDependencies": {
+    "constructs": "3.0.3",
     "jsii": "^1.5.0",
     "jsii-diff": "^1.5.0",
     "jsii-pacmak": "^1.5.0",
     "jsii-release": "^0.1.5",
-    "standard-version": "^8.0.0"
+    "standard-version": "^8.0.0",
+    "@types/node": "^13.13.5",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.19.2",
+    "eslint": "^6.8.0",
+    "eslint-import-resolver-node": "^0.3.3",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.2"
   },
+  "peerDependencies": {
+    "constructs": "^3.0.3"
+  },
+  "dependencies": {},
+  "license": "Apache-2.0",
+  "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",
-    "versionFormat": "full",
-    "targets": {
-      "java": {
-        "package": "com.github.eladb.jsiilibrarytemplate",
-        "maven": {
-          "groupId": "com.github.eladb",
-          "artifactId": "jsii-library-template"
-        }
-      },
-      "python": {
-        "distName": "jsii-library-template",
-        "module": "jsii_library_template"
-      },
-      "dotnet": {
-        "namespace": "Eladb.JsiiLibraryTemplate",
-        "packageId": "Elad.JsiiLibraryTemplate"
-      }
-    }
+    "targets": {}
   }
 }
