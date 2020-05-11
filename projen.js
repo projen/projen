@@ -5,7 +5,7 @@ const lib = new JsiiProject({
   name: 'projen',
   jsiiVersion: Semver.caret('1.5.0'),
   version: '0.1.0',
-  description: 'A new generation of a project generator',
+  description: 'A new generation of project generators',
   repository: 'https://github.com/eladb/projen.git',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
