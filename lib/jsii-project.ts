@@ -64,7 +64,6 @@ export class JsiiProject extends NodeProject {
     this.addScripts({
       compile: 'jsii',
       watch: 'jsii -w',
-      test: 'echo ok',
       compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
       package: 'jsii-pacmak',
       build: 'yarn compile && yarn test && yarn run package',

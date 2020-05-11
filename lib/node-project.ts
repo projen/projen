@@ -5,6 +5,7 @@ import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER } from './common';
+import { Lazy } from 'constructs';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const PROJEN_VERSION = require('../package.json').version;
@@ -56,7 +57,7 @@ export class NodeProject extends Project {
   private readonly bin: Record<string, string> = { };
 
   private readonly manifest: any;
-
+  private readonly testCommands = new Array<string>();
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -111,6 +112,8 @@ export class NodeProject extends Project {
       const projenVersion = options.projenVersion ?? Semver.caret(PROJEN_VERSION);
       this.addDevDependencies({ projen: projenVersion });
     }
+
+    this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
   }
 
   public addBins(bins: Record<string, string>) {
@@ -166,9 +169,21 @@ export class NodeProject extends Project {
     }
   }
 
+  public addTestCommands(...commands: string[]) {
+    this.testCommands.push(...commands);
+  }
+
   public addFields(fields: { [name: string]: any }) {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
+    }
+  }
+
+  private renderTestCommand() {
+    if (this.testCommands.length === 0) {
+      return "echo 'no tests'";
+    } else {
+      return this.testCommands.join(' && ');
     }
   }
 
