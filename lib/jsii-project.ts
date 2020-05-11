@@ -1,6 +1,8 @@
 import { NodeProject, DependencyOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
+import { GithubWorkflow } from './github-workflow';
+import { Construct } from 'constructs';
 
 export interface JsiiProjectOptions extends DependencyOptions {
   /**
@@ -84,6 +86,10 @@ export class JsiiProject extends NodeProject {
       },
     });
 
+    const releaseWorkflow = new JsiiReleaseWorkflow(this);
+
+    releaseWorkflow.publishToNpm();
+
     if (options.java) {
       targets.java = {
         package: options.java.package,
@@ -92,6 +98,8 @@ export class JsiiProject extends NodeProject {
           artifactId: options.java.mavenArtifactId,
         },
       };
+
+      releaseWorkflow.publishToMaven();
     }
 
     if (options.python) {
@@ -99,13 +107,17 @@ export class JsiiProject extends NodeProject {
         distName: options.python.distName,
         module: options.python.module,
       };
+
+      releaseWorkflow.publishToPyPi();
     }
 
     if (options.dotnet) {
       targets.dotnet = {
         namespace: options.dotnet.namespace,
         packageId: options.dotnet.packageId,
-      }
+      };
+
+      releaseWorkflow.publishToNuget();
     }
 
     this.addDevDependencies({
@@ -142,5 +154,184 @@ export class JsiiProject extends NodeProject {
     
     // include .jsii manifest
     this.npmignore.include('.jsii');
+
+    new JsiiBuildWorkflow(this);
+  }
+}
+
+
+class JsiiReleaseWorkflow extends GithubWorkflow {
+  private readonly buildJobId = 'build_artifact';
+
+  constructor(scope: Construct) {
+    super(scope, 'release', { name: 'Release' });
+
+    this.on({ push: { branches: [ 'master' ] } });
+
+    this.addJobs({ 
+      [this.buildJobId]: {
+        'name': 'Build and upload artifact',
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          image: 'jsii/superchain',
+        },
+        'steps': [
+          { uses: 'actions/checkout@v2' },
+          { run: 'yarn install --frozen-lockfile' },
+          { run: 'yarn build' },
+          {
+            name: 'Upload artifact',
+            uses: 'actions/upload-artifact@v1',
+            with: {
+              name: 'dist',
+              path: 'dist',
+            },
+          },
+        ],
+      }, 
+    });
+  }
+
+  public publishToNpm() {
+    this.addJobs({
+      release_npm: {
+        'name': 'Release to NPM',
+        'needs': this.buildJobId,
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          'image': 'jsii/superchain',
+        },
+        'steps': [
+          {
+            'name': 'Download build artifacts',
+            'uses': 'actions/download-artifact@v1',
+            'with': {
+              'name': 'dist',
+            },
+          },
+          {
+            'name': 'Release',
+            'run': 'npx -p jsii-release jsii-release-npm',
+            'env': {
+              'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  public publishToNuget() {
+    this.addJobs({
+      release_nuget: {
+        'name': 'Release to Nuget',
+        'needs': this.buildJobId,
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          'image': 'jsii/superchain',
+        },
+        'steps': [
+          {
+            'name': 'Download build artifacts',
+            'uses': 'actions/download-artifact@v1',
+            'with': {
+              'name': 'dist',
+            },
+          },
+          {
+            'name': 'Release',
+            'run': 'npx -p jsii-release jsii-release-nuget',
+            'env': {
+              'NUGET_API_KEY': '${{ secrets.NUGET_API_KEY }}',
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  public publishToMaven() {
+    this.addJobs({ 
+      release_maven: {
+        'name': 'Release to Maven',
+        'needs': this.buildJobId,
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          'image': 'jsii/superchain',
+        },
+        'steps': [
+          {
+            'name': 'Download build artifacts',
+            'uses': 'actions/download-artifact@v1',
+            'with': {
+              'name': 'dist',
+            },
+          },
+          {
+            'name': 'Release',
+            'run': 'npx -p jsii-release jsii-release-maven',
+            'env': {
+              'MAVEN_GPG_PRIVATE_KEY': '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
+              'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE': '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
+              'MAVEN_PASSWORD': '${{ secrets.MAVEN_PASSWORD }}',
+              'MAVEN_USERNAME': '${{ secrets.MAVEN_USERNAME }}',
+              'MAVEN_STAGING_PROFILE_ID': '${{ secrets.MAVEN_STAGING_PROFILE_ID }}',
+            },
+          },
+        ],
+      },
+    });
+  }
+
+  public publishToPyPi() {
+    this.addJobs({
+      release_pypi: {
+        'name': 'Release to PyPi',
+        'needs': this.buildJobId,
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          'image': 'jsii/superchain',
+        },
+        'steps': [
+          {
+            'name': 'Download build artifacts',
+            'uses': 'actions/download-artifact@v1',
+            'with': {
+              'name': 'dist',
+            },
+          },
+          {
+            'name': 'Release',
+            'run': 'npx -p jsii-release jsii-release-pypi',
+            'env': {
+              'TWINE_USERNAME': '${{ secrets.TWINE_USERNAME }}',
+              'TWINE_PASSWORD': '${{ secrets.TWINE_PASSWORD }}',
+            },
+          },
+        ],
+      },
+    });
+  }
+}
+
+export class JsiiBuildWorkflow extends GithubWorkflow {
+  constructor(scope: Construct) {
+    super(scope, 'build', { name: 'Build' });
+
+    this.on({ pull_request: { } });
+
+    this.addJobs({
+      build: {
+        'runs-on': 'ubuntu-latest',
+        container: {
+          image: 'jsii/superchain',
+        },
+        steps: [
+          { uses: 'actions/checkout@v2' },
+          { run: 'yarn install --frozen-lockfile' },
+          { run: 'yarn build' },
+        ],
+      },
+    });
   }
 }
