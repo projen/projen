@@ -2,7 +2,7 @@
   "//": "this file was synthesized by cdkfs - do not modify by hand",
   "name": "projen",
   "version": "0.1.0",
-  "description": "A new generation of a project generator",
+  "description": "A new generation of project generators",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
