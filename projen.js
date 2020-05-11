@@ -13,6 +13,7 @@ const project = new JsiiProject({
   dependencies: {
     yaml: Semver.caret('1.9.2')
   },
+  bundledDependencies: [ 'yaml' ],
   peerDependencies: {
     constructs: Semver.caret('3.0.3'),
   },

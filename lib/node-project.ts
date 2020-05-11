@@ -5,6 +5,7 @@ import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 
 export interface DependencyOptions {
+  readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
   readonly devDependencies?: Record<string, Semver>;
   readonly peerDependencies?: Record<string, Semver>;
@@ -32,6 +33,7 @@ export class NodeProject extends Project {
   private readonly peerDependencies: Record<string, string> = { };
   private readonly devDependencies: Record<string, string> = { };
   private readonly dependencies: Record<string, string> = { };
+  private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string> = { };
 
   private readonly manifest: any;
@@ -58,6 +60,7 @@ export class NodeProject extends Project {
       devDependencies: this.devDependencies,
       peerDependencies: this.peerDependencies,
       dependencies: this.dependencies,
+      bundledDependencies: this.bundledDependencies,
     };
 
     new JsonFile(this, 'package.json', this.manifest);
@@ -65,6 +68,7 @@ export class NodeProject extends Project {
     this.addDependencies(options.dependencies ?? {});
     this.addPeerDependencies(options.peerDependencies ?? {});
     this.addDevDependencies(options.devDependencies ?? {});
+    this.addBundledDependencies(...options.bundledDependencies ?? []);
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
     this.npmignore = new IgnoreFile(this, '.npmignore');
@@ -81,10 +85,28 @@ export class NodeProject extends Project {
     this.gitignore.include('projen.js');
   }
 
-  public addDependencies(deps: { [module: string]: Semver }) {
+  public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [ k, v ] of Object.entries(deps)) {
       this.dependencies[k] = v.spec;
-    }    
+
+      if (bundle) {
+        this.addBundledDependencies(k);
+      }
+    }
+  }
+
+  public addBundledDependencies(...deps: string[]) {
+    for (const dep of deps) {
+      if (!(dep in this.dependencies)) {
+        throw new Error(`unable to bundle "${dep}". it has to also be defined as a dependency`);
+      }
+
+      if (dep in this.peerDependencies) {
+        throw new Error(`unable to bundle "${dep}". it cannot appear as a peer dependency`);
+      }
+
+      this.bundledDependencies.push(dep);
+    }
   }
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
