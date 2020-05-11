@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/eladb/projen/compare/v0.1.4...v0.1.5) (2020-05-11)
+
+
+### Bug Fixes
+
+* actually export all types ([5bcdd75](https://github.com/eladb/projen/commit/5bcdd75712ea9477677c41a4e3cd06215ef50490))
+
 ### [0.1.4](https://github.com/eladb/projen/compare/v0.1.3...v0.1.4) (2020-05-11)
 
 
