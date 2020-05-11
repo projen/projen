@@ -129,7 +129,7 @@ export class JsiiProject extends NodeProject {
 
     const eslint = options.eslint ?? true;
     if (eslint) {
-      new Eslint(this, { project: this });
+      new Eslint(this);
     }
 
     this.gitignore.exclude(

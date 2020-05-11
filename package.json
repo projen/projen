@@ -19,6 +19,7 @@
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",
     "package": "jsii-pacmak",
     "build": "yarn compile && yarn test && yarn run package",
+    "eslint": "eslint . --ext .ts",
     "bump": "standard-version"
   },
   "author": {

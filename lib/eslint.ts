@@ -3,15 +3,9 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
-export interface EslintOptions {
-  readonly project: NodeProject;
-}
-
 export class Eslint extends Construct {
-  constructor(scope: Construct, options: EslintOptions) {
-    super(scope, 'eslint');
-
-    const project = options.project;
+  constructor(project: NodeProject) {
+    super(project, 'eslint');
 
     project.addDevDependencies({
       '@typescript-eslint/eslint-plugin': Semver.caret('2.31.0'),
@@ -21,6 +15,8 @@ export class Eslint extends Construct {
       'eslint-import-resolver-typescript': Semver.caret('2.0.0'),
       'eslint-plugin-import': Semver.caret('2.20.2'),
     });
+
+    project.addScripts({ eslint: 'eslint . --ext .ts' });
 
     new JsonFile(this, '.eslintrc.json', {
       env: {
