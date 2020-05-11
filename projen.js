@@ -19,6 +19,7 @@ const project = new JsiiProject({
   peerDependencies: {
     constructs: Semver.caret('3.0.3'),
   },
+  projenDevDependency: false, // because I am projen
 });
 
 project.synth();

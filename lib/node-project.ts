@@ -6,6 +6,9 @@ import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER } from './common';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const PROJEN_VERSION = require('../package.json').version;
+
 export interface CommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -13,6 +16,20 @@ export interface CommonOptions {
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
   readonly bin?: Record<string, string>;
+
+  /**
+   * Version of projen to install.
+   *
+   * @default - latest version
+   */
+  readonly projenVersion?: Semver;
+
+  /**
+   * Indicates of "projen" should be installed as a devDependency.
+   *
+   * @default true
+   */
+  readonly projenDevDependency?: boolean;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -28,7 +45,6 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
 }
 
 export class NodeProject extends Project {
-
   public readonly gitignore: IgnoreFile;
   public readonly npmignore: IgnoreFile;
 
@@ -89,6 +105,12 @@ export class NodeProject extends Project {
     this.gitignore.include('projen.js');
 
     this.addBins(options.bin ?? { });
+
+    const projen = options.projenDevDependency ?? true;
+    if (projen) {
+      const projenVersion = options.projenVersion ?? Semver.caret(PROJEN_VERSION);
+      this.addDevDependencies({ projen: projenVersion });
+    }
   }
 
   public addBins(bins: Record<string, string>) {
