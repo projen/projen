@@ -40,7 +40,7 @@ export enum Stability {
 }
 
 export interface JsiiJavaTarget {
-  readonly package: string;
+  readonly javaPackage: string;
   readonly mavenGroupId: string;
   readonly mavenArtifactId: string;
 }
@@ -51,7 +51,7 @@ export interface JsiiPythonTarget {
 }
 
 export interface JsiiDotNetTarget {
-  readonly namespace: string;
+  readonly dotNetNamespace: string;
   readonly packageId: string;
 }
 
@@ -59,7 +59,7 @@ export class JsiiProject extends NodeProject {
   constructor(options: JsiiProjectOptions) {
     super(options);
 
-    this.setFields({ types: 'lib/index.d.ts' });
+    this.addFields({ types: 'lib/index.d.ts' });
 
     this.addScripts({
       compile: 'jsii',
@@ -70,15 +70,15 @@ export class JsiiProject extends NodeProject {
       build: 'yarn compile && yarn test && yarn run package',
     });
 
-    this.setFields({ stability: options.stability ?? Stability.STABLE });
+    this.addFields({ stability: options.stability ?? Stability.STABLE });
 
     if (options.stability === Stability.DEPRECATED) {
-      this.setFields({ deprecated: true });
+      this.addFields({ deprecated: true });
     }
 
     const targets: Record<string, any> = { };
 
-    this.setFields({
+    this.addFields({
       jsii: {
         outdir: 'dist',
         targets,
@@ -91,7 +91,7 @@ export class JsiiProject extends NodeProject {
 
     if (options.java) {
       targets.java = {
-        package: options.java.package,
+        package: options.java.javaPackage,
         maven: {
           groupId: options.java.mavenGroupId,
           artifactId: options.java.mavenArtifactId,
@@ -112,7 +112,7 @@ export class JsiiProject extends NodeProject {
 
     if (options.dotnet) {
       targets.dotnet = {
-        namespace: options.dotnet.namespace,
+        namespace: options.dotnet.dotNetNamespace,
         packageId: options.dotnet.packageId,
       };
 

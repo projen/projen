@@ -2,7 +2,7 @@ import { Construct, ISynthesisSession } from 'constructs';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export abstract class File extends Construct {
+export abstract class FileBase extends Construct {
   public readonly path: string;
 
   constructor(scope: Construct, filePath: string) {
@@ -11,7 +11,7 @@ export abstract class File extends Construct {
     this.path = filePath;
   }
 
-  protected abstract get data(): unknown;
+  protected abstract get data(): any;
 
   public onSynthesize(session: ISynthesisSession): void {
     const filePath = path.join(session.outdir, this.path);

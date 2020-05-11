@@ -1,5 +1,5 @@
 import { Construct } from 'constructs';
-import { File } from './file';
+import { FileBase } from './file';
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
 
@@ -10,7 +10,7 @@ export interface GithubWorkflowOptions {
   readonly name?: string;
 }
 
-export class GithubWorkflow extends File {
+export class GithubWorkflow extends FileBase {
 
   private readonly name: string;
   private events: { [event: string]: any } = { };
@@ -36,7 +36,7 @@ export class GithubWorkflow extends File {
     };
   }
 
-  public get data() {
+  public get data(): any {
     const workflow = {
       name: this.name,
       on: this.events,

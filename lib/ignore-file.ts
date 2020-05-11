@@ -1,8 +1,8 @@
-import { File } from './file';
+import { FileBase } from './file';
 import { Construct } from 'constructs';
 import { GENERATION_DISCLAIMER } from './common';
 
-export class IgnoreFile extends File {
+export class IgnoreFile extends FileBase {
   private readonly excludes = new Array<string>();
   private readonly includes = new Array<string>();
 

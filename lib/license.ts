@@ -1,8 +1,8 @@
 import { Construct } from 'constructs';
-import { File } from './file';
+import { FileBase } from './file';
 import * as fs from 'fs';
 
-export class License extends File {
+export class License extends FileBase {
   private readonly buffer: Buffer;
 
   constructor(scope: Construct, spdx: string) {

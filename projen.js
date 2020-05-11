@@ -1,5 +1,4 @@
-const { JsiiProject } = require('./lib/jsii-project');
-const { Semver } = require('./lib/semver');
+const { JsiiProject, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',

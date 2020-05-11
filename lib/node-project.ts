@@ -166,7 +166,7 @@ export class NodeProject extends Project {
     }
   }
 
-  public setFields(fields: { [name: string]: any }) {
+  public addFields(fields: { [name: string]: any }) {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
     }

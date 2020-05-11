@@ -1,7 +1,7 @@
 import { Construct } from 'constructs';
-import { File } from './file';
+import { FileBase } from './file';
 
-export class JsonFile extends File {
+export class JsonFile extends FileBase {
   private readonly obj: object;
 
   constructor(scope: Construct, filePath: string, obj: any) {
@@ -9,7 +9,7 @@ export class JsonFile extends File {
     this.obj = obj;
   }
 
-  protected get data() {
+  protected get data(): any {
     return JSON.stringify(this.obj, undefined, 2);
   }
 }
