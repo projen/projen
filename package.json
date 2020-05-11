@@ -18,8 +18,8 @@
     "test": "echo ok",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",
     "package": "jsii-pacmak",
-    "bump": "standard-version",
-    "build": "yarn compile && yarn test && yarn run package"
+    "build": "yarn compile && yarn test && yarn run package",
+    "bump": "standard-version"
   },
   "author": {
     "name": "Elad Ben-Israel",
@@ -31,14 +31,14 @@
     "jsii-diff": "^1.5.0",
     "jsii-pacmak": "^1.5.0",
     "jsii-release": "^0.1.5",
-    "standard-version": "^8.0.0",
     "@types/node": "^13.13.5",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.19.2",
     "eslint": "^6.8.0",
     "eslint-import-resolver-node": "^0.3.3",
     "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "^2.20.2"
+    "eslint-plugin-import": "^2.20.2",
+    "standard-version": "^8.0.0"
   },
   "peerDependencies": {
     "constructs": "^3.0.3"

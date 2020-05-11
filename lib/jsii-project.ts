@@ -3,6 +3,7 @@ import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { GithubWorkflow } from './github-workflow';
 import { Construct } from 'constructs';
+import { BumpScript } from './bump';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -11,7 +12,6 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly rootdir?: string;
 
   readonly name: string;
-  readonly version: string;
   readonly description?: string;
   readonly repository: string;
   readonly authorName: string;
@@ -67,7 +67,6 @@ export class JsiiProject extends NodeProject {
       test: 'echo ok',
       compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
       package: 'jsii-pacmak',
-      bump: 'standard-version',
       build: 'yarn compile && yarn test && yarn run package',
     });
 
@@ -125,7 +124,6 @@ export class JsiiProject extends NodeProject {
       'jsii-diff': options.jsiiVersion,
       'jsii-pacmak': options.jsiiVersion,
       'jsii-release': Semver.caret('0.1.5'),
-      'standard-version': Semver.caret('8.0.0'),
       '@types/node': Semver.caret('13.13.5'),
     });
 
@@ -156,6 +154,7 @@ export class JsiiProject extends NodeProject {
     this.npmignore.include('.jsii');
 
     new JsiiBuildWorkflow(this);
+    new BumpScript(this);
   }
 }
 

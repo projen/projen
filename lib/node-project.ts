@@ -1,4 +1,5 @@
 import { Project, ProjectOptions } from './project';
+import * as fs from 'fs';
 import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
@@ -16,7 +17,6 @@ export interface CommonOptions {
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly name: string;
-  readonly version?: string;
   readonly description?: string;
   readonly repository?: string;
   readonly authorName?: string;
@@ -48,7 +48,7 @@ export class NodeProject extends Project {
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       name: options.name,
-      version: options.version ?? '0.0.0',
+      version: this.resolveVersion(),
       description: options.description,
       main: 'lib/index.js',
       repository: !options.repository ? undefined : {
@@ -148,6 +148,16 @@ export class NodeProject extends Project {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
     }
+  }
+
+  private resolveVersion() {
+    const versionFile = `${this.outdir}/version.json`;
+    if (!fs.existsSync(versionFile)) {
+      fs.writeFileSync(versionFile, { version: '0.0.0' });
+    }
+
+
+    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
   }
 
   private addDefaultGitIgnore()  {

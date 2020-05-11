@@ -3,6 +3,7 @@ projen.js
 *.ts
 tsconfig.json
 dist
+.versionrc.json
 !*.js
 !*.d.ts
 !.jsii

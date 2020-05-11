@@ -41,3 +41,4 @@ tsconfig.json
 *.d.ts
 *.js
 !projen.js
+!.versionrc.json
