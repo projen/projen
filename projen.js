@@ -1,7 +1,7 @@
 const { JsiiProject } = require('./lib/jsii-project');
 const { Semver } = require('./lib/semver');
 
-const lib = new JsiiProject({
+const project = new JsiiProject({
   name: 'projen',
   jsiiVersion: Semver.caret('1.5.0'),
   version: '0.1.0',
@@ -15,4 +15,4 @@ const lib = new JsiiProject({
   },
 });
 
-lib.synth();
+project.synth();
