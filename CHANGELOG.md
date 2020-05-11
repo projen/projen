@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/eladb/projen/compare/v0.1.1...v0.1.2) (2020-05-11)
+
+
+### Features
+
+* store & bump version in version.json ([a861b00](https://github.com/eladb/projen/commit/a861b00bff724ae03ace306d20f93766407631ed))
+
 ### 0.1.1 (2020-05-11)
 
 
