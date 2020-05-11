@@ -175,9 +175,8 @@ export class NodeProject extends Project {
   private resolveVersion() {
     const versionFile = `${this.outdir}/version.json`;
     if (!fs.existsSync(versionFile)) {
-      fs.writeFileSync(versionFile, { version: '0.0.0' });
+      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
     }
-
 
     return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
   }
