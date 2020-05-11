@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.1 (2020-05-11)
+
+
+### Features
+
+* projen cli ([e05f6d4](https://github.com/eladb/projen/commit/e05f6d4e54e6998ac209ca20854d3a9da3f554d2))
+* support "bin" in node projects ([6e77ffb](https://github.com/eladb/projen/commit/6e77ffb5a072ad7f01e0990bcc693532d85f9b41))
+* update disclaimer to include instructions ([250a856](https://github.com/eladb/projen/commit/250a8562687a5b851f6f788e9b897fdd45e30dbb))
+
 ## 1.1.0 (2020-05-10)
 
 
