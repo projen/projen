@@ -1,0 +1,51 @@
+{
+  "name": "jsii-library-template",
+  "version": "1.1.0",
+  "description": "Template for jsii libraries",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eladb/jsii-library-template.git"
+  },
+  "author": "Elad Ben-Israel <benisrae@amazon.com>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "compile": "jsii",
+    "watch": "jsii -w",
+    "test": "echo ok",
+    "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",
+    "package": "jsii-pacmak",
+    "bump": "standard-version",
+    "build": "yarn compile && yarn test && yarn run package"
+  },
+  "devDependencies": {
+    "jsii": "^1.5.0",
+    "jsii-diff": "^1.5.0",
+    "jsii-pacmak": "^1.5.0",
+    "jsii-release": "^0.1.5",
+    "standard-version": "^8.0.0"
+  },
+  "stability": "experimental",
+  "jsii": {
+    "outdir": "dist",
+    "versionFormat": "full",
+    "targets": {
+      "java": {
+        "package": "com.github.eladb.jsiilibrarytemplate",
+        "maven": {
+          "groupId": "com.github.eladb",
+          "artifactId": "jsii-library-template"
+        }
+      },
+      "python": {
+        "distName": "jsii-library-template",
+        "module": "jsii_library_template"
+      },
+      "dotnet": {
+        "namespace": "Eladb.JsiiLibraryTemplate",
+        "packageId": "Elad.JsiiLibraryTemplate"
+      }
+    }
+  }
+}
