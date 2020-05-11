@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/eladb/projen/compare/v0.1.5...v0.1.6) (2020-05-11)
+
+
+### Bug Fixes
+
+* version.json file corrupted ([99018a9](https://github.com/eladb/projen/commit/99018a9513749d95b98a2a51bd7ad549aeb92536))
+
 ### [0.1.5](https://github.com/eladb/projen/compare/v0.1.4...v0.1.5) (2020-05-11)
 
 
