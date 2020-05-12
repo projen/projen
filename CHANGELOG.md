@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/eladb/projen/compare/v0.1.7...v0.1.8) (2020-05-12)
+
+
+### Features
+
+* do not commit most generated files ([fcc9fcc](https://github.com/eladb/projen/commit/fcc9fcc893ca151ac1cf2ead73d0e4aadff6cfb5))
+* support committing package.json at the project level ([3ff069c](https://github.com/eladb/projen/commit/3ff069c2590884bc100349066f15ea0fcb11d997))
+
+
+### Bug Fixes
+
+* missing typescript (peer of eslint) ([dd31348](https://github.com/eladb/projen/commit/dd313480e0c9319825ce3918e74df780c9030cb8))
+
 ### [0.1.7](https://github.com/eladb/projen/compare/v0.1.6...v0.1.7) (2020-05-11)
 
 
