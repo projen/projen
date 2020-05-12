@@ -13,12 +13,13 @@ const project = new JsiiProject({
     projen: 'bin/projen'
   },
   dependencies: {
+    constructs: Semver.pinned('2.0.1'),
     yaml: Semver.caret('1.9.2')
   },
-  bundledDependencies: [ 'yaml' ],
   peerDependencies: {
-    constructs: Semver.caret('2.0.1'),
+    constructs: Semver.pinned('2.0.1'),
   },
+  bundledDependencies: [ 'yaml' ],
   projenDevDependency: false, // because I am projen
 });
 

@@ -43,9 +43,10 @@
     "eslint-plugin-import": "^2.20.2"
   },
   "peerDependencies": {
-    "constructs": "^2.0.1"
+    "constructs": "2.0.1"
   },
   "dependencies": {
+    "constructs": "2.0.1",
     "yaml": "^1.9.2"
   },
   "bundledDependencies": [
