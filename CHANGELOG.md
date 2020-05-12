@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/eladb/projen/compare/v0.1.8...v0.1.9) (2020-05-12)
+
+
+### Features
+
+* add "release" script (bump + push) ([91e8673](https://github.com/eladb/projen/commit/91e8673628e1ce4fe2df30c77b01a47c0cd5905b))
+* rename projen.js to .projenrc.js ([63a4538](https://github.com/eladb/projen/commit/63a45384552e9e26fcece2adc51112295cfa0281))
+* support bootstrapping from an empty repo ([b38a6dc](https://github.com/eladb/projen/commit/b38a6dce56b9dec8a142bd012afbafc7c8aff1f8))
+
 ### [0.1.8](https://github.com/eladb/projen/compare/v0.1.7...v0.1.8) (2020-05-12)
 
 
