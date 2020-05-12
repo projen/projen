@@ -14,6 +14,7 @@
     "projen": "node .projenrc.js && yarn install",
     "test": "yarn eslint",
     "bump": "standard-version",
+    "release": "yarn bump && git push --follow-tags origin master",
     "compile": "jsii",
     "watch": "jsii -w",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",

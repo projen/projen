@@ -11,6 +11,7 @@ export class Version extends Construct {
     super(project, 'bump-script');
 
     project.addScripts({ bump: 'standard-version' });
+    project.addScripts({ release: 'yarn bump && git push --follow-tags origin master' });
     project.addDevDependencies({
       'standard-version': Semver.caret('8.0.0'),
     });
