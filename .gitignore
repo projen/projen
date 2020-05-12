@@ -38,8 +38,6 @@ jspm_packages/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 # synthesized by projen
-/LICENSE
-# synthesized by projen
 /.versionrc.json
 # synthesized by projen
 /.eslintrc.json
@@ -52,6 +50,8 @@ tsconfig.json
 *.js
 !# synthesized by projen, but committed to git
 !/package.json
+!# synthesized by projen, but committed to git
+!/LICENSE
 !/.projenrc.js
 !# always commit version file
 !version.json
