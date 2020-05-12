@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/eladb/projen/compare/v0.1.10...v0.1.11) (2020-05-12)
+
+
+### Bug Fixes
+
+* unable to install projen in workflow ([a956f4e](https://github.com/eladb/projen/commit/a956f4e13d343ae2d33d9e9f303c0d4f2ab1ff48))
+
 ### [0.1.10](https://github.com/eladb/projen/compare/v0.1.9...v0.1.10) (2020-05-12)
 
 
