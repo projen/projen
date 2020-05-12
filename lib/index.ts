@@ -7,5 +7,5 @@ export * from './license';
 export * from './node-project';
 export * from './project';
 export * from './semver';
-export * from './bump';
+export * from './version';
 export * from './eslint';

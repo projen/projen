@@ -1,13 +1,13 @@
 import { FileBase } from './file';
-import { Construct } from 'constructs';
 import { GENERATION_DISCLAIMER } from './common';
+import { Project } from './project';
 
 export class IgnoreFile extends FileBase {
   private readonly excludes = new Array<string>();
   private readonly includes = new Array<string>();
 
-  constructor(scope: Construct, filePath: string) {
-    super(scope, filePath);
+  constructor(project: Project, filePath: string) {
+    super(project, filePath, { editGitignore: filePath !== '.gitignore' });
   }
 
   public exclude(...patterns: string[]) {

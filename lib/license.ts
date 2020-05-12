@@ -1,12 +1,12 @@
-import { Construct } from 'constructs';
 import { FileBase } from './file';
 import * as fs from 'fs';
+import { Project } from './project';
 
 export class License extends FileBase {
   private readonly text: string;
 
-  constructor(scope: Construct, spdx: string) {
-    super(scope, 'LICENSE');
+  constructor(project: Project, spdx: string) {
+    super(project, 'LICENSE');
 
     const textFile = `${__dirname}/license-text/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {

@@ -1,7 +1,7 @@
-import { Construct } from 'constructs';
 import { FileBase } from './file';
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
+import { Project } from './project';
 
 export interface GithubWorkflowOptions {
   /**
@@ -16,8 +16,8 @@ export class GithubWorkflow extends FileBase {
   private events: { [event: string]: any } = { };
   private jobs: { [jobid: string]: any } = { };
 
-  constructor(scope: Construct, name: string, options: GithubWorkflowOptions = { }) {
-    super(scope, `.github/workflows/${name}.yml`);
+  constructor(project: Project, name: string, options: GithubWorkflowOptions = { }) {
+    super(project, `.github/workflows/${name}.yml`, { committed: true });
     
     this.name = options.name ?? name;
   }

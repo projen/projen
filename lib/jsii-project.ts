@@ -2,8 +2,7 @@ import { NodeProject, CommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { GithubWorkflow } from './github-workflow';
-import { Construct } from 'constructs';
-import { BumpScript } from './bump';
+import { Project } from './project';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -153,7 +152,6 @@ export class JsiiProject extends NodeProject {
     this.npmignore.include('.jsii');
 
     new JsiiBuildWorkflow(this);
-    new BumpScript(this);
   }
 }
 
@@ -161,8 +159,8 @@ export class JsiiProject extends NodeProject {
 class JsiiReleaseWorkflow extends GithubWorkflow {
   private readonly buildJobId = 'build_artifact';
 
-  constructor(scope: Construct) {
-    super(scope, 'release', { name: 'Release' });
+  constructor(project: Project) {
+    super(project, 'release', { name: 'Release' });
 
     this.on({ push: { branches: [ 'master' ] } });
 
@@ -313,8 +311,8 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
 }
 
 export class JsiiBuildWorkflow extends GithubWorkflow {
-  constructor(scope: Construct) {
-    super(scope, 'build', { name: 'Build' });
+  constructor(project: Project) {
+    super(project, 'build', { name: 'Build' });
 
     this.on({ pull_request: { } });
 

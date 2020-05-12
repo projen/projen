@@ -1,4 +1,5 @@
 import { Construct, Node } from 'constructs';
+import { IgnoreFile } from './ignore-file';
 
 export interface ProjectOptions {
   /**
@@ -9,11 +10,12 @@ export interface ProjectOptions {
 
 export class Project extends Construct {
   public readonly outdir: string;
+  public readonly gitignore: IgnoreFile;
 
   constructor(options: ProjectOptions = { }) {
     super(undefined as any, 'project');
-
     this.outdir = options.outdir ?? '.';
+    this.gitignore = new IgnoreFile(this, '.gitignore');
   }
 
   public synth(): void {

@@ -1,11 +1,11 @@
-import { Construct } from 'constructs';
 import { FileBase } from './file';
+import { Project } from './project';
 
 export class JsonFile extends FileBase {
   private readonly obj: object;
 
-  constructor(scope: Construct, filePath: string, obj: any) {
-    super(scope, filePath);
+  constructor(project: Project, filePath: string, obj: any) {
+    super(project, filePath);
     this.obj = obj;
   }
 

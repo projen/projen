@@ -19,7 +19,7 @@ export class Eslint extends Construct {
     project.addScripts({ eslint: 'eslint . --ext .ts' });
     project.addTestCommands('yarn eslint');
 
-    new JsonFile(this, '.eslintrc.json', {
+    new JsonFile(project, '.eslintrc.json', {
       env: {
         jest: true,
         node: true,

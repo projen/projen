@@ -1,14 +1,14 @@
 import { Project, ProjectOptions } from './project';
-import * as fs from 'fs';
 import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER } from './common';
 import { Lazy } from 'constructs';
+import { Version } from './version';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const PROJEN_VERSION = require('../package.json').version;
+const PROJEN_VERSION = require('../version.json').version;
 
 export interface CommonOptions {
   readonly bundledDependencies?: string[];
@@ -46,7 +46,6 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
 }
 
 export class NodeProject extends Project {
-  public readonly gitignore: IgnoreFile;
   public readonly npmignore: IgnoreFile;
 
   private readonly peerDependencies: Record<string, string> = { };
@@ -58,14 +57,15 @@ export class NodeProject extends Project {
 
   private readonly manifest: any;
   private readonly testCommands = new Array<string>();
+  private readonly _version: Version;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
+
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       name: options.name,
-      version: this.resolveVersion(),
       description: options.description,
       main: 'lib/index.js',
       repository: !options.repository ? undefined : {
@@ -91,7 +91,6 @@ export class NodeProject extends Project {
     this.addDevDependencies(options.devDependencies ?? {});
     this.addBundledDependencies(...options.bundledDependencies ?? []);
 
-    this.gitignore = new IgnoreFile(this, '.gitignore');
     this.npmignore = new IgnoreFile(this, '.npmignore');
 
     this.addDefaultGitIgnore();
@@ -114,6 +113,17 @@ export class NodeProject extends Project {
     }
 
     this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
+
+    // version is read from a committed file called version.json which is how we bump
+    this._version = new Version(this);
+    this.manifest.version = this.version;
+  }
+
+  /**
+   * Returns the current version of the project.
+   */
+  public get version() {
+    return this._version.current;
   }
 
   public addBins(bins: Record<string, string>) {
@@ -187,15 +197,6 @@ export class NodeProject extends Project {
     }
   }
 
-  private resolveVersion() {
-    const versionFile = `${this.outdir}/version.json`;
-    if (!fs.existsSync(versionFile)) {
-      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
-    }
-
-    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
-  }
-
   private addDefaultGitIgnore()  {
 
     this.gitignore.exclude(
@@ -251,8 +252,6 @@ export class NodeProject extends Project {
     );
   }
 }
-
-
 
 export interface PeerDependencyOptions {
   /**

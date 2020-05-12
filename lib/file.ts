@@ -1,14 +1,44 @@
 import { Construct, ISynthesisSession, Tokenization, DefaultTokenResolver, StringConcat } from 'constructs';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Project } from './project';
+
+export interface FileBaseOptions {
+  /**
+   * Indicates whether this file should be committed to git or ignored.
+   * By default, all generated files are ignored.
+   * @default false
+   */
+  readonly committed?: boolean;
+
+  /**
+   * Update the project's .gitignore file
+   * @default true
+   */
+  readonly editGitignore?: boolean;
+}
 
 export abstract class FileBase extends Construct {
   public readonly path: string;
 
-  constructor(scope: Construct, filePath: string) {
-    super(scope, filePath);
-
+  constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
+    super(project, filePath);
     this.path = filePath;
+
+    const gitignore = options.editGitignore ?? true;
+    if (gitignore) {
+      const committed = options.committed ?? false;
+      const pattern = `/${this.path}`;
+      if (committed) {
+        project.gitignore.include(pattern);
+      } else {
+        project.gitignore.exclude(pattern);
+      }
+    } else {
+      if (options.committed != null) {
+        throw new Error('"gitignore" is disabled, so it does not make sense to specify "committed"');
+      }
+    }
   }
 
   protected abstract get data(): string;
