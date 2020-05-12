@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.14](https://github.com/eladb/projen/compare/v0.1.13...v0.1.14) (2020-05-12)
+
+
+### Features
+
+* add "projen:upgrade" command ([a1aa633](https://github.com/eladb/projen/commit/a1aa633716881fab4cde0fc94a527b0c7502807f))
+
+
+### Bug Fixes
+
+* license file should be in the repo ([d01409f](https://github.com/eladb/projen/commit/d01409f5a25676f9be6b4b3ee32cf525b8351379))
+
 ### [0.1.13](https://github.com/eladb/projen/compare/v0.1.12...v0.1.13) (2020-05-12)
 
 
