@@ -15,6 +15,7 @@ export class Eslint extends Construct {
       'eslint-import-resolver-node': Semver.caret('0.3.3'),
       'eslint-import-resolver-typescript': Semver.caret('2.0.0'),
       'eslint-plugin-import': Semver.caret('2.20.2'),
+      'json-schema': Semver.caret('0.2.5'), // required by @typescript-eslint/parser
     });
 
     project.addScripts({ eslint: 'eslint . --ext .ts' });
