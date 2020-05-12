@@ -22,4 +22,8 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
 });
 
+project.addScripts({
+  bootstrap: 'yarn install && yarn compile && yarn projen'
+});
+
 project.synth();
