@@ -3,7 +3,7 @@ import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
-import { GENERATION_DISCLAIMER } from './common';
+import { GENERATION_DISCLAIMER, PROJEN_RC } from './common';
 import { Lazy } from 'constructs';
 import { Version } from './version';
 
@@ -113,13 +113,13 @@ export class NodeProject extends Project {
     this.manifest.license = license;
     new License(this, license);
 
-    this.addScripts({ projen: 'node projen.js && yarn install' });
+    this.addScripts({ projen: `node ${PROJEN_RC} && yarn install` });
 
     this.npmignore.comment('exclude project definition from npm module');
-    this.npmignore.exclude('projen.js');
+    this.npmignore.exclude(`/${PROJEN_RC}`);
 
     this.npmignore.comment('make sure to commit projen definition');
-    this.gitignore.include('projen.js');
+    this.gitignore.include(`/${PROJEN_RC}`);
 
     this.addBins(options.bin ?? { });
 
