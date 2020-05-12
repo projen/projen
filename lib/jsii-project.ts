@@ -4,6 +4,7 @@ import { Eslint } from './eslint';
 import { GithubWorkflow } from './github-workflow';
 import { Project } from './project';
 import { PROJEN_VERSION } from './common';
+import { Jest } from './jest';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -36,6 +37,12 @@ export interface JsiiProjectOptions extends CommonOptions {
    * Options for github workflows.
    */
   readonly workflowOptions?: WorkflowOptions;
+
+  /**
+   * Use jest for unit tests.
+   * @default true
+   */
+  readonly jest?: boolean;
 }
 
 export enum Stability {
@@ -157,6 +164,11 @@ export class JsiiProject extends NodeProject {
     this.npmignore.include('.jsii');
 
     new JsiiBuildWorkflow(this, options.workflowOptions);
+
+    const jest = options.jest ?? true;
+    if (jest) {
+      new Jest(this);
+    }
   }
 }
 

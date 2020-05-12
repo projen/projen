@@ -12,7 +12,7 @@
   },
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
-    "test": "yarn eslint",
+    "test": "yarn eslint && jest",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
     "compile": "jsii",
@@ -42,7 +42,9 @@
     "eslint-import-resolver-node": "^0.3.3",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.2",
-    "json-schema": "^0.2.5"
+    "json-schema": "^0.2.5",
+    "jest": "^26.0.1",
+    "@types/jest": "^25.2.1"
   },
   "peerDependencies": {
     "constructs": "2.0.1"
@@ -61,5 +63,15 @@
   "jsii": {
     "outdir": "dist",
     "targets": {}
+  },
+  "jest": {
+    "clearMocks": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "js"
+    ]
   }
 }
