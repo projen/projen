@@ -9,5 +9,5 @@ jobs:
       image: jsii/superchain
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install --frozen-lockfile
+      - run: yarn bootstrap
       - run: yarn build

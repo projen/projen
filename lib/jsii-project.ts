@@ -3,6 +3,7 @@ import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { GithubWorkflow } from './github-workflow';
 import { Project } from './project';
+import { PROJEN_VERSION } from './common';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -30,6 +31,11 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default true
    */
   readonly eslint?: boolean;
+
+  /**
+   * Options for github workflows.
+   */
+  readonly workflowOptions?: WorkflowOptions;
 }
 
 export enum Stability {
@@ -83,7 +89,7 @@ export class JsiiProject extends NodeProject {
       },
     });
 
-    const releaseWorkflow = new JsiiReleaseWorkflow(this);
+    const releaseWorkflow = new JsiiReleaseWorkflow(this, options.workflowOptions);
 
     releaseWorkflow.publishToNpm();
 
@@ -150,15 +156,27 @@ export class JsiiProject extends NodeProject {
     this.npmignore.comment('include .jsii manifest');
     this.npmignore.include('.jsii');
 
-    new JsiiBuildWorkflow(this);
+    new JsiiBuildWorkflow(this, options.workflowOptions);
   }
 }
 
+export interface WorkflowOptions {
+  /**
+   * Workflow steps to use in order to bootstrap this repo.
+   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+   */
+  readonly bootstrapSteps?: any[];
+}
+
+const DEFAULT_WORKFLOW_BOOTSTRAP = [
+  { run: `npx projen${PROJEN_VERSION}` },
+  { run: 'yarn install --frozen-lockfile' },
+];
 
 class JsiiReleaseWorkflow extends GithubWorkflow {
   private readonly buildJobId = 'build_artifact';
 
-  constructor(project: Project) {
+  constructor(project: Project, options: WorkflowOptions = { }) {
     super(project, 'release', { name: 'Release' });
 
     this.on({ push: { branches: [ 'master' ] } });
@@ -172,7 +190,7 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
         },
         'steps': [
           { uses: 'actions/checkout@v2' },
-          { run: 'yarn install --frozen-lockfile' },
+          ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
           { run: 'yarn build' },
           {
             name: 'Upload artifact',
@@ -310,7 +328,7 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
 }
 
 export class JsiiBuildWorkflow extends GithubWorkflow {
-  constructor(project: Project) {
+  constructor(project: Project, options: WorkflowOptions = { }) {
     super(project, 'build', { name: 'Build' });
 
     this.on({ pull_request: { } });
@@ -323,7 +341,7 @@ export class JsiiBuildWorkflow extends GithubWorkflow {
         },
         steps: [
           { uses: 'actions/checkout@v2' },
-          { run: 'yarn install --frozen-lockfile' },
+          ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
           { run: 'yarn build' },
         ],
       },

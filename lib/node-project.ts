@@ -3,12 +3,9 @@ import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
-import { GENERATION_DISCLAIMER, PROJEN_RC } from './common';
+import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Lazy } from 'constructs';
 import { Version } from './version';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const PROJEN_VERSION = require('../version.json').version;
 
 export interface CommonOptions {
   readonly bundledDependencies?: string[];
