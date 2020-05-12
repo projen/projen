@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.12](https://github.com/eladb/projen/compare/v0.1.11...v0.1.12) (2020-05-12)
+
+
+### Bug Fixes
+
+* ts-eslint-parser requires json-schema ([456040e](https://github.com/eladb/projen/commit/456040e325e86ad93843668d926c9fedcc2b0e09))
+
 ### [0.1.11](https://github.com/eladb/projen/compare/v0.1.10...v0.1.11) (2020-05-12)
 
 
