@@ -130,25 +130,24 @@ export class JsiiProject extends NodeProject {
       new Eslint(this);
     }
 
-    this.gitignore.exclude(
-      'dist',
-      'tsconfig.json',
-      '.jsii',
-      '*.d.ts',
-      '*.js',
-    );
+    this.gitignore.comment('exclude jsii outputs')
+    this.gitignore.exclude('dist', '.jsii', 'tsconfig.json');
 
-    // exclude typescript source and config
+    this.gitignore.comment('exclude typescript compiler outputs');
+    this.gitignore.exclude('*.d.ts');
+    this.gitignore.exclude('*.js');
+
+    this.npmignore.comment('exclude typescript sources and configuration');
     this.npmignore.exclude('*.ts', 'tsconfig.json');
 
-    // include javascript files and typescript declarations
+    this.npmignore.comment('include javascript files and typescript declarations');
     this.npmignore.include('*.js');
     this.npmignore.include('*.d.ts');
 
-    // exclude jsii outdir
+    this.npmignore.comment('exclude jsii outdir');
     this.npmignore.exclude('dist');
     
-    // include .jsii manifest
+    this.npmignore.comment('include .jsii manifest');
     this.npmignore.include('.jsii');
 
     new JsiiBuildWorkflow(this);

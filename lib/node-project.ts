@@ -19,6 +19,15 @@ export interface CommonOptions {
   readonly bin?: Record<string, string>;
 
   /**
+   * Should we commit `package.json` to git or ignore?
+   *
+   * @default false By default `package.json` is *not* committed. This means
+   * that after you check out a repository you must run `npx projen` to
+   * bootstrap it.
+   */
+  readonly commitPackageJson?: boolean;
+
+  /**
    * Version of projen to install.
    *
    * @default - latest version
@@ -62,7 +71,6 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super(options);
 
-
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       name: options.name,
@@ -84,7 +92,12 @@ export class NodeProject extends Project {
       bundledDependencies: this.bundledDependencies,
     };
 
-    new JsonFile(this, 'package.json', this.manifest);
+
+    const commitPackageJson = options.commitPackageJson ?? false;
+    new JsonFile(this, 'package.json', {
+      committed: commitPackageJson,
+      obj: this.manifest,
+    });
 
     this.addDependencies(options.dependencies ?? {});
     this.addPeerDependencies(options.peerDependencies ?? {});
@@ -101,7 +114,11 @@ export class NodeProject extends Project {
     new License(this, license);
 
     this.addScripts({ projen: 'node projen.js && yarn install' });
+
+    this.npmignore.comment('exclude project definition from npm module');
     this.npmignore.exclude('projen.js');
+
+    this.npmignore.comment('make sure to commit projen definition');
     this.gitignore.include('projen.js');
 
     this.addBins(options.bin ?? { });

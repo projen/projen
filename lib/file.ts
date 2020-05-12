@@ -30,8 +30,10 @@ export abstract class FileBase extends Construct {
       const committed = options.committed ?? false;
       const pattern = `/${this.path}`;
       if (committed) {
+        project.gitignore.comment('synthesized by projen, but committed to git');
         project.gitignore.include(pattern);
       } else {
+        project.gitignore.comment('synthesized by projen');
         project.gitignore.exclude(pattern);
       }
     } else {

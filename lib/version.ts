@@ -15,16 +15,20 @@ export class Version extends Construct {
       'standard-version': Semver.caret('8.0.0'),
     });
 
-    project.gitignore.exclude('/.versionrc.json');
+    project.npmignore.comment('standard-version configuration');
     project.npmignore.exclude('/.versionrc.json');
+
+    project.gitignore.comment('always commit version file');
     project.gitignore.include(VERSION_FILE);
 
     new JsonFile(project, '.versionrc.json', {
-      packageFiles: [ {  filename: VERSION_FILE,  type: 'json' } ],
-      bumpFiles: [ { filename: VERSION_FILE, type: 'json' }  ],
-      commitAll: true,
-      scripts: {
-        postbump: 'yarn projen && git add .',
+      obj: {
+        packageFiles: [ {  filename: VERSION_FILE,  type: 'json' } ],
+        bumpFiles: [ { filename: VERSION_FILE, type: 'json' }  ],
+        commitAll: true,
+        scripts: {
+          postbump: 'yarn projen && git add .',
+        },
       },
     });
   }
