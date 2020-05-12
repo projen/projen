@@ -169,7 +169,7 @@ export interface WorkflowOptions {
 }
 
 const DEFAULT_WORKFLOW_BOOTSTRAP = [
-  { run: `npx projen${PROJEN_VERSION}` },
+  { run: `npx projen@${PROJEN_VERSION}` },
   { run: 'yarn install --frozen-lockfile' },
 ];
 
