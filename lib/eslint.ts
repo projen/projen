@@ -8,6 +8,7 @@ export class Eslint extends Construct {
     super(project, 'eslint');
 
     project.addDevDependencies({
+      'typescript': Semver.caret('3.8.3'),
       '@typescript-eslint/eslint-plugin': Semver.caret('2.31.0'),
       '@typescript-eslint/parser': Semver.caret('2.19.2'),
       'eslint': Semver.caret('6.8.0'),
