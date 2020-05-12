@@ -1,8 +1,2 @@
-#!/bin/bash
-set -euo pipefail
-app="./projen.js"
-if [ ! -f $app ]; then
-  echo "$app not found"
-  exit 1
-fi
-exec node $app
+#!/usr/bin/env node
+require('./projen.js');
