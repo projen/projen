@@ -6,7 +6,7 @@ export interface JsonFileOptions extends FileBaseOptions {
 }
 
 export class JsonFile extends FileBase {
-  private readonly obj: object;
+  protected readonly obj: object;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);

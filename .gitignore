@@ -59,3 +59,5 @@ tsconfig.json
 !/.github/workflows/release.yml
 !# synthesized by projen, but committed to git
 !/.github/workflows/build.yml
+!# synthesized by projen, but committed to git
+!/.mergify.yml

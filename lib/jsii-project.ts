@@ -5,6 +5,7 @@ import { GithubWorkflow } from './github-workflow';
 import { Project } from './project';
 import { PROJEN_VERSION } from './common';
 import { Jest } from './jest';
+import { Mergify } from './mergify';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -43,6 +44,12 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default true
    */
   readonly jest?: boolean;
+
+  /**
+   * Add mergify configuration
+   * @default true
+   */
+  readonly mergify?: boolean;
 }
 
 export enum Stability {
@@ -163,11 +170,37 @@ export class JsiiProject extends NodeProject {
     this.npmignore.comment('include .jsii manifest');
     this.npmignore.include('.jsii');
 
-    new JsiiBuildWorkflow(this, options.workflowOptions);
+    const buildWorkflow = new JsiiBuildWorkflow(this, options.workflowOptions);
 
     const jest = options.jest ?? true;
     if (jest) {
       new Jest(this);
+    }
+
+    const mergify = options.mergify ?? true;
+    if (mergify) {
+      const m = new Mergify(this);
+      m.addRule({
+        name: 'Automatic merge on approval and successful build',
+        conditions: [
+          '#approved-reviews-by>=1',
+          `status-success=${buildWorkflow.jobName}`,
+        ],
+        actions: {
+          merge: {
+            // squash all commits into a single commit when merging
+            method: 'squash',
+
+            // use PR title+body as the commit message
+            commit_message: 'title+body',
+
+            // update PR branch so it's up-to-date before merging
+            strict: 'smart',
+            strict_method: 'merge',
+          },
+          delete_head_branch: { },
+        },
+      });
     }
   }
 }
@@ -340,13 +373,18 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
 }
 
 export class JsiiBuildWorkflow extends GithubWorkflow {
+
+  public readonly jobName: string;
+
   constructor(project: Project, options: WorkflowOptions = { }) {
     super(project, 'build', { name: 'Build' });
+
+    this.jobName = 'build';
 
     this.on({ pull_request: { } });
 
     this.addJobs({
-      build: {
+      [this.jobName]: {
         'runs-on': 'ubuntu-latest',
         container: {
           image: 'jsii/superchain',
