@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/eladb/projen/compare/v0.1.14...v0.1.15) (2020-05-18)
+
+
+### Features
+
+* mergify ([5974506](https://github.com/eladb/projen/commit/5974506b281f7204dcef41e712614d8600da9b39))
+
 ### [0.1.14](https://github.com/eladb/projen/compare/v0.1.13...v0.1.14) (2020-05-12)
 
 
