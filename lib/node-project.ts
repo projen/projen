@@ -113,7 +113,6 @@ export class NodeProject extends Project {
       bundledDependencies: this.bundledDependencies,
     };
 
-
     const commitPackageJson = options.commitPackageJson ?? false;
     new JsonFile(this, 'package.json', {
       committed: commitPackageJson,
@@ -186,7 +185,7 @@ export class NodeProject extends Project {
             },
             {
               'name': 'Release',
-              'run': 'npm publish dist/js',
+              'run': 'npx -p jsii-release jsii-release-npm',
               'env': {
                 'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
               },
