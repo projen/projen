@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.17](https://github.com/eladb/projen/compare/v0.1.16...v0.1.17) (2020-05-25)
+
+
+### Bug Fixes
+
+* unable to publish to npm ([692555e](https://github.com/eladb/projen/commit/692555e570ae1dcec855bbcdecc35edf83fd1404))
+
 ### [0.1.16](https://github.com/eladb/projen/compare/v0.1.15...v0.1.16) (2020-05-25)
 
 
