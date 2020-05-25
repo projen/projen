@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.16](https://github.com/eladb/projen/compare/v0.1.15...v0.1.16) (2020-05-25)
+
+
+### Features
+
+* typescript projects ([a5d302e](https://github.com/eladb/projen/commit/a5d302e79165db8cd0c1c6d3b28886193deccabd))
+
 ### [0.1.15](https://github.com/eladb/projen/compare/v0.1.14...v0.1.15) (2020-05-18)
 
 
