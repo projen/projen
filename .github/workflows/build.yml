@@ -5,9 +5,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
     steps:
       - uses: actions/checkout@v2
       - run: yarn bootstrap
       - run: yarn build
+    container:
+      image: jsii/superchain

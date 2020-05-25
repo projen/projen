@@ -5,11 +5,8 @@ on:
     branches:
       - master
 jobs:
-  build_artifact:
-    name: Build and upload artifact
+  build:
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
     steps:
       - uses: actions/checkout@v2
       - run: yarn bootstrap
@@ -19,9 +16,11 @@ jobs:
         with:
           name: dist
           path: dist
+    container:
+      image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build_artifact
+    needs: build
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain

@@ -21,9 +21,9 @@ const project = new JsiiProject({
   },
   bundledDependencies: [ 'yaml' ],
   projenDevDependency: false, // because I am projen
-  workflowOptions: {
-    bootstrapSteps: [ { run: `yarn bootstrap` } ]
-  }
+  workflowBootstrapSteps: [
+    { run: `yarn bootstrap` }
+  ]
 });
 
 project.addScripts({

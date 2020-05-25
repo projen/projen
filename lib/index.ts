@@ -10,3 +10,4 @@ export * from './semver';
 export * from './version';
 export * from './eslint';
 export * from './jest';
+export * from './typescript';

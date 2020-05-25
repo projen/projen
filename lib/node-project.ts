@@ -6,6 +6,7 @@ import { License } from './license';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Lazy } from 'constructs';
 import { Version } from './version';
+import { GithubWorkflow } from './github-workflow';
 
 export interface CommonOptions {
   readonly bundledDependencies?: string[];
@@ -37,6 +38,26 @@ export interface CommonOptions {
    * @default true
    */
   readonly projenDevDependency?: boolean;
+
+  /**
+   * Workflow steps to use in order to bootstrap this repo.
+   *
+   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+   */
+  readonly workflowBootstrapSteps?: any[];
+
+  /**
+   * Container image to use for GitHub workflows.
+   *
+   * @default - default image
+   */
+  readonly workflowContainerImage?: string;
+
+  /**
+   * Automatically release to npm when new versions are introduced.
+   * @default - true
+   */
+  readonly releaseToNpm?: boolean;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -64,6 +85,9 @@ export class NodeProject extends Project {
   private readonly manifest: any;
   private readonly testCommands = new Array<string>();
   private readonly _version: Version;
+
+  protected readonly buildWorkflow: NodeBuildWorkflow;
+  protected readonly releaseWorkflow: NodeBuildWorkflow;
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -132,6 +156,46 @@ export class NodeProject extends Project {
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this);
     this.manifest.version = this.version;
+
+    this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
+      trigger: { pull_request: { } },
+      bootstrapSteps: options.workflowBootstrapSteps,
+      image: options.workflowContainerImage,
+    });
+
+    this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
+      trigger: { push: { branches: [ 'master' ] } },
+      uploadArtifact: true,
+      bootstrapSteps: options.workflowBootstrapSteps,
+      image: options.workflowContainerImage,
+    });
+
+    if (options.releaseToNpm) {
+      this.releaseWorkflow.addJobs({
+        release_npm: {
+          'name': 'Release to NPM',
+          'needs': this.releaseWorkflow.buildJobId,
+          'runs-on': 'ubuntu-latest',
+          'steps': [
+            {
+              'name': 'Download build artifacts',
+              'uses': 'actions/download-artifact@v1',
+              'with': {
+                'name': 'dist',
+              },
+            },
+            {
+              'name': 'Release',
+              'run': 'npm publish dist/js',
+              'env': {
+                'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
+              },
+            },
+          ],
+        },
+      });
+    }
+
   }
 
   /**
@@ -274,4 +338,64 @@ export interface PeerDependencyOptions {
    * @default true
    */
   readonly pinnedDevDependency?: boolean;
+}
+
+const DEFAULT_WORKFLOW_BOOTSTRAP = [
+  { run: `npx projen@${PROJEN_VERSION}` },
+  { run: 'yarn install --frozen-lockfile' },
+];
+
+export interface NodeBuildWorkflowOptions  {
+  /**
+   * @default - default image
+   */
+  readonly image?: string;
+
+  /**
+   * Workflow steps to use in order to bootstrap this repo.
+   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+   */
+  readonly bootstrapSteps?: any[];
+
+  readonly uploadArtifact?: boolean;
+
+  readonly trigger: { [event: string]: any };
+}
+
+export class NodeBuildWorkflow extends GithubWorkflow {
+  public readonly buildJobId: string;
+
+  constructor(project: Project, name: string, options: NodeBuildWorkflowOptions) {
+    super(project, name);
+
+    this.buildJobId = 'build';
+
+    this.on(options.trigger);
+
+    const job: Record<string, any> = {
+      'runs-on': 'ubuntu-latest',
+      'steps': [
+        { uses: 'actions/checkout@v2' },
+        ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
+        { run: 'yarn build' },
+      ],
+    };
+
+    if (options.image) {
+      job.container = { image: options.image };
+    }
+
+    if (options.uploadArtifact) {
+      job.steps.push({
+        name: 'Upload artifact',
+        uses: 'actions/upload-artifact@v1',
+        with: {
+          name: 'dist',
+          path: 'dist',
+        },
+      });
+    }
+
+    this.addJobs({ [this.buildJobId]: job });
+  }
 }

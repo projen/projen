@@ -1,9 +1,6 @@
 import { NodeProject, CommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
-import { GithubWorkflow } from './github-workflow';
-import { Project } from './project';
-import { PROJEN_VERSION } from './common';
 import { Jest } from './jest';
 import { Mergify } from './mergify';
 
@@ -29,15 +26,10 @@ export interface JsiiProjectOptions extends CommonOptions {
 
   /**
    * Install eslint.
-   * 
+   *
    * @default true
    */
   readonly eslint?: boolean;
-
-  /**
-   * Options for github workflows.
-   */
-  readonly workflowOptions?: WorkflowOptions;
 
   /**
    * Use jest for unit tests.
@@ -76,7 +68,12 @@ export interface JsiiDotNetTarget {
 
 export class JsiiProject extends NodeProject {
   constructor(options: JsiiProjectOptions) {
-    super(options);
+    super({
+      ...options,
+      workflowContainerImage: options.workflowContainerImage ?? 'jsii/superchain',
+      workflowBootstrapSteps: options.workflowBootstrapSteps,
+      releaseToNpm: false,
+    });
 
     this.addFields({ types: 'lib/index.d.ts' });
 
@@ -103,9 +100,7 @@ export class JsiiProject extends NodeProject {
       },
     });
 
-    const releaseWorkflow = new JsiiReleaseWorkflow(this, options.workflowOptions);
-
-    releaseWorkflow.publishToNpm();
+    this.publishToNpm();
 
     if (options.java) {
       targets.java = {
@@ -116,7 +111,7 @@ export class JsiiProject extends NodeProject {
         },
       };
 
-      releaseWorkflow.publishToMaven();
+      this.publishToMaven();
     }
 
     if (options.python) {
@@ -125,7 +120,7 @@ export class JsiiProject extends NodeProject {
         module: options.python.module,
       };
 
-      releaseWorkflow.publishToPyPi();
+      this.publishToPyPi();
     }
 
     if (options.dotnet) {
@@ -134,7 +129,7 @@ export class JsiiProject extends NodeProject {
         packageId: options.dotnet.packageId,
       };
 
-      releaseWorkflow.publishToNuget();
+      this.publishToNuget();
     }
 
     this.addDevDependencies({
@@ -166,11 +161,10 @@ export class JsiiProject extends NodeProject {
 
     this.npmignore.comment('exclude jsii outdir');
     this.npmignore.exclude('dist');
-    
+
     this.npmignore.comment('include .jsii manifest');
     this.npmignore.include('.jsii');
 
-    const buildWorkflow = new JsiiBuildWorkflow(this, options.workflowOptions);
 
     const jest = options.jest ?? true;
     if (jest) {
@@ -184,7 +178,7 @@ export class JsiiProject extends NodeProject {
         name: 'Automatic merge on approval and successful build',
         conditions: [
           '#approved-reviews-by>=1',
-          `status-success=${buildWorkflow.jobName}`,
+          `status-success=${this.buildWorkflow.buildJobId}`,
         ],
         actions: {
           merge: {
@@ -203,58 +197,12 @@ export class JsiiProject extends NodeProject {
       });
     }
   }
-}
 
-export interface WorkflowOptions {
-  /**
-   * Workflow steps to use in order to bootstrap this repo.
-   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
-   */
-  readonly bootstrapSteps?: any[];
-}
-
-const DEFAULT_WORKFLOW_BOOTSTRAP = [
-  { run: `npx projen@${PROJEN_VERSION}` },
-  { run: 'yarn install --frozen-lockfile' },
-];
-
-class JsiiReleaseWorkflow extends GithubWorkflow {
-  private readonly buildJobId = 'build_artifact';
-
-  constructor(project: Project, options: WorkflowOptions = { }) {
-    super(project, 'release', { name: 'Release' });
-
-    this.on({ push: { branches: [ 'master' ] } });
-
-    this.addJobs({ 
-      [this.buildJobId]: {
-        'name': 'Build and upload artifact',
-        'runs-on': 'ubuntu-latest',
-        'container': {
-          image: 'jsii/superchain',
-        },
-        'steps': [
-          { uses: 'actions/checkout@v2' },
-          ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
-          { run: 'yarn build' },
-          {
-            name: 'Upload artifact',
-            uses: 'actions/upload-artifact@v1',
-            with: {
-              name: 'dist',
-              path: 'dist',
-            },
-          },
-        ],
-      }, 
-    });
-  }
-
-  public publishToNpm() {
-    this.addJobs({
+  private publishToNpm() {
+    this.releaseWorkflow.addJobs({
       release_npm: {
         'name': 'Release to NPM',
-        'needs': this.buildJobId,
+        'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           'image': 'jsii/superchain',
@@ -279,11 +227,11 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
     });
   }
 
-  public publishToNuget() {
-    this.addJobs({
+  private publishToNuget() {
+    this.releaseWorkflow.addJobs({
       release_nuget: {
         'name': 'Release to Nuget',
-        'needs': this.buildJobId,
+        'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           'image': 'jsii/superchain',
@@ -308,11 +256,11 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
     });
   }
 
-  public publishToMaven() {
-    this.addJobs({ 
+  private publishToMaven() {
+    this.releaseWorkflow.addJobs({
       release_maven: {
         'name': 'Release to Maven',
-        'needs': this.buildJobId,
+        'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           'image': 'jsii/superchain',
@@ -341,11 +289,11 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
     });
   }
 
-  public publishToPyPi() {
-    this.addJobs({
+  private publishToPyPi() {
+    this.releaseWorkflow.addJobs({
       release_pypi: {
         'name': 'Release to PyPi',
-        'needs': this.buildJobId,
+        'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           'image': 'jsii/superchain',
@@ -366,33 +314,6 @@ class JsiiReleaseWorkflow extends GithubWorkflow {
               'TWINE_PASSWORD': '${{ secrets.TWINE_PASSWORD }}',
             },
           },
-        ],
-      },
-    });
-  }
-}
-
-export class JsiiBuildWorkflow extends GithubWorkflow {
-
-  public readonly jobName: string;
-
-  constructor(project: Project, options: WorkflowOptions = { }) {
-    super(project, 'build', { name: 'Build' });
-
-    this.jobName = 'build';
-
-    this.on({ pull_request: { } });
-
-    this.addJobs({
-      [this.jobName]: {
-        'runs-on': 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          { uses: 'actions/checkout@v2' },
-          ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
-          { run: 'yarn build' },
         ],
       },
     });

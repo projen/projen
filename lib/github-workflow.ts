@@ -3,23 +3,14 @@ import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
 import { Project } from './project';
 
-export interface GithubWorkflowOptions {
-  /**
-   * @default - same as name
-   */
-  readonly name?: string;
-}
-
 export class GithubWorkflow extends FileBase {
-
   private readonly name: string;
   private events: { [event: string]: any } = { };
   private jobs: { [jobid: string]: any } = { };
 
-  constructor(project: Project, name: string, options: GithubWorkflowOptions = { }) {
-    super(project, `.github/workflows/${name}.yml`, { committed: true });
-    
-    this.name = options.name ?? name;
+  constructor(project: Project, name: string) {
+    super(project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, { committed: true });
+    this.name = name;
   }
 
   public on(events: { [event: string]: any }) {

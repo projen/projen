@@ -56,8 +56,8 @@ tsconfig.json
 !# always commit version file
 !version.json
 !# synthesized by projen, but committed to git
-!/.github/workflows/release.yml
-!# synthesized by projen, but committed to git
 !/.github/workflows/build.yml
+!# synthesized by projen, but committed to git
+!/.github/workflows/release.yml
 !# synthesized by projen, but committed to git
 !/.mergify.yml
