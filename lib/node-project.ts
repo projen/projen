@@ -15,6 +15,7 @@ export interface CommonOptions {
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
   readonly bin?: Record<string, string>;
+  readonly keywords?: string[];
 
   /**
    * Should we commit `package.json` to git or ignore?
@@ -111,6 +112,7 @@ export class NodeProject extends Project {
       peerDependencies: this.peerDependencies,
       dependencies: this.dependencies,
       bundledDependencies: this.bundledDependencies,
+      keywords: options.keywords,
     };
 
     const commitPackageJson = options.commitPackageJson ?? false;
