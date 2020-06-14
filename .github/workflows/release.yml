@@ -12,12 +12,7 @@ jobs:
       - run: yarn bootstrap
       - run: yarn build
       - name: Anti-tamper check
-        run: '[[ "$(git diff-files)" != "" ]] && echo
-          "---------------------------------------------------------------------------------"
-          && echo "ERROR: files modified during build" && echo "Please make sure
-          to build locally and commit any changes" && echo
-          "---------------------------------------------------------------------------------"
-          && git diff-files && git diff && exit 1'
+        run: git diff --exit-code
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
