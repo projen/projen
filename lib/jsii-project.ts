@@ -72,6 +72,8 @@ export class JsiiProject extends NodeProject {
       ...options,
       workflowContainerImage: options.workflowContainerImage ?? 'jsii/superchain',
       workflowBootstrapSteps: options.workflowBootstrapSteps,
+      buildWorkflow: options.buildWorkflow,
+      releaseWorkflow: options.releaseWorkflow,
       releaseToNpm: false,
     });
 
@@ -178,7 +180,7 @@ export class JsiiProject extends NodeProject {
         name: 'Automatic merge on approval and successful build',
         conditions: [
           '#approved-reviews-by>=1',
-          `status-success=${this.buildWorkflow.buildJobId}`,
+          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
         ],
         actions: {
           merge: {
@@ -199,6 +201,10 @@ export class JsiiProject extends NodeProject {
   }
 
   private publishToNpm() {
+    if (!this.releaseWorkflow) {
+      return;
+    }
+
     this.releaseWorkflow.addJobs({
       release_npm: {
         'name': 'Release to NPM',
@@ -228,6 +234,9 @@ export class JsiiProject extends NodeProject {
   }
 
   private publishToNuget() {
+    if (!this.releaseWorkflow) {
+      return;
+    }
     this.releaseWorkflow.addJobs({
       release_nuget: {
         'name': 'Release to Nuget',
@@ -257,6 +266,9 @@ export class JsiiProject extends NodeProject {
   }
 
   private publishToMaven() {
+    if (!this.releaseWorkflow) {
+      return;
+    }
     this.releaseWorkflow.addJobs({
       release_maven: {
         'name': 'Release to Maven',
@@ -290,6 +302,9 @@ export class JsiiProject extends NodeProject {
   }
 
   private publishToPyPi() {
+    if (!this.releaseWorkflow) {
+      return;
+    }
     this.releaseWorkflow.addJobs({
       release_pypi: {
         'name': 'Release to PyPi',

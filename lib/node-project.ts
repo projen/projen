@@ -40,6 +40,18 @@ export interface CommonOptions {
   readonly projenDevDependency?: boolean;
 
   /**
+   * Define a GitHub workflow for building PRs.
+   * @default true
+   */
+  readonly buildWorkflow?: boolean;
+
+  /**
+   * Define a GitHub workflow for releasing from "master" when new versions are bumped.
+   * @default true
+   */
+  readonly releaseWorkflow?: boolean;
+
+  /**
    * Workflow steps to use in order to bootstrap this repo.
    *
    * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -86,8 +98,15 @@ export class NodeProject extends Project {
   private readonly testCommands = new Array<string>();
   private readonly _version: Version;
 
-  protected readonly buildWorkflow: NodeBuildWorkflow;
-  protected readonly releaseWorkflow: NodeBuildWorkflow;
+  /**
+   * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
+   */
+  protected readonly buildWorkflow?: NodeBuildWorkflow;
+
+  /**
+   * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
+   */
+  protected readonly releaseWorkflow?: NodeBuildWorkflow;
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -156,45 +175,48 @@ export class NodeProject extends Project {
     this._version = new Version(this);
     this.manifest.version = this.version;
 
-    this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
-      trigger: { pull_request: { } },
-      bootstrapSteps: options.workflowBootstrapSteps,
-      image: options.workflowContainerImage,
-    });
-
-    this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
-      trigger: { push: { branches: [ 'master' ] } },
-      uploadArtifact: true,
-      bootstrapSteps: options.workflowBootstrapSteps,
-      image: options.workflowContainerImage,
-    });
-
-    if (options.releaseToNpm) {
-      this.releaseWorkflow.addJobs({
-        release_npm: {
-          'name': 'Release to NPM',
-          'needs': this.releaseWorkflow.buildJobId,
-          'runs-on': 'ubuntu-latest',
-          'steps': [
-            {
-              'name': 'Download build artifacts',
-              'uses': 'actions/download-artifact@v1',
-              'with': {
-                'name': 'dist',
-              },
-            },
-            {
-              'name': 'Release',
-              'run': 'npx -p jsii-release jsii-release-npm',
-              'env': {
-                'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
-              },
-            },
-          ],
-        },
+    if (options.buildWorkflow ?? true) {
+      this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
+        trigger: { pull_request: { } },
+        bootstrapSteps: options.workflowBootstrapSteps,
+        image: options.workflowContainerImage,
       });
     }
 
+    if (options.releaseWorkflow ?? true) {
+      this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
+        trigger: { push: { branches: [ 'master' ] } },
+        uploadArtifact: true,
+        bootstrapSteps: options.workflowBootstrapSteps,
+        image: options.workflowContainerImage,
+      });
+
+      if (options.releaseToNpm) {
+        this.releaseWorkflow.addJobs({
+          release_npm: {
+            'name': 'Release to NPM',
+            'needs': this.releaseWorkflow.buildJobId,
+            'runs-on': 'ubuntu-latest',
+            'steps': [
+              {
+                'name': 'Download build artifacts',
+                'uses': 'actions/download-artifact@v1',
+                'with': {
+                  'name': 'dist',
+                },
+              },
+              {
+                'name': 'Release',
+                'run': 'npx -p jsii-release jsii-release-npm',
+                'env': {
+                  'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
+                },
+              },
+            ],
+          },
+        });
+      }
+    }
   }
 
   /**
