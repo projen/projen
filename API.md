@@ -431,6 +431,7 @@ that after you check out a repository you must run `npx projen` to
 bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
+  * **keywords** (<code>Array<string></code>)  *No description* *Optional*
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* *Optional*
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. *Default*: true
@@ -918,6 +919,7 @@ that after you check out a repository you must run `npx projen` to
 bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
+  * **keywords** (<code>Array<string></code>)  *No description* *Optional*
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* *Optional*
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. *Default*: true
@@ -1275,6 +1277,7 @@ that after you check out a repository you must run `npx projen` to
 bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
+  * **keywords** (<code>Array<string></code>)  *No description* *Optional*
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* *Optional*
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* *Optional*
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. *Default*: true
@@ -1530,6 +1533,7 @@ Name | Type | Description
 bootstrap it.
 **dependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
 **devDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
+**keywords**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **peerDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
 **peerDependencyOptions**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <br/><br/>*Optional*
 **projenDevDependency**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><br/>*Default*: true
@@ -1612,6 +1616,7 @@ bootstrap it.
 **eslint**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Install eslint.<br/><br/>*Default*: true
 **java**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | <br/><br/>*Optional*
 **jest**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Use jest for unit tests.<br/><br/>*Default*: true
+**keywords**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **license**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **mergify**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Add mergify configuration.<br/><br/>*Default*: true
 **peerDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
@@ -1696,6 +1701,7 @@ bootstrap it.
 **description**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **devDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
 **gitignore**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
+**keywords**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **license**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **npmignore**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **outdir**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Default*: . current directory
@@ -1760,6 +1766,7 @@ bootstrap it.
 **description**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **devDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, [Semver](#projen-semver)></code> | <br/><br/>*Optional*
 **gitignore**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
+**keywords**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **license**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **npmignore**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
 **outdir**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Default*: . current directory
