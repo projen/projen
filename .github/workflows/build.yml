@@ -9,7 +9,10 @@ jobs:
       - uses: actions/checkout@v2
       - run: yarn bootstrap
       - run: yarn build
-      - name: Anti-tamper check
+      - run: git status
+      - run: git diff
+      - run: git diff-files
+      - name: Anti-tamper modified files check
         run: git diff-index --exit-code --ignore-all-space --minimal --name-status
           --color HEAD
     container:
