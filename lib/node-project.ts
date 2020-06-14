@@ -10,13 +10,14 @@ import { GithubWorkflow } from './github-workflow';
 
 const ANTITAMPER_COMMAND = [
   {
-    name: 'Anti-tamper Check',
+    name: 'Anti-tamper check',
     run: [
       '[[ "$(git diff-files)" != "" ]]',
       'echo "---------------------------------------------------------------------------------"',
-      'echo "ERROR: files modified during build (anti-tamper)"',
-      'echo "Please make sure to build locally and commit any changed files."',
+      'echo "ERROR: files modified during build"',
+      'echo "Please make sure to build locally and commit any changes"',
       'echo "---------------------------------------------------------------------------------"',
+      'git diff-files',
       'git diff',
       'exit 1',
     ].join(' && '),
