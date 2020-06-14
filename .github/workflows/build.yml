@@ -12,8 +12,7 @@ jobs:
       - run: git status
       - run: git diff
       - run: git diff-files
-      - name: Anti-tamper modified files check
-        run: git diff-index --exit-code --ignore-all-space --minimal --name-status
-          --color HEAD
+      - name: Anti-tamper check (modify)
+        run: git diff --exit-code
     container:
       image: jsii/superchain

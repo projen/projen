@@ -10,17 +10,8 @@ import { GithubWorkflow } from './github-workflow';
 
 const ANTITAMPER_COMMAND = [
   {
-    run: 'git status',
-  },
-  {
-    run: 'git diff',
-  },
-  {
-    run: 'git diff-files',
-  },
-  {
     name: 'Anti-tamper check',
-    run: 'git diff-index --exit-code --ignore-all-space --minimal --name-status --color HEAD',
+    run: 'git diff --exit-code',
   },
 ];
 

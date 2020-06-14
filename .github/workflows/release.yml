@@ -15,8 +15,7 @@ jobs:
       - run: git diff
       - run: git diff-files
       - name: Anti-tamper check
-        run: git diff-index --exit-code --ignore-all-space --minimal --name-status
-          --color HEAD
+        run: git diff --exit-code
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
