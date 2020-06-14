@@ -60,7 +60,7 @@
     "yaml"
   ],
   "license": "Apache-2.0",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
