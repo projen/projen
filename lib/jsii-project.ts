@@ -3,6 +3,8 @@ import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { Jest } from './jest';
 import { Mergify } from './mergify';
+import { JsiiDocgen } from './jsii-docgen';
+import { Lazy } from 'constructs';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -42,6 +44,12 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default true
    */
   readonly mergify?: boolean;
+
+  /**
+   * Automatically generate API.md from jsii
+   * @default true
+   */
+  readonly docgen?: boolean;
 }
 
 export enum Stability {
@@ -67,6 +75,9 @@ export interface JsiiDotNetTarget {
 }
 
 export class JsiiProject extends NodeProject {
+
+  private compileCommands = new Array<string>();
+
   constructor(options: JsiiProjectOptions) {
     super({
       ...options,
@@ -79,8 +90,9 @@ export class JsiiProject extends NodeProject {
 
     this.addFields({ types: 'lib/index.d.ts' });
 
+
     this.addScripts({
-      compile: 'jsii',
+      compile: Lazy.stringValue({ produce: () => this.renderCompileCommand() }),
       watch: 'jsii -w',
       compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
       package: 'jsii-pacmak',
@@ -92,6 +104,8 @@ export class JsiiProject extends NodeProject {
     if (options.stability === Stability.DEPRECATED) {
       this.addFields({ deprecated: true });
     }
+
+    this.addCompileCommand('jsii --silence-warnings=reserved-word');
 
     const targets: Record<string, any> = { };
 
@@ -167,9 +181,11 @@ export class JsiiProject extends NodeProject {
     this.npmignore.comment('include .jsii manifest');
     this.npmignore.include('.jsii');
 
+    if (options.docgen ?? true) {
+      new JsiiDocgen(this);
+    }
 
-    const jest = options.jest ?? true;
-    if (jest) {
+    if (options.jest ?? true) {
       new Jest(this);
     }
 
@@ -198,6 +214,18 @@ export class JsiiProject extends NodeProject {
         },
       });
     }
+  }
+
+  /**
+   * Adds that will be executed after the jsii compilation
+   * @param command The command to execute
+   */
+  public addCompileCommand(command: string) {
+    this.compileCommands.push(command);
+  }
+
+  private renderCompileCommand() {
+    return this.compileCommands.join(' && ');
   }
 
   private publishToNpm() {
