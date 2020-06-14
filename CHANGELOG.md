@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.19](https://github.com/eladb/projen/compare/v0.1.18...v0.1.19) (2020-06-14)
+
+
+### Features
+
+* **node:** support disabling GitHub workflows ([f12ab7a](https://github.com/eladb/projen/commit/f12ab7a18fb18b3d8b745c84e443f6e64e30ed21))
+
 ### [0.1.18](https://github.com/eladb/projen/compare/v0.1.17...v0.1.18) (2020-06-09)
 
 ### [0.1.17](https://github.com/eladb/projen/compare/v0.1.16...v0.1.17) (2020-05-25)
