@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.21](https://github.com/eladb/projen/compare/v0.1.20...v0.1.21) (2020-06-14)
+
+
+### Features
+
+* **node:** anti-tamper during ci builds ([a7f6230](https://github.com/eladb/projen/commit/a7f62309a15ac99069261b129747a60a897de464))
+* **node:** keywords ([5acfada](https://github.com/eladb/projen/commit/5acfadafcf7de4c148485e73831b3abf8f3862bb))
+
 ### [0.1.20](https://github.com/eladb/projen/compare/v0.1.19...v0.1.20) (2020-06-14)
 
 
