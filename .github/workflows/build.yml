@@ -8,8 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: yarn bootstrap
-      - name: Anti-tamper check
-        run: git diff-index --quiet HEAD
       - run: yarn build
+      - name: Anti-tamper check
+        run: git diff-index HEAD
     container:
       image: jsii/superchain

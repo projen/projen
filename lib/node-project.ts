@@ -12,7 +12,7 @@ const ANTITAMPER_COMMAND = [
   {
     name: 'Anti-tamper check',
     run: [
-      'git diff-index --quiet HEAD',
+      'git diff-index --ignore-all-space HEAD',
     ].join(' && '),
   },
 ];
