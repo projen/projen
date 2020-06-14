@@ -12,7 +12,7 @@ export class JsiiDocgen extends Construct {
   constructor(project: JsiiProject) {
     super(project, 'jsii-docgen');
 
-    project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.1') });
+    project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
     project.addScripts({ docgen: 'jsii-docgen' });
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');
