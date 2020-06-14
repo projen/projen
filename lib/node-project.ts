@@ -12,13 +12,7 @@ const ANTITAMPER_COMMAND = [
   {
     name: 'Anti-tamper check',
     run: [
-      '[[ "$(git status --porcelain=v1 | grep -v \'^?? \')" != "" ]]',
-      'echo "---------------------------------------------------------------------------------"',
-      'echo "ERROR: files modified during build"',
-      'echo "Please make sure to build locally and commit any changes"',
-      'echo "---------------------------------------------------------------------------------"',
-      'git diff',
-      'exit 1',
+      'git diff-index --quiet HEAD',
     ].join(' && '),
   },
 ];
