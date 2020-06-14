@@ -10,6 +10,6 @@ jobs:
       - run: yarn bootstrap
       - run: yarn build
       - name: Anti-tamper check
-        run: git diff-index HEAD
+        run: git diff-index --exit-code --ignore-all-space HEAD
     container:
       image: jsii/superchain
