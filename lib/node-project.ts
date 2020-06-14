@@ -10,7 +10,7 @@ import { GithubWorkflow } from './github-workflow';
 
 const ANTITAMPER_COMMAND = [
   {
-    name: 'anti-tamper',
+    name: 'Anti-tamper Check',
     run: [
       '[[ "$(git diff-files)" != "" ]]',
       'echo "---------------------------------------------------------------------------------"',
