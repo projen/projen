@@ -8,6 +8,13 @@ import { Lazy } from 'constructs';
 import { Version } from './version';
 import { GithubWorkflow } from './github-workflow';
 
+const ANTITAMPER_COMMAND = [
+  {
+    name: 'anti-tamper',
+    run: '[[ "$(git diff-files)" == "" ]]',
+  },
+];
+
 export interface CommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -67,9 +74,15 @@ export interface CommonOptions {
 
   /**
    * Automatically release to npm when new versions are introduced.
-   * @default - true
+   * @default true
    */
   readonly releaseToNpm?: boolean;
+
+  /**
+   * Checks that after build there are no modified files onn git.
+   * @default true
+   */
+  readonly antitamper?: boolean;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -180,6 +193,7 @@ export class NodeProject extends Project {
         trigger: { pull_request: { } },
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
+        antitamper: options.antitamper,
       });
     }
 
@@ -189,6 +203,7 @@ export class NodeProject extends Project {
         uploadArtifact: true,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
+        antitamper: options.antitamper,
       });
 
       if (options.releaseToNpm) {
@@ -380,6 +395,12 @@ export interface NodeBuildWorkflowOptions  {
 
   readonly uploadArtifact?: boolean;
 
+  /**
+   * Checks that after build there are no modified files onn git.
+   * @default true
+   */
+  readonly antitamper?: boolean;
+
   readonly trigger: { [event: string]: any };
 }
 
@@ -399,6 +420,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         { uses: 'actions/checkout@v2' },
         ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
         { run: 'yarn build' },
+        ...(options.antitamper ?? true) ? ANTITAMPER_COMMAND : [],
       ],
     };
 

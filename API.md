@@ -422,6 +422,7 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. *Default*: true
   * **bin** (<code>Map<string, string></code>)  *No description* *Optional*
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. *Default*: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* *Optional*
@@ -804,6 +805,7 @@ new NodeBuildWorkflow(project: Project, name: string, options: NodeBuildWorkflow
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>[NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)</code>)  *No description*
   * **trigger** (<code>Map<string, any></code>)  *No description* 
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. *Default*: true
   * **bootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. *Default*: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **image** (<code>string</code>)  *No description* *Default*: default image
   * **uploadArtifact** (<code>boolean</code>)  *No description* *Optional*
@@ -907,6 +909,7 @@ new NodeProject(options: NodeProjectOptions)
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **outdir** (<code>string</code>)  *No description* *Default*: . current directory
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. *Default*: true
   * **bin** (<code>Map<string, string></code>)  *No description* *Optional*
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. *Default*: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* *Optional*
@@ -1263,6 +1266,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 
 * **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
   * **outdir** (<code>string</code>)  *No description* *Default*: . current directory
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. *Default*: true
   * **bin** (<code>Map<string, string></code>)  *No description* *Optional*
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. *Default*: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* *Optional*
@@ -1518,6 +1522,7 @@ public toString(): string
 
 Name | Type | Description 
 -----|------|-------------
+**antitamper**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><br/>*Default*: true
 **bin**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, string></code> | <br/><br/>*Optional*
 **buildWorkflow**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><br/>*Default*: true
 **bundledDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
@@ -1593,6 +1598,7 @@ Name | Type | Description
 **jsiiVersion**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>[Semver](#projen-semver)</code> | <span></span>
 **name**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <span></span>
 **repository**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <span></span>
+**antitamper**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><br/>*Default*: true
 **bin**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, string></code> | <br/><br/>*Optional*
 **buildWorkflow**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><br/>*Default*: true
 **bundledDependencies**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<string></code> | <br/><br/>*Optional*
@@ -1661,6 +1667,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **trigger**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, any></code> | <span></span>
+**antitamper**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><br/>*Default*: true
 **bootstrapSteps**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><br/>*Default*: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **image**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Default*: default image
 **uploadArtifact**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | <br/><br/>*Optional*
@@ -1677,6 +1684,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <span></span>
+**antitamper**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><br/>*Default*: true
 **authorEmail**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **authorName**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **bin**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, string></code> | <br/><br/>*Optional*
@@ -1740,6 +1748,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <span></span>
+**antitamper**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><br/>*Default*: true
 **authorEmail**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **authorName**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>string</code> | <br/><br/>*Optional*
 **bin**?<span title="This API element is experimental. It may change without notice.">🔹</span> | <code>Map<string, string></code> | <br/><br/>*Optional*
