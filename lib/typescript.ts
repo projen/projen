@@ -3,7 +3,7 @@ import { JsonFile } from './json';
 import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
-import { Mergify } from './mergify';
+import { Mergify, MergifyOptions } from './mergify';
 
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   /**
@@ -35,6 +35,12 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
    * @default true
    */
   readonly mergify?: boolean;
+
+  /**
+   * Options for mergify
+   * @default - default options
+   */
+  readonly mergifyOptions?: MergifyOptions;
 }
 
 export class TypeScriptLibraryProject extends NodeProject {
@@ -99,11 +105,11 @@ export class TypeScriptLibraryProject extends NodeProject {
 
     this.addDevDependencies({
       'typescript': options.typescriptVersion ?? Semver.caret('3.9.5'),
-      '@types/node': this.nodeVersion,
+      '@types/node': Semver.caret(this.minNodeVersion), // install the minimum version to ensure compatibility
     });
 
     if (options.mergify ?? true) {
-      new Mergify(this);
+      new Mergify(this, options.mergifyOptions);
     }
   }
 }

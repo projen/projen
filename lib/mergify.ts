@@ -15,7 +15,7 @@ export interface MergifyOptions {
 export class Mergify extends Construct {
   private readonly rules = new Array<MergifyRule>();
 
-  constructor(project: Project) {
+  constructor(project: Project, options: MergifyOptions = { }) {
     super(project, 'mergify');
 
     new YamlFile(project, '.mergify.yml', {
@@ -24,6 +24,8 @@ export class Mergify extends Construct {
         pull_request_rules: this.rules,
       },
     });
+
+    (options.rules ?? []).forEach(rule => this.addRule(rule));
   }
 
   public addRule(rule: MergifyRule) {

@@ -84,6 +84,18 @@ export interface CommonOptions {
    * @default true
    */
   readonly antitamper?: boolean;
+
+  /**
+   * Node.js version to require via package.json `engines` (inclusive).
+   * @default ^14.0.2
+   */
+  readonly minNodeVersion?: string;
+
+  /**
+   * Minimum node.js version to require via `engines` (inclusive).
+   * @default - no max
+   */
+  readonly maxNodeVersion?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -99,7 +111,6 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly stability?: string;
   readonly gitignore?: string[];
   readonly npmignore?: string[];
-  readonly nodeVersion?: Semver;
 }
 
 export class NodeProject extends Project {
@@ -126,12 +137,19 @@ export class NodeProject extends Project {
    */
   protected readonly releaseWorkflow?: NodeBuildWorkflow;
 
-  public readonly nodeVersion: Semver;
+  public readonly minNodeVersion: string;
+  public readonly maxNodeVersion?: string;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
-    this.nodeVersion = options.nodeVersion ?? Semver.caret('14.0.2');
+    this.minNodeVersion = options.minNodeVersion ?? '10.0.0';
+    this.maxNodeVersion = options.maxNodeVersion;
+
+    let nodeVersion = `>= ${this.minNodeVersion}`;
+    if (this.maxNodeVersion) {
+      nodeVersion += ` <= ${this.maxNodeVersion}`;
+    }
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -156,7 +174,7 @@ export class NodeProject extends Project {
       dependencies: this.dependencies,
       bundledDependencies: this.bundledDependencies,
       keywords: options.keywords,
-      engines: { node: this.nodeVersion.spec },
+      engines: { node: nodeVersion },
     };
 
     const commitPackageJson = options.commitPackageJson ?? false;

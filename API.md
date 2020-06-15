@@ -12,6 +12,7 @@ Name|Description
 [JsiiProject](#projen-jsiiproject)|*No description*
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
+[Mergify](#projen-mergify)|*No description*
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|*No description*
 [Project](#projen-project)|*No description*
@@ -33,6 +34,8 @@ Name|Description
 [JsiiProjectOptions](#projen-jsiiprojectoptions)|*No description*
 [JsiiPythonTarget](#projen-jsiipythontarget)|*No description*
 [JsonFileOptions](#projen-jsonfileoptions)|*No description*
+[MergifyOptions](#projen-mergifyoptions)|*No description*
+[MergifyRule](#projen-mergifyrule)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
@@ -338,6 +341,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: ^14.0.2
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -457,6 +462,54 @@ Name | Type | Description
 
 
 
+## class Mergify 🔹 <a id="projen-mergify"></a>
+
+
+
+<span style="text-decoration: underline">Implements</span>: [IConstruct](#constructs-iconstruct)
+<span style="text-decoration: underline">Extends</span>: [Construct](#constructs-construct)
+
+### Initializer
+
+
+
+
+<span style="text-decoration: underline">Usage:</span>
+
+```ts
+new Mergify(project: Project, options?: MergifyOptions)
+```
+
+<span style="text-decoration: underline">Parameters:</span>
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  *No description*
+  * **rules** (<code>Array<[MergifyRule](#projen-mergifyrule)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+
+
+### Methods
+
+
+#### addRule(rule)🔹 <a id="projen-mergify-addrule"></a>
+
+
+
+<span style="text-decoration: underline">Usage:</span>
+
+```ts
+addRule(rule: MergifyRule): void
+```
+
+<span style="text-decoration: underline">Parameters:</span>
+* **rule** (<code>[MergifyRule](#projen-mergifyrule)</code>)  *No description*
+  * **actions** (<code>Map<string, any></code>)  *No description* 
+  * **conditions** (<code>Array<string></code>)  *No description* 
+  * **name** (<code>string</code>)  *No description* 
+
+
+
+
+
+
 ## class NodeBuildWorkflow 🔹 <a id="projen-nodebuildworkflow"></a>
 
 
@@ -525,6 +578,8 @@ new NodeProject(options: NodeProjectOptions)
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: ^14.0.2
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -541,7 +596,6 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **nodeVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -554,10 +608,11 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**nodeVersion**🔹 | <code>[Semver](#projen-semver)</code> | <span></span>
+**minNodeVersion**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **version**🔹 | <code>any</code> | Returns the current version of the project.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **releaseWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The release GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
 
 ### Methods
@@ -851,6 +906,8 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: ^14.0.2
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -867,7 +924,6 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **nodeVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -875,6 +931,8 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. <span style="text-decoration: underline">*Default*</span>: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: default options
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. <span style="text-decoration: underline">*Default*</span>: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. <span style="text-decoration: underline">*Default*</span>: default options
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. <span style="text-decoration: underline">*Default*</span>: ^3.9.5
 
 
@@ -929,6 +987,8 @@ Name | Type | Description
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: ^14.0.2
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1042,7 +1102,9 @@ Name | Type | Description
 **jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Add mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: ^14.0.2
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1083,6 +1145,34 @@ Name | Type | Description
 **obj**🔹 | <code>any</code> | <span></span>
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: false
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/><span style="text-decoration: underline">*Default*</span>: true
+
+
+
+## struct MergifyOptions 🔹 <a id="projen-mergifyoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**?🔹 | <code>Array<[MergifyRule](#projen-mergifyrule)></code> | <span style="text-decoration: underline">*Optional*</span>
+
+
+
+## struct MergifyRule 🔹 <a id="projen-mergifyrule"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**actions**🔹 | <code>Map<string, any></code> | <span></span>
+**conditions**🔹 | <code>Array<string></code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -1128,7 +1218,8 @@ Name | Type | Description
 **homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**nodeVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: ^14.0.2
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1199,7 +1290,10 @@ Name | Type | Description
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: default options
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**nodeVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: ^14.0.2
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>

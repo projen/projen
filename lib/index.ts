@@ -11,3 +11,4 @@ export * from './version';
 export * from './eslint';
 export * from './jest';
 export * from './typescript';
+export * from './mergify';
