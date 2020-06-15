@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.23](https://github.com/eladb/projen/compare/v0.1.22...v0.1.23) (2020-06-15)
+
+
+### Features
+
+* initial readme ([613c7e2](https://github.com/eladb/projen/commit/613c7e245d87c2809fde6aa98ebb565e74b25562))
+
 ### [0.1.22](https://github.com/eladb/projen/compare/v0.1.21...v0.1.22) (2020-06-14)
 
 
