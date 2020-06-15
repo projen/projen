@@ -24,7 +24,7 @@ const project = new JsiiProject({
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }
   ],
-  minNodeVersion: Semver.caret('10.20.1')
+  minNodeVersion: '10.20.1'
 });
 
 project.addScripts({
