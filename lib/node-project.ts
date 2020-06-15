@@ -87,7 +87,7 @@ export interface CommonOptions {
 
   /**
    * Node.js version to require via package.json `engines` (inclusive).
-   * @default ^14.0.2
+   * @default "10.0.0"
    */
   readonly minNodeVersion?: string;
 
@@ -223,6 +223,7 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: { pull_request: { } },
+        nodeVersion: this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
         antitamper: options.antitamper,
@@ -233,6 +234,7 @@ export class NodeProject extends Project {
       this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
         trigger: { push: { branches: [ 'master' ] } },
         uploadArtifact: true,
+        nodeVersion: this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
         antitamper: options.antitamper,
@@ -434,6 +436,11 @@ export interface NodeBuildWorkflowOptions  {
   readonly antitamper?: boolean;
 
   readonly trigger: { [event: string]: any };
+
+  /**
+   * Adds a `actions/setup-node@v1` action with a specific node version.
+   */
+  readonly nodeVersion?: string;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -446,10 +453,18 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
     this.on(options.trigger);
 
+    const nodeVersion = !options.nodeVersion ? [] : [
+      {
+        uses: 'actions/setup-node@v1',
+        with: { 'node-version': options.nodeVersion },
+      },
+    ];
+
     const job: Record<string, any> = {
       'runs-on': 'ubuntu-latest',
       'steps': [
         { uses: 'actions/checkout@v2' },
+        ...nodeVersion,
         ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
         { run: 'yarn build' },
         ...(options.antitamper ?? true) ? ANTITAMPER_COMMAND : [],
