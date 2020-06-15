@@ -47,7 +47,7 @@ From now on, we will refer to this command as `pj`:
 alias pj='npx projen && yarn install'
 ```
 
-This will synthesize a jsii project with the following behavior:
+This will synthesize a jsii project with the following features:
 
 * `yarn compile` and `yarn watch`: compile/watch jsii to js
 * `yarn eslint`: run eslint
@@ -57,8 +57,8 @@ This will synthesize a jsii project with the following behavior:
 * Automatically generates `API.md` with reference docs after compilation (also `yarn docgen`).
 * `yarn bump` bumps the module version and creates a CHANGELOG entry. `yarn release` will bump and push with tags to `master`.
 * `yarn projen` runs `projen` followed by `yarn install` (good for updating dependencies)
-* `.github/workflows/build.yml`: auto-builds PR branches
-* `.github/workflows/release.yml`: builds all commits to `master` and releases new versions to all package managers (default is only npm)
+* PR builds: a GitHub workflow which auto-builds PR branches
+* Releases: a GitHub workflow which builds all commits to `master` and releases new versions to all package managers (default is only npm)
 * `.gitignore` and `.npmignore` are set up to commit only files that must exist in the repo (for example, by default `package.json` is *ignored*).
 * `.mergify.yml` will auto-merge approved PRs that pass PR builds
 * `LICENSE` defaults to `Apache-2.0`
