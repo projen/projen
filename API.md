@@ -342,17 +342,18 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
-  * **authorEmail** (<code>string</code>)  *No description* 
   * **authorName** (<code>string</code>)  *No description* 
-  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* 
   * **name** (<code>string</code>)  *No description* 
   * **repository** (<code>string</code>)  *No description* 
+  * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. <span style="text-decoration: underline">*Default*</span>: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **eslint** (<code>boolean</code>)  Install eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **jest** (<code>boolean</code>)  Use jest for unit tests. <span style="text-decoration: underline">*Default*</span>: true
+  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **mergify** (<code>boolean</code>)  Add mergify configuration. <span style="text-decoration: underline">*Default*</span>: true
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -980,12 +981,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**authorEmail**🔹 | <code>string</code> | <span></span>
 **authorName**🔹 | <code>string</code> | <span></span>
-**jsiiVersion**🔹 | <code>[Semver](#projen-semver)</code> | <span></span>
 **name**🔹 | <code>string</code> | <span></span>
 **repository**🔹 | <code>string</code> | <span></span>
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
+**authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -998,6 +999,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | <span style="text-decoration: underline">*Optional*</span>
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
+**jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **mergify**?🔹 | <code>boolean</code> | Add mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
