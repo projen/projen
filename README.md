@@ -27,7 +27,8 @@ const { JsiiProject } = require('projen');
 const project = new JsiiProject({
   name: 'my-project',
   authorName: 'Joe Schmo',
-  authorEmail: 'joe@schno.me'
+  authorEmail: 'joe@schno.me',
+  repository: 'https://github.com/joe/schmo.git',
 });
 
 project.synth();
@@ -73,7 +74,9 @@ const project = new JsiiProject({
   name: 'my-project',
   authorName: 'Joe Schmo',
   authorEmail: 'joe@schno.me',
-  repository: 'https://github.com/eladb/projen.git',
+  repository: 'https://github.com/joe/schmo.git',
+  
+  // add this:
   python: {
     distName: 'my-python-dist-name',
     module: 'my_python_module'
