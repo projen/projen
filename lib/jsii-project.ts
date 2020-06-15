@@ -16,7 +16,8 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly description?: string;
   readonly repository: string;
   readonly authorName: string;
-  readonly authorEmail: string;
+  readonly authorEmail?: string;
+  readonly authorUrl?: string;
   readonly license?: string;
   readonly stability?: string;
 
@@ -24,7 +25,7 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly python?: JsiiPythonTarget;
   readonly dotnet?: JsiiDotNetTarget;
 
-  readonly jsiiVersion: Semver;
+  readonly jsiiVersion?: Semver;
 
   /**
    * Install eslint.
@@ -88,6 +89,10 @@ export class JsiiProject extends NodeProject {
       releaseToNpm: false,
     });
 
+    if (!options.authorEmail && !options.authorUrl) {
+      throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
+    }
+
     this.addFields({ types: 'lib/index.d.ts' });
 
 
@@ -148,10 +153,12 @@ export class JsiiProject extends NodeProject {
       this.publishToNuget();
     }
 
+    const jsiiVersion = options.jsiiVersion ?? Semver.caret('1.6.0');
+
     this.addDevDependencies({
-      'jsii': options.jsiiVersion,
-      'jsii-diff': options.jsiiVersion,
-      'jsii-pacmak': options.jsiiVersion,
+      'jsii': jsiiVersion,
+      'jsii-diff': jsiiVersion,
+      'jsii-pacmak': jsiiVersion,
       'jsii-release': Semver.caret('0.1.5'),
       '@types/node': Semver.caret('13.13.5'),
     });

@@ -531,11 +531,14 @@ new NodeProject(options: NodeProjectOptions)
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
 
 
@@ -852,11 +855,14 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
 
 
@@ -1068,6 +1074,7 @@ Name | Type | Description
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1076,6 +1083,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **gitignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1087,6 +1095,7 @@ Name | Type | Description
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**repositoryDirectory**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
@@ -1132,6 +1141,7 @@ Name | Type | Description
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1140,6 +1150,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **gitignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1151,6 +1162,7 @@ Name | Type | Description
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**repositoryDirectory**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image

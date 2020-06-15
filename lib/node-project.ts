@@ -90,8 +90,11 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly name: string;
   readonly description?: string;
   readonly repository?: string;
+  readonly repositoryDirectory?: string;
   readonly authorName?: string;
   readonly authorEmail?: string;
+  readonly homepage?: string;
+  readonly authorUrl?: string;
   readonly license?: string;
   readonly stability?: string;
   readonly gitignore?: string[];
@@ -133,13 +136,16 @@ export class NodeProject extends Project {
       repository: !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
+        directory: options.repositoryDirectory,
       },
       bin: this.bin,
       scripts: this.scripts,
       author: {
         name: options.authorName,
         email: options.authorEmail,
+        url: options.authorUrl,
       },
+      homepage: options.homepage,
       devDependencies: this.devDependencies,
       peerDependencies: this.peerDependencies,
       dependencies: this.dependencies,
@@ -274,7 +280,7 @@ export class NodeProject extends Project {
   }
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
-    for (const [ k, v ] of Object.entries(deps)) {
+    for (const [ k, v ] of Object.entries(deps ?? {})) {
       this.devDependencies[k] = v.spec;
     }
   }
