@@ -59,8 +59,11 @@
   "bundledDependencies": [
     "yaml"
   ],
+  "engines": {
+    "node": "^14.0.2"
+  },
   "license": "Apache-2.0",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
@@ -69,6 +72,7 @@
   },
   "jest": {
     "clearMocks": true,
+    "collectCoverage": true,
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"

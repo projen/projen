@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.24](https://github.com/eladb/projen/compare/v0.1.23...v0.1.24) (2020-06-15)
+
+
+### Features
+
+* add --silence-warnings to "watch" ([50077ec](https://github.com/eladb/projen/commit/50077ec4e237fa2f0191be4d86bbf1137fd3a382))
+* feature bundle ([6a23f20](https://github.com/eladb/projen/commit/6a23f2097d7a67471772727eca2c12df8f29e36c))
+
 ### [0.1.23](https://github.com/eladb/projen/compare/v0.1.22...v0.1.23) (2020-06-15)
 
 
