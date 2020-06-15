@@ -95,10 +95,12 @@ export class JsiiProject extends NodeProject {
 
     this.addFields({ types: 'lib/index.d.ts' });
 
+    // this is an unhelpful warning
+    const jsiiFlags = '--silence-warnings=reserved-word';
 
     this.addScripts({
       compile: Lazy.stringValue({ produce: () => this.renderCompileCommand() }),
-      watch: 'jsii -w',
+      watch: `jsii -w ${jsiiFlags}`,
       compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
       package: 'jsii-pacmak',
       build: 'yarn compile && yarn test && yarn run package',
@@ -110,7 +112,7 @@ export class JsiiProject extends NodeProject {
       this.addFields({ deprecated: true });
     }
 
-    this.addCompileCommand('jsii --silence-warnings=reserved-word');
+    this.addCompileCommand(`jsii ${jsiiFlags}`);
 
     const targets: Record<string, any> = { };
 

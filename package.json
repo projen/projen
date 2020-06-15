@@ -17,7 +17,7 @@
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
     "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
-    "watch": "jsii -w",
+    "watch": "jsii -w --silence-warnings=reserved-word",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",
     "package": "jsii-pacmak",
     "build": "yarn compile && yarn test && yarn run package",
