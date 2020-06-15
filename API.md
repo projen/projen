@@ -25,7 +25,9 @@ Name|Description
 Name|Description
 ----|-----------
 [CommonOptions](#projen-commonoptions)|*No description*
+[CoverageThreshold](#projen-coveragethreshold)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
 [JsiiJavaTarget](#projen-jsiijavatarget)|*No description*
 [JsiiProjectOptions](#projen-jsiiprojectoptions)|*No description*
@@ -297,11 +299,13 @@ include(...patterns: string[]): void
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new Jest(project: NodeProject)
+new Jest(project: NodeProject, options?: JestOptions)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
+  * **globalCoverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -537,6 +541,7 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **nodeVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -549,6 +554,7 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**nodeVersion**🔹 | <code>[Semver](#projen-semver)</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **version**🔹 | <code>any</code> | Returns the current version of the project.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
@@ -861,10 +867,15 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **nodeVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **eslint** (<code>boolean</code>)  Setup eslint. <span style="text-decoration: underline">*Default*</span>: true
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. <span style="text-decoration: underline">*Default*</span>: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: default options
+  * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. <span style="text-decoration: underline">*Default*</span>: ^3.9.5
 
 
 
@@ -929,6 +940,22 @@ Name | Type | Description
 
 
 
+## struct CoverageThreshold 🔹 <a id="projen-coveragethreshold"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branches**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
+**functions**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
+**lines**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
+**statements**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
+
+
+
 ## struct FileBaseOptions 🔹 <a id="projen-filebaseoptions"></a>
 
 
@@ -940,6 +967,19 @@ Name | Type | Description
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: false
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/><span style="text-decoration: underline">*Default*</span>: true
+
+
+
+## struct JestOptions 🔹 <a id="projen-jestoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**globalCoverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -1088,6 +1128,7 @@ Name | Type | Description
 **homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**nodeVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1151,10 +1192,14 @@ Name | Type | Description
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
 **gitignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: default options
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**nodeVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1166,6 +1211,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **repositoryDirectory**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
 

@@ -1,8 +1,40 @@
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { JsonFile } from './json';
+import { JestOptions, Jest } from './jest';
+import { Eslint } from './eslint';
+import { Semver } from './semver';
+import { Mergify } from './mergify';
 
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
+  /**
+   * Setup jest unit tests
+   * @default true
+   */
+  readonly jest?: boolean;
 
+  /**
+   * Jest options
+   * @default - default options
+   */
+  readonly jestOptions?: JestOptions;
+
+  /**
+   * Setup eslint.
+   * @default true
+   */
+  readonly eslint?: boolean;
+
+  /**
+   * TypeScript version to use.
+   * @default ^3.9.5
+   */
+  readonly typescriptVersion?: Semver;
+
+  /**
+   * Adds mergify configuration.
+   * @default true
+   */
+  readonly mergify?: boolean;
 }
 
 export class TypeScriptLibraryProject extends NodeProject {
@@ -56,5 +88,22 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.npmignore.comment('include javascript files and typescript declarations');
     this.npmignore.include('*.js');
     this.npmignore.include('*.d.ts');
+
+    if (options.jest ?? true) {
+      new Jest(this, options.jestOptions);
+    }
+
+    if (options.eslint ?? true) {
+      new Eslint(this);
+    }
+
+    this.addDevDependencies({
+      'typescript': options.typescriptVersion ?? Semver.caret('3.9.5'),
+      '@types/node': this.nodeVersion,
+    });
+
+    if (options.mergify ?? true) {
+      new Mergify(this);
+    }
   }
 }

@@ -99,6 +99,7 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly stability?: string;
   readonly gitignore?: string[];
   readonly npmignore?: string[];
+  readonly nodeVersion?: Semver;
 }
 
 export class NodeProject extends Project {
@@ -125,8 +126,12 @@ export class NodeProject extends Project {
    */
   protected readonly releaseWorkflow?: NodeBuildWorkflow;
 
+  public readonly nodeVersion: Semver;
+
   constructor(options: NodeProjectOptions) {
     super(options);
+
+    this.nodeVersion = options.nodeVersion ?? Semver.caret('14.0.2');
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -151,6 +156,7 @@ export class NodeProject extends Project {
       dependencies: this.dependencies,
       bundledDependencies: this.bundledDependencies,
       keywords: options.keywords,
+      engines: { node: this.nodeVersion.spec },
     };
 
     const commitPackageJson = options.commitPackageJson ?? false;
