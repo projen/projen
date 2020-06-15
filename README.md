@@ -6,9 +6,10 @@
 
 Supported project types (API reference):
 
-* [Project](https://github.com/eladb/projen/blob/master/API.md#projen-project)
+* [Project](https://github.com/eladb/projen/blob/master/API.md#projen-project) (base class)
 * [NodeProject](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)
 * [TypeScriptLibraryProject](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)
+* [JsiiProject](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)
 
 To give you a sense of how it works, let's walk through a simple example.
 
