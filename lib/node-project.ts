@@ -25,15 +25,6 @@ export interface CommonOptions {
   readonly keywords?: string[];
 
   /**
-   * Should we commit `package.json` to git or ignore?
-   *
-   * @default false By default `package.json` is *not* committed. This means
-   * that after you check out a repository you must run `npx projen` to
-   * bootstrap it.
-   */
-  readonly commitPackageJson?: boolean;
-
-  /**
    * Version of projen to install.
    *
    * @default - latest version
@@ -177,9 +168,7 @@ export class NodeProject extends Project {
       engines: { node: nodeVersion },
     };
 
-    const commitPackageJson = options.commitPackageJson ?? false;
     new JsonFile(this, 'package.json', {
-      committed: commitPackageJson,
       obj: this.manifest,
     });
 
@@ -321,7 +310,7 @@ export class NodeProject extends Project {
       }
     }
   }
-  
+
   public addScripts(scripts: { [name: string]: string }) {
     for (const [ name, command ] of Object.entries(scripts)) {
       this.scripts[name] = command;

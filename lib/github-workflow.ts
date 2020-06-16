@@ -9,7 +9,7 @@ export class GithubWorkflow extends FileBase {
   private jobs: { [jobid: string]: any } = { };
 
   constructor(project: Project, name: string) {
-    super(project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, { committed: true });
+    super(project, `.github/workflows/${name.toLocaleLowerCase()}.yml`);
     this.name = name;
   }
 

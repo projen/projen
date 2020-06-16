@@ -98,7 +98,7 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[FileBaseOptions](#projen-filebaseoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. <span style="text-decoration: underline">*Default*</span>: false
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. <span style="text-decoration: underline">*Default*</span>: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. <span style="text-decoration: underline">*Default*</span>: true
 
 
@@ -337,7 +337,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **commitPackageJson** (<code>boolean</code>)  Should we commit `package.json` to git or ignore? <span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -413,7 +412,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[JsonFileOptions](#projen-jsonfileoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. <span style="text-decoration: underline">*Default*</span>: false
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. <span style="text-decoration: underline">*Default*</span>: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. <span style="text-decoration: underline">*Default*</span>: true
   * **obj** (<code>any</code>)  *No description* 
 
@@ -575,7 +574,6 @@ new NodeProject(options: NodeProjectOptions)
   * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **commitPackageJson** (<code>boolean</code>)  Should we commit `package.json` to git or ignore? <span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -903,7 +901,6 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **commitPackageJson** (<code>boolean</code>)  Should we commit `package.json` to git or ignore? <span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -984,7 +981,6 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**commitPackageJson**?🔹 | <code>boolean</code> | Should we commit `package.json` to git or ignore?<br/><span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1026,7 +1022,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: false
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/><span style="text-decoration: underline">*Default*</span>: true
 
 
@@ -1091,7 +1087,6 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**commitPackageJson**?🔹 | <code>boolean</code> | Should we commit `package.json` to git or ignore?<br/><span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1144,7 +1139,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **obj**🔹 | <code>any</code> | <span></span>
-**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: false
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/><span style="text-decoration: underline">*Default*</span>: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/><span style="text-decoration: underline">*Default*</span>: true
 
 
@@ -1212,7 +1207,6 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**commitPackageJson**?🔹 | <code>boolean</code> | Should we commit `package.json` to git or ignore?<br/><span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1281,7 +1275,6 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**commitPackageJson**?🔹 | <code>boolean</code> | Should we commit `package.json` to git or ignore?<br/><span style="text-decoration: underline">*Default*</span>: false By default `package.json` is *not* committed. This means that after you check out a repository you must run `npx projen` to bootstrap it.
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>

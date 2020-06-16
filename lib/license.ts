@@ -6,7 +6,7 @@ export class License extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, spdx: string) {
-    super(project, 'LICENSE', { committed: true });
+    super(project, 'LICENSE');
 
     const textFile = `${__dirname}/license-text/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {

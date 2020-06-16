@@ -117,6 +117,15 @@ And this will be added:
 * The `jsii` section in your `package.json` file will now have a `python` entry.
 * The `release.yml` github workflow will include a release job that will release your module to PyPI.
 
+## Should I Commit Synthesized Files?
+
+Yes, you should commit those files. Although most files don't *have* to be
+committed, there is value in being able to review any changes to these files
+when you upgrade **projen** itself (`yarn projen:upgrade`).
+
+Since projen installs an "anti-tamper" check in your CI builds, if these files
+are manually modified, your CI build will fail.
+
 ## API Reference
 
 See [API Reference](./API.md) for more details.

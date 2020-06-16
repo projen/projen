@@ -19,7 +19,6 @@ export class Mergify extends Construct {
     super(project, 'mergify');
 
     new YamlFile(project, '.mergify.yml', {
-      committed: true, // must be committed for mergify to be able to find it dah!
       obj: {
         pull_request_rules: this.rules,
       },
