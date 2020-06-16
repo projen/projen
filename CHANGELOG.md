@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.28](https://github.com/eladb/projen/compare/v0.1.27...v0.1.28) (2020-06-16)
+
+
+### Features
+
+* commit synthesized files by default ([a038ef1](https://github.com/eladb/projen/commit/a038ef10f4e64c4bbeaafd1b1081d486fef8fdfe))
+
 ### [0.1.27](https://github.com/eladb/projen/compare/v0.1.26...v0.1.27) (2020-06-15)
 
 ### [0.1.26](https://github.com/eladb/projen/compare/v0.1.24...v0.1.26) (2020-06-15)
