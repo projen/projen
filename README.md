@@ -4,12 +4,29 @@
 
 *projen* synthesizes project configuration files such as `package.json`, `tsconfig.json`, `.gitignore`, GitHub workflows, eslint, jest, etc from a well-typed definition.
 
-Supported project types (API reference):
+Contrary to templating/scaffolding approaches, *projen* is not a one-off generator. Synthesized configuration is not expected to ever be maunally edited (in fact, projen enforces that). The source of truth is always `.projenrc.js`.
 
-* [Project](https://github.com/eladb/projen/blob/master/API.md#projen-project) (base class)
+Project types:
+
 * [NodeProject](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)
 * [TypeScriptLibraryProject](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)
 * [JsiiProject](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)
+
+Features (contributions are welcome!):
+
+* npm scripts
+* eslint
+* jest
+* jsii: compile, package, api compatibility, api reference documentation
+* bump + release with changelog generation based on conventional commits
+* automated PR builds
+* automated releases to npm, maven, nuget and pypi
+* mergify
+* license file generation
+* gitignore + npmigonre management
+* npm dependencies
+
+## Example
 
 To give you a sense of how it works, let's walk through a simple example.
 
@@ -41,13 +58,13 @@ Run:
 npx projen && yarn install
 ```
 
-From now on, we will refer to this command as `pj`:
+From now on, we will refer to this command as `pj` (every time you modify .projenrc.js, just run `pj`):
 
 ```shell
 alias pj='npx projen && yarn install'
 ```
 
-This will synthesize a jsii project with the following features:
+What just happened? This command synthesized a jsii project for you with the following features:
 
 * `yarn compile` and `yarn watch`: compile/watch jsii to js
 * `yarn eslint`: run eslint
@@ -66,7 +83,7 @@ This will synthesize a jsii project with the following features:
 
 The [`JsiiProject`](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject) class has a rich API that can be used to configure these features (submit a PR if you are missing a degree of freedom). 
 
-For example, let's add a python target. Edit `.projenrc.js` and add a `python` section:
+Now, let's add a python target. Edit `.projenrc.js` and add a `python` section:
 
 ```ts
 const { JsiiProject } = require('../../lib');
@@ -87,16 +104,18 @@ const project = new JsiiProject({
 project.synth();
 ```
 
-Now run:
+And re-run:
 
 ```shell
 pj
 ```
 
-This will be added:
+And this will be added:
 
 * The `jsii` section in your `package.json` file will now have a `python` entry.
 * The `release.yml` github workflow will include a release job that will release your module to PyPI.
+
+## API Reference
 
 See [API Reference](./API.md) for more details.
 
