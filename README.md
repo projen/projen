@@ -14,17 +14,19 @@ Project types:
 
 Features (contributions are welcome!):
 
-* npm scripts
-* eslint
-* jest
-* jsii: compile, package, api compatibility, api reference documentation
-* bump + release with changelog generation based on conventional commits
-* automated PR builds
-* automated releases to npm, maven, nuget and pypi
-* mergify
-* license file generation
+* Package.json synthesis
+* Standard npm scripts
+* ESLint
+* Jest
+* jsii: compile, package, api compatibility checks, API.md
+* Bump & release scripts with CHANGELOG generation based on Conventional Commits
+* Automated PR builds
+* Automated releases to npm, maven, nuget and pypi
+* Mergify configuration
+* LICENSE file generation
 * gitignore + npmigonre management
-* npm dependencies
+* Node "engines" support with coupling to CI build environment and @types/node
+* Anti-tamper: CI builds will fail if a synthesized file is modified manually
 
 ## Example
 
