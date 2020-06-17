@@ -16,10 +16,13 @@ const project = new JsiiProject({
     yaml: Semver.caret('1.9.2'),
     'fs-extra': Semver.caret('9.0.1')
   },
+  peerDependencies: {
+    constructs: Semver.pinned('2.0.1')
+  },
   devDependencies: {
     '@types/fs-extra': Semver.caret('8.0.1')
   },
-  bundledDependencies: [ 'yaml', 'fs-extra', 'constructs' ],
+  bundledDependencies: [ 'yaml', 'fs-extra' ],
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }

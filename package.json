@@ -30,12 +30,14 @@
     "email": "benisrae@amazon.com"
   },
   "devDependencies": {
+    "constructs": "2.0.1",
     "@types/fs-extra": "^8.0.1",
     "standard-version": "^8.0.0",
     "jsii": "^1.5.0",
     "jsii-diff": "^1.5.0",
     "jsii-pacmak": "^1.5.0",
     "jsii-release": "^0.1.6",
+    "@types/node": "^10.17.0",
     "typescript": "^3.8.3",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.19.2",
@@ -48,7 +50,9 @@
     "jest": "^26.0.1",
     "@types/jest": "^25.2.1"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "constructs": "2.0.1"
+  },
   "dependencies": {
     "constructs": "2.0.1",
     "yaml": "^1.9.2",
@@ -56,11 +60,10 @@
   },
   "bundledDependencies": [
     "yaml",
-    "fs-extra",
-    "constructs"
+    "fs-extra"
   ],
   "engines": {
-    "node": ">= 10.20.1"
+    "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
   "version": "0.1.31",

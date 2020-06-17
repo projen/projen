@@ -8,7 +8,12 @@ import { Lazy } from 'constructs';
 
 const DEFAULT_JSII_VERSION = '1.6.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
-const DEFAULT_JSII_MIN_NODE = '10.20.1'; // <-- this is the node.js installed in jsii.superchain
+
+
+// jsii/superchain has 10.20.1
+// nvm has 10.17.0
+// @types/node has 10.17.0
+const DEFAULT_JSII_MIN_NODE = '10.17.0';
 
 export interface JsiiProjectOptions extends CommonOptions {
   /**
@@ -167,6 +172,7 @@ export class JsiiProject extends NodeProject {
       'jsii-diff': jsiiVersion,
       'jsii-pacmak': jsiiVersion,
       'jsii-release': Semver.caret('0.1.6'),
+      '@types/node': Semver.caret(this.minNodeVersion),
     });
 
     const eslint = options.eslint ?? true;
