@@ -35,7 +35,6 @@ export class Eslint extends Construct {
         parserOptions: {
           ecmaVersion: '2018',
           sourceType: 'module',
-          project: './tsconfig.json',
         },
         extends: [
           'plugin:import/typescript',
