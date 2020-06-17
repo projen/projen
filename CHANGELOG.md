@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.32](https://github.com/eladb/projen/compare/v0.1.31...v0.1.32) (2020-06-17)
+
+
+### Features
+
+* allow specifying explicit node version for GitHub workflow ([d9a2021](https://github.com/eladb/projen/commit/d9a2021ea5feebe6993889fd3a07b2a25487d27c))
+
 ### [0.1.31](https://github.com/eladb/projen/compare/v0.1.30...v0.1.31) (2020-06-17)
 
 ### [0.1.30](https://github.com/eladb/projen/compare/v0.1.29...v0.1.30) (2020-06-17)
