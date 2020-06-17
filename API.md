@@ -8,7 +8,7 @@ Name|Description
 [FileBase](#projen-filebase)|*No description*
 [GithubWorkflow](#projen-githubworkflow)|*No description*
 [IgnoreFile](#projen-ignorefile)|*No description*
-[Jest](#projen-jest)|*No description*
+[Jest](#projen-jest)|Installs the following npm scripts:.
 [JsiiProject](#projen-jsiiproject)|*No description*
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
@@ -289,7 +289,11 @@ include(...patterns: string[]): void
 
 ## class Jest 🔹 <a id="projen-jest"></a>
 
+Installs the following npm scripts:.
 
+- `test` will run `jest --passWithNoTests`
+- `test:watch` will run `jest --watch`
+- `test:update` will run `jest -u`
 
 <span style="text-decoration: underline">Implements</span>: [IConstruct](#constructs-iconstruct)
 <span style="text-decoration: underline">Extends</span>: [Construct](#constructs-construct)
@@ -309,7 +313,8 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **globalCoverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **typescript** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. <span style="text-decoration: underline">*Default*</span>: "/node_modules/"
+  * **typescript** (<code>boolean</code>)  Typescript support:. <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -1042,7 +1047,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **globalCoverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | <span style="text-decoration: underline">*Optional*</span>
-**typescript**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
+**ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/><span style="text-decoration: underline">*Default*</span>: "/node_modules/"
+**typescript**?🔹 | <code>boolean</code> | Typescript support:.<br/><span style="text-decoration: underline">*Optional*</span>
 
 
 

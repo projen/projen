@@ -13,7 +13,7 @@
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
     "projen:upgrade": "yarn upgrade projen && yarn projen",
-    "test": "yarn eslint && jest",
+    "test": "yarn eslint && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
     "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
@@ -23,6 +23,8 @@
     "build": "yarn compile && yarn test && yarn run package",
     "eslint": "eslint . --ext .ts",
     "docgen": "jsii-docgen",
+    "test:watch": "jest --watch",
+    "test:update": "jest -u",
     "bootstrap": "yarn install && yarn compile && yarn projen"
   },
   "author": {
@@ -80,6 +82,13 @@
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
-    "preset": "ts-jest"
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "preset": "ts-jest",
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ]
   }
 }
