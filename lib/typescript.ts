@@ -105,7 +105,7 @@ export class TypeScriptLibraryProject extends NodeProject {
 
     this.addDevDependencies({
       'typescript': options.typescriptVersion ?? Semver.caret('3.9.5'),
-      '@types/node': Semver.caret(this.minNodeVersion), // install the minimum version to ensure compatibility
+      '@types/node': Semver.caret(this.minNodeVersion ?? '10.17.0'), // install the minimum version to ensure compatibility
     });
 
     if (options.mergify ?? true) {

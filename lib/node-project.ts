@@ -78,7 +78,7 @@ export interface CommonOptions {
 
   /**
    * Node.js version to require via package.json `engines` (inclusive).
-   * @default "10.0.0"
+   * @default - no "engines" specified
    */
   readonly minNodeVersion?: string;
 
@@ -87,6 +87,12 @@ export interface CommonOptions {
    * @default - no max
    */
   readonly maxNodeVersion?: string;
+
+  /**
+   * The node version to use in GitHub workflows.
+   * @default - same as `minNodeVersion`
+   */
+  readonly workflowNodeVersion?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -128,16 +134,21 @@ export class NodeProject extends Project {
    */
   protected readonly releaseWorkflow?: NodeBuildWorkflow;
 
-  public readonly minNodeVersion: string;
+  public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
-    this.minNodeVersion = options.minNodeVersion ?? '10.0.0';
+    this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
 
-    let nodeVersion = `>= ${this.minNodeVersion}`;
+    let nodeVersion = '';
+
+    if (this.minNodeVersion) {
+      nodeVersion += `>= ${this.minNodeVersion}`;
+    }
+
     if (this.maxNodeVersion) {
       nodeVersion += ` <= ${this.maxNodeVersion}`;
     }
@@ -165,7 +176,7 @@ export class NodeProject extends Project {
       dependencies: this.dependencies,
       bundledDependencies: this.bundledDependencies,
       keywords: options.keywords,
-      engines: { node: nodeVersion },
+      engines: nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
     new JsonFile(this, 'package.json', {
@@ -212,7 +223,7 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: { pull_request: { } },
-        nodeVersion: this.minNodeVersion,
+        nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
         antitamper: options.antitamper,
@@ -223,7 +234,7 @@ export class NodeProject extends Project {
       this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
         trigger: { push: { branches: [ 'master' ] } },
         uploadArtifact: true,
-        nodeVersion: this.minNodeVersion,
+        nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
         antitamper: options.antitamper,

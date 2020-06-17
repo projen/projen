@@ -341,7 +341,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
-  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: "10.0.0"
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -350,6 +350,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. <span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
   * **authorName** (<code>string</code>)  *No description* 
   * **name** (<code>string</code>)  *No description* 
   * **repository** (<code>string</code>)  *No description* 
@@ -578,7 +579,7 @@ new NodeProject(options: NodeProjectOptions)
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
-  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: "10.0.0"
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -587,6 +588,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. <span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -607,11 +609,11 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**minNodeVersion**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **version**🔹 | <code>any</code> | Returns the current version of the project.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**minNodeVersion**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **releaseWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The release GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
 
 ### Methods
@@ -905,7 +907,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
-  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: "10.0.0"
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -914,6 +916,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. <span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -985,7 +988,7 @@ Name | Type | Description
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: "10.0.0"
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -994,6 +997,7 @@ Name | Type | Description
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
 
 
 
@@ -1100,7 +1104,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Add mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: "10.0.0"
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1112,6 +1116,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
 
 
 
@@ -1215,7 +1220,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: "10.0.0"
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1229,6 +1234,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
 
 
 
@@ -1288,7 +1294,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: "10.0.0"
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1303,6 +1309,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
 
 
 

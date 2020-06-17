@@ -85,19 +85,20 @@ export interface JsiiDotNetTarget {
 }
 
 export class JsiiProject extends NodeProject {
-
-  private compileCommands = new Array<string>();
+  private readonly compileCommands: string[];
 
   constructor(options: JsiiProjectOptions) {
+    const minNodeVersion = options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE;
+
     super({
       ...options,
       workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
-      workflowBootstrapSteps: options.workflowBootstrapSteps,
-      buildWorkflow: options.buildWorkflow,
-      releaseWorkflow: options.releaseWorkflow,
-      releaseToNpm: false,
-      minNodeVersion: options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE,
+      releaseToNpm: false, // we have a jsii release workflow
+      minNodeVersion,
+      ...options,
     });
+
+    this.compileCommands = new Array<string>();;
 
     if (!options.authorEmail && !options.authorUrl) {
       throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
@@ -172,7 +173,7 @@ export class JsiiProject extends NodeProject {
       'jsii-diff': jsiiVersion,
       'jsii-pacmak': jsiiVersion,
       'jsii-release': Semver.caret('0.1.6'),
-      '@types/node': Semver.caret(this.minNodeVersion),
+      '@types/node': Semver.caret(minNodeVersion),
     });
 
     const eslint = options.eslint ?? true;
