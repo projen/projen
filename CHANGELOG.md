@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.35](https://github.com/eladb/projen/compare/v0.1.33...v0.1.35) (2020-06-17)
+
+
+### Features
+
+* **typescript/jsii:** use ts-jest ([e03557d](https://github.com/eladb/projen/commit/e03557dc12b68bb1323ce5c72f070ab281e56f72))
+
+### [0.1.34](https://github.com/eladb/projen/compare/v0.1.33...v0.1.34) (2020-06-17)
+
+
+### Features
+
+* **typescript/jsii:** use ts-jest ([e03557d](https://github.com/eladb/projen/commit/e03557dc12b68bb1323ce5c72f070ab281e56f72))
+
 ### [0.1.33](https://github.com/eladb/projen/compare/v0.1.32...v0.1.33) (2020-06-17)
 
 
