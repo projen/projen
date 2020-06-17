@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.36](https://github.com/eladb/projen/compare/v0.1.35...v0.1.36) (2020-06-17)
+
+
+### Features
+
+* **jest:** match only .ts files when typescript is enabled. ([a7b4270](https://github.com/eladb/projen/commit/a7b427035ea4f7a601efbf233440bce67fae51a1))
+
 ### [0.1.35](https://github.com/eladb/projen/compare/v0.1.33...v0.1.35) (2020-06-17)
 
 
