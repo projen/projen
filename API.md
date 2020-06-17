@@ -309,6 +309,7 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **globalCoverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **typescript** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -1041,6 +1042,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **globalCoverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | <span style="text-decoration: underline">*Optional*</span>
+**typescript**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
 
 
 

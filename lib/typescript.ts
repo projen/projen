@@ -96,7 +96,10 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.npmignore.include('*.d.ts');
 
     if (options.jest ?? true) {
-      new Jest(this, options.jestOptions);
+      new Jest(this, {
+        typescript: true,
+        ...options.jestOptions,
+      });
     }
 
     if (options.eslint ?? true) {

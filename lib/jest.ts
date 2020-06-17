@@ -4,6 +4,7 @@ import { Semver } from './semver';
 
 export interface JestOptions {
   readonly globalCoverageThreshold?: CoverageThreshold;
+  readonly typescript?: boolean;
 }
 
 export interface CoverageThreshold {
@@ -17,23 +18,29 @@ export class Jest extends Construct {
   constructor(project: NodeProject, options: JestOptions = { }) {
     super(project, 'jest');
 
-    project.addDevDependencies({
-      jest: Semver.caret('26.0.1'),
-      '@types/jest': Semver.caret('25.2.1'),
-    });
+    project.addDevDependencies({ jest: Semver.caret('26.0.1') });
+
+    const config: any = {
+      clearMocks: true,
+      collectCoverage: true,
+      coveragePathIgnorePatterns: [ '/node_modules/' ],
+    };
+
+    if (options.typescript) {
+      config.preset = 'ts-jest';
+      project.addDevDependencies({
+        '@types/jest': Semver.caret('25.2.1'),
+        'ts-jest': Semver.caret('26.1.0'),
+      })
+    }
+
+    if (options.globalCoverageThreshold) {
+      config.coverageThreshold = {
+        global: options.globalCoverageThreshold,
+      };
+    }
 
     project.addTestCommands('jest');
-    project.addFields({
-      jest: {
-        clearMocks: true,
-        collectCoverage: true,
-        coverageThreshold: options.globalCoverageThreshold ? {
-          global: options.globalCoverageThreshold,
-        } : undefined,
-        coverageDirectory: 'coverage',
-        coveragePathIgnorePatterns: [ '/node_modules/' ],
-        moduleFileExtensions: [ 'js' ],
-      },
-    });
+    project.addFields({ jest: config });
   }
 }

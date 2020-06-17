@@ -206,7 +206,7 @@ export class JsiiProject extends NodeProject {
     }
 
     if (options.jest ?? true) {
-      new Jest(this);
+      new Jest(this, { typescript: true });
     }
 
     const mergify = options.mergify ?? true;
