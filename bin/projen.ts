@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import { PROJEN_RC } from '../lib/common';
 
@@ -15,7 +15,7 @@ if (!fs.existsSync(projenfile)) {
 const projen = path.dirname(require.resolve('../package.json'));
 const symlink = path.join('node_modules', 'projen');
 if (!fs.existsSync(symlink)) {
-  fs.mkdirSync('node_modules', { recursive: true });
+  fs.mkdirpSync('node_modules');
   fs.symlinkSync(projen, symlink);
 }
 

@@ -1,5 +1,5 @@
 import { Construct, ISynthesisSession, Tokenization, DefaultTokenResolver, StringConcat } from 'constructs';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import { Project } from './project';
 
@@ -49,7 +49,7 @@ export abstract class FileBase extends Construct {
 
   public onSynthesize(session: ISynthesisSession): void {
     const filePath = path.join(session.outdir, this.path);
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.mkdirpSync(path.dirname(filePath));
 
     const post = Tokenization.resolve(this.data, {
       resolver: new DefaultTokenResolver(new StringConcat()),

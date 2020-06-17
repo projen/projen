@@ -2,7 +2,6 @@ const { JsiiProject, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
-  commitPackageJson: true, // otherwise its very hard to bootstrap this specific project
   jsiiVersion: Semver.caret('1.5.0'),
   description: 'A new generation of project generators',
   repository: 'https://github.com/eladb/projen.git',
@@ -14,12 +13,16 @@ const project = new JsiiProject({
   },
   dependencies: {
     constructs: Semver.pinned('2.0.1'),
-    yaml: Semver.caret('1.9.2')
+    yaml: Semver.caret('1.9.2'),
+    'fs-extra': Semver.caret('9.0.1')
+  },
+  devDependencies: {
+    '@types/fs-extra': Semver.caret('8.0.1')
   },
   peerDependencies: {
     constructs: Semver.pinned('2.0.1'),
   },
-  bundledDependencies: [ 'yaml' ],
+  bundledDependencies: [ 'yaml', 'fs-extra' ],
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }
