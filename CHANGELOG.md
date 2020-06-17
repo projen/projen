@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.33](https://github.com/eladb/projen/compare/v0.1.32...v0.1.33) (2020-06-17)
+
+
+### Bug Fixes
+
+* **eslint:** File 'tsconfig.json' not found ([211a2a0](https://github.com/eladb/projen/commit/211a2a001ecb5feac7124e4a7586f033b5642878))
+
 ### [0.1.32](https://github.com/eladb/projen/compare/v0.1.31...v0.1.32) (2020-06-17)
 
 
