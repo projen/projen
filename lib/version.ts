@@ -2,7 +2,7 @@ import { Construct } from 'constructs';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 
 const VERSION_FILE = 'version.json';
 

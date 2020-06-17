@@ -1,6 +1,6 @@
 import { JsonFile } from './json';
 import { Project } from './project';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 
 test('json object can be mutated before synthesis', () => {
   const outdir = fs.mkdtempSync('/tmp/projen-test-');

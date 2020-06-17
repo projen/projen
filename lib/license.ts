@@ -1,5 +1,5 @@
 import { FileBase } from './file';
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import { Project } from './project';
 
 export class License extends FileBase {

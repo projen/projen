@@ -6,6 +6,10 @@ import { Mergify } from './mergify';
 import { JsiiDocgen } from './jsii-docgen';
 import { Lazy } from 'constructs';
 
+const DEFAULT_JSII_VERSION = '1.6.0';
+const DEFAULT_JSII_IMAGE = 'jsii/superchain';
+const DEFAULT_JSII_MIN_NODE = '10.20.1'; // <-- this is the node.js installed in jsii.superchain
+
 export interface JsiiProjectOptions extends CommonOptions {
   /**
    * @default "."
@@ -82,12 +86,12 @@ export class JsiiProject extends NodeProject {
   constructor(options: JsiiProjectOptions) {
     super({
       ...options,
-      workflowContainerImage: options.workflowContainerImage ?? 'jsii/superchain',
+      workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
       workflowBootstrapSteps: options.workflowBootstrapSteps,
       buildWorkflow: options.buildWorkflow,
       releaseWorkflow: options.releaseWorkflow,
       releaseToNpm: false,
-      minNodeVersion: options.minNodeVersion ?? '10.3.0',
+      minNodeVersion: options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE,
     });
 
     if (!options.authorEmail && !options.authorUrl) {
@@ -156,14 +160,13 @@ export class JsiiProject extends NodeProject {
       this.publishToNuget();
     }
 
-    const jsiiVersion = options.jsiiVersion ?? Semver.caret('1.6.0');
+    const jsiiVersion = options.jsiiVersion ?? Semver.caret(DEFAULT_JSII_VERSION);
 
     this.addDevDependencies({
       'jsii': jsiiVersion,
       'jsii-diff': jsiiVersion,
       'jsii-pacmak': jsiiVersion,
-      'jsii-release': Semver.caret('0.1.5'),
-      '@types/node': Semver.caret('13.13.5'),
+      'jsii-release': Semver.caret('0.1.6'),
     });
 
     const eslint = options.eslint ?? true;

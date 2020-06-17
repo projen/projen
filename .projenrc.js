@@ -19,15 +19,11 @@ const project = new JsiiProject({
   devDependencies: {
     '@types/fs-extra': Semver.caret('8.0.1')
   },
-  peerDependencies: {
-    constructs: Semver.pinned('2.0.1'),
-  },
-  bundledDependencies: [ 'yaml', 'fs-extra' ],
+  bundledDependencies: [ 'yaml', 'fs-extra', 'constructs' ],
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }
-  ],
-  minNodeVersion: '10.20.1'
+  ]
 });
 
 project.addScripts({

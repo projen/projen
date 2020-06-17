@@ -591,7 +591,7 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*", "@types/node@^13.13.5":
+"@types/node@*":
   version "13.13.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
   integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
@@ -3489,10 +3489,10 @@ jsii-reflect@^1.6.0:
     oo-ascii-tree "^1.6.0"
     yargs "^15.3.1"
 
-jsii-release@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/jsii-release/-/jsii-release-0.1.5.tgz#2d582f6f4ae289b052e2a30a8180ab905c7581d8"
-  integrity sha512-oJWwC3V6OZY5rS5tmbtXIyszFCBLCkjJJg2iLnRdDKVoaGLqHsdLcMl3u5RRM7Gc39W2eSP1yiMhux8AZxevzA==
+jsii-release@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/jsii-release/-/jsii-release-0.1.6.tgz#8881bb86f2d612f1b1c2d5b352e99037e796d897"
+  integrity sha512-o0gO3QQtYrBZNU87CEX7AORAcEmGobNJPIJufbxwmd5EAQxO02Q1KYIp6fBsppXYLaIkY9h14s/rl2rlmKO7Lw==
 
 jsii-rosetta@^1.5.0:
   version "1.5.0"
