@@ -87,6 +87,7 @@ export class JsiiProject extends NodeProject {
       buildWorkflow: options.buildWorkflow,
       releaseWorkflow: options.releaseWorkflow,
       releaseToNpm: false,
+      minNodeVersion: options.minNodeVersion ?? '10.3.0',
     });
 
     if (!options.authorEmail && !options.authorUrl) {
