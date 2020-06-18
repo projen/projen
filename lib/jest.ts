@@ -3,7 +3,10 @@ import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
 export interface JestOptions {
-  readonly globalCoverageThreshold?: CoverageThreshold;
+  /**
+   * Specify the global coverage thresholds
+   */
+  readonly coverage?: CoverageThreshold;
 
   /**
    * Typescript support:
@@ -65,9 +68,9 @@ export class Jest extends Construct {
       });;
     }
 
-    if (options.globalCoverageThreshold) {
+    if (options.coverage) {
       config.coverageThreshold = {
-        global: options.globalCoverageThreshold,
+        global: options.coverage,
       };
     }
 
