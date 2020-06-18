@@ -8,7 +8,7 @@ export class License extends FileBase {
   constructor(project: Project, spdx: string) {
     super(project, 'LICENSE');
 
-    const textFile = `${__dirname}/license-text/${spdx}.txt`;
+    const textFile = `${__dirname}/../license-text/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {
       throw new Error(`unsupported license ${spdx}`);
     }
