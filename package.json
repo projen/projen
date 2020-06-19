@@ -74,7 +74,11 @@
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",
-    "targets": {}
+    "targets": {},
+    "tsc": {
+      "outDir": "lib",
+      "rootDir": "src"
+    }
   },
   "jest": {
     "clearMocks": true,
@@ -89,6 +93,11 @@
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",
       "**/?(*.)+(spec|test).ts?(x)"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.jest.json"
+      }
+    }
   }
 }

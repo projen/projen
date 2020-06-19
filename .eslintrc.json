@@ -54,6 +54,17 @@
       "error",
       "always-multiline"
     ],
+    "quote-props": [
+      "error",
+      "consistent-as-needed",
+      {
+        "unnecessary": true
+      }
+    ],
+    "indent": [
+      "error",
+      2
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {

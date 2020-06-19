@@ -64,7 +64,7 @@ export class Eslint extends Construct {
           // Style
           'quotes': [ 'error', 'single', { avoidEscape: true } ],
           'comma-dangle': [ 'error', 'always-multiline' ], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-          'quote-props': [ 'error', 'consistent-as-needed', { 'unnecessary': true } ],
+          'quote-props': [ 'error', 'consistent-as-needed', { unnecessary: true } ],
           'indent': [ 'error', 2 ],
 
           // Require all imported dependencies are actually declared in package.json

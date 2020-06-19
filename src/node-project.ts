@@ -155,28 +155,28 @@ export class NodeProject extends Project {
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
-      name: options.name,
-      description: options.description,
-      main: 'lib/index.js',
-      repository: !options.repository ? undefined : {
+      'name': options.name,
+      'description': options.description,
+      'main': 'lib/index.js',
+      'repository': !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
         directory: options.repositoryDirectory,
       },
-      bin: this.bin,
-      scripts: this.scripts,
-      author: {
+      'bin': this.bin,
+      'scripts': this.scripts,
+      'author': {
         name: options.authorName,
         email: options.authorEmail,
         url: options.authorUrl,
       },
-      homepage: options.homepage,
-      devDependencies: this.devDependencies,
-      peerDependencies: this.peerDependencies,
-      dependencies: this.dependencies,
-      bundledDependencies: this.bundledDependencies,
-      keywords: options.keywords,
-      engines: nodeVersion !== '' ? { node: nodeVersion } : undefined,
+      'homepage': options.homepage,
+      'devDependencies': this.devDependencies,
+      'peerDependencies': this.peerDependencies,
+      'dependencies': this.dependencies,
+      'bundledDependencies': this.bundledDependencies,
+      'keywords': options.keywords,
+      'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
     new JsonFile(this, 'package.json', {
@@ -248,17 +248,17 @@ export class NodeProject extends Project {
             'runs-on': 'ubuntu-latest',
             'steps': [
               {
-                'name': 'Download build artifacts',
-                'uses': 'actions/download-artifact@v1',
-                'with': {
-                  'name': 'dist',
+                name: 'Download build artifacts',
+                uses: 'actions/download-artifact@v1',
+                with: {
+                  name: 'dist',
                 },
               },
               {
-                'name': 'Release',
-                'run': 'npx -p jsii-release jsii-release-npm',
-                'env': {
-                  'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
+                name: 'Release',
+                run: 'npx -p jsii-release jsii-release-npm',
+                env: {
+                  NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
                 },
               },
             ],

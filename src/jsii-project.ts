@@ -322,21 +322,21 @@ export class JsiiProject extends NodeProject {
         'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          'image': 'jsii/superchain',
+          image: 'jsii/superchain',
         },
         'steps': [
           {
-            'name': 'Download build artifacts',
-            'uses': 'actions/download-artifact@v1',
-            'with': {
-              'name': 'dist',
+            name: 'Download build artifacts',
+            uses: 'actions/download-artifact@v1',
+            with: {
+              name: 'dist',
             },
           },
           {
-            'name': 'Release',
-            'run': 'npx -p jsii-release jsii-release-npm',
-            'env': {
-              'NPM_TOKEN': '${{ secrets.NPM_TOKEN }}',
+            name: 'Release',
+            run: 'npx -p jsii-release jsii-release-npm',
+            env: {
+              NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
             },
           },
         ],
@@ -354,21 +354,21 @@ export class JsiiProject extends NodeProject {
         'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          'image': 'jsii/superchain',
+          image: 'jsii/superchain',
         },
         'steps': [
           {
-            'name': 'Download build artifacts',
-            'uses': 'actions/download-artifact@v1',
-            'with': {
-              'name': 'dist',
+            name: 'Download build artifacts',
+            uses: 'actions/download-artifact@v1',
+            with: {
+              name: 'dist',
             },
           },
           {
-            'name': 'Release',
-            'run': 'npx -p jsii-release jsii-release-nuget',
-            'env': {
-              'NUGET_API_KEY': '${{ secrets.NUGET_API_KEY }}',
+            name: 'Release',
+            run: 'npx -p jsii-release jsii-release-nuget',
+            env: {
+              NUGET_API_KEY: '${{ secrets.NUGET_API_KEY }}',
             },
           },
         ],
@@ -386,25 +386,25 @@ export class JsiiProject extends NodeProject {
         'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          'image': 'jsii/superchain',
+          image: 'jsii/superchain',
         },
         'steps': [
           {
-            'name': 'Download build artifacts',
-            'uses': 'actions/download-artifact@v1',
-            'with': {
-              'name': 'dist',
+            name: 'Download build artifacts',
+            uses: 'actions/download-artifact@v1',
+            with: {
+              name: 'dist',
             },
           },
           {
-            'name': 'Release',
-            'run': 'npx -p jsii-release jsii-release-maven',
-            'env': {
-              'MAVEN_GPG_PRIVATE_KEY': '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
-              'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE': '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
-              'MAVEN_PASSWORD': '${{ secrets.MAVEN_PASSWORD }}',
-              'MAVEN_USERNAME': '${{ secrets.MAVEN_USERNAME }}',
-              'MAVEN_STAGING_PROFILE_ID': '${{ secrets.MAVEN_STAGING_PROFILE_ID }}',
+            name: 'Release',
+            run: 'npx -p jsii-release jsii-release-maven',
+            env: {
+              MAVEN_GPG_PRIVATE_KEY: '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
+              MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
+              MAVEN_PASSWORD: '${{ secrets.MAVEN_PASSWORD }}',
+              MAVEN_USERNAME: '${{ secrets.MAVEN_USERNAME }}',
+              MAVEN_STAGING_PROFILE_ID: '${{ secrets.MAVEN_STAGING_PROFILE_ID }}',
             },
           },
         ],
@@ -422,22 +422,22 @@ export class JsiiProject extends NodeProject {
         'needs': this.releaseWorkflow.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          'image': 'jsii/superchain',
+          image: 'jsii/superchain',
         },
         'steps': [
           {
-            'name': 'Download build artifacts',
-            'uses': 'actions/download-artifact@v1',
-            'with': {
-              'name': 'dist',
+            name: 'Download build artifacts',
+            uses: 'actions/download-artifact@v1',
+            with: {
+              name: 'dist',
             },
           },
           {
-            'name': 'Release',
-            'run': 'npx -p jsii-release jsii-release-pypi',
-            'env': {
-              'TWINE_USERNAME': '${{ secrets.TWINE_USERNAME }}',
-              'TWINE_PASSWORD': '${{ secrets.TWINE_PASSWORD }}',
+            name: 'Release',
+            run: 'npx -p jsii-release jsii-release-pypi',
+            env: {
+              TWINE_USERNAME: '${{ secrets.TWINE_USERNAME }}',
+              TWINE_PASSWORD: '${{ secrets.TWINE_PASSWORD }}',
             },
           },
         ],
