@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/eladb/projen/compare/v0.2.1...v0.2.2) (2020-06-19)
+
+
+### Features
+
+* delete "lib/" before running tests and switch the order of compile and test in build ([7b8a846](https://github.com/eladb/projen/commit/7b8a8463eaa9d23012a70eb746be4ccc64f78bf4))
+* **jsii:** expose eslint configuration ([3e0b393](https://github.com/eladb/projen/commit/3e0b3938f64da467e363fde8aa4071fe9a9191c5))
+* **node:** auto-detect "bin" ([8c42f8e](https://github.com/eladb/projen/commit/8c42f8e180d1bd2c38c35fa3e3efc3581d74f239))
+
+
+### Bug Fixes
+
+* **eslint:** typescript indent not working ([5eddfa2](https://github.com/eladb/projen/commit/5eddfa2720be33ec61502ddb67bab5ca7bd9414b))
+* **jsii:** jest does not include test files ([48e92db](https://github.com/eladb/projen/commit/48e92db9fc0f361a6ba5b95cb8afab1764d325a7))
+
 ### [0.2.1](https://github.com/eladb/projen/compare/v0.2.0...v0.2.1) (2020-06-19)
 
 
