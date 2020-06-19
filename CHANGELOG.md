@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/eladb/projen/compare/v0.1.36...v0.2.0) (2020-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* **jsii:** sources in jsii projects are expected to be under `src` while `lib` is only `.d.ts` and `.js` files
+* **jest:** jest.globalCoverageThreshold is now 'coverage'
+
+### Features
+
+* **eslint:** consistent quote-props ([2043582](https://github.com/eladb/projen/commit/204358275b2a2c32967c8293f96671c6ac09201a))
+* **eslint:** exclude coverage report from npm and git and eslintrc from npm ([ffa9718](https://github.com/eladb/projen/commit/ffa9718d76005fa9e46aa49437ed61eab1483b33))
+* **jest:** rename 'globalCoverageThreshold' to 'coverage' ([5ab6608](https://github.com/eladb/projen/commit/5ab6608b029870504e2e0efa36c45133b0436b07))
+* **jsii:** move sources to "src" and outputs to "lib" ([2333739](https://github.com/eladb/projen/commit/2333739128cbbb9d9574b60e53491da6bff96aa7))
+
 ### [0.1.36](https://github.com/eladb/projen/compare/v0.1.35...v0.1.36) (2020-06-17)
 
 
