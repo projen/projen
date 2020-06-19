@@ -1,7 +1,8 @@
 {
   "env": {
     "jest": true,
-    "node": true
+    "node": true,
+    "browser": false
   },
   "plugins": [
     "@typescript-eslint",
@@ -9,7 +10,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": "2018",
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "extends": [
