@@ -251,13 +251,9 @@ export class JsiiProject extends NodeProject {
     }
 
     if (options.jest ?? true) {
-
-      // create a special tsconfig just file tests
+      // create a tsconfig for jest that does NOT include outDir and rootDir and
+      // includes both "src" and "test" as inputs.
       const tsconfig = new TypescriptConfig(this, {
-        compilerOptions: {
-          outDir: outdir,
-          rootDir: srcdir,
-        },
         fileName: 'tsconfig.jest.json',
         include: [
           `${srcdir}/**/*.ts`,
