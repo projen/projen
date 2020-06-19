@@ -76,6 +76,14 @@ new Eslint(project: NodeProject)
 
 
 
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**🔹 | <code>Map<string, Array<any>></code> | <span></span>
+
+
 
 ## class FileBase 🔹 <a id="projen-filebase"></a>
 
@@ -343,7 +351,8 @@ new JsiiProject(options: JsiiProjectOptions)
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
-  * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -382,6 +391,14 @@ new JsiiProject(options: JsiiProjectOptions)
   * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **testdir** (<code>string</code>)  Tests directory. <span style="text-decoration: underline">*Default*</span>: "test"
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | <span style="text-decoration: underline">*Optional*</span>
 
 ### Methods
 
@@ -585,7 +602,8 @@ new NodeProject(options: NodeProjectOptions)
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **outdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
-  * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -913,7 +931,8 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 * **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
   * **outdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
-  * **bin** (<code>Map<string, string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -1034,7 +1053,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
-**bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1144,7 +1164,8 @@ Name | Type | Description
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1269,7 +1290,8 @@ Name | Type | Description
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1338,7 +1360,8 @@ Name | Type | Description
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**bin**?🔹 | <code>Map<string, string></code> | <span style="text-decoration: underline">*Optional*</span>
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>

@@ -115,6 +115,8 @@ export interface JsiiDotNetTarget {
 export class JsiiProject extends NodeProject {
   private readonly compileCommands: string[];
 
+  public readonly eslint?: Eslint;
+
   constructor(options: JsiiProjectOptions) {
     const minNodeVersion = options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE;
 
@@ -221,7 +223,7 @@ export class JsiiProject extends NodeProject {
 
     const eslint = options.eslint ?? true;
     if (eslint) {
-      new Eslint(this);
+      this.eslint = new Eslint(this);
     }
 
     this.gitignore.comment('exclude jsii outputs')
