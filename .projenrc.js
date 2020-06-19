@@ -8,9 +8,6 @@ const project = new JsiiProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
-  bin: {
-    projen: 'bin/projen'
-  },
   dependencies: {
     constructs: Semver.pinned('2.0.1'),
     yaml: Semver.caret('1.9.2'),

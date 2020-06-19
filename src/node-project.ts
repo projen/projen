@@ -7,6 +7,8 @@ import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Lazy } from 'constructs';
 import { Version } from './version';
 import { GithubWorkflow } from './github-workflow';
+import * as fs from 'fs-extra';
+import * as path from 'path';
 
 const ANTITAMPER_COMMAND = [
   {
@@ -21,7 +23,24 @@ export interface CommonOptions {
   readonly devDependencies?: Record<string, Semver>;
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
+
+  /**
+   * Binary programs vended with your module.
+   *
+   * You can use this option to add/customize how binaries are represented in
+   * your `package.json`, but unless `autoDetectBin` is `false`, every
+   * executable file under `bin` will automatically be added to this section.
+   */
   readonly bin?: Record<string, string>;
+
+  /**
+   * Automatically add all executables under the `bin` directory to your
+   * `package.json` file under the `bin` section.
+   *
+   * @default true
+   */
+  readonly autoDetectBin?: boolean;
+
   readonly keywords?: string[];
 
   /**
@@ -264,6 +283,22 @@ export class NodeProject extends Project {
             ],
           },
         });
+      }
+    }
+
+    // automatically add all executable files under "bin"
+    if (options.autoDetectBin ?? true) {
+      const bindir = 'bin';
+
+      if (fs.existsSync(bindir)) {
+        for (const file of fs.readdirSync(bindir)) {
+          try {
+            fs.accessSync(path.join(bindir, file), fs.constants.X_OK);
+            this.bin[file] = path.join(bindir, file);
+          } catch (e) {
+            // not executable, skip
+          }
+        }
       }
     }
   }

@@ -128,7 +128,41 @@ are manually modified, your CI build will fail.
 
 ## API Reference
 
-See [API Reference](./API.md) for more details.
+See [API Reference](./API.md) for API details.
+
+### JsiiProject
+
+Directory structure:
+
+* `src/` - `.ts` files, after compilation they will go under `lib/`.
+* `test/` - `.ts` files for jest tests. Those will not be included in your npm module.
+
+#### Executables/CLIs (`bin`)
+
+You should create executable scripts under `bin/`, but **do not** include
+typescript files there. Those must be under `src/` or otherwise they won't be
+compiled and included in your output module.
+
+Let's walk through a simple example. Say my CLI should be called `mycli`:
+
+1. Create a file `lib/mycli.ts` with the actual code of the CLI. No need to export this file from your `index.ts` file.
+2. Create a file `bin/mycli` with the following content:
+
+    ```js
+    #!/usr/bin/env node
+    require('../lib/mycli.js');
+    ```
+
+That's it. projen will auto-detect `bin/mycli` and will add it to your
+`package.json` under the `bin` section. You can disable this behavior by setting
+`autoDetectBin: false`.
+
+
+
+
+
+
+
 
 ## Contributing
 
