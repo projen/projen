@@ -1,26 +1,31 @@
 import { Construct } from 'constructs';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
+import { TypescriptConfig } from './typescript';
 
 export interface JestOptions {
+
+  /**
+   * Collect coverage.
+   * @default true
+   */
+  readonly coverage?: boolean;
+
   /**
    * Specify the global coverage thresholds
    */
-  readonly coverage?: CoverageThreshold;
-
-  /**
-   * Typescript support:
-   *
-   *  - Uses `ts-jest` as a preprocessor and configuration preset.
-   *  - Only matches *.ts files
-   */
-  readonly typescript?: boolean;
+  readonly coverageThreshold?: CoverageThreshold;
 
   /**
    * Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`
    * @default "/node_modules/"
    */
   readonly ignorePatterns?: string[];
+
+  /**
+   * Configure for typescript.
+   */
+  readonly typescript?: TypescriptConfig;
 }
 
 export interface CoverageThreshold {
@@ -48,7 +53,7 @@ export class Jest extends Construct {
 
     const config: any = {
       clearMocks: true,
-      collectCoverage: true,
+      collectCoverage: options.coverage ?? true,
       coveragePathIgnorePatterns: ignorePatterns,
       testPathIgnorePatterns: ignorePatterns,
     };
@@ -62,15 +67,23 @@ export class Jest extends Construct {
         '**/?(*.)+(spec|test).ts?(x)',
       ];
 
+      // specify tsconfig.json
+      config.globals = {
+        'ts-jest': {
+          tsConfig: options.typescript.fileName,
+        },
+      }
+
+      // add relevant deps
       project.addDevDependencies({
         '@types/jest': Semver.caret('25.2.1'),
         'ts-jest': Semver.caret('26.1.0'),
-      });;
+      });
     }
 
-    if (options.coverage) {
+    if (options.coverageThreshold) {
       config.coverageThreshold = {
-        global: options.coverage,
+        global: options.coverageThreshold,
       };
     }
 
@@ -82,6 +95,5 @@ export class Jest extends Construct {
     });
 
     project.addFields({ jest: config });
-
   }
 }

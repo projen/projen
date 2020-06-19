@@ -4,6 +4,8 @@ import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
 import { Mergify, MergifyOptions } from './mergify';
+import { Project } from './project';
+import { Construct } from 'constructs';
 
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   /**
@@ -19,6 +21,7 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   readonly jestOptions?: JestOptions;
 
   /**
+   *
    * Setup eslint.
    * @default true
    */
@@ -54,34 +57,9 @@ export class TypeScriptLibraryProject extends NodeProject {
       build: 'yarn compile && yarn test && yarn run package',
     });
 
-    new JsonFile(this, 'tsconfig.json', {
-      obj: {
-        include: [ '**/*.ts' ],
-        exclude: [ 'node_modules' ],
-        compilerOptions: {
-          alwaysStrict: true,
-          charset: 'utf8',
-          declaration: true,
-          experimentalDecorators: true,
-          inlineSourceMap: true,
-          inlineSources: true,
-          lib: [ 'es2018' ],
-          module: 'CommonJS',
-          noEmitOnError: true,
-          noFallthroughCasesInSwitch: true,
-          noImplicitAny: true,
-          noImplicitReturns: true,
-          noImplicitThis: true,
-          noUnusedLocals: true,
-          noUnusedParameters: true,
-          resolveJsonModule: true,
-          strict: true,
-          strictNullChecks: true,
-          strictPropertyInitialization: true,
-          stripInternal: true,
-          target: 'ES2018',
-        },
-      },
+    const tsconfig = new TypescriptConfig(this, {
+      include: [ '**/*.ts' ],
+      exclude: [ 'node_modules' ],
     });
 
     this.gitignore.comment('exclude typescript compiler outputs');
@@ -97,7 +75,7 @@ export class TypeScriptLibraryProject extends NodeProject {
 
     if (options.jest ?? true) {
       new Jest(this, {
-        typescript: true,
+        typescript: tsconfig,
         ...options.jestOptions,
       });
     }
@@ -114,5 +92,79 @@ export class TypeScriptLibraryProject extends NodeProject {
     if (options.mergify ?? true) {
       new Mergify(this, options.mergifyOptions);
     }
+  }
+}
+
+export interface TypescriptConfigOptions {
+  /**
+   * @default "tsconfig.json"
+   */
+  readonly fileName?: string;
+  /**
+   * The directory in which typescript sources reside.
+   * @default - all .ts files recursively
+   */
+  readonly include?: string[];
+
+  /**
+   * @default - node_modules is excluded by default
+   */
+  readonly exclude?: string[];
+
+  /**
+   * Compiler options to use.
+   *
+   * @default - see above
+   */
+  readonly compilerOptions?: any;
+}
+
+export class TypescriptConfig extends Construct {
+  public readonly compilerOptions: any;
+  public readonly include: string[];
+  public readonly exclude: string[];
+  public readonly fileName: string;
+
+  constructor(project: Project, options: TypescriptConfigOptions = { }) {
+    const fileName = options.fileName ?? 'tsconfig.json';
+
+    super(project, `tsconfig-${fileName}`);
+
+    this.include = options.include ?? [ '**/*.ts' ];
+    this.exclude = options.exclude ?? [ 'node_modules' ];
+    this.fileName = fileName;
+
+    this.compilerOptions = {
+      alwaysStrict: true,
+      charset: 'utf8',
+      declaration: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: [ 'es2018' ],
+      module: 'CommonJS',
+      noEmitOnError: true,
+      noFallthroughCasesInSwitch: true,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: true,
+      noUnusedParameters: true,
+      resolveJsonModule: true,
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: true,
+      stripInternal: true,
+      target: 'ES2018',
+      ...options.compilerOptions,
+    };
+
+    new JsonFile(project, fileName, {
+      obj: {
+        compilerOptions: this.compilerOptions,
+        include: this.include,
+        exclude: this.exclude,
+      },
+    });
   }
 }

@@ -18,6 +18,7 @@ Name|Description
 [Project](#projen-project)|*No description*
 [Semver](#projen-semver)|*No description*
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
+[TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 
 
@@ -41,6 +42,7 @@ Name|Description
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
+[TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 
 
 **Enums**
@@ -312,9 +314,10 @@ new Jest(project: NodeProject, options?: JestOptions)
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
-  * **globalCoverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **coverage** (<code>boolean</code>)  Collect coverage. <span style="text-decoration: underline">*Default*</span>: true
+  * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. <span style="text-decoration: underline">*Optional*</span>
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. <span style="text-decoration: underline">*Default*</span>: "/node_modules/"
-  * **typescript** (<code>boolean</code>)  Typescript support:. <span style="text-decoration: underline">*Optional*</span>
+  * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -368,12 +371,16 @@ new JsiiProject(options: JsiiProjectOptions)
   * **eslint** (<code>boolean</code>)  Install eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **jest** (<code>boolean</code>)  Use jest for unit tests. <span style="text-decoration: underline">*Default*</span>: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: defaults
   * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **mergify** (<code>boolean</code>)  Add mergify configuration. <span style="text-decoration: underline">*Default*</span>: true
+  * **outdir** (<code>string</code>)  Compiler artifacts output directory. <span style="text-decoration: underline">*Default*</span>: "lib"
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **rootdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: "."
+  * **srcdir** (<code>string</code>)  Typescript sources directory. <span style="text-decoration: underline">*Default*</span>: "src"
   * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **testdir** (<code>string</code>)  Tests directory. <span style="text-decoration: underline">*Default*</span>: "test"
 
 
 ### Methods
@@ -945,6 +952,46 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 
 
 
+## class TypescriptConfig 🔹 <a id="projen-typescriptconfig"></a>
+
+
+
+<span style="text-decoration: underline">Implements</span>: [IConstruct](#constructs-iconstruct)
+<span style="text-decoration: underline">Extends</span>: [Construct](#constructs-construct)
+
+### Initializer
+
+
+
+
+<span style="text-decoration: underline">Usage:</span>
+
+```ts
+new TypescriptConfig(project: Project, options?: TypescriptConfigOptions)
+```
+
+<span style="text-decoration: underline">Parameters:</span>
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description*
+  * **compilerOptions** (<code>any</code>)  Compiler options to use. <span style="text-decoration: underline">*Default*</span>: see above
+  * **exclude** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
+  * **fileName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
+  * **include** (<code>Array<string></code>)  The directory in which typescript sources reside. <span style="text-decoration: underline">*Default*</span>: all .ts files recursively
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**compilerOptions**🔹 | <code>any</code> | <span></span>
+**exclude**🔹 | <code>Array<string></code> | <span></span>
+**fileName**🔹 | <code>string</code> | <span></span>
+**include**🔹 | <code>Array<string></code> | <span></span>
+
+
+
 ## class Version 🔹 <a id="projen-version"></a>
 
 
@@ -1046,9 +1093,10 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**globalCoverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | <span style="text-decoration: underline">*Optional*</span>
+**coverage**?🔹 | <code>boolean</code> | Collect coverage.<br/><span style="text-decoration: underline">*Default*</span>: true
+**coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/><span style="text-decoration: underline">*Optional*</span>
 **ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/><span style="text-decoration: underline">*Default*</span>: "/node_modules/"
-**typescript**?🔹 | <code>boolean</code> | Typescript support:.<br/><span style="text-decoration: underline">*Optional*</span>
+**typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/><span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -1107,12 +1155,14 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | <span style="text-decoration: underline">*Optional*</span>
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: defaults
 **jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Add mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**outdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/><span style="text-decoration: underline">*Default*</span>: "lib"
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1121,7 +1171,9 @@ Name | Type | Description
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **rootdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: "."
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/><span style="text-decoration: underline">*Default*</span>: "src"
 **stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/><span style="text-decoration: underline">*Default*</span>: "test"
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
@@ -1318,6 +1370,22 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
+
+
+
+## struct TypescriptConfigOptions 🔹 <a id="projen-typescriptconfigoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**compilerOptions**?🔹 | <code>any</code> | Compiler options to use.<br/><span style="text-decoration: underline">*Default*</span>: see above
+**exclude**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
+**fileName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
+**include**?🔹 | <code>Array<string></code> | The directory in which typescript sources reside.<br/><span style="text-decoration: underline">*Default*</span>: all .ts files recursively
 
 
 

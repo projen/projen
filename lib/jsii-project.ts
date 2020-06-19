@@ -1,10 +1,11 @@
 import { NodeProject, CommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
-import { Jest } from './jest';
+import { Jest, JestOptions } from './jest';
 import { Mergify } from './mergify';
 import { JsiiDocgen } from './jsii-docgen';
 import { Lazy } from 'constructs';
+import { TypescriptConfig } from './typescript';
 
 const DEFAULT_JSII_VERSION = '1.6.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -50,6 +51,12 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly jest?: boolean;
 
   /**
+   * Jest options
+   * @default - defaults
+   */
+  readonly jestOptions?: JestOptions;
+
+  /**
    * Add mergify configuration
    * @default true
    */
@@ -60,6 +67,27 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default true
    */
   readonly docgen?: boolean;
+
+  /**
+   * Compiler artifacts output directory
+   *
+   * @default "lib"
+   */
+  readonly outdir?: string;
+
+  /**
+   * Typescript sources directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+
+  /**
+   * Tests directory.
+   *
+   * @default "test"
+   */
+  readonly testdir?: string;
 }
 
 export enum Stability {
@@ -98,13 +126,17 @@ export class JsiiProject extends NodeProject {
       ...options,
     });
 
+    const srcdir = options.srcdir ?? 'src';
+    const outdir = options.outdir ?? 'lib';
+    const testdir = options.testdir ?? 'test';
+
     this.compileCommands = new Array<string>();;
 
     if (!options.authorEmail && !options.authorUrl) {
       throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
     }
 
-    this.addFields({ types: 'lib/index.d.ts' });
+    this.addFields({ types: `${outdir}/index.d.ts` });
 
     // this is an unhelpful warning
     const jsiiFlags = '--silence-warnings=reserved-word';
@@ -131,8 +163,19 @@ export class JsiiProject extends NodeProject {
       jsii: {
         outdir: 'dist',
         targets,
+        tsc: {
+          outDir: outdir,
+          rootDir: srcdir,
+        },
       },
     });
+
+    this.gitignore.exclude(`/${outdir}`);
+    this.gitignore.include(`/${srcdir}`);
+    this.gitignore.include(`/${testdir}`);
+    this.npmignore.include(`/${outdir}`);
+    this.npmignore.exclude(`/${srcdir}`);
+    this.npmignore.exclude(`/${testdir}`);
 
     this.publishToNpm();
 
@@ -206,7 +249,27 @@ export class JsiiProject extends NodeProject {
     }
 
     if (options.jest ?? true) {
-      new Jest(this, { typescript: true });
+
+      // create a special tsconfig just file tests
+      const tsconfig = new TypescriptConfig(this, {
+        compilerOptions: {
+          outDir: outdir,
+          rootDir: srcdir,
+        },
+        fileName: 'tsconfig.jest.json',
+        include: [
+          `${srcdir}/**/*.ts`,
+          `${testdir}/**/*.ts`,
+        ],
+        exclude: [
+          'node_modules',
+        ],
+      });
+
+      new Jest(this, {
+        typescript: tsconfig,
+        ...options.jestOptions,
+      });
     }
 
     const mergify = options.mergify ?? true;
