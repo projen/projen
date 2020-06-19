@@ -39,6 +39,9 @@
     "@typescript-eslint/no-require-imports": [
       "error"
     ],
+    "indent": [
+      "off"
+    ],
     "@typescript-eslint/indent": [
       "error",
       2
@@ -60,10 +63,6 @@
       {
         "unnecessary": true
       }
-    ],
-    "indent": [
-      "error",
-      2
     ],
     "import/no-extraneous-dependencies": [
       "error",
