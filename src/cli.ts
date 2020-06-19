@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { PROJEN_RC } from '../lib/common';
+import { PROJEN_RC } from './common';
 
 const projenfile = path.resolve(PROJEN_RC);
 
