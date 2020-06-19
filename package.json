@@ -13,7 +13,7 @@
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
     "projen:upgrade": "yarn upgrade projen && yarn projen",
-    "test": "rm -fr lib/ && jest --passWithNoTests && yarn eslint",
+    "test": "yarn eslint && rm -fr lib/ && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
     "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
@@ -24,6 +24,7 @@
     "docgen": "jsii-docgen",
     "test:watch": "jest --watch",
     "test:update": "jest -u",
+    "bootstrap": "yarn install && yarn compile && yarn projen",
     "eslint": "eslint . --ext .ts"
   },
   "author": {
