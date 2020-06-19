@@ -148,7 +148,9 @@ export class JsiiProject extends NodeProject {
       watch: `jsii -w ${jsiiFlags}`,
       compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
       package: 'jsii-pacmak',
-      build: 'yarn compile && yarn test && yarn run package',
+
+      // we runn "test" first because it deletes "lib/"
+      build: 'yarn test && yarn compile && yarn run package',
     });
 
     this.addFields({ stability: options.stability ?? Stability.STABLE });
@@ -263,6 +265,10 @@ export class JsiiProject extends NodeProject {
           'node_modules',
         ],
       });
+
+      // make sure to delete "lib" *before* runninng tests to ensure that
+      // test code does not take a dependency on "lib" and instead on "src".
+      this.addTestCommands('rm -fr lib/');
 
       new Jest(this, {
         typescript: tsconfig,

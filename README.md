@@ -132,10 +132,36 @@ See [API Reference](./API.md) for API details.
 
 ### JsiiProject
 
-Directory structure:
+#### Directory structure
 
 * `src/` - `.ts` files, after compilation they will go under `lib/`.
 * `test/` - `.ts` files for jest tests. Those will not be included in your npm module.
+* `bin/` - CLI executables (not .ts files!). See details below on how to define CLIs.
+
+#### npm Scripts
+
+jsii projects include a few useful npm scripts for your workflow:
+
+*
+
+#### Testing
+
+**jest** is used for unit tests. Write your unit test files under `test/` so they won't be
+included in the npm module.
+
+IMPORTANT: your test code should reference your library code through `src` and
+not through `lib`. To enforce that we will delete `lib/` before running your
+tests.
+
+The recommended workflow for TDD is to:
+
+1. Checkout the repo
+2. Run `yarn install`
+3. Run `yarn test:watch`
+
+That's it. You don't need to compile in order to run your tests because
+`ts-jest` takes care of compiling your code for you and `test:watch` will
+continuously watch your code for changes.
 
 #### Executables/CLIs (`bin`)
 
