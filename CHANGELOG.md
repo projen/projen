@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/eladb/projen/compare/v0.2.0...v0.2.1) (2020-06-19)
+
+
+### Bug Fixes
+
+* cannot find module when runninng projen ([86d77b6](https://github.com/eladb/projen/commit/86d77b60e41c14ddb9e63d31a53156b1ed5b10a8))
+
 ## [0.2.0](https://github.com/eladb/projen/compare/v0.1.36...v0.2.0) (2020-06-19)
 
 
