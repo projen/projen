@@ -1,16 +1,23 @@
+import type { Linter } from 'eslint';
 import { Construct } from 'constructs';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
+export interface EslintOptions {
+  config: Linter.Config;
+  dependencies: Record<string, Semver>;
+}
+
 export class Eslint extends Construct {
+  // (not "dev" dependencies, given that its relative to the construct, not the end workspace)
+  public readonly dependencies: Record<string, Semver>;
+  public readonly config: Linter.Config;
 
-  public readonly rules: { [rule: string]: any[] };
-
-  constructor(project: NodeProject) {
+  constructor(project: NodeProject, options?: EslintOptions) {
     super(project, 'eslint');
 
-    project.addDevDependencies({
+    this.dependencies = options?.dependencies || {
       'typescript': Semver.caret('3.8.3'),
       '@typescript-eslint/eslint-plugin': Semver.caret('2.31.0'),
       '@typescript-eslint/parser': Semver.caret('2.19.2'),
@@ -19,7 +26,69 @@ export class Eslint extends Construct {
       'eslint-import-resolver-typescript': Semver.caret('2.0.0'),
       'eslint-plugin-import': Semver.caret('2.20.2'),
       'json-schema': Semver.caret('0.2.5'), // required by @typescript-eslint/parser
-    });
+    }
+
+    this.config = options?.config || {
+      env: {
+        jest: true,
+        node: true,
+        browser: false,
+      },
+      plugins: [
+        '@typescript-eslint',
+        'import',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+      },
+      extends: [
+        'plugin:import/typescript',
+      ],
+      settings: {
+        'import/parsers': {
+          '@typescript-eslint/parser': ['.ts', '.tsx'],
+        },
+        'import/resolver': {
+          node: {},
+          typescript: {
+            directory: './tsconfig.json',
+          },
+        },
+      },
+      ignorePatterns: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts' ],
+      rules: {
+        // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
+        '@typescript-eslint/no-require-imports': [ 'error' ],
+
+        // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
+        'indent': [ 'off' ], '@typescript-eslint/indent': [ 'error', 2 ],
+
+        // Style
+        'quotes': [ 'error', 'single', { avoidEscape: true } ],
+        'comma-dangle': [ 'error', 'always-multiline' ], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+        'quote-props': [ 'error', 'consistent-as-needed', { unnecessary: true } ],
+
+        // Require all imported dependencies are actually declared in package.json
+        'import/no-extraneous-dependencies': [
+          'error',
+          {
+            devDependencies: [               // Only allow importing devDependencies from:
+              '**/build-tools/**',           // --> Build tools
+              '**/test/**',                   // --> Unit tests
+            ],
+            optionalDependencies: false,    // Disallow importing optional dependencies (those shouldn't be in use in the project)
+            peerDependencies: true,          // Allow importing peer dependencies (that aren't also direct dependencies)
+          },
+        ],
+
+        // Require all imported libraries actually resolve (!!required for import/no-extraneous-dependencies to work!!)
+        'import/no-unresolved': [ 'error' ],
+      },
+    }
+
+    project.addDevDependencies(this.dependencies);
 
     project.addScripts({ eslint: 'eslint . --ext .ts' });
     project.addTestCommands('yarn eslint');
@@ -29,69 +98,6 @@ export class Eslint extends Construct {
     project.npmignore.exclude('/coverage');
     project.npmignore.exclude('/.eslintrc.json');
 
-    this.rules = {
-      // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
-      '@typescript-eslint/no-require-imports': [ 'error' ],
-
-      // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
-      'indent': [ 'off' ], '@typescript-eslint/indent': [ 'error', 2 ],
-
-      // Style
-      'quotes': [ 'error', 'single', { avoidEscape: true } ],
-      'comma-dangle': [ 'error', 'always-multiline' ], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-      'quote-props': [ 'error', 'consistent-as-needed', { unnecessary: true } ],
-
-      // Require all imported dependencies are actually declared in package.json
-      'import/no-extraneous-dependencies': [
-        'error',
-        {
-          devDependencies: [               // Only allow importing devDependencies from:
-            '**/build-tools/**',           // --> Build tools
-            '**/test/**',                   // --> Unit tests
-          ],
-          optionalDependencies: false,    // Disallow importing optional dependencies (those shouldn't be in use in the project)
-          peerDependencies: true,          // Allow importing peer dependencies (that aren't also direct dependencies)
-        },
-      ],
-
-      // Require all imported libraries actually resolve (!!required for import/no-extraneous-dependencies to work!!)
-      'import/no-unresolved': [ 'error' ],
-    };
-
-    new JsonFile(project, '.eslintrc.json', {
-      obj: {
-        env: {
-          jest: true,
-          node: true,
-        },
-        plugins: [
-          '@typescript-eslint',
-          'import',
-        ],
-        parser: '@typescript-eslint/parser',
-        parserOptions: {
-          ecmaVersion: '2018',
-          sourceType: 'module',
-        },
-        extends: [
-          'plugin:import/typescript',
-        ],
-        settings: {
-          'import/parsers': {
-            '@typescript-eslint/parser': ['.ts', '.tsx'],
-          },
-          'import/resolver': {
-            node: {},
-            typescript: {
-              directory: './tsconfig.json',
-            },
-          },
-        },
-        ignorePatterns: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts' ],
-        rules: this.rules,
-      },
-    });
-
-
+    new JsonFile(project, '.eslintrc.json', {obj: this.config});
   }
 }

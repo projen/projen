@@ -6,13 +6,13 @@
 /.versionrc.json
 /src
 /test
-/coverage
-/.eslintrc.json
 # exclude typescript sources and configuration
 *.ts
 tsconfig.json
 # exclude jsii outdir
 dist
+/coverage
+/.eslintrc.json
 !/lib
 !# include javascript files and typescript declarations
 !*.js
