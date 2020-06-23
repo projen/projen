@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/eladb/projen/compare/v0.2.2...v0.2.3) (2020-06-23)
+
+
+### Features
+
+* **typescript:** npm ignore tsconfig.jest.json ([fda5367](https://github.com/eladb/projen/commit/fda53671428782afd674da161c6fde9b459b1816))
+
 ### [0.2.2](https://github.com/eladb/projen/compare/v0.2.1...v0.2.2) (2020-06-19)
 
 

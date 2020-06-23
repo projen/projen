@@ -69,7 +69,7 @@
     "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
