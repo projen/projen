@@ -986,11 +986,11 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new TypescriptConfig(project: Project, options?: TypescriptConfigOptions)
+new TypescriptConfig(project: NodeProject, options?: TypescriptConfigOptions)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description*
   * **compilerOptions** (<code>any</code>)  Compiler options to use. <span style="text-decoration: underline">*Default*</span>: see above
   * **exclude** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default

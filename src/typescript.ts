@@ -4,7 +4,6 @@ import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
 import { Mergify, MergifyOptions } from './mergify';
-import { Project } from './project';
 import { Construct } from 'constructs';
 
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
@@ -125,7 +124,7 @@ export class TypescriptConfig extends Construct {
   public readonly exclude: string[];
   public readonly fileName: string;
 
-  constructor(project: Project, options: TypescriptConfigOptions = { }) {
+  constructor(project: NodeProject, options: TypescriptConfigOptions = { }) {
     const fileName = options.fileName ?? 'tsconfig.json';
 
     super(project, `tsconfig-${fileName}`);
@@ -166,5 +165,7 @@ export class TypescriptConfig extends Construct {
         exclude: this.exclude,
       },
     });
+
+    project.npmignore.exclude(`/${fileName}`);
   }
 }
