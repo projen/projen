@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/eladb/projen/compare/v0.2.4...v0.2.5) (2020-07-05)
+
+
+### Features
+
+* **license:** copyright period and owner ([7a695a7](https://github.com/eladb/projen/commit/7a695a76460ceb6ee6a8db1e07a34c29a2fbbcae))
+* **node,jsii:** authorOrganization ([e773a0d](https://github.com/eladb/projen/commit/e773a0dcab0ace15cabca4db8dbc95924248e7ad))
+* **node,jsii:** releaseBranches ([752c080](https://github.com/eladb/projen/commit/752c080ba45da5dcaca9a225ffc787713ffd11c0))
+
 ### [0.2.4](https://github.com/eladb/projen/compare/v0.2.3...v0.2.4) (2020-07-05)
 
 
