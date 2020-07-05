@@ -384,6 +384,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. <span style="text-decoration: underline">*Default*</span>: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. <span style="text-decoration: underline">*Default*</span>: [ "master" ]
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. <span style="text-decoration: underline">*Default*</span>: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -638,6 +639,7 @@ new NodeProject(options: NodeProjectOptions)
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. <span style="text-decoration: underline">*Default*</span>: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. <span style="text-decoration: underline">*Default*</span>: [ "master" ]
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. <span style="text-decoration: underline">*Default*</span>: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -969,6 +971,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. <span style="text-decoration: underline">*Default*</span>: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. <span style="text-decoration: underline">*Default*</span>: [ "master" ]
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. <span style="text-decoration: underline">*Default*</span>: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. <span style="text-decoration: underline">*Default*</span>: true
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -1092,6 +1095,7 @@ Name | Type | Description
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -1218,6 +1222,7 @@ Name | Type | Description
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | <span style="text-decoration: underline">*Optional*</span>
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **rootdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: "."
@@ -1339,6 +1344,7 @@ Name | Type | Description
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1415,6 +1421,7 @@ Name | Type | Description
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
 **repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>

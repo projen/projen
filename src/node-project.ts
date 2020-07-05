@@ -70,6 +70,13 @@ export interface CommonOptions {
   readonly releaseWorkflow?: boolean;
 
   /**
+   * Branches which trigger a release.
+   *
+   * @default [ "master" ]
+   */
+  readonly releaseBranches?: string[];
+
+  /**
    * Workflow steps to use in order to bootstrap this repo.
    *
    * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -261,8 +268,9 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
+      const releaseBranches = options.releaseBranches ?? [ 'master' ];
       this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
-        trigger: { push: { branches: [ 'master' ] } },
+        trigger: { push: { branches: releaseBranches } },
         uploadArtifact: true,
         nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
