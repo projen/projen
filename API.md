@@ -379,6 +379,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. <span style="text-decoration: underline">*Default*</span>: "latest"
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -632,6 +633,7 @@ new NodeProject(options: NodeProjectOptions)
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. <span style="text-decoration: underline">*Default*</span>: "latest"
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -661,6 +663,7 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **version**🔹 | <code>any</code> | Returns the current version of the project.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/><span style="text-decoration: underline">*Optional*</span>
@@ -961,6 +964,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no max
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). <span style="text-decoration: underline">*Default*</span>: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. <span style="text-decoration: underline">*Default*</span>: "latest"
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. <span style="text-decoration: underline">*Default*</span>: true
@@ -1083,6 +1087,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1206,6 +1211,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Add mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **outdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/><span style="text-decoration: underline">*Default*</span>: "lib"
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1326,6 +1332,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1401,6 +1408,7 @@ Name | Type | Description
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>

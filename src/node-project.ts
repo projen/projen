@@ -112,6 +112,13 @@ export interface CommonOptions {
    * @default - same as `minNodeVersion`
    */
   readonly workflowNodeVersion?: string;
+
+  /**
+   * The dist-tag to use when releasing to npm.
+   *
+   * @default "latest"
+   */
+  readonly npmDistTag?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -156,6 +163,8 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
+  protected readonly npmDistTag: string;
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
@@ -171,6 +180,8 @@ export class NodeProject extends Project {
     if (this.maxNodeVersion) {
       nodeVersion += ` <= ${this.maxNodeVersion}`;
     }
+
+    this.npmDistTag = options.npmDistTag ?? 'latest';
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -278,6 +289,7 @@ export class NodeProject extends Project {
                 run: 'npx -p jsii-release jsii-release-npm',
                 env: {
                   NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+                  NPM_DIST_TAG: this.npmDistTag,
                 },
               },
             ],

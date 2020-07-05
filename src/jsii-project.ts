@@ -365,6 +365,7 @@ export class JsiiProject extends NodeProject {
             run: 'npx -p jsii-release jsii-release-npm',
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+              NPM_DIST_TAG: this.npmDistTag,
             },
           },
         ],
