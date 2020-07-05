@@ -87,11 +87,21 @@ export class Eslint extends Construct {
             },
           },
         },
-        ignorePatterns: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts' ],
+        ignorePatterns: [
+          '*.js',
+          '*.d.ts',
+          'node_modules/',
+          '*.generated.ts',
+          'coverage',
+        ],
         rules: this.rules,
       },
     });
+  }
 
-
+  public addRules(rules: { [rule: string]: any }) {
+    for (const [k,v] of Object.entries(rules)) {
+      this.rules[k] = v;
+    }
   }
 }

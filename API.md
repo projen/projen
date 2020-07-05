@@ -83,6 +83,25 @@ Name | Type | Description
 -----|------|-------------
 **rules**🔹 | <code>Map<string, Array<any>></code> | <span></span>
 
+### Methods
+
+
+#### addRules(rules)🔹 <a id="projen-eslint-addrules"></a>
+
+
+
+<span style="text-decoration: underline">Usage:</span>
+
+```ts
+addRules(rules: Map<string, any>): void
+```
+
+<span style="text-decoration: underline">Parameters:</span>
+* **rules** (<code>Map<string, any></code>)  *No description*
+
+
+
+
 
 
 ## class FileBase 🔹 <a id="projen-filebase"></a>
