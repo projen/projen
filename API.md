@@ -393,6 +393,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **repository** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. <span style="text-decoration: underline">*Default*</span>: true
+  * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. <span style="text-decoration: underline">*Default*</span>: .compatignore
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. <span style="text-decoration: underline">*Default*</span>: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -1187,6 +1189,8 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/><span style="text-decoration: underline">*Default*</span>: true
+**compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/><span style="text-decoration: underline">*Default*</span>: .compatignore
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
