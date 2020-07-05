@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/eladb/projen/compare/v0.2.3...v0.2.4) (2020-07-05)
+
+
+### Features
+
+* **eslint:** ignore "coverage" directory ([6249d0e](https://github.com/eladb/projen/commit/6249d0eba49edc484d16c3409694b85a0fe0becf))
+* **jsii:** API compatibility checks by default ([d9f6a9a](https://github.com/eladb/projen/commit/d9f6a9a1dd6277522df1d205d7db1f99b4c7fd25))
+* **node,jsii:** npmDistTag ([142e591](https://github.com/eladb/projen/commit/142e5918f793784e1c8c80e515b798b598449b0e))
+
 ### [0.2.3](https://github.com/eladb/projen/compare/v0.2.2...v0.2.3) (2020-06-23)
 
 
