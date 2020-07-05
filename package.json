@@ -29,7 +29,8 @@
   },
   "author": {
     "name": "Elad Ben-Israel",
-    "email": "benisrae@amazon.com"
+    "email": "benisrae@amazon.com",
+    "organization": false
   },
   "devDependencies": {
     "constructs": "2.0.1",

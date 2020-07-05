@@ -133,10 +133,13 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
   readonly description?: string;
   readonly repository?: string;
   readonly repositoryDirectory?: string;
+
   readonly authorName?: string;
   readonly authorEmail?: string;
-  readonly homepage?: string;
   readonly authorUrl?: string;
+  readonly authorOrganization?: boolean;
+
+  readonly homepage?: string;
   readonly license?: string;
   readonly stability?: string;
   readonly gitignore?: string[];
@@ -206,6 +209,7 @@ export class NodeProject extends Project {
         name: options.authorName,
         email: options.authorEmail,
         url: options.authorUrl,
+        organization: options.authorOrganization ?? false,
       },
       'homepage': options.homepage,
       'devDependencies': this.devDependencies,

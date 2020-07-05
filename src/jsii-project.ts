@@ -28,6 +28,7 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly authorName: string;
   readonly authorEmail?: string;
   readonly authorUrl?: string;
+  readonly authorOrganization?: boolean;
   readonly license?: string;
   readonly stability?: string;
 
