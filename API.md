@@ -35,6 +35,7 @@ Name|Description
 [JsiiProjectOptions](#projen-jsiiprojectoptions)|*No description*
 [JsiiPythonTarget](#projen-jsiipythontarget)|*No description*
 [JsonFileOptions](#projen-jsonfileoptions)|*No description*
+[LicenseOptions](#projen-licenseoptions)|*No description*
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
@@ -374,6 +375,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. <span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. <span style="text-decoration: underline">*Default*</span>: current year
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -394,6 +397,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **name** (<code>string</code>)  *No description* 
   * **repository** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorOrganization** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. <span style="text-decoration: underline">*Default*</span>: true
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. <span style="text-decoration: underline">*Default*</span>: .compatignore
@@ -497,12 +501,15 @@ Name | Type | Description
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new License(project: Project, spdx: string)
+new License(project: Project, spdx: string, options: LicenseOptions)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **spdx** (<code>string</code>)  *No description*
+* **options** (<code>[LicenseOptions](#projen-licenseoptions)</code>)  *No description*
+  * **copyrightOwner** (<code>string</code>)  Copyright owner. <span style="text-decoration: underline">*Default*</span>: ""
+  * **copyrightPeriod** (<code>string</code>)  Period of license (e.g. "1998-2023"). <span style="text-decoration: underline">*Default*</span>: current year (e.g. "2020")
 
 
 
@@ -629,6 +636,8 @@ new NodeProject(options: NodeProjectOptions)
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. <span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. <span style="text-decoration: underline">*Default*</span>: current year
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -648,6 +657,7 @@ new NodeProject(options: NodeProjectOptions)
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorOrganization** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -961,6 +971,8 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. <span style="text-decoration: underline">*Default*</span>: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. <span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. <span style="text-decoration: underline">*Default*</span>: current year
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **keywords** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -980,6 +992,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **name** (<code>string</code>)  *No description* 
   * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **authorOrganization** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
   * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
@@ -1085,6 +1098,8 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1193,6 +1208,7 @@ Name | Type | Description
 **repository**🔹 | <code>string</code> | <span></span>
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
@@ -1200,6 +1216,8 @@ Name | Type | Description
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/><span style="text-decoration: underline">*Default*</span>: true
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/><span style="text-decoration: underline">*Default*</span>: .compatignore
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1264,6 +1282,20 @@ Name | Type | Description
 
 
 
+## struct LicenseOptions 🔹 <a id="projen-licenseoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**copyrightOwner**?🔹 | <code>string</code> | Copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: ""
+**copyrightPeriod**?🔹 | <code>string</code> | Period of license (e.g. "1998-2023").<br/><span style="text-decoration: underline">*Default*</span>: current year (e.g. "2020")
+
+
+
 ## struct MergifyOptions 🔹 <a id="projen-mergifyoptions"></a>
 
 
@@ -1323,11 +1355,14 @@ Name | Type | Description
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
@@ -1395,11 +1430,14 @@ Name | Type | Description
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
 **authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
 **authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>

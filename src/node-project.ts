@@ -126,6 +126,19 @@ export interface CommonOptions {
    * @default "latest"
    */
   readonly npmDistTag?: string;
+
+  /**
+   * License copyright owner.
+   *
+   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
+   */
+  readonly copyrightOwner?: string;
+
+  /**
+   * The copyright years to put in the LICENSE file.
+   * @default - current year
+   */
+  readonly copyrightPeriod?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -236,7 +249,10 @@ export class NodeProject extends Project {
     // set license and produce license file
     const license = options.license ?? 'Apache-2.0';
     this.manifest.license = license;
-    new License(this, license);
+    new License(this, license, {
+      copyrightOwner: options.copyrightOwner ?? options.authorName,
+      copyrightPeriod: options.copyrightPeriod,
+    });
 
     this.addScripts({ projen: `node ${PROJEN_RC} && yarn install` });
     this.addScripts({ 'projen:upgrade': 'yarn upgrade projen && yarn projen' });

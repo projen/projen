@@ -23,7 +23,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }
-  ],
+  ]
 });
 
 project.addScripts({
