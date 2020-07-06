@@ -630,7 +630,7 @@ new NodeProject(options: NodeProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
@@ -654,19 +654,19 @@ new NodeProject(options: NodeProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. <span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
-  * **name** (<code>string</code>)  *No description* 
-  * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorOrganization** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. <span style="text-decoration: underline">*Optional*</span>
+  * **authorName** (<code>string</code>)  Author's name. <span style="text-decoration: underline">*Optional*</span>
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. <span style="text-decoration: underline">*Optional*</span>
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. <span style="text-decoration: underline">*Optional*</span>
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. <span style="text-decoration: underline">*Optional*</span>
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. <span style="text-decoration: underline">*Optional*</span>
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. <span style="text-decoration: underline">*Optional*</span>
+  * **license** (<code>string</code>)  License's SPDX identifier. <span style="text-decoration: underline">*Optional*</span>
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. <span style="text-decoration: underline">*Optional*</span>
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. <span style="text-decoration: underline">*Optional*</span>
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. <span style="text-decoration: underline">*Optional*</span>
+  * **stability** (<code>string</code>)  Package's Stability. <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -839,7 +839,7 @@ new Project(options?: ProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
 
 
 
@@ -965,7 +965,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
@@ -989,19 +989,19 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. <span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. <span style="text-decoration: underline">*Default*</span>: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. <span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
-  * **name** (<code>string</code>)  *No description* 
-  * **authorEmail** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorOrganization** (<code>boolean</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **authorUrl** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **description** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **gitignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **homepage** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **license** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **npmignore** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **repository** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **repositoryDirectory** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
-  * **stability** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Optional*</span>
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. <span style="text-decoration: underline">*Optional*</span>
+  * **authorName** (<code>string</code>)  Author's name. <span style="text-decoration: underline">*Optional*</span>
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. <span style="text-decoration: underline">*Optional*</span>
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. <span style="text-decoration: underline">*Optional*</span>
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. <span style="text-decoration: underline">*Optional*</span>
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. <span style="text-decoration: underline">*Optional*</span>
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. <span style="text-decoration: underline">*Optional*</span>
+  * **license** (<code>string</code>)  License's SPDX identifier. <span style="text-decoration: underline">*Optional*</span>
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. <span style="text-decoration: underline">*Optional*</span>
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. <span style="text-decoration: underline">*Optional*</span>
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. <span style="text-decoration: underline">*Optional*</span>
+  * **stability** (<code>string</code>)  Package's Stability. <span style="text-decoration: underline">*Optional*</span>
   * **eslint** (<code>boolean</code>)  Setup eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. <span style="text-decoration: underline">*Default*</span>: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: default options
@@ -1351,12 +1351,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | <span></span>
+**name**🔹 | <code>string</code> | This is the name of your package.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
-**authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorOrganization**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorName**?🔹 | <code>string</code> | Author's name.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/><span style="text-decoration: underline">*Optional*</span>
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1364,17 +1364,17 @@ Name | Type | Description
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/><span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**gitignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/><span style="text-decoration: underline">*Optional*</span>
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/><span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
-**npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1382,9 +1382,9 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
-**repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**repositoryDirectory**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/><span style="text-decoration: underline">*Optional*</span>
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
@@ -1413,7 +1413,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
+**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 
 
 
@@ -1426,12 +1426,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | <span></span>
+**name**🔹 | <code>string</code> | This is the name of your package.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
-**authorEmail**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorOrganization**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
-**authorUrl**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorName**?🔹 | <code>string</code> | Author's name.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/><span style="text-decoration: underline">*Optional*</span>
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1439,22 +1439,22 @@ Name | Type | Description
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**description**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/><span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
-**gitignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**homepage**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/><span style="text-decoration: underline">*Optional*</span>
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: default options
 **keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**license**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/><span style="text-decoration: underline">*Optional*</span>
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
-**npmignore**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**outdir**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: . current directory
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1462,9 +1462,9 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
-**repository**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**repositoryDirectory**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
-**stability**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Optional*</span>
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/><span style="text-decoration: underline">*Optional*</span>
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image

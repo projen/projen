@@ -3,6 +3,7 @@ import { IgnoreFile } from './ignore-file';
 
 export interface ProjectOptions {
   /**
+   * Where to put the generated project files.
    * @default . current directory
    */
   readonly outdir?: string;
