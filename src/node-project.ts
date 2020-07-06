@@ -142,20 +142,76 @@ export interface CommonOptions {
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
+  /**
+   * This is the name of your package. It gets used in URLs, as an argument on the command line,
+   * and as the directory name inside node_modules.
+   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
+   */
   readonly name: string;
+
+  /**
+   * The description is just a string that helps people understand the purpose of the package.
+   * It can be used when searching for packages in a package manager as well.
+   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-description
+   */
   readonly description?: string;
+
+  /**
+   * The repository is the location where the actual code for your package lives.
+   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-repository
+   */
   readonly repository?: string;
+
+  /**
+   * If the package.json for your package is not in the root directory (for example if it is part of a monorepo),
+   * you can specify the directory in which it lives.
+   */
   readonly repositoryDirectory?: string;
 
+  /**
+   * Author's name
+   */
   readonly authorName?: string;
+
+  /**
+   * Author's e-mail
+   */
   readonly authorEmail?: string;
+
+  /**
+   * Author's URL / Website
+   */
   readonly authorUrl?: string;
+
+  /**
+   * Author's Organization
+   */
   readonly authorOrganization?: boolean;
 
+  /**
+   * Package's Homepage / Website
+   */
   readonly homepage?: string;
+
+  /**
+   * License's SPDX identifier.
+   * See https://github.com/eladb/projen/tree/master/license-text for a list of supported licenses.
+   */
   readonly license?: string;
+
+  /**
+   * Package's Stability
+   */
   readonly stability?: string;
+
+  /**
+   * Additional entries to .gitignore
+   */
   readonly gitignore?: string[];
+
+  /**
+   * Additional entries to .npmignore
+   */
   readonly npmignore?: string[];
 }
 
@@ -243,8 +299,21 @@ export class NodeProject extends Project {
     this.addBundledDependencies(...options.bundledDependencies ?? []);
 
     this.npmignore = new IgnoreFile(this, '.npmignore');
-
     this.addDefaultGitIgnore();
+
+    if (options.gitignore?.length) {
+      this.gitignore.comment('custom gitignore entries')
+      for (const i of options.gitignore) {
+        this.gitignore.exclude(i);
+      }
+    }
+
+    if (options.npmignore?.length) {
+      this.npmignore.comment('custom npmignore entries')
+      for (const i of options.npmignore) {
+        this.npmignore.exclude(i);
+      }
+    }
 
     // set license and produce license file
     const license = options.license ?? 'Apache-2.0';
