@@ -630,7 +630,7 @@ new NodeProject(options: NodeProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  Where to put the generated project files. <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
@@ -839,7 +839,7 @@ new Project(options?: ProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  Where to put the generated project files. <span style="text-decoration: underline">*Default*</span>: . current directory
 
 
 
@@ -965,7 +965,7 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 
 <span style="text-decoration: underline">Parameters:</span>
 * **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  The directory where files will be generated. <span style="text-decoration: underline">*Default*</span>: . current directory
+  * **outdir** (<code>string</code>)  Where to put the generated project files. <span style="text-decoration: underline">*Default*</span>: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. <span style="text-decoration: underline">*Default*</span>: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. <span style="text-decoration: underline">*Default*</span>: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. <span style="text-decoration: underline">*Optional*</span>
@@ -1374,7 +1374,7 @@ Name | Type | Description
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
-**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
+**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
@@ -1413,7 +1413,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
+**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 
 
 
@@ -1454,7 +1454,7 @@ Name | Type | Description
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
-**outdir**?🔹 | <code>string</code> | The directory where files will be generated.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
+**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
