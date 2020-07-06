@@ -284,6 +284,28 @@ export class JsiiProject extends NodeProject {
         exclude: [
           'node_modules',
         ],
+        compilerOptions: {
+          alwaysStrict: true,
+          declaration: true,
+          experimentalDecorators: true,
+          inlineSourceMap: true,
+          inlineSources: true,
+          lib: [ 'es2018' ],
+          module: 'CommonJS',
+          noEmitOnError: true,
+          noFallthroughCasesInSwitch: true,
+          noImplicitAny: true,
+          noImplicitReturns: true,
+          noImplicitThis: true,
+          noUnusedLocals: true,
+          noUnusedParameters: true,
+          resolveJsonModule: true,
+          strict: true,
+          strictNullChecks: true,
+          strictPropertyInitialization: true,
+          stripInternal: true,
+          target: 'ES2018',
+        },
       });
 
       // make sure to delete "lib" *before* runninng tests to ensure that

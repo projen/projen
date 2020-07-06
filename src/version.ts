@@ -41,7 +41,7 @@ export class Version extends Construct {
     const versionFile = `${this.project.outdir}/${VERSION_FILE}`;
     if (!fs.existsSync(versionFile)) {
       if (!fs.existsSync(this.project.outdir)) {
-        fs.mkdirSync(this.project.outdir);
+        fs.mkdirSync(this.project.outdir, { recursive: true });
       }
       fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
     }

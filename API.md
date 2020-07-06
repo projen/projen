@@ -43,6 +43,7 @@ Name|Description
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
+[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 
 
@@ -1002,13 +1003,25 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. <span style="text-decoration: underline">*Optional*</span>
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. <span style="text-decoration: underline">*Optional*</span>
   * **stability** (<code>string</code>)  Package's Stability. <span style="text-decoration: underline">*Optional*</span>
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. <span style="text-decoration: underline">*Default*</span>: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. <span style="text-decoration: underline">*Default*</span>: 'API'
   * **eslint** (<code>boolean</code>)  Setup eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. <span style="text-decoration: underline">*Default*</span>: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: default options
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. <span style="text-decoration: underline">*Default*</span>: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. <span style="text-decoration: underline">*Default*</span>: default options
+  * **tsconfigOptions** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. <span style="text-decoration: underline">*Optional*</span>
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. <span style="text-decoration: underline">*Default*</span>: ^3.9.5
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**docsDirectory**🔹 | <code>string</code> | <span></span>
+**docgen**?🔹 | <code>boolean</code> | <span style="text-decoration: underline">*Optional*</span>
 
 
 
@@ -1027,13 +1040,13 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new TypescriptConfig(project: NodeProject, options?: TypescriptConfigOptions)
+new TypescriptConfig(project: NodeProject, options: TypescriptConfigOptions)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description*
-  * **compilerOptions** (<code>any</code>)  Compiler options to use. <span style="text-decoration: underline">*Default*</span>: see above
+  * **compilerOptions** (<code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
   * **fileName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
   * **include** (<code>Array<string></code>)  The directory in which typescript sources reside. <span style="text-decoration: underline">*Default*</span>: all .ts files recursively
@@ -1045,7 +1058,7 @@ new TypescriptConfig(project: NodeProject, options?: TypescriptConfigOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**compilerOptions**🔹 | <code>any</code> | <span></span>
+**compilerOptions**🔹 | <code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
@@ -1441,6 +1454,8 @@ Name | Type | Description
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/><span style="text-decoration: underline">*Optional*</span>
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/><span style="text-decoration: underline">*Default*</span>: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/><span style="text-decoration: underline">*Default*</span>: 'API'
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/><span style="text-decoration: underline">*Optional*</span>
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/><span style="text-decoration: underline">*Optional*</span>
@@ -1465,10 +1480,45 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/><span style="text-decoration: underline">*Optional*</span>
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/><span style="text-decoration: underline">*Optional*</span>
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/><span style="text-decoration: underline">*Optional*</span>
+**tsconfigOptions**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/><span style="text-decoration: underline">*Optional*</span>
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
+
+
+
+## struct TypescriptConfigCompilerOptions 🔹 <a id="projen-typescriptconfigcompileroptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**alwaysStrict**?🔹 | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.<br/><span style="text-decoration: underline">*Default*</span>: true
+**declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/><span style="text-decoration: underline">*Optional*</span>
+**declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/><span style="text-decoration: underline">*Optional*</span>
+**experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/><span style="text-decoration: underline">*Default*</span>: true
+**inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps,  TypeScript will embed the source map content in the .js files.<br/><span style="text-decoration: underline">*Default*</span>: true
+**inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded  string in the source map. This is often useful in the same cases as inlineSourceMap.<br/><span style="text-decoration: underline">*Default*</span>: true
+**lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/><span style="text-decoration: underline">*Default*</span>: [ 'es2018' ]
+**module**?🔹 | <code>string</code> | Sets the module system for the program.<br/><span style="text-decoration: underline">*Default*</span>: 'CommonJS'
+**noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noFallthroughCasesInSwitch**?🔹 | <code>boolean</code> | Report errors for fallthrough cases in switch statements.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noImplicitAny**?🔹 | <code>boolean</code> | In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noImplicitReturns**?🔹 | <code>boolean</code> | When enabled, TypeScript will check all code paths in a function to ensure they  return a value.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noImplicitThis**?🔹 | <code>boolean</code> | Raise error on ‘this’ expressions with an implied ‘any’ type.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noUnusedLocals**?🔹 | <code>boolean</code> | Report errors on unused local variables.<br/><span style="text-decoration: underline">*Default*</span>: true
+**noUnusedParameters**?🔹 | <code>boolean</code> | Report errors on unused parameters in functions.<br/><span style="text-decoration: underline">*Default*</span>: true
+**outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/><span style="text-decoration: underline">*Optional*</span>
+**resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice  in node projects. This includes generating a type for the import based on the static JSON shape.<br/><span style="text-decoration: underline">*Default*</span>: true
+**strict**?🔹 | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees  of program correctness.<br/><span style="text-decoration: underline">*Default*</span>: true
+**strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/><span style="text-decoration: underline">*Default*</span>: true
+**strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but  not set in the constructor.<br/><span style="text-decoration: underline">*Default*</span>: true
+**stripInternal**?🔹 | <code>boolean</code> | Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment.<br/><span style="text-decoration: underline">*Default*</span>: true
+**target**?🔹 | <code>string</code> | Modern browsers support all ES6 features, so ES6 is a good choice.<br/><span style="text-decoration: underline">*Default*</span>: 'ES2018'
 
 
 
@@ -1481,7 +1531,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**compilerOptions**?🔹 | <code>any</code> | Compiler options to use.<br/><span style="text-decoration: underline">*Default*</span>: see above
+**compilerOptions**🔹 | <code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code> | Compiler options to use.
 **exclude**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | The directory in which typescript sources reside.<br/><span style="text-decoration: underline">*Default*</span>: all .ts files recursively
