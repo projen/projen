@@ -42,8 +42,8 @@ Name|Description
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
+[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
-[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 
 
@@ -1004,13 +1004,13 @@ new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. <span style="text-decoration: underline">*Optional*</span>
   * **stability** (<code>string</code>)  Package's Stability. <span style="text-decoration: underline">*Optional*</span>
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. <span style="text-decoration: underline">*Default*</span>: false
-  * **docsDirectory** (<code>string</code>)  Docs directory. <span style="text-decoration: underline">*Default*</span>: 'API'
+  * **docsDirectory** (<code>string</code>)  Docs directory. <span style="text-decoration: underline">*Default*</span>: 'docs'
   * **eslint** (<code>boolean</code>)  Setup eslint. <span style="text-decoration: underline">*Default*</span>: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. <span style="text-decoration: underline">*Default*</span>: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. <span style="text-decoration: underline">*Default*</span>: default options
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. <span style="text-decoration: underline">*Default*</span>: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. <span style="text-decoration: underline">*Default*</span>: default options
-  * **tsconfigOptions** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. <span style="text-decoration: underline">*Optional*</span>
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. <span style="text-decoration: underline">*Optional*</span>
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. <span style="text-decoration: underline">*Default*</span>: ^3.9.5
 
 
@@ -1046,7 +1046,7 @@ new TypescriptConfig(project: NodeProject, options: TypescriptConfigOptions)
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description*
-  * **compilerOptions** (<code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code>)  Compiler options to use. 
+  * **compilerOptions** (<code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  *No description* <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
   * **fileName** (<code>string</code>)  *No description* <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
   * **include** (<code>Array<string></code>)  The directory in which typescript sources reside. <span style="text-decoration: underline">*Default*</span>: all .ts files recursively
@@ -1058,7 +1058,7 @@ new TypescriptConfig(project: NodeProject, options: TypescriptConfigOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**compilerOptions**🔹 | <code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code> | <span></span>
+**compilerOptions**🔹 | <code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
@@ -1430,65 +1430,7 @@ Name | Type | Description
 
 
 
-## struct TypeScriptLibraryProjectOptions 🔹 <a id="projen-typescriptlibraryprojectoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
-**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
-**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/><span style="text-decoration: underline">*Optional*</span>
-**authorName**?🔹 | <code>string</code> | Author's name.<br/><span style="text-decoration: underline">*Optional*</span>
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/><span style="text-decoration: underline">*Optional*</span>
-**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/><span style="text-decoration: underline">*Optional*</span>
-**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
-**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
-**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
-**bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
-**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
-**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/><span style="text-decoration: underline">*Optional*</span>
-**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/><span style="text-decoration: underline">*Default*</span>: false
-**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/><span style="text-decoration: underline">*Default*</span>: 'API'
-**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
-**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/><span style="text-decoration: underline">*Optional*</span>
-**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/><span style="text-decoration: underline">*Optional*</span>
-**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
-**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: default options
-**keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
-**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/><span style="text-decoration: underline">*Optional*</span>
-**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
-**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
-**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
-**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
-**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
-**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
-**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
-**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
-**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
-**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/><span style="text-decoration: underline">*Optional*</span>
-**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/><span style="text-decoration: underline">*Optional*</span>
-**stability**?🔹 | <code>string</code> | Package's Stability.<br/><span style="text-decoration: underline">*Optional*</span>
-**tsconfigOptions**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/><span style="text-decoration: underline">*Optional*</span>
-**typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
-**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
-**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
-
-
-
-## struct TypescriptConfigCompilerOptions 🔹 <a id="projen-typescriptconfigcompileroptions"></a>
+## struct TypeScriptCompilerOptions 🔹 <a id="projen-typescriptcompileroptions"></a>
 
 
 
@@ -1522,6 +1464,64 @@ Name | Type | Description
 
 
 
+## struct TypeScriptLibraryProjectOptions 🔹 <a id="projen-typescriptlibraryprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/><span style="text-decoration: underline">*Default*</span>: true
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorName**?🔹 | <code>string</code> | Author's name.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/><span style="text-decoration: underline">*Optional*</span>
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/><span style="text-decoration: underline">*Optional*</span>
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/><span style="text-decoration: underline">*Optional*</span>
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/><span style="text-decoration: underline">*Default*</span>: true
+**bundledDependencies**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/><span style="text-decoration: underline">*Default*</span>: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/><span style="text-decoration: underline">*Default*</span>: current year
+**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/><span style="text-decoration: underline">*Optional*</span>
+**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/><span style="text-decoration: underline">*Default*</span>: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/><span style="text-decoration: underline">*Default*</span>: 'docs'
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/><span style="text-decoration: underline">*Default*</span>: true
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/><span style="text-decoration: underline">*Optional*</span>
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/><span style="text-decoration: underline">*Default*</span>: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/><span style="text-decoration: underline">*Default*</span>: default options
+**keywords**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Optional*</span>
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/><span style="text-decoration: underline">*Optional*</span>
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/><span style="text-decoration: underline">*Default*</span>: true
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/><span style="text-decoration: underline">*Default*</span>: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/><span style="text-decoration: underline">*Default*</span>: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/><span style="text-decoration: underline">*Default*</span>: "latest"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/><span style="text-decoration: underline">*Optional*</span>
+**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/><span style="text-decoration: underline">*Default*</span>: . current directory
+**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span style="text-decoration: underline">*Optional*</span>
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | <span style="text-decoration: underline">*Optional*</span>
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/><span style="text-decoration: underline">*Default*</span>: true
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/><span style="text-decoration: underline">*Default*</span>: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/><span style="text-decoration: underline">*Default*</span>: [ "master" ]
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/><span style="text-decoration: underline">*Default*</span>: true
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/><span style="text-decoration: underline">*Default*</span>: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/><span style="text-decoration: underline">*Optional*</span>
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/><span style="text-decoration: underline">*Optional*</span>
+**tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/><span style="text-decoration: underline">*Optional*</span>
+**typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/><span style="text-decoration: underline">*Default*</span>: ^3.9.5
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/><span style="text-decoration: underline">*Default*</span>: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/><span style="text-decoration: underline">*Default*</span>: same as `minNodeVersion`
+
+
+
 ## struct TypescriptConfigOptions 🔹 <a id="projen-typescriptconfigoptions"></a>
 
 
@@ -1531,7 +1531,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**compilerOptions**🔹 | <code>[TypescriptConfigCompilerOptions](#projen-typescriptconfigcompileroptions)</code> | Compiler options to use.
+**compilerOptions**🔹 | <code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code> | Compiler options to use.
 **exclude**?🔹 | <code>Array<string></code> | <span style="text-decoration: underline">*Default*</span>: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | <span style="text-decoration: underline">*Default*</span>: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | The directory in which typescript sources reside.<br/><span style="text-decoration: underline">*Default*</span>: all .ts files recursively
