@@ -55,7 +55,7 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   /**
    * Docs directory
    * 
-   * @default 'API'
+   * @default 'docs'
    */
   readonly docsDirectory?: string;
 
@@ -63,7 +63,7 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
    * Custom TSConfig
    * 
    */
-  readonly tsconfigOptions?: TypescriptConfigOptions;
+  readonly tsconfig?: TypescriptConfigOptions;
 }
 
 export class TypeScriptLibraryProject extends NodeProject {
@@ -74,7 +74,7 @@ export class TypeScriptLibraryProject extends NodeProject {
     super(options);
     
     this.docgen = options.docgen;
-    this.docsDirectory = options.docsDirectory || 'API/';
+    this.docsDirectory = options.docsDirectory || 'docs/';
 
     this.addScripts({
       compile: 'tsc',
@@ -108,7 +108,7 @@ export class TypeScriptLibraryProject extends NodeProject {
         stripInternal: true,
         target: 'ES2018',
       },
-      ...options.tsconfigOptions,
+      ...options.tsconfig,
     });
 
     this.gitignore.comment('exclude typescript compiler outputs');
@@ -169,10 +169,10 @@ export interface TypescriptConfigOptions {
    *
    * @default - see above
    */
-  readonly compilerOptions: TypescriptConfigCompilerOptions;
+  readonly compilerOptions: TypeScriptCompilerOptions;
 }
 
-export interface TypescriptConfigCompilerOptions {
+export interface TypeScriptCompilerOptions {
   /**
    * Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict”
    * for each source file.
@@ -343,7 +343,7 @@ export interface TypescriptConfigCompilerOptions {
 }
 
 export class TypescriptConfig extends Construct {
-  public readonly compilerOptions: TypescriptConfigCompilerOptions;
+  public readonly compilerOptions: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
