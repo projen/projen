@@ -77,8 +77,9 @@ new Eslint(project: NodeProject, options?: EslintOptions)
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[EslintOptions](#projen-eslintoptions)</code>)  *No description*
-  * **config** (<code>Map<string, any></code>)  *No description* 
-  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* 
+  * **config** (<code>Map<string, any></code>)  Your ESLint configuration. 
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  Your ESLint configuration's dependencies (parsers, plugins, configs, etc.). 
+  * **overrides** (<code>Map<string, any></code>)  A dictionary of functions, which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct. 
 
 
 
@@ -95,7 +96,7 @@ Name | Type | Description
 
 #### addRules(rules)🔹 <a id="projen-eslint-addrules"></a>
 
-
+Allows rules to be added to the config after construction.
 
 <span style="text-decoration: underline">Usage:</span>
 
@@ -104,7 +105,7 @@ addRules(rules: Map<string, any>): void
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
-* **rules** (<code>Map<string, any></code>)  *No description*
+* **rules** (<code>Map<string, any></code>)  - the dictionary of rules to add to the config.
 
 
 
@@ -1162,8 +1163,9 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**config**🔹 | <code>Map<string, any></code> | <span></span>
-**dependencies**🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span></span>
+**config**🔹 | <code>Map<string, any></code> | Your ESLint configuration.
+**dependencies**🔹 | <code>Map<string, [Semver](#projen-semver)></code> | Your ESLint configuration's dependencies (parsers, plugins, configs, etc.).
+**overrides**🔹 | <code>Map<string, any></code> | A dictionary of functions, which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct.
 
 
 

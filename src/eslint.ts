@@ -5,13 +5,22 @@ import { Semver } from './semver';
 
 export interface EslintOptions {
   /**
-   * Your ESLint configuration
+   * Your ESLint configuration.
+   * @default DEFAULT_CONFIG
    */
   readonly config: Record<string, any>;
   /**
-   * Your ESLint configuration's dependencies (parsers, plugins, configs, etc.)
+   * Your ESLint configuration's dependencies (parsers, plugins, configs, etc.).
+   * @default DEFAULT_DEPENDENCIES
    */
   readonly dependencies: Record<string, Semver>;
+  /**
+   * A dictionary of overrides (functions), which accepts the initial config[key]
+   * values––whether provided or defaulted––and return new config[key]-compatible
+   * values, which is to be used in instantiating the construct.
+   * @default identity
+   */
+  readonly overrides: Record<string, any>;
 }
 
 const DEFAULT_CONFIG = {
@@ -90,8 +99,11 @@ const DEFAULT_DEPENDENCIES = {
   'json-schema': Semver.caret('0.2.5'), // required by @typescript-eslint/parser
 };
 
+const DEFAULT_OVERRIDES: Record<string, any> = {};
+
 const DEFAULT_OPTIONS: EslintOptions = {
   config: DEFAULT_CONFIG,
+  overrides: DEFAULT_OVERRIDES, 
   dependencies: DEFAULT_DEPENDENCIES,
 }
 
@@ -103,7 +115,12 @@ export class Eslint extends Construct {
     super(project, 'eslint');
 
     this.dependencies = options.dependencies;
-    this.config = options.config;
+    this.config = Object.entries(options.overrides).reduce((acc, [configKey, override]) => {
+      return {
+        ...acc,
+        [configKey]: override(acc[configKey]),
+      }
+    }, options.config)
 
     project.addDevDependencies(this.dependencies);
 
@@ -120,7 +137,7 @@ export class Eslint extends Construct {
 
   /**
    * Allows rules to be added to the config after construction.
-   * @param comment 
+   * @param rules - the dictionary of rules to add to the config.
    */
   public addRules(rules: { [rule: string]: any }) {
     if (!this.config.rules) {
