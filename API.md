@@ -28,7 +28,7 @@ Name|Description
 ----|-----------
 [CommonOptions](#projen-commonoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
-[EslintOptions](#projen-eslintoptions)|Options to customize the resulting ESLint configuration.
+[EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
@@ -1157,7 +1157,7 @@ Name | Type | Description
 ## struct EslintOptions 🔹 <a id="projen-eslintoptions"></a>
 
 
-Options to customize the resulting ESLint configuration.
+
 
 
 

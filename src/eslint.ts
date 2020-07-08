@@ -3,23 +3,22 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
-/**
- * Options to customize the resulting ESLint configuration
- * @default DEFAULT_OPTIONS
- */
 export interface EslintOptions {
   /**
    * Your ESLint configuration.
+   * @default DEFAULT_CONFIG
    */
   readonly config: Record<string, any>;
   /**
    * Your ESLint configuration's dependencies (parsers, plugins, configs, etc.).
+   * @default DEFAULT_DEPENDENCIES
    */
   readonly dependencies: Record<string, Semver>;
   /**
    * A dictionary of overrides (functions), which accepts the initial config[key]
    * values––whether provided or defaulted––and return new config[key]-compatible
    * values, which is to be used in instantiating the construct.
+   * @default identity
    */
   readonly overrides: Record<string, any>;
 }
