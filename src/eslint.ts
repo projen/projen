@@ -32,7 +32,6 @@ export class Eslint extends Construct {
       env: {
         jest: true,
         node: true,
-        browser: false,
       },
       plugins: [
         '@typescript-eslint',
@@ -57,7 +56,13 @@ export class Eslint extends Construct {
           },
         },
       },
-      ignorePatterns: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts' ],
+      ignorePatterns: [
+        '*.js',
+        '*.d.ts',
+        'node_modules/',
+        '*.generated.ts',
+        'coverage',
+      ],
       rules: {
         // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
         '@typescript-eslint/no-require-imports': [ 'error' ],
@@ -99,5 +104,11 @@ export class Eslint extends Construct {
     project.npmignore.exclude('/.eslintrc.json');
 
     new JsonFile(project, '.eslintrc.json', {obj: this.config});
+  }
+
+  public addRules(rules: { [rule: string]: any }) {
+    for (const [k,v] of Object.entries(rules)) {
+      this.config.rules[k] = v;
+    }
   }
 }

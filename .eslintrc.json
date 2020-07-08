@@ -34,7 +34,8 @@
     "*.js",
     "*.d.ts",
     "node_modules/",
-    "*.generated.ts"
+    "*.generated.ts",
+    "coverage"
   ],
   "rules": {
     "@typescript-eslint/no-require-imports": [

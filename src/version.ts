@@ -40,6 +40,9 @@ export class Version extends Construct {
   public get current() {
     const versionFile = `${this.project.outdir}/${VERSION_FILE}`;
     if (!fs.existsSync(versionFile)) {
+      if (!fs.existsSync(this.project.outdir)) {
+        fs.mkdirpSync(this.project.outdir);
+      }
       fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
     }
 

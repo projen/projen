@@ -138,12 +138,6 @@ See [API Reference](./API.md) for API details.
 * `test/` - `.ts` files for jest tests. Those will not be included in your npm module.
 * `bin/` - CLI executables (not .ts files!). See details below on how to define CLIs.
 
-#### npm Scripts
-
-jsii projects include a few useful npm scripts for your workflow:
-
-*
-
 #### Testing
 
 **jest** is used for unit tests. Write your unit test files under `test/` so they won't be

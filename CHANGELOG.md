@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/eladb/projen/compare/v0.2.4...v0.2.5) (2020-07-05)
+
+
+### Features
+
+* **license:** copyright period and owner ([7a695a7](https://github.com/eladb/projen/commit/7a695a76460ceb6ee6a8db1e07a34c29a2fbbcae))
+* **node,jsii:** authorOrganization ([e773a0d](https://github.com/eladb/projen/commit/e773a0dcab0ace15cabca4db8dbc95924248e7ad))
+* **node,jsii:** releaseBranches ([752c080](https://github.com/eladb/projen/commit/752c080ba45da5dcaca9a225ffc787713ffd11c0))
+
+### [0.2.4](https://github.com/eladb/projen/compare/v0.2.3...v0.2.4) (2020-07-05)
+
+
+### Features
+
+* **eslint:** ignore "coverage" directory ([6249d0e](https://github.com/eladb/projen/commit/6249d0eba49edc484d16c3409694b85a0fe0becf))
+* **jsii:** API compatibility checks by default ([d9f6a9a](https://github.com/eladb/projen/commit/d9f6a9a1dd6277522df1d205d7db1f99b4c7fd25))
+* **node,jsii:** npmDistTag ([142e591](https://github.com/eladb/projen/commit/142e5918f793784e1c8c80e515b798b598449b0e))
+
+### [0.2.3](https://github.com/eladb/projen/compare/v0.2.2...v0.2.3) (2020-06-23)
+
+
+### Features
+
+* **typescript:** npm ignore tsconfig.jest.json ([fda5367](https://github.com/eladb/projen/commit/fda53671428782afd674da161c6fde9b459b1816))
+
 ### [0.2.2](https://github.com/eladb/projen/compare/v0.2.1...v0.2.2) (2020-06-19)
 
 

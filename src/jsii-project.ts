@@ -28,6 +28,7 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly authorName: string;
   readonly authorEmail?: string;
   readonly authorUrl?: string;
+  readonly authorOrganization?: boolean;
   readonly license?: string;
   readonly stability?: string;
 
@@ -88,6 +89,23 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default "test"
    */
   readonly testdir?: string;
+
+  /**
+   * Automatically run API compatibility test against the latest version published to npm after compilation.
+   *
+   * - You can manually run compatbility tests using `yarn compat` if this feature is disabled.
+   * - You can ignore compatibility failures by adding lines to a ".compatignore" file.
+   *
+   * @default true
+   */
+  readonly compat?: boolean;
+
+  /**
+   * Name of the ignore file for API compatibility tests.
+   *
+   * @default .compatignore
+   */
+  readonly compatIgnore?: string;
 }
 
 export enum Stability {
@@ -143,10 +161,12 @@ export class JsiiProject extends NodeProject {
     // this is an unhelpful warning
     const jsiiFlags = '--silence-warnings=reserved-word';
 
+    const compatIgnore = options.compatIgnore ?? '.compatignore';
+
     this.addScripts({
       compile: Lazy.stringValue({ produce: () => this.renderCompileCommand() }),
       watch: `jsii -w ${jsiiFlags}`,
-      compat: 'npx jsii-diff npm:$(node -p "require(\'./package.json\').name")',
+      compat: `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
       package: 'jsii-pacmak',
 
       // we runn "test" first because it deletes "lib/"
@@ -264,6 +284,28 @@ export class JsiiProject extends NodeProject {
         exclude: [
           'node_modules',
         ],
+        compilerOptions: {
+          alwaysStrict: true,
+          declaration: true,
+          experimentalDecorators: true,
+          inlineSourceMap: true,
+          inlineSources: true,
+          lib: [ 'es2018' ],
+          module: 'CommonJS',
+          noEmitOnError: true,
+          noFallthroughCasesInSwitch: true,
+          noImplicitAny: true,
+          noImplicitReturns: true,
+          noImplicitThis: true,
+          noUnusedLocals: true,
+          noUnusedParameters: true,
+          resolveJsonModule: true,
+          strict: true,
+          strictNullChecks: true,
+          strictPropertyInitialization: true,
+          stripInternal: true,
+          target: 'ES2018',
+        },
       });
 
       // make sure to delete "lib" *before* runninng tests to ensure that
@@ -300,6 +342,11 @@ export class JsiiProject extends NodeProject {
           delete_head_branch: { },
         },
       });
+    }
+
+    const compat = options.compat ?? true;
+    if (compat) {
+      this.addCompileCommand('yarn compat');
     }
   }
 
@@ -341,6 +388,7 @@ export class JsiiProject extends NodeProject {
             run: 'npx -p jsii-release jsii-release-npm',
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+              NPM_DIST_TAG: this.npmDistTag,
             },
           },
         ],

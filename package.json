@@ -16,9 +16,9 @@
     "test": "yarn eslint && rm -fr lib/ && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
-    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
+    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen && yarn compat",
     "watch": "jsii -w --silence-warnings=reserved-word",
-    "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\")",
+    "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "package": "jsii-pacmak",
     "build": "yarn test && yarn compile && yarn run package",
     "docgen": "jsii-docgen",
@@ -29,7 +29,8 @@
   },
   "author": {
     "name": "Elad Ben-Israel",
-    "email": "benisrae@amazon.com"
+    "email": "benisrae@amazon.com",
+    "organization": false
   },
   "devDependencies": {
     "constructs": "2.0.1",
@@ -69,7 +70,7 @@
     "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
