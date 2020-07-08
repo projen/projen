@@ -79,7 +79,7 @@ new Eslint(project: NodeProject, options?: EslintOptions)
 * **options** (<code>[EslintOptions](#projen-eslintoptions)</code>)  *No description*
   * **config** (<code>Map<string, any></code>)  Your ESLint configuration. 
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  Your ESLint configuration's dependencies (parsers, plugins, configs, etc.). 
-  * **overrides** (<code>Map<string, any></code>)  A dictionary of functions, which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct. 
+  * **overrides** (<code>Map<string, any></code>)  A dictionary of overrides (functions), which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct. 
 
 
 
@@ -1165,7 +1165,7 @@ Name | Type | Description
 -----|------|-------------
 **config**🔹 | <code>Map<string, any></code> | Your ESLint configuration.
 **dependencies**🔹 | <code>Map<string, [Semver](#projen-semver)></code> | Your ESLint configuration's dependencies (parsers, plugins, configs, etc.).
-**overrides**🔹 | <code>Map<string, any></code> | A dictionary of functions, which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct.
+**overrides**🔹 | <code>Map<string, any></code> | A dictionary of overrides (functions), which accepts the initial config[key] values––whether provided or defaulted––and return new config[key]-compatible values, which is to be used in instantiating the construct.
 
 
 

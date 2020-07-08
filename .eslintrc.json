@@ -3,16 +3,24 @@
     "jest": true,
     "node": true
   },
-  "plugins": ["@typescript-eslint", "import"],
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "2018",
     "sourceType": "module"
   },
-  "extends": ["plugin:import/typescript"],
+  "extends": [
+    "plugin:import/typescript"
+  ],
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx"]
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
     },
     "import/resolver": {
       "node": {},
@@ -29,9 +37,16 @@
     "coverage"
   ],
   "rules": {
-    "@typescript-eslint/no-require-imports": ["error"],
-    "indent": ["off"],
-    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-require-imports": [
+      "error"
+    ],
+    "indent": [
+      "off"
+    ],
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
     "quotes": [
       "error",
       "single",
@@ -39,7 +54,10 @@
         "avoidEscape": true
       }
     ],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "quote-props": [
       "error",
       "consistent-as-needed",
@@ -50,11 +68,16 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["**/build-tools/**", "**/test/**"],
+        "devDependencies": [
+          "**/build-tools/**",
+          "**/test/**"
+        ],
         "optionalDependencies": false,
         "peerDependencies": true
       }
     ],
-    "import/no-unresolved": ["error"]
+    "import/no-unresolved": [
+      "error"
+    ]
   }
 }
