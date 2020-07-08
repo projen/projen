@@ -1,18 +1,17 @@
-import type { Linter } from 'eslint';
 import { Construct } from 'constructs';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
 export interface EslintOptions {
-  config: Linter.Config;
-  dependencies: Record<string, Semver>;
+  readonly config: Record<string, any>;
+  readonly dependencies: Record<string, Semver>;
 }
 
 export class Eslint extends Construct {
   // (not "dev" dependencies, given that its relative to the construct, not the end workspace)
   public readonly dependencies: Record<string, Semver>;
-  public readonly config: Linter.Config;
+  public readonly config: Record<string, any>;
 
   constructor(project: NodeProject, options?: EslintOptions) {
     super(project, 'eslint');
@@ -107,6 +106,10 @@ export class Eslint extends Construct {
   }
 
   public addRules(rules: { [rule: string]: any }) {
+    if (!this.config.rules) {
+      this.config.rules = {};
+    }
+
     for (const [k,v] of Object.entries(rules)) {
       this.config.rules[k] = v;
     }

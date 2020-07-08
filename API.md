@@ -28,6 +28,7 @@ Name|Description
 ----|-----------
 [CommonOptions](#projen-commonoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
+[EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
@@ -70,11 +71,14 @@ Name|Description
 <span style="text-decoration: underline">Usage:</span>
 
 ```ts
-new Eslint(project: NodeProject)
+new Eslint(project: NodeProject, options?: EslintOptions)
 ```
 
 <span style="text-decoration: underline">Parameters:</span>
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[EslintOptions](#projen-eslintoptions)</code>)  *No description*
+  * **config** (<code>Map<string, any></code>)  *No description* 
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* 
 
 
 
@@ -83,7 +87,8 @@ new Eslint(project: NodeProject)
 
 Name | Type | Description 
 -----|------|-------------
-**rules**🔹 | <code>Map<string, Array<any>></code> | <span></span>
+**config**🔹 | <code>Map<string, any></code> | <span></span>
+**dependencies**🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span></span>
 
 ### Methods
 
@@ -1145,6 +1150,20 @@ Name | Type | Description
 **functions**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
 **lines**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
 **statements**?🔹 | <code>number</code> | <span style="text-decoration: underline">*Optional*</span>
+
+
+
+## struct EslintOptions 🔹 <a id="projen-eslintoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>Map<string, any></code> | <span></span>
+**dependencies**🔹 | <code>Map<string, [Semver](#projen-semver)></code> | <span></span>
 
 
 
