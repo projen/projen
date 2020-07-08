@@ -33,7 +33,7 @@
     "*.js",
     "*.d.ts",
     "node_modules/",
-    "templates/",
+    "templates/**",
     "*.generated.ts",
     "coverage"
   ],
