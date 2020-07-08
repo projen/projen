@@ -38,7 +38,7 @@ export class Eslint extends Construct {
       ],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        ecmaVersion: 2018,
+        ecmaVersion: '2018',
         sourceType: 'module',
       },
       extends: [
