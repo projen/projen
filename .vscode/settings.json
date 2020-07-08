@@ -1,3 +1,4 @@
 {
-  "eslint.enable": true
+  "eslint.enable": true,
+  "deno.enable": false
 }
