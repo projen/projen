@@ -283,6 +283,7 @@ export class JsiiProject extends NodeProject {
         ],
         exclude: [
           'node_modules',
+          'templates',
         ],
         compilerOptions: {
           alwaysStrict: true,
