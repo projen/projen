@@ -22,7 +22,8 @@ class Command implements yargs.CommandModule {
     try {
       fs.copySync(templatePath, '.', {recursive: true});
       process.stdout.write(`Projen project generated from the "${args['TEMPLATE']}" template. \n` +
-        'Now, go edit it, nothing there is what you want.\n');
+        'Now, go edit it (nothing there is what you want).\n' + 
+        'When you are done, simply run "npx projen" to get the magic going.\n');
     } catch (e) {
       process.stderr.write(`Error when trying to copy template files: ${e}\n`);
       throw e;
