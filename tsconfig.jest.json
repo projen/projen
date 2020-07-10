@@ -28,7 +28,6 @@
     "test/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "templates"
+    "node_modules"
   ]
 }
