@@ -90,8 +90,6 @@ export class Eslint extends Construct {
         ignorePatterns: [
           '*.js',
           '*.d.ts',
-          'node_modules/', // docs say ignored it's by default?
-          'templates/**',
           '*.generated.ts',
           'coverage',
         ],
