@@ -70,12 +70,16 @@ export class TypeScriptLibraryProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
 
+  protected readonly srcdir: string;
+  protected readonly libdir: string;
+  protected readonly testdir: string;
+
   constructor(options: TypeScriptLibraryProjectOptions) {
     super(options);
-    
-    const srcdir = 'src';
-    const testdir = 'test';
-    const libdir = 'lib';
+
+    this.srcdir = options.srcdir ?? 'src';
+    this.libdir = options.libdir ?? 'lib';
+    this.testdir = options.testdir ?? 'test';
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
@@ -88,6 +92,8 @@ export class TypeScriptLibraryProject extends NodeProject {
       // we run "test" first because it deletes "lib/"
       build: 'yarn test && yarn compile && yarn run package',
     });
+
+    this.manifest.types = `${this.libdir}/index.d.ts`;
 
     const compilerOptions = {
       alwaysStrict: true,
@@ -113,32 +119,36 @@ export class TypeScriptLibraryProject extends NodeProject {
     };
 
     new TypescriptConfig(this, {
-      include: [ `${srcdir}/**/*.ts` ],
+      include: [ `${this.srcdir}/**/*.ts` ],
       exclude: [ 'node_modules', 'lib' ],
       compilerOptions: {
-        rootDir: srcdir,
-        outDir: libdir,
+        rootDir: this.srcdir,
+        outDir: this.libdir,
         ...compilerOptions,
       },
       ...options.tsconfig,
     });
 
-    this.gitignore.comment('exclude typescript compiler outputs');
-    this.gitignore.exclude('*.d.ts');
-    this.gitignore.exclude('*.js');
-    this.gitignore.exclude('/dist/');
+    this.gitignore.exclude(`/${this.libdir}`);
+    this.npmignore.include(`/${this.libdir}`);
 
-    this.npmignore.comment('exclude typescript sources and configuration');
-    this.npmignore.exclude('*.ts', 'tsconfig.json');
-    this.npmignore.exclude('/dist/');
-    this.npmignore.exclude('/.github/');
-    this.npmignore.exclude('/.vscode/');
+    this.gitignore.include(`/${this.srcdir}`);
+    this.npmignore.exclude(`/${this.srcdir}`);
+
+    this.npmignore.include(`/${this.libdir}/**/*.js`);
+    this.npmignore.include(`/${this.libdir}/**/*.d.ts`);
+
+    this.gitignore.exclude('/dist');
+    this.npmignore.exclude('/dist');
+
+    this.npmignore.exclude('/tsconfig.json');
+    this.npmignore.exclude('/.github');
+    this.npmignore.exclude('/.vscode');
     this.npmignore.exclude('/.projenrc.js');
-    this.npmignore.exclude('/src/');
 
-    this.npmignore.comment('include javascript files and typescript declarations');
-    this.npmignore.include('/lib/**/*.js');
-    this.npmignore.include('/lib/**/*.d.ts');
+    if (options.eslint ?? true) {
+      new Eslint(this);
+    }
 
     if (options.jest ?? true) {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
@@ -146,8 +156,8 @@ export class TypeScriptLibraryProject extends NodeProject {
       const tsconfig = new TypescriptConfig(this, {
         fileName: 'tsconfig.jest.json',
         include: [
-          `${srcdir}/**/*.ts`,
-          `${testdir}/**/*.ts`,
+          `${this.srcdir}/**/*.ts`,
+          `${this.testdir}/**/*.ts`,
         ],
         exclude: [
           'node_modules',
@@ -157,20 +167,15 @@ export class TypeScriptLibraryProject extends NodeProject {
 
       // make sure to delete "lib" *before* runninng tests to ensure that
       // test code does not take a dependency on "lib" and instead on "src".
-      this.addTestCommands('rm -fr lib/');
+      this.addTestCommands(`rm -fr ${this.libdir}/`);
 
       new Jest(this, {
         typescript: tsconfig,
         ...options.jestOptions,
       });
 
-      this.npmignore.exclude('/test');
-      this.npmignore.exclude('/coverage');
-      this.gitignore.exclude('/coverage');
-    }
-
-    if (options.eslint ?? true) {
-      new Eslint(this);
+      this.gitignore.include(`/${this.testdir}`);
+      this.npmignore.exclude(`/${this.testdir}`);
     }
 
     this.addDevDependencies({
@@ -179,7 +184,30 @@ export class TypeScriptLibraryProject extends NodeProject {
     });
 
     if (options.mergify ?? true) {
-      new Mergify(this, options.mergifyOptions);
+      const m = new Mergify(this, options.mergifyOptions);
+
+      m.addRule({
+        name: 'Automatic merge on approval and successful build',
+        conditions: [
+          '#approved-reviews-by>=1',
+          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
+        ],
+        actions: {
+          merge: {
+            // squash all commits into a single commit when merging
+            method: 'squash',
+
+            // use PR title+body as the commit message
+            commit_message: 'title+body',
+
+            // update PR branch so it's up-to-date before merging
+            strict: 'smart',
+            strict_method: 'merge',
+          },
+          delete_head_branch: { },
+        },
+      });
+
       this.npmignore.exclude('/.mergify.yml');
     }
 

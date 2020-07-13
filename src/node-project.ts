@@ -139,6 +139,27 @@ export interface CommonOptions {
    * @default - current year
    */
   readonly copyrightPeriod?: string;
+
+  /**
+   * Compiler artifacts output directory
+   *
+   * @default "lib"
+   */
+  readonly libdir?: string;
+
+  /**
+   * Typescript sources directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+
+  /**
+   * Tests directory.
+   *
+   * @default "test"
+   */
+  readonly testdir?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -225,7 +246,7 @@ export class NodeProject extends Project {
   private readonly scripts: Record<string, string> = { };
   private readonly bin: Record<string, string> = { };
 
-  private readonly manifest: any;
+  public readonly manifest: any;
   private readonly testCommands = new Array<string>();
   private readonly _version: Version;
 

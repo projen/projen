@@ -1,11 +1,10 @@
-import { NodeProject, CommonOptions } from './node-project';
+import { CommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
-import { Jest, JestOptions } from './jest';
-import { Mergify } from './mergify';
+import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { Lazy } from 'constructs';
-import { TypescriptConfig } from './typescript';
+import { TypeScriptLibraryProject } from './typescript';
 
 const DEFAULT_JSII_VERSION = '1.6.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -70,27 +69,6 @@ export interface JsiiProjectOptions extends CommonOptions {
   readonly docgen?: boolean;
 
   /**
-   * Compiler artifacts output directory
-   *
-   * @default "lib"
-   */
-  readonly outdir?: string;
-
-  /**
-   * Typescript sources directory.
-   *
-   * @default "src"
-   */
-  readonly srcdir?: string;
-
-  /**
-   * Tests directory.
-   *
-   * @default "test"
-   */
-  readonly testdir?: string;
-
-  /**
    * Automatically run API compatibility test against the latest version published to npm after compilation.
    *
    * - You can manually run compatbility tests using `yarn compat` if this feature is disabled.
@@ -130,7 +108,7 @@ export interface JsiiDotNetTarget {
   readonly packageId: string;
 }
 
-export class JsiiProject extends NodeProject {
+export class JsiiProject extends TypeScriptLibraryProject {
   private readonly compileCommands: string[];
 
   public readonly eslint?: Eslint;
@@ -146,9 +124,9 @@ export class JsiiProject extends NodeProject {
       ...options,
     });
 
-    const srcdir = options.srcdir ?? 'src';
-    const outdir = options.outdir ?? 'lib';
-    const testdir = options.testdir ?? 'test';
+    const srcdir = this.srcdir;
+    const libdir = this.libdir;
+    // const testdir = this.testdir;
 
     this.compileCommands = new Array<string>();;
 
@@ -156,7 +134,7 @@ export class JsiiProject extends NodeProject {
       throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
     }
 
-    this.addFields({ types: `${outdir}/index.d.ts` });
+    this.addFields({ types: `${libdir}/index.d.ts` });
 
     // this is an unhelpful warning
     const jsiiFlags = '--silence-warnings=reserved-word';
@@ -188,18 +166,11 @@ export class JsiiProject extends NodeProject {
         outdir: 'dist',
         targets,
         tsc: {
-          outDir: outdir,
+          outDir: libdir,
           rootDir: srcdir,
         },
       },
     });
-
-    this.gitignore.exclude(`/${outdir}`);
-    this.gitignore.include(`/${srcdir}`);
-    this.gitignore.include(`/${testdir}`);
-    this.npmignore.include(`/${outdir}`);
-    this.npmignore.exclude(`/${srcdir}`);
-    this.npmignore.exclude(`/${testdir}`);
 
     this.publishToNpm();
 
@@ -243,105 +214,11 @@ export class JsiiProject extends NodeProject {
       '@types/node': Semver.caret(minNodeVersion),
     });
 
-    const eslint = options.eslint ?? true;
-    if (eslint) {
-      this.eslint = new Eslint(this);
-    }
-
-    this.gitignore.comment('exclude jsii outputs')
-    this.gitignore.exclude('dist', '.jsii', 'tsconfig.json');
-
-    this.gitignore.comment('exclude typescript compiler outputs');
-    this.gitignore.exclude('*.d.ts');
-    this.gitignore.exclude('*.js');
-
-    this.npmignore.comment('exclude typescript sources and configuration');
-    this.npmignore.exclude('*.ts', 'tsconfig.json');
-
-    this.npmignore.comment('include javascript files and typescript declarations');
-    this.npmignore.include('*.js');
-    this.npmignore.include('*.d.ts');
-
-    this.npmignore.comment('exclude jsii outdir');
-    this.npmignore.exclude('dist');
-
-    this.npmignore.comment('include .jsii manifest');
+    this.gitignore.exclude('.jsii', 'tsconfig.json');
     this.npmignore.include('.jsii');
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
-    }
-
-    if (options.jest ?? true) {
-      // create a tsconfig for jest that does NOT include outDir and rootDir and
-      // includes both "src" and "test" as inputs.
-      const tsconfig = new TypescriptConfig(this, {
-        fileName: 'tsconfig.jest.json',
-        include: [
-          `${srcdir}/**/*.ts`,
-          `${testdir}/**/*.ts`,
-        ],
-        exclude: [
-          'node_modules',
-        ],
-        compilerOptions: {
-          alwaysStrict: true,
-          declaration: true,
-          experimentalDecorators: true,
-          inlineSourceMap: true,
-          inlineSources: true,
-          lib: [ 'es2018' ],
-          module: 'CommonJS',
-          noEmitOnError: true,
-          noFallthroughCasesInSwitch: true,
-          noImplicitAny: true,
-          noImplicitReturns: true,
-          noImplicitThis: true,
-          noUnusedLocals: true,
-          noUnusedParameters: true,
-          resolveJsonModule: true,
-          strict: true,
-          strictNullChecks: true,
-          strictPropertyInitialization: true,
-          stripInternal: true,
-          target: 'ES2018',
-        },
-      });
-
-      // make sure to delete "lib" *before* runninng tests to ensure that
-      // test code does not take a dependency on "lib" and instead on "src".
-      this.addTestCommands('rm -fr lib/');
-
-      new Jest(this, {
-        typescript: tsconfig,
-        ...options.jestOptions,
-      });
-    }
-
-    const mergify = options.mergify ?? true;
-    if (mergify) {
-      const m = new Mergify(this);
-      m.addRule({
-        name: 'Automatic merge on approval and successful build',
-        conditions: [
-          '#approved-reviews-by>=1',
-          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
-        ],
-        actions: {
-          merge: {
-            // squash all commits into a single commit when merging
-            method: 'squash',
-
-            // use PR title+body as the commit message
-            commit_message: 'title+body',
-
-            // update PR branch so it's up-to-date before merging
-            strict: 'smart',
-            strict_method: 'merge',
-          },
-          delete_head_branch: { },
-        },
-      });
     }
 
     const compat = options.compat ?? true;

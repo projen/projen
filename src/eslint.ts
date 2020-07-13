@@ -25,8 +25,6 @@ export class Eslint extends Construct {
     project.addTestCommands('yarn eslint');
 
     // exclude some files
-    project.gitignore.exclude('/coverage');
-    project.npmignore.exclude('/coverage');
     project.npmignore.exclude('/.eslintrc.json');
 
     this.rules = {
@@ -90,6 +88,7 @@ export class Eslint extends Construct {
         ignorePatterns: [
           '*.js',
           '*.d.ts',
+          'node_modules/',
           '*.generated.ts',
           'coverage',
         ],

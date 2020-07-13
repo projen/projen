@@ -1,0 +1,4240 @@
+{
+  "author": {
+    "email": "benisrae@amazon.com",
+    "name": "Elad Ben-Israel",
+    "roles": [
+      "author"
+    ]
+  },
+  "bundled": {
+    "fs-extra": "^9.0.1",
+    "yaml": "^1.9.2",
+    "yargs": "^15.4.0"
+  },
+  "dependencies": {
+    "constructs": "2.0.1"
+  },
+  "dependencyClosure": {
+    "constructs": {
+      "targets": {
+        "dotnet": {
+          "namespace": "Constructs",
+          "packageId": "Constructs"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "constructs",
+            "groupId": "software.constructs"
+          },
+          "package": "software.constructs"
+        },
+        "js": {
+          "npm": "constructs"
+        },
+        "python": {
+          "distName": "constructs",
+          "module": "constructs"
+        }
+      }
+    }
+  },
+  "description": "A new generation of project generators",
+  "docs": {
+    "stability": "experimental"
+  },
+  "homepage": "https://github.com/eladb/projen.git",
+  "jsiiVersion": "1.5.0 (build 46538f8)",
+  "license": "Apache-2.0",
+  "name": "projen",
+  "readme": {
+    "markdown": "# projen\n\n> A new generation of project generators\n\n*projen* synthesizes project configuration files such as `package.json`, `tsconfig.json`, `.gitignore`, GitHub workflows, eslint, jest, etc from a well-typed definition.\n\nContrary to templating/scaffolding approaches, *projen* is not a one-off generator. Synthesized configuration is not expected to ever be maunally edited (in fact, projen enforces that). The source of truth is always `.projenrc.js`.\n\nProject types:\n\n* [NodeProject](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)\n* [TypeScriptLibraryProject](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)\n* [JsiiProject](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)\n\nFeatures (contributions are welcome!):\n\n* Package.json synthesis\n* Standard npm scripts\n* ESLint\n* Jest\n* jsii: compile, package, api compatibility checks, API.md\n* Bump & release scripts with CHANGELOG generation based on Conventional Commits\n* Automated PR builds\n* Automated releases to npm, maven, nuget and pypi\n* Mergify configuration\n* LICENSE file generation\n* gitignore + npmigonre management\n* Node \"engines\" support with coupling to CI build environment and @types/node\n* Anti-tamper: CI builds will fail if a synthesized file is modified manually\n\n## Example\n\nTo give you a sense of how it works, let's walk through a simple example.\n\nCreate a new local git directory:\n\n```shell\n$ mkdir my-project && cd my-project\n$ git init\n```\n\nCreate a file `.projenrc.js`:\n\n```js\nconst { JsiiProject } = require('projen');\n\nconst project = new JsiiProject({\n  name: 'my-project',\n  authorName: 'Joe Schmo',\n  authorEmail: 'joe@schno.me',\n  repository: 'https://github.com/joe/schmo.git',\n});\n\nproject.synth();\n```\n\nRun:\n\n```shell\nnpx projen && yarn install\n```\n\nFrom now on, we will refer to this command as `pj` (every time you modify .projenrc.js, just run `pj`):\n\n```shell\nalias pj='npx projen && yarn install'\n```\n\nWhat just happened? This command synthesized a jsii project for you with the following features:\n\n* `yarn compile` and `yarn watch`: compile/watch jsii to js\n* `yarn eslint`: run eslint\n* `yarn test` run eslint and jest tests with coverage\n* `yarn run package`: `jsii-pacmak`\n* `yarn build`: `compile` + `test` + `package`\n* Automatically generates `API.md` with reference docs after compilation (also `yarn docgen`).\n* `yarn bump` bumps the module version and creates a CHANGELOG entry. `yarn release` will bump and push with tags to `master`.\n* `yarn projen` runs `projen` followed by `yarn install` (good for updating dependencies)\n* PR builds: a GitHub workflow which auto-builds PR branches\n* Releases: a GitHub workflow which builds all commits to `master` and releases new versions to all package managers (default is only npm)\n* `.gitignore` and `.npmignore` are set up to commit only files that must exist in the repo (for example, by default `package.json` is *ignored*).\n* `.mergify.yml` will auto-merge approved PRs that pass PR builds\n* `LICENSE` defaults to `Apache-2.0`\n* CI builds also include an \"anti tamper\" check to verify no files where changed during build. This ensures that generated-committed files (such as `API.md` and the GitHub workflows) have not been chaged out-of-band up-to-date.\n\nThe [`JsiiProject`](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject) class has a rich API that can be used to configure these features (submit a PR if you are missing a degree of freedom).\n\nNow, let's add a python target. Edit `.projenrc.js` and add a `python` section:\n\n```ts\nconst { JsiiProject } = require('../../lib');\n\nconst project = new JsiiProject({\n  name: 'my-project',\n  authorName: 'Joe Schmo',\n  authorEmail: 'joe@schno.me',\n  repository: 'https://github.com/joe/schmo.git',\n\n  // add this:\n  python: {\n    distName: 'my-python-dist-name',\n    module: 'my_python_module'\n  }\n});\n\nproject.synth();\n```\n\nAnd re-run:\n\n```shell\npj\n```\n\nAnd this will be added:\n\n* The `jsii` section in your `package.json` file will now have a `python` entry.\n* The `release.yml` github workflow will include a release job that will release your module to PyPI.\n\n## Should I Commit Synthesized Files?\n\nYes, you should commit those files. Although most files don't *have* to be\ncommitted, there is value in being able to review any changes to these files\nwhen you upgrade **projen** itself (`yarn projen:upgrade`).\n\nSince projen installs an \"anti-tamper\" check in your CI builds, if these files\nare manually modified, your CI build will fail.\n\n## API Reference\n\nSee [API Reference](./API.md) for API details.\n\n### JsiiProject\n\n#### Directory structure\n\n* `src/` - `.ts` files, after compilation they will go under `lib/`.\n* `test/` - `.ts` files for jest tests. Those will not be included in your npm module.\n* `bin/` - CLI executables (not .ts files!). See details below on how to define CLIs.\n\n#### Testing\n\n**jest** is used for unit tests. Write your unit test files under `test/` so they won't be\nincluded in the npm module.\n\nIMPORTANT: your test code should reference your library code through `src` and\nnot through `lib`. To enforce that we will delete `lib/` before running your\ntests.\n\nThe recommended workflow for TDD is to:\n\n1. Checkout the repo\n2. Run `yarn install`\n3. Run `yarn test:watch`\n\nThat's it. You don't need to compile in order to run your tests because\n`ts-jest` takes care of compiling your code for you and `test:watch` will\ncontinuously watch your code for changes.\n\n#### Executables/CLIs (`bin`)\n\nYou should create executable scripts under `bin/`, but **do not** include\ntypescript files there. Those must be under `src/` or otherwise they won't be\ncompiled and included in your output module.\n\nLet's walk through a simple example. Say my CLI should be called `mycli`:\n\n1. Create a file `lib/mycli.ts` with the actual code of the CLI. No need to export this file from your `index.ts` file.\n2. Create a file `bin/mycli` with the following content:\n\n    ```js\n    #!/usr/bin/env node\n    require('../lib/mycli.js');\n    ```\n\nThat's it. projen will auto-detect `bin/mycli` and will add it to your\n`package.json` under the `bin` section. You can disable this behavior by setting\n`autoDetectBin: false`.\n\n\n\n\n\n\n\n\n## Contributing\n\nContributions of all kinds are welcome!\n\nTo check out a development environment:\n\n```bash\n$ git clone git@github.com:eladb/projen\n$ cd projen\n$ yarn boostrap # special boostrapping because projen uses itself\n```\n\n## License\n\nDistributed under the [Apache-2.0](./LICENSE) license.\n"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eladb/projen.git"
+  },
+  "schema": "jsii/0.10.0",
+  "targets": {
+    "js": {
+      "npm": "projen"
+    }
+  },
+  "types": {
+    "projen.CommonOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.CommonOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 20
+      },
+      "name": "CommonOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Checks that after build there are no modified files onn git."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 103
+          },
+          "name": "antitamper",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 42
+          },
+          "name": "autoDetectBin",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "You can use this option to add/customize how binaries are represented in\nyour `package.json`, but unless `autoDetectBin` is `false`, every\nexecutable file under `bin` will automatically be added to this section.",
+            "stability": "experimental",
+            "summary": "Binary programs vended with your module."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 34
+          },
+          "name": "bin",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Define a GitHub workflow for building PRs."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 64
+          },
+          "name": "buildWorkflow",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 21
+          },
+          "name": "bundledDependencies",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- defaults to the value of authorName or \"\" if `authorName` is undefined.",
+            "stability": "experimental",
+            "summary": "License copyright owner."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 135
+          },
+          "name": "copyrightOwner",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- current year",
+            "stability": "experimental",
+            "summary": "The copyright years to put in the LICENSE file."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 141
+          },
+          "name": "copyrightPeriod",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 22
+          },
+          "name": "dependencies",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "fqn": "projen.Semver"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 23
+          },
+          "name": "devDependencies",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "fqn": "projen.Semver"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 44
+          },
+          "name": "keywords",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"lib\"",
+            "stability": "experimental",
+            "summary": "Compiler artifacts output directory."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 148
+          },
+          "name": "libdir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- no max",
+            "stability": "experimental",
+            "summary": "Minimum node.js version to require via `engines` (inclusive)."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 115
+          },
+          "name": "maxNodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- no \"engines\" specified",
+            "stability": "experimental",
+            "summary": "Node.js version to require via package.json `engines` (inclusive)."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 109
+          },
+          "name": "minNodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"latest\"",
+            "stability": "experimental",
+            "summary": "The dist-tag to use when releasing to npm."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 128
+          },
+          "name": "npmDistTag",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 24
+          },
+          "name": "peerDependencies",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "fqn": "projen.Semver"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 25
+          },
+          "name": "peerDependencyOptions",
+          "optional": true,
+          "type": {
+            "fqn": "projen.PeerDependencyOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Indicates of \"projen\" should be installed as a devDependency."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 58
+          },
+          "name": "projenDevDependency",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- latest version",
+            "stability": "experimental",
+            "summary": "Version of projen to install."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 51
+          },
+          "name": "projenVersion",
+          "optional": true,
+          "type": {
+            "fqn": "projen.Semver"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[ \"master\" ]",
+            "stability": "experimental",
+            "summary": "Branches which trigger a release."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 77
+          },
+          "name": "releaseBranches",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Automatically release to npm when new versions are introduced."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 97
+          },
+          "name": "releaseToNpm",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Define a GitHub workflow for releasing from \"master\" when new versions are bumped."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 70
+          },
+          "name": "releaseWorkflow",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"src\"",
+            "stability": "experimental",
+            "summary": "Typescript sources directory."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 155
+          },
+          "name": "srcdir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"test\"",
+            "stability": "experimental",
+            "summary": "Tests directory."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 162
+          },
+          "name": "testdir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]",
+            "stability": "experimental",
+            "summary": "Workflow steps to use in order to bootstrap this repo."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 84
+          },
+          "name": "workflowBootstrapSteps",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "any"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- default image",
+            "stability": "experimental",
+            "summary": "Container image to use for GitHub workflows."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 91
+          },
+          "name": "workflowContainerImage",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- same as `minNodeVersion`",
+            "stability": "experimental",
+            "summary": "The node version to use in GitHub workflows."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 121
+          },
+          "name": "workflowNodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.CoverageThreshold": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.CoverageThreshold",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jest.ts",
+        "line": 31
+      },
+      "name": "CoverageThreshold",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 32
+          },
+          "name": "branches",
+          "optional": true,
+          "type": {
+            "primitive": "number"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 33
+          },
+          "name": "functions",
+          "optional": true,
+          "type": {
+            "primitive": "number"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 34
+          },
+          "name": "lines",
+          "optional": true,
+          "type": {
+            "primitive": "number"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 35
+          },
+          "name": "statements",
+          "optional": true,
+          "type": {
+            "primitive": "number"
+          }
+        }
+      ]
+    },
+    "projen.Eslint": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Eslint",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.NodeProject"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/eslint.ts",
+        "line": 6
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/eslint.ts",
+            "line": 100
+          },
+          "name": "addRules",
+          "parameters": [
+            {
+              "name": "rules",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "any"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "name": "Eslint",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/eslint.ts",
+            "line": 8
+          },
+          "name": "rules",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "any"
+                  },
+                  "kind": "array"
+                }
+              },
+              "kind": "map"
+            }
+          }
+        }
+      ]
+    },
+    "projen.FileBase": {
+      "abstract": true,
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.FileBase",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "filePath",
+            "type": {
+              "primitive": "string"
+            }
+          },
+          {
+            "name": "options",
+            "optional": true,
+            "type": {
+              "fqn": "projen.FileBaseOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/file.ts",
+        "line": 23
+      },
+      "methods": [
+        {
+          "docs": {
+            "remarks": "This method is usually implemented by framework-level constructs such as `Stack` and `Asset`\nas they participate in synthesizing the cloud assembly.",
+            "stability": "experimental",
+            "summary": "Allows this construct to emit artifacts into the cloud assembly during synthesis."
+          },
+          "locationInModule": {
+            "filename": "src/file.ts",
+            "line": 50
+          },
+          "name": "onSynthesize",
+          "overrides": "constructs.Construct",
+          "parameters": [
+            {
+              "name": "session",
+              "type": {
+                "fqn": "constructs.ISynthesisSession"
+              }
+            }
+          ]
+        }
+      ],
+      "name": "FileBase",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/file.ts",
+            "line": 48
+          },
+          "name": "data",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/file.ts",
+            "line": 24
+          },
+          "name": "path",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.FileBaseOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.FileBaseOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/file.ts",
+        "line": 6
+      },
+      "name": "FileBaseOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "remarks": "By\ndefault, all generated files are committed and anti-tamper is used to\nprotect against manual modifications.",
+            "stability": "experimental",
+            "summary": "Indicates whether this file should be committed to git or ignored."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/file.ts",
+            "line": 14
+          },
+          "name": "committed",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Update the project's .gitignore file."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/file.ts",
+            "line": 20
+          },
+          "name": "editGitignore",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ]
+    },
+    "projen.GithubWorkflow": {
+      "assembly": "projen",
+      "base": "projen.FileBase",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.GithubWorkflow",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "primitive": "string"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/github-workflow.ts",
+        "line": 6
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/github-workflow.ts",
+            "line": 23
+          },
+          "name": "addJobs",
+          "parameters": [
+            {
+              "name": "jobs",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "any"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/github-workflow.ts",
+            "line": 16
+          },
+          "name": "on",
+          "parameters": [
+            {
+              "name": "events",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "any"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "name": "GithubWorkflow",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/github-workflow.ts",
+            "line": 30
+          },
+          "name": "data",
+          "overrides": "projen.FileBase",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.IgnoreFile": {
+      "assembly": "projen",
+      "base": "projen.FileBase",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.IgnoreFile",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "filePath",
+            "type": {
+              "primitive": "string"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/ignore-file.ts",
+        "line": 5
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental",
+            "summary": "appends a comment that will be included before the next exclude/include line."
+          },
+          "locationInModule": {
+            "filename": "src/ignore-file.ts",
+            "line": 19
+          },
+          "name": "comment",
+          "parameters": [
+            {
+              "name": "comment",
+              "type": {
+                "primitive": "string"
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/ignore-file.ts",
+            "line": 24
+          },
+          "name": "exclude",
+          "parameters": [
+            {
+              "name": "patterns",
+              "type": {
+                "primitive": "string"
+              },
+              "variadic": true
+            }
+          ],
+          "variadic": true
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/ignore-file.ts",
+            "line": 29
+          },
+          "name": "include",
+          "parameters": [
+            {
+              "name": "patterns",
+              "type": {
+                "primitive": "string"
+              },
+              "variadic": true
+            }
+          ],
+          "variadic": true
+        }
+      ],
+      "name": "IgnoreFile",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/ignore-file.ts",
+            "line": 34
+          },
+          "name": "data",
+          "overrides": "projen.FileBase",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.Jest": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "remarks": "- `test` will run `jest --passWithNoTests`\n- `test:watch` will run `jest --watch`\n- `test:update` will run `jest -u`",
+        "stability": "experimental",
+        "summary": "Installs the following npm scripts:."
+      },
+      "fqn": "projen.Jest",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.NodeProject"
+            }
+          },
+          {
+            "name": "options",
+            "optional": true,
+            "type": {
+              "fqn": "projen.JestOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/jest.ts",
+        "line": 46
+      },
+      "name": "Jest"
+    },
+    "projen.JestOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JestOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jest.ts",
+        "line": 6
+      },
+      "name": "JestOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Collect coverage."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 12
+          },
+          "name": "coverage",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Specify the global coverage thresholds."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 17
+          },
+          "name": "coverageThreshold",
+          "optional": true,
+          "type": {
+            "fqn": "projen.CoverageThreshold"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"/node_modules/\"",
+            "stability": "experimental",
+            "summary": "Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 23
+          },
+          "name": "ignorePatterns",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Configure for typescript."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jest.ts",
+            "line": 28
+          },
+          "name": "typescript",
+          "optional": true,
+          "type": {
+            "fqn": "projen.TypescriptConfig"
+          }
+        }
+      ]
+    },
+    "projen.JsiiDotNetTarget": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsiiDotNetTarget",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 106
+      },
+      "name": "JsiiDotNetTarget",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 107
+          },
+          "name": "dotNetNamespace",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 108
+          },
+          "name": "packageId",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.JsiiJavaTarget": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsiiJavaTarget",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 95
+      },
+      "name": "JsiiJavaTarget",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 96
+          },
+          "name": "javaPackage",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 98
+          },
+          "name": "mavenArtifactId",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 97
+          },
+          "name": "mavenGroupId",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.JsiiProject": {
+      "assembly": "projen",
+      "base": "projen.TypeScriptLibraryProject",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsiiProject",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.JsiiProjectOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 111
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental",
+            "summary": "Adds that will be executed after the jsii compilation."
+          },
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 234
+          },
+          "name": "addCompileCommand",
+          "parameters": [
+            {
+              "docs": {
+                "summary": "The command to execute."
+              },
+              "name": "command",
+              "type": {
+                "primitive": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "name": "JsiiProject",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 114
+          },
+          "name": "eslint",
+          "optional": true,
+          "type": {
+            "fqn": "projen.Eslint"
+          }
+        }
+      ]
+    },
+    "projen.JsiiProjectOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsiiProjectOptions",
+      "interfaces": [
+        "projen.CommonOptions"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 18
+      },
+      "name": "JsiiProjectOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 27
+          },
+          "name": "authorName",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 24
+          },
+          "name": "name",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 26
+          },
+          "name": "repository",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 28
+          },
+          "name": "authorEmail",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 30
+          },
+          "name": "authorOrganization",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 29
+          },
+          "name": "authorUrl",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "remarks": "- You can manually run compatbility tests using `yarn compat` if this feature is disabled.\n- You can ignore compatibility failures by adding lines to a \".compatignore\" file.",
+            "stability": "experimental",
+            "summary": "Automatically run API compatibility test against the latest version published to npm after compilation."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 79
+          },
+          "name": "compat",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": ".compatignore",
+            "stability": "experimental",
+            "summary": "Name of the ignore file for API compatibility tests."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 86
+          },
+          "name": "compatIgnore",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 25
+          },
+          "name": "description",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Automatically generate API.md from jsii."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 69
+          },
+          "name": "docgen",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 36
+          },
+          "name": "dotnet",
+          "optional": true,
+          "type": {
+            "fqn": "projen.JsiiDotNetTarget"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Install eslint."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 45
+          },
+          "name": "eslint",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 34
+          },
+          "name": "java",
+          "optional": true,
+          "type": {
+            "fqn": "projen.JsiiJavaTarget"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Use jest for unit tests."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 51
+          },
+          "name": "jest",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- defaults",
+            "stability": "experimental",
+            "summary": "Jest options."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 57
+          },
+          "name": "jestOptions",
+          "optional": true,
+          "type": {
+            "fqn": "projen.JestOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 38
+          },
+          "name": "jsiiVersion",
+          "optional": true,
+          "type": {
+            "fqn": "projen.Semver"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 31
+          },
+          "name": "license",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Add mergify configuration."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 63
+          },
+          "name": "mergify",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 35
+          },
+          "name": "python",
+          "optional": true,
+          "type": {
+            "fqn": "projen.JsiiPythonTarget"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\".\"",
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 22
+          },
+          "name": "rootdir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 32
+          },
+          "name": "stability",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.JsiiPythonTarget": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsiiPythonTarget",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 101
+      },
+      "name": "JsiiPythonTarget",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 102
+          },
+          "name": "distName",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/jsii-project.ts",
+            "line": 103
+          },
+          "name": "module",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.JsonFile": {
+      "assembly": "projen",
+      "base": "projen.FileBase",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsonFile",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "filePath",
+            "type": {
+              "primitive": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.JsonFileOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/json.ts",
+        "line": 8
+      },
+      "name": "JsonFile",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/json.ts",
+            "line": 16
+          },
+          "name": "data",
+          "overrides": "projen.FileBase",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/json.ts",
+            "line": 9
+          },
+          "name": "obj",
+          "protected": true,
+          "type": {
+            "primitive": "json"
+          }
+        }
+      ]
+    },
+    "projen.JsonFileOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.JsonFileOptions",
+      "interfaces": [
+        "projen.FileBaseOptions"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/json.ts",
+        "line": 4
+      },
+      "name": "JsonFileOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/json.ts",
+            "line": 5
+          },
+          "name": "obj",
+          "type": {
+            "primitive": "any"
+          }
+        }
+      ]
+    },
+    "projen.License": {
+      "assembly": "projen",
+      "base": "projen.FileBase",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.License",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "spdx",
+            "type": {
+              "primitive": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.LicenseOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/license.ts",
+        "line": 21
+      },
+      "name": "License",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/license.ts",
+            "line": 40
+          },
+          "name": "data",
+          "overrides": "projen.FileBase",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.LicenseOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.LicenseOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/license.ts",
+        "line": 5
+      },
+      "name": "LicenseOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"\"",
+            "stability": "experimental",
+            "summary": "Copyright owner."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/license.ts",
+            "line": 11
+          },
+          "name": "copyrightOwner",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- current year (e.g. \"2020\")",
+            "stability": "experimental",
+            "summary": "Period of license (e.g. \"1998-2023\")."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/license.ts",
+            "line": 18
+          },
+          "name": "copyrightPeriod",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.Mergify": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Mergify",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "options",
+            "optional": true,
+            "type": {
+              "fqn": "projen.MergifyOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/mergify.ts",
+        "line": 15
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/mergify.ts",
+            "line": 30
+          },
+          "name": "addRule",
+          "parameters": [
+            {
+              "name": "rule",
+              "type": {
+                "fqn": "projen.MergifyRule"
+              }
+            }
+          ]
+        }
+      ],
+      "name": "Mergify"
+    },
+    "projen.MergifyOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.MergifyOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/mergify.ts",
+        "line": 11
+      },
+      "name": "MergifyOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/mergify.ts",
+            "line": 12
+          },
+          "name": "rules",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "fqn": "projen.MergifyRule"
+              },
+              "kind": "array"
+            }
+          }
+        }
+      ]
+    },
+    "projen.MergifyRule": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.MergifyRule",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/mergify.ts",
+        "line": 5
+      },
+      "name": "MergifyRule",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/mergify.ts",
+            "line": 8
+          },
+          "name": "actions",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "any"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/mergify.ts",
+            "line": 7
+          },
+          "name": "conditions",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/mergify.ts",
+            "line": 6
+          },
+          "name": "name",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.NodeBuildWorkflow": {
+      "assembly": "projen",
+      "base": "projen.GithubWorkflow",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.NodeBuildWorkflow",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.Project"
+            }
+          },
+          {
+            "name": "name",
+            "type": {
+              "primitive": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.NodeBuildWorkflowOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 611
+      },
+      "name": "NodeBuildWorkflow",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 612
+          },
+          "name": "buildJobId",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.NodeBuildWorkflowOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.NodeBuildWorkflowOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 583
+      },
+      "name": "NodeBuildWorkflowOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 603
+          },
+          "name": "trigger",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "any"
+              },
+              "kind": "map"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Checks that after build there are no modified files onn git."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 601
+          },
+          "name": "antitamper",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]",
+            "stability": "experimental",
+            "summary": "Workflow steps to use in order to bootstrap this repo."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 593
+          },
+          "name": "bootstrapSteps",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "any"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- default image",
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 587
+          },
+          "name": "image",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Adds a `actions/setup-node@v1` action with a specific node version."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 608
+          },
+          "name": "nodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 595
+          },
+          "name": "uploadArtifact",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ]
+    },
+    "projen.NodeProject": {
+      "assembly": "projen",
+      "base": "projen.Project",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.NodeProject",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.NodeProjectOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 239
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 443
+          },
+          "name": "addBins",
+          "parameters": [
+            {
+              "name": "bins",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 459
+          },
+          "name": "addBundledDependencies",
+          "parameters": [
+            {
+              "name": "deps",
+              "type": {
+                "primitive": "string"
+              },
+              "variadic": true
+            }
+          ],
+          "variadic": true
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 449
+          },
+          "name": "addDependencies",
+          "parameters": [
+            {
+              "name": "deps",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "fqn": "projen.Semver"
+                  },
+                  "kind": "map"
+                }
+              }
+            },
+            {
+              "name": "bundle",
+              "optional": true,
+              "type": {
+                "primitive": "boolean"
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 473
+          },
+          "name": "addDevDependencies",
+          "parameters": [
+            {
+              "name": "deps",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "fqn": "projen.Semver"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 500
+          },
+          "name": "addFields",
+          "parameters": [
+            {
+              "name": "fields",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "any"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 479
+          },
+          "name": "addPeerDependencies",
+          "parameters": [
+            {
+              "name": "deps",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "fqn": "projen.Semver"
+                  },
+                  "kind": "map"
+                }
+              }
+            },
+            {
+              "name": "options",
+              "optional": true,
+              "type": {
+                "fqn": "projen.PeerDependencyOptions"
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 490
+          },
+          "name": "addScripts",
+          "parameters": [
+            {
+              "name": "scripts",
+              "type": {
+                "collection": {
+                  "elementtype": {
+                    "primitive": "string"
+                  },
+                  "kind": "map"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 496
+          },
+          "name": "addTestCommands",
+          "parameters": [
+            {
+              "name": "commands",
+              "type": {
+                "primitive": "string"
+              },
+              "variadic": true
+            }
+          ],
+          "variadic": true
+        }
+      ],
+      "name": "NodeProject",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 249
+          },
+          "name": "manifest",
+          "type": {
+            "primitive": "any"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 266
+          },
+          "name": "npmDistTag",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 240
+          },
+          "name": "npmignore",
+          "type": {
+            "fqn": "projen.IgnoreFile"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental",
+            "summary": "Returns the current version of the project."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 439
+          },
+          "name": "version",
+          "type": {
+            "primitive": "any"
+          }
+        },
+        {
+          "docs": {
+            "remarks": "`undefined` if `buildWorkflow` is disabled.",
+            "stability": "experimental",
+            "summary": "The PR build GitHub workflow."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 256
+          },
+          "name": "buildWorkflow",
+          "optional": true,
+          "protected": true,
+          "type": {
+            "fqn": "projen.NodeBuildWorkflow"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 264
+          },
+          "name": "maxNodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 263
+          },
+          "name": "minNodeVersion",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "remarks": "`undefined` if `releaseWorkflow` is disabled.",
+            "stability": "experimental",
+            "summary": "The release GitHub workflow."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 261
+          },
+          "name": "releaseWorkflow",
+          "optional": true,
+          "protected": true,
+          "type": {
+            "fqn": "projen.NodeBuildWorkflow"
+          }
+        }
+      ]
+    },
+    "projen.NodeProjectOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.NodeProjectOptions",
+      "interfaces": [
+        "projen.ProjectOptions",
+        "projen.CommonOptions"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 165
+      },
+      "name": "NodeProjectOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "It gets used in URLs, as an argument on the command line,\nand as the directory name inside node_modules.\nSee https://classic.yarnpkg.com/en/docs/package-json/#toc-name",
+            "stability": "experimental",
+            "summary": "This is the name of your package."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 171
+          },
+          "name": "name",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Author's e-mail."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 200
+          },
+          "name": "authorEmail",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Author's name."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 195
+          },
+          "name": "authorName",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Author's Organization."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 210
+          },
+          "name": "authorOrganization",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Author's URL / Website."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 205
+          },
+          "name": "authorUrl",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "It can be used when searching for packages in a package manager as well.\nSee https://classic.yarnpkg.com/en/docs/package-json/#toc-description",
+            "stability": "experimental",
+            "summary": "The description is just a string that helps people understand the purpose of the package."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 178
+          },
+          "name": "description",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Additional entries to .gitignore."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 231
+          },
+          "name": "gitignore",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Package's Homepage / Website."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 215
+          },
+          "name": "homepage",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "See https://github.com/eladb/projen/tree/master/license-text for a list of supported licenses.",
+            "stability": "experimental",
+            "summary": "License's SPDX identifier."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 221
+          },
+          "name": "license",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Additional entries to .npmignore."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 236
+          },
+          "name": "npmignore",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "See https://classic.yarnpkg.com/en/docs/package-json/#toc-repository",
+            "stability": "experimental",
+            "summary": "The repository is the location where the actual code for your package lives."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 184
+          },
+          "name": "repository",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 190
+          },
+          "name": "repositoryDirectory",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Package's Stability."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 226
+          },
+          "name": "stability",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.PeerDependencyOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.PeerDependencyOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/node-project.ts",
+        "line": 570
+      },
+      "name": "PeerDependencyOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Automatically add a pinned dev dependency."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/node-project.ts",
+            "line": 575
+          },
+          "name": "pinnedDevDependency",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ]
+    },
+    "projen.Project": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Project",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "optional": true,
+            "type": {
+              "fqn": "projen.ProjectOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/project.ts",
+        "line": 12
+      },
+      "methods": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "locationInModule": {
+            "filename": "src/project.ts",
+            "line": 22
+          },
+          "name": "synth"
+        }
+      ],
+      "name": "Project",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/project.ts",
+            "line": 14
+          },
+          "name": "gitignore",
+          "type": {
+            "fqn": "projen.IgnoreFile"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/project.ts",
+            "line": 13
+          },
+          "name": "outdir",
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.ProjectOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.ProjectOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/project.ts",
+        "line": 4
+      },
+      "name": "ProjectOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": ". current directory",
+            "stability": "experimental",
+            "summary": "Where to put the generated project files."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/project.ts",
+            "line": 9
+          },
+          "name": "outdir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.Semver": {
+      "assembly": "projen",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Semver",
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/semver.ts",
+        "line": 4
+      },
+      "methods": [
+        {
+          "docs": {
+            "remarks": ">= version\n< next major version",
+            "stability": "experimental",
+            "summary": "Accept any minor version."
+          },
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 16
+          },
+          "name": "caret",
+          "parameters": [
+            {
+              "name": "version",
+              "type": {
+                "primitive": "string"
+              }
+            }
+          ],
+          "returns": {
+            "type": {
+              "fqn": "projen.Semver"
+            }
+          },
+          "static": true
+        },
+        {
+          "docs": {
+            "stability": "experimental",
+            "summary": "Accept only an exact version."
+          },
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 8
+          },
+          "name": "pinned",
+          "parameters": [
+            {
+              "name": "version",
+              "type": {
+                "primitive": "string"
+              }
+            }
+          ],
+          "returns": {
+            "type": {
+              "fqn": "projen.Semver"
+            }
+          },
+          "static": true
+        },
+        {
+          "docs": {
+            "remarks": ">= version\n< next minor version",
+            "stability": "experimental",
+            "summary": "Accept patches."
+          },
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 24
+          },
+          "name": "tilde",
+          "parameters": [
+            {
+              "name": "version",
+              "type": {
+                "primitive": "string"
+              }
+            }
+          ],
+          "returns": {
+            "type": {
+              "fqn": "projen.Semver"
+            }
+          },
+          "static": true
+        }
+      ],
+      "name": "Semver",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 26
+          },
+          "name": "spec",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 27
+          },
+          "name": "version",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/semver.ts",
+            "line": 28
+          },
+          "name": "mode",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.Stability": {
+      "assembly": "projen",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Stability",
+      "kind": "enum",
+      "locationInModule": {
+        "filename": "src/jsii-project.ts",
+        "line": 89
+      },
+      "members": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "name": "EXPERIMENTAL"
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "name": "STABLE"
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "name": "DEPRECATED"
+        }
+      ],
+      "name": "Stability"
+    },
+    "projen.TypeScriptCompilerOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.TypeScriptCompilerOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/typescript.ts",
+        "line": 246
+      },
+      "name": "TypeScriptCompilerOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 253
+          },
+          "name": "alwaysStrict",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "To be specified along with the above."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 265
+          },
+          "name": "declaration",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Offers a way to configure the root directory for where declaration files are emitted."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 259
+          },
+          "name": "declarationDir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 272
+          },
+          "name": "experimentalDecorators",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "When set, instead of writing out a .js.map file to provide source maps,  TypeScript will embed the source map content in the .js files."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 280
+          },
+          "name": "inlineSourceMap",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "When set, TypeScript will include the original content of the .ts file as an embedded  string in the source map. This is often useful in the same cases as inlineSourceMap."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 288
+          },
+          "name": "inlineSources",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[ 'es2018' ]",
+            "remarks": "ES2016, ES5, ES2018).",
+            "stability": "experimental",
+            "summary": "Reference for type definitions / libraries to use (eg."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 295
+          },
+          "name": "lib",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "'CommonJS'",
+            "remarks": "See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.",
+            "stability": "experimental",
+            "summary": "Sets the module system for the program."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 303
+          },
+          "name": "module",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 311
+          },
+          "name": "noEmitOnError",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "remarks": "Ensures that any non-empty \ncase inside a switch statement includes either break or return. This means you won’t \naccidentally ship a case fallthrough bug.",
+            "stability": "experimental",
+            "summary": "Report errors for fallthrough cases in switch statements."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 320
+          },
+          "name": "noFallthroughCasesInSwitch",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 328
+          },
+          "name": "noImplicitAny",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "When enabled, TypeScript will check all code paths in a function to ensure they  return a value."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 336
+          },
+          "name": "noImplicitReturns",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Raise error on ‘this’ expressions with an implied ‘any’ type."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 342
+          },
+          "name": "noImplicitThis",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Report errors on unused local variables."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 349
+          },
+          "name": "noUnusedLocals",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Report errors on unused parameters in functions."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 356
+          },
+          "name": "noUnusedParameters",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Output directory for the compiled files."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 413
+          },
+          "name": "outDir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Allows importing modules with a ‘.json’ extension, which is a common practice  in node projects. This includes generating a type for the import based on the static JSON shape."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 364
+          },
+          "name": "resolveJsonModule",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "remarks": "Only use to control the output directory structure with `outDir`.",
+            "stability": "experimental",
+            "summary": "Specifies the root directory of input files."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 420
+          },
+          "name": "rootDir",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "remarks": "Turning this on is equivalent to enabling all of the strict mode family \noptions, which are outlined below. You can then turn off individual strict mode family checks as\nneeded.",
+            "stability": "experimental",
+            "summary": "The strict flag enables a wide range of type checking behavior that results in stronger guarantees  of program correctness."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 374
+          },
+          "name": "strict",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "remarks": "This can lead to unexpected errors at runtime.\nWhen strictNullChecks is true, null and undefined have their own distinct types and you’ll \nget a type error if you try to use them where a concrete value is expected.",
+            "stability": "experimental",
+            "summary": "When strictNullChecks is false, null and undefined are effectively ignored by the language."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 384
+          },
+          "name": "strictNullChecks",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "When set to true, TypeScript will raise an error when a class property was declared but  not set in the constructor."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 392
+          },
+          "name": "strictPropertyInitialization",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Do not emit declarations for code that has an @internal annotation in it’s JSDoc comment."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 399
+          },
+          "name": "stripInternal",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "'ES2018'",
+            "remarks": "You might choose to set\na lower target if your code is deployed to older environments, or a higher target if your\ncode is guaranteed to run in newer environments.",
+            "stability": "experimental",
+            "summary": "Modern browsers support all ES6 features, so ES6 is a good choice."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 408
+          },
+          "name": "target",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        }
+      ]
+    },
+    "projen.TypeScriptLibraryProject": {
+      "assembly": "projen",
+      "base": "projen.NodeProject",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.TypeScriptLibraryProject",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.TypeScriptLibraryProjectOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/typescript.ts",
+        "line": 69
+      },
+      "name": "TypeScriptLibraryProject",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 71
+          },
+          "name": "docsDirectory",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 74
+          },
+          "name": "libdir",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 73
+          },
+          "name": "srcdir",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 75
+          },
+          "name": "testdir",
+          "protected": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 70
+          },
+          "name": "docgen",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ]
+    },
+    "projen.TypeScriptLibraryProjectOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.TypeScriptLibraryProjectOptions",
+      "interfaces": [
+        "projen.NodeProjectOptions"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/typescript.ts",
+        "line": 10
+      },
+      "name": "TypeScriptLibraryProjectOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "false",
+            "stability": "experimental",
+            "summary": "Docgen by Typedoc."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 53
+          },
+          "name": "docgen",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "'docs'",
+            "stability": "experimental",
+            "summary": "Docs directory."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 60
+          },
+          "name": "docsDirectory",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Setup eslint."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 28
+          },
+          "name": "eslint",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Setup jest unit tests."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 15
+          },
+          "name": "jest",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- default options",
+            "stability": "experimental",
+            "summary": "Jest options."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 21
+          },
+          "name": "jestOptions",
+          "optional": true,
+          "type": {
+            "fqn": "projen.JestOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "true",
+            "stability": "experimental",
+            "summary": "Adds mergify configuration."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 40
+          },
+          "name": "mergify",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- default options",
+            "stability": "experimental",
+            "summary": "Options for mergify."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 46
+          },
+          "name": "mergifyOptions",
+          "optional": true,
+          "type": {
+            "fqn": "projen.MergifyOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "experimental",
+            "summary": "Custom TSConfig."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 66
+          },
+          "name": "tsconfig",
+          "optional": true,
+          "type": {
+            "fqn": "projen.TypescriptConfigOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "^3.9.5",
+            "stability": "experimental",
+            "summary": "TypeScript version to use."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 34
+          },
+          "name": "typescriptVersion",
+          "optional": true,
+          "type": {
+            "fqn": "projen.Semver"
+          }
+        }
+      ]
+    },
+    "projen.TypescriptConfig": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.TypescriptConfig",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.NodeProject"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "fqn": "projen.TypescriptConfigOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/typescript.ts",
+        "line": 423
+      },
+      "name": "TypescriptConfig",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 424
+          },
+          "name": "compilerOptions",
+          "type": {
+            "fqn": "projen.TypeScriptCompilerOptions"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 426
+          },
+          "name": "exclude",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 427
+          },
+          "name": "fileName",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "docs": {
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 425
+          },
+          "name": "include",
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        }
+      ]
+    },
+    "projen.TypescriptConfigOptions": {
+      "assembly": "projen",
+      "datatype": true,
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.TypescriptConfigOptions",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/typescript.ts",
+        "line": 222
+      },
+      "name": "TypescriptConfigOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- see above",
+            "stability": "experimental",
+            "summary": "Compiler options to use."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 243
+          },
+          "name": "compilerOptions",
+          "type": {
+            "fqn": "projen.TypeScriptCompilerOptions"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- node_modules is excluded by default",
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 236
+          },
+          "name": "exclude",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"tsconfig.json\"",
+            "stability": "experimental"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 226
+          },
+          "name": "fileName",
+          "optional": true,
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "- all .ts files recursively",
+            "stability": "experimental",
+            "summary": "The directory in which typescript sources reside."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/typescript.ts",
+            "line": 231
+          },
+          "name": "include",
+          "optional": true,
+          "type": {
+            "collection": {
+              "elementtype": {
+                "primitive": "string"
+              },
+              "kind": "array"
+            }
+          }
+        }
+      ]
+    },
+    "projen.Version": {
+      "assembly": "projen",
+      "base": "constructs.Construct",
+      "docs": {
+        "stability": "experimental"
+      },
+      "fqn": "projen.Version",
+      "initializer": {
+        "docs": {
+          "stability": "experimental"
+        },
+        "parameters": [
+          {
+            "name": "project",
+            "type": {
+              "fqn": "projen.NodeProject"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/version.ts",
+        "line": 9
+      },
+      "name": "Version",
+      "properties": [
+        {
+          "docs": {
+            "stability": "experimental",
+            "summary": "Returns the current version of the project."
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/version.ts",
+            "line": 40
+          },
+          "name": "current",
+          "type": {
+            "primitive": "any"
+          }
+        }
+      ]
+    }
+  },
+  "version": "0.2.5",
+  "fingerprint": "vEOyq/DwUervk2HO/Ckv2yUqLQKrUXse5ja2VhEEfbQ="
+}

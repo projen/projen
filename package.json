@@ -16,13 +16,11 @@
     "test": "yarn eslint && rm -fr lib/ && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
-    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen && yarn compat",
-    "watch": "jsii -w --silence-warnings=reserved-word",
-    "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
-    "package": "jsii-pacmak",
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "package": "rm -fr dist && mkdir -p dist/js && yarn pack && mv *.tgz dist/js/",
     "build": "yarn test && yarn compile && yarn run package",
     "eslint": "eslint . --ext .ts",
-    "docgen": "jsii-docgen",
     "test:watch": "jest --watch",
     "test:update": "jest -u",
     "bootstrap": "yarn install && yarn compile && yarn projen"
@@ -33,16 +31,10 @@
     "organization": false
   },
   "devDependencies": {
-    "constructs": "2.0.1",
     "@types/fs-extra": "^8.0.1",
     "@types/yargs": "^15.0.5",
     "standard-version": "^8.0.0",
-    "jsii": "^1.5.0",
-    "jsii-diff": "^1.5.0",
-    "jsii-pacmak": "^1.5.0",
-    "jsii-release": "^0.1.6",
-    "@types/node": "^10.17.0",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.5",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
     "@typescript-eslint/parser": "^2.19.2",
     "eslint": "^6.8.0",
@@ -50,40 +42,25 @@
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.2",
     "json-schema": "^0.2.5",
-    "jsii-docgen": "^1.3.2",
     "jest": "^26.0.1",
     "@types/jest": "^25.2.1",
-    "ts-jest": "^26.1.0"
+    "ts-jest": "^26.1.0",
+    "@types/node": "^10.17.0"
   },
-  "peerDependencies": {
-    "constructs": "2.0.1"
-  },
+  "peerDependencies": {},
   "dependencies": {
-    "constructs": "2.0.1",
     "yaml": "^1.9.2",
     "fs-extra": "^9.0.1",
-    "yargs": "^15.4.0"
+    "yargs": "^15.4.0",
+    "constructs": "2.0.1"
   },
-  "bundledDependencies": [
-    "yaml",
-    "fs-extra",
-    "yargs"
-  ],
+  "bundledDependencies": [],
   "engines": {
     "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
   "version": "0.3.0",
   "types": "lib/index.d.ts",
-  "stability": "experimental",
-  "jsii": {
-    "outdir": "dist",
-    "targets": {},
-    "tsc": {
-      "outDir": "lib",
-      "rootDir": "src"
-    }
-  },
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,

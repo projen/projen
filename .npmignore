@@ -4,19 +4,18 @@
 # make sure to commit projen definition
 # standard-version configuration
 /.versionrc.json
+/tsconfig.json
 /src
-/test
-/coverage
+/dist
+/tsconfig.json
+/.github
+/.vscode
+/.projenrc.js
 /.eslintrc.json
-# exclude typescript sources and configuration
-*.ts
-tsconfig.json
-# exclude jsii outdir
-dist
 /tsconfig.jest.json
+/coverage
+/test
+/.mergify.yml
 !/lib
-!# include javascript files and typescript declarations
-!*.js
-!*.d.ts
-!# include .jsii manifest
-!.jsii
+!/lib/**/*.js
+!/lib/**/*.d.ts

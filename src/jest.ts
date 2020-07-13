@@ -95,5 +95,8 @@ export class Jest extends Construct {
     });
 
     project.addFields({ jest: config });
+
+    project.npmignore.exclude('/coverage');
+    project.gitignore.exclude('/coverage');
   }
 }
