@@ -49,6 +49,10 @@ export abstract class FileBase extends Construct {
 
   public onSynthesize(session: ISynthesisSession): void {
     const filePath = path.join(session.outdir, this.path);
+    if (fs.existsSync(filePath)) {
+      fs.chmodSync(filePath, '755')
+    }
+
     fs.mkdirpSync(path.dirname(filePath));
 
     const post = Tokenization.resolve(this.data, {
@@ -56,7 +60,7 @@ export abstract class FileBase extends Construct {
       scope: this,
       preparing: false,
     });
-
     fs.writeFileSync(filePath, post);
+    fs.chmodSync(filePath, '555')
   }
 }
