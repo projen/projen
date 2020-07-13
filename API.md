@@ -1456,6 +1456,7 @@ Name | Type | Description
 **noUnusedParameters**?🔹 | <code>boolean</code> | Report errors on unused parameters in functions.<br/><span style="text-decoration: underline">*Default*</span>: true
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/><span style="text-decoration: underline">*Optional*</span>
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice  in node projects. This includes generating a type for the import based on the static JSON shape.<br/><span style="text-decoration: underline">*Default*</span>: true
+**rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/><span style="text-decoration: underline">*Optional*</span>
 **strict**?🔹 | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees  of program correctness.<br/><span style="text-decoration: underline">*Default*</span>: true
 **strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/><span style="text-decoration: underline">*Default*</span>: true
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but  not set in the constructor.<br/><span style="text-decoration: underline">*Default*</span>: true
