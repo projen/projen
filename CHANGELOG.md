@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/eladb/projen/compare/v0.2.5...v0.3.0) (2020-07-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **typescript:** sources in typescript project are now under `src` instead of `lib`. before upgrading make sure to `mv lib src` so you don't lose any files (`yarn test` also DELETES `lib`).
+* **ts:** `options` is now required for `TypescriptConfig`.
+
+
+By submitting this pull request, I confirm that you can use, modify, copy, and redistribute this contribution, under the terms of your choice.
+
+### Features
+
+* **typescript:** out of tree artifacts (src/lib) ([fef3de3](https://github.com/eladb/projen/commit/fef3de3f004831ad8a06a39fc38c55dcd9c61725))
+* generate read-only files ([#16](https://github.com/eladb/projen/issues/16)) ([a108ca4](https://github.com/eladb/projen/commit/a108ca416077cc39234a30b9bc29d2df97b9d40d)), closes [#15](https://github.com/eladb/projen/issues/15)
+* projen init ([#12](https://github.com/eladb/projen/issues/12)) ([cd4727c](https://github.com/eladb/projen/commit/cd4727c9dfdfe61dc79d12c39a04c46eb2a1090a))
+* **ts:** docgen / more docstrings ([#8](https://github.com/eladb/projen/issues/8)) ([6e11f02](https://github.com/eladb/projen/commit/6e11f02ffb44a89910ee068b15900826b8e06ab6))
+
+
+### Bug Fixes
+
+* **core:** version / custom outdir ([#7](https://github.com/eladb/projen/issues/7)) ([e85cee6](https://github.com/eladb/projen/commit/e85cee62036305918e79c2e12c67402dfe595b96))
+
 ### [0.2.5](https://github.com/eladb/projen/compare/v0.2.4...v0.2.5) (2020-07-05)
 
 
