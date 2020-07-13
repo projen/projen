@@ -169,7 +169,7 @@ export class JsiiProject extends NodeProject {
       compat: `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
       package: 'jsii-pacmak',
 
-      // we runn "test" first because it deletes "lib/"
+      // we run "test" first because it deletes "lib/"
       build: 'yarn test && yarn compile && yarn run package',
     });
 

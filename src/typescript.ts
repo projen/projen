@@ -73,6 +73,10 @@ export class TypeScriptLibraryProject extends NodeProject {
   constructor(options: TypeScriptLibraryProjectOptions) {
     super(options);
     
+    const srcdir = 'src';
+    const testdir = 'test';
+    const libdir = 'lib';
+
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
 
@@ -80,33 +84,41 @@ export class TypeScriptLibraryProject extends NodeProject {
       compile: 'tsc',
       watch: 'tsc -w',
       package: 'rm -fr dist && mkdir -p dist/js && yarn pack && mv *.tgz dist/js/',
-      build: 'yarn compile && yarn test && yarn run package',
+
+      // we run "test" first because it deletes "lib/"
+      build: 'yarn test && yarn compile && yarn run package',
     });
 
-    const tsconfig = new TypescriptConfig(this, {
-      include: [ '**/*.ts' ],
-      exclude: [ 'node_modules' ],
+    const compilerOptions = {
+      alwaysStrict: true,
+      declaration: true,
+      experimentalDecorators: true,
+      inlineSourceMap: true,
+      inlineSources: true,
+      lib: [ 'es2018' ],
+      module: 'CommonJS',
+      noEmitOnError: false,
+      noFallthroughCasesInSwitch: true,
+      noImplicitAny: true,
+      noImplicitReturns: true,
+      noImplicitThis: true,
+      noUnusedLocals: true,
+      noUnusedParameters: true,
+      resolveJsonModule: true,
+      strict: true,
+      strictNullChecks: true,
+      strictPropertyInitialization: true,
+      stripInternal: true,
+      target: 'ES2018',
+    };
+
+    new TypescriptConfig(this, {
+      include: [ `${srcdir}/**/*.ts` ],
+      exclude: [ 'node_modules', 'lib' ],
       compilerOptions: {
-        alwaysStrict: true,
-        declaration: true,
-        experimentalDecorators: true,
-        inlineSourceMap: true,
-        inlineSources: true,
-        lib: [ 'es2018' ],
-        module: 'CommonJS',
-        noEmitOnError: true,
-        noFallthroughCasesInSwitch: true,
-        noImplicitAny: true,
-        noImplicitReturns: true,
-        noImplicitThis: true,
-        noUnusedLocals: true,
-        noUnusedParameters: true,
-        resolveJsonModule: true,
-        strict: true,
-        strictNullChecks: true,
-        strictPropertyInitialization: true,
-        stripInternal: true,
-        target: 'ES2018',
+        rootDir: srcdir,
+        outDir: libdir,
+        ...compilerOptions,
       },
       ...options.tsconfig,
     });
@@ -114,19 +126,47 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.gitignore.comment('exclude typescript compiler outputs');
     this.gitignore.exclude('*.d.ts');
     this.gitignore.exclude('*.js');
+    this.gitignore.exclude('/dist/');
 
     this.npmignore.comment('exclude typescript sources and configuration');
     this.npmignore.exclude('*.ts', 'tsconfig.json');
+    this.npmignore.exclude('/dist/');
+    this.npmignore.exclude('/.github/');
+    this.npmignore.exclude('/.vscode/');
+    this.npmignore.exclude('/.projenrc.js');
+    this.npmignore.exclude('/src/');
 
     this.npmignore.comment('include javascript files and typescript declarations');
-    this.npmignore.include('*.js');
-    this.npmignore.include('*.d.ts');
+    this.npmignore.include('/lib/**/*.js');
+    this.npmignore.include('/lib/**/*.d.ts');
 
     if (options.jest ?? true) {
+      // create a tsconfig for jest that does NOT include outDir and rootDir and
+      // includes both "src" and "test" as inputs.
+      const tsconfig = new TypescriptConfig(this, {
+        fileName: 'tsconfig.jest.json',
+        include: [
+          `${srcdir}/**/*.ts`,
+          `${testdir}/**/*.ts`,
+        ],
+        exclude: [
+          'node_modules',
+        ],
+        compilerOptions,
+      });
+
+      // make sure to delete "lib" *before* runninng tests to ensure that
+      // test code does not take a dependency on "lib" and instead on "src".
+      this.addTestCommands('rm -fr lib/');
+
       new Jest(this, {
         typescript: tsconfig,
         ...options.jestOptions,
       });
+
+      this.npmignore.exclude('/test');
+      this.npmignore.exclude('/coverage');
+      this.gitignore.exclude('/coverage');
     }
 
     if (options.eslint ?? true) {
@@ -140,11 +180,14 @@ export class TypeScriptLibraryProject extends NodeProject {
 
     if (options.mergify ?? true) {
       new Mergify(this, options.mergifyOptions);
+      this.npmignore.exclude('/.mergify.yml');
     }
 
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+
+
   }
 }
 
@@ -340,6 +383,13 @@ export interface TypeScriptCompilerOptions {
    * Output directory for the compiled files.
    */
   readonly outDir?: string;
+
+  /**
+   * Specifies the root directory of input files.
+   *
+   * Only use to control the output directory structure with `outDir`.
+   */
+  readonly rootDir?: string;
 }
 
 export class TypescriptConfig extends Construct {
