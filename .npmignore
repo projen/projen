@@ -4,7 +4,6 @@
 # make sure to commit projen definition
 # standard-version configuration
 /.versionrc.json
-/tsconfig.json
 /src
 /dist
 /tsconfig.json
@@ -19,3 +18,4 @@
 !/lib
 !/lib/**/*.js
 !/lib/**/*.d.ts
+!.jsii

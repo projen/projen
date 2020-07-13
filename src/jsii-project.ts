@@ -122,6 +122,7 @@ export class JsiiProject extends TypeScriptLibraryProject {
       releaseToNpm: false, // we have a jsii release workflow
       minNodeVersion,
       ...options,
+      disableTsconfig: true, // jsii generates its own tsconfig.json
     });
 
     const srcdir = this.srcdir;
@@ -225,6 +226,9 @@ export class JsiiProject extends TypeScriptLibraryProject {
     if (compat) {
       this.addCompileCommand('yarn compat');
     }
+
+    // jsii updates .npmignore, so we make it writable
+    this.npmignore.readonly = false;
   }
 
   /**

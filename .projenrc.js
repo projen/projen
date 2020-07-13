@@ -1,6 +1,8 @@
-const { TypeScriptLibraryProject, Semver } = require('./lib');
+const { JsiiProject, Semver } = require('./lib');
 
-const project = new TypeScriptLibraryProject({
+const constructs = Semver.pinned('2.0.1');
+
+const project = new JsiiProject({
   name: 'projen',
   jsiiVersion: Semver.caret('1.5.0'),
   description: 'A new generation of project generators',
@@ -12,18 +14,24 @@ const project = new TypeScriptLibraryProject({
     'yaml': Semver.caret('1.9.2'),
     'fs-extra': Semver.caret('9.0.1'),
     'yargs': Semver.caret('15.4.0'),
-    'constructs': Semver.pinned('2.0.1'),
+    'constructs': constructs,
   },
   devDependencies: {
     '@types/fs-extra': Semver.caret('8.0.1'),
     '@types/yargs': Semver.caret('15.0.5')
   },
+  peerDependencies: {
+    'constructs': constructs
+  },
+  bundledDependencies: [
+    'yaml', 'fs-extra', 'yargs'
+  ],
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [
     { run: `yarn bootstrap` }
   ],
   releaseToNpm: true,
-  minNodeVersion: '10.17.0'
+  minNodeVersion: '10.17.0',
 });
 
 project.addScripts({

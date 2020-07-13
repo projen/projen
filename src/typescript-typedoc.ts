@@ -12,6 +12,6 @@ export class TypedocDocgen extends Construct {
     project.addDevDependencies({ typedoc: Semver.caret('0.17.8') });
     project.addScripts({
       docgen: 'typedoc --out ' + project.docsDirectory,
-    }); 
+    });
   }
 }

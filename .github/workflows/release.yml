@@ -21,10 +21,14 @@ jobs:
         with:
           name: dist
           path: dist
+    container:
+      image: jsii/superchain
   release_npm:
     name: Release to NPM
     needs: build
     runs-on: ubuntu-latest
+    container:
+      image: jsii/superchain
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v1

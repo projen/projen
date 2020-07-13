@@ -18,13 +18,23 @@ export interface FileBaseOptions {
    * @default true
    */
   readonly editGitignore?: boolean;
+
+  /**
+   * Whether the generated file should be readonly.
+   *
+   * @default true
+   */
+  readonly readonly?: boolean;
 }
 
 export abstract class FileBase extends Construct {
   public readonly path: string;
+  public readonly: boolean;
 
   constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
     super(project, filePath);
+
+    this.readonly = options.readonly ?? true;
     this.path = filePath;
 
     const gitignore = options.editGitignore ?? true;
@@ -50,7 +60,7 @@ export abstract class FileBase extends Construct {
   public onSynthesize(session: ISynthesisSession): void {
     const filePath = path.join(session.outdir, this.path);
     if (fs.existsSync(filePath)) {
-      fs.chmodSync(filePath, '755')
+      fs.chmodSync(filePath, '600')
     }
 
     fs.mkdirpSync(path.dirname(filePath));
@@ -61,6 +71,9 @@ export abstract class FileBase extends Construct {
       preparing: false,
     });
     fs.writeFileSync(filePath, post);
-    fs.chmodSync(filePath, '555')
+
+    if (this.readonly) {
+      fs.chmodSync(filePath, '400')
+    }
   }
 }

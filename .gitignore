@@ -38,6 +38,8 @@ jspm_packages/
 /lib
 /dist
 /coverage
+.jsii
+tsconfig.json
 !# synthesized by projen, (do not modify by hand)
 !/package.json
 !# synthesized by projen, (do not modify by hand)
@@ -53,8 +55,6 @@ jspm_packages/
 !/.github/workflows/build.yml
 !# synthesized by projen, (do not modify by hand)
 !/.github/workflows/release.yml
-!# synthesized by projen, (do not modify by hand)
-!/tsconfig.json
 !/src
 !# synthesized by projen, (do not modify by hand)
 !/.eslintrc.json
@@ -63,5 +63,6 @@ jspm_packages/
 !/test
 !# synthesized by projen, (do not modify by hand)
 !/.mergify.yml
+!/API.md
 !# templates must live in the repo
 !templates/**
