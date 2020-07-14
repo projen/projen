@@ -44,31 +44,38 @@ export interface CoverageThreshold {
  *
  */
 export class Jest extends Construct {
+  /**
+   * Escape hatch.
+   */
+  public readonly config: any;
+
+  private readonly ignorePatterns: string[];
+
   constructor(project: NodeProject, options: JestOptions = { }) {
     super(project, 'jest');
 
     project.addDevDependencies({ jest: Semver.caret('26.0.1') });
 
-    const ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
+    this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
 
-    const config: any = {
+    this.config = {
       clearMocks: true,
       collectCoverage: options.coverage ?? true,
-      coveragePathIgnorePatterns: ignorePatterns,
-      testPathIgnorePatterns: ignorePatterns,
+      coveragePathIgnorePatterns: this.ignorePatterns,
+      testPathIgnorePatterns: this.ignorePatterns,
     };
 
     if (options.typescript) {
-      config.preset = 'ts-jest';
+      this.config.preset = 'ts-jest';
 
       // only processs .ts files
-      config.testMatch = [
+      this.config.testMatch = [
         '**/__tests__/**/*.ts?(x)',
         '**/?(*.)+(spec|test).ts?(x)',
       ];
 
       // specify tsconfig.json
-      config.globals = {
+      this.config.globals = {
         'ts-jest': {
           tsConfig: options.typescript.fileName,
         },
@@ -82,7 +89,7 @@ export class Jest extends Construct {
     }
 
     if (options.coverageThreshold) {
-      config.coverageThreshold = {
+      this.config.coverageThreshold = {
         global: options.coverageThreshold,
       };
     }
@@ -94,9 +101,13 @@ export class Jest extends Construct {
       'test:update': 'jest -u',
     });
 
-    project.addFields({ jest: config });
+    project.addFields({ jest: this.config });
 
     project.npmignore.exclude('/coverage');
     project.gitignore.exclude('/coverage');
+  }
+
+  public addIgnorePattern(pattern: string) {
+    this.ignorePatterns.push(pattern);
   }
 }
