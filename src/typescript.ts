@@ -77,6 +77,7 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
 export class TypeScriptLibraryProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
+  public readonly eslint?: Eslint;
 
   protected readonly srcdir: string;
   protected readonly libdir: string;
@@ -160,7 +161,7 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.npmignore.exclude('/.projenrc.js');
 
     if (options.eslint ?? true) {
-      new Eslint(this);
+      this.eslint = new Eslint(this);
     }
 
     if (options.jest ?? true) {

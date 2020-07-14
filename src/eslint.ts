@@ -5,7 +5,18 @@ import { Semver } from './semver';
 
 export class Eslint extends Construct {
 
+
+  /**
+   * eslint rules.
+   */
   public readonly rules: { [rule: string]: any[] };
+
+  /**
+   * Direct access to the eslint configuration (escape hatch)
+   */
+  public readonly config: any;
+
+  private readonly ignorePatterns: string[];
 
   constructor(project: NodeProject) {
     super(project, 'eslint');
@@ -56,50 +67,62 @@ export class Eslint extends Construct {
       'import/no-unresolved': [ 'error' ],
     };
 
-    new JsonFile(project, '.eslintrc.json', {
-      obj: {
-        env: {
-          jest: true,
-          node: true,
-        },
-        plugins: [
-          '@typescript-eslint',
-          'import',
-        ],
-        parser: '@typescript-eslint/parser',
-        parserOptions: {
-          ecmaVersion: '2018',
-          sourceType: 'module',
-        },
-        extends: [
-          'plugin:import/typescript',
-        ],
-        settings: {
-          'import/parsers': {
-            '@typescript-eslint/parser': ['.ts', '.tsx'],
-          },
-          'import/resolver': {
-            node: {},
-            typescript: {
-              directory: './tsconfig.json',
-            },
-          },
-        },
-        ignorePatterns: [
-          '*.js',
-          '*.d.ts',
-          'node_modules/',
-          '*.generated.ts',
-          'coverage',
-        ],
-        rules: this.rules,
+    this.ignorePatterns = [
+      '*.js',
+      '*.d.ts',
+      'node_modules/',
+      '*.generated.ts',
+      'coverage',
+    ];
+
+    this.config = {
+      env: {
+        jest: true,
+        node: true,
       },
-    });
+      plugins: [
+        '@typescript-eslint',
+        'import',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+      },
+      extends: [
+        'plugin:import/typescript',
+      ],
+      settings: {
+        'import/parsers': {
+          '@typescript-eslint/parser': ['.ts', '.tsx'],
+        },
+        'import/resolver': {
+          node: {},
+          typescript: {
+            directory: './tsconfig.json',
+          },
+        },
+      },
+      ignorePatterns: this.ignorePatterns,
+      rules: this.rules,
+    };
+
+    new JsonFile(project, '.eslintrc.json', { obj: this.config });
   }
 
+  /**
+   * Add an eslint rule.
+   */
   public addRules(rules: { [rule: string]: any }) {
     for (const [k,v] of Object.entries(rules)) {
       this.rules[k] = v;
     }
+  }
+
+  /**
+   * Do not lint these files.
+   */
+  public addIgnorePattern(pattern: string) {
+    this.ignorePatterns.push(pattern);
   }
 }
