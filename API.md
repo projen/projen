@@ -80,14 +80,28 @@ new Eslint(project: NodeProject)
 
 Name | Type | Description 
 -----|------|-------------
-**rules**🔹 | <code>Map<string, Array<any>></code> | <span></span>
+**config**🔹 | <code>any</code> | Direct access to the eslint configuration (escape hatch).
+**rules**🔹 | <code>Map<string, Array<any>></code> | eslint rules.
 
 ### Methods
 
 
+#### addIgnorePattern(pattern)🔹 <a id="projen-eslint-addignorepattern"></a>
+
+Do not lint these files.
+
+```ts
+addIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
 #### addRules(rules)🔹 <a id="projen-eslint-addrules"></a>
 
-
+Add an eslint rule.
 
 ```ts
 addRules(rules: Map<string, any>): void
@@ -313,6 +327,30 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
   * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>any</code> | Escape hatch.
+
+### Methods
+
+
+#### addIgnorePattern(pattern)🔹 <a id="projen-jest-addignorepattern"></a>
+
+
+
+```ts
+addIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
 
 
 
@@ -934,6 +972,8 @@ Name | Type | Description
 **srcdir**🔹 | <code>string</code> | <span></span>
 **testdir**🔹 | <code>string</code> | <span></span>
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
+**eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
+**jest**?🔹 | <code>[Jest](#projen-jest)</code> | __*Optional*__
 
 
 
