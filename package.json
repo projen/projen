@@ -16,7 +16,7 @@
     "test": "yarn eslint && rm -fr lib/ && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
-    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen && yarn compat",
+    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
     "watch": "jsii -w --silence-warnings=reserved-word",
     "package": "jsii-pacmak",
     "build": "yarn test && yarn compile && yarn run package",

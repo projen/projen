@@ -74,7 +74,7 @@ export interface JsiiProjectOptions extends CommonOptions {
    * - You can manually run compatbility tests using `yarn compat` if this feature is disabled.
    * - You can ignore compatibility failures by adding lines to a ".compatignore" file.
    *
-   * @default true
+   * @default false
    */
   readonly compat?: boolean;
 
@@ -222,7 +222,7 @@ export class JsiiProject extends TypeScriptLibraryProject {
       new JsiiDocgen(this);
     }
 
-    const compat = options.compat ?? true;
+    const compat = options.compat ?? false;
     if (compat) {
       this.addCompileCommand('yarn compat');
     }

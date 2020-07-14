@@ -366,7 +366,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
   * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
   * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
-  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: true
+  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
   * **description** (<code>string</code>)  *No description* __*Optional*__
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
@@ -1137,7 +1137,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
-**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: true
+**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
