@@ -18,17 +18,21 @@ if (!fs.existsSync(symlink)) {
   fs.symlinkSync(projen, symlink);
 }
 
-yargs
+const args = yargs
   .commandDir('cmds')
   .recommendCommands()
   .wrap(yargs.terminalWidth())
   .help()
   .argv;
 
-if (!fs.existsSync(projenfile)) {
-  console.error(`unable to find ${projenfile}`);
-  process.exit(1);
+// no command means just require .projenrc.js
+if (args._.length === 0) {
+  if (!fs.existsSync(projenfile)) {
+    console.error(`unable to find ${projenfile}`);
+    process.exit(1);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require(projenfile);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require(projenfile);
