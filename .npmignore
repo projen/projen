@@ -5,7 +5,7 @@
 # standard-version configuration
 /.versionrc.json
 /src
-/dist
+dist
 /tsconfig.json
 /.github
 /.vscode

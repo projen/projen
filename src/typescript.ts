@@ -152,7 +152,7 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.npmignore.include(`/${this.libdir}/**/*.d.ts`);
 
     this.gitignore.exclude('/dist');
-    this.npmignore.exclude('/dist');
+    this.npmignore.exclude('dist'); // jsii-pacmak expects this to be "dist" and not "/dist". otherwise it will tamper with it
 
     this.npmignore.exclude('/tsconfig.json');
     this.npmignore.exclude('/.github');
