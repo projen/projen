@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/eladb/projen/compare/v0.3.2...v0.3.3) (2020-07-14)
+
+
+### Features
+
+* allow "init" in a non-empty directory ([a7d3b93](https://github.com/eladb/projen/commit/a7d3b93f2a99984e8ac049af6cf7e4565439ac4b))
+* allow configuring eslint ([52f8237](https://github.com/eladb/projen/commit/52f8237838ddc15491c2f0b75c44e9c6a7ee6f94))
+* allow configuring jest ([ef5aa9d](https://github.com/eladb/projen/commit/ef5aa9dd0342208fcd2960b7b557ee12cb3e133a))
+
+
+### Bug Fixes
+
+* "init" should not execute projen ([f94bfe1](https://github.com/eladb/projen/commit/f94bfe15ebdb0d2cb4c12b6e06cc192df2e1c65c))
+
 ### [0.3.2](https://github.com/eladb/projen/compare/v0.3.1...v0.3.2) (2020-07-14)
 
 
