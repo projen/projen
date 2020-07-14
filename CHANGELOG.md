@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/eladb/projen/compare/v0.3.1...v0.3.2) (2020-07-14)
+
+
+### Features
+
+* **jsii:** do not perform api compatibility check by default ([aefe376](https://github.com/eladb/projen/commit/aefe376ebf771a9a0194004c0aee64b1f391aadc))
+
 ### [0.3.1](https://github.com/eladb/projen/compare/v0.3.0...v0.3.1) (2020-07-14)
 
 
