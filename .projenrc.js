@@ -33,6 +33,7 @@ const project = new JsiiProject({
   ],
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
+  compileBeforeTest: true
 });
 
 project.addScripts({
