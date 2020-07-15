@@ -76,7 +76,7 @@ export function discover() {
     });
   }
 
-  return result;
+  return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
 }
 function discoverOptions(fqn: string): ProjectOption[] {
   const options = new Array<ProjectOption>();
