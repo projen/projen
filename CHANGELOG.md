@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/eladb/projen/compare/v0.3.3...v0.3.4) (2020-07-15)
+
+
+### Features
+
+* "projen new" (replaces "projen init") ([4897598](https://github.com/eladb/projen/commit/48975989a4ae1c03c63649215aeed807144e2b62))
+
 ### [0.3.3](https://github.com/eladb/projen/compare/v0.3.2...v0.3.3) (2020-07-14)
 
 
