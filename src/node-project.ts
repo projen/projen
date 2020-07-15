@@ -345,7 +345,7 @@ export class NodeProject extends Project {
     });
 
     this.addScripts({ projen: `node ${PROJEN_RC} && yarn install` });
-    this.addScripts({ 'projen:upgrade': 'yarn upgrade projen && yarn projen' });
+    this.addScripts({ 'projen:upgrade': 'yarn upgrade -L projen && yarn projen' });
 
     this.npmignore.comment('exclude project definition from npm module');
     this.npmignore.exclude(`/${PROJEN_RC}`);
