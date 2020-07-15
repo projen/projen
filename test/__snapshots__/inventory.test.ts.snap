@@ -1537,6 +1537,18 @@ Array [
         "type": "unknown",
       },
       Object {
+        "default": "the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
+        "docs": "Compile the code before running tests.",
+        "name": "compileBeforeTest",
+        "optional": true,
+        "path": Array [
+          "compileBeforeTest",
+        ],
+        "switch": "compile-before-test",
+        "type": "boolean",
+      },
+      Object {
         "default": "defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "name": "copyrightOwner",
