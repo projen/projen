@@ -62,12 +62,14 @@
     "yaml": "^1.9.2",
     "fs-extra": "^9.0.1",
     "yargs": "^15.4.0",
-    "constructs": "2.0.1"
+    "constructs": "2.0.1",
+    "decamelize": "^4.0.0"
   },
   "bundledDependencies": [
     "yaml",
     "fs-extra",
-    "yargs"
+    "yargs",
+    "decamelize"
   ],
   "engines": {
     "node": ">= 10.17.0"

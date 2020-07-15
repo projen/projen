@@ -6,7 +6,8 @@ import { Semver } from './semver';
 import { Mergify, MergifyOptions } from './mergify';
 import { Construct } from 'constructs';
 import { TypedocDocgen } from './typescript-typedoc';
-
+import * as fs from 'fs-extra';
+import * as path from 'path';
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   /**
    * Setup jest unit tests
@@ -74,7 +75,12 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   readonly disableTsconfig?: boolean;
 }
 
-export class TypeScriptLibraryProject extends NodeProject {
+
+/**
+ * typescript project
+ * @pjid ts
+ */
+export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
@@ -90,6 +96,9 @@ export class TypeScriptLibraryProject extends NodeProject {
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
     this.testdir = options.testdir ?? 'test';
+
+    // generate sample code in `src` and `lib` if these directories are empty or non-existent.
+    this.generateSample();
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
@@ -231,6 +240,40 @@ export class TypeScriptLibraryProject extends NodeProject {
     }
 
 
+  }
+
+  private generateSample() {
+    const srcdir = path.join(this.outdir, this.srcdir);
+    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
+      return;
+    }
+
+    const srcCode = [
+      'export class Hello {',
+      '  public sayHello() {',
+      '    return \'hello, world!\'',
+      '  }',
+      '}',
+    ];
+
+    fs.mkdirpSync(srcdir);
+    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
+
+    const testdir = path.join(this.outdir, this.testdir);
+    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
+      return;
+    }
+
+    const testCode = [
+      "import { Hello } from '../src'",
+      '',
+      "test('hello', () => {",
+      "  expect(new Hello().sayHello()).toBe('hello, world!');",
+      '});',
+    ];
+
+    fs.mkdirpSync(testdir);
+    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
   }
 }
 
@@ -463,3 +506,8 @@ export class TypescriptConfig extends Construct {
     project.npmignore.exclude(`/${fileName}`);
   }
 }
+
+/**
+ * @deprecated use `TypeScriptProject`
+ */
+export class TypeScriptLibraryProject extends TypeScriptProject { };

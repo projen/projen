@@ -4,7 +4,7 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { Lazy } from 'constructs';
-import { TypeScriptLibraryProject } from './typescript';
+import { TypeScriptProject } from './typescript';
 
 const DEFAULT_JSII_VERSION = '1.6.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -108,7 +108,10 @@ export interface JsiiDotNetTarget {
   readonly packageId: string;
 }
 
-export class JsiiProject extends TypeScriptLibraryProject {
+/**
+ * jsii library project
+ */
+export class JsiiProject extends TypeScriptProject {
   private readonly compileCommands: string[];
 
   public readonly eslint?: Eslint;

@@ -15,6 +15,7 @@ const project = new JsiiProject({
     'fs-extra': Semver.caret('9.0.1'),
     'yargs': Semver.caret('15.4.0'),
     'constructs': constructs,
+    'decamelize': Semver.caret('4.0.0')
   },
   devDependencies: {
     '@types/fs-extra': Semver.caret('8.0.1'),
@@ -24,7 +25,7 @@ const project = new JsiiProject({
     'constructs': constructs
   },
   bundledDependencies: [
-    'yaml', 'fs-extra', 'yargs'
+    'yaml', 'fs-extra', 'yargs', 'decamelize',
   ],
   projenDevDependency: false, // because I am projen
   workflowBootstrapSteps: [

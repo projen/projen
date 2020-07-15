@@ -9,7 +9,7 @@ Name|Description
 [GithubWorkflow](#projen-githubworkflow)|*No description*
 [IgnoreFile](#projen-ignorefile)|*No description*
 [Jest](#projen-jest)|Installs the following npm scripts:.
-[JsiiProject](#projen-jsiiproject)|*No description*
+[JsiiProject](#projen-jsiiproject)|jsii library project.
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
 [Mergify](#projen-mergify)|*No description*
@@ -18,6 +18,7 @@ Name|Description
 [Project](#projen-project)|*No description*
 [Semver](#projen-semver)|*No description*
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
+[TypeScriptProject](#projen-typescriptproject)|typescript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 
@@ -357,10 +358,10 @@ addIgnorePattern(pattern: string): void
 
 ## class JsiiProject 🔹 <a id="projen-jsiiproject"></a>
 
-
+jsii library project.
 
 __Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [TypeScriptLibraryProject](#projen-typescriptlibraryproject)
+__Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
 
@@ -892,9 +893,80 @@ __Returns__:
 
 
 
-## class TypeScriptLibraryProject 🔹 <a id="projen-typescriptlibraryproject"></a>
+## class TypeScriptLibraryProject ⚠️ <a id="projen-typescriptlibraryproject"></a>
 
 
+
+__Implements__: [IConstruct](#constructs-iconstruct)
+__Extends__: [TypeScriptProject](#projen-typescriptproject)
+
+### Initializer
+
+
+
+
+```ts
+new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
+```
+
+* **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
+  * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
+
+
+
+
+## class TypeScriptProject 🔹 <a id="projen-typescriptproject"></a>
+
+typescript project.
 
 __Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [NodeProject](#projen-nodeproject)
@@ -905,7 +977,7 @@ __Extends__: [NodeProject](#projen-nodeproject)
 
 
 ```ts
-new TypeScriptLibraryProject(options: TypeScriptLibraryProjectOptions)
+new TypeScriptProject(options: TypeScriptLibraryProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)</code>)  *No description*
