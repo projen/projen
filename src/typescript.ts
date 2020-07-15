@@ -8,6 +8,7 @@ import { Construct } from 'constructs';
 import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+
 export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
   /**
    * Setup jest unit tests
@@ -73,6 +74,14 @@ export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
    * @default false
    */
   readonly disableTsconfig?: boolean;
+
+  /**
+   * Compile the code before running tests.
+   *
+   * @default - the default behavior is to delete the lib/ directory and run
+   * jest typescript tests and only if all tests pass, run the compiler.
+   */
+  readonly compileBeforeTest?: boolean;
 }
 
 
@@ -107,10 +116,15 @@ export class TypeScriptProject extends NodeProject {
       compile: 'tsc',
       watch: 'tsc -w',
       package: 'rm -fr dist && mkdir -p dist/js && yarn pack && mv *.tgz dist/js/',
-
-      // we run "test" first because it deletes "lib/"
-      build: 'yarn test && yarn compile && yarn run package',
     });
+
+    // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
+    const compileBeforeTest = options.compileBeforeTest ?? false;
+    if (compileBeforeTest) {
+      this.addScripts({ build: 'yarn compile && yarn test && yarn run package' });
+    } else {
+      this.addScripts({ build: 'yarn test && yarn compile && yarn run package' })
+    }
 
     this.manifest.types = `${this.libdir}/index.d.ts`;
 
@@ -189,9 +203,13 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions,
       });
 
-      // make sure to delete "lib" *before* runninng tests to ensure that
-      // test code does not take a dependency on "lib" and instead on "src".
-      this.addTestCommands(`rm -fr ${this.libdir}/`);
+      // if we test before compilation, remove the lib/ directory before running
+      // tests so that we get a clean slate for testing.
+      if (!compileBeforeTest) {
+        // make sure to delete "lib" *before* runninng tests to ensure that
+        // test code does not take a dependency on "lib" and instead on "src".
+        this.addTestCommands(`rm -fr ${this.libdir}/`);
+      }
 
       this.jest = new Jest(this, {
         typescript: tsconfig,

@@ -150,9 +150,6 @@ export class JsiiProject extends TypeScriptProject {
       watch: `jsii -w ${jsiiFlags}`,
       compat: `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
       package: 'jsii-pacmak',
-
-      // we run "test" first because it deletes "lib/"
-      build: 'yarn test && yarn compile && yarn run package',
     });
 
     this.addFields({ stability: options.stability ?? Stability.STABLE });

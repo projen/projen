@@ -12,7 +12,7 @@
   },
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
-    "projen:upgrade": "yarn upgrade projen && yarn projen",
+    "projen:upgrade": "yarn upgrade -L projen && yarn projen",
     "test": "yarn eslint && rm -fr lib/ && jest --passWithNoTests",
     "bump": "standard-version",
     "release": "yarn bump && git push --follow-tags origin master",
