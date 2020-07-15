@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.5](https://github.com/eladb/projen/compare/v0.3.4...v0.3.5) (2020-07-15)
+
+
+### Features
+
+* compileBeforeTest ([8beda76](https://github.com/eladb/projen/commit/8beda76c1041da27bda5e7ee912f120a9388bc9e))
+* projen:upgrade now always update to latest ([56eb1f7](https://github.com/eladb/projen/commit/56eb1f741f84c5286e58b15d70b5d0b130a26f4d))
+
 ### [0.3.4](https://github.com/eladb/projen/compare/v0.3.3...v0.3.4) (2020-07-15)
 
 
