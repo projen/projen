@@ -89,6 +89,8 @@ function discoverOptions(fqn: string): ProjectOption[] {
 
   addOptions(optionsTypeFqn);
 
+  return options.sort((a, b) => a.switch.localeCompare(b.switch));
+
   function addOptions(ofqn: string, path: string[] = [], optional = false) {
     const struct = jsii[ofqn];
     if (!struct) {
@@ -118,8 +120,6 @@ function discoverOptions(fqn: string): ProjectOption[] {
       addOptions(ifc);
     }
   }
-
-  return options.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function filterUndefined(obj: any) {
