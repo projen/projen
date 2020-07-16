@@ -1,4 +1,4 @@
-import { Construct } from 'constructs';
+import { Construct, ISynthesisSession } from 'constructs';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
@@ -40,12 +40,19 @@ export class Version extends Construct {
   public get current() {
     const versionFile = `${this.project.outdir}/${VERSION_FILE}`;
     if (!fs.existsSync(versionFile)) {
-      if (!fs.existsSync(this.project.outdir)) {
-        fs.mkdirpSync(this.project.outdir);
-      }
-      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
+      return '0.0.0';
     }
-
     return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
+  }
+
+  public onSynthesize(session: ISynthesisSession) {
+    const versionFile = `${session.outdir}/${VERSION_FILE}`;
+    // This shouldn't happen but who knows
+    if (!fs.existsSync(versionFile)) {
+      if (!fs.existsSync(session.outdir)) {
+        fs.mkdirpSync(session.outdir);
+      }
+      fs.writeFileSync(`${session.outdir}/${VERSION_FILE}`, JSON.stringify({ version: '0.0.0' }));
+    }
   }
 }

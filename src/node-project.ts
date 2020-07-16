@@ -44,6 +44,12 @@ export interface CommonOptions {
   readonly keywords?: string[];
 
   /**
+   * Private projects.
+   *
+   */
+  readonly private?: boolean;
+
+  /**
    * Version of projen to install.
    *
    * @default - latest version
@@ -286,8 +292,8 @@ export class NodeProject extends Project {
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
+      'private': options.private || undefined,
       'description': options.description,
-      'main': 'lib/index.js',
       'repository': !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
@@ -388,7 +394,7 @@ export class NodeProject extends Project {
         antitamper: options.antitamper,
       });
 
-      if (options.releaseToNpm) {
+      if (options.releaseToNpm && !options.private) {
         this.releaseWorkflow.addJobs({
           release_npm: {
             'name': 'Release to NPM',

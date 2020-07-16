@@ -63,6 +63,19 @@ export abstract class FileBase extends Construct {
       fs.chmodSync(filePath, '600')
     }
 
+    // Preserving existing field on JSON file (e.g version)
+    // not using JsonFile to avoid circular reference issue
+    if ((this as any).preserveJSONFields?.length) {
+      if (fs.existsSync(filePath)) {
+        const existing = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        for (const field of (this as any).preserveJSONFields || []) {
+          if (Object.keys(existing).includes(field)) {
+            (this as any).obj[field] = existing[field];
+          }
+        }
+      }
+    }
+
     fs.mkdirpSync(path.dirname(filePath));
 
     const post = Tokenization.resolve(this.data, {

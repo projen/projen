@@ -188,7 +188,7 @@ const project = new JsiiProject({
   }
 });
 
-project.synth()
+project.synth();
 ```
 
 And re-run:
@@ -253,6 +253,95 @@ That's it. projen will auto-detect `bin/mycli` and will add it to your
 `package.json` under the `bin` section. You can disable this behavior by setting
 `autoDetectBin: false`.
 
+### Lerna / Yarn Monorepo
+
+#### Simplest example:
+
+```typescript
+const { LernaProject } = require('projen');
+
+const lernaProject = new LernaProject({
+  name: 'my-monorepo-project',
+});
+
+lernaProject.synth();
+```
+
+This would create a Lerna monorepo using yarn workspaces, setting `packages/*` as
+the path where to place your packages.
+
+#### What about the packages?
+
+In order to add packages to your monorepo, you can pass the `packages` property:
+```typescript
+const { LernaProject, TypeScriptLibraryProject } = require('projen');
+
+const lernaProject = new LernaProject({
+  name: 'my-monorepo-project',
+  packages: [
+    {
+      project: new TypeScriptProject({ 
+        name: 'ddb-connector', 
+        description: 'DynamoDB API / Connector' 
+      }),
+    },
+  ]
+});
+
+lernaProject.synth();
+```
+
+The `packages` property is an array of objects describing the details of the package that
+will belong to the monorepo, where:
+
+- `project` is a *projen* project.
+- `location` Optional. It's the path where the package will be created. If specified, and the path doesn't exist, 
+will create a new workspace pattern to match the location.
+
+Alternatively, you could add packages to your monorepo by calling the `addPackage` method on your
+`LernaProject` (before `synth()`):
+
+```typescript
+const { LernaProject, TypeScriptProject } = require('projen');
+
+const lernaProject = new LernaProject({
+  /* ... */
+});
+
+lernaProject.addPackage(new TypeScriptProject({ 
+  name: 'geocoding-service', 
+  description: 'Geocoding Service' 
+}));
+
+lernaProject.synth();
+```
+>When omitted, `workspaces` will have a default packages pattern of `packages/*`. Likewise, `location` 
+>will default to `packages`. If you're willing to use the default location when adding packages and 
+>want to specify additional packages location patterns, don't forget to include `packages/*`.
+
+You can use `lernaProject.noHoist(package, dep)` to tell yarn which packages can't be
+hoisted ()
+
+```typescript
+const { LernaProject, TypeScriptProject } = require('projen');
+
+const myChildProject =  new TypeScriptProject({ 
+  name: 'geocoding-service', 
+  description: 'Geocoding Service' 
+});
+
+const lernaProject = new LernaProject({
+  /* ... */
+});
+lernaProject.addPackage(myChildProject);
+lernaProject.noHoist('any-package', 'yaml') // generates 'any-package/yaml' nohoist entry
+lernaProject.noHoist(myChildProject, 'aws-sdk') // generates 'geocoding-service/aws-sdk'
+lernaProject.noHoist(myChildProject, 'aws-sdk/**') // generates 'geocoding-service/aws-sdk/**'
+
+lernaProject.synth();
+```
+
+
 ## Ecosystem
 
 _projen_ takes a "batteries included" approach and aims to offer dozens of different project types out of
@@ -262,6 +351,7 @@ the box (we are just getting started). Think `projen new react`, `projen new ang
 Adding new project types is as simple as submitting a pull request to this repo and exporting a class that 
 extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your 
 type will immediately be available in `projen new`.
+
 
 ## Contributing
 

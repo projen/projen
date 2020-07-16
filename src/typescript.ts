@@ -4,7 +4,7 @@ import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
 import { Mergify, MergifyOptions } from './mergify';
-import { Construct } from 'constructs';
+import { Construct, ISynthesisSession } from 'constructs';
 import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -106,11 +106,11 @@ export class TypeScriptProject extends NodeProject {
     this.libdir = options.libdir ?? 'lib';
     this.testdir = options.testdir ?? 'test';
 
-    // generate sample code in `src` and `lib` if these directories are empty or non-existent.
-    this.generateSample();
-
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
+
+    this.addFields({ types: `${this.libdir}/index.d.ts` });
+    this.addFields({ main: `${this.libdir}/index.js` });
 
     this.addScripts({
       compile: 'tsc',
@@ -260,8 +260,9 @@ export class TypeScriptProject extends NodeProject {
 
   }
 
-  private generateSample() {
-    const srcdir = path.join(this.outdir, this.srcdir);
+  private generateSample(outdir?: string) {
+    outdir = outdir || this.outdir;
+    const srcdir = path.join(outdir, this.srcdir);
     if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
@@ -277,7 +278,7 @@ export class TypeScriptProject extends NodeProject {
     fs.mkdirpSync(srcdir);
     fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
 
-    const testdir = path.join(this.outdir, this.testdir);
+    const testdir = path.join(outdir, this.testdir);
     if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
@@ -293,6 +294,13 @@ export class TypeScriptProject extends NodeProject {
     fs.mkdirpSync(testdir);
     fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
   }
+
+  public onSynthesize(session: ISynthesisSession) {
+    super.onSynthesize(session);
+    // generate sample code in `src` and `lib` if these directories are empty or non-existent.
+    this.generateSample(session.outdir);
+  }
+
 }
 
 export interface TypescriptConfigOptions {

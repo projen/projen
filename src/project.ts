@@ -19,7 +19,7 @@ export class Project extends Construct {
     this.gitignore = new IgnoreFile(this, '.gitignore');
   }
 
-  public synth(): void {
-    Node.of(this).synthesize({ outdir: this.outdir });
+  public synth(outdir?: string): void {
+    Node.of(this).synthesize({ outdir: outdir ?? this.outdir });
   }
 }

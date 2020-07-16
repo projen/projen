@@ -1,0 +1,1 @@
+To run this example: `tsc .projenrc.ts && node .projenrc.js`

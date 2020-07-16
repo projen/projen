@@ -138,8 +138,6 @@ export class JsiiProject extends TypeScriptProject {
       throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
     }
 
-    this.addFields({ types: `${libdir}/index.d.ts` });
-
     // this is an unhelpful warning
     const jsiiFlags = '--silence-warnings=reserved-word';
 

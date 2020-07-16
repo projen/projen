@@ -12,3 +12,4 @@ export * from './eslint';
 export * from './jest';
 export * from './typescript';
 export * from './mergify';
+export * from './lerna-project';
