@@ -1,26 +1,42 @@
 # projen
 
-> A new generation of project generators
+> Define and maintain complex project configuration through code. 
+
+> JOIN THE **#templatesareevil** MOVEMENT!
+
 
 *projen* synthesizes project configuration files such as `package.json`,
 `tsconfig.json`, `.gitignore`, GitHub workflows, eslint, jest, etc from a
-well-typed definition.
+well-typed definition written in JavaScript.
 
 Contrary to templating/scaffolding approaches, *projen* is not a one-off
 generator. Synthesized configuration is not expected to ever be manually edited
 (in fact, projen enforces that). The source of truth is always `.projenrc.js`.
 
-Project types:
+To create a new project, run the following command and follow the instructions:
 
-* [NodeProject](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)
-* [TypeScriptLibraryProject](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)
-* [JsiiProject](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)
+```
+$ npx projen new
+```
 
-Features (contributions are welcome!):
+## Project Types
 
-* Package.json synthesis
-* Standard npm scripts
-* ESLint
+Projen is all about **project types**. Project types are represented as **well-typed TypeScript classes**. The project 
+definition file (`.projenrc.js`) is a simple JavaScript program which instantiates of one of the project type classes
+and calls `proj.synth()` on it.
+
+Supported project types (create with `npx projen new TYPE`):
+
+* [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)
+* [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)
+* [jsii](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)
+* [Add yours](#ecosystem)
+
+Some examples for features built-in to these project types:
+
+* Fully synthesize `package.json`
+* Standard npm scripts like `compile`, `build`, `test`, `package`
+* eslint
 * Jest
 * jsii: compile, package, api compatibility checks, API.md
 * Bump & release scripts with CHANGELOG generation based on Conventional Commits
@@ -237,12 +253,15 @@ That's it. projen will auto-detect `bin/mycli` and will add it to your
 `package.json` under the `bin` section. You can disable this behavior by setting
 `autoDetectBin: false`.
 
+## Ecosystem
 
+_projen_ takes a "batteries included" approach and aims to offer dozens of different project types out of
+the box (we are just getting started). Think `projen new react`, `projen new angular`, `projen new java-maven`,
+`projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tight to javascript or npm!)...
 
-
-
-
-
+Adding new project types is as simple as submitting a pull request to this repo and exporting a class that 
+extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your 
+type will immediately be available in `projen new`.
 
 ## Contributing
 
