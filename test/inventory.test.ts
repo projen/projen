@@ -5,6 +5,7 @@ const result = inventory.discover();
 test('project id', () => {
   expect(result.map(x => x.pjid)).toStrictEqual([
     'jsii',
+    'lerna',
     'node',
     'project',
     'ts',
