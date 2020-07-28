@@ -55,6 +55,8 @@ tsconfig.json
 !/.github/workflows/build.yml
 !# synthesized by projen, (do not modify by hand)
 !/.github/workflows/release.yml
+!# synthesized by projen, (do not modify by hand)
+!/.github/dependabot.yml
 !/src
 !# synthesized by projen, (do not modify by hand)
 !/.eslintrc.json

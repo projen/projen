@@ -9,6 +9,7 @@ import { Version } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { DependabotOptions, Dependabot } from './dependabot';
 
 const ANTITAMPER_COMMAND = [
   {
@@ -160,6 +161,20 @@ export interface CommonOptions {
    * @default "test"
    */
   readonly testdir?: string;
+
+  /**
+   * Include dependabot configuration.
+   *
+   * @default true;
+   */
+  readonly dependabot?: boolean;
+
+  /**
+   * Options for dependabot.
+   *
+   * @default - default options
+   */
+  readonly dependabotOptions?: DependabotOptions;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
@@ -430,6 +445,10 @@ export class NodeProject extends Project {
           }
         }
       }
+    }
+
+    if (options.dependabot ?? true) {
+      new Dependabot(this, options.dependabotOptions);
     }
   }
 

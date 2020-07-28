@@ -9,7 +9,14 @@ import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-export interface TypeScriptLibraryProjectOptions extends NodeProjectOptions {
+/**
+ * @deprecated use TypeScriptProjectOptions
+ */
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
+
+}
+
+export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Setup jest unit tests
    * @default true
@@ -99,7 +106,7 @@ export class TypeScriptProject extends NodeProject {
   protected readonly libdir: string;
   protected readonly testdir: string;
 
-  constructor(options: TypeScriptLibraryProjectOptions) {
+  constructor(options: TypeScriptProjectOptions) {
     super(options);
 
     this.srcdir = options.srcdir ?? 'src';

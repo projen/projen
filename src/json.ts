@@ -10,6 +10,11 @@ export class JsonFile extends FileBase {
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
+
+    if (!options.obj) {
+      throw new Error('"obj" cannot be undefined');
+    }
+
     this.obj = options.obj;
   }
 
