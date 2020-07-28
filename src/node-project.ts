@@ -643,7 +643,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
     if (options.uploadArtifact) {
       job.steps.push({
         name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v1',
+        uses: 'actions/upload-artifact@v2.1.1',
         with: {
           name: 'dist',
           path: 'dist',
