@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.6](https://github.com/eladb/projen/compare/v0.3.5...v0.3.6) (2020-07-28)
+
+
+### Features
+
+* upgrade upload-artifact github action to 2.1.1 ([a281892](https://github.com/eladb/projen/commit/a281892a946670bfe7e6a6f6d58a392de9bdde15))
+
 ### [0.3.5](https://github.com/eladb/projen/compare/v0.3.4...v0.3.5) (2020-07-15)
 
 
