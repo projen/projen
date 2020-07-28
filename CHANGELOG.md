@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/eladb/projen/compare/v0.3.6...v0.3.7) (2020-07-28)
+
+
+### Features
+
+* dependabot support ([1b33016](https://github.com/eladb/projen/commit/1b33016c68bca1e08e9faead8d98fc64ceb2e4a7))
+* upgrade @types/jest to 26.0.7 ([b02c0b3](https://github.com/eladb/projen/commit/b02c0b317735e49354de2ba0c6514b28db04c1cf))
+
 ### [0.3.6](https://github.com/eladb/projen/compare/v0.3.5...v0.3.6) (2020-07-28)
 
 
