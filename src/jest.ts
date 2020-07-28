@@ -83,7 +83,7 @@ export class Jest extends Construct {
 
       // add relevant deps
       project.addDevDependencies({
-        '@types/jest': Semver.caret('25.2.1'),
+        '@types/jest': Semver.caret('26.0.7'),
         'ts-jest': Semver.caret('26.1.0'),
       });
     }
