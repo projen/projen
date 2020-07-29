@@ -49,6 +49,7 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[VersionOptions](#projen-versionoptions)|*No description*
 
 
 **Enums**
@@ -417,6 +418,7 @@ new JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -661,6 +663,7 @@ new NodeProject(options: NodeProjectOptions)
   * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -963,6 +966,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1037,6 +1041,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1155,10 +1160,12 @@ __Extends__: [Construct](#constructs-construct)
 
 
 ```ts
-new Version(project: NodeProject)
+new Version(project: NodeProject, options?: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
 
 
 
@@ -1279,6 +1286,7 @@ Name | Type | Description
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
 **authorUrl**?🔹 | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1425,6 +1433,7 @@ Name | Type | Description
 -----|------|-------------
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1472,6 +1481,7 @@ Name | Type | Description
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1589,6 +1599,7 @@ Name | Type | Description
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**autoReleaseSchedule**?⚠️ | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
@@ -1654,6 +1665,7 @@ Name | Type | Description
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1716,6 +1728,19 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | __*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | The directory in which typescript sources reside.<br/>__*Default*__: all .ts files recursively
+
+
+
+## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 
 
 

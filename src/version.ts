@@ -3,11 +3,23 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import * as fs from 'fs-extra';
+import { GithubWorkflow } from './github-workflow';
 
 const VERSION_FILE = 'version.json';
 
+export interface VersionOptions {
+  /**
+   * CRON schedule for automatically bumping and releasing a new version.
+   *
+   * Set to `"never"` to disable the auto-release workflow.
+   *
+   * @default - every 6 hours
+   */
+  readonly autoReleaseSchedule?: string;
+}
+
 export class Version extends Construct {
-  constructor(private readonly project: NodeProject) {
+  constructor(private readonly project: NodeProject, options: VersionOptions = {}) {
     super(project, 'bump-script');
 
     project.addScripts({ 'no-changes': '[ $(git log --oneline -1 | cut -d" " -f2) == "chore(release):" ] && echo "No changes to release."' });
@@ -34,6 +46,37 @@ export class Version extends Construct {
         },
       },
     });
+
+    const autoReleaseCron = options.autoReleaseSchedule ?? '0 */6 * * *';
+    if (autoReleaseCron && autoReleaseCron !== 'never') {
+      const workflow = new GithubWorkflow(project, 'bump');
+
+      workflow.on({
+        schedule: [ { cron: autoReleaseCron } ],
+
+        // allow manual triggering
+        workflow_dispatch: { },
+      });
+
+      workflow.addJobs({
+        bump: {
+          'runs-on': 'ubuntu-latest',
+          'steps': [
+            {
+              uses: 'actions/checkout@v2',
+              with: {
+                'fetch-depth': 0, // otherwise, you will failed to push refs to dest repo
+              },
+            },
+
+            { run: 'yarn install --frozen-lockfile' },
+
+            // bump and push to repo
+            { run: 'yarn release' },
+          ],
+        },
+      });
+    }
   }
 
   /**

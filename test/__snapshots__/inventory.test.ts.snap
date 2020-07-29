@@ -64,6 +64,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "every 6 hours",
+        "docs": "CRON schedule for automatically bumping and releasing a new version.",
+        "name": "autoReleaseSchedule",
+        "optional": true,
+        "path": Array [
+          "autoReleaseSchedule",
+        ],
+        "switch": "auto-release-schedule",
+        "type": "string",
+      },
+      Object {
         "docs": "Binary programs vended with your module.",
         "name": "bin",
         "optional": true,
@@ -1078,6 +1089,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "every 6 hours",
+        "docs": "CRON schedule for automatically bumping and releasing a new version.",
+        "name": "autoReleaseSchedule",
+        "optional": true,
+        "path": Array [
+          "autoReleaseSchedule",
+        ],
+        "switch": "auto-release-schedule",
+        "type": "string",
+      },
+      Object {
         "docs": "Binary programs vended with your module.",
         "name": "bin",
         "optional": true,
@@ -1582,6 +1604,17 @@ Array [
         ],
         "switch": "auto-detect-bin",
         "type": "boolean",
+      },
+      Object {
+        "default": "every 6 hours",
+        "docs": "CRON schedule for automatically bumping and releasing a new version.",
+        "name": "autoReleaseSchedule",
+        "optional": true,
+        "path": Array [
+          "autoReleaseSchedule",
+        ],
+        "switch": "auto-release-schedule",
+        "type": "string",
       },
       Object {
         "docs": "Binary programs vended with your module.",

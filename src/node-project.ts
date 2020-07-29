@@ -188,6 +188,15 @@ export interface NodeProjectCommonOptions {
    * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
+
+  /**
+  * CRON schedule for automatically bumping and releasing a new version.
+  *
+  * Set to `"never"` to disable the auto-release workflow.
+  *
+  * @default - every 6 hours
+  */
+  readonly autoReleaseSchedule?: string;
 }
 
 export interface NodeProjectOptions extends ProjectOptions, NodeProjectCommonOptions {
@@ -393,7 +402,9 @@ export class NodeProject extends Project {
     this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
 
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    this._version = new Version(this, {
+      autoReleaseSchedule: options.autoReleaseSchedule,
+    });
     this.manifest.version = this.version;
 
     if (options.buildWorkflow ?? true) {
