@@ -3,28 +3,17 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import * as fs from 'fs-extra';
-import { GithubWorkflow } from './github-workflow';
 
 const VERSION_FILE = 'version.json';
 
-export interface VersionOptions {
-  /**
-   * CRON schedule for automatically bumping and releasing a new version.
-   *
-   * Set to `"never"` to disable the auto-release workflow.
-   *
-   * @default - every 6 hours
-   */
-  readonly autoReleaseSchedule?: string;
-}
-
 export class Version extends Construct {
-  constructor(private readonly project: NodeProject, options: VersionOptions = {}) {
+  constructor(private readonly project: NodeProject) {
     super(project, 'bump-script');
 
     project.addScripts({ 'no-changes': '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."' });
     project.addScripts({ bump: 'yarn --silent no-changes || standard-version' });
     project.addScripts({ release: 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)' });
+
     project.addDevDependencies({
       'standard-version': Semver.caret('8.0.1'),
     });
@@ -46,55 +35,6 @@ export class Version extends Construct {
         },
       },
     });
-
-    const autoReleaseCron = options.autoReleaseSchedule ?? '0 */6 * * *';
-    if (autoReleaseCron && autoReleaseCron !== 'never') {
-      const workflow = new GithubWorkflow(project, 'bump');
-
-      workflow.on({
-        schedule: [ { cron: autoReleaseCron } ],
-
-        // allow manual triggering
-        workflow_dispatch: { },
-      });
-
-      workflow.addJobs({
-        Bump: {
-          'runs-on': 'ubuntu-latest',
-          'steps': [
-            {
-              name: 'Checkout source code',
-              uses: 'actions/checkout@v2',
-              with: {
-                'fetch-depth': 0, // otherwise, you will failed to push refs to dest repo
-              },
-            },
-
-            {
-              run: 'yarn bootstrap',
-            },
-
-            {
-              run: 'yarn build',
-            },
-
-            {
-              name: 'Set git identity',
-              run: [
-                'git config user.name "Auto-bump"',
-                'git config user.email "github-actions@github.com"',
-              ].join('\n'),
-            },
-
-            // bump and push to repo
-            {
-              name: 'Bump & push',
-              run: 'yarn release',
-            },
-          ],
-        },
-      });
-    }
   }
 
   /**

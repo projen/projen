@@ -72,6 +72,18 @@ export interface NodeProjectCommonOptions {
   readonly releaseWorkflow?: boolean;
 
   /**
+   * Automatically release new versions every commit to one of branches in `releaseBranches`.
+   * @default true
+   */
+  readonly releaseEveryCommit?: boolean;
+
+  /**
+   * CRON schedule to trigger new releases.
+   * @default - no scheduled releases
+   */
+  readonly releaseSchedule?: string;
+
+  /**
    * Branches which trigger a release.
    *
    * @default [ "master" ]
@@ -273,6 +285,21 @@ export interface NodeProjectOptions extends ProjectOptions, NodeProjectCommonOpt
   readonly npmignore?: string[];
 }
 
+/**
+ * Automatic bump modes
+ */
+export enum AutoRelease {
+  /**
+   * Automatically bump & release a new version for every commit to "master"
+   */
+  EVERY_COMMIT,
+
+  /**
+   * Automatically bump & release a new version on a daily basis.
+   */
+  DAILY
+}
+
 export class NodeProject extends Project {
   public readonly npmignore: IgnoreFile;
   public readonly mergify?: Mergify;
@@ -402,14 +429,15 @@ export class NodeProject extends Project {
     this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
 
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this, {
-      autoReleaseSchedule: options.autoReleaseSchedule,
-    });
+    this._version = new Version(this);
     this.manifest.version = this.version;
 
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
-        trigger: { pull_request: { } },
+        trigger: {
+          pull_request: { },
+          push: { },
+        },
         nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
@@ -419,8 +447,20 @@ export class NodeProject extends Project {
 
     if (options.releaseWorkflow ?? true) {
       const releaseBranches = options.releaseBranches ?? [ 'master' ];
+
+      const trigger: { [event: string]: any } = {};
+
+      if (options.releaseEveryCommit ?? true) {
+        trigger.push = { branches: releaseBranches };
+      }
+
+      if (options.releaseSchedule) {
+        trigger.schedule = { cron: options.releaseSchedule };
+      }
+
       this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
-        trigger: { push: { branches: releaseBranches } },
+        trigger,
+        bump: true,
         uploadArtifact: true,
         nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
@@ -678,6 +718,12 @@ export interface NodeBuildWorkflowOptions  {
    * Adds a `actions/setup-node@v1` action with a specific node version.
    */
   readonly nodeVersion?: string;
+
+  /**
+   * Bump a new version for this build.
+   * @default false
+   */
+  readonly bump?: boolean;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -690,6 +736,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
     this.on(options.trigger);
 
+    this.on({
+      workflow_dispatch: {}, // allow manual triggering
+    });
+
     const nodeVersion = !options.nodeVersion ? [] : [
       {
         uses: 'actions/setup-node@v1',
@@ -697,14 +747,38 @@ export class NodeBuildWorkflow extends GithubWorkflow {
       },
     ];
 
-    const job: Record<string, any> = {
+    const job: any = {
       'runs-on': 'ubuntu-latest',
       'steps': [
+        // check out sources.
         { uses: 'actions/checkout@v2' },
+
+        // use the correct node version
         ...nodeVersion,
+
+        // bootstrap the repo
         ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
+
+        // sets git identity so we can push later
+        {
+          name: 'Set git identity',
+          run: [
+            'git config user.name "Auto-bump"',
+            'git config user.email "github-actions@github.com"',
+          ].join('\n'),
+        },
+
+        // if there are changes, creates a bump commit
+        ...options.bump ? [ { run: 'yarn bump' } ] : [],
+
+        // build (compile + test)
         { run: 'yarn build' },
+
+        // anti-tamper check (fails if there were changes to committed files)
         ...(options.antitamper ?? true) ? ANTITAMPER_COMMAND : [],
+
+        // push bump commit
+        ...options.bump ? [ { run: 'git push --follow-tags origin master' } ] : [],
       ],
     };
 
