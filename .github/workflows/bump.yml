@@ -12,4 +12,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: yarn bootstrap
+      - run:
+          - git config user.name "Auto-bump"
+          - git config user.email "github-actions@github.com"
       - run: yarn release

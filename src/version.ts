@@ -68,9 +68,13 @@ export class Version extends Construct {
                 'fetch-depth': 0, // otherwise, you will failed to push refs to dest repo
               },
             },
-
             { run: 'yarn bootstrap' },
-
+            {
+              run: [
+                'git config user.name "Auto-bump"',
+                'git config user.email "github-actions@github.com"',
+              ],
+            },
             // bump and push to repo
             { run: 'yarn release' },
           ],
