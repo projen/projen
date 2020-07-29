@@ -94,11 +94,19 @@ export class Jest extends Construct {
       };
     }
 
-    project.addTestCommands('jest --passWithNoTests');
+    const jestOpts = [ '--passWithNoTests' ];
+
+    // if the project has anti-tamper configured, it should be safe to always run tests
+    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
+    if (project.antitamper) {
+      jestOpts.push('--updateSnapshot');
+    }
+
+    project.addTestCommands(`jest ${jestOpts.join(' ')}`);
 
     project.addScripts({
       'test:watch': 'jest --watch',
-      'test:update': 'jest -u',
+      'test:update': 'jest --updateSnapshot',
     });
 
     project.addFields({ jest: this.config });

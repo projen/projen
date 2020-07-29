@@ -13,7 +13,7 @@
   "scripts": {
     "projen": "node .projenrc.js && yarn install",
     "projen:upgrade": "yarn upgrade -L projen && yarn projen",
-    "test": "yarn eslint && jest --passWithNoTests",
+    "test": "yarn eslint && jest --passWithNoTests --updateSnapshot",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
@@ -23,7 +23,7 @@
     "build": "yarn compile && yarn test && yarn run package",
     "eslint": "eslint . --ext .ts",
     "test:watch": "jest --watch",
-    "test:update": "jest -u",
+    "test:update": "jest --updateSnapshot",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen",
     "bootstrap": "yarn install && yarn compile && yarn projen"

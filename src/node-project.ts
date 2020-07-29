@@ -328,6 +328,11 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
+  /**
+   * Indicates if workflows have anti-tamper checks.
+   */
+  public readonly antitamper: boolean;
+
   protected readonly npmDistTag: string;
 
   constructor(options: NodeProjectOptions) {
@@ -432,6 +437,10 @@ export class NodeProject extends Project {
     this._version = new Version(this);
     this.manifest.version = this.version;
 
+    // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
+    // to decide if we can always run with --updateSnapshot
+    this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
+
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
@@ -441,7 +450,7 @@ export class NodeProject extends Project {
         nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
-        antitamper: options.antitamper,
+        antitamper: this.antitamper,
       });
     }
 
@@ -465,7 +474,7 @@ export class NodeProject extends Project {
         nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
         bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
-        antitamper: options.antitamper,
+        antitamper: this.antitamper,
       });
 
       if (options.releaseToNpm) {
