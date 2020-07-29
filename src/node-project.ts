@@ -12,13 +12,6 @@ import * as path from 'path';
 import { DependabotOptions, Dependabot } from './dependabot';
 import { MergifyOptions, Mergify } from './mergify';
 
-const ANTITAMPER_COMMAND = [
-  {
-    name: 'Anti-tamper check',
-    run: 'git diff --exit-code',
-  },
-];
-
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -768,6 +761,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         // bootstrap the repo
         ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
 
+        // first anti-tamper check (right after bootstrapping)
+        // this will identify any non-committed files genrated by projen
+        ...(options.antitamper ?? true) ? renderAntiTamperCommand('bootstrapping') : [],
+
         // sets git identity so we can push later
         {
           name: 'Set git identity',
@@ -784,7 +781,8 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         { run: 'yarn build' },
 
         // anti-tamper check (fails if there were changes to committed files)
-        ...(options.antitamper ?? true) ? ANTITAMPER_COMMAND : [],
+        // this will identify any non-commited files generated during build (e.g. test snapshots)
+        ...(options.antitamper ?? true) ? renderAntiTamperCommand('build') : [],
 
         // push bump commit
         ...options.bump ? [ { run: 'git push --follow-tags origin $GITHUB_REF' } ] : [],
@@ -808,4 +806,13 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
     this.addJobs({ [this.buildJobId]: job });
   }
+}
+
+function renderAntiTamperCommand(purpose: string) {
+  return [
+    {
+      name: `Anti-tamper check after ${purpose}`,
+      run: 'git diff --exit-code',
+    },
+  ];
 }

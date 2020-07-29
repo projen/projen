@@ -14,13 +14,15 @@ jobs:
         with:
           node-version: 10.17.0
       - run: yarn bootstrap
+      - name: Anti-tamper check after bootstrapping
+        run: git diff --exit-code
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
       - run: yarn bump
       - run: yarn build
-      - name: Anti-tamper check
+      - name: Anti-tamper check after build
         run: git diff --exit-code
       - run: git push --follow-tags origin $GITHUB_REF
       - name: Upload artifact
