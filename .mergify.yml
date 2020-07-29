@@ -12,3 +12,12 @@ pull_request_rules:
         strict: smart
         strict_method: merge
       delete_head_branch: {}
+  - name: Merge pull requests from dependabot if CI passes
+    conditions:
+      - author=dependabot[bot]
+      - status-success=build
+    actions:
+      merge:
+        method: merge
+        commit_message: title+body
+        
