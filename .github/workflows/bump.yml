@@ -8,11 +8,15 @@ jobs:
   Bump:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - run: yarn bootstrap
-      - run:
-          - git config user.name "Auto-bump"
-          - git config user.email "github-actions@github.com"
-      - run: yarn release
+      - run: yarn build
+      - name: Set git identity
+        run: |-
+          git config user.name "Auto-bump"
+          git config user.email "github-actions@github.com"
+      - name: Bump & push
+        run: yarn release

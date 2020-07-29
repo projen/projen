@@ -63,20 +63,34 @@ export class Version extends Construct {
           'runs-on': 'ubuntu-latest',
           'steps': [
             {
+              name: 'Checkout source code',
               uses: 'actions/checkout@v2',
               with: {
                 'fetch-depth': 0, // otherwise, you will failed to push refs to dest repo
               },
             },
-            { run: 'yarn bootstrap' },
+
             {
+              run: 'yarn bootstrap',
+            },
+
+            {
+              run: 'yarn build',
+            },
+
+            {
+              name: 'Set git identity',
               run: [
                 'git config user.name "Auto-bump"',
                 'git config user.email "github-actions@github.com"',
-              ],
+              ].join('\n'),
             },
+
             // bump and push to repo
-            { run: 'yarn release' },
+            {
+              name: 'Bump & push',
+              run: 'yarn release',
+            },
           ],
         },
       });
