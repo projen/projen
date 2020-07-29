@@ -56,6 +56,8 @@ tsconfig.json
 !# synthesized by projen, (do not modify by hand)
 !/.github/workflows/release.yml
 !# synthesized by projen, (do not modify by hand)
+!/.mergify.yml
+!# synthesized by projen, (do not modify by hand)
 !/.github/dependabot.yml
 !/src
 !# synthesized by projen, (do not modify by hand)
@@ -63,8 +65,6 @@ tsconfig.json
 !# synthesized by projen, (do not modify by hand)
 !/tsconfig.jest.json
 !/test
-!# synthesized by projen, (do not modify by hand)
-!/.mergify.yml
 !/API.md
 !# templates must live in the repo
 !templates/**

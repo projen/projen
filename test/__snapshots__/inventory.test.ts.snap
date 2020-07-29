@@ -149,6 +149,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically merge dependabot PRs if build CI build passes.",
+        "name": "autoMerge",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "autoMerge",
+        ],
+        "switch": "dependabot-options-auto-merge",
+        "type": "boolean",
+      },
+      Object {
         "name": "dependencies",
         "optional": true,
         "path": Array [
@@ -749,7 +761,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Add mergify configuration.",
+        "docs": "Adds mergify configuration.",
         "name": "mergify",
         "optional": true,
         "path": Array [
@@ -757,6 +769,16 @@ Array [
         ],
         "switch": "mergify",
         "type": "boolean",
+      },
+      Object {
+        "name": "rules",
+        "optional": true,
+        "path": Array [
+          "mergifyOptions",
+          "rules",
+        ],
+        "switch": "mergify-options-rules",
+        "type": "unknown",
       },
       Object {
         "default": "no \\"engines\\" specified",
@@ -1119,6 +1141,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically merge dependabot PRs if build CI build passes.",
+        "name": "autoMerge",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "autoMerge",
+        ],
+        "switch": "dependabot-options-auto-merge",
+        "type": "boolean",
+      },
+      Object {
         "name": "dependencies",
         "optional": true,
         "path": Array [
@@ -1206,6 +1240,27 @@ Array [
         ],
         "switch": "max-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Adds mergify configuration.",
+        "name": "mergify",
+        "optional": true,
+        "path": Array [
+          "mergify",
+        ],
+        "switch": "mergify",
+        "type": "boolean",
+      },
+      Object {
+        "name": "rules",
+        "optional": true,
+        "path": Array [
+          "mergifyOptions",
+          "rules",
+        ],
+        "switch": "mergify-options-rules",
+        "type": "unknown",
       },
       Object {
         "default": "no \\"engines\\" specified",
@@ -1601,6 +1656,18 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "dependabot",
         ],
         "switch": "dependabot",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically merge dependabot PRs if build CI build passes.",
+        "name": "autoMerge",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "autoMerge",
+        ],
+        "switch": "dependabot-options-auto-merge",
         "type": "boolean",
       },
       Object {

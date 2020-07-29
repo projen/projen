@@ -20,4 +20,3 @@ pull_request_rules:
       merge:
         method: merge
         commit_message: title+body
-        

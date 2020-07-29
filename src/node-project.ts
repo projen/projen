@@ -10,6 +10,7 @@ import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { DependabotOptions, Dependabot } from './dependabot';
+import { MergifyOptions, Mergify } from './mergify';
 
 const ANTITAMPER_COMMAND = [
   {
@@ -18,7 +19,7 @@ const ANTITAMPER_COMMAND = [
   },
 ];
 
-export interface CommonOptions {
+export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
   readonly devDependencies?: Record<string, Semver>;
@@ -175,9 +176,21 @@ export interface CommonOptions {
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
+
+  /**
+   * Adds mergify configuration.
+   * @default true
+   */
+  readonly mergify?: boolean;
+
+  /**
+   * Options for mergify
+   * @default - default options
+   */
+  readonly mergifyOptions?: MergifyOptions;
 }
 
-export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
+export interface NodeProjectOptions extends ProjectOptions, NodeProjectCommonOptions {
   /**
    * This is the name of your package. It gets used in URLs, as an argument on the command line,
    * and as the directory name inside node_modules.
@@ -253,6 +266,7 @@ export interface NodeProjectOptions extends ProjectOptions, CommonOptions {
 
 export class NodeProject extends Project {
   public readonly npmignore: IgnoreFile;
+  public readonly mergify?: Mergify;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly devDependencies: Record<string, string> = { };
@@ -445,6 +459,34 @@ export class NodeProject extends Project {
           }
         }
       }
+    }
+
+    if (options.mergify ?? true) {
+      this.mergify = new Mergify(this, options.mergifyOptions);
+
+      this.mergify.addRule({
+        name: 'Automatic merge on approval and successful build',
+        conditions: [
+          '#approved-reviews-by>=1',
+          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
+        ],
+        actions: {
+          merge: {
+            // squash all commits into a single commit when merging
+            method: 'squash',
+
+            // use PR title+body as the commit message
+            commit_message: 'title+body',
+
+            // update PR branch so it's up-to-date before merging
+            strict: 'smart',
+            strict_method: 'merge',
+          },
+          delete_head_branch: { },
+        },
+      });
+
+      this.npmignore.exclude('/.mergify.yml');
     }
 
     if (options.dependabot ?? true) {

@@ -18,6 +18,12 @@ export interface DependabotOptions {
    * updates will fail the build.
    */
   readonly versioningStrategy?: VersioningStrategy;
+
+  /**
+   * Automatically merge dependabot PRs if build CI build passes.
+   * @default true
+   */
+  readonly autoMerge?: boolean;
 }
 
 /**
@@ -109,5 +115,21 @@ export class Dependabot extends Construct {
       obj: this.config,
       committed: true,
     });
+
+    if (options.autoMerge ?? true) {
+      project.mergify?.addRule({
+        name: 'Merge pull requests from dependabot if CI passes',
+        conditions: [
+          'author=dependabot[bot]',
+          'status-success=build',
+        ],
+        actions: {
+          merge: {
+            method: 'merge',
+            commit_message: 'title+body',
+          },
+        },
+      });
+    }
   }
 }

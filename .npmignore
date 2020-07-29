@@ -4,6 +4,7 @@
 # make sure to commit projen definition
 # standard-version configuration
 /.versionrc.json
+/.mergify.yml
 /src
 dist
 /tsconfig.json
@@ -14,7 +15,6 @@ dist
 /tsconfig.jest.json
 /coverage
 /test
-/.mergify.yml
 !/lib
 !/lib/**/*.js
 !/lib/**/*.d.ts

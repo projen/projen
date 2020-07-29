@@ -3,7 +3,6 @@ import { JsonFile } from './json';
 import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
-import { Mergify, MergifyOptions } from './mergify';
 import { Construct } from 'constructs';
 import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
@@ -41,18 +40,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default ^3.9.5
    */
   readonly typescriptVersion?: Semver;
-
-  /**
-   * Adds mergify configuration.
-   * @default true
-   */
-  readonly mergify?: boolean;
-
-  /**
-   * Options for mergify
-   * @default - default options
-   */
-  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Docgen by Typedoc
@@ -232,33 +219,7 @@ export class TypeScriptProject extends NodeProject {
       '@types/node': Semver.caret(this.minNodeVersion ?? '10.17.0'), // install the minimum version to ensure compatibility
     });
 
-    if (options.mergify ?? true) {
-      const m = new Mergify(this, options.mergifyOptions);
 
-      m.addRule({
-        name: 'Automatic merge on approval and successful build',
-        conditions: [
-          '#approved-reviews-by>=1',
-          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
-        ],
-        actions: {
-          merge: {
-            // squash all commits into a single commit when merging
-            method: 'squash',
-
-            // use PR title+body as the commit message
-            commit_message: 'title+body',
-
-            // update PR branch so it's up-to-date before merging
-            strict: 'smart',
-            strict_method: 'merge',
-          },
-          delete_head_branch: { },
-        },
-      });
-
-      this.npmignore.exclude('/.mergify.yml');
-    }
 
     if (this.docgen) {
       new TypedocDocgen(this);

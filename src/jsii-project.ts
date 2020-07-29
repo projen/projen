@@ -1,4 +1,4 @@
-import { CommonOptions } from './node-project';
+import { NodeProjectCommonOptions } from './node-project';
 import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { JestOptions } from './jest';
@@ -15,7 +15,7 @@ const DEFAULT_JSII_IMAGE = 'jsii/superchain';
 // @types/node has 10.17.0
 const DEFAULT_JSII_MIN_NODE = '10.17.0';
 
-export interface JsiiProjectOptions extends CommonOptions {
+export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * @default "."
    */
@@ -55,12 +55,6 @@ export interface JsiiProjectOptions extends CommonOptions {
    * @default - defaults
    */
   readonly jestOptions?: JestOptions;
-
-  /**
-   * Add mergify configuration
-   * @default true
-   */
-  readonly mergify?: boolean;
 
   /**
    * Automatically generate API.md from jsii
