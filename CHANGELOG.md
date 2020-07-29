@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.11 (2020-07-29)
+
+
+### Bug Fixes
+
+* projen:upgrade fails because package.json is read-only ([e86bbe0](https://github.com/eladb/projen/commit/e86bbe0dbdf760574e2e7a6100db398775ad6efe))
+
 ### 0.3.10 (2020-07-29)
 
 
