@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.12 (2020-07-29)
+
+
+### Bug Fixes
+
+* projen anti-tamper does not work in release ([926e4e2](https://github.com/eladb/projen/commit/926e4e2d1cb41fbc2f75d75079cdcf831fb8b487))
+
 ### 0.3.11 (2020-07-29)
 
 
