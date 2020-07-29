@@ -11,5 +11,5 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: yarn install --frozen-lockfile
+      - run: yarn bootstrap
       - run: yarn release
