@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.14 (2020-07-29)
+
+
+### Features
+
+* do not depend on "constructs" ([#36](https://github.com/eladb/projen/issues/36)) ([a715a06](https://github.com/eladb/projen/commit/a715a069e1d6f0ed4608a93f04ae086f567ed94b))
+
 ### 0.3.13 (2020-07-29)
 
 ### 0.3.12 (2020-07-29)
