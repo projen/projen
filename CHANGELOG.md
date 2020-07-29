@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.10 (2020-07-29)
+
+
+### Features
+
+* use jest -u if project has anti-tamper check ([aa85cde](https://github.com/eladb/projen/commit/aa85cdedccf00b1c7a216e00669d792664c53098))
+
 ### [0.3.9](https://github.com/eladb/projen/compare/v0.3.8...v0.3.9) (2020-07-29)
 
 

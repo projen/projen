@@ -718,6 +718,7 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
