@@ -84,7 +84,10 @@ class Command implements yargs.CommandModule {
   }
 
   public async handler(args: any) {
-    console.log({args});
+    console.log(`Invalid project type ${args.projectType}. Supported types:`);
+    for (const pjid of inventory.discover().map(x => x.pjid)) {
+      console.log(`  ${pjid}`);
+    }
   }
 }
 
