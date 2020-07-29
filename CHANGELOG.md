@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.9](https://github.com/eladb/projen/compare/v0.3.8...v0.3.9) (2020-07-29)
+
+
+### Features
+
+* auto-bump ([a90b29c](https://github.com/eladb/projen/commit/a90b29c666c29d7d743d49b7af4ea23c3a0ee3dd))
+* make "bump" and "release" idempotent ([2ac0a85](https://github.com/eladb/projen/commit/2ac0a85b8a61843fbcc8e5f5dd7ea1696c3469db))
+
+
+### Bug Fixes
+
+* no-changes cannot be executed on ubuntu ([6024c8b](https://github.com/eladb/projen/commit/6024c8b2b4503df84a6abd96a1eb6bae5e825170))
+
 ### [0.3.8](https://github.com/eladb/projen/compare/v0.3.6...v0.3.8) (2020-07-29)
 
 
