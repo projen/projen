@@ -1,9 +1,8 @@
-import { Construct } from 'constructs';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 
-export class Eslint extends Construct {
+export class Eslint {
 
 
   /**
@@ -19,8 +18,6 @@ export class Eslint extends Construct {
   private readonly ignorePatterns: string[];
 
   constructor(project: NodeProject) {
-    super(project, 'eslint');
-
     project.addDevDependencies({
       'typescript': Semver.caret('3.8.3'),
       '@typescript-eslint/eslint-plugin': Semver.caret('2.31.0'),
@@ -32,8 +29,8 @@ export class Eslint extends Construct {
       'json-schema': Semver.caret('0.2.5'), // required by @typescript-eslint/parser
     });
 
-    project.addScripts({ eslint: 'eslint . --ext .ts' });
-    project.addTestCommands('yarn eslint');
+    project.replaceScript('eslint', 'eslint . --ext .ts');
+    project.addTestCommand('yarn eslint');
 
     // exclude some files
     project.npmignore.exclude('/.eslintrc.json');

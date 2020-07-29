@@ -1,4 +1,4 @@
-import { FileBase } from './file';
+import { FileBase, IResolver } from './file';
 import { GENERATION_DISCLAIMER } from './common';
 import { Project } from './project';
 
@@ -31,14 +31,14 @@ export class IgnoreFile extends FileBase {
     this.includes.push(...patterns);
   }
 
-  protected get data(): string {
-    return [
+  protected synthesizeContent(resolver: IResolver): string {
+    return resolver.resolve([
       `# ${GENERATION_DISCLAIMER}`,
       ...this.excludes,
 
       // includes must follow includes
       ...this.includes.map(x => `!${x}`),
-    ].join('\n');
+    ]).join('\n');
   }
 
   private flushComments(into: string[]) {

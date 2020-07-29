@@ -1,7 +1,7 @@
-import { Construct, ISynthesisSession, Tokenization, DefaultTokenResolver, StringConcat } from 'constructs';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { Project } from './project';
+import { Component } from './component';
+import { resolve } from './_resolve';
 
 export interface FileBaseOptions {
   /**
@@ -27,12 +27,12 @@ export interface FileBaseOptions {
   readonly readonly?: boolean;
 }
 
-export abstract class FileBase extends Construct {
+export abstract class FileBase extends Component {
   public readonly path: string;
   public readonly: boolean;
 
   constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
-    super(project, filePath);
+    super(project);
 
     this.readonly = options.readonly ?? true;
     this.path = filePath;
@@ -55,25 +55,46 @@ export abstract class FileBase extends Construct {
     }
   }
 
-  protected abstract get data(): string;
+  /**
+   * Implemented by derived classes and returns the contents of the file to
+   * emit.
+   * @param resolver Call `resolver.resolve(obj)` on any objects in order to
+   * resolve token functions.
+   */
+  protected abstract synthesizeContent(resolver: IResolver): string;
 
-  public onSynthesize(session: ISynthesisSession): void {
-    const filePath = path.join(session.outdir, this.path);
+  /**
+   * Writes the file to the project's output directory
+   * @internal
+   */
+  public _synthesize(outdir: string) {
+    const filePath = path.join(outdir, this.path);
     if (fs.existsSync(filePath)) {
       fs.chmodSync(filePath, '600')
     }
 
     fs.mkdirpSync(path.dirname(filePath));
 
-    const post = Tokenization.resolve(this.data, {
-      resolver: new DefaultTokenResolver(new StringConcat()),
-      scope: this,
-      preparing: false,
-    });
-    fs.writeFileSync(filePath, post);
+    const resolver: IResolver = { resolve: obj => resolve(obj, outdir) };
+    fs.writeFileSync(filePath, this.synthesizeContent(resolver));
 
     if (this.readonly) {
       fs.chmodSync(filePath, '400')
     }
   }
 }
+
+/**
+ * API for resolving tokens when synthesizing file content.
+ */
+export interface IResolver {
+  /**
+   * Given a value (object/string/array/whatever, looks up any functions inside
+   * the object and returns an object where all functions are called.
+   * @param value The value to resolve
+   */
+  resolve(value: any): any;
+}
+
+
+import { Project } from './project';

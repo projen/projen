@@ -4,6 +4,7 @@
 
 Name|Description
 ----|-----------
+[Component](#projen-component)|Represents a project component.
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
@@ -44,11 +45,17 @@ Name|Description
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
-[ProjectOptions](#projen-projectoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+
+
+**Interfaces**
+
+Name|Description
+----|-----------
+[IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 
 
 **Enums**
@@ -62,6 +69,33 @@ Name|Description
 
 
 
+## class Component 🔹 <a id="projen-component"></a>
+
+Represents a project component.
+
+
+### Initializer
+
+
+
+
+```ts
+new Component(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**project**🔹 | <code>[Project](#projen-project)</code> | <span></span>
+
+
+
 ## class Dependabot 🔹 <a id="projen-dependabot"></a>
 
 Defines dependabot configuration for node projects.
@@ -70,8 +104,6 @@ Since module versions are managed in projen, the versioning strategy will be
 configured to "lockfile-only" which means that only updates that can be done
 on the lockfile itself will be proposed.
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -103,8 +135,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -162,8 +192,7 @@ addRules(rules: Map<string, any>): void
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
+__Extends__: [Component](#projen-component)
 __Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow)
 
 ### Initializer
@@ -189,28 +218,24 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**data**🔹 | <code>string</code> | <span></span>
 **path**🔹 | <code>string</code> | <span></span>
 **readonly**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
 
-#### onSynthesize(session)🔹 <a id="projen-filebase-onsynthesize"></a>
+#### protected synthesizeContent(resolver)🔹 <a id="projen-filebase-synthesizecontent"></a>
 
-Allows this construct to emit artifacts into the cloud assembly during synthesis.
-
-This method is usually implemented by framework-level constructs such as `Stack` and `Asset`
-as they participate in synthesizing the cloud assembly.
+Implemented by derived classes and returns the contents of the file to emit.
 
 ```ts
-onSynthesize(session: ISynthesisSession): void
+protected synthesizeContent(resolver: IResolver): string
 ```
 
-* **session** (<code>[ISynthesisSession](#constructs-isynthesissession)</code>)  *No description*
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  Call `resolver.resolve(obj)` on any objects in order to resolve token functions.
 
-
-
+__Returns__:
+* <code>string</code>
 
 
 
@@ -218,7 +243,6 @@ onSynthesize(session: ISynthesisSession): void
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [FileBase](#projen-filebase)
 
 ### Initializer
@@ -233,14 +257,6 @@ new GithubWorkflow(project: Project, name: string)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**data**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -271,13 +287,25 @@ on(events: Map<string, any>): void
 
 
 
+#### protected synthesizeContent(resolver)🔹 <a id="projen-githubworkflow-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 
 
 ## class IgnoreFile 🔹 <a id="projen-ignorefile"></a>
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [FileBase](#projen-filebase)
 
 ### Initializer
@@ -292,14 +320,6 @@ new IgnoreFile(project: Project, filePath: string)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**data**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -343,6 +363,19 @@ include(...patterns: string[]): void
 
 
 
+#### protected synthesizeContent(resolver)🔹 <a id="projen-ignorefile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 
 
 ## class Jest 🔹 <a id="projen-jest"></a>
@@ -353,8 +386,6 @@ Installs the following npm scripts:.
 - `test:watch` will run `jest --watch`
 - `test:update` will run `jest -u`
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -403,7 +434,6 @@ addIgnorePattern(pattern: string): void
 
 jsii library project.
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
@@ -444,6 +474,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -479,29 +510,12 @@ Name | Type | Description
 -----|------|-------------
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 
-### Methods
-
-
-#### addCompileCommand(command)🔹 <a id="projen-jsiiproject-addcompilecommand"></a>
-
-Adds that will be executed after the jsii compilation.
-
-```ts
-addCompileCommand(command: string): void
-```
-
-* **command** (<code>string</code>)  The command to execute.
-
-
-
-
 
 
 ## class JsonFile 🔹 <a id="projen-jsonfile"></a>
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [FileBase](#projen-filebase)
 
 ### Initializer
@@ -528,8 +542,23 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**data**🔹 | <code>string</code> | <span></span>
 **obj**🔹 | <code>json</code> | <span></span>
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-jsonfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 
 
@@ -537,7 +566,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [FileBase](#projen-filebase)
 
 ### Initializer
@@ -556,13 +584,21 @@ new License(project: Project, spdx: string, options: LicenseOptions)
   * **copyrightPeriod** (<code>string</code>)  Period of license (e.g. "1998-2023"). __*Default*__: current year (e.g. "2020")
 
 
+### Methods
 
-### Properties
 
+#### protected synthesizeContent(_)🔹 <a id="projen-license-synthesizecontent"></a>
 
-Name | Type | Description 
------|------|-------------
-**data**🔹 | <code>string</code> | <span></span>
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 
 
@@ -570,8 +606,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -612,7 +646,6 @@ addRule(rule: MergifyRule): void
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [GithubWorkflow](#projen-githubworkflow)
 
 ### Initializer
@@ -650,7 +683,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [Project](#projen-project)
 
 ### Initializer
@@ -663,7 +695,6 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
@@ -692,6 +723,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -722,7 +754,6 @@ Name | Type | Description
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
-**version**🔹 | <code>any</code> | Returns the current version of the project.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
@@ -754,6 +785,19 @@ addBundledDependencies(...deps: string[]): void
 ```
 
 * **deps** (<code>string</code>)  *No description*
+
+
+
+
+#### addCompileCommand(...commands)🔹 <a id="projen-nodeproject-addcompilecommand"></a>
+
+Adds that will be executed after the jsii compilation.
+
+```ts
+addCompileCommand(...commands: string[]): void
+```
+
+* **commands** (<code>string</code>)  The commands to execute during compile.
 
 
 
@@ -813,28 +857,58 @@ addPeerDependencies(deps: Map<string, Semver>, options?: PeerDependencyOptions):
 
 
 
+#### addScriptCommand(name, ...commands)🔹 <a id="projen-nodeproject-addscriptcommand"></a>
+
+Appends a command to run for an npm script.
+
+Joined by "&&"
+
+```ts
+addScriptCommand(name: string, ...commands: string[]): void
+```
+
+* **name** (<code>string</code>)  The name of the script.
+* **commands** (<code>string</code>)  The commands to append.
+
+
+
+
 #### addScripts(scripts)🔹 <a id="projen-nodeproject-addscripts"></a>
 
-
+Replaces the contents of a set of npm package.json scripts.
 
 ```ts
 addScripts(scripts: Map<string, string>): void
 ```
 
-* **scripts** (<code>Map<string, string></code>)  *No description*
+* **scripts** (<code>Map<string, string></code>)  script names and commands.
 
 
 
 
-#### addTestCommands(...commands)🔹 <a id="projen-nodeproject-addtestcommands"></a>
+#### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
 
 
 
 ```ts
-addTestCommands(...commands: string[]): void
+addTestCommand(...commands: string[]): void
 ```
 
 * **commands** (<code>string</code>)  *No description*
+
+
+
+
+#### replaceScript(name, ...commands)🔹 <a id="projen-nodeproject-replacescript"></a>
+
+Replaces the contents of an npm package.json script.
+
+```ts
+replaceScript(name: string, ...commands: string[]): void
+```
+
+* **name** (<code>string</code>)  The script namne.
+* **commands** (<code>string</code>)  The commands to run (joined by "&&").
 
 
 
@@ -845,8 +919,6 @@ addTestCommands(...commands: string[]): void
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -854,11 +926,9 @@ __Extends__: [Construct](#constructs-construct)
 
 
 ```ts
-new Project(options?: ProjectOptions)
+new Project()
 ```
 
-* **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
 
 
 
@@ -868,19 +938,19 @@ new Project(options?: ProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
-**outdir**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
 
-#### synth()🔹 <a id="projen-project-synth"></a>
+#### synth(outdir?)🔹 <a id="projen-project-synth"></a>
 
-
+Synthesize all project files into `outdir`.
 
 ```ts
-synth(): void
+synth(outdir?: string): void
 ```
 
+* **outdir** (<code>string</code>)  The project root directory (default is `.`).
 
 
 
@@ -956,7 +1026,6 @@ __Returns__:
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
@@ -969,7 +1038,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
@@ -998,6 +1066,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -1033,7 +1102,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 typescript project.
 
-__Implements__: [IConstruct](#constructs-iconstruct)
 __Extends__: [NodeProject](#projen-nodeproject)
 
 ### Initializer
@@ -1046,7 +1114,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **outdir** (<code>string</code>)  Where to put the generated project files. __*Default*__: . current directory
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
@@ -1075,6 +1142,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -1111,9 +1179,9 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **docsDirectory**🔹 | <code>string</code> | <span></span>
-**libdir**🔹 | <code>string</code> | <span></span>
-**srcdir**🔹 | <code>string</code> | <span></span>
-**testdir**🔹 | <code>string</code> | <span></span>
+**libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
+**srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
+**testdir**🔹 | <code>string</code> | The directory in which .ts tests reside.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | __*Optional*__
@@ -1124,8 +1192,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -1161,8 +1227,6 @@ Name | Type | Description
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct)
-__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -1176,13 +1240,21 @@ new Version(project: NodeProject)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 
 
+### Methods
 
-### Properties
 
+#### resolveVersion(outdir)🔹 <a id="projen-version-resolveversion"></a>
 
-Name | Type | Description 
------|------|-------------
-**current**🔹 | <code>any</code> | Returns the current version of the project.
+Returns the current version of the project.
+
+```ts
+resolveVersion(outdir: string): any
+```
+
+* **outdir** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>any</code>
 
 
 
@@ -1229,6 +1301,28 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## interface IResolver 🔹 <a id="projen-iresolver"></a>
+
+
+API for resolving tokens when synthesizing file content.
+### Methods
+
+
+#### resolve(value)🔹 <a id="projen-iresolver-resolve"></a>
+
+Given a value (object/string/array/whatever, looks up any functions inside the object and returns an object where all functions are called.
+
+```ts
+resolve(value: any): any
+```
+
+* **value** (<code>any</code>)  The value to resolve.
+
+__Returns__:
+* <code>any</code>
 
 
 
@@ -1333,6 +1427,7 @@ Name | Type | Description
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | __*Optional*__
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
@@ -1470,6 +1565,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
@@ -1516,7 +1612,6 @@ Name | Type | Description
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
-**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/>__*Default*__: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -1528,6 +1623,7 @@ Name | Type | Description
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
@@ -1547,19 +1643,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **pinnedDevDependency**?🔹 | <code>boolean</code> | Automatically add a pinned dev dependency.<br/>__*Default*__: true
-
-
-
-## struct ProjectOptions 🔹 <a id="projen-projectoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/>__*Default*__: . current directory
 
 
 
@@ -1643,7 +1726,6 @@ Name | Type | Description
 **minNodeVersion**?⚠️ | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
-**outdir**?⚠️ | <code>string</code> | Where to put the generated project files.<br/>__*Default*__: . current directory
 **peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -1655,6 +1737,7 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
@@ -1711,7 +1794,6 @@ Name | Type | Description
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
-**outdir**?🔹 | <code>string</code> | Where to put the generated project files.<br/>__*Default*__: . current directory
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -1723,6 +1805,7 @@ Name | Type | Description
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"

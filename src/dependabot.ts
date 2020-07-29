@@ -1,4 +1,3 @@
-import { Construct } from 'constructs';
 import { YamlFile } from './yaml';
 import { NodeProject } from './node-project';
 
@@ -87,7 +86,7 @@ export enum VersioningStrategy {
  * configured to "lockfile-only" which means that only updates that can be done
  * on the lockfile itself will be proposed.
  */
-export class Dependabot extends Construct {
+export class Dependabot {
   /**
    * The raw dependabot configuration.
    * @see https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
@@ -95,8 +94,6 @@ export class Dependabot extends Construct {
   public readonly config: any;
 
   constructor(project: NodeProject, options: DependabotOptions = {}) {
-    super(project, 'dependabot');
-
     this.config = {
       version: 2,
       updates: [

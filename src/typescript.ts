@@ -3,10 +3,10 @@ import { JsonFile } from './json';
 import { JestOptions, Jest } from './jest';
 import { Eslint } from './eslint';
 import { Semver } from './semver';
-import { Construct } from 'constructs';
 import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { Component } from './component';
 
 /**
  * @deprecated use TypeScriptProjectOptions
@@ -89,9 +89,20 @@ export class TypeScriptProject extends NodeProject {
   public readonly eslint?: Eslint;
   public readonly jest?: Jest;
 
-  protected readonly srcdir: string;
-  protected readonly libdir: string;
-  protected readonly testdir: string;
+  /**
+   * The directory in which the .ts sources reside.
+   */
+  public readonly srcdir: string;
+
+  /**
+   * The directory in which compiled .js files reside.
+   */
+  public readonly libdir: string;
+
+  /**
+   * The directory in which .ts tests reside.
+   */
+  public readonly testdir: string;
 
   constructor(options: TypeScriptProjectOptions) {
     super(options);
@@ -99,9 +110,6 @@ export class TypeScriptProject extends NodeProject {
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
     this.testdir = options.testdir ?? 'test';
-
-    // generate sample code in `src` and `lib` if these directories are empty or non-existent.
-    this.generateSample();
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
@@ -115,9 +123,9 @@ export class TypeScriptProject extends NodeProject {
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
     if (compileBeforeTest) {
-      this.addScripts({ build: 'yarn compile && yarn test && yarn run package' });
+      this.replaceScript('build', 'yarn compile && yarn test && yarn run package');
     } else {
-      this.addScripts({ build: 'yarn test && yarn compile && yarn run package' })
+      this.replaceScript('build', 'yarn test && yarn compile && yarn run package')
     }
 
     this.manifest.types = `${this.libdir}/index.d.ts`;
@@ -202,7 +210,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* runninng tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.addTestCommands(`rm -fr ${this.libdir}/`);
+        this.addTestCommand(`rm -fr ${this.libdir}/`);
       }
 
       this.jest = new Jest(this, {
@@ -219,47 +227,12 @@ export class TypeScriptProject extends NodeProject {
       '@types/node': Semver.caret(this.minNodeVersion ?? '10.17.0'), // install the minimum version to ensure compatibility
     });
 
-
+    // generate sample code in `src` and `lib` if these directories are empty or non-existent.
+    new SampleCode(this);
 
     if (this.docgen) {
       new TypedocDocgen(this);
     }
-
-
-  }
-
-  private generateSample() {
-    const srcdir = path.join(this.outdir, this.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
-
-    const srcCode = [
-      'export class Hello {',
-      '  public sayHello() {',
-      '    return \'hello, world!\'',
-      '  }',
-      '}',
-    ];
-
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
-
-    const testdir = path.join(this.outdir, this.testdir);
-    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
-
-    const testCode = [
-      "import { Hello } from '../src'",
-      '',
-      "test('hello', () => {",
-      "  expect(new Hello().sayHello()).toBe('hello, world!');",
-      '});',
-    ];
-
-    fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
   }
 }
 
@@ -464,7 +437,7 @@ export interface TypeScriptCompilerOptions {
   readonly rootDir?: string;
 }
 
-export class TypescriptConfig extends Construct {
+export class TypescriptConfig {
   public readonly compilerOptions: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
@@ -472,8 +445,6 @@ export class TypescriptConfig extends Construct {
 
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
     const fileName = options.fileName ?? 'tsconfig.json';
-
-    super(project, `tsconfig-${fileName}`);
 
     this.include = options.include ?? [ '**/*.ts' ];
     this.exclude = options.exclude ?? [ 'node_modules' ];
@@ -490,6 +461,52 @@ export class TypescriptConfig extends Construct {
     });
 
     project.npmignore.exclude(`/${fileName}`);
+  }
+}
+
+
+class SampleCode extends Component {
+
+  private readonly nodeProject: TypeScriptProject;
+
+  constructor(project: TypeScriptProject) {
+    super(project);
+
+    this.nodeProject = project;
+  }
+
+  public _synthesize(outdir: string) {
+    const srcdir = path.join(outdir, this.nodeProject.srcdir);
+    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
+      return;
+    }
+
+    const srcCode = [
+      'export class Hello {',
+      '  public sayHello() {',
+      '    return \'hello, world!\'',
+      '  }',
+      '}',
+    ];
+
+    fs.mkdirpSync(srcdir);
+    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
+
+    const testdir = path.join(outdir, this.nodeProject.testdir);
+    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
+      return;
+    }
+
+    const testCode = [
+      "import { Hello } from '../src'",
+      '',
+      "test('hello', () => {",
+      "  expect(new Hello().sayHello()).toBe('hello, world!');",
+      '});',
+    ];
+
+    fs.mkdirpSync(testdir);
+    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
   }
 }
 

@@ -977,6 +977,17 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "{}",
+        "docs": "npm scripts to include.",
+        "name": "scripts",
+        "optional": true,
+        "path": Array [
+          "scripts",
+        ],
+        "switch": "scripts",
+        "type": "unknown",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "name": "srcdir",
@@ -1348,17 +1359,6 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": ". current directory",
-        "docs": "Where to put the generated project files.",
-        "name": "outdir",
-        "optional": true,
-        "path": Array [
-          "outdir",
-        ],
-        "switch": "outdir",
-        "type": "string",
-      },
-      Object {
         "name": "peerDependencies",
         "optional": true,
         "path": Array [
@@ -1496,6 +1496,17 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "{}",
+        "docs": "npm scripts to include.",
+        "name": "scripts",
+        "optional": true,
+        "path": Array [
+          "scripts",
+        ],
+        "switch": "scripts",
+        "type": "unknown",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "name": "srcdir",
@@ -1567,19 +1578,7 @@ Array [
   Object {
     "docs": undefined,
     "fqn": "projen.Project",
-    "options": Array [
-      Object {
-        "default": ". current directory",
-        "docs": "Where to put the generated project files.",
-        "name": "outdir",
-        "optional": true,
-        "path": Array [
-          "outdir",
-        ],
-        "switch": "outdir",
-        "type": "string",
-      },
-    ],
+    "options": Array [],
     "pjid": "project",
     "typename": "Project",
   },
@@ -2373,17 +2372,6 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
-        "default": ". current directory",
-        "docs": "Where to put the generated project files.",
-        "name": "outdir",
-        "optional": true,
-        "path": Array [
-          "outdir",
-        ],
-        "switch": "outdir",
-        "type": "string",
-      },
-      Object {
         "name": "peerDependencies",
         "optional": true,
         "path": Array [
@@ -2519,6 +2507,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         ],
         "switch": "repository-directory",
         "type": "string",
+      },
+      Object {
+        "default": "{}",
+        "docs": "npm scripts to include.",
+        "name": "scripts",
+        "optional": true,
+        "path": Array [
+          "scripts",
+        ],
+        "switch": "scripts",
+        "type": "unknown",
       },
       Object {
         "default": "\\"src\\"",

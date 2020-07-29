@@ -1,4 +1,3 @@
-import { Construct } from 'constructs';
 import { JsiiProject } from './jsii-project';
 import { Semver } from './semver';
 
@@ -8,12 +7,10 @@ import { Semver } from './semver';
  * - Runs `jsii-docgen` after compilation
  * - Enforces that API.md is checked in
  */
-export class JsiiDocgen extends Construct {
+export class JsiiDocgen {
   constructor(project: JsiiProject) {
-    super(project, 'jsii-docgen');
-
     project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
-    project.addScripts({ docgen: 'jsii-docgen' });
+    project.replaceScript('docgen', 'jsii-docgen');
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');
   }
