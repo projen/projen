@@ -22,7 +22,7 @@ export class Version extends Construct {
   constructor(private readonly project: NodeProject, options: VersionOptions = {}) {
     super(project, 'bump-script');
 
-    project.addScripts({ 'no-changes': '[ $(git log --oneline -1 | cut -d" " -f2) == "chore(release):" ] && echo "No changes to release."' });
+    project.addScripts({ 'no-changes': '[[ $(git log --oneline -1 | cut -d" " -f2) == "chore(release):" ]] && echo "No changes to release."' });
     project.addScripts({ bump: 'yarn --silent no-changes || standard-version' });
     project.addScripts({ release: 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)' });
     project.addDevDependencies({
@@ -59,7 +59,7 @@ export class Version extends Construct {
       });
 
       workflow.addJobs({
-        bump: {
+        Bump: {
           'runs-on': 'ubuntu-latest',
           'steps': [
             {

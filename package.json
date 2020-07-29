@@ -14,7 +14,7 @@
     "projen": "node .projenrc.js && yarn install",
     "projen:upgrade": "yarn upgrade -L projen && yarn projen",
     "test": "yarn eslint && jest --passWithNoTests",
-    "no-changes": "[ $(git log --oneline -1 | cut -d\" \" -f2) == \"chore(release):\" ] && echo \"No changes to release.\"",
+    "no-changes": "[[ $(git log --oneline -1 | cut -d\" \" -f2) == \"chore(release):\" ]] && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
     "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
