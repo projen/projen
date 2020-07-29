@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.15 (2020-07-29)
+
+
+### Bug Fixes
+
+* EEXIST after first 'npx projen' ([a4bf22c](https://github.com/eladb/projen/commit/a4bf22cd4d32ea9a4afca640f66ed86e74cf3eb9)), closes [#20](https://github.com/eladb/projen/issues/20)
+
 ### 0.3.14 (2020-07-29)
 
 
