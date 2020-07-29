@@ -1,4 +1,3 @@
-import { Construct } from 'constructs';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import { TypescriptConfig } from './typescript';
@@ -43,7 +42,7 @@ export interface CoverageThreshold {
  * - `test:update` will run `jest -u`
  *
  */
-export class Jest extends Construct {
+export class Jest {
   /**
    * Escape hatch.
    */
@@ -52,8 +51,6 @@ export class Jest extends Construct {
   private readonly ignorePatterns: string[];
 
   constructor(project: NodeProject, options: JestOptions = { }) {
-    super(project, 'jest');
-
     project.addDevDependencies({ jest: Semver.caret('26.0.1') });
 
     this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
@@ -102,7 +99,7 @@ export class Jest extends Construct {
       jestOpts.push('--updateSnapshot');
     }
 
-    project.addTestCommands(`jest ${jestOpts.join(' ')}`);
+    project.addTestCommand(`jest ${jestOpts.join(' ')}`);
 
     project.addScripts({
       'test:watch': 'jest --watch',

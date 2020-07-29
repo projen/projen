@@ -1301,11 +1301,6 @@ concat-stream@^2.0.0:
     readable-stream "^3.0.2"
     typedarray "^0.0.6"
 
-constructs@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-2.0.1.tgz#274d6b8ce6a698813495c444466b0c745349ddb5"
-  integrity sha512-edR85YFGI9TBT9byAo5vAfI0PRi+jFGzinwN3RAJwKfv6Yc9x9kALYfoEmgotp95qT7/k/iUQWHrH9BMJeqpdg==
-
 contains-path@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/contains-path/-/contains-path-0.1.0.tgz#fe8cf184ff6670b6baef01a9d4861a5cbec4120a"
@@ -3445,7 +3440,7 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsii-diff@^1.5.0:
+jsii-diff@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.9.0.tgz#56102a1983b32c4a25d0b062fa4ffc5cdf5e8c96"
   integrity sha512-kBnAZ4oTRDthPRwpM60XWsAE2O6lUw2+WZgLiPRKWgMK1t5wnXeZvj+W8oeBt/SzRM6trcEHPzkL3rKaJFi7+A==
@@ -3467,7 +3462,7 @@ jsii-docgen@^1.3.2:
     jsii-reflect "^1.9.0"
     yargs "^15.4.1"
 
-jsii-pacmak@^1.5.0:
+jsii-pacmak@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.9.0.tgz#4acc92991e65a7d308a5d029c39fe78b0050abf5"
   integrity sha512-rfOslRr+w0EcN4GnT8CqAOHnRf9DRQLH4QAPUuyHKfzXESARn4BIZwL7fbuGxzvuFSM53MoXd1fBvvUfx8mL5g==
@@ -3513,7 +3508,7 @@ jsii-rosetta@^1.9.0:
     xmldom "^0.3.0"
     yargs "^15.4.0"
 
-jsii@^1.5.0:
+jsii@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.9.0.tgz#3a039b4fb9838460d9f996484b48cf89283de664"
   integrity sha512-vtzzgYDF6WGnAbTP4+ko4QUmz3O4rS8BN5iCYOf5Kh87VVhb3+vkdijSR7esnWJCT7/a+rJfMX5pztec8O/mvw==

@@ -1,16 +1,16 @@
-import { Project, ProjectOptions } from './project';
+import { Project } from './project';
 import { JsonFile } from './json';
 import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
-import { Lazy } from 'constructs';
 import { Version } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { DependabotOptions, Dependabot } from './dependabot';
 import { MergifyOptions, Mergify } from './mergify';
+import { ProjenUpgrade } from './projen-upgrade';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -202,9 +202,17 @@ export interface NodeProjectCommonOptions {
   * @default - every 6 hours
   */
   readonly autoReleaseSchedule?: string;
+
+  /**
+   * npm scripts to include. If a script has the same name as a standard script,
+   * the standard script will be overwritten.
+   *
+   * @default {}
+   */
+  readonly scripts?: { [name: string]: string }
 }
 
-export interface NodeProjectOptions extends ProjectOptions, NodeProjectCommonOptions {
+export interface NodeProjectOptions extends NodeProjectCommonOptions {
   /**
    * This is the name of your package. It gets used in URLs, as an argument on the command line,
    * and as the directory name inside node_modules.
@@ -301,11 +309,10 @@ export class NodeProject extends Project {
   private readonly devDependencies: Record<string, string> = { };
   private readonly dependencies: Record<string, string> = { };
   private readonly bundledDependencies: string[] = [];
-  private readonly scripts: Record<string, string> = { };
+  private readonly scripts: Record<string, string[]>;
   private readonly bin: Record<string, string> = { };
 
   public readonly manifest: any;
-  private readonly testCommands = new Array<string>();
   private readonly _version: Version;
 
   /**
@@ -329,7 +336,7 @@ export class NodeProject extends Project {
   protected readonly npmDistTag: string;
 
   constructor(options: NodeProjectOptions) {
-    super(options);
+    super();
 
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
@@ -346,6 +353,17 @@ export class NodeProject extends Project {
 
     this.npmDistTag = options.npmDistTag ?? 'latest';
 
+    this.scripts = {};
+
+    const renderScripts = () => {
+      const result: any = {};
+      for (const [name, commands] of Object.entries(this.scripts)) {
+        const cmds = commands.length > 0 ? commands : [ 'echo "n/a"' ];
+        result[name] = cmds.join(' && ');
+      }
+      return result;
+    };
+
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
@@ -357,7 +375,7 @@ export class NodeProject extends Project {
         directory: options.repositoryDirectory,
       },
       'bin': this.bin,
-      'scripts': this.scripts,
+      'scripts': renderScripts,
       'author': {
         name: options.authorName,
         email: options.authorEmail,
@@ -407,8 +425,7 @@ export class NodeProject extends Project {
       copyrightPeriod: options.copyrightPeriod,
     });
 
-    this.addScripts({ projen: `node ${PROJEN_RC} && yarn install` });
-    this.addScripts({ 'projen:upgrade': 'chmod +w package.json && yarn upgrade -L projen && chmod -w package.json && yarn projen' });
+    this.replaceScript('projen', `node ${PROJEN_RC} && yarn install`);
 
     this.npmignore.comment('exclude project definition from npm module');
     this.npmignore.exclude(`/${PROJEN_RC}`);
@@ -424,11 +441,9 @@ export class NodeProject extends Project {
       this.addDevDependencies({ projen: projenVersion });
     }
 
-    this.addScripts({ test: Lazy.stringValue({ produce: () => this.renderTestCommand() }) });
-
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this);
-    this.manifest.version = this.version;
+    this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -545,13 +560,13 @@ export class NodeProject extends Project {
     if (options.dependabot ?? true) {
       new Dependabot(this, options.dependabotOptions);
     }
-  }
 
-  /**
-   * Returns the current version of the project.
-   */
-  public get version() {
-    return this._version.current;
+    new ProjenUpgrade(this);
+
+    // override any scripts from options (if specified)
+    for (const [n, v] of Object.entries(options.scripts ?? {})) {
+      this.replaceScript(n, v);
+    }
   }
 
   public addBins(bins: Record<string, string>) {
@@ -601,27 +616,52 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * Replaces the contents of a set of npm package.json scripts.
+   *
+   * @param scripts script names and commands
+   */
   public addScripts(scripts: { [name: string]: string }) {
     for (const [ name, command ] of Object.entries(scripts)) {
-      this.scripts[name] = command;
+      this.replaceScript(name, command);
     }
   }
 
-  public addTestCommands(...commands: string[]) {
-    this.testCommands.push(...commands);
+  /**
+   * Replaces the contents of an npm package.json script.
+   *
+   * @param name The script namne
+   * @param commands The commands to run (joined by "&&")
+   */
+  public replaceScript(name: string, ...commands: string[]) {
+    this.scripts[name] = commands;
+  }
+
+  /**
+   * Appends a command to run for an npm script. Joined by "&&"
+   * @param name The name of the script
+   * @param commands The commands to append.
+   */
+  public addScriptCommand(name: string, ...commands: string[]) {
+    this.scripts[name] = this.scripts[name] ?? [];
+    this.scripts[name].push(...commands);
+  }
+
+  /**
+   * Adds that will be executed after the jsii compilation
+   * @param commands The commands to execute during compile
+   */
+  public addCompileCommand(...commands: string[]) {
+    this.addScriptCommand('compile', ...commands);
+  }
+
+  public addTestCommand(...commands: string[]) {
+    this.addScriptCommand('test', ...commands);
   }
 
   public addFields(fields: { [name: string]: any }) {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
-    }
-  }
-
-  private renderTestCommand() {
-    if (this.testCommands.length === 0) {
-      return "echo 'no tests'";
-    } else {
-      return this.testCommands.join(' && ');
     }
   }
 

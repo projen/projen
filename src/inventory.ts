@@ -83,7 +83,8 @@ function discoverOptions(fqn: string): ProjectOption[] {
   const params = jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;
-  if (params.length !== 1 || optionsParam?.name !== 'options' || !optionsTypeFqn) {
+
+  if (params.length > 1 || (params.length === 1 && optionsParam?.name !== 'options')) {
     throw new Error(`constructor for project ${fqn} must have a single "options" argument of a struct type. got ${JSON.stringify(params)}`);
   }
 
@@ -91,7 +92,12 @@ function discoverOptions(fqn: string): ProjectOption[] {
 
   return options.sort((a, b) => a.switch.localeCompare(b.switch));
 
-  function addOptions(ofqn: string, path: string[] = [], optional = false) {
+  function addOptions(ofqn?: string, path: string[] = [], optional = false) {
+
+    if (!ofqn) {
+      return;
+    }
+
     const struct = jsii[ofqn];
     if (!struct) {
       throw new Error(`unable to find options type ${ofqn} for project ${fqn}`);

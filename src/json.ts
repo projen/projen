@@ -1,4 +1,4 @@
-import { FileBase, FileBaseOptions } from './file';
+import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
 export interface JsonFileOptions extends FileBaseOptions {
@@ -18,7 +18,7 @@ export class JsonFile extends FileBase {
     this.obj = options.obj;
   }
 
-  protected get data() {
-    return JSON.stringify(this.obj, undefined, 2);
+  protected synthesizeContent(resolver: IResolver) {
+    return JSON.stringify(resolver.resolve(this.obj), undefined, 2);
   }
 }

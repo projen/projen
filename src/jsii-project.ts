@@ -3,10 +3,9 @@ import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
-import { Lazy } from 'constructs';
 import { TypeScriptProject } from './typescript';
 
-const DEFAULT_JSII_VERSION = '1.6.0';
+const DEFAULT_JSII_VERSION = '1.9.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
 
 
@@ -106,8 +105,6 @@ export interface JsiiDotNetTarget {
  * jsii library project
  */
 export class JsiiProject extends TypeScriptProject {
-  private readonly compileCommands: string[];
-
   public readonly eslint?: Eslint;
 
   constructor(options: JsiiProjectOptions) {
@@ -124,9 +121,6 @@ export class JsiiProject extends TypeScriptProject {
 
     const srcdir = this.srcdir;
     const libdir = this.libdir;
-    // const testdir = this.testdir;
-
-    this.compileCommands = new Array<string>();;
 
     if (!options.authorEmail && !options.authorUrl) {
       throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
@@ -139,20 +133,16 @@ export class JsiiProject extends TypeScriptProject {
 
     const compatIgnore = options.compatIgnore ?? '.compatignore';
 
-    this.addScripts({
-      compile: Lazy.stringValue({ produce: () => this.renderCompileCommand() }),
-      watch: `jsii -w ${jsiiFlags}`,
-      compat: `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
-      package: 'jsii-pacmak',
-    });
-
     this.addFields({ stability: options.stability ?? Stability.STABLE });
 
     if (options.stability === Stability.DEPRECATED) {
       this.addFields({ deprecated: true });
     }
 
-    this.addCompileCommand(`jsii ${jsiiFlags}`);
+    this.replaceScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
+    this.replaceScript('compile', `jsii ${jsiiFlags}`);
+    this.replaceScript('watch', `jsii -w ${jsiiFlags}`)
+    this.replaceScript('package', 'jsii-pacmak');
 
     const targets: Record<string, any> = { };
 
@@ -223,18 +213,6 @@ export class JsiiProject extends TypeScriptProject {
 
     // jsii updates .npmignore, so we make it writable
     this.npmignore.readonly = false;
-  }
-
-  /**
-   * Adds that will be executed after the jsii compilation
-   * @param command The command to execute
-   */
-  public addCompileCommand(command: string) {
-    this.compileCommands.push(command);
-  }
-
-  private renderCompileCommand() {
-    return this.compileCommands.join(' && ');
   }
 
   private publishToNpm() {

@@ -1,25 +1,30 @@
-import { Construct, Node } from 'constructs';
 import { IgnoreFile } from './ignore-file';
+import { Component } from './component';
 
-export interface ProjectOptions {
-  /**
-   * Where to put the generated project files.
-   * @default . current directory
-   */
-  readonly outdir?: string;
-}
-
-export class Project extends Construct {
-  public readonly outdir: string;
+export class Project {
   public readonly gitignore: IgnoreFile;
 
-  constructor(options: ProjectOptions = { }) {
-    super(undefined as any, 'project');
-    this.outdir = options.outdir ?? '.';
+  private readonly components = new Array<Component>();
+
+  constructor() {
     this.gitignore = new IgnoreFile(this, '.gitignore');
   }
 
-  public synth(): void {
-    Node.of(this).synthesize({ outdir: this.outdir });
+  /**
+   * Synthesize all project files into `outdir`
+   * @param outdir The project root directory (default is `.`).
+   */
+  public synth(outdir: string = '.'): void {
+    for (const comp of this.components) {
+      comp._synthesize(outdir);
+    }
+  }
+
+  /**
+   * Adds a component to the project.
+   * @internal
+   */
+  public _addComponent(component: Component) {
+    this.components.push(component);
   }
 }

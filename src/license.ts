@@ -1,4 +1,4 @@
-import { FileBase } from './file';
+import { FileBase, IResolver } from './file';
 import * as fs from 'fs-extra';
 import { Project } from './project';
 
@@ -37,7 +37,7 @@ export class License extends FileBase {
       .replace('[name of copyright owner]', owner)
   }
 
-  protected get data(): string {
+  protected synthesizeContent(_: IResolver) {
     return this.text;
   }
 }

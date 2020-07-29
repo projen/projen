@@ -2,6 +2,7 @@ import { JsonFile, JsonFileOptions } from './json';
 import * as YAML from 'yaml';
 import { Project } from './project';
 import { GENERATION_DISCLAIMER } from './common';
+import { IResolver } from './file';
 
 export interface YamlFileOptions extends JsonFileOptions {
 
@@ -12,9 +13,9 @@ export class YamlFile extends JsonFile {
     super(project, filePath, options);
   }
 
-  protected get data() {
+  protected synthesizeContent(resolver: IResolver) {
     // sanitize object references by serializaing and deserializing to JSON
-    const sanitized = JSON.parse(JSON.stringify(this.obj));
+    const sanitized = JSON.parse(JSON.stringify(resolver.resolve(this.obj)));
     return [
       `# ${GENERATION_DISCLAIMER}`,
       '',

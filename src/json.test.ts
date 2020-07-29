@@ -3,8 +3,7 @@ import { Project } from './project';
 import * as fs from 'fs-extra';
 
 test('json object can be mutated before synthesis', () => {
-  const outdir = fs.mkdtempSync('/tmp/projen-test-');
-  const prj = new Project({ outdir });
+  const prj = new Project();
 
   const obj: any = {
     hello: 'world',
@@ -17,7 +16,8 @@ test('json object can be mutated before synthesis', () => {
     foo: 1234,
   };
 
-  prj.synth();
+  const outdir = fs.mkdtempSync('/tmp/projen-test-');
+  prj.synth(outdir);
 
   const actual = JSON.parse(fs.readFileSync(`${outdir}/my/json/file.json`, 'utf-8'));
   expect(actual).toStrictEqual({ 

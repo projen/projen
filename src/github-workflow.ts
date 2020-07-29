@@ -1,4 +1,4 @@
-import { FileBase } from './file';
+import { FileBase, IResolver } from './file';
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
 import { Project } from './project';
@@ -27,12 +27,12 @@ export class GithubWorkflow extends FileBase {
     };
   }
 
-  public get data() {
-    const workflow = {
+  protected synthesizeContent(resolver: IResolver) {
+    const workflow = resolver.resolve({
       name: this.name,
       on: this.events,
       jobs: this.jobs,
-    };
+    });
 
     return [
       `# ${GENERATION_DISCLAIMER}`,

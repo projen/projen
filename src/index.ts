@@ -6,6 +6,7 @@ export * from './json';
 export * from './license';
 export * from './node-project';
 export * from './project';
+export * from './component';
 export * from './semver';
 export * from './version';
 export * from './eslint';
