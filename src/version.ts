@@ -10,8 +10,9 @@ export class Version extends Construct {
   constructor(private readonly project: NodeProject) {
     super(project, 'bump-script');
 
-    project.addScripts({ bump: 'standard-version' });
-    project.addScripts({ release: 'yarn bump && git push --follow-tags origin master' });
+    project.addScripts({ 'no-changes': '[ $(git log --oneline -1 | cut -d" " -f2) == "chore(release):" ] && echo "No changes to release."' });
+    project.addScripts({ bump: 'yarn --silent no-changes || standard-version' });
+    project.addScripts({ release: 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)' });
     project.addDevDependencies({
       'standard-version': Semver.caret('8.0.1'),
     });
@@ -28,6 +29,7 @@ export class Version extends Construct {
         bumpFiles: [ { filename: VERSION_FILE, type: 'json' }  ],
         commitAll: true,
         scripts: {
+          // run projen after release to update package.json
           postbump: 'yarn projen && git add .',
         },
       },
