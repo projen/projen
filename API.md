@@ -49,13 +49,13 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
-[VersionOptions](#projen-versionoptions)|*No description*
 
 
 **Enums**
 
 Name|Description
 ----|-----------
+[AutoRelease](#projen-autorelease)|Automatic bump modes.
 [ScheduleInterval](#projen-scheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [Stability](#projen-stability)|*No description*
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
@@ -440,6 +440,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -628,6 +630,7 @@ new NodeBuildWorkflow(project: Project, name: string, options: NodeBuildWorkflow
   * **trigger** (<code>Map<string, any></code>)  *No description* 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **bootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+  * **bump** (<code>boolean</code>)  Bump a new version for this build. __*Default*__: false
   * **image** (<code>string</code>)  *No description* __*Default*__: default image
   * **nodeVersion** (<code>string</code>)  Adds a `actions/setup-node@v1` action with a specific node version. __*Optional*__
   * **uploadArtifact** (<code>boolean</code>)  *No description* __*Optional*__
@@ -685,6 +688,8 @@ new NodeProject(options: NodeProjectOptions)
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -988,6 +993,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1063,6 +1070,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1160,12 +1169,10 @@ __Extends__: [Construct](#constructs-construct)
 
 
 ```ts
-new Version(project: NodeProject, options?: VersionOptions)
+new Version(project: NodeProject)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
 
 
 
@@ -1320,6 +1327,8 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -1416,6 +1425,7 @@ Name | Type | Description
 **trigger**🔹 | <code>Map<string, any></code> | <span></span>
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **bootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+**bump**?🔹 | <code>boolean</code> | Bump a new version for this build.<br/>__*Default*__: false
 **image**?🔹 | <code>string</code> | __*Default*__: default image
 **nodeVersion**?🔹 | <code>string</code> | Adds a `actions/setup-node@v1` action with a specific node version.<br/>__*Optional*__
 **uploadArtifact**?🔹 | <code>boolean</code> | __*Optional*__
@@ -1455,6 +1465,8 @@ Name | Type | Description
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
@@ -1509,6 +1521,8 @@ Name | Type | Description
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
@@ -1634,6 +1648,8 @@ Name | Type | Description
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
@@ -1700,6 +1716,8 @@ Name | Type | Description
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
@@ -1731,17 +1749,14 @@ Name | Type | Description
 
 
 
-## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+## enum AutoRelease 🔹 <a id="projen-autorelease"></a>
 
+Automatic bump modes.
 
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
-
+Name | Description
+-----|-----
+**EVERY_COMMIT** 🔹|Automatically bump & release a new version for every commit to "master".
+**DAILY** 🔹|Automatically bump & release a new version on a daily basis.
 
 
 ## enum ScheduleInterval 🔹 <a id="projen-scheduleinterval"></a>

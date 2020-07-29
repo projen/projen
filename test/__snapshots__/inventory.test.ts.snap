@@ -916,6 +916,28 @@ Array [
       },
       Object {
         "default": "true",
+        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
+        "name": "releaseEveryCommit",
+        "optional": true,
+        "path": Array [
+          "releaseEveryCommit",
+        ],
+        "switch": "release-every-commit",
+        "type": "boolean",
+      },
+      Object {
+        "default": "no scheduled releases",
+        "docs": "CRON schedule to trigger new releases.",
+        "name": "releaseSchedule",
+        "optional": true,
+        "path": Array [
+          "releaseSchedule",
+        ],
+        "switch": "release-schedule",
+        "type": "string",
+      },
+      Object {
+        "default": "true",
         "docs": "Automatically release to npm when new versions are introduced.",
         "name": "releaseToNpm",
         "optional": true,
@@ -1408,6 +1430,28 @@ Array [
         ],
         "switch": "release-branches",
         "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
+        "name": "releaseEveryCommit",
+        "optional": true,
+        "path": Array [
+          "releaseEveryCommit",
+        ],
+        "switch": "release-every-commit",
+        "type": "boolean",
+      },
+      Object {
+        "default": "no scheduled releases",
+        "docs": "CRON schedule to trigger new releases.",
+        "name": "releaseSchedule",
+        "optional": true,
+        "path": Array [
+          "releaseSchedule",
+        ],
+        "switch": "release-schedule",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -2411,6 +2455,28 @@ jest typescript tests and only if all tests pass, run the compiler.",
         ],
         "switch": "release-branches",
         "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically release new versions every commit to one of branches in \`releaseBranches\`.",
+        "name": "releaseEveryCommit",
+        "optional": true,
+        "path": Array [
+          "releaseEveryCommit",
+        ],
+        "switch": "release-every-commit",
+        "type": "boolean",
+      },
+      Object {
+        "default": "no scheduled releases",
+        "docs": "CRON schedule to trigger new releases.",
+        "name": "releaseSchedule",
+        "optional": true,
+        "path": Array [
+          "releaseSchedule",
+        ],
+        "switch": "release-schedule",
+        "type": "string",
       },
       Object {
         "default": "true",

@@ -778,7 +778,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         ...(options.antitamper ?? true) ? ANTITAMPER_COMMAND : [],
 
         // push bump commit
-        ...options.bump ? [ { run: 'git push --follow-tags origin master' } ] : [],
+        ...options.bump ? [ { run: 'git push --follow-tags origin $GITHUB_REF' } ] : [],
       ],
     };
 
