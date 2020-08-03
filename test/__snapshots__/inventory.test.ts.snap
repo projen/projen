@@ -172,6 +172,30 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "[]",
+        "docs": "You can use the \`ignore\` option to customize which dependencies are updated.",
+        "name": "ignore",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignore",
+        ],
+        "switch": "dependabot-options-ignore",
+        "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Ignores updates to \`projen\`.",
+        "name": "ignoreProjen",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignoreProjen",
+        ],
+        "switch": "dependabot-options-ignore-projen",
+        "type": "boolean",
+      },
+      Object {
         "name": "dependencies",
         "optional": true,
         "path": Array [
@@ -1208,6 +1232,30 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "[]",
+        "docs": "You can use the \`ignore\` option to customize which dependencies are updated.",
+        "name": "ignore",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignore",
+        ],
+        "switch": "dependabot-options-ignore",
+        "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Ignores updates to \`projen\`.",
+        "name": "ignoreProjen",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignoreProjen",
+        ],
+        "switch": "dependabot-options-ignore-projen",
+        "type": "boolean",
+      },
+      Object {
         "name": "dependencies",
         "optional": true,
         "path": Array [
@@ -1744,6 +1792,30 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "autoMerge",
         ],
         "switch": "dependabot-options-auto-merge",
+        "type": "boolean",
+      },
+      Object {
+        "default": "[]",
+        "docs": "You can use the \`ignore\` option to customize which dependencies are updated.",
+        "name": "ignore",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignore",
+        ],
+        "switch": "dependabot-options-ignore",
+        "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Ignores updates to \`projen\`.",
+        "name": "ignoreProjen",
+        "optional": true,
+        "path": Array [
+          "dependabotOptions",
+          "ignoreProjen",
+        ],
+        "switch": "dependabot-options-ignore-projen",
         "type": "boolean",
       },
       Object {

@@ -30,6 +30,7 @@ Name|Description
 Name|Description
 ----|-----------
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
+[DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [DependabotOptions](#projen-dependabotoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
@@ -63,7 +64,7 @@ Name|Description
 Name|Description
 ----|-----------
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
-[ScheduleInterval](#projen-scheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [Stability](#projen-stability)|*No description*
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 
@@ -117,7 +118,9 @@ new Dependabot(project: NodeProject, options?: DependabotOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  *No description*
   * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
-  * **scheduleInterval** (<code>[ScheduleInterval](#projen-scheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **ignore** (<code>Array<[DependabotIgnore](#projen-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[DependabotScheduleInterval](#projen-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
   * **versioningStrategy** (<code>[VersioningStrategy](#projen-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
 
 
@@ -128,6 +131,23 @@ new Dependabot(project: NodeProject, options?: DependabotOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | The raw dependabot configuration.
+
+### Methods
+
+
+#### addIgnore(dependencyName, ...versions)🔹 <a id="projen-dependabot-addignore"></a>
+
+Ignores a depepdency from automatic updates.
+
+```ts
+addIgnore(dependencyName: string, ...versions: string[]): void
+```
+
+* **dependencyName** (<code>string</code>)  Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+* **versions** (<code>string</code>)  Use to ignore specific versions or ranges of versions.
+
+
+
 
 
 
@@ -1274,6 +1294,22 @@ Name | Type | Description
 
 
 
+## struct DependabotIgnore 🔹 <a id="projen-dependabotignore"></a>
+
+
+You can use the `ignore` option to customize which dependencies are updated.
+
+The ignore option supports the following options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencyName**🔹 | <code>string</code> | Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+**versions**?🔹 | <code>Array<string></code> | Use to ignore specific versions or ranges of versions.<br/>__*Optional*__
+
+
+
 ## struct DependabotOptions 🔹 <a id="projen-dependabotoptions"></a>
 
 
@@ -1284,7 +1320,9 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **autoMerge**?🔹 | <code>boolean</code> | Automatically merge dependabot PRs if build CI build passes.<br/>__*Default*__: true
-**scheduleInterval**?🔹 | <code>[ScheduleInterval](#projen-scheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
+**ignore**?🔹 | <code>Array<[DependabotIgnore](#projen-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
+**ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
+**scheduleInterval**?🔹 | <code>[DependabotScheduleInterval](#projen-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
 **versioningStrategy**?🔹 | <code>[VersioningStrategy](#projen-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
 
 
@@ -1843,7 +1881,7 @@ Name | Description
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
 
 
-## enum ScheduleInterval 🔹 <a id="projen-scheduleinterval"></a>
+## enum DependabotScheduleInterval 🔹 <a id="projen-dependabotscheduleinterval"></a>
 
 How often to check for new versions and raise pull requests for version updates.
 

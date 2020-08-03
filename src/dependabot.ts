@@ -1,5 +1,6 @@
 import { YamlFile } from './yaml';
 import { NodeProject } from './node-project';
+import { version } from 'yargs';
 
 export interface DependabotOptions {
   /**
@@ -7,7 +8,7 @@ export interface DependabotOptions {
    *
    * @default ScheduleInterval.DAILY
    */
-  readonly scheduleInterval?: ScheduleInterval;
+  readonly scheduleInterval?: DependabotScheduleInterval;
 
   /**
    * The strategy to use when edits manifest and lock files.
@@ -23,13 +24,54 @@ export interface DependabotOptions {
    * @default true
    */
   readonly autoMerge?: boolean;
+
+  /**
+   * You can use the `ignore` option to customize which dependencies are updated.
+   * The ignore option supports the following options.
+   * @default []
+   */
+  readonly ignore?: DependabotIgnore[];
+
+  /**
+   * Ignores updates to `projen`.
+   *
+   * This is required since projen updates may cause changes in committed files
+   * and anti-tamper checks will fail.
+   *
+   * Projen upgrades are covered through the `ProjenUpgrade` class.
+   *
+   * @default true
+   */
+  readonly ignoreProjen?: boolean;
+}
+
+/**
+ * You can use the `ignore` option to customize which dependencies are updated.
+ * The ignore option supports the following options.
+ */
+export interface DependabotIgnore {
+  /**
+   * Use to ignore updates for dependencies with matching names, optionally
+   * using `*` to match zero or more characters.
+   *
+   * For Java dependencies, the format of the dependency-name attribute is:
+   * `groupId:artifactId`, for example: `org.kohsuke:github-api`.
+   */
+  readonly dependencyName: string;
+
+  /**
+   * Use to ignore specific versions or ranges of versions. If you want to
+   * define a range, use the standard pattern for the package manager (for
+   * example: `^1.0.0` for npm, or `~> 2.0` for Bundler).
+   */
+  readonly versions?: string[];
 }
 
 /**
  * How often to check for new versions and raise pull requests for version
  * updates.
  */
-export enum ScheduleInterval {
+export enum DependabotScheduleInterval {
   /**
    * Runs on every weekday, Monday to Friday.
    */
@@ -93,7 +135,12 @@ export class Dependabot {
    */
   public readonly config: any;
 
+  private readonly ignore: any[];
+
   constructor(project: NodeProject, options: DependabotOptions = {}) {
+
+    this.ignore = [];
+
     this.config = {
       version: 2,
       updates: [
@@ -102,8 +149,9 @@ export class Dependabot {
           'versioning-strategy': 'lockfile-only',
           'directory': '/',
           'schedule': {
-            interval: options.scheduleInterval ?? ScheduleInterval.DAILY,
+            interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
+          'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
         },
       ],
     };
@@ -128,5 +176,29 @@ export class Dependabot {
         },
       });
     }
+
+    for (const i of options.ignore ?? []) {
+      this.addIgnore(i.dependencyName, ...(i.versions ?? []));
+    }
+
+    if (options.ignoreProjen ?? true) {
+      this.addIgnore('projen');
+    }
+  }
+
+  /**
+   * Ignores a depepdency from automatic updates.
+   *
+   * @param dependencyName Use to ignore updates for dependencies with matching
+   * names, optionally using `*` to match zero or more characters.
+   * @param versions Use to ignore specific versions or ranges of versions. If
+   * you want to define a range, use the standard pattern for the package
+   * manager (for example: `^1.0.0` for npm, or `~> 2.0` for Bundler).
+   */
+  public addIgnore(dependencyName: string, ...versions: string[]) {
+    this.ignore.push({
+      'dependency-name': dependencyName,
+      'versions': () => versions.length > 0 ? version : undefined,
+    });
   }
 }
