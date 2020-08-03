@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.19 (2020-08-03)
+
+
+### Features
+
+* **dependabot:** ignore `projen` since it cannot be updated without anti-tamper failures ([1c8ee2f](https://github.com/eladb/projen/commit/1c8ee2f76b7c37735f3d96182e6ec723ca3ae2cb))
+
 ### 0.3.18 (2020-08-03)
 
 ### 0.3.17 (2020-07-31)
