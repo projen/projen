@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.22 (2020-08-04)
+
+
+### Features
+
+* auto-upgrade projen through a daily pull request ([6bb1b5f](https://github.com/eladb/projen/commit/6bb1b5fd62125b8e7469959857eed6412c9d829a))
+
 ### 0.3.21 (2020-08-04)
 
 ### 0.3.20 (2020-08-03)
