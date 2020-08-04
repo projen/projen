@@ -8,9 +8,9 @@ const VERSION_FILE = 'version.json';
 export class Version {
   constructor(project: NodeProject) {
 
-    project.replaceScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
-    project.replaceScript('bump', 'yarn --silent no-changes || standard-version');
-    project.replaceScript('release', 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)');
+    project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
+    project.addScript('bump', 'yarn --silent no-changes || standard-version');
+    project.addScript('release', 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)');
 
     project.addDevDependencies({
       'standard-version': Semver.caret('8.0.1'),

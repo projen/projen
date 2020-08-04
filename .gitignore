@@ -59,6 +59,8 @@ tsconfig.json
 !/.mergify.yml
 !# synthesized by projen, (do not modify by hand)
 !/.github/dependabot.yml
+!# synthesized by projen, (do not modify by hand)
+!/.github/workflows/upgrade-projen.yml
 !/src
 !# synthesized by projen, (do not modify by hand)
 !/.eslintrc.json

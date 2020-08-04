@@ -29,7 +29,7 @@ export class Eslint {
       'json-schema': Semver.caret('0.2.5'), // required by @typescript-eslint/parser
     });
 
-    project.replaceScript('eslint', 'eslint . --ext .ts');
+    project.addScript('eslint', 'eslint . --ext .ts');
     project.addTestCommand('yarn eslint');
 
     // exclude some files

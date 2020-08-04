@@ -674,18 +674,15 @@ __Extends__: [GithubWorkflow](#projen-githubworkflow)
 
 
 ```ts
-new NodeBuildWorkflow(project: Project, name: string, options: NodeBuildWorkflowOptions)
+new NodeBuildWorkflow(project: NodeProject, name: string, options: NodeBuildWorkflowOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>[NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)</code>)  *No description*
   * **trigger** (<code>Map<string, any></code>)  *No description* 
-  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
-  * **bootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **bump** (<code>boolean</code>)  Bump a new version for this build. __*Default*__: false
   * **image** (<code>string</code>)  *No description* __*Default*__: default image
-  * **nodeVersion** (<code>string</code>)  Adds a `actions/setup-node@v1` action with a specific node version. __*Optional*__
   * **uploadArtifact** (<code>boolean</code>)  *No description* __*Optional*__
 
 
@@ -774,6 +771,8 @@ Name | Type | Description
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
+**workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
+**workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
@@ -877,6 +876,20 @@ addPeerDependencies(deps: Map<string, Semver>, options?: PeerDependencyOptions):
 
 
 
+#### addScript(name, ...commands)🔹 <a id="projen-nodeproject-addscript"></a>
+
+Replaces the contents of an npm package.json script.
+
+```ts
+addScript(name: string, ...commands: string[]): void
+```
+
+* **name** (<code>string</code>)  The script namne.
+* **commands** (<code>string</code>)  The commands to run (joined by "&&").
+
+
+
+
 #### addScriptCommand(name, ...commands)🔹 <a id="projen-nodeproject-addscriptcommand"></a>
 
 Appends a command to run for an npm script.
@@ -915,20 +928,6 @@ addTestCommand(...commands: string[]): void
 ```
 
 * **commands** (<code>string</code>)  *No description*
-
-
-
-
-#### replaceScript(name, ...commands)🔹 <a id="projen-nodeproject-replacescript"></a>
-
-Replaces the contents of an npm package.json script.
-
-```ts
-replaceScript(name: string, ...commands: string[]): void
-```
-
-* **name** (<code>string</code>)  The script namne.
-* **commands** (<code>string</code>)  The commands to run (joined by "&&").
 
 
 
@@ -1557,11 +1556,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **trigger**🔹 | <code>Map<string, any></code> | <span></span>
-**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
-**bootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **bump**?🔹 | <code>boolean</code> | Bump a new version for this build.<br/>__*Default*__: false
 **image**?🔹 | <code>string</code> | __*Default*__: default image
-**nodeVersion**?🔹 | <code>string</code> | Adds a `actions/setup-node@v1` action with a specific node version.<br/>__*Optional*__
 **uploadArtifact**?🔹 | <code>boolean</code> | __*Optional*__
 
 

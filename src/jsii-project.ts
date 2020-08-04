@@ -139,10 +139,10 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    this.replaceScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
-    this.replaceScript('compile', `jsii ${jsiiFlags}`);
-    this.replaceScript('watch', `jsii -w ${jsiiFlags}`)
-    this.replaceScript('package', 'jsii-pacmak');
+    this.addScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
+    this.addScript('compile', `jsii ${jsiiFlags}`);
+    this.addScript('watch', `jsii -w ${jsiiFlags}`)
+    this.addScript('package', 'jsii-pacmak');
 
     const targets: Record<string, any> = { };
 

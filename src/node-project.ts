@@ -328,6 +328,10 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
+  private readonly bootstrapSteps?: any[];
+
+  private readonly nodeVersion?: string;
+
   /**
    * Indicates if workflows have anti-tamper checks.
    */
@@ -425,7 +429,7 @@ export class NodeProject extends Project {
       copyrightPeriod: options.copyrightPeriod,
     });
 
-    this.replaceScript('projen', `node ${PROJEN_RC} && yarn install`);
+    this.addScript('projen', `node ${PROJEN_RC} && yarn install`);
 
     this.npmignore.comment('exclude project definition from npm module');
     this.npmignore.exclude(`/${PROJEN_RC}`);
@@ -445,9 +449,12 @@ export class NodeProject extends Project {
     this._version = new Version(this);
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
+    this.bootstrapSteps = options.workflowBootstrapSteps;
+
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
+    this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
 
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
@@ -455,10 +462,7 @@ export class NodeProject extends Project {
           pull_request: { },
           push: { },
         },
-        nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
-        bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
-        antitamper: this.antitamper,
       });
     }
 
@@ -479,10 +483,7 @@ export class NodeProject extends Project {
         trigger,
         bump: true,
         uploadArtifact: true,
-        nodeVersion: options.workflowNodeVersion ?? this.minNodeVersion,
-        bootstrapSteps: options.workflowBootstrapSteps,
         image: options.workflowContainerImage,
-        antitamper: this.antitamper,
       });
 
       if (options.releaseToNpm) {
@@ -565,7 +566,7 @@ export class NodeProject extends Project {
 
     // override any scripts from options (if specified)
     for (const [n, v] of Object.entries(options.scripts ?? {})) {
-      this.replaceScript(n, v);
+      this.addScript(n, v);
     }
   }
 
@@ -623,7 +624,7 @@ export class NodeProject extends Project {
    */
   public addScripts(scripts: { [name: string]: string }) {
     for (const [ name, command ] of Object.entries(scripts)) {
-      this.replaceScript(name, command);
+      this.addScript(name, command);
     }
   }
 
@@ -633,7 +634,7 @@ export class NodeProject extends Project {
    * @param name The script namne
    * @param commands The commands to run (joined by "&&")
    */
-  public replaceScript(name: string, ...commands: string[]) {
+  public addScript(name: string, ...commands: string[]) {
     this.scripts[name] = commands;
   }
 
@@ -663,6 +664,43 @@ export class NodeProject extends Project {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
     }
+  }
+
+  /**
+   * Returns a set of steps to checkout and bootstrap the project in a github
+   * workflow.
+   */
+  public get workflowBootstrapSteps() {
+    const nodeVersion = !this.nodeVersion ? [] : [
+      {
+        uses: 'actions/setup-node@v1',
+        with: { 'node-version': this.nodeVersion },
+      },
+    ];
+
+    return [
+      // check out sources.
+      { uses: 'actions/checkout@v2' },
+
+      // use the correct node version
+      ...nodeVersion,
+
+      // bootstrap the repo
+      ...this.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
+
+      // first anti-tamper check (right after bootstrapping)
+      // this will identify any non-committed files genrated by projen
+      ...this.workflowAntitamperSteps,
+    ];
+  }
+
+  /**
+   * Returns the set of steps to perform anti-tamper check in a github workflow.
+   */
+  public get workflowAntitamperSteps(): any[] {
+    return this.antitamper
+      ? [ { name: 'Anti-tamper check', run: 'git diff --exit-code' } ]
+      : [];
   }
 
   private addDefaultGitIgnore()  {
@@ -740,26 +778,10 @@ export interface NodeBuildWorkflowOptions  {
    */
   readonly image?: string;
 
-  /**
-   * Workflow steps to use in order to bootstrap this repo.
-   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
-   */
-  readonly bootstrapSteps?: any[];
-
   readonly uploadArtifact?: boolean;
 
-  /**
-   * Checks that after build there are no modified files onn git.
-   * @default true
-   */
-  readonly antitamper?: boolean;
 
   readonly trigger: { [event: string]: any };
-
-  /**
-   * Adds a `actions/setup-node@v1` action with a specific node version.
-   */
-  readonly nodeVersion?: string;
 
   /**
    * Bump a new version for this build.
@@ -771,7 +793,7 @@ export interface NodeBuildWorkflowOptions  {
 export class NodeBuildWorkflow extends GithubWorkflow {
   public readonly buildJobId: string;
 
-  constructor(project: Project, name: string, options: NodeBuildWorkflowOptions) {
+  constructor(project: NodeProject, name: string, options: NodeBuildWorkflowOptions) {
     super(project, name);
 
     this.buildJobId = 'build';
@@ -782,28 +804,11 @@ export class NodeBuildWorkflow extends GithubWorkflow {
       workflow_dispatch: {}, // allow manual triggering
     });
 
-    const nodeVersion = !options.nodeVersion ? [] : [
-      {
-        uses: 'actions/setup-node@v1',
-        with: { 'node-version': options.nodeVersion },
-      },
-    ];
-
     const job: any = {
       'runs-on': 'ubuntu-latest',
       'steps': [
-        // check out sources.
-        { uses: 'actions/checkout@v2' },
-
-        // use the correct node version
-        ...nodeVersion,
-
-        // bootstrap the repo
-        ...options.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
-
-        // first anti-tamper check (right after bootstrapping)
-        // this will identify any non-committed files genrated by projen
-        ...(options.antitamper ?? true) ? renderAntiTamperCommand('bootstrapping') : [],
+        // bootstrap
+        ...project.workflowBootstrapSteps,
 
         // sets git identity so we can push later
         {
@@ -822,7 +827,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-commited files generated during build (e.g. test snapshots)
-        ...(options.antitamper ?? true) ? renderAntiTamperCommand('build') : [],
+        ...project.workflowAntitamperSteps,
 
         // push bump commit
         ...options.bump ? [ { run: 'git push --follow-tags origin $GITHUB_REF' } ] : [],
@@ -846,13 +851,4 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
     this.addJobs({ [this.buildJobId]: job });
   }
-}
-
-function renderAntiTamperCommand(purpose: string) {
-  return [
-    {
-      name: `Anti-tamper check after ${purpose}`,
-      run: 'git diff --exit-code',
-    },
-  ];
 }

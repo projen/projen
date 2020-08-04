@@ -10,7 +10,7 @@ import { Semver } from './semver';
 export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
-    project.replaceScript('docgen', 'jsii-docgen');
+    project.addScript('docgen', 'jsii-docgen');
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');
   }

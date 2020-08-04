@@ -123,9 +123,9 @@ export class TypeScriptProject extends NodeProject {
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
     if (compileBeforeTest) {
-      this.replaceScript('build', 'yarn compile && yarn test && yarn run package');
+      this.addScript('build', 'yarn compile && yarn test && yarn run package');
     } else {
-      this.replaceScript('build', 'yarn test && yarn compile && yarn run package')
+      this.addScript('build', 'yarn test && yarn compile && yarn run package')
     }
 
     this.manifest.types = `${this.libdir}/index.d.ts`;

@@ -7,6 +7,6 @@ import { Semver } from './semver';
 export class TypedocDocgen {
   constructor(project: TypeScriptLibraryProject) {
     project.addDevDependencies({ typedoc: Semver.caret('0.17.8') });
-    project.replaceScript('docgen', 'typedoc --out ' + project.docsDirectory);
+    project.addScript('docgen', 'typedoc --out ' + project.docsDirectory);
   }
 }
