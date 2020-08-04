@@ -210,6 +210,14 @@ export interface NodeProjectCommonOptions {
    * @default {}
    */
   readonly scripts?: { [name: string]: string }
+
+  /**
+   * Define a `projen:upgrade` script and a scheduled github workflow which will
+   * upgrade projen and submit a PR with the upgrade.
+   *
+   * @default true
+   */
+  readonly projenUpgrade?: boolean;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -562,7 +570,9 @@ export class NodeProject extends Project {
       new Dependabot(this, options.dependabotOptions);
     }
 
-    new ProjenUpgrade(this);
+    if (options.projenUpgrade ?? true) {
+      new ProjenUpgrade(this);
+    }
 
     // override any scripts from options (if specified)
     for (const [n, v] of Object.entries(options.scripts ?? {})) {

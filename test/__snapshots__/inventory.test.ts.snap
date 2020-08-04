@@ -878,6 +878,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Define a \`projen:upgrade\` script and a scheduled github workflow which will upgrade projen and submit a PR with the upgrade.",
+        "name": "projenUpgrade",
+        "optional": true,
+        "path": Array [
+          "projenUpgrade",
+        ],
+        "switch": "projen-upgrade",
+        "type": "boolean",
+      },
+      Object {
         "name": "mode",
         "optional": true,
         "path": Array [
@@ -1436,6 +1447,17 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Define a \`projen:upgrade\` script and a scheduled github workflow which will upgrade projen and submit a PR with the upgrade.",
+        "name": "projenUpgrade",
+        "optional": true,
+        "path": Array [
+          "projenUpgrade",
+        ],
+        "switch": "projen-upgrade",
         "type": "boolean",
       },
       Object {
@@ -2473,6 +2495,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Define a \`projen:upgrade\` script and a scheduled github workflow which will upgrade projen and submit a PR with the upgrade.",
+        "name": "projenUpgrade",
+        "optional": true,
+        "path": Array [
+          "projenUpgrade",
+        ],
+        "switch": "projen-upgrade",
         "type": "boolean",
       },
       Object {

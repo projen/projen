@@ -14,7 +14,7 @@ export class ProjenUpgrade {
       'chmod -w package.json',
       'yarn projen');
 
-    const workflow = new GithubWorkflow(project, 'upgrade-projen');
+    const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
 
     workflow.on({
       schedule: [ { cron: '0 6 * * *' } ], // 6am every day
@@ -32,12 +32,14 @@ export class ProjenUpgrade {
 
           // submit a PR
           {
-            'name': 'Create Pull Request',
-            'uses': 'peter-evans/create-pull-request@v3',
-            'commit-message': 'chore: upgrade projen',
-            'branch': 'auto/projen-upgrade',
-            'title': 'chore: upgrade projen',
-            'body': 'This PR upgrades projen to the latest version',
+            name: 'Create Pull Request',
+            uses: 'peter-evans/create-pull-request@v3',
+            with: {
+              'commit-message': 'chore: upgrade projen',
+              'branch': 'auto/projen-upgrade',
+              'title': 'chore: upgrade projen',
+              'body': 'This PR upgrades projen to the latest version',
+            },
           },
         ],
       },

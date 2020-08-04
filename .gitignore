@@ -60,7 +60,7 @@ tsconfig.json
 !# synthesized by projen, (do not modify by hand)
 !/.github/dependabot.yml
 !# synthesized by projen, (do not modify by hand)
-!/.github/workflows/upgrade-projen.yml
+!/.github/workflows/projenupgrade.yml
 !/src
 !# synthesized by projen, (do not modify by hand)
 !/.eslintrc.json
