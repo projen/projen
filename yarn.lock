@@ -3540,11 +3540,11 @@ jsii-rosetta@^1.10.0:
     yargs "^15.4.0"
 
 jsii@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.9.0.tgz#3a039b4fb9838460d9f996484b48cf89283de664"
-  integrity sha512-vtzzgYDF6WGnAbTP4+ko4QUmz3O4rS8BN5iCYOf5Kh87VVhb3+vkdijSR7esnWJCT7/a+rJfMX5pztec8O/mvw==
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.10.0.tgz#86ac53a1b5451abfc66c8f4753436ff4542b6c72"
+  integrity sha512-Bo4HTCZ9VOB3Rq85WEBLXlnsBCyjkHAgeUxnlDc8SUsK4cWoUa7JQ+7zs8bEvqgesCH4S1VC1d2ogfVVLeskAA==
   dependencies:
-    "@jsii/spec" "^1.9.0"
+    "@jsii/spec" "^1.10.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.3"
