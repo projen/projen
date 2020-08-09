@@ -408,7 +408,7 @@ export class NodeProject extends Project {
     });
 
     this.addDependencies(options.dependencies ?? {});
-    this.addPeerDependencies(options.peerDependencies ?? {});
+    this.addPeerDependencies(options.peerDependencies ?? {}, options.peerDependencyOptions);
     this.addDevDependencies(options.devDependencies ?? {});
     this.addBundledDependencies(...options.bundledDependencies ?? []);
 
