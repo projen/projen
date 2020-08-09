@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.26 (2020-08-09)
+
+
+### Bug Fixes
+
+* **core:** peerDependencyOptions not passed ([#54](https://github.com/eladb/projen/issues/54)) ([9fdbd31](https://github.com/eladb/projen/commit/9fdbd31abc7ddd303e4085172378f5e2f3e4dd1c)), closes [#53](https://github.com/eladb/projen/issues/53)
+
 ### 0.3.25 (2020-08-07)
 
 ### 0.3.24 (2020-08-06)
