@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.32 (2020-08-12)
+
+
+### Bug Fixes
+
+* projen:upgrade should be included even if workflow is disabled ([b641d63](https://github.com/eladb/projen/commit/b641d639fdf7181dafa0ce00b0d0675d6737a0dc))
+
 ### 0.3.31 (2020-08-12)
 
 ### 0.3.30 (2020-08-12)
