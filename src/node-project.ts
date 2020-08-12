@@ -212,7 +212,8 @@ export interface NodeProjectCommonOptions {
   readonly scripts?: { [name: string]: string }
 
   /**
-   * Periodically submits a pull request for projen upgrades.
+   * Periodically submits a pull request for projen upgrades (executes `yarn
+   * projen:upgrade`).
    *
    * This setting is a GitHub secret name which contains a GitHub Access Token
    * with `repo` and `workflow` permissions.
@@ -572,11 +573,9 @@ export class NodeProject extends Project {
       new Dependabot(this, options.dependabotOptions);
     }
 
-    if (options.projenUpgradeSecret) {
-      new ProjenUpgrade(this, {
-        autoUpgradeSecret: options.projenUpgradeSecret,
-      });
-    }
+    new ProjenUpgrade(this, {
+      autoUpgradeSecret: options.projenUpgradeSecret,
+    });
 
     // override any scripts from options (if specified)
     for (const [n, v] of Object.entries(options.scripts ?? {})) {

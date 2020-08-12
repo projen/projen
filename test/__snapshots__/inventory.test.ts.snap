@@ -879,7 +879,7 @@ Array [
       },
       Object {
         "default": "no automatic projen upgrade pull requests",
-        "docs": "Periodically submits a pull request for projen upgrades.",
+        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
         "optional": true,
         "path": Array [
@@ -1451,7 +1451,7 @@ Array [
       },
       Object {
         "default": "no automatic projen upgrade pull requests",
-        "docs": "Periodically submits a pull request for projen upgrades.",
+        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
         "optional": true,
         "path": Array [
@@ -2499,7 +2499,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "no automatic projen upgrade pull requests",
-        "docs": "Periodically submits a pull request for projen upgrades.",
+        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
         "optional": true,
         "path": Array [
