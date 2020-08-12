@@ -344,19 +344,6 @@ new IgnoreFile(project: Project, filePath: string)
 ### Methods
 
 
-#### comment(comment)🔹 <a id="projen-ignorefile-comment"></a>
-
-appends a comment that will be included before the next exclude/include line.
-
-```ts
-comment(comment: string): void
-```
-
-* **comment** (<code>string</code>)  *No description*
-
-
-
-
 #### exclude(...patterns)🔹 <a id="projen-ignorefile-exclude"></a>
 
 
