@@ -212,12 +212,19 @@ export interface NodeProjectCommonOptions {
   readonly scripts?: { [name: string]: string }
 
   /**
-   * Define a `projen:upgrade` script and a scheduled github workflow which will
-   * upgrade projen and submit a PR with the upgrade.
+   * Periodically submits a pull request for projen upgrades.
    *
-   * @default true
+   * This setting is a GitHub secret name which contains a GitHub Access Token
+   * with `repo` and `workflow` permissions.
+   *
+   * This token is used to submit the upgrade pull request, which will likely
+   * include workflow updates.
+   *
+   * To create a personal access token see https://github.com/settings/tokens
+   *
+   * @default - no automatic projen upgrade pull requests
    */
-  readonly projenUpgrade?: boolean;
+  readonly projenUpgradeSecret?: string;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -570,8 +577,10 @@ export class NodeProject extends Project {
       new Dependabot(this, options.dependabotOptions);
     }
 
-    if (options.projenUpgrade ?? true) {
-      new ProjenUpgrade(this);
+    if (options.projenUpgradeSecret) {
+      new ProjenUpgrade(this, {
+        autoUpgradeSecret: options.projenUpgradeSecret,
+      });
     }
 
     // override any scripts from options (if specified)
