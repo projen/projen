@@ -15,7 +15,6 @@
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
-    "projen:upgrade": "chmod +w package.json && yarn upgrade -L projen && chmod -w package.json && yarn projen",
     "bootstrap": "yarn install && yarn compile && yarn projen",
     "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
     "watch": "jsii -w --silence-warnings=reserved-word",
@@ -36,6 +35,7 @@
   "devDependencies": {
     "@types/fs-extra": "^8.0.1",
     "@types/yargs": "^15.0.5",
+    "@types/glob": "^7.1.3",
     "standard-version": "^8.0.1",
     "typescript": "^3.9.5",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
@@ -60,13 +60,15 @@
     "yaml": "^1.9.2",
     "fs-extra": "^9.0.1",
     "yargs": "^15.4.0",
-    "decamelize": "^4.0.0"
+    "decamelize": "^4.0.0",
+    "glob": "^7.1.6"
   },
   "bundledDependencies": [
     "yaml",
     "fs-extra",
     "yargs",
-    "decamelize"
+    "decamelize",
+    "glob"
   ],
   "engines": {
     "node": ">= 10.17.0"

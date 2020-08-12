@@ -2,6 +2,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import {PROJEN_RC} from './common';
 import * as yargs from 'yargs';
+import { cleanup } from './cleanup';
 
 const projenfile = path.resolve(PROJEN_RC);
 const projen = path.dirname(require.resolve('../package.json'));
@@ -32,6 +33,9 @@ if (args._.length === 0) {
     unlink = symlink;
   }
 
+  // deletes all generated files before generating new ones
+  cleanup();
+
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require(projenfile);
@@ -41,4 +45,3 @@ if (args._.length === 0) {
     }
   }
 }
-
