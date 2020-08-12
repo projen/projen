@@ -423,14 +423,12 @@ export class NodeProject extends Project {
     this.addDefaultGitIgnore();
 
     if (options.gitignore?.length) {
-      this.gitignore.comment('custom gitignore entries')
       for (const i of options.gitignore) {
         this.gitignore.exclude(i);
       }
     }
 
     if (options.npmignore?.length) {
-      this.npmignore.comment('custom npmignore entries')
       for (const i of options.npmignore) {
         this.npmignore.exclude(i);
       }
@@ -446,10 +444,7 @@ export class NodeProject extends Project {
 
     this.addScript('projen', `node ${PROJEN_RC} && yarn install`);
 
-    this.npmignore.comment('exclude project definition from npm module');
     this.npmignore.exclude(`/${PROJEN_RC}`);
-
-    this.npmignore.comment('make sure to commit projen definition');
     this.gitignore.include(`/${PROJEN_RC}`);
 
     this.addBins(options.bin ?? { });

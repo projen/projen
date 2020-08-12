@@ -42,10 +42,8 @@ export abstract class FileBase extends Component {
       const committed = options.committed ?? true;
       const pattern = `/${this.path}`;
       if (committed) {
-        project.gitignore.comment('synthesized by projen, (do not modify by hand)');
         project.gitignore.include(pattern);
       } else {
-        project.gitignore.comment('synthesized by projen');
         project.gitignore.exclude(pattern);
       }
     } else {

@@ -16,10 +16,7 @@ export class Version {
       'standard-version': Semver.caret('8.0.1'),
     });
 
-    project.npmignore.comment('standard-version configuration');
     project.npmignore.exclude('/.versionrc.json');
-
-    project.gitignore.comment('always commit version file');
     project.gitignore.include(VERSION_FILE);
 
     new JsonFile(project, '.versionrc.json', {

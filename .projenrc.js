@@ -33,7 +33,6 @@ const project = new JsiiProject({
   compileBeforeTest: true,
 });
 
-project.gitignore.comment('templates must live in the repo');
 project.gitignore.include('templates/**');
 
 project.synth();
