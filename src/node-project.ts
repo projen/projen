@@ -780,7 +780,7 @@ export interface PeerDependencyOptions {
   readonly pinnedDevDependency?: boolean;
 }
 
-const DEFAULT_WORKFLOW_BOOTSTRAP = [
+export const DEFAULT_WORKFLOW_BOOTSTRAP = [
   { run: `npx projen@${PROJEN_VERSION}` },
   { run: 'yarn install --frozen-lockfile' },
 ];
