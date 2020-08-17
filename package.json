@@ -75,7 +75,7 @@
     "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
-  "version": "0.3.34",
+  "version": "0.3.35",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,
