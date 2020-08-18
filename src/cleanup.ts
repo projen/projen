@@ -13,7 +13,7 @@ export function cleanup() {
 }
 
 function findGeneratedFiles() {
-  const ignore = readGitIgnore();
+  const ignore = [...readGitIgnore(), 'node_modules/**'];
 
   const files = glob.sync('**', {
     ignore,
