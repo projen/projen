@@ -598,9 +598,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@26.x", "@types/jest@^26.0.7":
-  version "26.0.9"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.9.tgz#0543b57da5f0cd949c5f423a00c56c492289c989"
-  integrity sha512-k4qFfJ5AUKrWok5KYXp2EPm89b0P/KZpl7Vg4XuOTVVQEhLDBDBU3iBFrjjdgd8fLw96aAtmnwhXHl63bWeBQQ==
+  version "26.0.10"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.10.tgz#8faf7e9756c033c39014ae76a7329efea00ea607"
+  integrity sha512-i2m0oyh8w/Lum7wWK/YOZJakYF8Mx08UaKA1CtbmFeDquVhAEdA7znacsVSf2hJ1OQ/OfVMGN90pw/AtzF8s/Q==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
@@ -1916,9 +1916,9 @@ eslint-import-resolver-node@^0.3.3:
     resolve "^1.13.1"
 
 eslint-import-resolver-typescript@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.2.0.tgz#f7b261e41a38b690f3044660f6d496cc312323b0"
-  integrity sha512-/NhKEH1gbRlcb9RcaZJe5zRn5eIffGTf1qh3JAyvkEuPli3DEa5HQWWUO5OTfUjj7buUXsDq8lEsdwbbSeqywg==
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.2.1.tgz#4b9bdfb51af7e14947ebc40ffdd6c32d5924b905"
+  integrity sha512-wxlVdwuWY6R5+CoesIy6n8EZX4k9lEeZGWTVBoX9g//8Xma8JMtL/p3AGnG43rRyXmIrX+/0IN8lpOPzrw1fSw==
   dependencies:
     debug "^4.1.1"
     glob "^7.1.6"
@@ -3496,9 +3496,9 @@ jsii-diff@^1.9.0:
     yargs "^15.4.0"
 
 jsii-docgen@^1.3.2:
-  version "1.4.17"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.17.tgz#8363091ee2bda98f40fd1dd8431c04d1bd4b2112"
-  integrity sha512-A9yAky8/Zycucx1cxC1p1RbIJmHYxP0RIo1waHmQX/VqanHDQxiaMDMqAbZCurr7EmOWunpEiw+CcArJuXPAMA==
+  version "1.4.19"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.19.tgz#a3e4f7049442ca655a5bb4e95dade0552efaf59c"
+  integrity sha512-dJFtByISo3nMue381gUwmd8X2vGbeUeE6xHSd4EgAl3lffz8mw6+QMnd101HCToE5AqGSI6Skq7IQPnOhPmwtg==
   dependencies:
     "@jsii/spec" "^1.9.0"
     fs-extra "^9.0.0"
