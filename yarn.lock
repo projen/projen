@@ -3552,11 +3552,11 @@ jsii-rosetta@^1.11.0:
     yargs "^15.4.1"
 
 jsii@^1.9.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.10.0.tgz#86ac53a1b5451abfc66c8f4753436ff4542b6c72"
-  integrity sha512-Bo4HTCZ9VOB3Rq85WEBLXlnsBCyjkHAgeUxnlDc8SUsK4cWoUa7JQ+7zs8bEvqgesCH4S1VC1d2ogfVVLeskAA==
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.11.0.tgz#104454263fa7a57a73977e27de06b0416c894b1f"
+  integrity sha512-5/YZPqpSoXSi6h1JLMv8fa4iIyGfL14Va5p1J2NXkB7cQj5gPbl8gvi0KJiqmQXyF7urczGJB8vzuU15FyCalg==
   dependencies:
-    "@jsii/spec" "^1.10.0"
+    "@jsii/spec" "^1.11.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.3"
@@ -3566,8 +3566,8 @@ jsii@^1.9.0:
     semver-intersect "^1.4.0"
     sort-json "^2.0.0"
     spdx-license-list "^6.2.0"
-    typescript "~3.9.6"
-    yargs "^15.4.0"
+    typescript "~3.9.7"
+    yargs "^15.4.1"
 
 json-parse-better-errors@^1.0.1:
   version "1.0.2"
