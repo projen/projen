@@ -251,6 +251,12 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
   readonly name: string;
 
   /**
+   * If you do not want your package published in a package manager, set this to true.
+   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-private
+   */
+  readonly private?: boolean;
+
+  /**
    * The description is just a string that helps people understand the purpose of the package.
    * It can be used when searching for packages in a package manager as well.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-description
@@ -410,7 +416,8 @@ export class NodeProject extends Project {
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
-      'name': options.name,
+	  'name': options.name,
+	  'private': options.private || undefined,
       'description': options.description,
       'main': 'lib/index.js',
       'repository': !options.repository ? undefined : {
@@ -529,7 +536,7 @@ export class NodeProject extends Project {
         image: options.workflowContainerImage,
       });
 
-      if (options.releaseToNpm) {
+      if (options.releaseToNpm && !options.private) {
         this.releaseWorkflow.addJobs({
           release_npm: {
             'name': 'Release to NPM',

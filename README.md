@@ -1,6 +1,6 @@
 # projen
 
-> Define and maintain complex project configuration through code. 
+> Define and maintain complex project configuration through code.
 
 > JOIN THE **#templatesareevil** MOVEMENT!
 
@@ -21,7 +21,7 @@ $ npx projen new
 
 ## Project Types
 
-Projen is all about **project types**. Project types are represented as **well-typed TypeScript classes**. The project 
+Projen is all about **project types**. Project types are represented as **well-typed TypeScript classes**. The project
 definition file (`.projenrc.js`) is a simple JavaScript program which instantiates of one of the project type classes
 and calls `proj.synth()` on it.
 
@@ -30,6 +30,7 @@ Supported project types (create with `npx projen new TYPE`):
 * [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject)
 * [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptlibraryproject)
 * [jsii](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject)
+* [lerna](https://github.com/eladb/projen/blob/master/API.md#projen-lernaproject)
 * [Add yours](#ecosystem)
 
 Some examples for features built-in to these project types:
@@ -253,14 +254,86 @@ That's it. projen will auto-detect `bin/mycli` and will add it to your
 `package.json` under the `bin` section. You can disable this behavior by setting
 `autoDetectBin: false`.
 
+### LernaProject
+
+#### Simplest example:
+
+```typescript
+const { LernaProject } = require('projen');
+const lernaProject = new LernaProject({
+  name: 'my-monorepo-project',
+});
+lernaProject.synth();
+```
+
+This example creates a Lerna monorepo using yarn workspaces, with `packages/*` defined as the package location.
+
+#### What about the packages?
+
+In order to add packages to your monorepo, you can pass the `packages` property:
+```typescript
+const { LernaProject, TypeScriptProject } = require('projen');
+const lernaProject = new LernaProject({
+  name: 'my-monorepo-project',
+  packages: [
+    {
+      project: new TypeScriptProject({
+        name: 'ddb-connector',
+        description: 'DynamoDB API / Connector'
+      }),
+    },
+  ]
+});
+lernaProject.synth();
+```
+
+The `packages` property is an array of objects describing the details of the package that
+will belong to the monorepo, where:
+
+- `project` is a *projen* project.
+- `location` (optional) The path where the package will be created.
+
+Alternatively, you could add packages to your monorepo by calling the `addPackage` method on your
+`LernaProject` (before `synth()`):
+
+```typescript
+const { LernaProject, TypeScriptProject } = require('projen');
+const lernaProject = new LernaProject({
+  /* ... */
+});
+lernaProject.addPackage(new TypeScriptProject({
+  name: 'geocoding-service',
+  description: 'Geocoding Service'
+}));
+lernaProject.synth();
+```
+
+You can use `lernaProject.noHoist(package, dep)` to tell yarn which packages can't be hoisted.
+
+```typescript
+const { LernaProject, TypeScriptProject } = require('projen');
+const myChildProject =  new TypeScriptProject({
+  name: 'geocoding-service',
+  /* ... */
+});
+const lernaProject = new LernaProject({
+  /* ... */
+});
+lernaProject.addPackage(myChildProject);
+lernaProject.noHoist('any-package', 'yaml') // generates 'any-package/yaml' nohoist entry
+lernaProject.noHoist(myChildProject, 'aws-sdk') // generates 'geocoding-service/aws-sdk'
+lernaProject.noHoist(myChildProject, 'aws-sdk/**') // generates 'geocoding-service/aws-sdk/**'
+lernaProject.synth();
+```
+
 ## Ecosystem
 
 _projen_ takes a "batteries included" approach and aims to offer dozens of different project types out of
 the box (we are just getting started). Think `projen new react`, `projen new angular`, `projen new java-maven`,
 `projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tight to javascript or npm!)...
 
-Adding new project types is as simple as submitting a pull request to this repo and exporting a class that 
-extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your 
+Adding new project types is as simple as submitting a pull request to this repo and exporting a class that
+extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
 ## Contributing

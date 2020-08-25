@@ -6,6 +6,7 @@ test('project id', () => {
   expect(result.map(x => x.pjid).sort()).toStrictEqual([
     'construct-lib-aws',
     'jsii',
+    'lerna',
     'node',
     'project',
     'ts',
