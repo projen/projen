@@ -403,10 +403,10 @@ export class NodeProject extends Project {
         organization: options.authorOrganization ?? false,
       },
       'homepage': options.homepage,
-      'devDependencies': this.devDependencies,
-      'peerDependencies': this.peerDependencies,
-      'dependencies': this.dependencies,
-      'bundledDependencies': this.bundledDependencies,
+      'devDependencies': sorted(this.devDependencies),
+      'peerDependencies': sorted(this.peerDependencies),
+      'dependencies': sorted(this.dependencies),
+      'bundledDependencies': sorted(this.bundledDependencies),
       'keywords': options.keywords,
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
@@ -863,5 +863,19 @@ export class NodeBuildWorkflow extends GithubWorkflow {
     }
 
     this.addJobs({ [this.buildJobId]: job });
+  }
+}
+
+function sorted<T>(toSort: T): T {
+  if (Array.isArray(toSort)) {
+    return toSort.sort();
+  } else if (toSort != null && typeof toSort === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(toSort).sort(([l], [r]) => l.localeCompare(r))) {
+      result[key] = value;
+    }
+    return result as T;
+  } else {
+    return toSort;
   }
 }
