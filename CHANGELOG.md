@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.44 (2020-08-26)
+
+
+### Features
+
+* upgrade download-artifact action to 2.0.1 ([#84](https://github.com/eladb/projen/issues/84)) ([1e56981](https://github.com/eladb/projen/commit/1e5698157b36666ae71b4ca747a881f9d660a517))
+
 ### 0.3.43 (2020-08-26)
 
 ### 0.3.42 (2020-08-25)
