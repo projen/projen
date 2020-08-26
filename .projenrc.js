@@ -2,7 +2,6 @@ const { JsiiProject, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
-  jsiiVersion: Semver.caret('1.9.0'),
   description: 'A new generation of project generators',
   repository: 'https://github.com/eladb/projen.git',
   authorName: 'Elad Ben-Israel',

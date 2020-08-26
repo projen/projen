@@ -866,16 +866,18 @@ export class NodeBuildWorkflow extends GithubWorkflow {
   }
 }
 
-function sorted<T>(toSort: T): T {
-  if (Array.isArray(toSort)) {
-    return toSort.sort();
-  } else if (toSort != null && typeof toSort === 'object') {
-    const result: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(toSort).sort(([l], [r]) => l.localeCompare(r))) {
-      result[key] = value;
+function sorted<T>(toSort: T) {
+  return () => {
+    if (Array.isArray(toSort)) {
+      return toSort.sort();
+    } else if (toSort != null && typeof toSort === 'object') {
+      const result: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(toSort).sort(([l], [r]) => l.localeCompare(r))) {
+        result[key] = value;
+      }
+      return result as T;
+    } else {
+      return toSort;
     }
-    return result as T;
-  } else {
-    return toSort;
-  }
+  };
 }

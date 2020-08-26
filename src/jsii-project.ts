@@ -5,10 +5,8 @@ import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { TypeScriptProject } from './typescript';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const DEFAULT_JSII_VERSION: string = require('../package.json').devDependencies.jsii;
+const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
-
 
 // jsii/superchain has 10.20.1
 // nvm has 10.17.0
