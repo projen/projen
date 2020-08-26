@@ -8,6 +8,14 @@ import { TypeScriptProject } from './typescript';
 const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
 
+const DOWNLOAD_ARTIFACT_STEP = {
+  name: 'Download build artifacts',
+  uses: 'actions/download-artifact@v2.0.1',
+  with: {
+    name: 'dist',
+  },
+};
+
 // jsii/superchain has 10.20.1
 // nvm has 10.17.0
 // @types/node has 10.17.0
@@ -228,13 +236,7 @@ export class JsiiProject extends TypeScriptProject {
           image: 'jsii/superchain',
         },
         'steps': [
-          {
-            name: 'Download build artifacts',
-            uses: 'actions/download-artifact@v1',
-            with: {
-              name: 'dist',
-            },
-          },
+          DOWNLOAD_ARTIFACT_STEP,
           {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-npm',
@@ -261,13 +263,7 @@ export class JsiiProject extends TypeScriptProject {
           image: 'jsii/superchain',
         },
         'steps': [
-          {
-            name: 'Download build artifacts',
-            uses: 'actions/download-artifact@v1',
-            with: {
-              name: 'dist',
-            },
-          },
+          DOWNLOAD_ARTIFACT_STEP,
           {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-nuget',
@@ -293,13 +289,7 @@ export class JsiiProject extends TypeScriptProject {
           image: 'jsii/superchain',
         },
         'steps': [
-          {
-            name: 'Download build artifacts',
-            uses: 'actions/download-artifact@v1',
-            with: {
-              name: 'dist',
-            },
-          },
+          DOWNLOAD_ARTIFACT_STEP,
           {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-maven',
@@ -329,13 +319,7 @@ export class JsiiProject extends TypeScriptProject {
           image: 'jsii/superchain',
         },
         'steps': [
-          {
-            name: 'Download build artifacts',
-            uses: 'actions/download-artifact@v1',
-            with: {
-              name: 'dist',
-            },
-          },
+          DOWNLOAD_ARTIFACT_STEP,
           {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-pypi',
