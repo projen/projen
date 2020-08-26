@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.46 (2020-08-26)
+
+
+### Features
+
+* aws-cdk construct-library project type ([4d8c140](https://github.com/eladb/projen/commit/4d8c140726d5634d4f853a64a3e404c58403896e))
+
 ### 0.3.45 (2020-08-26)
 
 ### 0.3.44 (2020-08-26)
