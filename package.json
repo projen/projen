@@ -71,6 +71,7 @@
     "yaml",
     "yargs"
   ],
+  "keywords": [],
   "engines": {
     "node": ">= 10.17.0"
   },

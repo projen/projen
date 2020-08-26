@@ -322,11 +322,13 @@ export class NodeProject extends Project {
   public readonly mergify?: Mergify;
 
   private readonly peerDependencies: Record<string, string> = { };
+  private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly devDependencies: Record<string, string> = { };
   private readonly dependencies: Record<string, string> = { };
   private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string[]>;
   private readonly bin: Record<string, string> = { };
+  private readonly keywords: Set<string>;
 
   public readonly manifest: any;
   private readonly _version: Version;
@@ -360,6 +362,9 @@ export class NodeProject extends Project {
 
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
+
+    this.keywords = new Set();
+    this.addKeywords(...options.keywords ?? []);
 
     let nodeVersion = '';
 
@@ -407,7 +412,7 @@ export class NodeProject extends Project {
       'peerDependencies': sorted(this.peerDependencies),
       'dependencies': sorted(this.dependencies),
       'bundledDependencies': sorted(this.bundledDependencies),
-      'keywords': options.keywords,
+      'keywords': () => Array.from(this.keywords).sort(),
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
@@ -416,7 +421,8 @@ export class NodeProject extends Project {
     });
 
     this.addDependencies(options.dependencies ?? {});
-    this.addPeerDependencies(options.peerDependencies ?? {}, options.peerDependencyOptions);
+    this.peerDependencyOptions = options.peerDependencyOptions ?? {};
+    this.addPeerDependencies(options.peerDependencies ?? {});
     this.addDevDependencies(options.devDependencies ?? {});
     this.addBundledDependencies(...options.bundledDependencies ?? []);
 
@@ -619,12 +625,13 @@ export class NodeProject extends Project {
     }
   }
 
-  public addPeerDependencies(deps: { [module: string]: Semver }, options: PeerDependencyOptions = {}) {
-    const pinnedDevDependency = options.pinnedDevDependency ?? true;
+  public addPeerDependencies(deps: { [module: string]: Semver }, options?: PeerDependencyOptions) {
+    const opts = options ?? this.peerDependencyOptions;
+    const pinned = opts.pinnedDevDependency ?? true;
     for (const [ k, v ] of Object.entries(deps)) {
       this.peerDependencies[k] = v.spec;
 
-      if (pinnedDevDependency) {
+      if (pinned) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
       }
     }
@@ -676,6 +683,16 @@ export class NodeProject extends Project {
   public addFields(fields: { [name: string]: any }) {
     for (const [ name, value ] of Object.entries(fields)) {
       this.manifest[name] = value;
+    }
+  }
+
+  /**
+   * Adds keywords to package.json (deduplicated)
+   * @param keywords The keywords to add
+   */
+  public addKeywords(...keywords: string[]) {
+    for (const k of keywords) {
+      this.keywords.add(k);
     }
   }
 
