@@ -13,7 +13,7 @@ export class Version {
     project.addScript('release', 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)');
 
     project.addDevDependencies({
-      'standard-version': Semver.caret('8.0.1'),
+      'standard-version': Semver.caret('9.0.0'),
     });
 
     project.npmignore.exclude('/.versionrc.json');
