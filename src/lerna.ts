@@ -2,7 +2,26 @@ import { NodeProject, NodeProjectOptions } from './node-project';
 import { JsonFile } from './json';
 import { Semver } from './semver';
 import { Component } from './component';
+import { VersionOptions } from './version';
 import * as path from 'path';
+
+/**
+ * A `projen` project added as a package to a lerna project.
+ */
+export interface LernaPackage {
+  /**
+   * Directory in which the package will live.
+   *
+   * @default 'packages'
+   */
+  readonly location?: string;
+
+  /**
+   * Project instance of the package.
+   * e.g: new TypeScriptProject({name: 'my-project'})
+   */
+  readonly project: NodeProject;
+}
 
 export interface LernaProjectOptions extends NodeProjectOptions {
   /**
@@ -35,19 +54,9 @@ export interface LernaProjectOptions extends NodeProjectOptions {
   readonly lernaVersion?: Semver;
 }
 
-export interface LernaPackage {
-  /**
-   * Directory in which the package will live.
-   * @default 'packages'
-   */
-  readonly location?: string;
-
-  /**
-   * Project instance of the package.
-   * e.g: new TypeScriptProject({name: 'my-project'})
-   */
-  readonly project: NodeProject;
-}
+const defaultVersionOptions: VersionOptions = {
+  versionFilename: 'lerna.json',
+};
 
 /**
  * lerna monorepo project
@@ -55,35 +64,35 @@ export interface LernaPackage {
  */
 export class LernaProject extends NodeProject {
   private readonly packages: Package[];
-  private readonly lernaJson: any;
   private readonly workspaces: Array<string>;
   private readonly noHoistPatterns: Array<string>;
+  private readonly useWorkspaces: boolean;
 
   constructor(options: LernaProjectOptions) {
-    super({ ...options, private: true });
+    super({ ...options, version: options?.version ?? defaultVersionOptions, private: true });
     this.packages = new Array<Package>();
     this.workspaces = new Array<string>();
     this.noHoistPatterns = new Array<string>();
 
     this.addDevDependencies({ lerna: options.lernaVersion ?? Semver.caret('3.22.1') });
 
-    const useWorkspaces = options.useWorkspaces ?? true;
+    this.useWorkspaces = options.useWorkspaces ?? true;
 
-    this.lernaJson = {
+    const lernaJson = {
       npmClient: options.npmClient ?? 'yarn',
-      useWorkspaces,
-      version: '0.0.0',
+      useWorkspaces: this.useWorkspaces,
+      version: (outdir: string) => this._version.resolveVersion(outdir),
     };
 
     new JsonFile(this, 'lerna.json', {
-      obj: this.lernaJson,
+      obj: lernaJson,
     });
 
     for (const pack of options.packages || []) {
       this.addPackage(pack.project, pack.location);
     }
 
-    if (useWorkspaces)
+    if (this.useWorkspaces)
       this.addFields({
         workspaces: {
           packages: this.workspaces,
@@ -97,7 +106,8 @@ export class LernaProject extends NodeProject {
    * @param pattern The pattern to add.
    */
   public addWorkspace(pattern: string) {
-    if (!this.workspaces.includes(pattern)) this.workspaces.push(pattern);
+    if (this.useWorkspaces && !this.workspaces.includes(pattern))
+      this.workspaces.push(pattern);
   }
 
   /**

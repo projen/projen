@@ -46,21 +46,24 @@ Name|Description
 [JsiiProjectOptions](#projen-jsiiprojectoptions)|*No description*
 [JsiiPythonTarget](#projen-jsiipythontarget)|*No description*
 [JsonFileOptions](#projen-jsonfileoptions)|*No description*
-[LernaPackage](#projen-lernapackage)|*No description*
+[LernaPackage](#projen-lernapackage)|A `projen` project added as a package to a lerna project.
 [LernaProjectOptions](#projen-lernaprojectoptions)|*No description*
 [LicenseOptions](#projen-licenseoptions)|*No description*
+[LifecycleScriptOptions](#projen-lifecyclescriptoptions)|standard-version supports lifecycle scripts.
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
+[SkipOptions](#projen-skipoptions)|standard-version allows for skipping any of the lifecycle steps (bump, changelog, commit, tag).
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[VersionOptions](#projen-versionoptions)|*No description*
 
 
 **Interfaces**
@@ -78,6 +81,7 @@ Name|Description
 [DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [Stability](#projen-stability)|*No description*
 [StartEntryCategory](#projen-startentrycategory)|*No description*
+[VersionUpdater](#projen-versionupdater)|The standard-version "updater" defines how the version file will be bumped.
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 
 
@@ -160,6 +164,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -296,6 +301,7 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -764,6 +770,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -896,7 +903,10 @@ new LernaProject(options: LernaProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1130,6 +1140,7 @@ new NodeProject(options: NodeProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1559,6 +1570,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1639,6 +1651,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **version** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for standard-version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1729,10 +1742,16 @@ Name | Type | Description
 
 
 ```ts
-new Version(project: NodeProject)
+new Version(project: NodeProject, options?: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **commitAll** (<code>boolean</code>)  Commit generated artifacts in the release commit. __*Default*__: false
+  * **lifecycleScripts** (<code>[LifecycleScriptOptions](#projen-lifecyclescriptoptions)</code>)  standard-version supports lifecycle scripts. __*Default*__: no lifecycle scripts
+  * **skip** (<code>[SkipOptions](#projen-skipoptions)</code>)  standard-version allows for skipping any of the lifecycle steps (bump, changelog, commit, tag). __*Default*__: no lifecycle steps are skipped
+  * **versionFilename** (<code>string</code>)  Filename used to track the version. __*Default*__: 'version.json'
+  * **versionUpdater** (<code>[VersionUpdater](#projen-versionupdater)</code>)  The standard-version "updater" defines how the version file will be bumped. __*Default*__: VersionUpdater.JSON
 
 
 ### Methods
@@ -1835,6 +1854,7 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -1905,6 +1925,7 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2106,6 +2127,7 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2145,7 +2167,7 @@ Name | Type | Description
 ## struct LernaPackage 🔹 <a id="projen-lernapackage"></a>
 
 
-
+A `projen` project added as a package to a lerna project.
 
 
 
@@ -2213,8 +2235,11 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **useWorkspaces**?🔹 | <code>boolean</code> | Enables integration with Yarn Workspaces (available since yarn@0.27+).<br/>__*Default*__: true
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2232,6 +2257,30 @@ Name | Type | Description
 -----|------|-------------
 **copyrightOwner**?🔹 | <code>string</code> | Copyright owner.<br/>__*Default*__: ""
 **copyrightPeriod**?🔹 | <code>string</code> | Period of license (e.g. "1998-2023").<br/>__*Default*__: current year (e.g. "2020")
+
+
+
+## struct LifecycleScriptOptions 🔹 <a id="projen-lifecyclescriptoptions"></a>
+
+
+standard-version supports lifecycle scripts.
+
+These allow you to execute your own supplementary commands during the
+release.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**postbump**?🔹 | <code>string</code> | Executed after the version is bumped.<br/>__*Default*__: no postbump script
+**postchangelog**?🔹 | <code>string</code> | Executed after the CHANGELOG is generated.<br/>__*Default*__: no postchangelog script
+**postcommit**?🔹 | <code>string</code> | Executed after the commit step.<br/>__*Default*__: no postcommit script
+**posttag**?🔹 | <code>string</code> | Executed after the tagging step.<br/>__*Default*__: no posttag script
+**prebump**?🔹 | <code>string</code> | Executed before the version is bumped.<br/>__*Default*__: no prebump script
+**prechangelog**?🔹 | <code>string</code> | Executed before the CHANGELOG is generated.<br/>__*Default*__: no prechangelog script
+**precommit**?🔹 | <code>string</code> | Executed before the commit step.<br/>__*Default*__: no precommit script
+**prerelease**?🔹 | <code>string</code> | Executed before anything happens.<br/>__*Default*__: no prerelease script
+**pretag**?🔹 | <code>string</code> | Executed before the tagging step.<br/>__*Default*__: no pretag script
 
 
 
@@ -2322,6 +2371,7 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2385,6 +2435,7 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2401,6 +2452,22 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **pinnedDevDependency**?🔹 | <code>boolean</code> | Automatically add a pinned dev dependency.<br/>__*Default*__: true
+
+
+
+## struct SkipOptions 🔹 <a id="projen-skipoptions"></a>
+
+
+standard-version allows for skipping any of the lifecycle steps (bump, changelog, commit, tag).
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**bump**?🔹 | <code>boolean</code> | Skip the `bump` lifecycle step.<br/>__*Default*__: false
+**changelog**?🔹 | <code>boolean</code> | Skip the `changelog` lifecycle step.<br/>__*Default*__: false
+**commit**?🔹 | <code>boolean</code> | Skip the `commit` lifecycle step.<br/>__*Default*__: false
+**tag**?🔹 | <code>boolean</code> | Skip the `tag` lifecycle step.<br/>__*Default*__: false
 
 
 
@@ -2525,6 +2592,7 @@ Name | Type | Description
 **testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
+**version**?⚠️ | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2597,6 +2665,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
+**version**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for standard-version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2616,6 +2685,23 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | __*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | The directory in which typescript sources reside.<br/>__*Default*__: all .ts files recursively
+
+
+
+## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**commitAll**?🔹 | <code>boolean</code> | Commit generated artifacts in the release commit.<br/>__*Default*__: false
+**lifecycleScripts**?🔹 | <code>[LifecycleScriptOptions](#projen-lifecyclescriptoptions)</code> | standard-version supports lifecycle scripts.<br/>__*Default*__: no lifecycle scripts
+**skip**?🔹 | <code>[SkipOptions](#projen-skipoptions)</code> | standard-version allows for skipping any of the lifecycle steps (bump, changelog, commit, tag).<br/>__*Default*__: no lifecycle steps are skipped
+**versionFilename**?🔹 | <code>string</code> | Filename used to track the version.<br/>__*Default*__: 'version.json'
+**versionUpdater**?🔹 | <code>[VersionUpdater](#projen-versionupdater)</code> | The standard-version "updater" defines how the version file will be bumped.<br/>__*Default*__: VersionUpdater.JSON
 
 
 
@@ -2662,6 +2748,16 @@ Name | Description
 **RELEASE** 🔹|
 **MAINTAIN** 🔹|
 **MISC** 🔹|
+
+
+## enum VersionUpdater 🔹 <a id="projen-versionupdater"></a>
+
+The standard-version "updater" defines how the version file will be bumped.
+
+Name | Description
+-----|-----
+**PLAINTEXT** 🔹|The `plain-text` updater assumes the file contents represents the version.
+**JSON** 🔹|The `json` updater assumes the version is available under a `version` key in the provided JSON document.
 
 
 ## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>

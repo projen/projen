@@ -4,7 +4,7 @@ import { Semver } from './semver';
 import { IgnoreFile } from './ignore-file';
 import { License } from './license';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
-import { Version } from './version';
+import { Version, VersionOptions } from './version';
 import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -237,9 +237,17 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Options for `yarn start`.
+   *
    * @default - default options
    */
   readonly startOptions?: StartOptions;
+
+  /**
+   * Options for standard-version.
+   *
+   * @default - default options
+   */
+  readonly version?: VersionOptions;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -337,6 +345,14 @@ export enum AutoRelease {
   DAILY
 }
 
+const defaultVersionOptions: VersionOptions = {
+  commitAll: true,
+  lifecycleScripts: {
+    // By default, run projen after release to update package.json
+    postbump: 'yarn projen && git add .',
+  },
+};
+
 export class NodeProject extends Project {
   public readonly npmignore: IgnoreFile;
   public readonly mergify?: Mergify;
@@ -351,7 +367,11 @@ export class NodeProject extends Project {
   private readonly keywords: Set<string>;
 
   public readonly manifest: any;
-  private readonly _version: Version;
+
+  /**
+   * @internal
+   */
+  protected readonly _version: Version;
 
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
@@ -416,8 +436,8 @@ export class NodeProject extends Project {
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
-	  'name': options.name,
-	  'private': options.private || undefined,
+      'name': options.name,
+      'private': options.private || undefined,
       'description': options.description,
       'main': 'lib/index.js',
       'repository': !options.repository ? undefined : {
@@ -495,8 +515,8 @@ export class NodeProject extends Project {
       this.addDevDependencies({ projen: projenVersion });
     }
 
-    // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    // version is read from a committed file which is how we bump
+    this._version = new Version(this, options?.version ?? defaultVersionOptions);
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
     this.bootstrapSteps = options.workflowBootstrapSteps;
