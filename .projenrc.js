@@ -35,5 +35,6 @@ const project = new JsiiProject({
 });
 
 project.gitignore.include('templates/**');
+project.addCompileCommand('yarn projen');
 
 project.synth();

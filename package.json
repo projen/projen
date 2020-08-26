@@ -17,7 +17,7 @@
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
     "projen:upgrade": "chmod +w package.json && yarn upgrade -L projen && chmod -w package.json && yarn projen",
     "bootstrap": "yarn install && yarn compile && yarn projen",
-    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen",
+    "compile": "jsii --silence-warnings=reserved-word && jsii-docgen && yarn projen",
     "watch": "jsii -w --silence-warnings=reserved-word",
     "package": "jsii-pacmak",
     "build": "yarn compile && yarn test && yarn run package",
