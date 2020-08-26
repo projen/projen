@@ -408,6 +408,7 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
+  * **jestVersion** (<code>[Semver](#projen-semver)</code>)  The version of jest to use. __*Default*__: ^26.4.2
   * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
 
 
@@ -1366,6 +1367,7 @@ Name | Type | Description
 **coverage**?🔹 | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Optional*__
 **ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: "/node_modules/"
+**jestVersion**?🔹 | <code>[Semver](#projen-semver)</code> | The version of jest to use.<br/>__*Default*__: ^26.4.2
 **typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/>__*Optional*__
 
 

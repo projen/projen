@@ -2,6 +2,8 @@ import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import { TypescriptConfig } from './typescript';
 
+const DEFAULT_JEST_VERSION = Semver.caret('26.4.2');
+
 export interface JestOptions {
 
   /**
@@ -25,6 +27,13 @@ export interface JestOptions {
    * Configure for typescript.
    */
   readonly typescript?: TypescriptConfig;
+
+  /**
+   * The version of jest to use.
+   *
+   * @default ^26.4.2
+   */
+  readonly jestVersion?: Semver;
 }
 
 export interface CoverageThreshold {
@@ -51,7 +60,9 @@ export class Jest {
   private readonly ignorePatterns: string[];
 
   constructor(project: NodeProject, options: JestOptions = { }) {
-    project.addDevDependencies({ jest: Semver.caret('26.0.1') });
+    const version = options.jestVersion ?? DEFAULT_JEST_VERSION;
+
+    project.addDevDependencies({ jest: version });
 
     this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
 

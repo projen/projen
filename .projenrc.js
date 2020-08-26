@@ -2,16 +2,15 @@ const { JsiiProject, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
-  jsiiVersion: Semver.caret('1.9.0'),
   description: 'A new generation of project generators',
   repository: 'https://github.com/eladb/projen.git',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
   dependencies: {
-    'yaml': Semver.caret('1.9.2'),
+    'yaml': Semver.caret('1.10.0'),
     'fs-extra': Semver.caret('9.0.1'),
-    'yargs': Semver.caret('15.4.0'),
+    'yargs': Semver.caret('15.4.1'),
     'decamelize': Semver.caret('4.0.0'),
     'glob': Semver.caret('7.1.6')
   },
