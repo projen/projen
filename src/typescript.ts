@@ -7,6 +7,7 @@ import { TypedocDocgen } from './typescript-typedoc';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 import { Component } from './component';
+import { StartEntryCategory } from './start';
 
 /**
  * @deprecated use TypeScriptProjectOptions
@@ -114,10 +115,27 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory || 'docs/';
 
-    this.addScripts({
-      compile: 'tsc',
-      watch: 'tsc -w',
-      package: 'rm -fr dist && mkdir -p dist/js && yarn pack && mv *.tgz dist/js/',
+    this.addScript('package',
+      'rm -fr dist',
+      'mkdir -p dist/js',
+      'yarn pack',
+      'mv *.tgz dist/js/',
+    );
+    this.start?.addEntry('package', {
+      descrtiption: 'Create an npm tarball',
+      category: StartEntryCategory.RELEASE,
+    });
+
+    this.addScript('compile', 'tsc');
+    this.start?.addEntry('compile', {
+      descrtiption: 'Only compile',
+      category: StartEntryCategory.BUILD,
+    });
+
+    this.addScript('watch', 'tsc -w');
+    this.start?.addEntry('watch', {
+      descrtiption: 'Watch & compile in the background',
+      category: StartEntryCategory.BUILD,
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
@@ -127,6 +145,10 @@ export class TypeScriptProject extends NodeProject {
     } else {
       this.addScript('build', 'yarn test && yarn compile && yarn run package')
     }
+    this.start?.addEntry('build', {
+      descrtiption: 'Full release build',
+      category: StartEntryCategory.BUILD,
+    });
 
     this.manifest.types = `${this.libdir}/index.d.ts`;
 

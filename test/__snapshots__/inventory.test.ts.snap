@@ -1141,6 +1141,17 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`yarn start\` interactive experience.",
+        "name": "start",
+        "optional": true,
+        "path": Array [
+          "start",
+        ],
+        "switch": "start",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"test\\"",
         "docs": "Tests directory.",
         "name": "testdir",
@@ -2262,6 +2273,17 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`yarn start\` interactive experience.",
+        "name": "start",
+        "optional": true,
+        "path": Array [
+          "start",
+        ],
+        "switch": "start",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"test\\"",
         "docs": "Tests directory.",
         "name": "testdir",
@@ -2815,6 +2837,17 @@ Array [
         ],
         "switch": "stability",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Defines a \`yarn start\` interactive experience.",
+        "name": "start",
+        "optional": true,
+        "path": Array [
+          "start",
+        ],
+        "switch": "start",
+        "type": "boolean",
       },
       Object {
         "default": "\\"test\\"",
@@ -3896,6 +3929,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         ],
         "switch": "stability",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Defines a \`yarn start\` interactive experience.",
+        "name": "start",
+        "optional": true,
+        "path": Array [
+          "start",
+        ],
+        "switch": "start",
+        "type": "boolean",
       },
       Object {
         "default": "\\"test\\"",

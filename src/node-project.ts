@@ -11,6 +11,7 @@ import * as path from 'path';
 import { DependabotOptions, Dependabot } from './dependabot';
 import { MergifyOptions, Mergify } from './mergify';
 import { ProjenUpgrade } from './projen-upgrade';
+import { Start, StartOptions, StartEntryCategory } from './start';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -226,6 +227,19 @@ export interface NodeProjectCommonOptions {
    * @default - no automatic projen upgrade pull requests
    */
   readonly projenUpgradeSecret?: string;
+
+  /**
+   * Defines a `yarn start` interactive experience
+   *
+   * @default true
+   */
+  readonly start?: boolean;
+
+  /**
+   * Options for `yarn start`.
+   * @default - default options
+   */
+  readonly startOptions?: StartOptions;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -354,6 +368,11 @@ export class NodeProject extends Project {
    * Indicates if workflows have anti-tamper checks.
    */
   public readonly antitamper: boolean;
+
+  /**
+   * The start menu
+   */
+  public readonly start?: Start;
 
   protected readonly npmDistTag: string;
 
@@ -587,6 +606,10 @@ export class NodeProject extends Project {
     for (const [n, v] of Object.entries(options.scripts ?? {})) {
       this.addScript(n, v);
     }
+
+    if (options.start ?? true) {
+      this.start = new Start(this, options.startOptions ?? {});
+    }
   }
 
   public addBins(bins: Record<string, string>) {
@@ -659,6 +682,14 @@ export class NodeProject extends Project {
   }
 
   /**
+   * Indicates if a script by the name name is defined.
+   * @param name The name of the script
+   */
+  public hasScript(name: string) {
+    return name in this.scripts;
+  }
+
+  /**
    * Appends a command to run for an npm script. Joined by "&&"
    * @param name The name of the script
    * @param commands The commands to append.
@@ -678,6 +709,10 @@ export class NodeProject extends Project {
 
   public addTestCommand(...commands: string[]) {
     this.addScriptCommand('test', ...commands);
+    this.start?.addEntry('test', {
+      descrtiption: 'Run tests',
+      category: StartEntryCategory.TEST,
+    });
   }
 
   public addFields(fields: { [name: string]: any }) {

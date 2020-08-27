@@ -4,6 +4,7 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { TypeScriptProject } from './typescript';
+import { StartEntryCategory } from './start';
 
 const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -142,6 +143,11 @@ export class JsiiProject extends TypeScriptProject {
     }
 
     this.addScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
+    this.start?.addEntry('compat', {
+      descrtiption: 'Perform API compatibility check against latest version',
+      category: StartEntryCategory.RELEASE,
+    });
+
     this.addScript('compile', `jsii ${jsiiFlags}`);
     this.addScript('watch', `jsii -w ${jsiiFlags}`)
     this.addScript('package', 'jsii-pacmak');
