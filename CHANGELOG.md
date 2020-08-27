@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.48 (2020-08-27)
+
+
+### Bug Fixes
+
+* start app path should be relative ([aef4fd2](https://github.com/eladb/projen/commit/aef4fd24df3ed74db358948b08d344bc6283eea2))
+
 ### 0.3.47 (2020-08-27)
 
 ### 0.3.46 (2020-08-26)
