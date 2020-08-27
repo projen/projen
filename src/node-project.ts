@@ -468,7 +468,14 @@ export class NodeProject extends Project {
       copyrightPeriod: options.copyrightPeriod,
     });
 
-    this.addScript('projen', `node ${PROJEN_RC} && yarn install`);
+    if (options.start ?? true) {
+      this.start = new Start(this, options.startOptions ?? {});
+    }
+    this.addScript('projen', `node ${PROJEN_RC} && yarn -s install`);
+    this.start?.addEntry('projen', {
+      descrtiption: 'Synthesize project configuration from .projenrc.js',
+      category: StartEntryCategory.MAINTAIN,
+    });
 
     this.npmignore.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -605,10 +612,6 @@ export class NodeProject extends Project {
     // override any scripts from options (if specified)
     for (const [n, v] of Object.entries(options.scripts ?? {})) {
       this.addScript(n, v);
-    }
-
-    if (options.start ?? true) {
-      this.start = new Start(this, options.startOptions ?? {});
     }
   }
 

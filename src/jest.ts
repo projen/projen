@@ -1,6 +1,7 @@
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import { TypescriptConfig } from './typescript';
+import { StartEntryCategory } from './start';
 
 const DEFAULT_JEST_VERSION = Semver.caret('26.4.2');
 
@@ -115,6 +116,11 @@ export class Jest {
     project.addScripts({
       'test:watch': 'jest --watch',
       'test:update': 'jest --updateSnapshot',
+    });
+
+    project.start?.addEntry('test:watch', {
+      descrtiption: 'Run jest in watch mode',
+      category: StartEntryCategory.TEST,
     });
 
     project.addFields({ jest: this.config });

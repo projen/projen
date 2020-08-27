@@ -6,6 +6,7 @@ import * as inquirer from 'inquirer';
 import { StartEntryOptions, StartEntryCategory } from './start';
 
 const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+const EXIT_MARKER = '$exit';
 
 inquirer.prompt([
   {
@@ -17,6 +18,9 @@ inquirer.prompt([
     loop: false,
   },
 ]).then(({ command }) => {
+  if (command === EXIT_MARKER) {
+    return;
+  }
   child_process.spawnSync('yarn', [ '-s', command ], { stdio: 'inherit' });
 });
 
@@ -42,6 +46,10 @@ function renderChoices() {
   }
 
   result.push(new inquirer.Separator('  '));
+  result.push({
+    name: 'EXIT',
+    value: EXIT_MARKER,
+  });
 
   return result;
 }

@@ -11,6 +11,14 @@ export class Project {
   }
 
   /**
+   * Prints a "tip" message during synthesis.
+   * @param message The message
+   */
+  public printTip(message: string) {
+    console.error(`💡 ${message}`);
+  }
+
+  /**
    * Synthesize all project files into `outdir`
    * @param outdir The project root directory (default is `.`).
    */

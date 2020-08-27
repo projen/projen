@@ -15,6 +15,7 @@ export class Start extends Component {
 
     const startApp = require.resolve('./start-app');
     project.addScript('start', `node ${startApp}`);
+    project.printTip('Run "yarn start" for an interactive project menu.');
   }
 
   /**

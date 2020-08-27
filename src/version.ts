@@ -2,6 +2,7 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
 import * as fs from 'fs-extra';
+import { StartEntryCategory } from './start';
 
 const VERSION_FILE = 'version.json';
 
@@ -11,6 +12,16 @@ export class Version {
     project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
     project.addScript('bump', 'yarn --silent no-changes || standard-version');
     project.addScript('release', 'yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)');
+
+    project.start?.addEntry('bump', {
+      descrtiption: 'Commits a bump to the package version based on conventional commits',
+      category: StartEntryCategory.RELEASE,
+    });
+
+    project.start?.addEntry('release', {
+      descrtiption: 'Bumps version & push to master',
+      category: StartEntryCategory.RELEASE,
+    });
 
     project.addDevDependencies({
       'standard-version': Semver.caret('9.0.0'),

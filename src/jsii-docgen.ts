@@ -1,5 +1,6 @@
 import { JsiiProject } from './jsii-project';
 import { Semver } from './semver';
+import { StartEntryCategory } from './start';
 
 /**
  * Creates an API.md file based on the jsii manifest:
@@ -11,6 +12,10 @@ export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
     project.addScript('docgen', 'jsii-docgen');
+    project.start?.addEntry('docgen', {
+      descrtiption: 'Generate API.md from .jsii manifest',
+      category: StartEntryCategory.RELEASE,
+    });
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');
   }

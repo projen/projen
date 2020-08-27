@@ -1,5 +1,6 @@
 import { NodeProject } from './node-project';
 import { GithubWorkflow } from './github-workflow';
+import { StartEntryCategory } from './start';
 
 export interface ProjenUpgradeOptions {
   /**
@@ -24,6 +25,11 @@ export class ProjenUpgrade {
       'yarn upgrade -L projen',
       'chmod -w package.json',
       'yarn projen');
+
+    project.start?.addEntry(script, {
+      descrtiption: 'upgrades projen to the latest version',
+      category: StartEntryCategory.MAINTAIN,
+    });
 
     if (options.autoUpgradeSecret) {
       const workflow = new GithubWorkflow(project, 'ProjenUpgrade');

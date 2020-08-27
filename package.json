@@ -11,13 +11,13 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "projen": "node .projenrc.js && yarn install",
+    "start": "node /Users/benisrae/code/projen/lib/start-app.js",
+    "projen": "node .projenrc.js && yarn -s install",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
     "projen:upgrade": "chmod +w package.json && yarn upgrade -L projen && chmod -w package.json && yarn projen",
     "bootstrap": "yarn install && yarn compile && yarn projen",
-    "start": "node /Users/benisrae/code/projen/lib/start-app.js",
     "package": "jsii-pacmak",
     "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen && yarn projen",
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
@@ -80,8 +80,23 @@
     "node": ">= 10.17.0"
   },
   "license": "Apache-2.0",
-  "version": "0.3.47",
   "start": {
+    "projen": {
+      "descrtiption": "Synthesize project configuration from .projenrc.js",
+      "category": 3
+    },
+    "bump": {
+      "descrtiption": "Commits a bump to the package version based on conventional commits",
+      "category": 2
+    },
+    "release": {
+      "descrtiption": "Bumps version & push to master",
+      "category": 2
+    },
+    "projen:upgrade": {
+      "descrtiption": "upgrades projen to the latest version",
+      "category": 3
+    },
     "package": {
       "descrtiption": "Create an npm tarball",
       "category": 2
@@ -98,15 +113,28 @@
       "descrtiption": "Full release build",
       "category": 0
     },
+    "eslint": {
+      "descrtiption": "Runs eslint against the codebase",
+      "category": 1
+    },
     "test": {
       "descrtiption": "Run tests",
+      "category": 1
+    },
+    "test:watch": {
+      "descrtiption": "Run jest in watch mode",
       "category": 1
     },
     "compat": {
       "descrtiption": "Perform API compatibility check against latest version",
       "category": 2
+    },
+    "docgen": {
+      "descrtiption": "Generate API.md from .jsii manifest",
+      "category": 2
     }
   },
+  "version": "0.3.47",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,

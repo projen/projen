@@ -1255,6 +1255,19 @@ Name | Type | Description
 ### Methods
 
 
+#### printTip(message)🔹 <a id="projen-project-printtip"></a>
+
+Prints a "tip" message during synthesis.
+
+```ts
+printTip(message: string): void
+```
+
+* **message** (<code>string</code>)  The message.
+
+
+
+
 #### synth(outdir?)🔹 <a id="projen-project-synth"></a>
 
 Synthesize all project files into `outdir`.

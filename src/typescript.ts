@@ -126,7 +126,7 @@ export class TypeScriptProject extends NodeProject {
       category: StartEntryCategory.RELEASE,
     });
 
-    this.addScript('compile', 'tsc');
+    this.addCompileCommand('tsc');
     this.start?.addEntry('compile', {
       descrtiption: 'Only compile',
       category: StartEntryCategory.BUILD,

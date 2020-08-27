@@ -1,6 +1,7 @@
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
+import { StartEntryCategory } from './start';
 
 export class Eslint {
 
@@ -30,6 +31,10 @@ export class Eslint {
     });
 
     project.addScript('eslint', 'eslint . --ext .ts');
+    project.start?.addEntry('eslint', {
+      descrtiption: 'Runs eslint against the codebase',
+      category: StartEntryCategory.TEST,
+    });
     project.addTestCommand('yarn eslint');
 
     // exclude some files
