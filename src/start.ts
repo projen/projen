@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { NodeProject } from './node-project';
+import * as path from 'path';
 
 export interface StartOptions {
 
@@ -13,7 +14,7 @@ export class Start extends Component {
 
     this.nodeProject = project;
 
-    const startApp = require.resolve('./start-app');
+    const startApp = path.relative(process.cwd(), require.resolve('./start-app'));
     project.addScript('start', `node ${startApp}`);
     project.printTip('Run "yarn start" for an interactive project menu.');
   }
