@@ -3,28 +3,34 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import * as inquirer from 'inquirer';
-import { StartEntryOptions, StartEntryCategory } from './start';
+import { StartEntryOptions, StartEntryCategory } from '../start';
 
-const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const EXIT_MARKER = '$exit';
 
-inquirer.prompt([
-  {
-    type: 'list',
-    name: 'command',
-    message: 'Scripts:',
-    choices: renderChoices(),
-    pageSize: 100,
-    loop: false,
-  },
-]).then(({ command }) => {
+export async function showStartMenu() {
+
+  const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+
+  const { command } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'command',
+      message: 'Scripts:',
+      choices: renderChoices(manifest),
+      pageSize: 100,
+      loop: false,
+    },
+  ]);
+
   if (command === EXIT_MARKER) {
     return;
   }
-  child_process.spawnSync('yarn', [ '-s', command ], { stdio: 'inherit' });
-});
 
-function renderChoices() {
+  child_process.spawnSync('yarn', [ '-s', command ], { stdio: 'inherit' });
+}
+
+
+function renderChoices(manifest: any) {
   const start: { [name: string]: StartEntryOptions } = manifest.start ?? {};
   const result = new Array();
   let category;

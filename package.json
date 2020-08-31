@@ -11,7 +11,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "start": "node lib/start-app.js",
+    "start": "npx projen start",
     "projen": "node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
@@ -134,7 +134,7 @@
       "category": 2
     }
   },
-  "version": "0.3.48",
+  "version": "0.3.50",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,
