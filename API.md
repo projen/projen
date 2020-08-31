@@ -1110,6 +1110,22 @@ addBundledDependencies(...deps: string[]): void
 
 
 
+#### addBundledDeps(...deps)🔹 <a id="projen-nodeproject-addbundleddeps"></a>
+
+Defines bundled dependencies.
+
+Bundled dependencies will be added as normal dependencies as well as to the
+`bundledDependencies` section of your `package.json`.
+
+```ts
+addBundledDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
 #### addCompileCommand(...commands)🔹 <a id="projen-nodeproject-addcompilecommand"></a>
 
 Adds that will be executed after the jsii compilation.
@@ -1137,6 +1153,19 @@ addDependencies(deps: Map<string, Semver>, bundle?: boolean): void
 
 
 
+#### addDeps(...deps)🔹 <a id="projen-nodeproject-adddeps"></a>
+
+Defines normal dependencies.
+
+```ts
+addDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
 #### addDevDependencies(deps)🔹 <a id="projen-nodeproject-adddevdependencies"></a>
 
 
@@ -1146,6 +1175,19 @@ addDevDependencies(deps: Map<string, Semver>): void
 ```
 
 * **deps** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description*
+
+
+
+
+#### addDevDeps(...deps)🔹 <a id="projen-nodeproject-adddevdeps"></a>
+
+Defines development/test dependencies.
+
+```ts
+addDevDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
 
 
 
@@ -1187,6 +1229,23 @@ addPeerDependencies(deps: Map<string, Semver>, options?: PeerDependencyOptions):
 * **deps** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description*
 * **options** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description*
   * **pinnedDevDependency** (<code>boolean</code>)  Automatically add a pinned dev dependency. __*Default*__: true
+
+
+
+
+#### addPeerDeps(...deps)🔹 <a id="projen-nodeproject-addpeerdeps"></a>
+
+Defines peer dependencies.
+
+When adding peer dependencies, a devDependency will also be added on the
+pinned version of the declared peer. This will ensure that you are testing
+your code against the minimum version required from your consumers.
+
+```ts
+addPeerDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
 
 
 
@@ -1415,6 +1474,19 @@ Latest version.
 static latest(): Semver
 ```
 
+
+__Returns__:
+* <code>[Semver](#projen-semver)</code>
+
+#### *static* of(spec)🔹 <a id="projen-semver-of"></a>
+
+
+
+```ts
+static of(spec: string): Semver
+```
+
+* **spec** (<code>string</code>)  *No description*
 
 __Returns__:
 * <code>[Semver](#projen-semver)</code>

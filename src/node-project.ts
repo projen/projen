@@ -13,7 +13,6 @@ import { MergifyOptions, Mergify } from './mergify';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Start, StartOptions, StartEntryCategory } from './start';
 import { exec, writeFile } from './util';
-import { option } from 'yargs';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -823,7 +822,6 @@ export class NodeProject extends Project {
    * in your `package.json` file. You can upgrade manually or using `yarn
    * add/upgrade`. If you wish to specify a version range use this syntax:
    * `module@^7`.
-   * @param options Peer dependency options
    */
   public addPeerDeps(...deps: string[]) {
     for (const dep of deps) {

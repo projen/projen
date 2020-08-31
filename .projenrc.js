@@ -19,7 +19,7 @@ const project = new JsiiProject({
   ],
 
   devDeps: [
-    '@types/fs-extra',
+    '@types/fs-extra@^8',
     '@types/yargs',
     '@types/glob',
     '@types/inquirer',
