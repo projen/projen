@@ -1,3 +1,5 @@
+import * as semver from 'semver';
+
 export class Semver {
 
   public static of(spec: string) { return new Semver(spec); }
@@ -35,6 +37,6 @@ export class Semver {
   }
 
   public get version() {
-    return this.spec.substr(1);
+    return semver.clean(this.spec) as string;
   }
 }

@@ -13,6 +13,7 @@ import { MergifyOptions, Mergify } from './mergify';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Start, StartOptions, StartEntryCategory } from './start';
 import { exec, writeFile } from './util';
+import { option } from 'yargs';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -780,32 +781,80 @@ export class NodeProject extends Project {
       : [];
   }
 
-  private processDeps(options: NodeProjectCommonOptions) {
-
-    const resolve = (dep: string) => {
-      const scope = dep.startsWith('@');
-      if (scope) {
-        dep = dep.substr(1);
-      }
-
-      const [ name, version ] = dep.split('@');
-      let depname = scope ? `@${name}` : name;
-      return { [depname]: Semver.of(version ?? '*') };
+  /**
+   * Defines normal dependencies.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDependencies(parseDep(dep));
     }
+  }
 
-    for (const dep of options.devDeps ?? []) {
-      this.addDevDependencies(resolve(dep));
+  /**
+   * Defines development/test dependencies.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addDevDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDevDependencies(parseDep(dep));
     }
-    for (const dep of options.deps ?? []) {
-      this.addDependencies(resolve(dep));
+  }
+
+  /**
+   * Defines peer dependencies.
+   *
+   * When adding peer dependencies, a devDependency will also be added on the
+   * pinned version of the declared peer. This will ensure that you are testing
+   * your code against the minimum version required from your consumers.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   * @param options Peer dependency options
+   */
+  public addPeerDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addPeerDependencies(parseDep(dep));
     }
-    for (const dep of options.bundledDeps ?? []) {
-      this.addDependencies(resolve(dep));
+  }
+
+  /**
+   * Defines bundled dependencies.
+   *
+   * Bundled dependencies will be added as normal dependencies as well as to the
+   * `bundledDependencies` section of your `package.json`.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addBundledDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDependencies(parseDep(dep));
       this.addBundledDependencies(dep.split('@')[0]);
     }
-    for (const dep of options.peerDeps ?? []) {
-      this.addPeerDependencies(resolve(dep));
-    }
+  }
+
+  private processDeps(options: NodeProjectCommonOptions) {
+    this.addDeps(...options.deps ?? []);
+    this.addDevDeps(...options.devDeps ?? []);
+    this.addPeerDeps(...options.peerDeps ?? []);
+    this.addBundledDeps(...options.bundledDeps ?? []);
   }
 
   public preSynthesize(outdir: string) {
@@ -1067,4 +1116,15 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
+}
+
+function parseDep(dep: string) {
+  const scope = dep.startsWith('@');
+  if (scope) {
+    dep = dep.substr(1);
+  }
+
+  const [ name, version ] = dep.split('@');
+  let depname = scope ? `@${name}` : name;
+  return { [depname]: Semver.of(version ?? '*') };
 }

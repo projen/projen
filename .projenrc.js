@@ -14,6 +14,7 @@ const project = new JsiiProject({
     'yargs',
     'decamelize',
     'glob@^7',
+    'semver',
     'inquirer',
   ],
 
@@ -22,6 +23,7 @@ const project = new JsiiProject({
     '@types/yargs',
     '@types/glob',
     '@types/inquirer',
+    '@types/semver'
   ],
 
   projenDevDependency: false, // because I am projen
