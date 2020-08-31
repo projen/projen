@@ -2,11 +2,9 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import {PROJEN_RC} from './common';
 import * as yargs from 'yargs';
-import { cleanup } from './cleanup';
 
 const projenfile = path.resolve(PROJEN_RC);
-const projen = path.dirname(require.resolve('../package.json'));
-
+const projen = path.join(__dirname, '..');
 
 const args = yargs
   .commandDir('cmds')
@@ -32,9 +30,6 @@ if (args._.length === 0) {
     fs.symlinkSync(projen, symlink);
     unlink = symlink;
   }
-
-  // deletes all generated files before generating new ones
-  cleanup();
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports

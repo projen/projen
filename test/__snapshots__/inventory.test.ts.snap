@@ -105,6 +105,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "bundledDeps",
+        "optional": true,
+        "path": Array [
+          "bundledDeps",
+        ],
+        "switch": "bundled-deps",
+        "type": "unknown",
+      },
+      Object {
         "default": "true",
         "docs": "Should we announce new versions?",
         "name": "announce",
@@ -270,6 +279,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "deps",
+        "optional": true,
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
         "name": "description",
         "optional": true,
         "path": Array [
@@ -285,6 +303,15 @@ Array [
           "devDependencies",
         ],
         "switch": "dev-dependencies",
+        "type": "unknown",
+      },
+      Object {
+        "name": "devDeps",
+        "optional": true,
+        "path": Array [
+          "devDeps",
+        ],
+        "switch": "dev-deps",
         "type": "unknown",
       },
       Object {
@@ -963,6 +990,15 @@ Array [
         ],
         "switch": "peer-dependency-options-pinned-dev-dependency",
         "type": "boolean",
+      },
+      Object {
+        "name": "peerDeps",
+        "optional": true,
+        "path": Array [
+          "peerDeps",
+        ],
+        "switch": "peer-deps",
+        "type": "unknown",
       },
       Object {
         "default": "true",
@@ -1302,6 +1338,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "bundledDeps",
+        "optional": true,
+        "path": Array [
+          "bundledDeps",
+        ],
+        "switch": "bundled-deps",
+        "type": "unknown",
+      },
+      Object {
         "default": "false",
         "docs": "Automatically run API compatibility test against the latest version published to npm after compilation.",
         "name": "compat",
@@ -1402,6 +1447,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "deps",
+        "optional": true,
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
         "name": "description",
         "optional": true,
         "path": Array [
@@ -1417,6 +1471,15 @@ Array [
           "devDependencies",
         ],
         "switch": "dev-dependencies",
+        "type": "unknown",
+      },
+      Object {
+        "name": "devDeps",
+        "optional": true,
+        "path": Array [
+          "devDeps",
+        ],
+        "switch": "dev-deps",
         "type": "unknown",
       },
       Object {
@@ -2095,6 +2158,15 @@ Array [
         ],
         "switch": "peer-dependency-options-pinned-dev-dependency",
         "type": "boolean",
+      },
+      Object {
+        "name": "peerDeps",
+        "optional": true,
+        "path": Array [
+          "peerDeps",
+        ],
+        "switch": "peer-deps",
+        "type": "unknown",
       },
       Object {
         "default": "true",
@@ -2439,6 +2511,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "bundledDeps",
+        "optional": true,
+        "path": Array [
+          "bundledDeps",
+        ],
+        "switch": "bundled-deps",
+        "type": "unknown",
+      },
+      Object {
         "default": "defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "name": "copyrightOwner",
@@ -2517,6 +2598,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "deps",
+        "optional": true,
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The description is just a string that helps people understand the purpose of the package.",
         "name": "description",
         "optional": true,
@@ -2533,6 +2623,15 @@ Array [
           "devDependencies",
         ],
         "switch": "dev-dependencies",
+        "type": "unknown",
+      },
+      Object {
+        "name": "devDeps",
+        "optional": true,
+        "path": Array [
+          "devDeps",
+        ],
+        "switch": "dev-deps",
         "type": "unknown",
       },
       Object {
@@ -2678,6 +2777,15 @@ Array [
         ],
         "switch": "peer-dependency-options-pinned-dev-dependency",
         "type": "boolean",
+      },
+      Object {
+        "name": "peerDeps",
+        "optional": true,
+        "path": Array [
+          "peerDeps",
+        ],
+        "switch": "peer-deps",
+        "type": "unknown",
       },
       Object {
         "default": "true",
@@ -3012,6 +3120,15 @@ Array [
         "type": "unknown",
       },
       Object {
+        "name": "bundledDeps",
+        "optional": true,
+        "path": Array [
+          "bundledDeps",
+        ],
+        "switch": "bundled-deps",
+        "type": "unknown",
+      },
+      Object {
         "default": "the default behavior is to delete the lib/ directory and run
 jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
@@ -3102,6 +3219,15 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "name": "deps",
+        "optional": true,
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The description is just a string that helps people understand the purpose of the package.",
         "name": "description",
         "optional": true,
@@ -3118,6 +3244,15 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "devDependencies",
         ],
         "switch": "dev-dependencies",
+        "type": "unknown",
+      },
+      Object {
+        "name": "devDeps",
+        "optional": true,
+        "path": Array [
+          "devDeps",
+        ],
+        "switch": "dev-deps",
         "type": "unknown",
       },
       Object {
@@ -3770,6 +3905,15 @@ jest typescript tests and only if all tests pass, run the compiler.",
         ],
         "switch": "peer-dependency-options-pinned-dev-dependency",
         "type": "boolean",
+      },
+      Object {
+        "name": "peerDeps",
+        "optional": true,
+        "path": Array [
+          "peerDeps",
+        ],
+        "switch": "peer-deps",
+        "type": "unknown",
       },
       Object {
         "default": "true",

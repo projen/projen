@@ -12,6 +12,7 @@ import { DependabotOptions, Dependabot } from './dependabot';
 import { MergifyOptions, Mergify } from './mergify';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Start, StartOptions, StartEntryCategory } from './start';
+import { exec, writeFile } from './util';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -19,6 +20,11 @@ export interface NodeProjectCommonOptions {
   readonly devDependencies?: Record<string, Semver>;
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
+
+  readonly bundledDeps?: string[];
+  readonly deps?: string[];
+  readonly devDeps?: string[];
+  readonly peerDeps?: string[];
 
   /**
    * Binary programs vended with your module.
@@ -379,6 +385,8 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super();
 
+    this.processDeps(options);
+
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
 
@@ -437,6 +445,7 @@ export class NodeProject extends Project {
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
+      readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
     this.addDependencies(options.dependencies ?? {});
@@ -471,7 +480,7 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript('projen', `node ${PROJEN_RC} && yarn -s install`);
+    this.addScript('projen', `node ${PROJEN_RC}`);
     this.start?.addEntry('projen', {
       descrtiption: 'Synthesize project configuration from .projenrc.js',
       category: StartEntryCategory.MAINTAIN,
@@ -503,7 +512,6 @@ export class NodeProject extends Project {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
           pull_request: { },
-          push: { },
         },
         image: options.workflowContainerImage,
       });
@@ -623,7 +631,7 @@ export class NodeProject extends Project {
 
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [ k, v ] of Object.entries(deps)) {
-      this.dependencies[k] = v.spec;
+      this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (bundle) {
         this.addBundledDependencies(k);
@@ -647,7 +655,7 @@ export class NodeProject extends Project {
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
     for (const [ k, v ] of Object.entries(deps ?? {})) {
-      this.devDependencies[k] = v.spec;
+      this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
 
@@ -655,7 +663,7 @@ export class NodeProject extends Project {
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
     for (const [ k, v ] of Object.entries(deps)) {
-      this.peerDependencies[k] = v.spec;
+      this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (pinned) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
@@ -769,6 +777,176 @@ export class NodeProject extends Project {
     return this.antitamper
       ? [ { name: 'Anti-tamper check', run: 'git diff --exit-code' } ]
       : [];
+  }
+
+  /**
+   * Defines normal dependencies.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDependencies(parseDep(dep));
+    }
+  }
+
+  /**
+   * Defines development/test dependencies.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addDevDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDevDependencies(parseDep(dep));
+    }
+  }
+
+  /**
+   * Defines peer dependencies.
+   *
+   * When adding peer dependencies, a devDependency will also be added on the
+   * pinned version of the declared peer. This will ensure that you are testing
+   * your code against the minimum version required from your consumers.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addPeerDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addPeerDependencies(parseDep(dep));
+    }
+  }
+
+  /**
+   * Defines bundled dependencies.
+   *
+   * Bundled dependencies will be added as normal dependencies as well as to the
+   * `bundledDependencies` section of your `package.json`.
+   *
+   * @param deps Names modules to install. By default, the the dependency will
+   * be installed in the next `npx projen` run and the version will be recorded
+   * in your `package.json` file. You can upgrade manually or using `yarn
+   * add/upgrade`. If you wish to specify a version range use this syntax:
+   * `module@^7`.
+   */
+  public addBundledDeps(...deps: string[]) {
+    for (const dep of deps) {
+      this.addDependencies(parseDep(dep));
+      this.addBundledDependencies(dep.split('@')[0]);
+    }
+  }
+
+  private processDeps(options: NodeProjectCommonOptions) {
+    this.addDeps(...options.deps ?? []);
+    this.addDevDeps(...options.devDeps ?? []);
+    this.addPeerDeps(...options.peerDeps ?? []);
+    this.addBundledDeps(...options.bundledDeps ?? []);
+  }
+
+  public preSynthesize(outdir: string) {
+    this.loadDependencies(outdir);
+  }
+
+  public postSynthesize(outdir: string) {
+    super.postSynthesize(outdir);
+
+    exec('yarn install');
+    this.resolveDependencies(outdir);
+  }
+
+  private loadDependencies(outdir: string) {
+    const root = path.join(outdir, 'package.json');
+
+    // nothing to do if package.json file does not exist
+    if (!fs.existsSync(root)) {
+      return;
+    }
+
+    const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
+
+    const readDeps = (user: Record<string, string>, current: Record<string, string>) => {
+      for (const [name, userVersion] of Object.entries(user)) {
+        const currentVersion = current[name];
+
+        // respect user version if it's not '*' or if current version is undefined
+        if (userVersion !== '*' || !currentVersion || currentVersion === '*') {
+          continue;
+        }
+
+        // memoize current version in memory so it is preserved when saving
+        user[name] = currentVersion;
+      }
+
+      // report removals
+      for (const name of Object.keys(current)) {
+        if (!user[name]) {
+          console.error(`${name}: removed`);
+        }
+      }
+    }
+
+    readDeps(this.devDependencies, pkg.devDependencies);
+    readDeps(this.dependencies, pkg.dependencies);
+    readDeps(this.peerDependencies, pkg.peerDependencies);
+  }
+
+  private resolveDependencies(outdir: string) {
+    const root = path.join(outdir, 'package.json');
+    const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
+
+    const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
+      const result: Record<string, string> = {};
+
+      for (const [ name, currentDefinition ] of Object.entries(user)) {
+        // find actual version from node_modules
+        let desiredVersion = currentDefinition;
+
+        if (currentDefinition === '*') {
+          try {
+            const modulePath = require.resolve(`${name}/package.json`, { paths: [ outdir ]});
+            const module = JSON.parse(fs.readFileSync(modulePath, 'utf-8'));
+            desiredVersion = `^${module.version}`;
+          } catch (e) { }
+
+          if (!desiredVersion) {
+            console.error(`unable to resolve version for ${name} from installed modules`);
+            continue;
+          }
+        }
+
+        if (currentDefinition !== desiredVersion) {
+          console.error(`${name}: ${currentDefinition} => ${desiredVersion}`);
+        }
+
+        result[name] = desiredVersion;
+      }
+
+      // print removed packages
+      for (const name of Object.keys(current)) {
+        if (!result[name]) {
+          console.error(`${name} removed`);
+        }
+      }
+
+      return sorted(result)();
+    }
+
+    pkg.dependencies = resolveDeps(pkg.dependencies, this.dependencies);
+    pkg.devDependencies = resolveDeps(pkg.devDependencies, this.devDependencies);
+    pkg.peerDependencies = resolveDeps(pkg.peerDependencies, this.peerDependencies);
+
+    writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
 
   private addDefaultGitIgnore()  {
@@ -935,4 +1113,15 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
+}
+
+function parseDep(dep: string) {
+  const scope = dep.startsWith('@');
+  if (scope) {
+    dep = dep.substr(1);
+  }
+
+  const [ name, version ] = dep.split('@');
+  let depname = scope ? `@${name}` : name;
+  return { [depname]: Semver.of(version ?? '*') };
 }

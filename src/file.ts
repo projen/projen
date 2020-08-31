@@ -1,7 +1,7 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
 import { Component } from './component';
 import { resolve } from './_resolve';
+import { writeFile } from './util';
 
 export interface FileBaseOptions {
   /**
@@ -67,18 +67,10 @@ export abstract class FileBase extends Component {
    */
   public _synthesize(outdir: string) {
     const filePath = path.join(outdir, this.path);
-    if (fs.existsSync(filePath)) {
-      fs.chmodSync(filePath, '600')
-    }
-
-    fs.mkdirpSync(path.dirname(filePath));
-
     const resolver: IResolver = { resolve: obj => resolve(obj, outdir) };
-    fs.writeFileSync(filePath, this.synthesizeContent(resolver));
-
-    if (this.readonly) {
-      fs.chmodSync(filePath, '400')
-    }
+    writeFile(filePath, this.synthesizeContent(resolver), {
+      readonly: this.readonly,
+    });
   }
 }
 

@@ -1,10 +1,11 @@
 import * as glob from 'glob';
+import * as path from 'path';
 import * as fs from 'fs-extra';
 import { PROJEN_MARKER } from './common';
 
-export function cleanup() {
+export function cleanup(dir: string) {
   try {
-    for (const f of findGeneratedFiles()) {
+    for (const f of findGeneratedFiles(dir)) {
       fs.removeSync(f);
     }
   } catch (e) {
@@ -12,11 +13,12 @@ export function cleanup() {
   }
 }
 
-function findGeneratedFiles() {
-  const ignore = [...readGitIgnore(), 'node_modules/**'];
+function findGeneratedFiles(dir: string) {
+  const ignore = [...readGitIgnore(dir), 'node_modules/**'];
 
   const files = glob.sync('**', {
     ignore,
+    cwd: dir,
     dot: true,
     nodir: true,
   });
@@ -35,12 +37,13 @@ function findGeneratedFiles() {
   return generated;
 }
 
-function readGitIgnore() {
-  if (!fs.pathExistsSync('.gitignore')) {
+function readGitIgnore(dir: string) {
+  const filepath = path.join(dir, '.gitignore');
+  if (!fs.pathExistsSync(filepath)) {
     return [];
   }
 
-  return fs.readFileSync('.gitignore', 'utf-8')
+  return fs.readFileSync(filepath, 'utf-8')
     .split('\n')
     .filter(x => !x.startsWith('#') && !x.startsWith('!'))
     .map(x => `${x}\n${x}/**`)
