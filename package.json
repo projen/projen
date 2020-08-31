@@ -11,7 +11,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "start": "node lib/start-app.js",
+    "start": "npx projen start",
     "projen": "node .projenrc.js && yarn -s install",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
