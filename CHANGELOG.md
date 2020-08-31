@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.51 (2020-08-31)
+
+
+### Features
+
+* **node:** automatic dependency management ([#91](https://github.com/eladb/projen/issues/91)) ([d64ed11](https://github.com/eladb/projen/commit/d64ed114bd6a064368cfa84470834d450e784227)), closes [#90](https://github.com/eladb/projen/issues/90)
+
 ### 0.3.50 (2020-08-31)
 
 ### 0.3.49 (2020-08-31)
