@@ -7,23 +7,23 @@ const project = new JsiiProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
-  dependencies: {
-    'yaml': Semver.caret('1.10.0'),
-    'fs-extra': Semver.caret('9.0.1'),
-    'yargs': Semver.caret('15.4.1'),
-    'decamelize': Semver.caret('4.0.0'),
-    'glob': Semver.caret('7.1.6'),
-    'inquirer': Semver.caret('7.3.3'),
-  },
-  devDependencies: {
-    '@types/fs-extra': Semver.caret('8.0.1'),
-    '@types/yargs': Semver.caret('15.0.5'),
-    '@types/glob': Semver.caret('7.1.3'),
-    '@types/inquirer': Semver.caret('7.3.1'),
-  },
-  bundledDependencies: [
-    'yaml', 'fs-extra', 'yargs', 'decamelize', 'glob', 'inquirer'
+
+  bundledDeps: [
+    'yaml',
+    'fs-extra',
+    'yargs',
+    'decamelize',
+    'glob',
+    'inquirer',
   ],
+
+  devDeps: [
+    '@types/fs-extra',
+    '@types/yargs',
+    '@types/glob',
+    '@types/inquirer',
+  ],
+
   projenDevDependency: false, // because I am projen
   scripts: {
     bootstrap: [ 'yarn install', 'yarn compile', 'yarn projen' ].join(' && ')

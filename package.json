@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "node lib/start-app.js",
-    "projen": "node .projenrc.js && yarn -s install",
+    "projen": "node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn --silent no-changes || standard-version",
     "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",

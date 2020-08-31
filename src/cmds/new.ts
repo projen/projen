@@ -4,7 +4,7 @@ import * as path from 'path';
 import { PROJEN_RC } from '../common';
 import * as inventory from '../inventory';
 
-const projen = path.dirname(require.resolve('../../package.json'));
+const projen = path.join(__dirname, '..', '..');
 export const templatesPath = path.join(projen, 'templates');
 export const availableTemplates = fs.readdirSync(templatesPath);
 
@@ -75,7 +75,7 @@ class Command implements yargs.CommandModule {
           generateProjenConfig(type, params);
 
           console.error(`Project config created for "${type.typename}" project in ${PROJEN_RC}.`);
-          console.error('Now run `npx projen && yarn install` (or `pj` if you are one of the cool kids with an alias).');
+          console.error('Now run `npx projen` (or `pj` if you are one of the cool kids with an alias).');
         },
       });
     }

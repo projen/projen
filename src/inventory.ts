@@ -3,8 +3,7 @@ import * as path from 'path';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
-const projen = path.dirname(require.resolve('../package.json'));
-const jsii: { [name: string]: JsiiType } = fs.readJsonSync(path.join(projen, '.jsii')).types;
+const jsii: { [name: string]: JsiiType } = fs.readJsonSync(path.join(__dirname, '..', '.jsii')).types;
 
 export interface ProjectOption {
   path: string[];

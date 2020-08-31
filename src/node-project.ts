@@ -12,6 +12,7 @@ import { DependabotOptions, Dependabot } from './dependabot';
 import { MergifyOptions, Mergify } from './mergify';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Start, StartOptions, StartEntryCategory } from './start';
+import { exec, writeFile } from './util';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -19,6 +20,11 @@ export interface NodeProjectCommonOptions {
   readonly devDependencies?: Record<string, Semver>;
   readonly peerDependencies?: Record<string, Semver>;
   readonly peerDependencyOptions?: PeerDependencyOptions;
+
+  readonly bundledDeps?: string[];
+  readonly deps?: string[];
+  readonly devDeps?: string[];
+  readonly peerDeps?: string[];
 
   /**
    * Binary programs vended with your module.
@@ -379,6 +385,8 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super();
 
+    this.processDeps(options);
+
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
 
@@ -437,6 +445,7 @@ export class NodeProject extends Project {
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
+      readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
     this.addDependencies(options.dependencies ?? {});
@@ -471,7 +480,7 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript('projen', `node ${PROJEN_RC} && yarn -s install`);
+    this.addScript('projen', `node ${PROJEN_RC}`);
     this.start?.addEntry('projen', {
       descrtiption: 'Synthesize project configuration from .projenrc.js',
       category: StartEntryCategory.MAINTAIN,
@@ -623,7 +632,7 @@ export class NodeProject extends Project {
 
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [ k, v ] of Object.entries(deps)) {
-      this.dependencies[k] = v.spec;
+      this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (bundle) {
         this.addBundledDependencies(k);
@@ -647,7 +656,7 @@ export class NodeProject extends Project {
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
     for (const [ k, v ] of Object.entries(deps ?? {})) {
-      this.devDependencies[k] = v.spec;
+      this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
 
@@ -655,7 +664,7 @@ export class NodeProject extends Project {
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
     for (const [ k, v ] of Object.entries(deps)) {
-      this.peerDependencies[k] = v.spec;
+      this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (pinned) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
@@ -769,6 +778,117 @@ export class NodeProject extends Project {
     return this.antitamper
       ? [ { name: 'Anti-tamper check', run: 'git diff --exit-code' } ]
       : [];
+  }
+
+  private processDeps(options: NodeProjectCommonOptions) {
+    for (const dep of options.devDeps ?? []) {
+      this.addDevDependencies({ [dep]: Semver.latest() } );
+    }
+    for (const dep of options.deps ?? []) {
+      this.addDependencies({ [dep]: Semver.latest() } );
+    }
+    for (const dep of options.bundledDeps ?? []) {
+      this.addDependencies({ [dep]: Semver.latest() });
+      this.addBundledDependencies(dep);
+    }
+    for (const dep of options.peerDeps ?? []) {
+      this.addPeerDependencies({ [dep]: Semver.latest() });
+    }
+  }
+
+  public preSynthesize(outdir: string) {
+    this.loadDependencies(outdir);
+  }
+
+  public postSynthesize(outdir: string) {
+    super.postSynthesize(outdir);
+
+    exec('yarn install');
+    this.resolveDependencies(outdir);
+  }
+
+  private loadDependencies(outdir: string) {
+    const root = path.join(outdir, 'package.json');
+
+    // nothing to do if package.json file does not exist
+    if (!fs.existsSync(root)) {
+      return;
+    }
+
+    const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
+
+    const readDeps = (user: Record<string, string>, current: Record<string, string>) => {
+      for (const [name, userVersion] of Object.entries(user)) {
+        const currentVersion = current[name];
+
+        // respect user version if it's not '*' or if current version is undefined
+        if (userVersion !== '*' || !currentVersion || currentVersion === '*') {
+          continue;
+        }
+
+        // memoize current version in memory so it is preserved when saving
+        user[name] = currentVersion;
+      }
+
+      // report removals
+      for (const name of Object.keys(current)) {
+        if (!user[name]) {
+          console.error(`${name}: removed`);
+        }
+      }
+    }
+
+    readDeps(this.devDependencies, pkg.devDependencies);
+    readDeps(this.dependencies, pkg.dependencies);
+    readDeps(this.peerDependencies, pkg.peerDependencies);
+  }
+
+  private resolveDependencies(outdir: string) {
+    const root = path.join(outdir, 'package.json');
+    const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
+
+    const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
+      const result: Record<string, string> = {};
+
+      for (const [ name, currentDefinition ] of Object.entries(user)) {
+        // find actual version from node_modules
+        let desiredVersion = currentDefinition;
+
+        if (currentDefinition === '*') {
+          try {
+            const modulePath = require.resolve(`${name}/package.json`, { paths: [ outdir ]});
+            const module = JSON.parse(fs.readFileSync(modulePath, 'utf-8'));
+            desiredVersion = `^${module.version}`;
+          } catch (e) { }
+
+          if (!desiredVersion) {
+            console.error(`unable to resolve version for ${name} from installed modules`);
+            continue;
+          }
+        }
+
+        if (currentDefinition !== desiredVersion) {
+          console.error(`${name}: ${currentDefinition} => ${desiredVersion}`);
+        }
+
+        result[name] = desiredVersion;
+      }
+
+      // print removed packages
+      for (const name of Object.keys(current)) {
+        if (!result[name]) {
+          console.error(`${name} removed`);
+        }
+      }
+
+      return sorted(result)();
+    }
+
+    pkg.dependencies = resolveDeps(pkg.dependencies, this.dependencies);
+    pkg.devDependencies = resolveDeps(pkg.devDependencies, this.devDependencies);
+    pkg.peerDependencies = resolveDeps(pkg.peerDependencies, this.peerDependencies);
+
+    writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
 
   private addDefaultGitIgnore()  {

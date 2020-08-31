@@ -3,6 +3,11 @@ const ALLOWED_MODES = [ '~', '^' ];
 
 export class Semver {
   /**
+   * Latest version.
+   */
+  public static latest() { return new Semver('*'); }
+
+  /**
    * Accept only an exact version 
    */
   public static pinned(version: string) { return new Semver(version); }
@@ -28,6 +33,17 @@ export class Semver {
   public readonly mode?: string;
 
   private constructor(version: string, mode?: string) {
+    this.validate(version, mode);
+    this.version = version;
+    this.mode = mode;
+    this.spec = `${mode ?? ''}${version}`;
+  }
+
+  private validate(version: string, mode?: string) {
+    if (version === '*') {
+      return;
+    }
+
     if (!VALIDATE_SEMVER.test(version)) {
       throw new Error(`invalid semver: ${version}`);
     }
@@ -35,9 +51,5 @@ export class Semver {
     if (mode && !ALLOWED_MODES.includes(mode)) {
       throw new Error(`mode "${mode}" not allowed. allowed modes: ${ALLOWED_MODES.join(',')}`);
     }
-    
-    this.version = version;
-    this.mode = mode;
-    this.spec = `${mode ?? ''}${version}`;
   }
 }
