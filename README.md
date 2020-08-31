@@ -91,13 +91,13 @@ project.synth();
 Now run:
 
 ```shell
-npx projen && yarn install
+npx projen
 ```
 
 > From now on, we will refer to this command as `pj`. Every time you modify
 > `.projenrc.js`, just run `pj`.
 >
-> Put this in your shell profile: `alias pj='npx projen && yarn install'`
+> Put this in your shell profile: `alias pj='npx projen'`
 
 OK, what just happened? If you examine your directory, you will notice that
 projen generated a bunch of **read only** project configuration files like
@@ -153,8 +153,7 @@ This command synthesized a jsii project for you with the following features:
   `yarn docgen`).
 * `yarn bump` bumps the module version and creates a CHANGELOG entry. `yarn
   release` will bump and push with tags to `master`.
-* `yarn projen` runs `projen` followed by `yarn install` (good for updating
-  dependencies)
+* `yarn projen` runs `npx projen` (good for updating dependencies)
 * PR builds: a GitHub workflow which auto-builds PR branches
 * Releases: a GitHub workflow which builds all commits to `master` and releases
   new versions to all package managers (default is only npm)
@@ -226,7 +225,7 @@ tests.
 The recommended workflow for TDD is to:
 
 1. Checkout the repo
-2. Run `yarn install`
+2. Run `pj`
 3. Run `yarn test:watch`
 
 That's it. You don't need to compile in order to run your tests because
