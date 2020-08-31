@@ -1,6 +1,5 @@
 import { Component } from './component';
 import { NodeProject } from './node-project';
-import * as path from 'path';
 
 export interface StartOptions {
 
