@@ -512,7 +512,6 @@ export class NodeProject extends Project {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
           pull_request: { },
-          push: { },
         },
         image: options.workflowContainerImage,
       });
