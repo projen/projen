@@ -13,7 +13,7 @@ const project = new JsiiProject({
     'fs-extra',
     'yargs',
     'decamelize',
-    'glob',
+    'glob@^7',
     'inquirer',
   ],
 

@@ -781,18 +781,30 @@ export class NodeProject extends Project {
   }
 
   private processDeps(options: NodeProjectCommonOptions) {
+
+    const resolve = (dep: string) => {
+      const scope = dep.startsWith('@');
+      if (scope) {
+        dep = dep.substr(1);
+      }
+
+      const [ name, version ] = dep.split('@');
+      let depname = scope ? `@${name}` : name;
+      return { [depname]: Semver.of(version ?? '*') };
+    }
+
     for (const dep of options.devDeps ?? []) {
-      this.addDevDependencies({ [dep]: Semver.latest() } );
+      this.addDevDependencies(resolve(dep));
     }
     for (const dep of options.deps ?? []) {
-      this.addDependencies({ [dep]: Semver.latest() } );
+      this.addDependencies(resolve(dep));
     }
     for (const dep of options.bundledDeps ?? []) {
-      this.addDependencies({ [dep]: Semver.latest() });
-      this.addBundledDependencies(dep);
+      this.addDependencies(resolve(dep));
+      this.addBundledDependencies(dep.split('@')[0]);
     }
     for (const dep of options.peerDeps ?? []) {
-      this.addPeerDependencies({ [dep]: Semver.latest() });
+      this.addPeerDependencies(resolve(dep));
     }
   }
 
