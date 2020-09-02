@@ -93,7 +93,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Workflow steps to use in order to bootstrap this repo.
    *
-   * @default - [ { run: `npx projen${PROJEN_VERSION}` }, { run: 'yarn install --frozen-lockfile' } ]
+   * @default "npx projen${PROJEN_VERSION}"
    */
   readonly workflowBootstrapSteps?: any[];
 
@@ -861,7 +861,27 @@ export class NodeProject extends Project {
   public postSynthesize(outdir: string) {
     super.postSynthesize(outdir);
 
-    exec('yarn install');
+    const install = ['yarn install'];
+
+    // now we run `yarn install`, but before we do that, remove the
+    // `node_modules/projen` symlink so that yarn won't hate us.
+    const projenModule = path.resolve('node_modules', 'projen');
+    try {
+      if (fs.lstatSync(projenModule).isSymbolicLink()) {
+        fs.unlinkSync(projenModule);
+      }
+    } catch (e) { }
+
+    // add --check-files to ensure all modules exist (especiall projen which was just removed).
+    install.push('--check-files');
+
+    // if we are runniung in a CI environment, fix versions through the lockfile.
+    if (process.env.CI) {
+      install.push('--frozen-lockfile');
+    }
+
+    exec(install.join(' '));
+
     this.resolveDependencies(outdir);
   }
 
@@ -1015,7 +1035,6 @@ export interface PeerDependencyOptions {
 
 const DEFAULT_WORKFLOW_BOOTSTRAP = [
   { run: `npx projen@${PROJEN_VERSION}` },
-  { run: 'yarn install --frozen-lockfile' },
 ];
 
 export interface NodeBuildWorkflowOptions  {
@@ -1052,6 +1071,9 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
     const job: any = {
       'runs-on': 'ubuntu-latest',
+      'env': {
+        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+      },
       'steps': [
         // bootstrap
         ...project.workflowBootstrapSteps,

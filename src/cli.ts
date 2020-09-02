@@ -20,23 +20,16 @@ if (args._.length === 0) {
     process.exit(1);
   }
 
-  // now in order to run, projen needs to be able to "require('projen')". this will
-  // work if we already installed our modules, but will fail miserably when we
-  // bootstrap a checked out (or empty) repo.
-  let unlink;
-  const symlink = path.join('node_modules', 'projen');
-  if (!fs.existsSync(symlink)) {
+  // if node_modules/projen is not a directory or does not exist, create a
+  // temporary symlink to the projen that we are currently running in order to
+  // allow .projenrc.js to `require()` it.
+  const projenModulePath = path.resolve('node_modules', 'projen');
+  if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
+    fs.removeSync(projenModulePath);
     fs.mkdirpSync('node_modules');
-    fs.symlinkSync(projen, symlink);
-    unlink = symlink;
+    fs.symlinkSync(projen, projenModulePath);
   }
 
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require(projenfile);
-  } finally {
-    if (unlink) {
-      fs.unlinkSync(symlink);
-    }
-  }
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require(projenfile);
 }

@@ -1199,7 +1199,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ { run: \`npx projen\${PROJEN_VERSION}\` }, { run: 'yarn install --frozen-lockfile' } ]",
+        "default": "\\"npx projen\${PROJEN_VERSION}\\"",
         "docs": "Workflow steps to use in order to bootstrap this repo.",
         "name": "workflowBootstrapSteps",
         "optional": true,
@@ -2367,7 +2367,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ { run: \`npx projen\${PROJEN_VERSION}\` }, { run: 'yarn install --frozen-lockfile' } ]",
+        "default": "\\"npx projen\${PROJEN_VERSION}\\"",
         "docs": "Workflow steps to use in order to bootstrap this repo.",
         "name": "workflowBootstrapSteps",
         "optional": true,
@@ -2969,7 +2969,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ { run: \`npx projen\${PROJEN_VERSION}\` }, { run: 'yarn install --frozen-lockfile' } ]",
+        "default": "\\"npx projen\${PROJEN_VERSION}\\"",
         "docs": "Workflow steps to use in order to bootstrap this repo.",
         "name": "workflowBootstrapSteps",
         "optional": true,
@@ -4456,7 +4456,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ { run: \`npx projen\${PROJEN_VERSION}\` }, { run: 'yarn install --frozen-lockfile' } ]",
+        "default": "\\"npx projen\${PROJEN_VERSION}\\"",
         "docs": "Workflow steps to use in order to bootstrap this repo.",
         "name": "workflowBootstrapSteps",
         "optional": true,
