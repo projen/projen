@@ -877,6 +877,7 @@ export class NodeProject extends Project {
 
     // if we are runniung in a CI environment, fix versions through the lockfile.
     if (process.env.CI) {
+      console.error('Running yarn with --frozen-lockfile since "CI" is defined.');
       install.push('--frozen-lockfile');
     }
 

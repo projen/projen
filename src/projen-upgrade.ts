@@ -21,10 +21,8 @@ export class ProjenUpgrade {
     const script = 'projen:upgrade';
 
     project.addScript(script,
-      'chmod +w package.json',
       'yarn upgrade -L projen',
-      'chmod -w package.json',
-      'yarn projen');
+      'CI="" yarn projen'); // if CI is defined, projen runs yarn with --frozen-lockfile
 
     project.start?.addEntry(script, {
       descrtiption: 'upgrades projen to the latest version',
