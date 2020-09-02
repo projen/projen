@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.55 (2020-09-02)
+
+
+### Bug Fixes
+
+* **upgrade:** can't upgrade with --frozen-lockfile ([f6c0694](https://github.com/eladb/projen/commit/f6c0694fbdda10d1a14a320462c4e1695c7f9021))
+
 ### 0.3.54 (2020-09-02)
 
 
