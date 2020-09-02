@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.54 (2020-09-02)
+
+
+### Bug Fixes
+
+* **node:** operation not permitted: unlink 'node_modules/projen' ([e310054](https://github.com/eladb/projen/commit/e3100545ee382b72b0f7c249f8054b5b438b1031)), closes [#93](https://github.com/eladb/projen/issues/93)
+
 ### 0.3.53 (2020-09-02)
 
 ### 0.3.52 (2020-09-01)
