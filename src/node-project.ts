@@ -385,6 +385,7 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super();
 
+    this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.processDeps(options);
 
     this.minNodeVersion = options.minNodeVersion;
@@ -447,12 +448,6 @@ export class NodeProject extends Project {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
-
-    this.addDependencies(options.dependencies ?? {});
-    this.peerDependencyOptions = options.peerDependencyOptions ?? {};
-    this.addPeerDependencies(options.peerDependencies ?? {});
-    this.addDevDependencies(options.devDependencies ?? {});
-    this.addBundledDependencies(...options.bundledDependencies ?? []);
 
     this.npmignore = new IgnoreFile(this, '.npmignore');
     this.addDefaultGitIgnore();
@@ -848,6 +843,10 @@ export class NodeProject extends Project {
   }
 
   private processDeps(options: NodeProjectCommonOptions) {
+    this.addDependencies(options.dependencies ?? {});
+    this.addPeerDependencies(options.peerDependencies ?? {});
+    this.addDevDependencies(options.devDependencies ?? {});
+    this.addBundledDependencies(...options.bundledDependencies ?? []);
     this.addDeps(...options.deps ?? []);
     this.addDevDeps(...options.devDeps ?? []);
     this.addPeerDeps(...options.peerDeps ?? []);
