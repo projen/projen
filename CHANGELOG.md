@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.66 (2020-09-16)
+
+
+### Bug Fixes
+
+* **node:** Cannot read property 'pinnedDevDependency' of undefined ([6ec1a55](https://github.com/eladb/projen/commit/6ec1a5529576c2cd78e127e5c04c4891b3944d35))
+
 ### 0.3.65 (2020-09-16)
 
 ### 0.3.64 (2020-09-15)
