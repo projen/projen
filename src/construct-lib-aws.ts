@@ -31,6 +31,8 @@ export interface ConstructLibraryAwsOptions extends ConstructLibraryOptions {
 }
 
 /**
+ * AWS CDK construct library project
+ *
  * A multi-language (jsii) construct library which vends constructs designed to
  * use within the AWS CDK with a friendly workflow and automatic publishing to
  * the construct catalog.
@@ -93,7 +95,7 @@ export interface ConstructLibraryAwsOptions extends ConstructLibraryOptions {
  * project.synth();
  * ```
  *
- * @pjid construct-lib-aws
+ * @pjid aws-construct
  */
 export class ConstructLibraryAws extends ConstructLibrary {
   /**
