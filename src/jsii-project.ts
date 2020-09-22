@@ -14,6 +14,9 @@ const DEFAULT_JSII_IMAGE = 'jsii/superchain';
 // @types/node has 10.17.0
 const DEFAULT_JSII_MIN_NODE = '10.17.0';
 
+const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+
 export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * @default "."
@@ -42,8 +45,23 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
    * @default $GIT_USER_NAME
    */
   readonly authorName: string;
+
+  /**
+   * Email or URL of the library author.
+   * @default $GIT_USER_EMAIL
+   */
+  readonly authorAddress: string;
+
+  /**
+   * @deprecated use `authorAddress`
+   */
   readonly authorEmail?: string;
+
+  /**
+   * @deprecated use `authorAddress`
+   */
   readonly authorUrl?: string;
+
   readonly authorOrganization?: boolean;
   readonly license?: string;
   readonly stability?: string;
@@ -120,13 +138,14 @@ export interface JsiiDotNetTarget {
 }
 
 /**
- * jsii library project
+ * Multi-language jsii library project
  */
 export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;
 
   constructor(options: JsiiProjectOptions) {
     const minNodeVersion = options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE;
+    const { authorEmail, authorUrl } = parseAuthorAddress(options);
 
     super({
       ...options,
@@ -135,14 +154,12 @@ export class JsiiProject extends TypeScriptProject {
       minNodeVersion,
       ...options,
       disableTsconfig: true, // jsii generates its own tsconfig.json
+      authorEmail,
+      authorUrl,
     });
 
     const srcdir = this.srcdir;
     const libdir = this.libdir;
-
-    if (!options.authorEmail && !options.authorUrl) {
-      throw new Error('at least "authorEmail" or "authorUrl" are required for jsii projects');
-    }
 
     this.addFields({ types: `${libdir}/index.d.ts` });
 
@@ -376,3 +393,26 @@ export class JsiiProject extends TypeScriptProject {
     });
   }
 }
+function parseAuthorAddress(options: JsiiProjectOptions) {
+  let authorEmail = options.authorEmail;
+  let authorUrl = options.authorUrl;
+  if (options.authorAddress) {
+    if (options.authorEmail) {
+      throw new Error('authorEmail is deprecated and cannot be used in conjunction with authorAddress');
+    }
+
+    if (options.authorUrl) {
+      throw new Error('authorUrl is deprecated and cannot be used in conjunction with authorAddress.');
+    }
+
+    if (EMAIL_REGEX.test(options.authorAddress)) {
+      authorEmail = options.authorAddress;
+    } else if (URL_REGEX.test(options.authorAddress)) {
+      authorUrl = options.authorAddress;
+    } else {
+      throw new Error(`authorAddress must be either an email address or a URL: ${options.authorAddress}`);
+    }
+  }
+  return { authorEmail, authorUrl };
+}
+
