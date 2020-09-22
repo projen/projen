@@ -81,8 +81,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
 
 /**
- * typescript project
- * @pjid ts
+ * TypeScript project
+ * @pjid typescript
  */
 export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
