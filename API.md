@@ -6,24 +6,24 @@ Name|Description
 ----|-----------
 [Component](#projen-component)|Represents a project component.
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
-[ConstructLibraryAws](#projen-constructlibraryaws)|A multi-language (jsii) construct library which vends constructs designed to use within the AWS CDK with a friendly workflow and automatic publishing to the construct catalog.
+[ConstructLibraryAws](#projen-constructlibraryaws)|AWS CDK construct library project.
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
 [GithubWorkflow](#projen-githubworkflow)|*No description*
 [IgnoreFile](#projen-ignorefile)|*No description*
 [Jest](#projen-jest)|Installs the following npm scripts:.
-[JsiiProject](#projen-jsiiproject)|jsii library project.
+[JsiiProject](#projen-jsiiproject)|Multi-language jsii library project.
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
 [Mergify](#projen-mergify)|*No description*
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
-[NodeProject](#projen-nodeproject)|*No description*
-[Project](#projen-project)|*No description*
+[NodeProject](#projen-nodeproject)|Node.js project.
+[Project](#projen-project)|Base project.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
-[TypeScriptProject](#projen-typescriptproject)|typescript project.
+[TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 
@@ -182,15 +182,16 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **authorName** (<code>string</code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
-  * **repository** (<code>string</code>)  *No description* 
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
   * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
   * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
   * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
-  * **description** (<code>string</code>)  *No description* __*Optional*__
+  * **description** (<code>string</code>)  Library description. __*Optional*__
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
@@ -209,7 +210,11 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 
 ## class ConstructLibraryAws 🔹 <a id="projen-constructlibraryaws"></a>
 
-A multi-language (jsii) construct library which vends constructs designed to use within the AWS CDK with a friendly workflow and automatic publishing to the construct catalog.
+AWS CDK construct library project.
+
+A multi-language (jsii) construct library which vends constructs designed to
+use within the AWS CDK with a friendly workflow and automatic publishing to
+the construct catalog.
 
 ```ts
 const project = new ConstructLibraryAws({
@@ -322,15 +327,16 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **authorName** (<code>string</code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
-  * **repository** (<code>string</code>)  *No description* 
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
   * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
   * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
   * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
-  * **description** (<code>string</code>)  *No description* __*Optional*__
+  * **description** (<code>string</code>)  Library description. __*Optional*__
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
@@ -739,7 +745,7 @@ addIgnorePattern(pattern: string): void
 
 ## class JsiiProject 🔹 <a id="projen-jsiiproject"></a>
 
-jsii library project.
+Multi-language jsii library project.
 
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
@@ -794,15 +800,16 @@ new JsiiProject(options: JsiiProjectOptions)
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **authorName** (<code>string</code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
-  * **repository** (<code>string</code>)  *No description* 
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
   * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
   * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
   * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
-  * **description** (<code>string</code>)  *No description* __*Optional*__
+  * **description** (<code>string</code>)  Library description. __*Optional*__
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
@@ -920,6 +927,7 @@ __Returns__:
 
 
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -992,7 +1000,7 @@ Name | Type | Description
 
 ## class NodeProject 🔹 <a id="projen-nodeproject"></a>
 
-
+Node.js project.
 
 __Extends__: [Project](#projen-project)
 
@@ -1351,7 +1359,7 @@ preSynthesize(outdir: string): void
 
 ## class Project 🔹 <a id="projen-project"></a>
 
-
+Base project.
 
 
 ### Initializer
@@ -1374,6 +1382,19 @@ Name | Type | Description
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 
 ### Methods
+
+
+#### addTip(message)🔹 <a id="projen-project-addtip"></a>
+
+Prints a "tip" message during synthesis.
+
+```ts
+addTip(message: string): void
+```
+
+* **message** (<code>string</code>)  The message.
+
+
 
 
 #### postSynthesize(_outdir)🔹 <a id="projen-project-postsynthesize"></a>
@@ -1400,19 +1421,6 @@ preSynthesize(_outdir: string): void
 ```
 
 * **_outdir** (<code>string</code>)  *No description*
-
-
-
-
-#### printTip(message)🔹 <a id="projen-project-printtip"></a>
-
-Prints a "tip" message during synthesis.
-
-```ts
-printTip(message: string): void
-```
-
-* **message** (<code>string</code>)  The message.
 
 
 
@@ -1647,7 +1655,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 ## class TypeScriptProject 🔹 <a id="projen-typescriptproject"></a>
 
-typescript project.
+TypeScript project.
 
 __Extends__: [NodeProject](#projen-nodeproject)
 
@@ -1835,13 +1843,14 @@ Options for the construct-lib-aws project.
 
 Name | Type | Description 
 -----|------|-------------
-**authorName**🔹 | <code>string</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**repository**🔹 | <code>string</code> | <span></span>
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
-**authorEmail**?🔹 | <code>string</code> | __*Optional*__
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
-**authorUrl**?🔹 | <code>string</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
@@ -1861,7 +1870,7 @@ Name | Type | Description
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | __*Optional*__
-**description**?🔹 | <code>string</code> | __*Optional*__
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
@@ -1913,13 +1922,14 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**authorName**🔹 | <code>string</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**repository**🔹 | <code>string</code> | <span></span>
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
-**authorEmail**?🔹 | <code>string</code> | __*Optional*__
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
-**authorUrl**?🔹 | <code>string</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
@@ -1935,7 +1945,7 @@ Name | Type | Description
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | __*Optional*__
-**description**?🔹 | <code>string</code> | __*Optional*__
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
@@ -2119,13 +2129,14 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**authorName**🔹 | <code>string</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**repository**🔹 | <code>string</code> | <span></span>
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
-**authorEmail**?🔹 | <code>string</code> | __*Optional*__
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
-**authorUrl**?🔹 | <code>string</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
@@ -2140,7 +2151,7 @@ Name | Type | Description
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | __*Optional*__
-**description**?🔹 | <code>string</code> | __*Optional*__
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true

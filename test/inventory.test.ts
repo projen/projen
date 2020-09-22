@@ -4,11 +4,11 @@ const result = inventory.discover();
 
 test('project id', () => {
   expect(result.map(x => x.pjid).sort()).toStrictEqual([
-    'construct-lib-aws',
+    'aws-construct',
     'jsii',
     'node',
     'project',
-    'ts',
+    'typescript',
   ]);
 })
 
