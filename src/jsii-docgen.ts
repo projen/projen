@@ -18,5 +18,7 @@ export class JsiiDocgen {
     });
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');
+
+    project.addTip('`API.md` includes the API reference for your library');
   }
 }

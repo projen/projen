@@ -127,6 +127,8 @@ export class Jest {
 
     project.npmignore.exclude('/coverage');
     project.gitignore.exclude('/coverage');
+
+    project.addTip('The VSCode jest extension watches in the background and shows inline test results');
   }
 
   public addIgnorePattern(pattern: string) {

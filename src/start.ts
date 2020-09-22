@@ -14,7 +14,7 @@ export class Start extends Component {
     this.nodeProject = project;
 
     project.addScript('start', 'npx projen start');
-    project.printTip('Run "yarn start" for an interactive project menu.');
+    project.addTip('Run `yarn start` for an interactive project menu');
   }
 
   /**

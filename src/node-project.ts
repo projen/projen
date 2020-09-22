@@ -339,6 +339,9 @@ export enum AutoRelease {
   DAILY
 }
 
+/**
+ * Node.js project
+ */
 export class NodeProject extends Project {
   public readonly npmignore: IgnoreFile;
   public readonly mergify?: Mergify;

@@ -2,10 +2,14 @@ import { IgnoreFile } from './ignore-file';
 import { Component } from './component';
 import { cleanup } from './cleanup';
 
+/**
+ * Base project
+ */
 export class Project {
   public readonly gitignore: IgnoreFile;
 
   private readonly components = new Array<Component>();
+  private readonly tips = new Array<string>();
 
   constructor() {
     this.gitignore = new IgnoreFile(this, '.gitignore');
@@ -15,8 +19,8 @@ export class Project {
    * Prints a "tip" message during synthesis.
    * @param message The message
    */
-  public printTip(message: string) {
-    console.error(`💡 ${message}`);
+  public addTip(message: string) {
+    this.tips.push(message);
   }
 
   /**
@@ -40,6 +44,15 @@ export class Project {
 
     // project-level hook
     this.postSynthesize(outdir);
+
+    if (this.tips.length) {
+      console.error();
+      console.error('Tips:');
+
+      for (const tip of this.tips) {
+        console.error(`💡 ${tip}`);
+      }
+    }
   }
 
   public preSynthesize(_outdir: string) {}

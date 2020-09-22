@@ -202,6 +202,8 @@ export class JsiiProject extends TypeScriptProject {
 
     this.publishToNpm();
 
+    let publishing = false;
+
     if (options.java) {
       targets.java = {
         package: options.java.javaPackage,
@@ -212,6 +214,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.publishToMaven();
+      publishing = true;
     }
 
     if (options.python) {
@@ -221,6 +224,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.publishToPyPi();
+      publishing = true;
     }
 
     if (options.dotnet) {
@@ -230,6 +234,11 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.publishToNuget();
+      publishing = true;
+    }
+
+    if (!publishing) {
+      this.addTip('Use the "java", "python" and "dotnet" options to define publishing settings');
     }
 
     const jsiiVersion = options.jsiiVersion ?? Semver.caret(DEFAULT_JSII_VERSION);
@@ -252,6 +261,8 @@ export class JsiiProject extends TypeScriptProject {
     const compat = options.compat ?? false;
     if (compat) {
       this.addCompileCommand('yarn compat');
+    } else {
+      this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
 
     // jsii updates .npmignore, so we make it writable

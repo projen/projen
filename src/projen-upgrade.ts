@@ -61,6 +61,8 @@ export class ProjenUpgrade {
           ],
         },
       });
+    } else {
+      project.addTip('Set `autoUpgradeSecret` to enable automatic projen upgrade pull requests');
     }
   }
 }
