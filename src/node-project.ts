@@ -253,6 +253,8 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
    * This is the name of your package. It gets used in URLs, as an argument on the command line,
    * and as the directory name inside node_modules.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
+   *
+   * @default $BASEDIR
    */
   readonly name: string;
 

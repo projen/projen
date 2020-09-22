@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import * as inquirer from 'inquirer';
-import { StartEntryOptions, StartEntryCategory } from '../start';
+import { StartEntryOptions, StartEntryCategory } from '../../start';
 
 const EXIT_MARKER = '$exit';
 

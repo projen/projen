@@ -106,9 +106,14 @@ function discoverOptions(fqn: string): ProjectOption[] {
       const propPath = [ ...path, prop.name ];
 
       if (prop.type?.fqn) {
-        addOptions(prop.type?.fqn, propPath, true);
+        // recurse to sub-types only if this is a required property. otherwise, users can configure from .projenrc.js
+        if (!prop.optional) {
+          addOptions(prop.type?.fqn, propPath, true);
+        }
         continue;
       }
+
+      const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
 
       options.push(filterUndefined({
         path: propPath,
@@ -116,7 +121,7 @@ function discoverOptions(fqn: string): ProjectOption[] {
         docs: prop.docs.summary,
         type: prop.type?.primitive ?? 'unknown',
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
-        default: prop.docs?.default?.replace(/^\ *\-/, '').trim(),
+        default: defaultValue,
         optional: optional || prop.optional,
       }));
     }
