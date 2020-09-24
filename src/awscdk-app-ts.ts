@@ -42,7 +42,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public readonly cdkConfig: any;
 
   constructor(options: AwsCdkTypeScriptAppOptions) {
-    super(options);
+    super({
+      ...options,
+      sampleCode: false,
+    });
 
     this.cdkVersion = Semver.caret(options.cdkVersion);
 

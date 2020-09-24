@@ -559,7 +559,6 @@ export class TypeScriptAppProject extends TypeScriptProject {
   constructor(options: TypeScriptProjectOptions) {
     super({
       allowLibraryDependencies: false,
-      sampleCode: false,
       releaseWorkflow: false,
       entrypoint: 'lib/main.js',
       package: false,
