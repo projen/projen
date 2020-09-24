@@ -37,6 +37,6 @@ export class Semver {
   }
 
   public get version() {
-    return semver.clean(this.spec) as string;
+    return semver.minVersion(this.spec)?.version;
   }
 }
