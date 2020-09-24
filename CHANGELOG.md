@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.74 (2020-09-24)
+
+
+### Bug Fixes
+
+* **typescript-app:** does not include sample code ([ccb0aa9](https://github.com/eladb/projen/commit/ccb0aa946d9be7c328676396b58c9cb0bba1aebb))
+
 ### 0.3.73 (2020-09-24)
 
 ### 0.3.72 (2020-09-23)
