@@ -4,9 +4,11 @@
 
 Name|Description
 ----|-----------
+[AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
+[AwsCdkTypeScriptApp](#projen-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [Component](#projen-component)|Represents a project component.
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
-[ConstructLibraryAws](#projen-constructlibraryaws)|AWS CDK construct library project.
+[ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
@@ -22,6 +24,7 @@ Name|Description
 [Project](#projen-project)|Base project.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
+[TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
@@ -32,8 +35,10 @@ Name|Description
 
 Name|Description
 ----|-----------
+[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
+[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
-[ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|Options for the construct-lib-aws project.
+[ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -79,136 +84,7 @@ Name|Description
 
 
 
-## class Component 🔹 <a id="projen-component"></a>
-
-Represents a project component.
-
-
-### Initializer
-
-
-
-
-```ts
-new Component(project: Project)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**project**🔹 | <code>[Project](#projen-project)</code> | <span></span>
-
-### Methods
-
-
-#### postSynthesize(_outdir)🔹 <a id="projen-component-postsynthesize"></a>
-
-Called after synthesis.
-
-Order is *not* guaranteed.
-
-```ts
-postSynthesize(_outdir: string): void
-```
-
-* **_outdir** (<code>string</code>)  The project directory.
-
-
-
-
-
-
-## class ConstructLibrary 🔹 <a id="projen-constructlibrary"></a>
-
-A multi-language library for CDK constructs.
-
-__Extends__: [JsiiProject](#projen-jsiiproject)
-__Implemented by__: [ConstructLibraryAws](#projen-constructlibraryaws)
-
-### Initializer
-
-
-
-
-```ts
-new ConstructLibrary(options: ConstructLibraryOptions)
-```
-
-* **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
-  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
-  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
-  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
-  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
-  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
-  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
-  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
-  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
-  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
-  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
-  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
-  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
-  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
-  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
-  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
-  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
-  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
-  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
-  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
-  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
-  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
-  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
-  * **authorName** (<code>string</code>)  The name of the library author. 
-  * **name** (<code>string</code>)  The name of the library. 
-  * **repository** (<code>string</code>)  Git repository URL. 
-  * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
-  * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
-  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
-  * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
-  * **description** (<code>string</code>)  Library description. __*Optional*__
-  * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
-  * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
-  * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
-  * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
-  * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* __*Optional*__
-  * **license** (<code>string</code>)  *No description* __*Optional*__
-  * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
-  * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
-  * **stability** (<code>string</code>)  *No description* __*Optional*__
-  * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-
-
-
-
-## class ConstructLibraryAws 🔹 <a id="projen-constructlibraryaws"></a>
+## class AwsCdkConstructLibrary 🔹 <a id="projen-awscdkconstructlibrary"></a>
 
 AWS CDK construct library project.
 
@@ -282,13 +158,13 @@ __Extends__: [ConstructLibrary](#projen-constructlibrary)
 
 
 ```ts
-new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
+new AwsCdkConstructLibrary(options: ConstructLibraryAwsOptions)
 ```
 
 * **options** (<code>[ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -301,13 +177,15 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
   * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -317,7 +195,7 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -349,10 +227,10 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **stability** (<code>string</code>)  *No description* __*Optional*__
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
+  * **cdkVersion** (<code>string</code>)  Minmum target version this library is tested against. 
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
-  * **cdkVersion** (<code>string</code>)  Minmum target version this library is tested against. __*Default*__: ConstructLibraryAwsCdk.defaultVersion
 
 
 
@@ -362,12 +240,11 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
 Name | Type | Description 
 -----|------|-------------
 **version**🔹 | <code>[Semver](#projen-semver)</code> | The target CDK version for this library.
-*static* **defaultVersion**🔹 | <code>string</code> | The default value for `targetVersion`.
 
 ### Methods
 
 
-#### addCdkDependencies(...deps)🔹 <a id="projen-constructlibraryaws-addcdkdependencies"></a>
+#### addCdkDependencies(...deps)🔹 <a id="projen-awscdkconstructlibrary-addcdkdependencies"></a>
 
 Adds CDK modules as runtime dependencies.
 
@@ -387,7 +264,7 @@ addCdkDependencies(...deps: string[]): void
 
 
 
-#### addCdkTestDependencies(...deps)🔹 <a id="projen-constructlibraryaws-addcdktestdependencies"></a>
+#### addCdkTestDependencies(...deps)🔹 <a id="projen-awscdkconstructlibrary-addcdktestdependencies"></a>
 
 Adds CDK modules as test dependencies.
 
@@ -398,6 +275,355 @@ addCdkTestDependencies(...deps: string[]): void
 * **deps** (<code>string</code>)  names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
 
+
+
+
+
+## class AwsCdkTypeScriptApp 🔹 <a id="projen-awscdktypescriptapp"></a>
+
+AWS CDK app in TypeScript.
+
+__Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
+
+### Initializer
+
+
+
+
+```ts
+new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
+```
+
+* **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
+  * **cdkVersion** (<code>string</code>)  AWS CDK version to use. 
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. __*Optional*__
+  * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkConfig**🔹 | <code>any</code> | Contents of `cdk.json`.
+**cdkVersion**🔹 | <code>[Semver](#projen-semver)</code> | The CDK version this app is using.
+
+### Methods
+
+
+#### addCdkDependency(...modules)🔹 <a id="projen-awscdktypescriptapp-addcdkdependency"></a>
+
+Adds an AWS CDK module dependencies.
+
+```ts
+addCdkDependency(...modules: string[]): void
+```
+
+* **modules** (<code>string</code>)  The list of modules to depend on.
+
+
+
+
+
+
+## class Component 🔹 <a id="projen-component"></a>
+
+Represents a project component.
+
+
+### Initializer
+
+
+
+
+```ts
+new Component(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**project**🔹 | <code>[Project](#projen-project)</code> | <span></span>
+
+### Methods
+
+
+#### postSynthesize(_outdir)🔹 <a id="projen-component-postsynthesize"></a>
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+```ts
+postSynthesize(_outdir: string): void
+```
+
+* **_outdir** (<code>string</code>)  The project directory.
+
+
+
+
+#### synthesize(_outdir)🔹 <a id="projen-component-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(_outdir: string): void
+```
+
+* **_outdir** (<code>string</code>)  The project directory*.
+
+
+
+
+
+
+## class ConstructLibrary 🔹 <a id="projen-constructlibrary"></a>
+
+A multi-language library for CDK constructs.
+
+__Extends__: [JsiiProject](#projen-jsiiproject)
+__Implemented by__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary), [ConstructLibraryAws](#projen-constructlibraryaws)
+
+### Initializer
+
+
+
+
+```ts
+new ConstructLibrary(options: ConstructLibraryOptions)
+```
+
+* **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
+  * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
+  * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
+  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
+  * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
+  * **description** (<code>string</code>)  Library description. __*Optional*__
+  * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
+  * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
+  * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
+  * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
+  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* __*Optional*__
+  * **license** (<code>string</code>)  *No description* __*Optional*__
+  * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
+  * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
+  * **stability** (<code>string</code>)  *No description* __*Optional*__
+  * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
+
+
+
+
+## class ConstructLibraryAws ⚠️ <a id="projen-constructlibraryaws"></a>
+
+
+
+__Extends__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)
+
+### Initializer
+
+
+
+
+```ts
+new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
+```
+
+* **options** (<code>[ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
+  * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
+  * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
+  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
+  * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
+  * **description** (<code>string</code>)  Library description. __*Optional*__
+  * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
+  * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
+  * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
+  * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
+  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* __*Optional*__
+  * **license** (<code>string</code>)  *No description* __*Optional*__
+  * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
+  * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
+  * **stability** (<code>string</code>)  *No description* __*Optional*__
+  * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
+  * **cdkVersion** (<code>string</code>)  Minmum target version this library is tested against. 
+  * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
+  * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
 
 
 
@@ -547,6 +773,19 @@ Name | Type | Description
 **readonly**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
+
+
+#### synthesize(outdir)🔹 <a id="projen-filebase-synthesize"></a>
+
+Writes the file to the project's output directory.
+
+```ts
+synthesize(outdir: string): void
+```
+
+* **outdir** (<code>string</code>)  *No description*
+
+
 
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-filebase-synthesizecontent"></a>
@@ -759,9 +998,9 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -774,13 +1013,15 @@ new JsiiProject(options: JsiiProjectOptions)
   * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
   * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -790,7 +1031,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1014,9 +1255,9 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1029,13 +1270,15 @@ new NodeProject(options: NodeProjectOptions)
   * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
   * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1045,7 +1288,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1076,16 +1319,18 @@ new NodeProject(options: NodeProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
+**entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
-**npmignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | __*Optional*__
+**npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | __*Optional*__
 **releaseWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 **start**?🔹 | <code>[Start](#projen-start)</code> | The start menu.<br/>__*Optional*__
 
@@ -1136,7 +1381,7 @@ addBundledDeps(...deps: string[]): void
 
 #### addCompileCommand(...commands)🔹 <a id="projen-nodeproject-addcompilecommand"></a>
 
-Adds that will be executed after the jsii compilation.
+Adds commands which will be executed after compilation.
 
 ```ts
 addCompileCommand(...commands: string[]): void
@@ -1452,8 +1697,8 @@ synth(outdir?: string): void
 Name | Type | Description 
 -----|------|-------------
 **spec**🔹 | <code>string</code> | <span></span>
-**version**🔹 | <code>string</code> | <span></span>
 **mode**?🔹 | <code>string</code> | __*Optional*__
+**version**?🔹 | <code>string</code> | __*Optional*__
 
 ### Methods
 
@@ -1562,7 +1807,7 @@ addEntry(name: string, options: StartEntryOptions): void
 
 * **name** (<code>string</code>)  The npm script name.
 * **options** (<code>[StartEntryOptions](#projen-startentryoptions)</code>)  Entry options.
-  * **descrtiption** (<code>string</code>)  The description of the start entry. 
+  * **desc** (<code>string</code>)  The description of the start entry. 
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Priority-order (lower values will be shown first). __*Default*__: StartEntryCategory.MISC
 
 
@@ -1570,9 +1815,9 @@ addEntry(name: string, options: StartEntryOptions): void
 
 
 
-## class TypeScriptLibraryProject ⚠️ <a id="projen-typescriptlibraryproject"></a>
+## class TypeScriptAppProject 🔹 <a id="projen-typescriptappproject"></a>
 
-
+TypeScript app.
 
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
@@ -1582,13 +1827,13 @@ __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 
 ```ts
-new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
+new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1601,13 +1846,15 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
   * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1617,7 +1864,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1644,9 +1891,100 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
+
+
+
+
+## class TypeScriptLibraryProject ⚠️ <a id="projen-typescriptlibraryproject"></a>
+
+
+
+__Extends__: [TypeScriptProject](#projen-typescriptproject)
+
+### Initializer
+
+
+
+
+```ts
+new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
+```
+
+* **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
 
@@ -1669,9 +2007,9 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **autoReleaseSchedule** (<code>string</code>)  CRON schedule for automatically bumping and releasing a new version. __*Default*__: every 6 hours
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1684,13 +2022,15 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
-  * **keywords** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
   * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -1700,7 +2040,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: true
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -1727,9 +2067,12 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
 
@@ -1789,6 +2132,7 @@ Name | Type | Description
 
 
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -1820,6 +2164,170 @@ __Returns__:
 
 
 
+## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
+
+
+Options for the construct-lib-aws project.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**cdkVersion**🔹 | <code>string</code> | Minmum target version this library is tested against.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
+**cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
+**cdkTestDependencies**?🔹 | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
+**compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
+**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | __*Optional*__
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
+**dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
+**jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | __*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
+**python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**rootdir**?🔹 | <code>string</code> | __*Default*__: "."
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | __*Optional*__
+**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct AwsCdkTypeScriptAppOptions 🔹 <a id="projen-awscdktypescriptappoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkVersion**🔹 | <code>string</code> | AWS CDK version to use.
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.<br/>__*Optional*__
+**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
+**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | __*Optional*__
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: 'docs'
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
+**typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
 ## struct Catalog 🔹 <a id="projen-catalog"></a>
 
 
@@ -1834,82 +2342,84 @@ Name | Type | Description
 
 
 
-## struct ConstructLibraryAwsOptions 🔹 <a id="projen-constructlibraryawsoptions"></a>
+## struct ConstructLibraryAwsOptions ⚠️ <a id="projen-constructlibraryawsoptions"></a>
 
 
-Options for the construct-lib-aws project.
+
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
-**authorName**🔹 | <code>string</code> | The name of the library author.
-**name**🔹 | <code>string</code> | The name of the library.
-**repository**🔹 | <code>string</code> | Git repository URL.
-**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
+**authorName**⚠️ | <code>string</code> | The name of the library author.
+**cdkVersion**⚠️ | <code>string</code> | Minmum target version this library is tested against.
+**name**⚠️ | <code>string</code> | The name of the library.
+**repository**⚠️ | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?⚠️ | <code>string</code> | __*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | __*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | __*Optional*__
-**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
-**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
-**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
-**bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
-**bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
-**catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
-**cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
-**cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
-**cdkTestDependencies**?🔹 | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
-**cdkVersion**?🔹 | <code>string</code> | Minmum target version this library is tested against.<br/>__*Default*__: ConstructLibraryAwsCdk.defaultVersion
-**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
-**compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
-**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
-**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
-**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
-**deps**?🔹 | <code>Array<string></code> | __*Optional*__
-**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
-**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
-**devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
-**docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
-**dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
-**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
-**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
-**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | __*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
-**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
-**license**?🔹 | <code>string</code> | __*Optional*__
-**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
-**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
-**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
-**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
-**peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
-**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
-**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
-**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
-**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
-**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
-**rootdir**?🔹 | <code>string</code> | __*Default*__: "."
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
-**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
-**stability**?🔹 | <code>string</code> | __*Optional*__
-**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
-**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
-**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
-**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
-**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+**autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?⚠️ | <code>Array<string></code> | __*Optional*__
+**catalog**?⚠️ | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**cdkAssert**?⚠️ | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
+**cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
+**cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
+**compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
+**copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
+**dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?⚠️ | <code>Array<string></code> | __*Optional*__
+**description**?⚠️ | <code>string</code> | Library description.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?⚠️ | <code>Array<string></code> | __*Optional*__
+**docgen**?⚠️ | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
+**dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**java**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?⚠️ | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
+**jsiiVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | __*Optional*__
+**keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?⚠️ | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?⚠️ | <code>string</code> | __*Optional*__
+**maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?⚠️ | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
+**peerDeps**?⚠️ | <code>Array<string></code> | __*Optional*__
+**projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
+**python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
+**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**rootdir**?⚠️ | <code>string</code> | __*Default*__: "."
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?⚠️ | <code>string</code> | __*Optional*__
+**start**?⚠️ | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?⚠️ | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
+**workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
 
@@ -1926,12 +2436,12 @@ Name | Type | Description
 **authorName**🔹 | <code>string</code> | The name of the library author.
 **name**🔹 | <code>string</code> | The name of the library.
 **repository**🔹 | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?⚠️ | <code>string</code> | __*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1950,12 +2460,13 @@ Name | Type | Description
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
 **jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | __*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -1963,6 +2474,7 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -1973,7 +2485,7 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
@@ -2133,12 +2645,12 @@ Name | Type | Description
 **authorName**🔹 | <code>string</code> | The name of the library author.
 **name**🔹 | <code>string</code> | The name of the library.
 **repository**🔹 | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?⚠️ | <code>string</code> | __*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | __*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2156,12 +2668,13 @@ Name | Type | Description
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
 **jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | __*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -2169,6 +2682,7 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2179,7 +2693,7 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
@@ -2291,9 +2805,9 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2306,13 +2820,15 @@ Name | Type | Description
 **deps**?🔹 | <code>Array<string></code> | __*Optional*__
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2322,7 +2838,7 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
@@ -2345,13 +2861,13 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2365,9 +2881,10 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -2375,6 +2892,7 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -2385,7 +2903,7 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
@@ -2423,7 +2941,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**descrtiption**🔹 | <code>string</code> | The description of the start entry.
+**desc**🔹 | <code>string</code> | The description of the start entry.
 **category**?🔹 | <code>[StartEntryCategory](#projen-startentrycategory)</code> | Priority-order (lower values will be shown first).<br/>__*Default*__: StartEntryCategory.MISC
 
 
@@ -2479,13 +2997,13 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**⚠️ | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?⚠️ | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
@@ -2503,12 +3021,14 @@ Name | Type | Description
 **disableTsconfig**?⚠️ | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
 **docgen**?⚠️ | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
 **docsDirectory**?⚠️ | <code>string</code> | Docs directory.<br/>__*Default*__: 'docs'
+**entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**keywords**?⚠️ | <code>Array<string></code> | __*Optional*__
+**keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?⚠️ | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -2516,7 +3036,9 @@ Name | Type | Description
 **mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?⚠️ | <code>Array<string></code> | __*Optional*__
@@ -2526,10 +3048,11 @@ Name | Type | Description
 **releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -2554,13 +3077,13 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**autoReleaseSchedule**?🔹 | <code>string</code> | CRON schedule for automatically bumping and releasing a new version.<br/>__*Default*__: every 6 hours
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
 **bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2578,12 +3101,14 @@ Name | Type | Description
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
 **docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: 'docs'
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**keywords**?🔹 | <code>Array<string></code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -2591,7 +3116,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -2601,10 +3128,11 @@ Name | Type | Description
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: true
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
