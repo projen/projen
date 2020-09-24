@@ -9,13 +9,6 @@ import * as path from 'path';
 import { Component } from './component';
 import { StartEntryCategory } from './start';
 
-/**
- * @deprecated use TypeScriptProjectOptions
- */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
-
-}
-
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Setup jest unit tests
@@ -77,8 +70,27 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * jest typescript tests and only if all tests pass, run the compiler.
    */
   readonly compileBeforeTest?: boolean;
-}
 
+  /**
+   * Generate one-time sample in `src/` and `test/` if there are no files there.
+   * @default true
+   */
+  readonly sampleCode?: boolean;
+
+  /**
+   * The .d.ts file that includes the type declarations for this module.
+   * @default - .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+   */
+  readonly entrypointTypes?: string;
+
+  /**
+   * Defines a `yarn package` command that will produce a tarball and place it
+   * under `dist/js`.
+   *
+   * @default true
+   */
+  readonly package?: boolean;
+}
 
 /**
  * TypeScript project
@@ -113,18 +125,7 @@ export class TypeScriptProject extends NodeProject {
     this.testdir = options.testdir ?? 'test';
 
     this.docgen = options.docgen;
-    this.docsDirectory = options.docsDirectory || 'docs/';
-
-    this.addScript('package',
-      'rm -fr dist',
-      'mkdir -p dist/js',
-      'yarn pack',
-      'mv *.tgz dist/js/',
-    );
-    this.start?.addEntry('package', {
-      descrtiption: 'Create an npm tarball',
-      category: StartEntryCategory.RELEASE,
-    });
+    this.docsDirectory = options.docsDirectory ?? 'docs/';
 
     this.addCompileCommand('tsc');
     this.start?.addEntry('compile', {
@@ -141,16 +142,32 @@ export class TypeScriptProject extends NodeProject {
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
     if (compileBeforeTest) {
-      this.addScript('build', 'yarn compile && yarn test && yarn run package');
+      this.addScriptCommand('build', 'yarn compile', 'yarn test');
     } else {
-      this.addScript('build', 'yarn test && yarn compile && yarn run package')
+      this.addScriptCommand('build', 'yarn test', 'yarn compile');
     }
     this.start?.addEntry('build', {
-      descrtiption: 'Full release build',
+      desc: 'Full release build (test+compile)',
       category: StartEntryCategory.BUILD,
     });
 
-    this.manifest.types = `${this.libdir}/index.d.ts`;
+    if (options.package ?? true) {
+      this.addScript('package',
+        'rm -fr dist',
+        'mkdir -p dist/js',
+        'yarn pack',
+        'mv *.tgz dist/js/',
+      );
+
+      this.addScriptCommand('build', 'yarn run package');
+
+      this.start?.addEntry('package', {
+        desc: 'Create an npm tarball',
+        category: StartEntryCategory.RELEASE,
+      });
+    }
+
+    this.manifest.types = options.entrypointTypes ?? `${path.dirname(this.entrypoint)}${path.basename(this.entrypoint, '.js')}.d.ts`;
 
     const compilerOptions = {
       alwaysStrict: true,
@@ -192,21 +209,21 @@ export class TypeScriptProject extends NodeProject {
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
-    this.npmignore.include(`/${this.libdir}`);
+    this.npmignore?.include(`/${this.libdir}`);
 
     this.gitignore.include(`/${this.srcdir}`);
-    this.npmignore.exclude(`/${this.srcdir}`);
+    this.npmignore?.exclude(`/${this.srcdir}`);
 
-    this.npmignore.include(`/${this.libdir}/**/*.js`);
-    this.npmignore.include(`/${this.libdir}/**/*.d.ts`);
+    this.npmignore?.include(`/${this.libdir}/**/*.js`);
+    this.npmignore?.include(`/${this.libdir}/**/*.d.ts`);
 
     this.gitignore.exclude('/dist');
-    this.npmignore.exclude('dist'); // jsii-pacmak expects this to be "dist" and not "/dist". otherwise it will tamper with it
+    this.npmignore?.exclude('dist'); // jsii-pacmak expects this to be "dist" and not "/dist". otherwise it will tamper with it
 
-    this.npmignore.exclude('/tsconfig.json');
-    this.npmignore.exclude('/.github');
-    this.npmignore.exclude('/.vscode');
-    this.npmignore.exclude('/.projenrc.js');
+    this.npmignore?.exclude('/tsconfig.json');
+    this.npmignore?.exclude('/.github');
+    this.npmignore?.exclude('/.vscode');
+    this.npmignore?.exclude('/.projenrc.js');
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this);
@@ -241,7 +258,7 @@ export class TypeScriptProject extends NodeProject {
       });
 
       this.gitignore.include(`/${this.testdir}`);
-      this.npmignore.exclude(`/${this.testdir}`);
+      this.npmignore?.exclude(`/${this.testdir}`);
     }
 
     this.addDevDependencies({
@@ -250,7 +267,9 @@ export class TypeScriptProject extends NodeProject {
     });
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
-    new SampleCode(this);
+    if (options.sampleCode ?? true) {
+      new SampleCode(this);
+    }
 
     if (this.docgen) {
       new TypedocDocgen(this);
@@ -482,13 +501,12 @@ export class TypescriptConfig {
       },
     });
 
-    project.npmignore.exclude(`/${fileName}`);
+    project.npmignore?.exclude(`/${fileName}`);
   }
 }
 
 
 class SampleCode extends Component {
-
   private readonly nodeProject: TypeScriptProject;
 
   constructor(project: TypeScriptProject) {
@@ -497,7 +515,7 @@ class SampleCode extends Component {
     this.nodeProject = project;
   }
 
-  public _synthesize(outdir: string) {
+  public synthesize(outdir: string) {
     const srcdir = path.join(outdir, this.nodeProject.srcdir);
     if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
       return;
@@ -533,6 +551,29 @@ class SampleCode extends Component {
 }
 
 /**
+ * TypeScript app.
+ *
+ * @pjid typescript-app
+ */
+export class TypeScriptAppProject extends TypeScriptProject {
+  constructor(options: TypeScriptProjectOptions) {
+    super({
+      allowLibraryDependencies: false,
+      sampleCode: false,
+      releaseWorkflow: false,
+      entrypoint: 'lib/main.js',
+      package: false,
+      ...options,
+    });
+  }
+}
+
+/**
  * @deprecated use `TypeScriptProject`
  */
 export class TypeScriptLibraryProject extends TypeScriptProject { };
+
+/**
+ * @deprecated use TypeScriptProjectOptions
+ */
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions { }

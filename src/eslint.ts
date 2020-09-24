@@ -38,7 +38,7 @@ export class Eslint {
     project.addTestCommand('yarn eslint');
 
     // exclude some files
-    project.npmignore.exclude('/.eslintrc.json');
+    project.npmignore?.exclude('/.eslintrc.json');
 
     this.rules = {
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`

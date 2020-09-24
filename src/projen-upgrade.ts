@@ -25,7 +25,7 @@ export class ProjenUpgrade {
       'CI="" yarn projen'); // if CI is defined, projen runs yarn with --frozen-lockfile
 
     project.start?.addEntry(script, {
-      descrtiption: 'upgrades projen to the latest version',
+      desc: 'upgrades projen to the latest version',
       category: StartEntryCategory.MAINTAIN,
     });
 

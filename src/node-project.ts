@@ -43,6 +43,9 @@ export interface NodeProjectCommonOptions {
    */
   readonly autoDetectBin?: boolean;
 
+  /**
+   * Keywords to include in `package.json`.
+   */
   readonly keywords?: string[];
 
   /**
@@ -66,7 +69,9 @@ export interface NodeProjectCommonOptions {
   readonly buildWorkflow?: boolean;
 
   /**
-   * Define a GitHub workflow for releasing from "master" when new versions are bumped.
+   * Define a GitHub workflow for releasing from "master" when new versions are
+   * bumped. Requires that `version` will be undefined.
+   *
    * @default true
    */
   readonly releaseWorkflow?: boolean;
@@ -106,7 +111,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Automatically release to npm when new versions are introduced.
-   * @default true
+   * @default false
    */
   readonly releaseToNpm?: boolean;
 
@@ -202,15 +207,6 @@ export interface NodeProjectCommonOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-  * CRON schedule for automatically bumping and releasing a new version.
-  *
-  * Set to `"never"` to disable the auto-release workflow.
-  *
-  * @default - every 6 hours
-  */
-  readonly autoReleaseSchedule?: string;
-
-  /**
    * npm scripts to include. If a script has the same name as a standard script,
    * the standard script will be overwritten.
    *
@@ -246,6 +242,30 @@ export interface NodeProjectCommonOptions {
    * @default - default options
    */
   readonly startOptions?: StartOptions;
+
+  /**
+   * Allow the project to include `peerDependencies` and `bundledDependencies`.
+   * This is normally only allowed for libraries. For apps, there's no meaning
+   * for specifying these.
+   *
+   * @default true
+   */
+  readonly allowLibraryDependencies?: boolean;
+
+  /**
+   * Defines an .npmignore file. Normally this is only needed for libraries that
+   * are packaged as tarballs.
+   *
+   * @default true
+   */
+  readonly npmIgnore?: boolean;
+
+  /**
+   * Module entrypoint (`main` in `package.json`)
+   *
+   * @default lib/index.js
+   */
+  readonly entrypoint?: string;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -343,8 +363,11 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
-  public readonly npmignore: IgnoreFile;
+  public readonly npmignore?: IgnoreFile;
   public readonly mergify?: Mergify;
+  public readonly manifest: any;
+  public readonly allowLibraryDependencies: boolean;
+  public readonly entrypoint: string;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -354,8 +377,6 @@ export class NodeProject extends Project {
   private readonly scripts: Record<string, string[]>;
   private readonly bin: Record<string, string> = { };
   private readonly keywords: Set<string>;
-
-  public readonly manifest: any;
   private readonly _version: Version;
 
   /**
@@ -390,6 +411,7 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super();
 
+    this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.processDeps(options);
 
@@ -426,7 +448,6 @@ export class NodeProject extends Project {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
       'description': options.description,
-      'main': 'lib/index.js',
       'repository': !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
@@ -449,12 +470,18 @@ export class NodeProject extends Project {
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
+    this.entrypoint = options.entrypoint ?? 'lib/index.js'
+    this.manifest.main = this.entrypoint;
+
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
-    this.npmignore = new IgnoreFile(this, '.npmignore');
+    if (options.npmignore ?? true) {
+      this.npmignore = new IgnoreFile(this, '.npmignore');
+    }
+
     this.addDefaultGitIgnore();
 
     if (options.gitignore?.length) {
@@ -464,6 +491,10 @@ export class NodeProject extends Project {
     }
 
     if (options.npmignore?.length) {
+      if (!this.npmignore) {
+        throw new Error('.npmignore is not defined for an APP project type');
+      }
+
       for (const i of options.npmignore) {
         this.npmignore.exclude(i);
       }
@@ -486,7 +517,7 @@ export class NodeProject extends Project {
       category: StartEntryCategory.MAINTAIN,
     });
 
-    this.npmignore.exclude(`/${PROJEN_RC}`);
+    this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
     this.addBins(options.bin ?? { });
@@ -537,7 +568,7 @@ export class NodeProject extends Project {
         image: options.workflowContainerImage,
       });
 
-      if (options.releaseToNpm) {
+      if (options.releaseToNpm ?? false) {
         this.releaseWorkflow.addJobs({
           release_npm: {
             'name': 'Release to NPM',
@@ -562,6 +593,23 @@ export class NodeProject extends Project {
             ],
           },
         });
+      }
+    } else {
+      // validate that no release options are selected if the release workflow is disabled.
+      if (options.releaseToNpm) {
+        throw new Error('"releaseToNpm" is not supported for APP projects');
+      }
+
+      if (options.releaseBranches) {
+        throw new Error('"releaseBranches" is not supported for APP projects');
+      }
+
+      if (options.releaseEveryCommit) {
+        throw new Error('"releaseEveryCommit" is not supported for APP projects');
+      }
+
+      if (options.releaseSchedule) {
+        throw new Error('"releaseSchedule" is not supported for APP projects');
       }
     }
 
@@ -606,7 +654,7 @@ export class NodeProject extends Project {
         },
       });
 
-      this.npmignore.exclude('/.mergify.yml');
+      this.npmignore?.exclude('/.mergify.yml');
     }
 
     if (options.dependabot ?? true) {
@@ -640,6 +688,10 @@ export class NodeProject extends Project {
   }
 
   public addBundledDependencies(...deps: string[]) {
+    if (deps.length && !this.allowLibraryDependencies) {
+      throw new Error(`cannot add bundled dependencies to an APP project: ${deps.join(',')}`);
+    }
+
     for (const dep of deps) {
       if (!(dep in this.dependencies)) {
         throw new Error(`unable to bundle "${dep}". it has to also be defined as a dependency`);
@@ -660,12 +712,15 @@ export class NodeProject extends Project {
   }
 
   public addPeerDependencies(deps: { [module: string]: Semver }, options?: PeerDependencyOptions) {
+    if (Object.keys(deps).length && !this.allowLibraryDependencies) {
+      throw new Error(`cannot add peer dependencies to an APP project: ${Object.keys(deps).join(',')}`);
+    }
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
     for (const [ k, v ] of Object.entries(deps)) {
       this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
-      if (pinned) {
+      if (pinned && v.version) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
       }
     }

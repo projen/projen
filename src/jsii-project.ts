@@ -252,7 +252,7 @@ export class JsiiProject extends TypeScriptProject {
     });
 
     this.gitignore.exclude('.jsii', 'tsconfig.json');
-    this.npmignore.include('.jsii');
+    this.npmignore?.include('.jsii');
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
@@ -266,7 +266,9 @@ export class JsiiProject extends TypeScriptProject {
     }
 
     // jsii updates .npmignore, so we make it writable
-    this.npmignore.readonly = false;
+    if (this.npmignore) {
+      this.npmignore.readonly = false;
+    }
   }
 
   private publishToNpm() {

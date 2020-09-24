@@ -29,7 +29,7 @@ export class Version extends Component {
       'standard-version': Semver.caret('9.0.0'),
     });
 
-    project.npmignore.exclude('/.versionrc.json');
+    project.npmignore?.exclude('/.versionrc.json');
     project.gitignore.include(VERSION_FILE);
 
     new JsonFile(project, '.versionrc.json', {
