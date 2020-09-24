@@ -16,6 +16,7 @@ const project = new JsiiProject({
     'glob@^7',
     'semver',
     'inquirer',
+    'chalk',
   ],
 
   devDeps: [

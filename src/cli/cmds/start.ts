@@ -1,12 +1,20 @@
 import * as yargs from 'yargs';
-import { showStartMenu } from './start-app';
+import { printStartMenu, showStartMenu } from './start-app';
 
 class Command implements yargs.CommandModule {
   command = 'start';
-  describe = 'Interactive menu with project commands';
+  describe = 'Prints all project commands';
 
-  async handler() {
-    await showStartMenu();
+  public builder(args: yargs.Argv) {
+    return args.option('interactive', { alias: 'i', desc: 'Interactive menu' });
+  }
+
+  async handler(opts: any) {
+    if (opts.interactive) {
+      await showStartMenu();
+    } else {
+      printStartMenu();
+    }
   }
 }
 

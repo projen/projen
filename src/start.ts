@@ -13,8 +13,10 @@ export class Start extends Component {
 
     this.nodeProject = project;
 
-    project.addScript('start', 'npx projen start');
-    project.addTip('Run `yarn start` for an interactive project menu');
+    project.addScript('start', 'npx projen start -i');
+    this.addEntry('start', {
+      desc: 'Shows this menu',
+    });
   }
 
   /**
@@ -36,7 +38,7 @@ export interface StartEntryOptions {
   /**
    * The description of the start entry.
    */
-  readonly descrtiption: string;
+  readonly desc: string;
 
   /**
    * Priority-order (lower values will be shown first).

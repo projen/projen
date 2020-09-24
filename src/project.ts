@@ -1,6 +1,9 @@
 import { IgnoreFile } from './ignore-file';
 import { Component } from './component';
 import { cleanup } from './cleanup';
+import { Start } from './start';
+import { printStartMenu } from './cli/cmds/start-app';
+import * as chalk from 'chalk';
 
 /**
  * Base project
@@ -28,14 +31,13 @@ export class Project {
    * @param outdir The project root directory (default is `.`).
    */
   public synth(outdir: string = '.'): void {
-
     this.preSynthesize(outdir);
 
     // delete all generated files before we start synthesizing new ones
     cleanup(outdir);
 
     for (const comp of this.components) {
-      comp._synthesize(outdir);
+      comp.synthesize(outdir);
     }
 
     for (const comp of this.components) {
@@ -45,10 +47,17 @@ export class Project {
     // project-level hook
     this.postSynthesize(outdir);
 
-    if (this.tips.length) {
-      console.error();
-      console.error('Tips:');
+    console.error(`${chalk.cyanBright('projen')}: done`);
 
+    const start = this.components.find(c => c instanceof Start);
+    if (start) {
+      console.error();
+      console.error('-'.repeat(100));
+      printStartMenu();
+    }
+
+    if (this.tips.length) {
+      console.error(chalk.cyanBright.underline('Tips:'));
       for (const tip of this.tips) {
         console.error(`💡 ${tip}`);
       }

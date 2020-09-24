@@ -32,7 +32,7 @@ export class Eslint {
 
     project.addScript('eslint', 'eslint . --ext .ts');
     project.start?.addEntry('eslint', {
-      descrtiption: 'Runs eslint against the codebase',
+      desc: 'Runs eslint against the codebase',
       category: StartEntryCategory.TEST,
     });
     project.addTestCommand('yarn eslint');

@@ -128,13 +128,13 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
     this.start?.addEntry('compile', {
-      descrtiption: 'Only compile',
+      desc: 'Only compile',
       category: StartEntryCategory.BUILD,
     });
 
     this.addScript('watch', 'tsc -w');
     this.start?.addEntry('watch', {
-      descrtiption: 'Watch & compile in the background',
+      desc: 'Watch & compile in the background',
       category: StartEntryCategory.BUILD,
     });
 

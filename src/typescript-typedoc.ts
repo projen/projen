@@ -10,7 +10,7 @@ export class TypedocDocgen {
     project.addDevDependencies({ typedoc: Semver.caret('0.17.8') });
     project.addScript('docgen', 'typedoc --out ' + project.docsDirectory);
     project.start?.addEntry('docgen', {
-      descrtiption: `Generate TypeScript API reference ${project.docsDirectory}`,
+      desc: `Generate TypeScript API reference ${project.docsDirectory}`,
       category: StartEntryCategory.RELEASE,
     });
   }

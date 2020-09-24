@@ -13,7 +13,7 @@ export class JsiiDocgen {
     project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
     project.addScript('docgen', 'jsii-docgen');
     project.start?.addEntry('docgen', {
-      descrtiption: 'Generate API.md from .jsii manifest',
+      desc: 'Generate API.md from .jsii manifest',
       category: StartEntryCategory.RELEASE,
     });
     project.addCompileCommand('jsii-docgen');

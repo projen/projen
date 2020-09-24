@@ -482,7 +482,7 @@ export class NodeProject extends Project {
     }
     this.addScript('projen', `node ${PROJEN_RC}`);
     this.start?.addEntry('projen', {
-      descrtiption: 'Synthesize project configuration from .projenrc.js',
+      desc: 'Synthesize project configuration from .projenrc.js',
       category: StartEntryCategory.MAINTAIN,
     });
 
@@ -711,7 +711,7 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Adds that will be executed after the jsii compilation
+   * Adds commands which will be executed after compilation
    * @param commands The commands to execute during compile
    */
   public addCompileCommand(...commands: string[]) {
@@ -721,7 +721,7 @@ export class NodeProject extends Project {
   public addTestCommand(...commands: string[]) {
     this.addScriptCommand('test', ...commands);
     this.start?.addEntry('test', {
-      descrtiption: 'Run tests',
+      desc: 'Run tests',
       category: StartEntryCategory.TEST,
     });
   }

@@ -1,6 +1,7 @@
 import * as child_process from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as chalk from 'chalk';
 
 import * as inquirer from 'inquirer';
 import { StartEntryOptions, StartEntryCategory } from '../../start';
@@ -8,15 +9,12 @@ import { StartEntryOptions, StartEntryCategory } from '../../start';
 const EXIT_MARKER = '$exit';
 
 export async function showStartMenu() {
-
-  const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
-
   const { command } = await inquirer.prompt([
     {
       type: 'list',
       name: 'command',
       message: 'Scripts:',
-      choices: renderChoices(manifest),
+      choices: renderChoices(),
       pageSize: 100,
       loop: false,
     },
@@ -29,8 +27,19 @@ export async function showStartMenu() {
   child_process.spawnSync('yarn', [ '-s', command ], { stdio: 'inherit' });
 }
 
+export function printStartMenu() {
+  console.error(chalk.cyanBright.underline('Commands ("yarn run COMMAND"):'));
+  for (const entry of renderChoices()) {
+    if (entry.type === 'separator') {
+      console.error(entry.line);
+    } else if (entry.name && entry.value !== '$exit') {
+      console.error(entry.name);
+    }
+  }
+}
 
-function renderChoices(manifest: any) {
+function renderChoices() {
+  const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
   const start: { [name: string]: StartEntryOptions } = manifest.start ?? {};
   const result = new Array();
   let category;
@@ -45,9 +54,9 @@ function renderChoices(manifest: any) {
     }
     category = cat;
     result.push({
-      name: `${k.padEnd(width)}   ${entry.descrtiption}`,
+      name: `${k.padEnd(width)}   ${entry.desc}`,
       value: k,
-      short: entry.descrtiption,
+      short: entry.desc,
     });
   }
 
@@ -68,7 +77,7 @@ function headingForCategory(category: StartEntryCategory) {
     case StartEntryCategory.MAINTAIN: return 'MAINTAIN';
     case StartEntryCategory.MISC:
     default:
-      return 'Misc.';
+      return 'MISC';
   }
 }
 

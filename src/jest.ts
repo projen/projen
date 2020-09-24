@@ -119,7 +119,7 @@ export class Jest {
     });
 
     project.start?.addEntry('test:watch', {
-      descrtiption: 'Run jest in watch mode',
+      desc: 'Run jest in watch mode',
       category: StartEntryCategory.TEST,
     });
 
