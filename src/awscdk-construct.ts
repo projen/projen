@@ -4,13 +4,13 @@ import { Semver } from './semver';
 /**
  * Options for the construct-lib-aws project.
  */
-export interface ConstructLibraryAwsOptions extends ConstructLibraryOptions {
+export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Minmum target version this library is tested against.
    *
-   * @default ConstructLibraryAwsCdk.defaultVersion
+   * @default 1.60.0
    */
-  readonly cdkVersion?: string;
+  readonly cdkVersion: string;
 
   /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
@@ -95,14 +95,9 @@ export interface ConstructLibraryAwsOptions extends ConstructLibraryOptions {
  * project.synth();
  * ```
  *
- * @pjid aws-construct
+ * @pjid awscdk-construct
  */
-export class ConstructLibraryAws extends ConstructLibrary {
-  /**
-   * The default value for `targetVersion`.
-   */
-  public static defaultVersion = '1.60.0';
-
+export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * The target CDK version for this library.
    */
@@ -116,7 +111,7 @@ export class ConstructLibraryAws extends ConstructLibrary {
       },
     });
 
-    this.version = Semver.caret(options.cdkVersion ?? ConstructLibraryAws.defaultVersion);
+    this.version = Semver.caret(options.cdkVersion);
 
     this.addPeerDependencies({ constructs: Semver.caret('3.0.4') });
 
@@ -159,3 +154,9 @@ export class ConstructLibraryAws extends ConstructLibrary {
     }
   }
 }
+
+/** @deprecated use `AwsCdkConstructLibraryOptions` */
+export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions { }
+
+/** @deprecated use `AwsCdkConstructLibrary` */
+export class ConstructLibraryAws extends AwsCdkConstructLibrary { }
