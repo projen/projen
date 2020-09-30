@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.78 (2020-09-30)
+
+
+### Bug Fixes
+
+* **typescript:** Add missing `/` to default types path  ([#133](https://github.com/eladb/projen/issues/133)) ([c6a1f20](https://github.com/eladb/projen/commit/c6a1f200a034659993b4b984fd2d21bfedc9d7f5)), closes [#132](https://github.com/eladb/projen/issues/132)
+
 ### 0.3.77 (2020-09-30)
 
 ### 0.3.76 (2020-09-29)
