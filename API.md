@@ -9,6 +9,7 @@ Name|Description
 [Component](#projen-component)|Represents a project component.
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
+[ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
@@ -39,6 +40,7 @@ Name|Description
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
 [ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
+[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -458,7 +460,7 @@ synthesize(_outdir: string): void
 A multi-language library for CDK constructs.
 
 __Extends__: [JsiiProject](#projen-jsiiproject)
-__Implemented by__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary), [ConstructLibraryAws](#projen-constructlibraryaws)
+__Implemented by__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary), [ConstructLibraryAws](#projen-constructlibraryaws), [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)
 
 ### Initializer
 
@@ -624,6 +626,96 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+
+
+
+
+## class ConstructLibraryCdk8s 🔹 <a id="projen-constructlibrarycdk8s"></a>
+
+CDK8s construct library project.
+
+A multi-language (jsii) construct library which vends constructs designed to
+use within the CDK for Kubernetes (CDK8s), with a friendly workflow and
+automatic publishing to the construct catalog.
+
+__Extends__: [ConstructLibrary](#projen-constructlibrary)
+
+### Initializer
+
+
+
+
+```ts
+new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
+```
+
+* **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **authorAddress** (<code>string</code>)  Email or URL of the library author. 
+  * **authorName** (<code>string</code>)  The name of the library author. 
+  * **name** (<code>string</code>)  The name of the library. 
+  * **repository** (<code>string</code>)  Git repository URL. 
+  * **authorEmail** (<code>string</code>)  *No description* __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  *No description* __*Optional*__
+  * **authorUrl** (<code>string</code>)  *No description* __*Optional*__
+  * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
+  * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: .compatignore
+  * **description** (<code>string</code>)  Library description. __*Optional*__
+  * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
+  * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
+  * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
+  * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
+  * **jsiiVersion** (<code>[Semver](#projen-semver)</code>)  *No description* __*Optional*__
+  * **license** (<code>string</code>)  *No description* __*Optional*__
+  * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
+  * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
+  * **stability** (<code>string</code>)  *No description* __*Optional*__
+  * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
+  * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
 
 
 
@@ -2420,6 +2512,84 @@ Name | Type | Description
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct ConstructLibraryCdk8sOptions 🔹 <a id="projen-constructlibrarycdk8soptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
+**compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
+**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | __*Optional*__
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
+**dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
+**jsiiVersion**?🔹 | <code>[Semver](#projen-semver)</code> | __*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | __*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
+**python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**rootdir**?🔹 | <code>string</code> | __*Default*__: "."
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | __*Optional*__
+**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
 
