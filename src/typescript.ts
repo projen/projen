@@ -167,7 +167,7 @@ export class TypeScriptProject extends NodeProject {
       });
     }
 
-    this.manifest.types = options.entrypointTypes ?? `${path.dirname(this.entrypoint)}${path.basename(this.entrypoint, '.js')}.d.ts`;
+    this.manifest.types = options.entrypointTypes ?? `${path.dirname(this.entrypoint)}/${path.basename(this.entrypoint, '.js')}.d.ts`;
 
     const compilerOptions = {
       alwaysStrict: true,
