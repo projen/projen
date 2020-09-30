@@ -1,18 +1,19 @@
-import { Project } from './project';
-import { JsonFile } from './json';
-import { Semver } from './semver';
-import { IgnoreFile } from './ignore-file';
-import { License } from './license';
-import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
-import { Version } from './version';
-import { GithubWorkflow } from './github-workflow';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { DependabotOptions, Dependabot } from './dependabot';
-import { MergifyOptions, Mergify } from './mergify';
+import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
+import { Dependabot, DependabotOptions } from './dependabot';
+import { GithubWorkflow } from './github-workflow';
+import { IgnoreFile } from './ignore-file';
+import { JsonFile } from './json';
+import { License } from './license';
+import * as logging from './logging';
+import { Mergify, MergifyOptions } from './mergify';
+import { Project } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
-import { Start, StartOptions, StartEntryCategory } from './start';
+import { Semver } from './semver';
+import { Start, StartEntryCategory, StartOptions } from './start';
 import { exec, writeFile } from './util';
+import { Version } from './version';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -936,7 +937,7 @@ export class NodeProject extends Project {
 
     // if we are runniung in a CI environment, fix versions through the lockfile.
     if (process.env.CI) {
-      console.error('Running yarn with --frozen-lockfile since "CI" is defined.');
+      logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
       install.push('--frozen-lockfile');
     }
 
@@ -971,7 +972,7 @@ export class NodeProject extends Project {
       // report removals
       for (const name of Object.keys(current)) {
         if (!user[name]) {
-          console.error(`${name}: removed`);
+          logging.verbose(`${name}: removed`);
         }
       }
     }
@@ -1000,13 +1001,13 @@ export class NodeProject extends Project {
           } catch (e) { }
 
           if (!desiredVersion) {
-            console.error(`unable to resolve version for ${name} from installed modules`);
+            logging.warn(`unable to resolve version for ${name} from installed modules`);
             continue;
           }
         }
 
         if (currentDefinition !== desiredVersion) {
-          console.error(`${name}: ${currentDefinition} => ${desiredVersion}`);
+          logging.verbose(`${name}: ${currentDefinition} => ${desiredVersion}`);
         }
 
         result[name] = desiredVersion;
@@ -1015,7 +1016,7 @@ export class NodeProject extends Project {
       // print removed packages
       for (const name of Object.keys(current)) {
         if (!result[name]) {
-          console.error(`${name} removed`);
+          logging.verbose(`${name} removed`);
         }
       }
 

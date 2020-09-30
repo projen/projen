@@ -1,9 +1,10 @@
-import { IgnoreFile } from './ignore-file';
-import { Component } from './component';
-import { cleanup } from './cleanup';
-import { Start } from './start';
-import { printStartMenu } from './cli/cmds/start-app';
 import * as chalk from 'chalk';
+import { cleanup } from './cleanup';
+import { printStartMenu } from './cli/cmds/start-app';
+import { Component } from './component';
+import { IgnoreFile } from './ignore-file';
+import * as logging from './logging';
+import { Start } from './start';
 
 /**
  * Base project
@@ -47,7 +48,8 @@ export class Project {
     // project-level hook
     this.postSynthesize(outdir);
 
-    console.error(`${chalk.cyanBright('projen')}: done`);
+
+    logging.info('Synthesis complete');
 
     const start = this.components.find(c => c instanceof Start);
     if (start) {

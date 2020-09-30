@@ -1,19 +1,21 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import {PROJEN_RC} from '../common';
+import { PROJEN_RC } from '../common';
+import * as logging from '../logging';
 
 const projenfile = path.resolve(PROJEN_RC);
 const projen = path.join(__dirname, '..');
 
 export function synth() {
   if (!fs.existsSync(projenfile)) {
-    console.error(`Unable to find ${projenfile}. Use "projen new" to create a new project.`);
+    logging.error(`Unable to find ${projenfile}. Use "projen new" to create a new project.`);
     process.exit(1);
   }
 
   // if node_modules/projen is not a directory or does not exist, create a
   // temporary symlink to the projen that we are currently running in order to
   // allow .projenrc.js to `require()` it.
+  logging.info('Synthesizing project configuration files...');
   const projenModulePath = path.resolve('node_modules', 'projen');
   if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
     fs.removeSync(projenModulePath);

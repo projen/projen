@@ -1,10 +1,10 @@
+import * as chalk from 'chalk';
 import * as child_process from 'child_process';
 import * as fs from 'fs';
-import * as path from 'path';
-import * as chalk from 'chalk';
-
 import * as inquirer from 'inquirer';
-import { StartEntryOptions, StartEntryCategory } from '../../start';
+import * as path from 'path';
+import { StartEntryCategory, StartEntryOptions } from '../../start';
+
 
 const EXIT_MARKER = '$exit';
 

@@ -1,9 +1,10 @@
+import { execSync } from 'child_process';
 import * as fs from 'fs-extra';
-import * as yargs from 'yargs';
 import * as path from 'path';
+import * as yargs from 'yargs';
 import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
-import { execSync } from 'child_process';
+import * as logging from '../../logging';
 import { synth } from '../synth';
 
 class Command implements yargs.CommandModule {
@@ -11,6 +12,7 @@ class Command implements yargs.CommandModule {
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
+    args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js'});
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? '', {
         builder: args => {
@@ -51,7 +53,7 @@ class Command implements yargs.CommandModule {
 
           // fail if .projenrc.js already exists
           if (fs.existsSync(PROJEN_RC)) {
-            console.error(`Directory already contains ${PROJEN_RC}`);
+            logging.error(`Directory already contains ${PROJEN_RC}`);
             process.exit(1);
           }
 
@@ -79,8 +81,11 @@ class Command implements yargs.CommandModule {
           }
 
           generateProjenConfig(type, params);
-          console.error(`Project config created for "${type.typename}" project in ${PROJEN_RC}.`);
-          synth();
+          logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
+
+          if (args.synth) {
+            synth();
+          }
         },
       });
     }

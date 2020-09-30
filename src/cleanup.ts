@@ -1,7 +1,8 @@
+import * as fs from 'fs-extra';
 import * as glob from 'glob';
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { PROJEN_MARKER } from './common';
+import * as logging from './logging';
 
 export function cleanup(dir: string) {
   try {
@@ -9,7 +10,7 @@ export function cleanup(dir: string) {
       fs.removeSync(f);
     }
   } catch (e) {
-    console.error(`warning: failed to clean up generated files: ${e.stack}`);
+    logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
   }
 }
 
