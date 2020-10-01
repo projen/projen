@@ -208,6 +208,15 @@ export interface NodeProjectCommonOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
+   * Automatically merge PRs that build successfully and have this label.
+   * 
+   * To disable, set this value to an empty string.
+   * 
+   * @default "auto-merge"
+   */
+  readonly mergifyAutoMergeLabel?: string;
+
+  /**
    * npm scripts to include. If a script has the same name as a standard script,
    * the standard script will be overwritten.
    *
@@ -645,27 +654,46 @@ export class NodeProject extends Project {
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
 
+      const successfulBuild = this.buildWorkflow 
+        ? [ `status-success=${this.buildWorkflow.buildJobId}` ] 
+        : [];
+
+      const mergeAction = {
+        merge: {
+          // squash all commits into a single commit when merging
+          method: 'squash',
+
+          // use PR title+body as the commit message
+          commit_message: 'title+body',
+
+          // update PR branch so it's up-to-date before merging
+          strict: 'smart',
+          strict_method: 'merge',
+        },
+        delete_head_branch: { },
+      };
+
       this.mergify.addRule({
         name: 'Automatic merge on approval and successful build',
+        actions: mergeAction,
         conditions: [
           '#approved-reviews-by>=1',
-          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
+          ...successfulBuild,
         ],
-        actions: {
-          merge: {
-            // squash all commits into a single commit when merging
-            method: 'squash',
-
-            // use PR title+body as the commit message
-            commit_message: 'title+body',
-
-            // update PR branch so it's up-to-date before merging
-            strict: 'smart',
-            strict_method: 'merge',
-          },
-          delete_head_branch: { },
-        },
       });
+
+      // empty string means disabled.
+      const autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
+      if (autoMergeLabel !== '') {
+        this.mergify.addRule({
+          name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
+          actions: mergeAction,
+          conditions: [
+            `label=${autoMergeLabel}`,
+            ...successfulBuild,
+          ],
+        });
+      }
 
       this.npmignore?.exclude('/.mergify.yml');
     }
