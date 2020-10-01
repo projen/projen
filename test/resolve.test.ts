@@ -28,15 +28,15 @@ test('boolean', () => {
 });
 
 test('array', () => {
-  expect(resolve([ ])).toStrictEqual([]);
-  expect(resolve([ 1, 2, 3 ])).toStrictEqual([ 1, 2, 3 ]);
+  expect(resolve([])).toStrictEqual([]);
+  expect(resolve([1, 2, 3])).toStrictEqual([1, 2, 3]);
 });
 
 test('object', () => {
   expect(resolve({ })).toStrictEqual({ });
-  expect(resolve({ foo: 123, hello: [ 1, 2, { bar: 3 } ]})).toStrictEqual({
+  expect(resolve({ foo: 123, hello: [1, 2, { bar: 3 }] })).toStrictEqual({
     foo: 123,
-    hello: [ 1, 2, { bar: 3 }],
+    hello: [1, 2, { bar: 3 }],
   });
 });
 
@@ -47,11 +47,11 @@ test('functions are resolved', () => {
 });
 
 test('recursive resolve', () => {
-  expect(resolve(() => [ 1, 2, () => 30 ])).toStrictEqual([ 1, 2, 30 ]);
-  expect(resolve(() => ({ foo: 123, bar: () => 'bar' }))).toStrictEqual({ foo: 123, bar: 'bar' })
-  expect(resolve(() => ({ foo: 123, bar: () => [ 'bar', 'baz', { hello: () => 'world' } ] }))).toStrictEqual({
+  expect(resolve(() => [1, 2, () => 30])).toStrictEqual([1, 2, 30]);
+  expect(resolve(() => ({ foo: 123, bar: () => 'bar' }))).toStrictEqual({ foo: 123, bar: 'bar' });
+  expect(resolve(() => ({ foo: 123, bar: () => ['bar', 'baz', { hello: () => 'world' }] }))).toStrictEqual({
     foo: 123,
-    bar: [ 'bar', 'baz', { hello: 'world' } ],
+    bar: ['bar', 'baz', { hello: 'world' }],
   });
 });
 
@@ -89,6 +89,6 @@ test('context is passed to functions', () => {
       4,
       { another: { level: 'hello fun 2 10' } },
     ],
-  })
+  });
 });
 

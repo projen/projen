@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
@@ -12,18 +12,18 @@ class Command implements yargs.CommandModule {
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
-    args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js'});
+    args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? '', {
-        builder: args => {
-          args.showHelpOnFail(true);
+        builder: cargs => {
+          cargs.showHelpOnFail(true);
 
           for (const option of type.options ?? []) {
             if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
               continue;
             }
 
-            let desc = [ option.docs?.replace(/\ *\.$/, '') ?? '' ];
+            let desc = [option.docs?.replace(/\ *\.$/, '') ?? ''];
 
             const required = !option.optional;
             let defaultValue;
@@ -38,7 +38,7 @@ class Command implements yargs.CommandModule {
               }
             }
 
-            args.option(option.switch, {
+            cargs.option(option.switch, {
               group: required ? 'Required:' : 'Optional:',
               type: option.type,
               description: desc.join(' '),
@@ -47,9 +47,10 @@ class Command implements yargs.CommandModule {
             });
           }
 
-          return args;
+          return cargs;
         },
-        handler: args => {
+
+        handler: argv => {
 
           // fail if .projenrc.js already exists
           if (fs.existsSync(PROJEN_RC)) {
@@ -58,11 +59,11 @@ class Command implements yargs.CommandModule {
           }
 
           const params: any = { };
-          for (const [ key, value ] of Object.entries(args)) {
+          for (const [key, value] of Object.entries(argv)) {
             for (const opt of type.options) {
               if (opt.switch === key) {
                 let curr = params;
-                const queue = [ ...opt.path ];
+                const queue = [...opt.path];
                 while (true) {
                   const p = queue.shift();
                   if (!p) {
@@ -83,7 +84,7 @@ class Command implements yargs.CommandModule {
           generateProjenConfig(type, params);
           logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 
-          if (args.synth) {
+          if (argv.synth) {
             synth();
           }
         },
@@ -135,7 +136,7 @@ function processDefault(value: string) {
 
 function execOrUndefined(command: string): string | undefined {
   try {
-    const value = execSync(command, { stdio: [ 'inherit', 'pipe', 'ignore' ]}).toString('utf-8').trim();
+    const value = execSync(command, { stdio: ['inherit', 'pipe', 'ignore'] }).toString('utf-8').trim();
     if (!value) { return undefined; } // an empty string is the same as undefined
     return value;
   } catch {

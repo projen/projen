@@ -1,5 +1,5 @@
-import { FileBase, IResolver } from './file';
 import * as fs from 'fs-extra';
+import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
 export interface LicenseOptions {
@@ -34,7 +34,7 @@ export class License extends FileBase {
 
     this.text = fs.readFileSync(textFile, 'utf-8')
       .replace('[yyyy]', years)
-      .replace('[name of copyright owner]', owner)
+      .replace('[name of copyright owner]', owner);
   }
 
   protected synthesizeContent(_: IResolver) {

@@ -1,6 +1,6 @@
-import { FileBase, IResolver } from './file';
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
+import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
 export class GithubWorkflow extends FileBase {
@@ -37,6 +37,6 @@ export class GithubWorkflow extends FileBase {
     return [
       `# ${GENERATION_DISCLAIMER}`,
       YAML.stringify(workflow),
-    ].join('\n')
+    ].join('\n');
   }
 }

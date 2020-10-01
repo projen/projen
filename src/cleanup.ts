@@ -1,6 +1,6 @@
+import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as glob from 'glob';
-import * as path from 'path';
 import { PROJEN_MARKER } from './common';
 import * as logging from './logging';
 
@@ -49,6 +49,6 @@ function readGitIgnore(dir: string) {
     .filter(x => !x.startsWith('#') && !x.startsWith('!'))
     .map(x => `${x}\n${x}/**`)
     .join('\n')
-    .split('\n')
+    .split('\n');
 }
 

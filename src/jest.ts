@@ -1,7 +1,7 @@
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
-import { TypescriptConfig } from './typescript';
 import { StartEntryCategory } from './start';
+import { TypescriptConfig } from './typescript';
 
 const DEFAULT_JEST_VERSION = Semver.caret('26.4.2');
 
@@ -65,7 +65,7 @@ export class Jest {
 
     project.addDevDependencies({ jest: version });
 
-    this.ignorePatterns = options.ignorePatterns ?? [ '/node_modules/' ];
+    this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
 
     this.config = {
       clearMocks: true,
@@ -88,7 +88,7 @@ export class Jest {
         'ts-jest': {
           tsConfig: options.typescript.fileName,
         },
-      }
+      };
 
       // add relevant deps
       project.addDevDependencies({
@@ -103,7 +103,7 @@ export class Jest {
       };
     }
 
-    const jestOpts = [ '--passWithNoTests' ];
+    const jestOpts = ['--passWithNoTests'];
 
     // if the project has anti-tamper configured, it should be safe to always run tests
     // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.

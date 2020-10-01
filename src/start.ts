@@ -26,7 +26,7 @@ export class Start extends Component {
    */
   public addEntry(name: string, options: StartEntryOptions) {
     if (!this.nodeProject.hasScript(name)) {
-      throw new Error(`cannot add a start menu item for undefined script ${name}`)
+      throw new Error(`cannot add a start menu item for undefined script ${name}`);
     }
 
     this.nodeProject.manifest.start = this.nodeProject.manifest.start ?? {};

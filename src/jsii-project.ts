@@ -1,10 +1,10 @@
-import { NodeProjectCommonOptions } from './node-project';
-import { Semver } from './semver';
 import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
-import { TypeScriptProject } from './typescript';
+import { NodeProjectCommonOptions } from './node-project';
+import { Semver } from './semver';
 import { StartEntryCategory } from './start';
+import { TypeScriptProject } from './typescript';
 
 const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -184,7 +184,7 @@ export class JsiiProject extends TypeScriptProject {
     });
 
     this.addScript('compile', `jsii ${jsiiFlags}`);
-    this.addScript('watch', `jsii -w ${jsiiFlags}`)
+    this.addScript('watch', `jsii -w ${jsiiFlags}`);
     this.addScript('package', 'jsii-pacmak');
 
     const targets: Record<string, any> = { };
@@ -298,6 +298,7 @@ export class JsiiProject extends TypeScriptProject {
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
               NPM_DIST_TAG: this.npmDistTag,
+              NPM_REGISTRY: this.npmRegistry,
             },
           },
         ],

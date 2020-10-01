@@ -10,13 +10,13 @@ export class Semver {
   public static latest() { return new Semver('*'); }
 
   /**
-   * Accept only an exact version 
+   * Accept only an exact version
    */
   public static pinned(version: string) { return new Semver(version); }
 
   /**
    * Accept any minor version.
-   * 
+   *
    * >= version
    * < next major version
    */
@@ -24,7 +24,7 @@ export class Semver {
 
   /**
    * Accept patches.
-   * 
+   *
    * >= version
    * < next minor version
    */

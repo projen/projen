@@ -1,6 +1,7 @@
 import * as path from 'path';
-import { Component } from './component';
 import { resolve } from './_resolve';
+import { Component } from './component';
+import { Project } from './project';
 import { writeFile } from './util';
 
 export interface FileBaseOptions {
@@ -86,4 +87,3 @@ export interface IResolver {
 }
 
 
-import { Project } from './project';

@@ -20,7 +20,7 @@ export function resolve(value: any, ...args: any[]): any {
 
   const result: any = {};
 
-  for (const [k,v] of Object.entries(value)) {
+  for (const [k, v] of Object.entries(value)) {
     result[k] = resolve(v, ...args);
   }
 

@@ -1,8 +1,8 @@
-import { JsonFile, JsonFileOptions } from './json';
 import * as YAML from 'yaml';
-import { Project } from './project';
 import { GENERATION_DISCLAIMER } from './common';
 import { IResolver } from './file';
+import { JsonFile, JsonFileOptions } from './json';
+import { Project } from './project';
 
 export interface YamlFileOptions extends JsonFileOptions {
 
@@ -20,6 +20,6 @@ export class YamlFile extends JsonFile {
       `# ${GENERATION_DISCLAIMER}`,
       '',
       YAML.stringify(sanitized, { indent: 2 }),
-    ].join('\n')
+    ].join('\n');
   }
 }

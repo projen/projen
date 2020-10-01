@@ -1,13 +1,13 @@
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { JsonFile } from './json';
-import { JestOptions, Jest } from './jest';
-import { Eslint } from './eslint';
-import { Semver } from './semver';
-import { TypedocDocgen } from './typescript-typedoc';
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { Component } from './component';
+import { Eslint } from './eslint';
+import { Jest, JestOptions } from './jest';
+import { JsonFile } from './json';
+import { NodeProject, NodeProjectOptions } from './node-project';
+import { Semver } from './semver';
 import { StartEntryCategory } from './start';
+import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -142,9 +142,9 @@ export class TypeScriptProject extends NodeProject {
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
     if (compileBeforeTest) {
-      this.addScriptCommand('build', 'yarn compile', 'yarn test');
+      this.addBuildCommand('yarn compile', 'yarn test');
     } else {
-      this.addScriptCommand('build', 'yarn test', 'yarn compile');
+      this.addBuildCommand('yarn test', 'yarn compile');
     }
     this.start?.addEntry('build', {
       desc: 'Full release build (test+compile)',
@@ -159,7 +159,7 @@ export class TypeScriptProject extends NodeProject {
         'mv *.tgz dist/js/',
       );
 
-      this.addScriptCommand('build', 'yarn run package');
+      this.addBuildCommand('yarn run package');
 
       this.start?.addEntry('package', {
         desc: 'Create an npm tarball',
@@ -167,7 +167,9 @@ export class TypeScriptProject extends NodeProject {
       });
     }
 
-    this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js'))}.d.ts`;
+    if (options.entrypointTypes || this.entrypoint !== '') {
+      this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js'))}.d.ts`;
+    }
 
     const compilerOptions = {
       alwaysStrict: true,
@@ -175,7 +177,7 @@ export class TypeScriptProject extends NodeProject {
       experimentalDecorators: true,
       inlineSourceMap: true,
       inlineSources: true,
-      lib: [ 'es2018' ],
+      lib: ['es2018'],
       module: 'CommonJS',
       noEmitOnError: false,
       noFallthroughCasesInSwitch: true,
@@ -194,7 +196,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (!options.disableTsconfig) {
       new TypescriptConfig(this, {
-        include: [ `${this.srcdir}/**/*.ts` ],
+        include: [`${this.srcdir}/**/*.ts`],
         exclude: [
           'node_modules',
           this.libdir,
@@ -225,9 +227,8 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.vscode');
     this.npmignore?.exclude('/.projenrc.js');
 
-    if (options.eslint ?? true) {
-      this.eslint = new Eslint(this);
-    }
+    // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
+    let eslintTsConfig = 'tsconfig.json';
 
     if (options.jest ?? true) {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
@@ -243,6 +244,8 @@ export class TypeScriptProject extends NodeProject {
         ],
         compilerOptions,
       });
+
+      eslintTsConfig = tsconfig.fileName;
 
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
@@ -261,6 +264,13 @@ export class TypeScriptProject extends NodeProject {
       this.npmignore?.exclude(`/${this.testdir}`);
     }
 
+    if (options.eslint ?? true) {
+      this.eslint = new Eslint(this, {
+        tsconfigPath: `./${eslintTsConfig}`,
+        dirs: [this.srcdir, this.testdir],
+      });
+    }
+
     this.addDevDependencies({
       'typescript': options.typescriptVersion ?? Semver.caret('3.9.5'),
       '@types/node': Semver.caret(this.minNodeVersion ?? '10.17.0'), // install the minimum version to ensure compatibility
@@ -274,6 +284,14 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * Adds commands to run as part of `yarn build`.
+   * @param commands The commands to add
+   */
+  public addBuildCommand(...commands: string[]) {
+    this.addScriptCommand('build', ...commands);
   }
 }
 
@@ -487,8 +505,8 @@ export class TypescriptConfig {
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
     const fileName = options.fileName ?? 'tsconfig.json';
 
-    this.include = options.include ?? [ '**/*.ts' ];
-    this.exclude = options.exclude ?? [ 'node_modules' ];
+    this.include = options.include ?? ['**/*.ts'];
+    this.exclude = options.exclude ?? ['node_modules'];
     this.fileName = fileName;
 
     this.compilerOptions = options.compilerOptions;
@@ -560,7 +578,7 @@ export class TypeScriptAppProject extends TypeScriptProject {
     super({
       allowLibraryDependencies: false,
       releaseWorkflow: false,
-      entrypoint: 'lib/main.js',
+      entrypoint: '', // "main" is not needed in typescript apps
       package: false,
       ...options,
     });

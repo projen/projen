@@ -1,8 +1,8 @@
-import * as chalk from 'chalk';
 import * as child_process from 'child_process';
 import * as fs from 'fs';
-import * as inquirer from 'inquirer';
 import * as path from 'path';
+import * as chalk from 'chalk';
+import * as inquirer from 'inquirer';
 import { StartEntryCategory, StartEntryOptions } from '../../start';
 
 
@@ -24,7 +24,7 @@ export async function showStartMenu() {
     return;
   }
 
-  child_process.spawnSync('yarn', [ '-s', command ], { stdio: 'inherit' });
+  child_process.spawnSync('yarn', ['-s', command], { stdio: 'inherit' });
 }
 
 export function printStartMenu() {
@@ -81,7 +81,7 @@ function headingForCategory(category: StartEntryCategory) {
   }
 }
 
-function sortByPriority([_1,e1]: [string, StartEntryOptions], [_2,e2]: [string,StartEntryOptions]) {
+function sortByPriority([_1, e1]: [string, StartEntryOptions], [_2, e2]: [string, StartEntryOptions]) {
   const p1 = e1.category ?? StartEntryCategory.MISC;
   const p2 = e2.category ?? StartEntryCategory.MISC;
   if (p1 > p2) return 1;

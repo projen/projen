@@ -1,5 +1,5 @@
-import { NodeProject } from './node-project';
 import { GithubWorkflow } from './github-workflow';
+import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 
 export interface ProjenUpgradeOptions {
@@ -11,6 +11,15 @@ export interface ProjenUpgradeOptions {
    * @default - auto-upgrade is disabled
    */
   readonly autoUpgradeSecret?: string;
+
+  /**
+   * Apply labels to the PR. For example, you can add the label "auto-merge",
+   * which, in-tandem with mergify configuraiton will automatically merge these
+   * PRs if their build passes.
+   *
+   * @default []
+   */
+  readonly labels?: string[];
 }
 
 /**
@@ -33,9 +42,21 @@ export class ProjenUpgrade {
       const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
 
       workflow.on({
-        schedule: [ { cron: '0 6 * * *' } ], // 6am every day
-        workflow_dispatch: {},               // allow manual triggering
+        schedule: [{ cron: '0 6 * * *' }], // 6am every day
+        workflow_dispatch: {}, // allow manual triggering
       });
+
+      const withOptions: Record<string, string> = {
+        'token': '${{ secrets.' + options.autoUpgradeSecret + ' }}',
+        'commit-message': 'chore: upgrade projen',
+        'branch': 'auto/projen-upgrade',
+        'title': 'chore: upgrade projen',
+        'body': 'This PR upgrades projen to the latest version',
+      };
+
+      if (options.labels?.length) {
+        withOptions.labels = options.labels.join(',');
+      }
 
       workflow.addJobs({
         upgrade: {
@@ -50,13 +71,7 @@ export class ProjenUpgrade {
             {
               name: 'Create Pull Request',
               uses: 'peter-evans/create-pull-request@v3',
-              with: {
-                'token': '${{ secrets.' + options.autoUpgradeSecret + ' }}',
-                'commit-message': 'chore: upgrade projen',
-                'branch': 'auto/projen-upgrade',
-                'title': 'chore: upgrade projen',
-                'body': 'This PR upgrades projen to the latest version',
-              },
+              with: withOptions,
             },
           ],
         },

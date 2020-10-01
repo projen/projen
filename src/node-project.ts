@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
@@ -148,6 +148,13 @@ export interface NodeProjectCommonOptions {
   readonly npmDistTag?: string;
 
   /**
+   * The registry url to use when releasing packages.
+   *
+   * @default "registry.npmjs.org"
+   */
+  readonly npmRegistry?: string;
+
+  /**
    * License copyright owner.
    *
    * @default - defaults to the value of authorName or "" if `authorName` is undefined.
@@ -208,12 +215,21 @@ export interface NodeProjectCommonOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
+   * Automatically merge PRs that build successfully and have this label.
+   *
+   * To disable, set this value to an empty string.
+   *
+   * @default "auto-merge"
+   */
+  readonly mergifyAutoMergeLabel?: string;
+
+  /**
    * npm scripts to include. If a script has the same name as a standard script,
    * the standard script will be overwritten.
    *
    * @default {}
    */
-  readonly scripts?: { [name: string]: string }
+  readonly scripts?: { [name: string]: string };
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
@@ -230,6 +246,14 @@ export interface NodeProjectCommonOptions {
    * @default - no automatic projen upgrade pull requests
    */
   readonly projenUpgradeSecret?: string;
+
+  /**
+   * Automatically merge projen upgrade PRs when build passes.
+   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   *
+   * @default - "true" if mergify auto-merge is enabled (default)
+   */
+  readonly projenUpgradeAutoMerge?: boolean;
 
   /**
    * Defines a `yarn start` interactive experience
@@ -263,6 +287,8 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Module entrypoint (`main` in `package.json`)
+   *
+   * Set to an empty string to not include `main` in your package.json
    *
    * @default lib/index.js
    */
@@ -409,6 +435,8 @@ export class NodeProject extends Project {
 
   protected readonly npmDistTag: string;
 
+  protected readonly npmRegistry: string;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -434,16 +462,33 @@ export class NodeProject extends Project {
 
     this.npmDistTag = options.npmDistTag ?? 'latest';
 
+    this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
+
     this.scripts = {};
 
     const renderScripts = () => {
       const result: any = {};
       for (const [name, commands] of Object.entries(this.scripts)) {
-        const cmds = commands.length > 0 ? commands : [ 'echo "n/a"' ];
+        const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
         result[name] = cmds.join(' && ');
       }
       return result;
     };
+
+    let author;
+
+    if (options.authorName) {
+      author = {
+        name: options.authorName,
+        email: options.authorEmail,
+        url: options.authorUrl,
+        organization: options.authorOrganization ?? false,
+      };
+    } else {
+      if (options.authorEmail || options.authorUrl || options.authorOrganization !== undefined) {
+        throw new Error('"authorName" is required if specifying "authorEmail" or "authorUrl"');
+      }
+    }
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -456,12 +501,7 @@ export class NodeProject extends Project {
       },
       'bin': this.bin,
       'scripts': renderScripts,
-      'author': {
-        name: options.authorName,
-        email: options.authorEmail,
-        url: options.authorUrl,
-        organization: options.authorOrganization ?? false,
-      },
+      'author': author,
       'homepage': options.homepage,
       'devDependencies': sorted(this.devDependencies),
       'peerDependencies': sorted(this.peerDependencies),
@@ -471,8 +511,8 @@ export class NodeProject extends Project {
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
-    this.entrypoint = options.entrypoint ?? 'lib/index.js'
-    this.manifest.main = this.entrypoint;
+    this.entrypoint = options.entrypoint ?? 'lib/index.js';
+    this.manifest.main = this.entrypoint !== '' ? this.entrypoint : undefined;
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
@@ -550,7 +590,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
-      const releaseBranches = options.releaseBranches ?? [ 'master' ];
+      const releaseBranches = options.releaseBranches ?? ['master'];
 
       const trigger: { [event: string]: any } = {};
 
@@ -589,6 +629,7 @@ export class NodeProject extends Project {
                 env: {
                   NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
                   NPM_DIST_TAG: this.npmDistTag,
+                  NPM_REGISTRY: this.npmRegistry,
                 },
               },
             ],
@@ -630,30 +671,51 @@ export class NodeProject extends Project {
       }
     }
 
+    let autoMergeLabel;
+
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
 
+      const successfulBuild = this.buildWorkflow
+        ? [`status-success=${this.buildWorkflow.buildJobId}`]
+        : [];
+
+      const mergeAction = {
+        merge: {
+          // squash all commits into a single commit when merging
+          method: 'squash',
+
+          // use PR title+body as the commit message
+          commit_message: 'title+body',
+
+          // update PR branch so it's up-to-date before merging
+          strict: 'smart',
+          strict_method: 'merge',
+        },
+        delete_head_branch: { },
+      };
+
       this.mergify.addRule({
         name: 'Automatic merge on approval and successful build',
+        actions: mergeAction,
         conditions: [
           '#approved-reviews-by>=1',
-          ...(this.buildWorkflow ? [ `status-success=${this.buildWorkflow.buildJobId}` ] : []),
+          ...successfulBuild,
         ],
-        actions: {
-          merge: {
-            // squash all commits into a single commit when merging
-            method: 'squash',
-
-            // use PR title+body as the commit message
-            commit_message: 'title+body',
-
-            // update PR branch so it's up-to-date before merging
-            strict: 'smart',
-            strict_method: 'merge',
-          },
-          delete_head_branch: { },
-        },
       });
+
+      // empty string means disabled.
+      autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
+      if (autoMergeLabel !== '') {
+        this.mergify.addRule({
+          name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
+          actions: mergeAction,
+          conditions: [
+            `label=${autoMergeLabel}`,
+            ...successfulBuild,
+          ],
+        });
+      }
 
       this.npmignore?.exclude('/.mergify.yml');
     }
@@ -662,8 +724,10 @@ export class NodeProject extends Project {
       new Dependabot(this, options.dependabotOptions);
     }
 
+    const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
+      labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
     });
 
     // override any scripts from options (if specified)
@@ -673,13 +737,13 @@ export class NodeProject extends Project {
   }
 
   public addBins(bins: Record<string, string>) {
-    for (const [ k, v ] of Object.entries(bins)) {
+    for (const [k, v] of Object.entries(bins)) {
       this.bin[k] = v;
     }
   }
 
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
-    for (const [ k, v ] of Object.entries(deps)) {
+    for (const [k, v] of Object.entries(deps)) {
       this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (bundle) {
@@ -707,7 +771,7 @@ export class NodeProject extends Project {
   }
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
-    for (const [ k, v ] of Object.entries(deps ?? {})) {
+    for (const [k, v] of Object.entries(deps ?? {})) {
       this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
@@ -718,7 +782,7 @@ export class NodeProject extends Project {
     }
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
-    for (const [ k, v ] of Object.entries(deps)) {
+    for (const [k, v] of Object.entries(deps)) {
       this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (pinned && v.version) {
@@ -733,7 +797,7 @@ export class NodeProject extends Project {
    * @param scripts script names and commands
    */
   public addScripts(scripts: { [name: string]: string }) {
-    for (const [ name, command ] of Object.entries(scripts)) {
+    for (const [name, command] of Object.entries(scripts)) {
       this.addScript(name, command);
     }
   }
@@ -747,6 +811,15 @@ export class NodeProject extends Project {
   public addScript(name: string, ...commands: string[]) {
     this.scripts[name] = commands;
   }
+
+  /**
+   * Removes the npm script (always successful).
+   * @param name The name of the script.
+   */
+  public removeScript(name: string) {
+    delete this.scripts[name];
+  }
+
 
   /**
    * Indicates if a script by the name name is defined.
@@ -783,7 +856,7 @@ export class NodeProject extends Project {
   }
 
   public addFields(fields: { [name: string]: any }) {
-    for (const [ name, value ] of Object.entries(fields)) {
+    for (const [name, value] of Object.entries(fields)) {
       this.manifest[name] = value;
     }
   }
@@ -831,7 +904,7 @@ export class NodeProject extends Project {
    */
   public get workflowAntitamperSteps(): any[] {
     return this.antitamper
-      ? [ { name: 'Anti-tamper check', run: 'git diff --exit-code' } ]
+      ? [{ name: 'Anti-tamper check', run: 'git diff --exit-code' }]
       : [];
   }
 
@@ -975,7 +1048,7 @@ export class NodeProject extends Project {
           logging.verbose(`${name}: removed`);
         }
       }
-    }
+    };
 
     readDeps(this.devDependencies, pkg.devDependencies);
     readDeps(this.dependencies, pkg.dependencies);
@@ -989,13 +1062,13 @@ export class NodeProject extends Project {
     const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
       const result: Record<string, string> = {};
 
-      for (const [ name, currentDefinition ] of Object.entries(user)) {
+      for (const [name, currentDefinition] of Object.entries(user)) {
         // find actual version from node_modules
         let desiredVersion = currentDefinition;
 
         if (currentDefinition === '*') {
           try {
-            const modulePath = require.resolve(`${name}/package.json`, { paths: [ outdir ]});
+            const modulePath = require.resolve(`${name}/package.json`, { paths: [outdir] });
             const module = JSON.parse(fs.readFileSync(modulePath, 'utf-8'));
             desiredVersion = `^${module.version}`;
           } catch (e) { }
@@ -1021,7 +1094,7 @@ export class NodeProject extends Project {
       }
 
       return sorted(result)();
-    }
+    };
 
     pkg.dependencies = resolveDeps(pkg.dependencies, this.dependencies);
     pkg.devDependencies = resolveDeps(pkg.devDependencies, this.devDependencies);
@@ -1030,7 +1103,7 @@ export class NodeProject extends Project {
     writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
 
-  private addDefaultGitIgnore()  {
+  private addDefaultGitIgnore() {
 
     this.gitignore.exclude(
       '# Logs',
@@ -1098,7 +1171,7 @@ const DEFAULT_WORKFLOW_BOOTSTRAP = [
   { run: `npx projen@${PROJEN_VERSION}` },
 ];
 
-export interface NodeBuildWorkflowOptions  {
+export interface NodeBuildWorkflowOptions {
   /**
    * @default - default image
    */
@@ -1149,7 +1222,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [ { run: 'yarn bump' } ] : [],
+        ...options.bump ? [{ run: 'yarn bump' }] : [],
 
         // build (compile + test)
         { run: 'yarn build' },
@@ -1159,7 +1232,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         ...project.workflowAntitamperSteps,
 
         // push bump commit
-        ...options.bump ? [ { run: 'git push --follow-tags origin $GITHUB_REF' } ] : [],
+        ...options.bump ? [{ run: 'git push --follow-tags origin $GITHUB_REF' }] : [],
       ],
     };
 
@@ -1204,7 +1277,7 @@ function parseDep(dep: string) {
     dep = dep.substr(1);
   }
 
-  const [ name, version ] = dep.split('@');
+  const [name, version] = dep.split('@');
   let depname = scope ? `@${name}` : name;
   return { [depname]: Semver.of(version ?? '*') };
 }

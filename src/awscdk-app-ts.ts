@@ -1,10 +1,10 @@
+import * as path from 'path';
+import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { Semver } from './semver';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import { StartEntryCategory } from './start';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
@@ -23,6 +23,14 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * Additional context to include in `cdk.json`.
    */
   readonly context?: { [key: string]: string };
+
+  /**
+   * The CDK app's entrypoint (relative to the source directory, which is
+   * "src" by default).
+   *
+   * @default "main.ts"
+   */
+  readonly appEntrypoint?: string;
 }
 
 /**
@@ -41,11 +49,26 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    */
   public readonly cdkConfig: any;
 
+  /**
+   * The CDK app entrypoint
+   */
+  public readonly appEntrypoint: string;
+
   constructor(options: AwsCdkTypeScriptAppOptions) {
     super({
       ...options,
       sampleCode: false,
     });
+
+    if (this.srcdir !== 'src') {
+      throw new Error('sources are expected under the "src" directory');
+    }
+
+    if (this.testdir !== 'test') {
+      throw new Error('test sources are expected under the "test" directory');
+    }
+
+    this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
     this.cdkVersion = Semver.caret(options.cdkVersion);
 
@@ -56,10 +79,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addCdkDependency('@aws-cdk/core');
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    this.addScript('synth', 'cdk synth');
     this.addScript('cdk', 'cdk');
+    this.addScript('synth', 'cdk synth');
     this.addScript('deploy', 'cdk deploy');
-    this.addCompileCommand('yarn synth'); // synth after compile
+    this.addScript('diff', 'cdk diff');
+
+    this.addScript('compile', 'true');
+    this.removeScript('watch'); // because we use ts-node
+    this.addBuildCommand('yarn synth');
 
     this.start?.addEntry('synth', {
       desc: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
@@ -72,8 +99,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     this.cdkConfig = {
-      app: `node ${this.entrypoint}`,
+      app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
+
+    this.addDevDeps('ts-node');
 
     new JsonFile(this, 'cdk.json', {
       obj: this.cdkConfig,
@@ -97,14 +126,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 }
 
 class SampleCode extends Component {
-  private readonly nodeProject: AwsCdkTypeScriptApp;
+  private readonly appProject: AwsCdkTypeScriptApp;
   constructor(project: AwsCdkTypeScriptApp) {
     super(project);
-    this.nodeProject = project;
+    this.appProject = project;
   }
 
   public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.nodeProject.srcdir);
+    const srcdir = path.join(outdir, this.appProject.srcdir);
     if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
@@ -119,14 +148,23 @@ export class MyStack extends Stack {
   }
 }
 
+// for development, use account/region from cdk cli
+const devEnv = {
+  account: process.env.CDK_DEFAULT_ACCOUNT,
+  region: process.env.CDK_DEFAULT_REGION,
+};
+
 const app = new App();
-new MyStack(app, 'my-stack');
+
+new MyStack(app, 'my-stack-dev', { env: devEnv });
+// new MyStack(app, 'my-stack-prod', { env: prodEnv });
+
 app.synth();`;
 
     fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'main.ts'), srcCode);
+    fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
 
-    const testdir = path.join(outdir, this.nodeProject.testdir);
+    const testdir = path.join(outdir, this.appProject.testdir);
     if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
@@ -144,6 +182,6 @@ test('Snapshot', () => {
 });`;
 
     fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'app.test.ts'), testCode);
+    fs.writeFileSync(path.join(testdir, 'main.test.ts'), testCode);
   }
 }

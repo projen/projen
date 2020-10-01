@@ -1,9 +1,9 @@
+import * as fs from 'fs-extra';
+import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Semver } from './semver';
-import * as fs from 'fs-extra';
 import { StartEntryCategory } from './start';
-import { Component } from './component';
 
 const VERSION_FILE = 'version.json';
 
@@ -34,8 +34,8 @@ export class Version extends Component {
 
     new JsonFile(project, '.versionrc.json', {
       obj: {
-        packageFiles: [ {  filename: VERSION_FILE,  type: 'json' } ],
-        bumpFiles: [ { filename: VERSION_FILE, type: 'json' }  ],
+        packageFiles: [{ filename: VERSION_FILE, type: 'json' }],
+        bumpFiles: [{ filename: VERSION_FILE, type: 'json' }],
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
