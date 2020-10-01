@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
@@ -209,9 +209,9 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Automatically merge PRs that build successfully and have this label.
-   * 
+   *
    * To disable, set this value to an empty string.
-   * 
+   *
    * @default "auto-merge"
    */
   readonly mergifyAutoMergeLabel?: string;
@@ -450,7 +450,7 @@ export class NodeProject extends Project {
     const renderScripts = () => {
       const result: any = {};
       for (const [name, commands] of Object.entries(this.scripts)) {
-        const cmds = commands.length > 0 ? commands : [ 'echo "n/a"' ];
+        const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
         result[name] = cmds.join(' && ');
       }
       return result;
@@ -571,7 +571,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
-      const releaseBranches = options.releaseBranches ?? [ 'master' ];
+      const releaseBranches = options.releaseBranches ?? ['master'];
 
       const trigger: { [event: string]: any } = {};
 
@@ -654,8 +654,8 @@ export class NodeProject extends Project {
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
 
-      const successfulBuild = this.buildWorkflow 
-        ? [ `status-success=${this.buildWorkflow.buildJobId}` ] 
+      const successfulBuild = this.buildWorkflow
+        ? [`status-success=${this.buildWorkflow.buildJobId}`]
         : [];
 
       const mergeAction = {
@@ -713,13 +713,13 @@ export class NodeProject extends Project {
   }
 
   public addBins(bins: Record<string, string>) {
-    for (const [ k, v ] of Object.entries(bins)) {
+    for (const [k, v] of Object.entries(bins)) {
       this.bin[k] = v;
     }
   }
 
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
-    for (const [ k, v ] of Object.entries(deps)) {
+    for (const [k, v] of Object.entries(deps)) {
       this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (bundle) {
@@ -747,7 +747,7 @@ export class NodeProject extends Project {
   }
 
   public addDevDependencies(deps: { [module: string]: Semver }) {
-    for (const [ k, v ] of Object.entries(deps ?? {})) {
+    for (const [k, v] of Object.entries(deps ?? {})) {
       this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
@@ -758,7 +758,7 @@ export class NodeProject extends Project {
     }
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
-    for (const [ k, v ] of Object.entries(deps)) {
+    for (const [k, v] of Object.entries(deps)) {
       this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (pinned && v.version) {
@@ -773,7 +773,7 @@ export class NodeProject extends Project {
    * @param scripts script names and commands
    */
   public addScripts(scripts: { [name: string]: string }) {
-    for (const [ name, command ] of Object.entries(scripts)) {
+    for (const [name, command] of Object.entries(scripts)) {
       this.addScript(name, command);
     }
   }
@@ -832,7 +832,7 @@ export class NodeProject extends Project {
   }
 
   public addFields(fields: { [name: string]: any }) {
-    for (const [ name, value ] of Object.entries(fields)) {
+    for (const [name, value] of Object.entries(fields)) {
       this.manifest[name] = value;
     }
   }
@@ -880,7 +880,7 @@ export class NodeProject extends Project {
    */
   public get workflowAntitamperSteps(): any[] {
     return this.antitamper
-      ? [ { name: 'Anti-tamper check', run: 'git diff --exit-code' } ]
+      ? [{ name: 'Anti-tamper check', run: 'git diff --exit-code' }]
       : [];
   }
 
@@ -1024,7 +1024,7 @@ export class NodeProject extends Project {
           logging.verbose(`${name}: removed`);
         }
       }
-    }
+    };
 
     readDeps(this.devDependencies, pkg.devDependencies);
     readDeps(this.dependencies, pkg.dependencies);
@@ -1038,13 +1038,13 @@ export class NodeProject extends Project {
     const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
       const result: Record<string, string> = {};
 
-      for (const [ name, currentDefinition ] of Object.entries(user)) {
+      for (const [name, currentDefinition] of Object.entries(user)) {
         // find actual version from node_modules
         let desiredVersion = currentDefinition;
 
         if (currentDefinition === '*') {
           try {
-            const modulePath = require.resolve(`${name}/package.json`, { paths: [ outdir ]});
+            const modulePath = require.resolve(`${name}/package.json`, { paths: [outdir] });
             const module = JSON.parse(fs.readFileSync(modulePath, 'utf-8'));
             desiredVersion = `^${module.version}`;
           } catch (e) { }
@@ -1070,7 +1070,7 @@ export class NodeProject extends Project {
       }
 
       return sorted(result)();
-    }
+    };
 
     pkg.dependencies = resolveDeps(pkg.dependencies, this.dependencies);
     pkg.devDependencies = resolveDeps(pkg.devDependencies, this.devDependencies);
@@ -1079,7 +1079,7 @@ export class NodeProject extends Project {
     writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
 
-  private addDefaultGitIgnore()  {
+  private addDefaultGitIgnore() {
 
     this.gitignore.exclude(
       '# Logs',
@@ -1147,7 +1147,7 @@ const DEFAULT_WORKFLOW_BOOTSTRAP = [
   { run: `npx projen@${PROJEN_VERSION}` },
 ];
 
-export interface NodeBuildWorkflowOptions  {
+export interface NodeBuildWorkflowOptions {
   /**
    * @default - default image
    */
@@ -1198,7 +1198,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [ { run: 'yarn bump' } ] : [],
+        ...options.bump ? [{ run: 'yarn bump' }] : [],
 
         // build (compile + test)
         { run: 'yarn build' },
@@ -1208,7 +1208,7 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         ...project.workflowAntitamperSteps,
 
         // push bump commit
-        ...options.bump ? [ { run: 'git push --follow-tags origin $GITHUB_REF' } ] : [],
+        ...options.bump ? [{ run: 'git push --follow-tags origin $GITHUB_REF' }] : [],
       ],
     };
 
@@ -1253,7 +1253,7 @@ function parseDep(dep: string) {
     dep = dep.substr(1);
   }
 
-  const [ name, version ] = dep.split('@');
+  const [name, version] = dep.split('@');
   let depname = scope ? `@${name}` : name;
   return { [depname]: Semver.of(version ?? '*') };
 }

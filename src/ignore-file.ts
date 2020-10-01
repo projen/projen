@@ -1,5 +1,5 @@
-import { FileBase, IResolver } from './file';
 import { GENERATION_DISCLAIMER } from './common';
+import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
 export class IgnoreFile extends FileBase {

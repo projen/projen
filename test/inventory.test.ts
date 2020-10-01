@@ -6,7 +6,7 @@ test('project id', () => {
   expect(result.map(x => x.pjid).sort()).toContain('jsii');
   expect(result.map(x => x.pjid).sort()).toContain('awscdk-construct');
   expect(result.map(x => x.pjid).sort()).toContain('typescript');
-})
+});
 
 test('inventory', () => {
   expect(result).toMatchSnapshot();

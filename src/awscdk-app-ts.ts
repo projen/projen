@@ -1,10 +1,10 @@
+import * as path from 'path';
+import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { Semver } from './semver';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import { StartEntryCategory } from './start';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**

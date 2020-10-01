@@ -116,7 +116,7 @@ export class Eslint {
    * Add an eslint rule.
    */
   public addRules(rules: { [rule: string]: any }) {
-    for (const [k,v] of Object.entries(rules)) {
+    for (const [k, v] of Object.entries(rules)) {
       this.rules[k] = v;
     }
   }

@@ -1,5 +1,5 @@
-import { NodeProject } from './node-project';
 import { GithubWorkflow } from './github-workflow';
+import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 
 export interface ProjenUpgradeOptions {
@@ -33,8 +33,8 @@ export class ProjenUpgrade {
       const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
 
       workflow.on({
-        schedule: [ { cron: '0 6 * * *' } ], // 6am every day
-        workflow_dispatch: {},               // allow manual triggering
+        schedule: [{ cron: '0 6 * * *' }], // 6am every day
+        workflow_dispatch: {}, // allow manual triggering
       });
 
       workflow.addJobs({

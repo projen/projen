@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
@@ -59,12 +59,12 @@ interface JsiiType {
 export function discover() {
   const result = new Array<ProjectType>();
 
-  for (const [ fqn, typeinfo ] of Object.entries(jsii)) {
+  for (const [fqn, typeinfo] of Object.entries(jsii)) {
     if (!isProjectType(fqn)) {
       continue;
     }
 
-    const [ , typename ] = fqn.split('.');
+    const [, typename] = fqn.split('.');
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
       typename,
@@ -91,8 +91,7 @@ function discoverOptions(fqn: string): ProjectOption[] {
 
   return options.sort((a, b) => a.switch.localeCompare(b.switch));
 
-  function addOptions(ofqn?: string, path: string[] = [], optional = false) {
-
+  function addOptions(ofqn?: string, basePath: string[] = [], optional = false) {
     if (!ofqn) {
       return;
     }
@@ -103,7 +102,7 @@ function discoverOptions(fqn: string): ProjectOption[] {
     }
 
     for (const prop of struct.properties ?? []) {
-      const propPath = [ ...path, prop.name ];
+      const propPath = [...basePath, prop.name];
 
       if (prop.type?.fqn) {
         // recurse to sub-types only if this is a required property. otherwise, users can configure from .projenrc.js
@@ -134,7 +133,7 @@ function discoverOptions(fqn: string): ProjectOption[] {
 
 function filterUndefined(obj: any) {
   const ret: any = {};
-  for (const [k,v] of Object.entries(obj)) {
+  for (const [k, v] of Object.entries(obj)) {
     if (v !== undefined) {
       ret[k] = v;
     }

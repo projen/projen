@@ -1,13 +1,13 @@
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { JsonFile } from './json';
-import { JestOptions, Jest } from './jest';
-import { Eslint } from './eslint';
-import { Semver } from './semver';
-import { TypedocDocgen } from './typescript-typedoc';
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { Component } from './component';
+import { Eslint } from './eslint';
+import { Jest, JestOptions } from './jest';
+import { JsonFile } from './json';
+import { NodeProject, NodeProjectOptions } from './node-project';
+import { Semver } from './semver';
 import { StartEntryCategory } from './start';
+import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -177,7 +177,7 @@ export class TypeScriptProject extends NodeProject {
       experimentalDecorators: true,
       inlineSourceMap: true,
       inlineSources: true,
-      lib: [ 'es2018' ],
+      lib: ['es2018'],
       module: 'CommonJS',
       noEmitOnError: false,
       noFallthroughCasesInSwitch: true,
@@ -196,7 +196,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (!options.disableTsconfig) {
       new TypescriptConfig(this, {
-        include: [ `${this.srcdir}/**/*.ts` ],
+        include: [`${this.srcdir}/**/*.ts`],
         exclude: [
           'node_modules',
           this.libdir,
@@ -497,8 +497,8 @@ export class TypescriptConfig {
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
     const fileName = options.fileName ?? 'tsconfig.json';
 
-    this.include = options.include ?? [ '**/*.ts' ];
-    this.exclude = options.exclude ?? [ 'node_modules' ];
+    this.include = options.include ?? ['**/*.ts'];
+    this.exclude = options.exclude ?? ['node_modules'];
     this.fileName = fileName;
 
     this.compilerOptions = options.compilerOptions;

@@ -1,6 +1,6 @@
-import { YamlFile } from './yaml';
-import { NodeProject } from './node-project';
 import { version } from 'yargs';
+import { NodeProject } from './node-project';
+import { YamlFile } from './yaml';
 
 export interface DependabotOptions {
   /**

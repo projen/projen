@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { PROJEN_RC } from '../common';
 import * as logging from '../logging';
 
@@ -24,5 +24,5 @@ export function synth() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  require(projenfile);  
+  require(projenfile);
 }
