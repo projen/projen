@@ -148,6 +148,13 @@ export interface NodeProjectCommonOptions {
   readonly npmDistTag?: string;
 
   /**
+   * The registry url to use when releasing packages.
+   *
+   * @default "registry.npmjs.org"
+   */
+  readonly npmRegistry?: string;
+
+  /**
    * License copyright owner.
    *
    * @default - defaults to the value of authorName or "" if `authorName` is undefined.
@@ -428,6 +435,8 @@ export class NodeProject extends Project {
 
   protected readonly npmDistTag: string;
 
+  protected readonly npmRegistry: string;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -452,6 +461,8 @@ export class NodeProject extends Project {
     }
 
     this.npmDistTag = options.npmDistTag ?? 'latest';
+
+    this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
     this.scripts = {};
 
@@ -618,6 +629,7 @@ export class NodeProject extends Project {
                 env: {
                   NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
                   NPM_DIST_TAG: this.npmDistTag,
+                  NPM_REGISTRY: this.npmRegistry,
                 },
               },
             ],

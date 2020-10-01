@@ -298,6 +298,7 @@ export class JsiiProject extends TypeScriptProject {
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
               NPM_DIST_TAG: this.npmDistTag,
+              NPM_REGISTRY: this.npmRegistry,
             },
           },
         ],
