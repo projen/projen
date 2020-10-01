@@ -11,7 +11,7 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
-    "project": "tsconfig.jest.json"
+    "project": "./tsconfig.jest.json"
   },
   "extends": [
     "plugin:import/typescript"

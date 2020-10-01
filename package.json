@@ -24,7 +24,7 @@
     "test": "jest --passWithNoTests --updateSnapshot && yarn eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
-    "eslint": "eslint . --ext .ts",
+    "eslint": "eslint --ext .ts --fix src test",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen"
   },

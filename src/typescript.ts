@@ -266,7 +266,8 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: eslintTsConfig,
+        tsconfigPath: `./${eslintTsConfig}`,
+        dirs: [this.srcdir, this.testdir],
       });
     }
 

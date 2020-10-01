@@ -241,6 +241,14 @@ export interface NodeProjectCommonOptions {
   readonly projenUpgradeSecret?: string;
 
   /**
+   * Automatically merge projen upgrade PRs when build passes.
+   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   *
+   * @default - "true" if mergify auto-merge is enabled (default)
+   */
+  readonly projenUpgradeAutoMerge?: boolean;
+
+  /**
    * Defines a `yarn start` interactive experience
    *
    * @default true
@@ -651,6 +659,8 @@ export class NodeProject extends Project {
       }
     }
 
+    let autoMergeLabel;
+
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
 
@@ -683,7 +693,7 @@ export class NodeProject extends Project {
       });
 
       // empty string means disabled.
-      const autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
+      autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
       if (autoMergeLabel !== '') {
         this.mergify.addRule({
           name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
@@ -702,8 +712,10 @@ export class NodeProject extends Project {
       new Dependabot(this, options.dependabotOptions);
     }
 
+    const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
+      labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
     });
 
     // override any scripts from options (if specified)

@@ -5,6 +5,11 @@ import { StartEntryCategory } from './start';
 
 export interface EslintOptions {
   readonly tsconfigPath: string;
+
+  /**
+   * Directories with source files to lint (e.g. [ "src", "test" ])
+   */
+  readonly dirs: string[];
 }
 
 export class Eslint extends Component {
@@ -25,15 +30,17 @@ export class Eslint extends Component {
 
     project.addDevDeps(
       'eslint',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
+      '@typescript-eslint/eslint-plugin@^4.3.0',
+      '@typescript-eslint/parser@^4.3.0',
       'eslint-import-resolver-node',
       'eslint-import-resolver-typescript',
       'eslint-plugin-import',
       'json-schema',
     );
 
-    project.addScript('eslint', 'eslint . --ext .ts');
+    const dirs = options.dirs;
+
+    project.addScript('eslint', `eslint --ext .ts --fix ${dirs.join(' ')}`);
     project.start?.addEntry('eslint', {
       desc: 'Runs eslint against the codebase',
       category: StartEntryCategory.TEST,
