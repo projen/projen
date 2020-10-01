@@ -45,6 +45,7 @@ Name|Description
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [DependabotOptions](#projen-dependabotoptions)|*No description*
+[EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
@@ -785,6 +786,7 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -792,10 +794,12 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 
 ```ts
-new Eslint(project: NodeProject)
+new Eslint(project: NodeProject, options: EslintOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[EslintOptions](#projen-eslintoptions)</code>)  *No description*
+  * **tsconfigPath** (<code>string</code>)  *No description* 
 
 
 
@@ -2763,6 +2767,19 @@ Name | Type | Description
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **scheduleInterval**?🔹 | <code>[DependabotScheduleInterval](#projen-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
 **versioningStrategy**?🔹 | <code>[VersioningStrategy](#projen-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+## struct EslintOptions 🔹 <a id="projen-eslintoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**tsconfigPath**🔹 | <code>string</code> | <span></span>
 
 
 
