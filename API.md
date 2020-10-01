@@ -25,6 +25,7 @@ Name|Description
 [Project](#projen-project)|Base project.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
+[TomlFile](#projen-tomlfile)|TOML file.
 [TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
@@ -61,6 +62,7 @@ Name|Description
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
+[TomlFileOptions](#projen-tomlfileoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
@@ -836,7 +838,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow)
+__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow), [TomlFile](#projen-tomlfile)
 
 ### Initializer
 
@@ -1904,6 +1906,56 @@ addEntry(name: string, options: StartEntryOptions): void
 
 
 
+
+
+
+## class TomlFile 🔹 <a id="projen-tomlfile"></a>
+
+TOML file.
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[TomlFileOptions](#projen-tomlfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  Object to render in the TOML file. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>json</code> | <span></span>
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-tomlfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 
 
@@ -3119,6 +3171,22 @@ Name | Type | Description
 ## struct StartOptions 🔹 <a id="projen-startoptions"></a>
 
 
+
+
+
+## struct TomlFileOptions 🔹 <a id="projen-tomlfileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>any</code> | Object to render in the TOML file.
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

@@ -3,9 +3,15 @@ import { Project } from './project';
 import * as TOML from '@iarna/toml';
 
 export interface TomlFileOptions extends FileBaseOptions {
+  /**
+   * Object to render in the TOML file.
+   */
   readonly obj: any;
 }
 
+/**
+ * TOML file
+ */
 export class TomlFile extends FileBase {
   protected readonly obj: object;
 
