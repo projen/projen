@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.82 (2020-10-01)
+
+
+### Features
+
+* **node,jsii:** allowing npm registry to be set ([#136](https://github.com/eladb/projen/issues/136)) ([b13dffb](https://github.com/eladb/projen/commit/b13dffb5d8ec5fb16548aa3da4991f9fb57c2c71))
+
 ### 0.3.81 (2020-10-01)
 
 ### 0.3.80 (2020-10-01)
