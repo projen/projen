@@ -21,10 +21,10 @@
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
     "build": "yarn compile && yarn test && yarn run package",
     "package": "jsii-pacmak",
-    "eslint": "eslint . --ext .ts",
-    "test": "yarn eslint && jest --passWithNoTests --updateSnapshot",
+    "test": "jest --passWithNoTests --updateSnapshot && yarn eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
+    "eslint": "eslint . --ext .ts",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen"
   },
@@ -39,14 +39,14 @@
     "@types/inquirer": "^7.3.1",
     "@types/jest": "^26.0.7",
     "@types/node": "^10.17.0",
-    "@types/semver": "^7.3.3",
-    "@types/yargs": "^15.0.5",
-    "@typescript-eslint/eslint-plugin": "^2.31.0",
-    "@typescript-eslint/parser": "^2.19.2",
-    "eslint": "^6.8.0",
-    "eslint-import-resolver-node": "^0.3.3",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "^2.20.2",
+    "@types/semver": "^7.3.4",
+    "@types/yargs": "^15.0.7",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "eslint": "^7.10.0",
+    "eslint-import-resolver-node": "^0.3.4",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
     "jest": "^26.4.2",
     "jsii": "^1.11.0",
     "jsii-diff": "^1.11.0",
@@ -67,7 +67,7 @@
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
     "yaml": "^1.10.0",
-    "yargs": "^15.4.1"
+    "yargs": "^16.0.3"
   },
   "bundledDependencies": [
     "chalk",
@@ -121,16 +121,16 @@
       "desc": "Create an npm tarball",
       "category": 2
     },
-    "eslint": {
-      "desc": "Runs eslint against the codebase",
-      "category": 1
-    },
     "test": {
       "desc": "Run tests",
       "category": 1
     },
     "test:watch": {
       "desc": "Run jest in watch mode",
+      "category": 1
+    },
+    "eslint": {
+      "desc": "Runs eslint against the codebase",
       "category": 1
     },
     "compat": {

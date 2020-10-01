@@ -227,9 +227,8 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.vscode');
     this.npmignore?.exclude('/.projenrc.js');
 
-    if (options.eslint ?? true) {
-      this.eslint = new Eslint(this);
-    }
+    // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
+    let eslintTsConfig = 'tsconfig.json';
 
     if (options.jest ?? true) {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
@@ -246,6 +245,8 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions,
       });
 
+      eslintTsConfig = tsconfig.fileName;
+
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
       if (!compileBeforeTest) {
@@ -261,6 +262,12 @@ export class TypeScriptProject extends NodeProject {
 
       this.gitignore.include(`/${this.testdir}`);
       this.npmignore?.exclude(`/${this.testdir}`);
+    }
+
+    if (options.eslint ?? true) {
+      this.eslint = new Eslint(this, {
+        tsconfigPath: eslintTsConfig,
+      });
     }
 
     this.addDevDependencies({
