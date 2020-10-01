@@ -366,6 +366,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
   * **cdkVersion** (<code>string</code>)  AWS CDK version to use. 
+  * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. __*Optional*__
   * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Optional*__
 
@@ -376,6 +377,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**appEntrypoint**🔹 | <code>string</code> | The CDK app entrypoint.
 **cdkConfig**🔹 | <code>any</code> | Contents of `cdk.json`.
 **cdkVersion**🔹 | <code>[Semver](#projen-semver)</code> | The CDK version this app is using.
 
@@ -1692,6 +1694,19 @@ preSynthesize(outdir: string): void
 
 
 
+#### removeScript(name)🔹 <a id="projen-nodeproject-removescript"></a>
+
+Removes the npm script (always successful).
+
+```ts
+removeScript(name: string): void
+```
+
+* **name** (<code>string</code>)  The name of the script.
+
+
+
+
 
 
 ## class Project 🔹 <a id="projen-project"></a>
@@ -2183,6 +2198,22 @@ Name | Type | Description
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | __*Optional*__
 
+### Methods
+
+
+#### addBuildCommand(...commands)🔹 <a id="projen-typescriptproject-addbuildcommand"></a>
+
+Adds commands to run as part of `yarn build`.
+
+```ts
+addBuildCommand(...commands: string[]): void
+```
+
+* **commands** (<code>string</code>)  The commands to add.
+
+
+
+
 
 
 ## class TypescriptConfig 🔹 <a id="projen-typescriptconfig"></a>
@@ -2350,6 +2381,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**appEntrypoint**?🔹 | <code>string</code> | The CDK app's entrypoint (relative to the source directory, which is "src" by default).<br/>__*Default*__: "main.ts"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__

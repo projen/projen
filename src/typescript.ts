@@ -142,9 +142,9 @@ export class TypeScriptProject extends NodeProject {
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
     if (compileBeforeTest) {
-      this.addScriptCommand('build', 'yarn compile', 'yarn test');
+      this.addBuildCommand('yarn compile', 'yarn test');
     } else {
-      this.addScriptCommand('build', 'yarn test', 'yarn compile');
+      this.addBuildCommand('yarn test', 'yarn compile');
     }
     this.start?.addEntry('build', {
       desc: 'Full release build (test+compile)',
@@ -159,7 +159,7 @@ export class TypeScriptProject extends NodeProject {
         'mv *.tgz dist/js/',
       );
 
-      this.addScriptCommand('build', 'yarn run package');
+      this.addBuildCommand('yarn run package');
 
       this.start?.addEntry('package', {
         desc: 'Create an npm tarball',
@@ -167,7 +167,9 @@ export class TypeScriptProject extends NodeProject {
       });
     }
 
-    this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js'))}.d.ts`;
+    if (options.entrypointTypes || this.entrypoint !== '') {
+      this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js'))}.d.ts`;
+    }
 
     const compilerOptions = {
       alwaysStrict: true,
@@ -274,6 +276,14 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
+  }
+
+  /**
+   * Adds commands to run as part of `yarn build`.
+   * @param commands The commands to add
+   */
+  public addBuildCommand(...commands: string[]) {
+    this.addScriptCommand('build', ...commands);
   }
 }
 
@@ -560,7 +570,7 @@ export class TypeScriptAppProject extends TypeScriptProject {
     super({
       allowLibraryDependencies: false,
       releaseWorkflow: false,
-      entrypoint: 'lib/main.js',
+      entrypoint: '', // "main" is not needed in typescript apps
       package: false,
       ...options,
     });

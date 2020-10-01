@@ -263,6 +263,8 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Module entrypoint (`main` in `package.json`)
+   * 
+   * Set to an empty string to not include `main` in your package.json
    *
    * @default lib/index.js
    */
@@ -445,6 +447,21 @@ export class NodeProject extends Project {
       return result;
     };
 
+    let author;
+
+    if (options.authorName) {
+      author = {
+        name: options.authorName,
+        email: options.authorEmail,
+        url: options.authorUrl,
+        organization: options.authorOrganization ?? false,
+      };
+    } else {
+      if (options.authorEmail || options.authorUrl || options.authorOrganization !== undefined) {
+        throw new Error('"authorName" is required if specifying "authorEmail" or "authorUrl"');
+      }
+    }
+
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
@@ -456,12 +473,7 @@ export class NodeProject extends Project {
       },
       'bin': this.bin,
       'scripts': renderScripts,
-      'author': {
-        name: options.authorName,
-        email: options.authorEmail,
-        url: options.authorUrl,
-        organization: options.authorOrganization ?? false,
-      },
+      'author': author,
       'homepage': options.homepage,
       'devDependencies': sorted(this.devDependencies),
       'peerDependencies': sorted(this.peerDependencies),
@@ -472,7 +484,7 @@ export class NodeProject extends Project {
     };
 
     this.entrypoint = options.entrypoint ?? 'lib/index.js'
-    this.manifest.main = this.entrypoint;
+    this.manifest.main = this.entrypoint !== '' ? this.entrypoint : undefined;
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
@@ -747,6 +759,15 @@ export class NodeProject extends Project {
   public addScript(name: string, ...commands: string[]) {
     this.scripts[name] = commands;
   }
+
+  /**
+   * Removes the npm script (always successful).
+   * @param name The name of the script.
+   */
+  public removeScript(name: string) {
+    delete this.scripts[name];
+  }
+
 
   /**
    * Indicates if a script by the name name is defined.

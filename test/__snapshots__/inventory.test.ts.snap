@@ -29,6 +29,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"main.ts\\"",
+        "docs": "The CDK app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
+        "name": "appEntrypoint",
+        "optional": true,
+        "path": Array [
+          "appEntrypoint",
+        ],
+        "switch": "app-entrypoint",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
