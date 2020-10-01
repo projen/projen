@@ -280,7 +280,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Module entrypoint (`main` in `package.json`)
-   * 
+   *
    * Set to an empty string to not include `main` in your package.json
    *
    * @default lib/index.js
@@ -500,7 +500,7 @@ export class NodeProject extends Project {
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
-    this.entrypoint = options.entrypoint ?? 'lib/index.js'
+    this.entrypoint = options.entrypoint ?? 'lib/index.js';
     this.manifest.main = this.entrypoint !== '' ? this.entrypoint : undefined;
 
     new JsonFile(this, 'package.json', {
