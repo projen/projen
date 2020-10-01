@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.80 (2020-10-01)
+
+
+### Features
+
+* **awscdk-app-ts:** no compilation needed ([062643d](https://github.com/eladb/projen/commit/062643dbd066f78cb9f9e919b2e1db1511941e4a))
+
 ### 0.3.79 (2020-10-01)
 
 ### 0.3.78 (2020-09-30)
