@@ -222,7 +222,7 @@ export interface NodeProjectCommonOptions {
    *
    * @default {}
    */
-  readonly scripts?: { [name: string]: string }
+  readonly scripts?: { [name: string]: string };
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn

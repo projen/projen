@@ -65,6 +65,7 @@ export class Eslint extends Component {
       'brace-style': ['error', '1tbs', { allowSingleLine: true }], // enforce one true brace style
       'space-before-blocks': ['error'], // require space before blocks
       'curly': ['error', 'multi-line', 'consistent'], // require curly braces for multiline control statements
+      '@typescript-eslint/member-delimiter-style': ['error'],
 
       // Require all imported dependencies are actually declared in package.json
       'import/no-extraneous-dependencies': [

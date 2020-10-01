@@ -33,7 +33,7 @@ interface JsiiType {
     parameters?: Array<{
       name: string;
       type?: { fqn?: string };
-    }>
+    }>;
   };
   properties?: Array<{
     name: string;
