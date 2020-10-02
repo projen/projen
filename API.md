@@ -378,6 +378,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. __*Optional*__
   * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Optional*__
+  * **requireApproval** (<code>string</code>)  To protect you against unintended changes that affect your security posture,  the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: broadening
 
 
 
@@ -2531,6 +2532,7 @@ Name | Type | Description
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**requireApproval**?🔹 | <code>string</code> | To protect you against unintended changes that affect your security posture,  the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: broadening
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
