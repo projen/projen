@@ -22,6 +22,7 @@ function findGeneratedFiles(dir: string) {
     cwd: dir,
     dot: true,
     nodir: true,
+    absolute: true,
   });
 
   const generated = new Array<string>();
