@@ -17,6 +17,6 @@ export * from './node-project';
 export * from './project';
 export * from './semver';
 export * from './start';
+export * from './toml';
 export * from './typescript';
 export * from './version';
-

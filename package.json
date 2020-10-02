@@ -60,6 +60,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.0",
     "decamelize": "^4.0.0",
     "fs-extra": "^9.0.1",
@@ -70,6 +71,7 @@
     "yargs": "^16.0.3"
   },
   "bundledDependencies": [
+    "@iarna/toml",
     "chalk",
     "decamelize",
     "fs-extra",

@@ -17,6 +17,7 @@ const project = new JsiiProject({
     'semver',
     'inquirer',
     'chalk',
+    '@iarna/toml',
   ],
 
   devDeps: [

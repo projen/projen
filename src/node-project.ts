@@ -972,7 +972,7 @@ export class NodeProject extends Project {
   public addBundledDeps(...deps: string[]) {
     for (const dep of deps) {
       this.addDependencies(parseDep(dep));
-      this.addBundledDependencies(dep.split('@')[0]);
+      this.addBundledDependencies(Object.keys(parseDep(dep))[0]);
     }
   }
 
