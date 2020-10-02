@@ -33,15 +33,15 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly appEntrypoint?: string;
 
   /**
-   * To protect you against unintended changes that affect your security posture, 
+   * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
-   * 
+   *
    * You can change the level of change that requires approval by specifying:
-   * 
+   *
    * never - Approval is never required
    * any-change - Requires approval on any IAM or security-group-related change
    * broadening - Requires approval when IAM statements or traffic rules are added; removals don't require approval
-   * 
+   *
    * @default broadening
    */
   readonly requireApproval?: 'never' | 'any-change' | 'broadening';
@@ -118,7 +118,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     };
 
     if (options.context) {
-      this.cdkConfig.context = {...options.context};
+      this.cdkConfig.context = { ...options.context };
     }
 
     if (options.requireApproval) {
