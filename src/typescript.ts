@@ -101,6 +101,7 @@ export class TypeScriptProject extends NodeProject {
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
   public readonly jest?: Jest;
+  public readonly tsconfig?: TypescriptConfig;
 
   /**
    * The directory in which the .ts sources reside.
@@ -116,7 +117,7 @@ export class TypeScriptProject extends NodeProject {
    * The directory in which .ts tests reside.
    */
   public readonly testdir: string;
-
+  
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
@@ -195,7 +196,7 @@ export class TypeScriptProject extends NodeProject {
     };
 
     if (!options.disableTsconfig) {
-      new TypescriptConfig(this, {
+      this.tsconfig = new TypescriptConfig(this, {
         include: [`${this.srcdir}/**/*.ts`],
         exclude: [
           'node_modules',
