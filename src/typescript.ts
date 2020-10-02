@@ -117,7 +117,7 @@ export class TypeScriptProject extends NodeProject {
    * The directory in which .ts tests reside.
    */
   public readonly testdir: string;
-  
+
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
