@@ -1188,6 +1188,7 @@ new JsiiProject(options: JsiiProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
+**twineRegistryUrl**?🔹 | <code>string</code> | __*Optional*__
 
 
 
@@ -2989,6 +2990,7 @@ Name | Type | Description
 -----|------|-------------
 **distName**🔹 | <code>string</code> | <span></span>
 **module**🔹 | <code>string</code> | <span></span>
+**twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Optional*__
 
 
 

@@ -130,6 +130,11 @@ export interface JsiiJavaTarget {
 export interface JsiiPythonTarget {
   readonly distName: string;
   readonly module: string;
+
+  /**
+   * The registry url to use when releasing packages.
+   */
+  readonly twineRegistryUrl?: string;
 }
 
 export interface JsiiDotNetTarget {
@@ -142,6 +147,7 @@ export interface JsiiDotNetTarget {
  */
 export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;
+  protected readonly twineRegistryUrl?: string;
 
   constructor(options: JsiiProjectOptions) {
     const minNodeVersion = options.minNodeVersion ?? DEFAULT_JSII_MIN_NODE;
@@ -218,6 +224,7 @@ export class JsiiProject extends TypeScriptProject {
     }
 
     if (options.python) {
+      this.twineRegistryUrl = options.python.twineRegistryUrl;
       targets.python = {
         distName: options.python.distName,
         module: options.python.module,
@@ -400,6 +407,7 @@ export class JsiiProject extends TypeScriptProject {
             env: {
               TWINE_USERNAME: '${{ secrets.TWINE_USERNAME }}',
               TWINE_PASSWORD: '${{ secrets.TWINE_PASSWORD }}',
+              ...(this.twineRegistryUrl && { TWINE_REPOSITORY_URL: this.twineRegistryUrl }),
             },
           },
         ],
