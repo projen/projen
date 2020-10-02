@@ -1014,7 +1014,7 @@ export class NodeProject extends Project {
       install.push('--frozen-lockfile');
     }
 
-    exec(install.join(' '), {cwd: outdir});
+    exec(install.join(' '), { cwd: outdir });
 
     this.resolveDependencies(outdir);
   }
