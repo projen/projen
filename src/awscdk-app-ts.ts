@@ -15,6 +15,13 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdkVersion: string;
 
   /**
+   * Use pinned version instead of caret version for CDK.
+   *
+   * @default false
+   */
+  readonly cdkVersionPinning?: boolean;
+
+  /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.
    */
   readonly cdkDependencies?: string[];
@@ -70,7 +77,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
-    this.cdkVersion = Semver.caret(options.cdkVersion);
+    this.cdkVersion = options.cdkVersionPinning ? Semver.pinned(options.cdkVersion) : Semver.caret(options.cdkVersion);
 
     // CLI
     this.addDevDependencies({ 'aws-cdk': this.cdkVersion });
