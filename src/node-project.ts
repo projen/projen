@@ -1008,13 +1008,13 @@ export class NodeProject extends Project {
     // add --check-files to ensure all modules exist (especiall projen which was just removed).
     install.push('--check-files');
 
-    // if we are runniung in a CI environment, fix versions through the lockfile.
+    // if we are running in a CI environment, fix versions through the lockfile.
     if (process.env.CI) {
       logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
       install.push('--frozen-lockfile');
     }
 
-    exec(install.join(' '));
+    exec(install.join(' '), { cwd: outdir });
 
     this.resolveDependencies(outdir);
   }

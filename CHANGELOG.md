@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.87 (2020-10-04)
+
+
+### Features
+
+* exclude cdk folders from git, npm and tsc ([#141](https://github.com/eladb/projen/issues/141)) ([c848ede](https://github.com/eladb/projen/commit/c848edec33281e6c28796545432b4c5b39c6070d))
+
+### 0.3.86 (2020-10-04)
+
+
+### Bug Fixes
+
+* post synth directory ([#143](https://github.com/eladb/projen/issues/143)) ([8aa5e31](https://github.com/eladb/projen/commit/8aa5e311e298acc11a5df833fcc838bd70401a01))
+
+### 0.3.85 (2020-10-04)
+
+
+### Bug Fixes
+
+* eslint fails in nested projects ([#144](https://github.com/eladb/projen/issues/144)) ([eabd2c7](https://github.com/eladb/projen/commit/eabd2c786b45fad651fbeb9d494d51e4ee15b535))
+
 ### 0.3.84 (2020-10-02)
 
 ### 0.3.83 (2020-10-02)
