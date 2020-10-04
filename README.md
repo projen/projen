@@ -22,7 +22,7 @@ $ npx projen new
 ## Project Types
 
 Projen is all about **project types**. Project types are represented as **well-typed TypeScript classes**. The project 
-definition file (`.projenrc.js`) is a simple JavaScript program which instantiates of one of the project type classes
+definition file (`.projenrc.js`) is a simple JavaScript program which instantiates one of the project type classes
 and calls `proj.synth()` on it.
 
 Supported project types (create with `npx projen new TYPE`):
@@ -256,7 +256,7 @@ That's it. projen will auto-detect `bin/mycli` and will add it to your
 
 _projen_ takes a "batteries included" approach and aims to offer dozens of different project types out of
 the box (we are just getting started). Think `projen new react`, `projen new angular`, `projen new java-maven`,
-`projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tight to javascript or npm!)...
+`projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tied to javascript or npm!)...
 
 Adding new project types is as simple as submitting a pull request to this repo and exporting a class that 
 extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your 
@@ -271,7 +271,7 @@ To check out a development environment:
 ```bash
 $ git clone git@github.com:eladb/projen
 $ cd projen
-$ yarn boostrap # special boostrapping because projen uses itself
+$ yarn bootstrap # special bootstrapping because projen uses itself
 ```
 
 ## License
