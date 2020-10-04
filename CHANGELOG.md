@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.86 (2020-10-04)
+
+
+### Bug Fixes
+
+* post synth directory ([#143](https://github.com/eladb/projen/issues/143)) ([8aa5e31](https://github.com/eladb/projen/commit/8aa5e311e298acc11a5df833fcc838bd70401a01))
+
 ### 0.3.85 (2020-10-04)
 
 
