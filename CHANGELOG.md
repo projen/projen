@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.88 (2020-10-04)
+
+
+### Features
+
+* configure cdk.json via projen ([#142](https://github.com/eladb/projen/issues/142)) ([6bd24c8](https://github.com/eladb/projen/commit/6bd24c8d85b319b538b636d194488b701661e37b))
+
 ### 0.3.87 (2020-10-04)
 
 
