@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.89 (2020-10-04)
+
+
+### Features
+
+* add version pinning for CDK ([#147](https://github.com/eladb/projen/issues/147)) ([2957542](https://github.com/eladb/projen/commit/29575425a9b930b655b715736458ba6da711538e))
+
 ### 0.3.88 (2020-10-04)
 
 
