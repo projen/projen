@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.85 (2020-10-04)
+
+
+### Bug Fixes
+
+* eslint fails in nested projects ([#144](https://github.com/eladb/projen/issues/144)) ([eabd2c7](https://github.com/eladb/projen/commit/eabd2c786b45fad651fbeb9d494d51e4ee15b535))
+
 ### 0.3.84 (2020-10-02)
 
 ### 0.3.83 (2020-10-02)
