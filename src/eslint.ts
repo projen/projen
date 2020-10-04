@@ -178,6 +178,7 @@ export class Eslint extends Component {
         jest: true,
         node: true,
       },
+      root: true,
       plugins: [
         '@typescript-eslint',
         'import',
