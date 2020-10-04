@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.87 (2020-10-04)
+
+
+### Features
+
+* exclude cdk folders from git, npm and tsc ([#141](https://github.com/eladb/projen/issues/141)) ([c848ede](https://github.com/eladb/projen/commit/c848edec33281e6c28796545432b4c5b39c6070d))
+
 ### 0.3.86 (2020-10-04)
 
 
