@@ -613,17 +613,6 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "broadening",
-        "docs": "To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.",
-        "name": "requireApproval",
-        "optional": true,
-        "path": Array [
-          "requireApproval",
-        ],
-        "switch": "require-approval",
-        "type": "string",
-      },
-      Object {
         "default": "true",
         "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
         "name": "sampleCode",

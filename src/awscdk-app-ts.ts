@@ -10,15 +10,15 @@ export enum CdkApprovalLevel {
   /**
    * Approval is never required
    */
-  'never',
+  NEVER = 'never',
   /**
    * Requires approval on any IAM or security-group-related change
    */
-  'any-change',
+  ANY_CHANGE = 'any-change',
   /**
    * Requires approval when IAM statements or traffic rules are added; removals don't require approval
    */
-  'broadening',
+  BROADENING = 'broadening',
 }
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
