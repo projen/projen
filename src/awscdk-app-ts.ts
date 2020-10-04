@@ -6,6 +6,20 @@ import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
+export enum CdkApprovalLevel {
+  /**
+   * Approval is never required
+   */
+  NEVER = 'never',
+  /**
+   * Requires approval on any IAM or security-group-related change
+   */
+  ANY_CHANGE = 'any-change',
+  /**
+   * Requires approval when IAM statements or traffic rules are added; removals don't require approval
+   */
+  BROADENING = 'broadening',
+}
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
@@ -31,6 +45,15 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
+
+  /**
+   * To protect you against unintended changes that affect your security posture,
+   * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
+   *
+   * @default broadening
+   */
+  readonly requireApproval?: CdkApprovalLevel;
+
 }
 
 /**
@@ -101,6 +124,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.cdkConfig = {
       app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
+
+    if (options.context) {
+      this.cdkConfig.context = { ...options.context };
+    }
+
+    if (options.requireApproval) {
+      this.cdkConfig.requireApproval = options.requireApproval;
+    }
 
     this.gitignore.exclude('cdk.out/');
     this.gitignore.exclude('.cdk.staging/');
