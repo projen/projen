@@ -3,6 +3,7 @@
     "jest": true,
     "node": true
   },
+  "root": true,
   "plugins": [
     "@typescript-eslint",
     "import"

@@ -109,6 +109,17 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
 
+    this.gitignore.exclude('cdk.out/');
+    this.gitignore.exclude('.cdk.staging/');
+    this.gitignore.exclude('.parcel-cache/');
+
+    this.npmignore?.exclude('cdk.out/');
+    this.npmignore?.exclude('.cdk.staging/');
+
+    if (this.tsconfig) {
+      this.tsconfig.exclude.push('cdk.out');
+    }
+
     this.addDevDeps('ts-node');
 
     new JsonFile(this, 'cdk.json', {

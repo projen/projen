@@ -2286,6 +2286,7 @@ Name | Type | Description
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | __*Optional*__
+**tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 ### Methods
 
