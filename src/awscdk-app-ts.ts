@@ -16,7 +16,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
 
   /**
    * Use pinned version instead of caret version for CDK.
-   * 
+   *
    * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
    * If you use experimental features this will let you define the moment you include breaking changes.
    *
