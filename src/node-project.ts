@@ -13,7 +13,7 @@ import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
 import { Start, StartEntryCategory, StartOptions } from './start';
 import { exec, writeFile } from './util';
-import { Version } from './version';
+import { Version, VersionOptions } from './version';
 
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
@@ -222,6 +222,12 @@ export interface NodeProjectCommonOptions {
    * @default "auto-merge"
    */
   readonly mergifyAutoMergeLabel?: string;
+
+  /**
+   * Options for Version
+   * @default - default options
+   */
+  readonly versionOptions?: VersionOptions;
 
   /**
    * npm scripts to include. If a script has the same name as a standard script,
@@ -570,7 +576,7 @@ export class NodeProject extends Project {
     }
 
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    this._version = new Version(this, options.versionOptions);
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
     this.bootstrapSteps = options.workflowBootstrapSteps;
