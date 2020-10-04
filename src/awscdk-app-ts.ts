@@ -6,6 +6,20 @@ import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
+export enum CdkApprovalLevel {
+  /**
+   * Approval is never required
+   */
+  'never',
+  /**
+   * Requires approval on any IAM or security-group-related change
+   */
+  'any-change',
+  /**
+   * Requires approval when IAM statements or traffic rules are added; removals don't require approval
+   */
+  'broadening',
+}
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
@@ -36,15 +50,9 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
    *
-   * You can change the level of change that requires approval by specifying:
-   *
-   * never - Approval is never required
-   * any-change - Requires approval on any IAM or security-group-related change
-   * broadening - Requires approval when IAM statements or traffic rules are added; removals don't require approval
-   *
    * @default broadening
    */
-  readonly requireApproval?: 'never' | 'any-change' | 'broadening';
+  readonly requireApproval?: CdkApprovalLevel;
 
 }
 
