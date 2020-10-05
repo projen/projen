@@ -456,6 +456,8 @@ export class NodeProject extends Project {
 
   public readonly useNpm: boolean;
 
+  public readonly scriptRunCmd: string;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -484,6 +486,8 @@ export class NodeProject extends Project {
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
     this.useNpm = options.useNpm || false;
+
+    this.scriptRunCmd = this.useNpm ? 'npm run' : 'yarn';
 
     this.scripts = {};
 
@@ -1246,10 +1250,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: project.useNpm ? 'npm run bump' : 'yarn bump' }] : [],
+        ...options.bump ? [{ run: `${project.scriptRunCmd} bump` }] : [],
 
         // build (compile + test)
-        { run: project.useNpm ? 'npm run build' : 'yarn build' },
+        { run: `${project.scriptRunCmd} build` },
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-commited files generated during build (e.g. test snapshots)

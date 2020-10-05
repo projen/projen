@@ -19,7 +19,7 @@
     "bootstrap": "yarn install && yarn compile && yarn projen",
     "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen && yarn projen",
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "build": "yarn compile && yarn test && yarn run package",
+    "build": "yarn compile && yarn test && yarn package",
     "package": "jsii-pacmak",
     "test": "jest --passWithNoTests --updateSnapshot && yarn eslint",
     "test:watch": "jest --watch",
