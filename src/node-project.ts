@@ -157,6 +157,13 @@ export interface NodeProjectCommonOptions {
   readonly npmRegistry?: string;
 
   /**
+   * Flag to use NPM instead of Yarn as package manager.
+   *
+   * @default false
+   */
+  readonly useNpm?: boolean;
+
+  /**
    * License copyright owner.
    *
    * @default - defaults to the value of authorName or "" if `authorName` is undefined.
@@ -447,6 +454,8 @@ export class NodeProject extends Project {
 
   protected readonly npmRegistry: string;
 
+  public readonly useNpm: boolean;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -473,6 +482,8 @@ export class NodeProject extends Project {
     this.npmDistTag = options.npmDistTag ?? 'latest';
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
+
+    this.useNpm = options.useNpm || false;
 
     this.scripts = {};
 
@@ -1004,7 +1015,7 @@ export class NodeProject extends Project {
   public postSynthesize(outdir: string) {
     super.postSynthesize(outdir);
 
-    const install = ['yarn install'];
+    const install = [this.useNpm ? 'npm i' : 'yarn install'];
 
     // now we run `yarn install`, but before we do that, remove the
     // `node_modules/projen` symlink so that yarn won't hate us.
@@ -1015,13 +1026,20 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
+    if (!this.useNpm) {
     // add --check-files to ensure all modules exist (especiall projen which was just removed).
-    install.push('--check-files');
+      install.push('--check-files');
+    }
 
     // if we are running in a CI environment, fix versions through the lockfile.
     if (process.env.CI) {
-      logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
-      install.push('--frozen-lockfile');
+      if (this.useNpm) {
+        logging.info('Running npm ci instead of install since "CI" is defined.');
+        install[0] = 'npm ci';
+      } else {
+        logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
+        install.push('--frozen-lockfile');
+      }
     }
 
     exec(install.join(' '), { cwd: outdir });
@@ -1228,10 +1246,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: 'yarn bump' }] : [],
+        ...options.bump ? [{ run: project.useNpm ? 'npm run bump' : 'yarn bump' }] : [],
 
         // build (compile + test)
-        { run: 'yarn build' },
+        { run: project.useNpm ? 'npm run build' : 'yarn build' },
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-commited files generated during build (e.g. test snapshots)
