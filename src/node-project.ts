@@ -258,6 +258,13 @@ export interface NodeProjectCommonOptions {
   readonly projenUpgradeAutoMerge?: boolean;
 
   /**
+   * Customize the projenUpgrade schedule in cron expression.
+   *
+   @default [ '0 6 * * *' ]
+   */
+  readonly projenUpgradeSchedule?: string[];
+
+  /**
    * Defines a `yarn start` interactive experience
    *
    * @default true
@@ -737,6 +744,7 @@ export class NodeProject extends Project {
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
+      autoUpgradeSchedule: options.projenUpgradeSchedule,
       labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
     });
 
