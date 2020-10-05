@@ -65,7 +65,7 @@ export class ProjenUpgrade {
             ...project.workflowBootstrapSteps,
 
             // upgrade
-            { run: `yarn ${script}` },
+            { run: `${project.scriptRunCmd} ${script}` },
 
             // submit a PR
             {
