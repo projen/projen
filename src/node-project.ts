@@ -15,6 +15,8 @@ import { Start, StartEntryCategory, StartOptions } from './start';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
+const PROJEN_SCRIPT = 'projen';
+
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -99,7 +101,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Workflow steps to use in order to bootstrap this repo.
    *
-   * @default "npx projen${PROJEN_VERSION}"
+   * @default "yarn install --frozen-lockfile && yarn projen"
    */
   readonly workflowBootstrapSteps?: any[];
 
@@ -390,6 +392,14 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
+  /**
+   * The default command to execute when bootstrapping projen-based workflows.
+   */
+  public static readonly DEFAULT_WORKFLOW_BOOTSTRAP: any[] = [
+    { run: 'yarn install --frozen-lockfile' },
+    { run: `yarn ${PROJEN_SCRIPT}` },
+  ];
+
   public readonly npmignore?: IgnoreFile;
   public readonly mergify?: Mergify;
   public readonly manifest: any;
@@ -419,7 +429,7 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
-  private readonly bootstrapSteps?: any[];
+  private readonly bootstrapSteps: any[];
 
   private readonly nodeVersion?: string;
 
@@ -552,8 +562,8 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript('projen', `node ${PROJEN_RC}`);
-    this.start?.addEntry('projen', {
+    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
+    this.start?.addEntry(PROJEN_SCRIPT, {
       desc: 'Synthesize project configuration from .projenrc.js',
       category: StartEntryCategory.MAINTAIN,
     });
@@ -573,7 +583,7 @@ export class NodeProject extends Project {
     this._version = new Version(this);
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapSteps = options.workflowBootstrapSteps;
+    this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -891,7 +901,7 @@ export class NodeProject extends Project {
       ...nodeVersion,
 
       // bootstrap the repo
-      ...this.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
+      ...this.bootstrapSteps,
 
       // first anti-tamper check (right after bootstrapping)
       // this will identify any non-committed files genrated by projen
@@ -1166,10 +1176,6 @@ export interface PeerDependencyOptions {
    */
   readonly pinnedDevDependency?: boolean;
 }
-
-const DEFAULT_WORKFLOW_BOOTSTRAP = [
-  { run: `npx projen@${PROJEN_VERSION}` },
-];
 
 export interface NodeBuildWorkflowOptions {
   /**
