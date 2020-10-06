@@ -84,7 +84,7 @@ Name|Description
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
 [DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
-[NodePackageManager](#projen-nodepackagemanager)|*No description*
+[NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [Stability](#projen-stability)|*No description*
 [StartEntryCategory](#projen-startentrycategory)|*No description*
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
@@ -1458,8 +1458,8 @@ Name | Type | Description
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
-**packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | <span></span>
-**scriptRunCmd**🔹 | <code>string</code> | Run command for selected `packageManager`.
+**packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
+**runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package mabnager).
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
@@ -3577,12 +3577,12 @@ Name | Description
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>
 
-
+The node package manager to use.
 
 Name | Description
 -----|-----
-**YARN** 🔹|
-**NPM** 🔹|
+**YARN** 🔹|Use `yarn` as the package manager.
+**NPM** 🔹|Use `npm` as the package manager.
 
 
 ## enum Stability 🔹 <a id="projen-stability"></a>

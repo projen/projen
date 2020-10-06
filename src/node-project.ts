@@ -17,8 +17,18 @@ import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
+/**
+ * The node package manager to use.
+ */
 export enum NodePackageManager {
+  /**
+   * Use `yarn` as the package manager.
+   */
   YARN,
+
+  /**
+   * Use `npm` as the package manager.
+   */
   NPM
 }
 
@@ -459,12 +469,15 @@ export class NodeProject extends Project {
 
   protected readonly npmRegistry: string;
 
+  /**
+   * The package manager to use.
+   */
   protected readonly packageManager: NodePackageManager;
 
   /**
-   * Run command for selected `packageManager`
+   * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package mabnager).
    */
-  public readonly scriptRunCmd: string;
+  public readonly runScriptCommand: string;
 
   constructor(options: NodeProjectOptions) {
     super();
@@ -493,9 +506,15 @@ export class NodeProject extends Project {
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-    this.packageManager = options.packageManager || NodePackageManager.YARN;
+    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
 
-    this.scriptRunCmd = this.packageManager === NodePackageManager.NPM ? 'npm run' : 'yarn run';
+    this.runScriptCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.NPM: return 'npm run';
+        case NodePackageManager.YARN: return 'yarn run';
+        default: throw new Error(`unexpected package manager ${this.packageManager}`);
+      }
+    })();
 
     this.scripts = {};
 
@@ -1027,8 +1046,6 @@ export class NodeProject extends Project {
   public postSynthesize(outdir: string) {
     super.postSynthesize(outdir);
 
-    let install = [this.packageManager ? 'npm i' : 'yarn install'];
-
     // now we run `yarn install`, but before we do that, remove the
     // `node_modules/projen` symlink so that yarn won't hate us.
     const projenModule = path.resolve('node_modules', 'projen');
@@ -1038,25 +1055,28 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    if (this.packageManager === NodePackageManager.YARN) {
-    // add --check-files to ensure all modules exist (especiall projen which was just removed).
-      install.push('--check-files');
-    }
-
-    // if we are running in a CI environment, fix versions through the lockfile.
-    if (process.env.CI) {
-      if (this.packageManager === NodePackageManager.NPM) {
-        logging.info('Running npm ci instead of install since "CI" is defined.');
-        install = ['npm ci'];
-      } else {
-        logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
-        install.push('--frozen-lockfile');
-      }
-    }
-
-    exec(install.join(' '), { cwd: outdir });
+    exec(this.installDepsCommand, { cwd: outdir });
 
     this.resolveDependencies(outdir);
+  }
+
+  private get installDepsCommand() {
+    switch (this.packageManager) {
+      case NodePackageManager.YARN:
+        return [
+          'yarn install',
+          '--check-files', // ensure all modules exist (especially projen which was just removed).
+          ...process.env.CI ? ['--frozen-lockfile'] : [],
+        ].join(' ');
+
+      case NodePackageManager.NPM:
+        return process.env.CI
+          ? 'npm ci'
+          : 'npm install';
+
+      default:
+        throw new Error(`unexpected package manager ${this.packageManager}`);
+    }
   }
 
   private loadDependencies(outdir: string) {
@@ -1258,10 +1278,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: `${project.scriptRunCmd} bump` }] : [],
+        ...options.bump ? [{ run: `${project.runScriptCommand} bump` }] : [],
 
         // build (compile + test)
-        { run: `${project.scriptRunCmd} build` },
+        { run: `${project.runScriptCommand} build` },
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-commited files generated during build (e.g. test snapshots)

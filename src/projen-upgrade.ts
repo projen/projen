@@ -65,7 +65,7 @@ export class ProjenUpgrade {
             ...project.workflowBootstrapSteps,
 
             // upgrade
-            { run: `${project.scriptRunCmd} ${script}` },
+            { run: `${project.runScriptCommand} ${script}` },
 
             // submit a PR
             {

@@ -119,7 +119,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addScript('compile', 'true');
     this.removeScript('watch'); // because we use ts-node
-    this.addBuildCommand(`${this.scriptRunCmd} synth`);
+    this.addBuildCommand(`${this.runScriptCommand} synth`);
 
     this.start?.addEntry('synth', {
       desc: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',

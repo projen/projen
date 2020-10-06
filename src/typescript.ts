@@ -144,9 +144,9 @@ export class TypeScriptProject extends NodeProject {
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.addBuildCommand(`${this.scriptRunCmd} compile`, `${this.scriptRunCmd} test`);
+      this.addBuildCommand(`${this.runScriptCommand} compile`, `${this.runScriptCommand} test`);
     } else {
-      this.addBuildCommand(`${this.scriptRunCmd} test`, `${this.scriptRunCmd} compile`);
+      this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
     }
     this.start?.addEntry('build', {
       desc: 'Full release build (test+compile)',
@@ -157,11 +157,11 @@ export class TypeScriptProject extends NodeProject {
       this.addScript('package',
         'rm -fr dist',
         'mkdir -p dist/js',
-        `${this.scriptRunCmd} pack`,
+        `${this.runScriptCommand} pack`,
         'mv *.tgz dist/js/',
       );
 
-      this.addBuildCommand(`${this.scriptRunCmd} package`);
+      this.addBuildCommand(`${this.runScriptCommand} package`);
 
       this.start?.addEntry('package', {
         desc: 'Create an npm tarball',
