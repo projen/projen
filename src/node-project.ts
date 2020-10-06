@@ -17,6 +17,11 @@ import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
+export enum NodePackageManager {
+  YARN,
+  NPM
+}
+
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -157,11 +162,11 @@ export interface NodeProjectCommonOptions {
   readonly npmRegistry?: string;
 
   /**
-   * Flag to use NPM instead of Yarn as package manager.
+   * The Node Package Manager used to execute scripts
    *
-   * @default false
+   * @default packageManager.YARN
    */
-  readonly useNpm?: boolean;
+  readonly packageManager?: NodePackageManager;
 
   /**
    * License copyright owner.
@@ -454,8 +459,11 @@ export class NodeProject extends Project {
 
   protected readonly npmRegistry: string;
 
-  public readonly useNpm: boolean;
+  protected readonly packageManager: NodePackageManager;
 
+  /**
+   * Run command for selected `packageManager`
+   */
   public readonly scriptRunCmd: string;
 
   constructor(options: NodeProjectOptions) {
@@ -485,9 +493,9 @@ export class NodeProject extends Project {
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-    this.useNpm = options.useNpm || false;
+    this.packageManager = options.packageManager || NodePackageManager.YARN;
 
-    this.scriptRunCmd = this.useNpm ? 'npm run' : 'yarn';
+    this.scriptRunCmd = this.packageManager === NodePackageManager.NPM ? 'npm run' : 'yarn run';
 
     this.scripts = {};
 
@@ -1019,7 +1027,7 @@ export class NodeProject extends Project {
   public postSynthesize(outdir: string) {
     super.postSynthesize(outdir);
 
-    const install = [this.useNpm ? 'npm i' : 'yarn install'];
+    let install = [this.packageManager ? 'npm i' : 'yarn install'];
 
     // now we run `yarn install`, but before we do that, remove the
     // `node_modules/projen` symlink so that yarn won't hate us.
@@ -1030,16 +1038,16 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    if (!this.useNpm) {
+    if (this.packageManager === NodePackageManager.YARN) {
     // add --check-files to ensure all modules exist (especiall projen which was just removed).
       install.push('--check-files');
     }
 
     // if we are running in a CI environment, fix versions through the lockfile.
     if (process.env.CI) {
-      if (this.useNpm) {
+      if (this.packageManager === NodePackageManager.NPM) {
         logging.info('Running npm ci instead of install since "CI" is defined.');
-        install[0] = 'npm ci';
+        install = ['npm ci'];
       } else {
         logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
         install.push('--frozen-lockfile');
