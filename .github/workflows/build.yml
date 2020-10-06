@@ -13,7 +13,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: yarn bootstrap
+      - run: yarn install --frozen-lockfile
+      - run: yarn projen
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Set git identity
