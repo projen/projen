@@ -10,22 +10,17 @@ const VERSION_FILE = 'version.json';
 export interface VersionOptions {
   /**
    * The name of the release branch where the code and tags are pushed to.
-   * @default master
    */
-  readonly releaseBranch?: string;
+  readonly releaseBranch: string;
 }
 
 export class Version extends Component {
-  public readonly releaseBranch: string;
-
-  constructor(project: NodeProject, options: VersionOptions = {}) {
+  constructor(project: NodeProject, options: VersionOptions) {
     super(project);
-
-    this.releaseBranch = options.releaseBranch ?? 'master';
 
     project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
     project.addScript('bump', 'yarn --silent no-changes || standard-version');
-    project.addScript('release', `yarn --silent no-changes || (yarn bump && git push --follow-tags origin ${this.releaseBranch})`);
+    project.addScript('release', `yarn --silent no-changes || (yarn bump && git push --follow-tags origin ${options.releaseBranch})`);
 
     project.start?.addEntry('bump', {
       desc: 'Commits a bump to the package version based on conventional commits',
@@ -33,7 +28,7 @@ export class Version extends Component {
     });
 
     project.start?.addEntry('release', {
-      desc: `Bumps version & push to ${this.releaseBranch}`,
+      desc: `Bumps version & push to ${options.releaseBranch}`,
       category: StartEntryCategory.RELEASE,
     });
 

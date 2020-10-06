@@ -178,6 +178,7 @@ new AwsCdkConstructLibrary(options: ConstructLibraryAwsOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -202,7 +203,7 @@ new AwsCdkConstructLibrary(options: ConstructLibraryAwsOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -212,7 +213,6 @@ new AwsCdkConstructLibrary(options: ConstructLibraryAwsOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -315,6 +315,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -339,7 +340,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -349,7 +350,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -498,6 +498,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -522,7 +523,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -532,7 +533,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -587,6 +587,7 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -611,7 +612,7 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -621,7 +622,6 @@ new ConstructLibraryAws(options: ConstructLibraryAwsOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -684,6 +684,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -708,7 +709,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -718,7 +719,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1132,6 +1132,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1156,7 +1157,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -1166,7 +1167,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1393,6 +1393,7 @@ new NodeProject(options: NodeProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1417,7 +1418,7 @@ new NodeProject(options: NodeProjectOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -1427,7 +1428,6 @@ new NodeProject(options: NodeProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2037,6 +2037,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2061,7 +2062,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -2071,7 +2072,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2129,6 +2129,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2153,7 +2154,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -2163,7 +2164,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2221,6 +2221,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2245,7 +2246,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -2255,7 +2256,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
   * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
   * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
-  * **versionOptions** (<code>[VersionOptions](#projen-versionoptions)</code>)  Options for Version. __*Default*__: default options
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "npx projen${PROJEN_VERSION}"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2366,21 +2366,13 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: NodeProject, options?: VersionOptions)
+new Version(project: NodeProject, options: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **releaseBranch** (<code>string</code>)  The name of the release branch where the code and tags are pushed to. __*Default*__: master
+  * **releaseBranch** (<code>string</code>)  The name of the release branch where the code and tags are pushed to. 
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**releaseBranch**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -2432,6 +2424,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2466,7 +2459,7 @@ Name | Type | Description
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -2478,7 +2471,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2514,6 +2506,7 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2551,7 +2544,7 @@ Name | Type | Description
 **projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -2568,7 +2561,6 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2621,6 +2613,7 @@ Name | Type | Description
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2655,7 +2648,7 @@ Name | Type | Description
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -2667,7 +2660,6 @@ Name | Type | Description
 **start**?⚠️ | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?⚠️ | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?⚠️ | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2703,6 +2695,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2737,7 +2730,7 @@ Name | Type | Description
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -2749,7 +2742,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -2784,6 +2776,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2818,7 +2811,7 @@ Name | Type | Description
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -2830,7 +2823,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3010,6 +3002,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: .compatignore
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3044,7 +3037,7 @@ Name | Type | Description
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -3056,7 +3049,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3169,6 +3161,7 @@ Name | Type | Description
 **bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3193,7 +3186,7 @@ Name | Type | Description
 **projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -3203,7 +3196,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3233,6 +3225,7 @@ Name | Type | Description
 **bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3262,7 +3255,7 @@ Name | Type | Description
 **projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -3275,7 +3268,6 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3390,6 +3382,7 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3427,7 +3420,7 @@ Name | Type | Description
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -3443,7 +3436,6 @@ Name | Type | Description
 **testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
-**versionOptions**?⚠️ | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3474,6 +3466,7 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3511,7 +3504,7 @@ Name | Type | Description
 **projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -3527,7 +3520,6 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
-**versionOptions**?🔹 | <code>[VersionOptions](#projen-versionoptions)</code> | Options for Version.<br/>__*Default*__: default options
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "npx projen${PROJEN_VERSION}"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3559,7 +3551,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**releaseBranch**?🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.<br/>__*Default*__: master
+**releaseBranch**🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.
 
 
 
