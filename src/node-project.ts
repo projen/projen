@@ -857,7 +857,7 @@ export class NodeProject extends Project {
   /**
    * Replaces the contents of an npm package.json script.
    *
-   * @param name The script namne
+   * @param name The script name
    * @param commands The commands to run (joined by "&&")
    */
   public addScript(name: string, ...commands: string[]) {

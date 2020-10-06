@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.93 (2020-10-06)
+
+
+### Bug Fixes
+
+* **node:** typo in addScript docstring ([#160](https://github.com/eladb/projen/issues/160)) ([d743bb9](https://github.com/eladb/projen/commit/d743bb989f7222ad97e64793ac031333a2debcbf))
+
 ### 0.3.92 (2020-10-05)
 
 
