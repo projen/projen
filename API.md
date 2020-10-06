@@ -1638,7 +1638,7 @@ Replaces the contents of an npm package.json script.
 addScript(name: string, ...commands: string[]): void
 ```
 
-* **name** (<code>string</code>)  The script namne.
+* **name** (<code>string</code>)  The script name.
 * **commands** (<code>string</code>)  The commands to run (joined by "&&").
 
 
