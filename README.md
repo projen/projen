@@ -271,7 +271,8 @@ To check out a development environment:
 ```bash
 $ git clone git@github.com:eladb/projen
 $ cd projen
-$ yarn bootstrap # special bootstrapping because projen uses itself
+$ yarn
+$ yarn projen # special bootstrapping because projen uses itself
 ```
 
 ## License
