@@ -29,18 +29,14 @@ const project = new JsiiProject({
   ],
 
   projenDevDependency: false, // because I am projen
-  scripts: {
-    bootstrap: [ 'yarn install', 'yarn compile', 'yarn projen' ].join(' && ')
-  },
-  workflowBootstrapSteps: [
-    { run: `yarn bootstrap` }
-  ],
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
   compileBeforeTest: true,
 });
 
+// since this is projen, we need to compile before running projen, dah!
+project.addScript('projen', 'yarn compile', 'node .projenrc.js');
+
 project.gitignore.include('templates/**');
-project.addCompileCommand('yarn projen');
 
 project.synth();

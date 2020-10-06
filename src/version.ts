@@ -19,8 +19,9 @@ export class Version extends Component {
     super(project);
 
     project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
-    project.addScript('bump', 'yarn --silent no-changes || standard-version');
-    project.addScript('release', `yarn --silent no-changes || (yarn bump && git push --follow-tags origin ${options.releaseBranch})`);
+
+    project.addScript('bump', `${project.runScriptCommand} --silent no-changes || standard-version`);
+    project.addScript('release', `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`);
 
     project.start?.addEntry('bump', {
       desc: 'Commits a bump to the package version based on conventional commits',
@@ -46,7 +47,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: 'yarn projen && git add .',
+          postbump: `${project.runScriptCommand} projen && git add .`,
         },
       },
     });

@@ -103,7 +103,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public readonly version: Semver;
 
-  constructor(options: ConstructLibraryAwsOptions) {
+  constructor(options: AwsCdkConstructLibraryOptions) {
     super({
       ...options,
       peerDependencyOptions: {
