@@ -142,10 +142,11 @@ export class TypeScriptProject extends NodeProject {
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
+
     if (compileBeforeTest) {
-      this.addBuildCommand('yarn compile', 'yarn test');
+      this.addBuildCommand(`${this.runScriptCommand} compile`, `${this.runScriptCommand} test`);
     } else {
-      this.addBuildCommand('yarn test', 'yarn compile');
+      this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
     }
     this.start?.addEntry('build', {
       desc: 'Full release build (test+compile)',
@@ -156,11 +157,11 @@ export class TypeScriptProject extends NodeProject {
       this.addScript('package',
         'rm -fr dist',
         'mkdir -p dist/js',
-        'yarn pack',
+        `${this.runScriptCommand} pack`,
         'mv *.tgz dist/js/',
       );
 
-      this.addBuildCommand('yarn run package');
+      this.addBuildCommand(`${this.runScriptCommand} package`);
 
       this.start?.addEntry('package', {
         desc: 'Create an npm tarball',
