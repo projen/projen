@@ -141,7 +141,7 @@ export interface NodeProjectCommonOptions {
   readonly releaseToNpm?: boolean;
 
   /**
-   * Checks that after build there are no modified files onn git.
+   * Checks that after build there are no modified files on git.
    * @default true
    */
   readonly antitamper?: boolean;
