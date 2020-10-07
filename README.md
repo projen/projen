@@ -21,10 +21,12 @@ files.
 To create a new project, run the following command and follow the instructions:
 
 ```console
-mkdir my-project
-cd my-project
-git init
-npx projen new PROJECT-TYPE
+$ mkdir my-project
+$ cd my-project
+$ git init
+$ npx projen new PROJECT-TYPE
+🤖 Synthesizing project...
+...
 ```
 
 Currently supported project types (use `npx projen new` without a type for a
