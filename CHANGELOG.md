@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.99 (2020-10-07)
+
+
+### Bug Fixes
+
+* **typescript:** "package" script fails with "Command "pack" not found." ([52f8b33](https://github.com/eladb/projen/commit/52f8b332c3c2433ca35b8d4fd0a6a0651c8de0d3)), closes [#157](https://github.com/eladb/projen/issues/157)
+
 ### 0.3.98 (2020-10-07)
 
 ### 0.3.97 (2020-10-07)
