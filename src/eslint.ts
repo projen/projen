@@ -45,7 +45,7 @@ export class Eslint extends Component {
       desc: 'Runs eslint against the codebase',
       category: StartEntryCategory.TEST,
     });
-    project.addTestCommand('yarn eslint');
+    project.addTestCommand(`${project.runScriptCommand} eslint`);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');

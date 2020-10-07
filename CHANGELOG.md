@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.96 (2020-10-06)
+
+### 0.3.95 (2020-10-06)
+
+### 0.3.94 (2020-10-06)
+
+
+### Features
+
+* **node:** support 'npm' as a package manager ([#157](https://github.com/eladb/projen/issues/157)) ([f2a03d3](https://github.com/eladb/projen/commit/f2a03d3b1f554df41142112d03f6c55786258a75)), closes [#156](https://github.com/eladb/projen/issues/156)
+
+### 0.3.93 (2020-10-06)
+
+
+### Bug Fixes
+
+* **node:** typo in addScript docstring ([#160](https://github.com/eladb/projen/issues/160)) ([d743bb9](https://github.com/eladb/projen/commit/d743bb989f7222ad97e64793ac031333a2debcbf))
+
 ### 0.3.92 (2020-10-05)
 
 
