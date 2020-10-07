@@ -2990,7 +2990,7 @@ Name | Type | Description
 -----|------|-------------
 **distName**🔹 | <code>string</code> | <span></span>
 **module**🔹 | <code>string</code> | <span></span>
-**twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Optional*__
+**twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 
 
 
@@ -3503,5 +3503,4 @@ Name | Description
 **WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
 **INCREASE** 🔹|Always increase the version requirement to match the new version.
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
-
 
