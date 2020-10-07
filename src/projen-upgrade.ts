@@ -49,7 +49,7 @@ export class ProjenUpgrade {
       const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
 
       workflow.on({
-        schedule: options.autoUpgradeSchedule 
+        schedule: options.autoUpgradeSchedule
           ? options.autoUpgradeSchedule.map(s => ({ cron: s }))
           : [{ cron: '0 6 * * *' }], // 6am every day
         workflow_dispatch: {}, // allow manual triggering
