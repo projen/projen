@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.97 (2020-10-07)
+
+
+### Features
+
+* **node:** projen upgrade schedule ([#155](https://github.com/eladb/projen/issues/155)) ([16169b8](https://github.com/eladb/projen/commit/16169b8f5b978bd15a0fe3126b5a93f9de7dc016)), closes [eladb/projen#153](https://github.com/eladb/projen/issues/153)
+
 ### 0.3.96 (2020-10-06)
 
 ### 0.3.95 (2020-10-06)
