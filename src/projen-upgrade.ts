@@ -20,6 +20,13 @@ export interface ProjenUpgradeOptions {
    * @default []
    */
   readonly labels?: string[];
+
+  /**
+   * Customize the projenUpgrade schedule in cron expression.
+   *
+   @default [ '0 6 * * *' ]
+   */
+  readonly autoUpgradeSchedule?: string[];
 }
 
 /**
@@ -42,7 +49,9 @@ export class ProjenUpgrade {
       const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
 
       workflow.on({
-        schedule: [{ cron: '0 6 * * *' }], // 6am every day
+        schedule: options.autoUpgradeSchedule
+          ? options.autoUpgradeSchedule.map(s => ({ cron: s }))
+          : [{ cron: '0 6 * * *' }], // 6am every day
         workflow_dispatch: {}, // allow manual triggering
       });
 
@@ -65,7 +74,7 @@ export class ProjenUpgrade {
             ...project.workflowBootstrapSteps,
 
             // upgrade
-            { run: `yarn ${script}` },
+            { run: `${project.runScriptCommand} ${script}` },
 
             // submit a PR
             {

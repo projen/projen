@@ -15,6 +15,23 @@ import { Start, StartEntryCategory, StartOptions } from './start';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
+const PROJEN_SCRIPT = 'projen';
+
+/**
+ * The node package manager to use.
+ */
+export enum NodePackageManager {
+  /**
+   * Use `yarn` as the package manager.
+   */
+  YARN = 'yarn',
+
+  /**
+   * Use `npm` as the package manager.
+   */
+  NPM = 'npm'
+}
+
 export interface NodeProjectCommonOptions {
   readonly bundledDependencies?: string[];
   readonly dependencies?: Record<string, Semver>;
@@ -64,6 +81,13 @@ export interface NodeProjectCommonOptions {
   readonly projenDevDependency?: boolean;
 
   /**
+   * The name of the main release branch.
+   *
+   * @default 'master'
+   */
+  readonly defaultReleaseBranch?: string;
+
+  /**
    * Define a GitHub workflow for building PRs.
    * @default true
    */
@@ -92,14 +116,14 @@ export interface NodeProjectCommonOptions {
   /**
    * Branches which trigger a release.
    *
-   * @default [ "master" ]
+   * @default [ "master" ] - based on the value of defaultReleaseBranch.
    */
   readonly releaseBranches?: string[];
 
   /**
    * Workflow steps to use in order to bootstrap this repo.
    *
-   * @default "npx projen${PROJEN_VERSION}"
+   * @default "yarn install --frozen-lockfile && yarn projen"
    */
   readonly workflowBootstrapSteps?: any[];
 
@@ -117,7 +141,7 @@ export interface NodeProjectCommonOptions {
   readonly releaseToNpm?: boolean;
 
   /**
-   * Checks that after build there are no modified files onn git.
+   * Checks that after build there are no modified files on git.
    * @default true
    */
   readonly antitamper?: boolean;
@@ -153,6 +177,13 @@ export interface NodeProjectCommonOptions {
    * @default "registry.npmjs.org"
    */
   readonly npmRegistry?: string;
+
+  /**
+   * The Node Package Manager used to execute scripts
+   *
+   * @default packageManager.YARN
+   */
+  readonly packageManager?: NodePackageManager;
 
   /**
    * License copyright owner.
@@ -254,6 +285,13 @@ export interface NodeProjectCommonOptions {
    * @default - "true" if mergify auto-merge is enabled (default)
    */
   readonly projenUpgradeAutoMerge?: boolean;
+
+  /**
+   * Customize the projenUpgrade schedule in cron expression.
+   *
+   @default [ '0 6 * * *' ]
+   */
+  readonly projenUpgradeSchedule?: string[];
 
   /**
    * Defines a `yarn start` interactive experience
@@ -390,6 +428,14 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
+  /**
+   * The default command to execute when bootstrapping projen-based workflows.
+   */
+  public static readonly DEFAULT_WORKFLOW_BOOTSTRAP: any[] = [
+    { run: 'yarn install --frozen-lockfile' },
+    { run: `yarn ${PROJEN_SCRIPT}` },
+  ];
+
   public readonly npmignore?: IgnoreFile;
   public readonly mergify?: Mergify;
   public readonly manifest: any;
@@ -419,7 +465,7 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
-  private readonly bootstrapSteps?: any[];
+  private readonly bootstrapSteps: any[];
 
   private readonly nodeVersion?: string;
 
@@ -436,6 +482,16 @@ export class NodeProject extends Project {
   protected readonly npmDistTag: string;
 
   protected readonly npmRegistry: string;
+
+  /**
+   * The package manager to use.
+   */
+  protected readonly packageManager: NodePackageManager;
+
+  /**
+   * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package mabnager).
+   */
+  public readonly runScriptCommand: string;
 
   constructor(options: NodeProjectOptions) {
     super();
@@ -463,6 +519,16 @@ export class NodeProject extends Project {
     this.npmDistTag = options.npmDistTag ?? 'latest';
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
+
+    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+
+    this.runScriptCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.NPM: return 'npm run';
+        case NodePackageManager.YARN: return 'yarn run';
+        default: throw new Error(`unexpected package manager ${this.packageManager}`);
+      }
+    })();
 
     this.scripts = {};
 
@@ -552,8 +618,8 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript('projen', `node ${PROJEN_RC}`);
-    this.start?.addEntry('projen', {
+    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
+    this.start?.addEntry(PROJEN_SCRIPT, {
       desc: 'Synthesize project configuration from .projenrc.js',
       category: StartEntryCategory.MAINTAIN,
     });
@@ -569,11 +635,13 @@ export class NodeProject extends Project {
       this.addDevDependencies({ projen: projenVersion });
     }
 
+    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
+
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapSteps = options.workflowBootstrapSteps;
+    this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -590,7 +658,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
-      const releaseBranches = options.releaseBranches ?? ['master'];
+      const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = {};
 
@@ -727,6 +795,7 @@ export class NodeProject extends Project {
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
+      autoUpgradeSchedule: options.projenUpgradeSchedule,
       labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
     });
 
@@ -805,7 +874,7 @@ export class NodeProject extends Project {
   /**
    * Replaces the contents of an npm package.json script.
    *
-   * @param name The script namne
+   * @param name The script name
    * @param commands The commands to run (joined by "&&")
    */
   public addScript(name: string, ...commands: string[]) {
@@ -891,7 +960,7 @@ export class NodeProject extends Project {
       ...nodeVersion,
 
       // bootstrap the repo
-      ...this.bootstrapSteps ?? DEFAULT_WORKFLOW_BOOTSTRAP,
+      ...this.bootstrapSteps,
 
       // first anti-tamper check (right after bootstrapping)
       // this will identify any non-committed files genrated by projen
@@ -972,7 +1041,7 @@ export class NodeProject extends Project {
   public addBundledDeps(...deps: string[]) {
     for (const dep of deps) {
       this.addDependencies(parseDep(dep));
-      this.addBundledDependencies(dep.split('@')[0]);
+      this.addBundledDependencies(Object.keys(parseDep(dep))[0]);
     }
   }
 
@@ -994,8 +1063,6 @@ export class NodeProject extends Project {
   public postSynthesize(outdir: string) {
     super.postSynthesize(outdir);
 
-    const install = ['yarn install'];
-
     // now we run `yarn install`, but before we do that, remove the
     // `node_modules/projen` symlink so that yarn won't hate us.
     const projenModule = path.resolve('node_modules', 'projen');
@@ -1005,18 +1072,28 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    // add --check-files to ensure all modules exist (especiall projen which was just removed).
-    install.push('--check-files');
-
-    // if we are runniung in a CI environment, fix versions through the lockfile.
-    if (process.env.CI) {
-      logging.info('Running yarn with --frozen-lockfile since "CI" is defined.');
-      install.push('--frozen-lockfile');
-    }
-
-    exec(install.join(' '));
+    exec(this.installDepsCommand, { cwd: outdir });
 
     this.resolveDependencies(outdir);
+  }
+
+  private get installDepsCommand() {
+    switch (this.packageManager) {
+      case NodePackageManager.YARN:
+        return [
+          'yarn install',
+          '--check-files', // ensure all modules exist (especially projen which was just removed).
+          ...process.env.CI ? ['--frozen-lockfile'] : [],
+        ].join(' ');
+
+      case NodePackageManager.NPM:
+        return process.env.CI
+          ? 'npm ci'
+          : 'npm install';
+
+      default:
+        throw new Error(`unexpected package manager ${this.packageManager}`);
+    }
   }
 
   private loadDependencies(outdir: string) {
@@ -1167,10 +1244,6 @@ export interface PeerDependencyOptions {
   readonly pinnedDevDependency?: boolean;
 }
 
-const DEFAULT_WORKFLOW_BOOTSTRAP = [
-  { run: `npx projen@${PROJEN_VERSION}` },
-];
-
 export interface NodeBuildWorkflowOptions {
   /**
    * @default - default image
@@ -1222,10 +1295,10 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: 'yarn bump' }] : [],
+        ...options.bump ? [{ run: `${project.runScriptCommand} bump` }] : [],
 
         // build (compile + test)
-        { run: 'yarn build' },
+        { run: `${project.runScriptCommand} build` },
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-commited files generated during build (e.g. test snapshots)

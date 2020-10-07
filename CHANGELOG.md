@@ -2,6 +2,95 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.100 (2020-10-07)
+
+
+### Bug Fixes
+
+* **node:** typo in help-text ([#170](https://github.com/eladb/projen/issues/170)) ([688372f](https://github.com/eladb/projen/commit/688372f4c1ed05e9667057077c3a50efda1c2989))
+
+### 0.3.99 (2020-10-07)
+
+
+### Bug Fixes
+
+* **typescript:** "package" script fails with "Command "pack" not found." ([52f8b33](https://github.com/eladb/projen/commit/52f8b332c3c2433ca35b8d4fd0a6a0651c8de0d3)), closes [#157](https://github.com/eladb/projen/issues/157)
+
+### 0.3.98 (2020-10-07)
+
+### 0.3.97 (2020-10-07)
+
+
+### Features
+
+* **node:** projen upgrade schedule ([#155](https://github.com/eladb/projen/issues/155)) ([16169b8](https://github.com/eladb/projen/commit/16169b8f5b978bd15a0fe3126b5a93f9de7dc016)), closes [eladb/projen#153](https://github.com/eladb/projen/issues/153)
+
+### 0.3.96 (2020-10-06)
+
+### 0.3.95 (2020-10-06)
+
+### 0.3.94 (2020-10-06)
+
+
+### Features
+
+* **node:** support 'npm' as a package manager ([#157](https://github.com/eladb/projen/issues/157)) ([f2a03d3](https://github.com/eladb/projen/commit/f2a03d3b1f554df41142112d03f6c55786258a75)), closes [#156](https://github.com/eladb/projen/issues/156)
+
+### 0.3.93 (2020-10-06)
+
+
+### Bug Fixes
+
+* **node:** typo in addScript docstring ([#160](https://github.com/eladb/projen/issues/160)) ([d743bb9](https://github.com/eladb/projen/commit/d743bb989f7222ad97e64793ac031333a2debcbf))
+
+### 0.3.92 (2020-10-05)
+
+
+### Bug Fixes
+
+* projen upgrades always require workflow changes ([960f9b3](https://github.com/eladb/projen/commit/960f9b379a178b5133ea4123d3b3fd980710d614)), closes [#65](https://github.com/eladb/projen/issues/65)
+
+### 0.3.91 (2020-10-05)
+
+### 0.3.90 (2020-10-04)
+
+### 0.3.89 (2020-10-04)
+
+
+### Features
+
+* add version pinning for CDK ([#147](https://github.com/eladb/projen/issues/147)) ([2957542](https://github.com/eladb/projen/commit/29575425a9b930b655b715736458ba6da711538e))
+
+### 0.3.88 (2020-10-04)
+
+
+### Features
+
+* configure cdk.json via projen ([#142](https://github.com/eladb/projen/issues/142)) ([6bd24c8](https://github.com/eladb/projen/commit/6bd24c8d85b319b538b636d194488b701661e37b))
+
+### 0.3.87 (2020-10-04)
+
+
+### Features
+
+* exclude cdk folders from git, npm and tsc ([#141](https://github.com/eladb/projen/issues/141)) ([c848ede](https://github.com/eladb/projen/commit/c848edec33281e6c28796545432b4c5b39c6070d))
+
+### 0.3.86 (2020-10-04)
+
+
+### Bug Fixes
+
+* post synth directory ([#143](https://github.com/eladb/projen/issues/143)) ([8aa5e31](https://github.com/eladb/projen/commit/8aa5e311e298acc11a5df833fcc838bd70401a01))
+
+### 0.3.85 (2020-10-04)
+
+
+### Bug Fixes
+
+* eslint fails in nested projects ([#144](https://github.com/eladb/projen/issues/144)) ([eabd2c7](https://github.com/eladb/projen/commit/eabd2c786b45fad651fbeb9d494d51e4ee15b535))
+
+### 0.3.84 (2020-10-02)
+
 ### 0.3.83 (2020-10-02)
 
 ### 0.3.82 (2020-10-01)

@@ -11,17 +11,16 @@
   },
   "scripts": {
     "start": "npx projen start -i",
-    "projen": "node .projenrc.js",
+    "projen": "yarn compile && node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
-    "bump": "yarn --silent no-changes || standard-version",
-    "release": "yarn --silent no-changes || (yarn bump && git push --follow-tags origin master)",
+    "bump": "yarn run --silent no-changes || standard-version",
+    "release": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)",
     "projen:upgrade": "yarn upgrade -L projen && CI=\"\" yarn projen",
-    "bootstrap": "yarn install && yarn compile && yarn projen",
-    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen && yarn projen",
+    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "build": "yarn compile && yarn test && yarn run package",
+    "build": "yarn run compile && yarn run test && yarn run package",
     "package": "jsii-pacmak",
-    "test": "jest --passWithNoTests --updateSnapshot && yarn eslint",
+    "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
     "eslint": "eslint --ext .ts --fix src test",
@@ -60,6 +59,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.0",
     "decamelize": "^4.0.0",
     "fs-extra": "^9.0.1",
@@ -70,6 +70,7 @@
     "yargs": "^16.0.3"
   },
   "bundledDependencies": [
+    "@iarna/toml",
     "chalk",
     "decamelize",
     "fs-extra",
@@ -142,7 +143,7 @@
       "category": 2
     }
   },
-  "version": "0.3.83",
+  "version": "0.3.100",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,

@@ -6,6 +6,20 @@ import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
+export enum CdkApprovalLevel {
+  /**
+   * Approval is never required
+   */
+  NEVER = 'never',
+  /**
+   * Requires approval on any IAM or security-group-related change
+   */
+  ANY_CHANGE = 'any-change',
+  /**
+   * Requires approval when IAM statements or traffic rules are added; removals don't require approval
+   */
+  BROADENING = 'broadening',
+}
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
@@ -13,6 +27,16 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default 1.63.0
    */
   readonly cdkVersion: string;
+
+  /**
+   * Use pinned version instead of caret version for CDK.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdkVersionPinning?: boolean;
 
   /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.
@@ -31,6 +55,15 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
+
+  /**
+   * To protect you against unintended changes that affect your security posture,
+   * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
+   *
+   * @default broadening
+   */
+  readonly requireApproval?: CdkApprovalLevel;
+
 }
 
 /**
@@ -70,7 +103,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
-    this.cdkVersion = Semver.caret(options.cdkVersion);
+    this.cdkVersion = options.cdkVersionPinning ? Semver.pinned(options.cdkVersion) : Semver.caret(options.cdkVersion);
 
     // CLI
     this.addDevDependencies({ 'aws-cdk': this.cdkVersion });
@@ -86,7 +119,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addScript('compile', 'true');
     this.removeScript('watch'); // because we use ts-node
-    this.addBuildCommand('yarn synth');
+    this.addBuildCommand(`${this.runScriptCommand} synth`);
 
     this.start?.addEntry('synth', {
       desc: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
@@ -101,6 +134,25 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.cdkConfig = {
       app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
+
+    if (options.context) {
+      this.cdkConfig.context = { ...options.context };
+    }
+
+    if (options.requireApproval) {
+      this.cdkConfig.requireApproval = options.requireApproval;
+    }
+
+    this.gitignore.exclude('cdk.out/');
+    this.gitignore.exclude('.cdk.staging/');
+    this.gitignore.exclude('.parcel-cache/');
+
+    this.npmignore?.exclude('cdk.out/');
+    this.npmignore?.exclude('.cdk.staging/');
+
+    if (this.tsconfig) {
+      this.tsconfig.exclude.push('cdk.out');
+    }
 
     this.addDevDeps('ts-node');
 
