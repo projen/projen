@@ -4008,6 +4008,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+markmac@^0.1.2:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.3.tgz#f30cfe9e228309d5d0b05a5de6e7218454a6c9be"
+  integrity sha512-kE4XR7kbbz/ciRdL3s6bf8z/6946t9PRfChB4lm6EYxbBkG8G9oDn+eIBuIqwJ+/W3l3yRUF+C9TTbfxVYefPw==
+
 mdurl@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"

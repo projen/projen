@@ -1,0 +1,7 @@
+{
+  "default": true,
+  "commands-show-output": false,
+  "line-length": {
+    "line_length": 200
+  }
+}

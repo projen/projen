@@ -4,6 +4,7 @@ exports[`inventory 1`] = `
 Array [
   Object {
     "docs": "AWS CDK app in TypeScript.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdktypescriptapp",
     "fqn": "projen.AwsCdkTypeScriptApp",
     "options": Array [
       Object {
@@ -749,6 +750,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "AWS CDK construct library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdkconstructlibrary",
     "fqn": "projen.AwsCdkConstructLibrary",
     "options": Array [
       Object {
@@ -1413,6 +1415,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "CDK8s construct library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-constructlibrarycdk8s",
     "fqn": "projen.ConstructLibraryCdk8s",
     "options": Array [
       Object {
@@ -2046,6 +2049,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Multi-language jsii library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject",
     "fqn": "projen.JsiiProject",
     "options": Array [
       Object {
@@ -2669,6 +2673,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Node.js project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject",
     "fqn": "projen.NodeProject",
     "options": Array [
       Object {
@@ -3262,6 +3267,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Base project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-project",
     "fqn": "projen.Project",
     "options": Array [],
     "pjid": "project",
@@ -3269,6 +3275,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "TypeScript project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject",
     "fqn": "projen.TypeScriptProject",
     "options": Array [
       Object {
@@ -3962,6 +3969,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "TypeScript app.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptappproject",
     "fqn": "projen.TypeScriptAppProject",
     "options": Array [
       Object {
