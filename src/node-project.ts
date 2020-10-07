@@ -81,6 +81,13 @@ export interface NodeProjectCommonOptions {
   readonly projenDevDependency?: boolean;
 
   /**
+   * The name of the main release branch.
+   *
+   * @default 'master'
+   */
+  readonly defaultReleaseBranch?: string;
+
+  /**
    * Define a GitHub workflow for building PRs.
    * @default true
    */
@@ -109,7 +116,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Branches which trigger a release.
    *
-   * @default [ "master" ]
+   * @default [ "master" ] - based on the value of defaultReleaseBranch.
    */
   readonly releaseBranches?: string[];
 
@@ -628,8 +635,10 @@ export class NodeProject extends Project {
       this.addDevDependencies({ projen: projenVersion });
     }
 
+    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
+
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
     this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
@@ -649,7 +658,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
-      const releaseBranches = options.releaseBranches ?? ['master'];
+      const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = {};
 
