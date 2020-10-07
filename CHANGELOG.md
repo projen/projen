@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.98 (2020-10-07)
+
+
+### Features
+
+* **version:** enable master branch name to be configured ([#150](https://github.com/eladb/projen/issues/150)) ([6df5142](https://github.com/eladb/projen/commit/6df5142f577afa28017b9a33028019106bb249ad)), closes [#146](https://github.com/eladb/projen/issues/146)
+
 ### 0.3.97 (2020-10-07)
 
 
