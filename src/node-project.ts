@@ -24,12 +24,12 @@ export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
    */
-  YARN,
+  YARN = 'yarn',
 
   /**
    * Use `npm` as the package manager.
    */
-  NPM
+  NPM = 'npm'
 }
 
 export interface NodeProjectCommonOptions {

@@ -157,7 +157,7 @@ export class TypeScriptProject extends NodeProject {
       this.addScript('package',
         'rm -fr dist',
         'mkdir -p dist/js',
-        `${this.runScriptCommand} pack`,
+        `${this.packageManager} pack`,
         'mv *.tgz dist/js/',
       );
 
