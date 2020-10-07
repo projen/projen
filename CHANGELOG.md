@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.101 (2020-10-07)
+
+
+### Features
+
+* **jsii:** allowing twine registry to be set ([#140](https://github.com/eladb/projen/issues/140)) ([5b0918c](https://github.com/eladb/projen/commit/5b0918c99e64d859ca737a6a9ff432857f43906a)), closes [#124](https://github.com/eladb/projen/issues/124)
+
 ### 0.3.100 (2020-10-07)
 
 
