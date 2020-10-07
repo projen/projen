@@ -133,6 +133,7 @@ export interface JsiiPythonTarget {
 
   /**
    * The registry url to use when releasing packages.
+   * @default - twine default
    */
   readonly twineRegistryUrl?: string;
 }
@@ -437,4 +438,3 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
   }
   return { authorEmail, authorUrl };
 }
-
