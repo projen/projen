@@ -731,7 +731,7 @@ export class NodeProject extends Project {
         for (const file of fs.readdirSync(bindir)) {
           try {
             fs.accessSync(path.join(bindir, file), fs.constants.X_OK);
-            this.bin[file] = path.join(bindir, file);
+            this.bin[file] = path.join(bindir, file).replace(/\\/g, '/');
           } catch (e) {
             // not executable, skip
           }
@@ -760,6 +760,7 @@ export class NodeProject extends Project {
           strict: 'smart',
           strict_method: 'merge',
         },
+
         delete_head_branch: { },
       };
 

@@ -1,3 +1,5 @@
+import * as os from 'os';
+import * as path from 'path';
 import * as TOML from '@iarna/toml';
 import * as fs from 'fs-extra';
 import { Project } from './project';
@@ -17,10 +19,10 @@ test('toml object can be mutated before synthesis', () => {
     foo: 1234,
   };
 
-  const outdir = fs.mkdtempSync('/tmp/projen-test-');
+  const outdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
   prj.synth(outdir);
 
-  const actual = TOML.parse(fs.readFileSync(`${outdir}/my/toml/file.toml`, 'utf-8'));
+  const actual = TOML.parse(fs.readFileSync(path.join(outdir, 'my/toml/file.toml'), 'utf-8'));
   expect(actual).toStrictEqual({
     hello: 'world',
     anotherField: { foo: 1234 },
