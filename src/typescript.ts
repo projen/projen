@@ -157,7 +157,7 @@ export class TypeScriptProject extends NodeProject {
       this.addScript('package',
         'rm -fr dist',
         'mkdir -p dist/js',
-        `${this.runScriptCommand} pack`,
+        `${this.packageManager} pack`,
         'mv *.tgz dist/js/',
       );
 
@@ -170,7 +170,7 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
-      this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js'))}.d.ts`;
+      this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
     }
 
     const compilerOptions = {

@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.106 (2020-10-11)
+
+
+### Bug Fixes
+
+* paths are not compatible with windows ([#175](https://github.com/eladb/projen/issues/175)) ([cffdec2](https://github.com/eladb/projen/commit/cffdec204ca5979808d01127876374a6927247b8))
+
+### 0.3.105 (2020-10-11)
+
+### 0.3.104 (2020-10-09)
+
+### 0.3.103 (2020-10-08)
+
+### 0.3.102 (2020-10-07)
+
+### 0.3.101 (2020-10-07)
+
+
+### Features
+
+* **jsii:** allowing twine registry to be set ([#140](https://github.com/eladb/projen/issues/140)) ([5b0918c](https://github.com/eladb/projen/commit/5b0918c99e64d859ca737a6a9ff432857f43906a)), closes [#124](https://github.com/eladb/projen/issues/124)
+
+### 0.3.100 (2020-10-07)
+
+
+### Bug Fixes
+
+* **node:** typo in help-text ([#170](https://github.com/eladb/projen/issues/170)) ([688372f](https://github.com/eladb/projen/commit/688372f4c1ed05e9667057077c3a50efda1c2989))
+
+### 0.3.99 (2020-10-07)
+
+
+### Bug Fixes
+
+* **typescript:** "package" script fails with "Command "pack" not found." ([52f8b33](https://github.com/eladb/projen/commit/52f8b332c3c2433ca35b8d4fd0a6a0651c8de0d3)), closes [#157](https://github.com/eladb/projen/issues/157)
+
+### 0.3.98 (2020-10-07)
+
+### 0.3.97 (2020-10-07)
+
+
+### Features
+
+* **node:** projen upgrade schedule ([#155](https://github.com/eladb/projen/issues/155)) ([16169b8](https://github.com/eladb/projen/commit/16169b8f5b978bd15a0fe3126b5a93f9de7dc016)), closes [eladb/projen#153](https://github.com/eladb/projen/issues/153)
+
 ### 0.3.96 (2020-10-06)
 
 ### 0.3.95 (2020-10-06)

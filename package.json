@@ -18,7 +18,7 @@
     "projen:upgrade": "yarn upgrade -L projen && CI=\"\" yarn projen",
     "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
-    "build": "yarn run compile && yarn run test && yarn run package",
+    "build": "yarn run compile && yarn run test && yarn run package && mv README.md README.md.bak && cat README.md.bak | npx markmac > README.md && rm README.md.bak",
     "package": "jsii-pacmak",
     "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "test:watch": "jest --watch",
@@ -53,6 +53,7 @@
     "jsii-pacmak": "^1.11.0",
     "jsii-release": "^0.1.6",
     "json-schema": "^0.2.5",
+    "markmac": "^0.1.2",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
@@ -143,7 +144,7 @@
       "category": 2
     }
   },
-  "version": "0.3.96",
+  "version": "0.3.106",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,

@@ -21,6 +21,7 @@ export interface ProjectType {
   typename: string;
   options: ProjectOption[];
   docs?: string;
+  docsurl: string;
 }
 
 interface JsiiType {
@@ -65,6 +66,7 @@ export function discover() {
     }
 
     const [, typename] = fqn.split('.');
+    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
       typename,
@@ -72,6 +74,7 @@ export function discover() {
       fqn,
       options: discoverOptions(fqn),
       docs: typeinfo.docs?.summary,
+      docsurl,
     });
   }
 

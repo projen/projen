@@ -24,12 +24,12 @@ export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
    */
-  YARN,
+  YARN = 'yarn',
 
   /**
    * Use `npm` as the package manager.
    */
-  NPM
+  NPM = 'npm'
 }
 
 export interface NodeProjectCommonOptions {
@@ -81,6 +81,13 @@ export interface NodeProjectCommonOptions {
   readonly projenDevDependency?: boolean;
 
   /**
+   * The name of the main release branch.
+   *
+   * @default 'master'
+   */
+  readonly defaultReleaseBranch?: string;
+
+  /**
    * Define a GitHub workflow for building PRs.
    * @default true
    */
@@ -109,7 +116,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Branches which trigger a release.
    *
-   * @default [ "master" ]
+   * @default [ "master" ] - based on the value of defaultReleaseBranch.
    */
   readonly releaseBranches?: string[];
 
@@ -134,7 +141,7 @@ export interface NodeProjectCommonOptions {
   readonly releaseToNpm?: boolean;
 
   /**
-   * Checks that after build there are no modified files onn git.
+   * Checks that after build there are no modified files on git.
    * @default true
    */
   readonly antitamper?: boolean;
@@ -278,6 +285,13 @@ export interface NodeProjectCommonOptions {
    * @default - "true" if mergify auto-merge is enabled (default)
    */
   readonly projenUpgradeAutoMerge?: boolean;
+
+  /**
+   * Customize the projenUpgrade schedule in cron expression.
+   *
+   @default [ '0 6 * * *' ]
+   */
+  readonly projenUpgradeSchedule?: string[];
 
   /**
    * Defines a `yarn start` interactive experience
@@ -621,8 +635,10 @@ export class NodeProject extends Project {
       this.addDevDependencies({ projen: projenVersion });
     }
 
+    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
+
     // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this);
+    this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
     this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
@@ -642,7 +658,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? true) {
-      const releaseBranches = options.releaseBranches ?? ['master'];
+      const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = {};
 
@@ -715,7 +731,7 @@ export class NodeProject extends Project {
         for (const file of fs.readdirSync(bindir)) {
           try {
             fs.accessSync(path.join(bindir, file), fs.constants.X_OK);
-            this.bin[file] = path.join(bindir, file);
+            this.bin[file] = path.join(bindir, file).replace(/\\/g, '/');
           } catch (e) {
             // not executable, skip
           }
@@ -744,6 +760,7 @@ export class NodeProject extends Project {
           strict: 'smart',
           strict_method: 'merge',
         },
+
         delete_head_branch: { },
       };
 
@@ -779,6 +796,7 @@ export class NodeProject extends Project {
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
+      autoUpgradeSchedule: options.projenUpgradeSchedule,
       labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
     });
 

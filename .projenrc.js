@@ -1,4 +1,4 @@
-const { JsiiProject, Semver } = require('./lib');
+const { JsiiProject, JsonFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -25,7 +25,8 @@ const project = new JsiiProject({
     '@types/yargs',
     '@types/glob',
     '@types/inquirer',
-    '@types/semver'
+    '@types/semver',
+    'markmac',
   ],
 
   projenDevDependency: false, // because I am projen
@@ -38,5 +39,23 @@ const project = new JsiiProject({
 project.addScript('projen', 'yarn compile', 'node .projenrc.js');
 
 project.gitignore.include('templates/**');
+
+// expand markdown macros in readme
+project.addBuildCommand(
+  'mv README.md README.md.bak',
+  'cat README.md.bak | npx markmac > README.md',
+  'rm README.md.bak',
+);
+
+new JsonFile(project, '.markdownlint.json', {
+  obj: {
+    "default": true,
+    "commands-show-output": false,
+    "line-length": {
+      "line_length": 200
+    }
+  }
+});
+
 
 project.synth();

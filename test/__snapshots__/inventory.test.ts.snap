@@ -4,6 +4,7 @@ exports[`inventory 1`] = `
 Array [
   Object {
     "docs": "AWS CDK app in TypeScript.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdktypescriptapp",
     "fqn": "projen.AwsCdkTypeScriptApp",
     "options": Array [
       Object {
@@ -19,7 +20,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -202,6 +203,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -538,6 +550,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -549,7 +572,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -727,6 +750,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "AWS CDK construct library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdkconstructlibrary",
     "fqn": "projen.AwsCdkConstructLibrary",
     "options": Array [
       Object {
@@ -742,7 +766,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -934,6 +958,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
+        "type": "string",
+      },
+      Object {
         "default": "true;",
         "docs": "Include dependabot configuration.",
         "name": "dependabot",
@@ -1192,6 +1227,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -1203,7 +1249,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -1369,6 +1415,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "CDK8s construct library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-constructlibrarycdk8s",
     "fqn": "projen.ConstructLibraryCdk8s",
     "options": Array [
       Object {
@@ -1384,7 +1431,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -1542,6 +1589,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -1803,6 +1861,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -1814,7 +1883,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -1980,6 +2049,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Multi-language jsii library project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject",
     "fqn": "projen.JsiiProject",
     "options": Array [
       Object {
@@ -1995,7 +2065,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -2143,6 +2213,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -2404,6 +2485,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -2415,7 +2507,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -3185,6 +3277,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Node.js project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject",
     "fqn": "projen.NodeProject",
     "options": Array [
       Object {
@@ -3200,7 +3293,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -3319,6 +3412,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -3578,6 +3682,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -3589,7 +3704,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -3756,6 +3871,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "Base project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-project",
     "fqn": "projen.Project",
     "options": Array [],
     "pjid": "project",
@@ -3763,6 +3879,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "TypeScript project.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject",
     "fqn": "projen.TypeScriptProject",
     "options": Array [
       Object {
@@ -3778,7 +3895,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -3909,6 +4026,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -4245,6 +4373,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -4256,7 +4395,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -4434,6 +4573,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
   },
   Object {
     "docs": "TypeScript app.",
+    "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptappproject",
     "fqn": "projen.TypeScriptAppProject",
     "options": Array [
       Object {
@@ -4449,7 +4589,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "true",
-        "docs": "Checks that after build there are no modified files onn git.",
+        "docs": "Checks that after build there are no modified files on git.",
         "name": "antitamper",
         "optional": true,
         "path": Array [
@@ -4580,6 +4720,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "copyrightPeriod",
         ],
         "switch": "copyright-period",
+        "type": "string",
+      },
+      Object {
+        "default": "'master'",
+        "docs": "The name of the main release branch.",
+        "name": "defaultReleaseBranch",
+        "optional": true,
+        "path": Array [
+          "defaultReleaseBranch",
+        ],
+        "switch": "default-release-branch",
         "type": "string",
       },
       Object {
@@ -4916,6 +5067,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "[ '0 6 * * *' ]",
+        "docs": "Customize the projenUpgrade schedule in cron expression.",
+        "name": "projenUpgradeSchedule",
+        "optional": true,
+        "path": Array [
+          "projenUpgradeSchedule",
+        ],
+        "switch": "projen-upgrade-schedule",
+        "type": "unknown",
+      },
+      Object {
         "default": "no automatic projen upgrade pull requests",
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "name": "projenUpgradeSecret",
@@ -4927,7 +5089,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"master\\" ] - based on the value of defaultReleaseBranch.",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,

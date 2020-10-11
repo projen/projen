@@ -56,3 +56,4 @@ tsconfig.json
 !/.eslintrc.json
 !/API.md
 !templates/**
+!/.markdownlint.json
