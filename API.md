@@ -20,7 +20,7 @@ Name|Description
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
 [Mergify](#projen-mergify)|*No description*
-[NextJSProject](#projen-nextjsproject)|NextJS project.
+[NextJsProject](#projen-nextjsproject)|NextJS project.
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
@@ -58,7 +58,7 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
-[NextJSProjectOptions](#projen-nextjsprojectoptions)|*No description*
+[NextJsProjectOptions](#projen-nextjsprojectoptions)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
@@ -1350,7 +1350,7 @@ addRule(rule: MergifyRule): void
 
 
 
-## class NextJSProject 🔹 <a id="projen-nextjsproject"></a>
+## class NextJsProject 🔹 <a id="projen-nextjsproject"></a>
 
 NextJS project.
 
@@ -1362,12 +1362,12 @@ __Extends__: [NodeProject](#projen-nodeproject)
 
 
 ```ts
-new NextJSProject(options: NextJSProjectOptions)
+new NextJsProject(options: NextJsProjectOptions)
 ```
 
-* **options** (<code>[NextJSProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
+* **options** (<code>[NextJsProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
-  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files onn git. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
@@ -1375,6 +1375,7 @@ new NextJSProject(options: NextJSProjectOptions)
   * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
   * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1398,9 +1399,10 @@ new NextJSProject(options: NextJSProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ '0 6 * * *' ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
@@ -1437,8 +1439,8 @@ new NextJSProject(options: NextJSProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
-**pagesdir**🔹 | <code>string</code> | The directory in which NextJS pages are declared.
+**assetsDir**🔹 | <code>string</code> | The directory in which app assets reside.
+**pagesDir**🔹 | <code>string</code> | The directory in which NextJS pages are declared.
 
 
 
@@ -3259,7 +3261,7 @@ Name | Type | Description
 
 
 
-## struct NextJSProjectOptions 🔹 <a id="projen-nextjsprojectoptions"></a>
+## struct NextJsProjectOptions 🔹 <a id="projen-nextjsprojectoptions"></a>
 
 
 
@@ -3270,7 +3272,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
-**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files onn git.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **assetsDir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
@@ -3283,6 +3285,7 @@ Name | Type | Description
 **bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
 **dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3312,9 +3315,10 @@ Name | Type | Description
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ '0 6 * * *' ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
