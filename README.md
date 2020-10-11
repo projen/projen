@@ -10,6 +10,8 @@ Define and maintain complex project configuration through code.
 `tsconfig.json`, `.gitignore`, GitHub Workflows, eslint, jest, etc from a
 well-typed definition written in JavaScript.
 
+Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen.
+
 As opposed to existing templating/scaffolding tools, *projen* is not a one-off
 generator. Synthesized files should never be manually edited (in fact, projen
 enforces that). To modify your project setup, users interact with rich
