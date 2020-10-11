@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.106 (2020-10-11)
+
+
+### Bug Fixes
+
+* paths are not compatible with windows ([#175](https://github.com/eladb/projen/issues/175)) ([cffdec2](https://github.com/eladb/projen/commit/cffdec204ca5979808d01127876374a6927247b8))
+
 ### 0.3.105 (2020-10-11)
 
 ### 0.3.104 (2020-10-09)
