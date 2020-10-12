@@ -195,7 +195,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -334,7 +335,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -367,7 +369,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -519,7 +520,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -610,7 +612,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -709,7 +712,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1159,7 +1163,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1423,7 +1428,8 @@ new NodeProject(options: NodeProjectOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1456,7 +1462,6 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2072,7 +2077,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2105,7 +2111,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2166,7 +2171,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2199,7 +2205,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2260,7 +2265,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
-  * **npmIgnore** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
   * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2293,7 +2299,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2474,8 +2479,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -2560,9 +2566,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -2667,8 +2673,9 @@ Name | Type | Description
 **mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -2751,8 +2758,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -2834,8 +2842,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -3062,8 +3071,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -3215,8 +3225,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -3285,9 +3296,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
@@ -3451,9 +3462,9 @@ Name | Type | Description
 **mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
@@ -3537,9 +3548,9 @@ Name | Type | Description
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
-**npmIgnore**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
