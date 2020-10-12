@@ -1,4 +1,4 @@
-# AWS CDK - Construct library
+# AWS CDK Construct Library
 
 This projen type is used for building AWS CDK constructs using the JSII.
 
