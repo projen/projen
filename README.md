@@ -39,6 +39,7 @@ list):
 * [awscdk-construct](https://github.com/eladb/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-construct](https://github.com/eladb/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
 * [jsii](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
+* [nextjs](https://github.com/eladb/projen/blob/master/API.md#projen-nextjsproject) - NextJS project.
 * [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/eladb/projen/blob/master/API.md#projen-project) - Base project.
 * [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
