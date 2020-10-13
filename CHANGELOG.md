@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.109 (2020-10-13)
+
+
+### Features
+
+* **nextjs:** add support for nextjs projects ([#167](https://github.com/eladb/projen/issues/167)) ([2613604](https://github.com/eladb/projen/commit/261360425a1cd24ecaad28b9abaa98dab26d710e)), closes [#158](https://github.com/eladb/projen/issues/158)
+
 ### 0.3.108 (2020-10-13)
 
 ### 0.3.107 (2020-10-12)
