@@ -24,9 +24,10 @@ export interface ProjectType {
   docsurl: string;
 }
 
-interface JsiiType {
+export interface JsiiType {
   kind: string;
   abstract?: boolean;
+  assembly?: string;
   base?: string;
   fqn: string;
   interfaces?: string[];
@@ -54,6 +55,9 @@ interface JsiiType {
     custom?: {
       pjid?: string;
     };
+  };
+  locationInModule?: {
+    filename?: string;
   };
 }
 
