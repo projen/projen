@@ -163,6 +163,16 @@ Adding new project types is as simple as submitting a pull request to this repo 
 extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
+### External Discovery
+
+```bash
+npm init -y
+npm install projen # Have to install so npx will use the local copy instead of child process
+npx projen discover NPM-MODULE # Discover your npm module. Can have multiple project types in case you want to maintain them all together
+npx projen new my-cool-project # Create the new project and synth
+npx projen discover NPM-module # TODO: Figure out if this is needed once discovery is merged in - needed because of my local install atm
+```
+
 ## Contributing
 
 Contributions of all kinds are welcome!

@@ -1109,7 +1109,7 @@ export class NodeProject extends Project {
 
     const readDeps = (user: Record<string, string>, current: Record<string, string>) => {
       for (const [name, userVersion] of Object.entries(user)) {
-        const currentVersion = current ? current[name] : '';
+        const currentVersion = current ? current[name] : undefined;
 
         // respect user version if it's not '*' or if current version is undefined
         if (userVersion !== '*' || !currentVersion || currentVersion === '*') {
