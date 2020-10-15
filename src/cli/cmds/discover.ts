@@ -33,7 +33,11 @@ class Command implements yargs.CommandModule {
 
     let projectFound = false;
     let assembly = '';
+
+    // TODO: Check this against the inventory types as well? To make sure it's a proper subtype?
     for (const [fqn, typeinfo] of Object.entries(externalJsii)) {
+      if (!isProjenType(fqn, externalJsii, projenJsii)) continue;
+
       assembly = typeinfo.assembly ?? '';
       projenTypes[fqn] = typeinfo;
       projectFound = true;
@@ -92,5 +96,37 @@ function cleanup() {
   const tmpDir = path.join(baseDir, targetTmp);
   fs.removeSync(tmpDir);
 }
+
+function isProjenType(fqn: string, externalJsii: { [name: string]: JsiiType }, projenJsii: { [name: string]: JsiiType }) {
+  const type = externalJsii[fqn];
+
+  if (type.kind !== 'class') {
+    return false;
+  }
+  if (type.abstract) {
+    return false;
+  }
+
+  if (type.docs?.deprecated) {
+    return false;
+  }
+
+  let curr = type;
+  while (true) {
+    if (curr.fqn === 'projen.Project') {
+      return true;
+    }
+
+    if (!curr.base) {
+      return false;
+    }
+
+    curr = projenJsii[curr.base];
+    if (!curr) {
+      return false;
+    }
+  }
+}
+
 
 module.exports = new Command();
