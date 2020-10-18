@@ -1,5 +1,5 @@
-import {FileBase, FileBaseOptions, IResolver} from "./file";
-import {Project} from "./project";
+import { FileBase, FileBaseOptions, IResolver } from './file';
+import { Project } from './project';
 
 export interface ReadmeOptions extends FileBaseOptions {
   /**
@@ -18,8 +18,8 @@ export class Readme extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, options: ReadmeOptions = {}) {
-    super(project, "README.md", options);
-    this.text = options.text ?? "# jsii construct";
+    super(project, 'README.md', options);
+    this.text = options.text ?? '# jsii construct';
   }
 
   protected synthesizeContent(resolver: IResolver): string {
