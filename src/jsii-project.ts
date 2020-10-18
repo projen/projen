@@ -5,6 +5,7 @@ import { NodeProjectCommonOptions } from './node-project';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptProject } from './typescript';
+import { Readme } from './readme';
 
 const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -264,6 +265,8 @@ export class JsiiProject extends TypeScriptProject {
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
     }
+
+    new Readme(this);
 
     const compat = options.compat ?? false;
     if (compat) {
