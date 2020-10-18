@@ -6,7 +6,6 @@ like to build and distribute CDK constructs for others to use.
 
 # Table of Contents
 
-* [AWS CDK Construct Library](#aws-cdk-construct-library)
 * [Project Heirarchy](#project-heirarchy)
 * [Getting Started](#getting-started)
   * [Standard Node Module Fields](#standard-node-module-fields)
