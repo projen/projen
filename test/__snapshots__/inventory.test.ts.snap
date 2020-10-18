@@ -2701,12 +2701,12 @@ jest typescript tests and only if all tests pass, run the compiler.",
       Object {
         "default": "'public'",
         "docs": "Assets directory.",
-        "name": "assetsDir",
+        "name": "assetsdir",
         "optional": true,
         "path": Array [
-          "assetsDir",
+          "assetsdir",
         ],
-        "switch": "assets-dir",
+        "switch": "assetsdir",
         "type": "string",
       },
       Object {
@@ -3317,12 +3317,12 @@ jest typescript tests and only if all tests pass, run the compiler.",
       Object {
         "default": "'public'",
         "docs": "Assets directory.",
-        "name": "assetsDir",
+        "name": "assetsdir",
         "optional": true,
         "path": Array [
-          "assetsDir",
+          "assetsdir",
         ],
-        "switch": "assets-dir",
+        "switch": "assetsdir",
         "type": "string",
       },
       Object {

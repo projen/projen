@@ -322,7 +322,7 @@ export interface TypescriptConfigOptions {
 }
 
 /**
- * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
+ * Determines how modules get resolved.
  *
  * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html
  */
@@ -343,7 +343,7 @@ export enum TypeScriptModuleResolution {
 }
 
 /**
- * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
+ * Determines how JSX should get transformed into valid JavaScript.
  *
  * @see https://www.typescriptlang.org/docs/handbook/jsx.html
  */

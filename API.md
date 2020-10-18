@@ -95,6 +95,8 @@ Name|Description
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [Stability](#projen-stability)|*No description*
 [StartEntryCategory](#projen-startentrycategory)|*No description*
+[TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
+[TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 
 
@@ -1371,7 +1373,7 @@ new NextJsProject(options: NextJsProjectOptions)
 ```
 
 * **options** (<code>[NextJsProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
-  * **assetsDir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
@@ -1443,8 +1445,8 @@ new NextJsProject(options: NextJsProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**assetsDir**🔹 | <code>string</code> | The directory in which app assets reside.
-**srcDir**🔹 | <code>string</code> | The directory in which source files reside.
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 
 
 
@@ -1505,7 +1507,7 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 ```
 
 * **options** (<code>[NextJsTypeScriptProjectOptions](#projen-nextjstypescriptprojectoptions)</code>)  *No description*
-  * **assetsDir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
@@ -1588,9 +1590,9 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**assetsDir**🔹 | <code>string</code> | The directory in which app assets reside.
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
 **nextJsTypeDef**🔹 | <code>[NextJsTypeDef](#projen-nextjstypedef)</code> | TypeScript definition file included that ensures Next.js types are picked up by the TypeScript compiler.
-**srcDir**🔹 | <code>string</code> | The directory in which source files reside.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 
 
 
@@ -3421,7 +3423,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**assetsDir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
 
 
@@ -3438,7 +3440,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**assetsDir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -3529,7 +3531,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**assetsDir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -3822,11 +3824,11 @@ Name | Type | Description
 **forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
-**isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Optional*__
-**jsx**?🔹 | <code>string</code> | Support JSX in .tsx files: "react", "preserve", "react-native".<br/>__*Default*__: undefined
+**isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
+**jsx**?🔹 | <code>[TypeScriptJsxMode](#projen-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native".<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ 'es2018' ]
 **module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: 'CommonJS'
-**moduleResolution**?🔹 | <code>string</code> | Determine how modules get resolved.<br/>__*Default*__: 'node'
+**moduleResolution**?🔹 | <code>[TypeScriptModuleResolution](#projen-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: 'node'
 **noEmit**?🔹 | <code>boolean</code> | Do not emit outputs.<br/>__*Default*__: false
 **noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/>__*Default*__: true
 **noFallthroughCasesInSwitch**?🔹 | <code>boolean</code> | Report errors for fallthrough cases in switch statements.<br/>__*Default*__: true
@@ -4112,6 +4114,27 @@ Name | Description
 **RELEASE** 🔹|
 **MAINTAIN** 🔹|
 **MISC** 🔹|
+
+
+## enum TypeScriptJsxMode 🔹 <a id="projen-typescriptjsxmode"></a>
+
+Determines how JSX should get transformed into valid JavaScript.
+
+Name | Description
+-----|-----
+**PRESERVE** 🔹|Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
+**REACT** 🔹|Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
+**REACT_NATIVE** 🔹|Keeps all JSX like 'preserve' mode, but output will have a .js extension.
+
+
+## enum TypeScriptModuleResolution 🔹 <a id="projen-typescriptmoduleresolution"></a>
+
+Determines how modules get resolved.
+
+Name | Description
+-----|-----
+**CLASSIC** 🔹|TypeScript's former default resolution strategy.
+**NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 
 ## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>

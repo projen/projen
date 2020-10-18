@@ -4,7 +4,7 @@ import { Component } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { StartEntryCategory } from './start';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
+import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
 export interface NextJsCommonProjectOptions {
   /**
@@ -12,7 +12,7 @@ export interface NextJsCommonProjectOptions {
    *
    * @default 'public'
    */
-  readonly assetsDir?: string;
+  readonly assetsdir?: string;
 
   /**
    * Generate one-time sample in `pages/` and `public/` if there are no files there.
@@ -34,12 +34,12 @@ export class NextJsProject extends NodeProject {
   /**
    * The directory in which source files reside.
    */
-  public readonly srcDir: string;
+  public readonly srcdir: string;
 
   /**
    * The directory in which app assets reside.
    */
-  public readonly assetsDir: string;
+  public readonly assetsdir: string;
 
   constructor(options: NextJsProjectOptions) {
     super({
@@ -47,8 +47,8 @@ export class NextJsProject extends NodeProject {
       ...options,
     });
 
-    this.srcDir = options.srcdir ?? 'pages';
-    this.assetsDir = options.assetsDir ?? 'public';
+    this.srcdir = options.srcdir ?? 'pages';
+    this.assetsdir = options.assetsdir ?? 'public';
 
     this.addDeps('next', 'react', 'react-dom');
 
@@ -84,8 +84,8 @@ export class NextJsProject extends NodeProject {
     if (options.sampleCode ?? true) {
       new SampleCode(this, {
         fileExt: 'js',
-        srcDir: this.srcDir,
-        assetsDir: this.assetsDir,
+        srcDir: this.srcdir,
+        assetsDir: this.assetsdir,
       });
     }
   }
@@ -100,12 +100,12 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
   /**
    * The directory in which source files reside.
    */
-  public readonly srcDir: string;
+  public readonly srcdir: string;
 
   /**
    * The directory in which app assets reside.
    */
-  public readonly assetsDir: string;
+  public readonly assetsdir: string;
 
   /**
    * TypeScript definition file included that ensures Next.js types are picked
@@ -126,10 +126,10 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           // required by Next.js
           esModuleInterop: true,
           module: 'esnext',
-          moduleResolution: 'node',
+          moduleResolution: TypeScriptModuleResolution.NODE,
           isolatedModules: true,
           resolveJsonModule: true,
-          jsx: 'preserve',
+          jsx: TypeScriptJsxMode.PRESERVE,
 
           // recommended by Next.js
           allowJs: true,
@@ -151,8 +151,8 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
       sampleCode: false,
     });
 
-    this.srcDir = options.srcdir ?? 'pages';
-    this.assetsDir = options.assetsDir ?? 'public';
+    this.srcdir = options.srcdir ?? 'pages';
+    this.assetsdir = options.assetsdir ?? 'public';
 
     // currently eslint fails because there are no files in the test/ dir.
     // until fixed, adding this to allow successful builds
@@ -197,7 +197,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
       new SampleCode(this, {
         fileExt: 'tsx',
         srcDir: this.srcdir,
-        assetsDir: this.assetsDir,
+        assetsDir: this.assetsdir,
       });
     }
   }
