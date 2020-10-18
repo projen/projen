@@ -20,6 +20,7 @@ Name|Description
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
 [Mergify](#projen-mergify)|*No description*
+[NextComponent](#projen-nextcomponent)|*No description*
 [NextJsProject](#projen-nextjsproject)|Next.js project without TypeScript.
 [NextJsTypeDef](#projen-nextjstypedef)|*No description*
 [NextJsTypeScriptProject](#projen-nextjstypescriptproject)|Next.js project with TypeScript.
@@ -60,6 +61,7 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
+[NextComponentOptions](#projen-nextcomponentoptions)|*No description*
 [NextJsCommonProjectOptions](#projen-nextjscommonprojectoptions)|*No description*
 [NextJsProjectOptions](#projen-nextjsprojectoptions)|*No description*
 [NextJsTypeDefOptions](#projen-nextjstypedefoptions)|*No description*
@@ -1353,6 +1355,28 @@ addRule(rule: MergifyRule): void
   * **name** (<code>string</code>)  *No description* 
 
 
+
+
+
+
+## class NextComponent 🔹 <a id="projen-nextcomponent"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new NextComponent(project: NodeProject, options: NextComponentOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[NextComponentOptions](#projen-nextcomponentoptions)</code>)  *No description*
+  * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript Next.js projects. __*Default*__: false
 
 
 
@@ -3411,6 +3435,19 @@ Name | Type | Description
 **actions**🔹 | <code>Map<string, any></code> | <span></span>
 **conditions**🔹 | <code>Array<string></code> | <span></span>
 **name**🔹 | <code>string</code> | <span></span>
+
+
+
+## struct NextComponentOptions 🔹 <a id="projen-nextcomponentoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**typescript**?🔹 | <code>boolean</code> | Whether to apply options specific for TypeScript Next.js projects.<br/>__*Default*__: false
 
 
 

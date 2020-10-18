@@ -50,39 +50,11 @@ export class NextJsProject extends NodeProject {
     this.srcdir = options.srcdir ?? 'pages';
     this.assetsdir = options.assetsdir ?? 'public';
 
-    this.addDeps('next', 'react', 'react-dom');
-
-    // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
-    this.addScript('dev', 'next dev');
-    this.start?.addEntry('dev', {
-      desc: 'Starts the Next.js application in development mode',
-      category: StartEntryCategory.BUILD,
-    });
-
-    this.addScript('build', 'next build');
-    this.start?.addEntry('build', {
-      desc: 'Creates an optimized production build of your Next.js application',
-      category: StartEntryCategory.BUILD,
-    });
-
-    this.addScript('server', 'next start');
-    this.start?.addEntry('server', {
-      desc: 'Starts the Next.js application in production mode',
-      category: StartEntryCategory.RELEASE,
-    });
-
-    this.addScript('telemetry', 'next telemetry');
-    this.start?.addEntry('telemetry', {
-      desc: 'Checks the status of Next.js telemetry collection',
-      category: StartEntryCategory.MISC,
-    });
-
-    this.npmignore?.exclude('# Next.js', '/.next/');
-    this.gitignore.exclude('# Next.js', '/.next/');
+    new NextComponent(this, { typescript: false });
 
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
-      new SampleCode(this, {
+      new NextSampleCode(this, {
         fileExt: 'js',
         srcDir: this.srcdir,
         assetsDir: this.assetsdir,
@@ -154,36 +126,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     this.srcdir = options.srcdir ?? 'pages';
     this.assetsdir = options.assetsdir ?? 'public';
 
-    // currently eslint fails because there are no files in the test/ dir.
-    // until fixed, adding this to allow successful builds
-    this.addTestCommand('echo 0');
-
-    this.addDeps('next', 'react', 'react-dom');
-    this.addDevDeps('@types/react', '@types/react-dom');
-
-    // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
-    this.addScript('dev', 'next dev');
-    this.start?.addEntry('dev', {
-      desc: 'Starts the Next.js application in development mode',
-      category: StartEntryCategory.BUILD,
-    });
-
-    this.addBuildCommand('next build');
-
-    this.addScript('server', 'next start');
-    this.start?.addEntry('server', {
-      desc: 'Starts the Next.js application in production mode',
-      category: StartEntryCategory.RELEASE,
-    });
-
-    this.addScript('telemetry', 'next telemetry');
-    this.start?.addEntry('telemetry', {
-      desc: 'Checks the status of Next.js telemetry collection',
-      category: StartEntryCategory.MISC,
-    });
-
-    this.npmignore?.exclude('# Next.js', '/.next/');
-    this.gitignore.exclude('# Next.js', '/.next/');
+    new NextComponent(this, { typescript: true });
 
     // 'next build' command fails if tsconfig.json is immutable
     if (this.tsconfig) {
@@ -194,7 +137,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
 
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
-      new SampleCode(this, {
+      new NextSampleCode(this, {
         fileExt: 'tsx',
         srcDir: this.srcdir,
         assetsDir: this.assetsdir,
@@ -218,7 +161,59 @@ export class NextJsTypeDef extends FileBase {
   }
 }
 
-interface SampleCodeOptions {
+export interface NextComponentOptions {
+  /**
+   * Whether to apply options specific for TypeScript Next.js projects.
+   *
+   * @default false
+   */
+  readonly typescript?: boolean;
+}
+
+export class NextComponent extends Component {
+  private readonly typescript: boolean;
+
+  constructor(project: NodeProject, options: NextComponentOptions) {
+    super(project);
+
+    this.typescript = options.typescript ?? false;
+
+    project.addDeps('next', 'react', 'react-dom');
+    if (this.typescript) {
+      project.addDevDeps('@types/react', '@types/react-dom');
+    }
+
+    // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
+    project.addScript('dev', 'next dev');
+    project.start?.addEntry('dev', {
+      desc: 'Starts the Next.js application in development mode',
+      category: StartEntryCategory.BUILD,
+    });
+
+    project.addScript('build', 'next build');
+    project.start?.addEntry('build', {
+      desc: 'Creates an optimized production build of your Next.js application',
+      category: StartEntryCategory.BUILD,
+    });
+
+    project.addScript('server', 'next start');
+    project.start?.addEntry('server', {
+      desc: 'Starts the Next.js application in production mode',
+      category: StartEntryCategory.RELEASE,
+    });
+
+    project.addScript('telemetry', 'next telemetry');
+    project.start?.addEntry('telemetry', {
+      desc: 'Checks the status of Next.js telemetry collection',
+      category: StartEntryCategory.MISC,
+    });
+
+    project.npmignore?.exclude('# Next.js', '/.next/');
+    project.gitignore.exclude('# Next.js', '/.next/');
+  }
+}
+
+interface NextSampleCodeOptions {
   /**
    * File extension for sample javascript code to be saved as.
    *
@@ -237,12 +232,12 @@ interface SampleCodeOptions {
   readonly assetsDir: string;
 }
 
-class SampleCode extends Component {
+class NextSampleCode extends Component {
   private readonly fileExt: string;
   private readonly srcDir: string;
   private readonly assetsDir: string;
 
-  constructor(project: NodeProject, options: SampleCodeOptions) {
+  constructor(project: NodeProject, options: NextSampleCodeOptions) {
     super(project);
 
     this.fileExt = options.fileExt ?? 'js';
