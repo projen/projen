@@ -321,6 +321,49 @@ export interface TypescriptConfigOptions {
   readonly compilerOptions: TypeScriptCompilerOptions;
 }
 
+/**
+ * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html
+ */
+export enum TypeScriptModuleResolution {
+  /**
+   * TypeScript's former default resolution strategy.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic
+   */
+  CLASSIC = 'classic',
+
+  /**
+   * Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
+   */
+  NODE = 'node'
+}
+
+/**
+ * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/jsx.html
+ */
+export enum TypeScriptJsxMode {
+  /**
+   * Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
+   */
+  PRESERVE = 'preserve',
+
+  /**
+   * Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
+   */
+  REACT = 'react',
+
+  /**
+   * Keeps all JSX like 'preserve' mode, but output will have a .js extension.
+   */
+  REACT_NATIVE = 'react-native'
+}
+
 export interface TypeScriptCompilerOptions {
   /**
    * Allow JavaScript files to be compiled.
@@ -391,6 +434,8 @@ export interface TypeScriptCompilerOptions {
   /**
    * Perform additional checks to ensure that separate compilation (such as
    * with transpileModule or @babel/plugin-transform-typescript) would be safe.
+   *
+   * @default false
    */
   readonly isolatedModules?: boolean;
 
@@ -399,7 +444,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @default undefined
    */
-  readonly jsx?: string;
+  readonly jsx?: TypeScriptJsxMode;
 
   /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
@@ -421,7 +466,7 @@ export interface TypeScriptCompilerOptions {
    *
    * @default 'node'
    */
-  readonly moduleResolution?: string;
+  readonly moduleResolution?: TypeScriptModuleResolution;
 
   /**
    * Do not emit outputs.
@@ -560,7 +605,7 @@ export class TypescriptConfig {
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
-  public file: JsonFile;
+  public readonly file: JsonFile;
 
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
     const fileName = options.fileName ?? 'tsconfig.json';
