@@ -56,8 +56,8 @@ export class NextJsProject extends NodeProject {
     if (options.sampleCode ?? true) {
       new NextSampleCode(this, {
         fileExt: 'js',
-        srcDir: this.srcdir,
-        assetsDir: this.assetsdir,
+        srcdir: this.srcdir,
+        assetsdir: this.assetsdir,
       });
     }
   }
@@ -139,8 +139,8 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     if (options.sampleCode ?? true) {
       new NextSampleCode(this, {
         fileExt: 'tsx',
-        srcDir: this.srcdir,
-        assetsDir: this.assetsdir,
+        srcdir: this.srcdir,
+        assetsdir: this.assetsdir,
       });
     }
   }
@@ -224,29 +224,29 @@ interface NextSampleCodeOptions {
   /**
    * The directory in which Next.js pages are declared.
    */
-  readonly srcDir: string;
+  readonly srcdir: string;
 
   /**
    * The directory in which app assets reside.
    */
-  readonly assetsDir: string;
+  readonly assetsdir: string;
 }
 
 class NextSampleCode extends Component {
   private readonly fileExt: string;
-  private readonly srcDir: string;
-  private readonly assetsDir: string;
+  private readonly srcdir: string;
+  private readonly assetsdir: string;
 
   constructor(project: NodeProject, options: NextSampleCodeOptions) {
     super(project);
 
     this.fileExt = options.fileExt ?? 'js';
-    this.srcDir = options.srcDir;
-    this.assetsDir = options.assetsDir;
+    this.srcdir = options.srcdir;
+    this.assetsdir = options.assetsdir;
   }
 
   public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.srcDir);
+    const srcdir = path.join(outdir, this.srcdir);
     if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(
       x => ['.js', '.jsx', '.ts', '.tsx'].some(suffix => x.endsWith(suffix)))) {
       return;
@@ -467,7 +467,7 @@ class NextSampleCode extends Component {
     fs.mkdirpSync(srcdir);
     fs.writeFileSync(path.join(srcdir, 'index.' + this.fileExt), indexJs.join('\n'));
 
-    const assetsdir = path.join(outdir, this.assetsDir);
+    const assetsdir = path.join(outdir, this.assetsdir);
     if (fs.pathExistsSync(assetsdir) && fs.readdirSync(assetsdir)) {
       return;
     }
