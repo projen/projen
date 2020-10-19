@@ -266,7 +266,7 @@ export class JsiiProject extends TypeScriptProject {
       new JsiiDocgen(this);
     }
 
-    new Readme(this);
+    new Readme(this, '# jsii construct');
 
     const compat = options.compat ?? false;
     if (compat) {
