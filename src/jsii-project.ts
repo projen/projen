@@ -2,10 +2,10 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { NodeProjectCommonOptions } from './node-project';
+import { Readme } from './readme';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptProject } from './typescript';
-import { Readme } from './readme';
 
 const DEFAULT_JSII_VERSION = '1.11.0';
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
