@@ -63,7 +63,7 @@ Next are getting CDK dependencies added:
 
 `cdkDependencies` will add both dependencies and peerDependencies to your package.json file with a caret semver 
 requirement (e.g. `^1.67.0`). CDK dependencies must be both direct and peer dependencies, 
-see [this issue](https://github.com/aws/aws-cdk/issues/5064). You can set cdkVersionPinning to true to use a fixed 
+see [this issue](https://github.com/aws/aws-cdk/issues/5064). You can set `cdkVersionPinning` to `true` to use a fixed 
 version, but this means that any consumer of your library will have to use this exact CDK version. 
 Likewise, `cdkTestDependencies` will add dependencies to the `devDependencies`. 
 
