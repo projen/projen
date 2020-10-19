@@ -189,13 +189,11 @@ Please review this file regularly and document your constructs liberally.
 
 Source .ts files should reside in the `src` directory. Constructs should be exported from the main.ts file. 
 Compiled files will be put in the `lib` directory. Tests are in the `test` directory. If you need additional 
-resources that are packaged with your library, add those to a `resource` directory and modify your scripts to copy them
-during the `compile` script:
+resources that are packaged with your library, add those to a `resources` directory that is besides the `src` directory
+and modify your references accordingly:
 
 ```typescript
-project.addScripts({
-  compile: "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen && cp -R resources/ lib/",
-});
+const thing = require('../resources/some-resource.json')
 ```
 
 # Migrating existing projects
