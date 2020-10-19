@@ -8,7 +8,7 @@ export interface ReadmeOptions extends FileBaseOptions {
   /**
    * The initial content of the README file.
    *
-   * @default "# jsii construct"
+   * @default "# replace this"
    */
   readonly text?: string;
 }
@@ -23,7 +23,7 @@ export class Readme extends Component {
 
   constructor(project: Project, text?: string) {
     super(project);
-    this.text = text ?? '# jsii construct';
+    this.text = text ?? '# replace this';
   }
 
   synthesize(outdir: string) {
