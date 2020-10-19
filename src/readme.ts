@@ -27,7 +27,7 @@ export class Readme extends Component {
   }
 
   synthesize(outdir: string) {
-    let readmeFilename = 'README.md';
+    const readmeFilename = 'README.md';
     const filePath = path.join(outdir, readmeFilename);
     if (!fileExists(readmeFilename)) {
       writeFile(filePath, this.text);
