@@ -39,13 +39,13 @@ you may want to set explicitly.
 These fields are your basic Node module setup:
 
 ```typescript
-  authorAddress: "benisrae@amazon.com",
-  authorName: "Elad Ben-Israel",
+  authorAddress: 'benisrae@amazon.com',
+  authorName: 'Elad Ben-Israel',
   description: 'Watching your CDK apps since 2019',
   name: 'cdk-watchful',
-  license: "MIT",
-  repository: "https://github.com/eladb/cdk-watchful.git",
-  keywords: ["cloudwatch", "monitoring"]
+  license: 'MIT',
+  repository: 'https://github.com/eladb/cdk-watchful.git',
+  keywords: ['cloudwatch', 'monitoring']
 ```
 
 All are pretty standard setup and nothing CDK-specific at this point. The `keywords` automatically gets 'cdk' so you don't
@@ -56,9 +56,9 @@ need to specify it.
 Next are getting CDK dependencies added:
 
 ```typescript
-  cdkVersion: "1.67.0",
-  cdkDependencies: ["@aws-cdk/aws-ec2"],
-  cdkTestDependencies: ["@aws-cdk/assert"],
+  cdkVersion: '1.67.0',
+  cdkDependencies: ['@aws-cdk/aws-ec2'],
+  cdkTestDependencies: ['@aws-cdk/assert'],
 ```
 
 `cdkDependencies` will add both dependencies and peerDependencies to your package.json file with a caret semver 
@@ -70,8 +70,8 @@ Likewise, `cdkTestDependencies` will add dependencies to the `devDependencies`.
 Additionally, you can add CDK dependencies using the methods:
 
 ```typescript
-project.addCdkDependencies("aws-cdk/aws-sqs", "aws-cdk/aws-sns");
-project.addCdkTestDependencies("aws-cdk/something-else");
+project.addCdkDependencies('aws-cdk/aws-sqs', 'aws-cdk/aws-sns');
+project.addCdkTestDependencies('aws-cdk/something-else');
 ```
 
 The `@aws-cdk/assert` library is already added to the cdkTestDependencies for you.
