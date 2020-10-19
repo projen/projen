@@ -34,7 +34,7 @@ npx projen new awscdk-construct
 Review the resulting .projenrc.js file and make changes as needed. The following are some specific areas
 you may want to set explicitly.
 
-## Standard Node Module Fields
+## Module Metadata
 
 These fields are your basic Node module setup:
 
