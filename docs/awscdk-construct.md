@@ -84,7 +84,7 @@ A [dependabot](https://dependabot.com/) file will be added unless `dependabot` i
 
 ## jsii Publishing
 
-As this is a [jsii](https://github.com/aws/jsii) project, it will cross-compile to other languages.  You can set up 
+As this is a [jsii project](./jsii.md), it will cross-compile to other languages.  You can set up 
 any number of jsii target languages. 
 
 ```typescript
