@@ -27,7 +27,6 @@ export interface ProjectType {
 export interface JsiiType {
   kind: string;
   abstract?: boolean;
-  assembly?: string;
   base?: string;
   fqn: string;
   interfaces?: string[];
@@ -55,9 +54,6 @@ export interface JsiiType {
     custom?: {
       pjid?: string;
     };
-  };
-  locationInModule?: {
-    filename?: string;
   };
 }
 
@@ -89,7 +85,7 @@ export function discoverRemote(externalJsii: { [name: string]: JsiiType }) {
   const result = new Array<ProjectType>();
 
   for (const [fqn, typeinfo] of Object.entries(externalJsii)) {
-    if (!isProjenType(fqn, externalJsii)) continue;
+    if (!isProjectType(fqn, externalJsii)) continue;
 
     const [, typename] = fqn.split('.');
     const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
@@ -171,8 +167,8 @@ function filterUndefined(obj: any) {
   return ret;
 }
 
-function isProjectType(fqn: string) {
-  const type = jsii[fqn];
+function isProjectType(fqn: string, externalJsii?: { [name: string]: JsiiType }) {
+  const type = externalJsii && externalJsii[fqn] ? externalJsii[fqn] : jsii[fqn];
 
   if (type.kind !== 'class') {
     return false;
@@ -195,38 +191,7 @@ function isProjectType(fqn: string) {
       return false;
     }
 
-    curr = jsii[curr.base];
-    if (!curr) {
-      return false;
-    }
-  }
-}
-
-export function isProjenType(fqn: string, externalJsii: { [name: string]: JsiiType }) {
-  const type = externalJsii[fqn];
-
-  if (type.kind !== 'class') {
-    return false;
-  }
-  if (type.abstract) {
-    return false;
-  }
-
-  if (type.docs?.deprecated) {
-    return false;
-  }
-
-  let curr = type;
-  while (true) {
-    if (curr.fqn === 'projen.Project') {
-      return true;
-    }
-
-    if (!curr.base) {
-      return false;
-    }
-
-    curr = externalJsii[curr.base] ? externalJsii[curr.base] : jsii[curr.base];
+    curr = externalJsii && externalJsii[curr.base] ? externalJsii[curr.base] : jsii[curr.base];
     if (!curr) {
       return false;
     }

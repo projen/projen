@@ -60,7 +60,7 @@ class Command implements yargs.CommandModule {
           // fail if .projenrc.js already exists
           checkForExistingProjenRc();
 
-          const params: any = {};
+          const params: any = { };
           for (const [key, value] of Object.entries(argv)) {
             for (const opt of type.options) {
               if (opt.switch === key) {
@@ -74,7 +74,7 @@ class Command implements yargs.CommandModule {
                   if (queue.length === 0) {
                     curr[p] = value;
                   } else {
-                    curr[p] = curr[p] ?? {};
+                    curr[p] = curr[p] ?? { };
                     curr = curr[p];
                   }
                 }
@@ -97,15 +97,10 @@ class Command implements yargs.CommandModule {
 
   public async handler(args: any) {
     if (args.from && args.from !== '') {
-      try {
-        return await handleFromNPM(args);
-      } catch (err) {
-        logging.error(err);
-        process.exit(1);
-      }
-    } else {
-      yargs.showHelp();
+      return await handleFromNPM(args);
     }
+
+    yargs.showHelp();
   }
 }
 
