@@ -10,10 +10,9 @@ import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { synth } from '../synth';
 
-const targetTmp = './tmp';
+const localNodeModules = './node_modules.local';
 
 class Command implements yargs.CommandModule {
-  // public readonly command = 'new PROJECT-TYPE [OPTIONS]';
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
   public readonly describe = 'Creates a new projen project';
 
@@ -160,6 +159,12 @@ function execOrUndefined(command: string): string | undefined {
 }
 
 async function handleFromNPM(args: any) {
+  // fail if .projenrc.js already exists
+  if (fs.existsSync(PROJEN_RC)) {
+    logging.error(`Directory already contains ${PROJEN_RC}`);
+    process.exit(1);
+  }
+
   const modulePath = args.from;
   const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const packageDir = await downloadExtractRemoteModule(modulePath);
@@ -169,7 +174,6 @@ async function handleFromNPM(args: any) {
   const projects = inventory.discoverRemote(externalJsii);
   if (projects.length < 1) {
     logging.error('No projects found in remote module');
-    cleanup();
     process.exit(1);
   }
 
@@ -179,14 +183,12 @@ async function handleFromNPM(args: any) {
     const projectName = args.name;
     if (!projectName) {
       logging.error('Multiple projects found in package. Please specify a project name with --name option');
-      cleanup();
       process.exit(1);
     }
 
     type = projects.find(project => project.typename === '');
     if (!type) {
       logging.error(`Project with name ${projectName} not found.`);
-      cleanup();
       process.exit(1);
     }
   }
@@ -226,60 +228,57 @@ async function handleFromNPM(args: any) {
     }
   }
 
-  params.devDeps = [modulePath];
-
-  console.log('PARAMS');
-  console.log(params);
-
-  // TODO: Move this up
-  // fail if .projenrc.js already exists
-  if (fs.existsSync(PROJEN_RC)) {
-    logging.error(`Directory already contains ${PROJEN_RC}`);
-    process.exit(1);
-  }
+  params.devDeps = [moduleName];
 
   generateProjenConfig(type, params, moduleName);
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 
-  cleanup();
+  if (args.synth) {
+    synth();
+  }
 }
 
 async function downloadExtractRemoteModule(module: string): Promise<string> {
-  const output = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
-
+  let modulePath = module;
+  const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
-  const packageZip = path.join(baseDir, output.toString('utf-8').trim());
 
-  const fileData = fs.readFileSync(packageZip);
-  const tarData = zlib.gunzipSync(fileData);
+  // Yarn fails to extract tgz if it contains @ https://github.com/yarnpkg/yarn/issues/6339
+  if (module.indexOf('.tgz') > -1) {
+    const npmPackOutput = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
+    const packageZip = path.join(baseDir, npmPackOutput.toString('utf-8').trim());
 
-  // Readable.from() doesn't work in TS?
-  // const stream = Readable.from(tarData);
-  // stream.pipe(tar.extract(target),); // consume the stream
+    const fileData = fs.readFileSync(packageZip);
+    const tarData = zlib.gunzipSync(fileData);
 
-  const readable = new Readable();
-  readable._read = () => { }; // _read is required but you can noop it
-  readable.push(tarData);
-  readable.push(null);
+    // Readable.from() doesn't work in TS?
+    // const stream = Readable.from(tarData);
+    // stream.pipe(tar.extract(target),); // consume the stream
 
-  await new Promise((resolve, reject) => {
-    // consume the stream
-    readable.pipe(
-      tar.extract(targetTmp)
-        .on('finish', resolve)
-        .on('error', reject),
-    );
-  });
+    const readable = new Readable();
+    readable._read = () => { }; // _read is required but you can noop it
+    readable.push(tarData);
+    readable.push(null);
 
-  fs.removeSync(packageZip);
+    const extractedPath = path.join(localNodeModules, moduleName);
+    fs.removeSync(extractedPath);
 
-  return path.join(baseDir, targetTmp, 'package');
-}
+    await new Promise((resolve, reject) => {
+      // consume the stream
+      readable.pipe(
+        tar.extract(extractedPath)
+          .on('finish', resolve)
+          .on('error', reject),
+      );
+    });
 
-function cleanup() {
-  const baseDir = process.cwd();
-  const tmpDir = path.join(baseDir, targetTmp);
-  fs.removeSync(tmpDir);
+    fs.removeSync(packageZip);
+
+    modulePath = path.join(baseDir, extractedPath, 'package');
+  }
+
+  execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
+  return path.join(baseDir, 'node_modules', moduleName);
 }
 
 module.exports = new Command();
