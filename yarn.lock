@@ -4009,9 +4009,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 markmac@^0.1.2:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.5.tgz#c8704a848b088ecd9b9f11cc38d1398ddacc222e"
-  integrity sha512-Yw5u6I62TXGpNvmq318k9vLB+etbcaKNmLl8ZgduwpJx5r1gFlqQQAoSyyI293BWG7fd68+gnKJlqATYSffKRw==
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.6.tgz#80eb13ae12a03a0e75deb530ff537e00310b59d7"
+  integrity sha512-R161xxwIQLatrRnRkXJ/MPTNI6tr6l5azhKp7Kat5O9Azt9SisHfF97C0o2gEFVg4Fh7WW3MfLK2IorIZWPLbw==
 
 mdurl@~1.0.1:
   version "1.0.1"
