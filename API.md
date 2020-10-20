@@ -30,6 +30,7 @@ Name|Description
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
+[SampleFile](#projen-samplefile)|*No description*
 [PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [ReactComponent](#projen-reactcomponent)|*No description*
 [ReactProject](#projen-reactproject)|React project without TypeScript.
@@ -2505,6 +2506,45 @@ synth(outdir?: string): void
 
 
 
+## class SampleFile 🔹 <a id="projen-samplefile"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new SampleFile(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+### Methods
+
+
+#### protected writeOnceFileContents(dir, filename, contents)🔹 <a id="projen-samplefile-writeoncefilecontents"></a>
+
+
+
+```ts
+protected writeOnceFileContents(dir: string, filename: string, contents: string): void
+```
+
+* **dir** (<code>string</code>)  *No description*
+* **filename** (<code>string</code>)  *No description*
+* **contents** (<code>string</code>)  *No description*
+
+
+
+
+
+
+## class Semver 🔹 <a id="projen-semver"></a>
 ## class PullRequestTemplate 🔹 <a id="projen-pullrequesttemplate"></a>
 
 Template for GitHub pull requests.
