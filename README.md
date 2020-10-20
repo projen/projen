@@ -172,7 +172,7 @@ Say we have a module in npm called projen-vue which includes a single project ty
 $ npx projen new --from projen-vue
 ```
 
-If the referenced module includes multiple project types, the type is required. Switches can also be used to specify initial values based on the project type APIs. You can also use any package syntax supported by [yarn add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like projen-vuejs@1.2.3, file:/path/to/local/folder, git@github.com/awesome/projen-vuejs#1.2.3, etc.
+If the referenced module includes multiple project types, the type is required. Switches can also be used to specify initial values based on the project type APIs. You can also use any package syntax supported by [yarn add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like `projen-vuejs@1.2.3`, `file:/path/to/local/folder`, `git@github.com/awesome/projen-vuejs#1.2.3`, etc.
 
 ```bash
 $ npx projen new --from projen-vue vuejs-ts@^2 --name my-vuejs-sample
@@ -186,7 +186,7 @@ const { VueJsProject } = require('projen-vuejs');
 const project = new VueJsProject({
   name: 'my-vuejs-sample',
   // ...
-  buildDeps: [
+  devDeps: [
     'projen-vuejs'
   ]
 });
