@@ -163,14 +163,35 @@ Adding new project types is as simple as submitting a pull request to this repo 
 extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
-### External Discovery
+### Projects in external modules
+projen is bundled with many project types out of the box, but it can also work with project types and components defined in external jsii modules (the reason we need jsii is because projen uses the jsii metadata to discover project types & options in projen new).
+
+Say we have a module in npm called projen-vue which includes a single project type for vue.js:
 
 ```bash
-npm init -y
-npm install projen # Have to install so npx will use the local copy instead of child process
-npx projen discover NPM-MODULE # Discover your npm module. Can have multiple project types in case you want to maintain them all together
-npx projen new my-cool-project # Create the new project and synth
-npx projen discover NPM-module # TODO: Figure out if this is needed once discovery is merged in - needed because of my local install atm
+$ npx projen new --from projen-vue
+```
+
+If the referenced module includes multiple project types, the type is required. Switches can also be used to specify initial values based on the project type APIs. You can also use any package syntax supported by [yarn add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like projen-vuejs@1.2.3, file:/path/to/local/folder, git@github.com/awesome/projen-vuejs#1.2.3, etc.
+
+```bash
+$ npx projen new --from projen-vue vuejs-ts@^2 --name my-vuejs-sample
+```
+
+Under the hood, projen new will install the projen-vuejs module from npm, discover that it contains a single project type and bootstrap it. If you examine your .projenrc.js file, you'll see that projen-vuejs is defined as a build dependency:
+
+```javascript
+const { VueJsProject } = require('projen-vuejs');
+
+const project = new VueJsProject({
+  name: 'my-vuejs-sample',
+  // ...
+  buildDeps: [
+    'projen-vuejs'
+  ]
+});
+
+project.synth();
 ```
 
 ## Contributing
