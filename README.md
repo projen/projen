@@ -10,6 +10,8 @@ Define and maintain complex project configuration through code.
 `tsconfig.json`, `.gitignore`, GitHub Workflows, eslint, jest, etc from a
 well-typed definition written in JavaScript.
 
+Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen.
+
 As opposed to existing templating/scaffolding tools, *projen* is not a one-off
 generator. Synthesized files should never be manually edited (in fact, projen
 enforces that). To modify your project setup, users interact with rich
@@ -37,6 +39,7 @@ list):
 * [awscdk-construct](https://github.com/eladb/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-construct](https://github.com/eladb/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
 * [jsii](https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
+* [nextjs](https://github.com/eladb/projen/blob/master/API.md#projen-nextjsproject) - NextJS project.
 * [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/eladb/projen/blob/master/API.md#projen-project) - Base project.
 * [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.

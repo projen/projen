@@ -321,7 +321,12 @@ export interface NodeProjectCommonOptions {
    *
    * @default true
    */
-  readonly npmIgnore?: boolean;
+  readonly npmignoreEnabled?: boolean;
+
+  /**
+   * Additional entries to .npmignore
+   */
+  readonly npmignore?: string[];
 
   /**
    * Module entrypoint (`main` in `package.json`)
@@ -402,11 +407,6 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
-
-  /**
-   * Additional entries to .npmignore
-   */
-  readonly npmignore?: string[];
 }
 
 /**
@@ -585,7 +585,7 @@ export class NodeProject extends Project {
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
-    if (options.npmignore ?? true) {
+    if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
     }
 
@@ -599,7 +599,7 @@ export class NodeProject extends Project {
 
     if (options.npmignore?.length) {
       if (!this.npmignore) {
-        throw new Error('.npmignore is not defined for an APP project type');
+        throw new Error('.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this');
       }
 
       for (const i of options.npmignore) {
@@ -731,7 +731,7 @@ export class NodeProject extends Project {
         for (const file of fs.readdirSync(bindir)) {
           try {
             fs.accessSync(path.join(bindir, file), fs.constants.X_OK);
-            this.bin[file] = path.join(bindir, file);
+            this.bin[file] = path.join(bindir, file).replace(/\\/g, '/');
           } catch (e) {
             // not executable, skip
           }
@@ -760,6 +760,7 @@ export class NodeProject extends Project {
           strict: 'smart',
           strict_method: 'merge',
         },
+
         delete_head_branch: { },
       };
 
