@@ -1,8 +1,6 @@
-import * as path from 'path';
-import { Component } from './component';
-import { FileBaseOptions } from './file';
-import { Project } from './project';
-import { fileExists, writeFile } from './util';
+import {FileBaseOptions} from './file';
+import {Project} from './project';
+import {SampleFile} from "./typescript";
 
 export interface ReadmeOptions extends FileBaseOptions {
   /**
@@ -18,7 +16,7 @@ export interface ReadmeOptions extends FileBaseOptions {
  * Represents a README.md file. Unlike most other files this will only be created if the file doesn't already exist.
  * You are expected to manage this file after creation.
  */
-export class Readme extends Component {
+export class Readme extends SampleFile {
   private readonly text: string;
 
   constructor(project: Project, text?: string) {
@@ -27,10 +25,6 @@ export class Readme extends Component {
   }
 
   synthesize(outdir: string) {
-    const readmeFilename = 'README.md';
-    const filePath = path.join(outdir, readmeFilename);
-    if (!fileExists(readmeFilename)) {
-      writeFile(filePath, this.text);
-    }
+    this.writeOnceFileContents(outdir, 'README.md', this.text);
   }
 }

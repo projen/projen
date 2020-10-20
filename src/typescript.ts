@@ -634,8 +634,18 @@ export class TypescriptConfig {
 }
 
 
-class SampleCode extends Component {
-  private readonly nodeProject: TypeScriptProject;
+export abstract class SampleFile extends Component {
+  protected writeOnceFileContents(dir: string, filename: string, contents: string) {
+    if (fs.pathExistsSync(dir) && fs.readdirSync(dir).filter(x => x === filename)) {
+      return;
+    }
+    fs.mkdirpSync(dir);
+    fs.writeFileSync(path.join(dir, filename), contents);
+  }
+}
+
+class SampleCode extends SampleFile {
+  private nodeProject: TypeScriptProject;
 
   constructor(project: TypeScriptProject) {
     super(project);
@@ -645,9 +655,6 @@ class SampleCode extends Component {
 
   public synthesize(outdir: string) {
     const srcdir = path.join(outdir, this.nodeProject.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
 
     const srcCode = [
       'export class Hello {',
@@ -655,26 +662,18 @@ class SampleCode extends Component {
       '    return \'hello, world!\'',
       '  }',
       '}',
-    ];
-
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
+    ].join('\n');
+    this.writeOnceFileContents(srcdir, 'index.ts', srcCode);
 
     const testdir = path.join(outdir, this.nodeProject.testdir);
-    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
-
     const testCode = [
       "import { Hello } from '../src'",
       '',
       "test('hello', () => {",
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
       '});',
-    ];
-
-    fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
+    ].join('\n');
+    this.writeOnceFileContents(testdir, 'hello.test.ts', testCode);
   }
 }
 
@@ -698,9 +697,11 @@ export class TypeScriptAppProject extends TypeScriptProject {
 /**
  * @deprecated use `TypeScriptProject`
  */
-export class TypeScriptLibraryProject extends TypeScriptProject { };
+export class TypeScriptLibraryProject extends TypeScriptProject {
+};
 
 /**
  * @deprecated use TypeScriptProjectOptions
  */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions { }
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
+}
