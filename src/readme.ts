@@ -1,6 +1,6 @@
-import {FileBaseOptions} from './file';
-import {Project} from './project';
-import {SampleFile} from "./typescript";
+import { FileBaseOptions } from './file';
+import { Project } from './project';
+import { SampleFile } from './typescript';
 
 export interface ReadmeOptions extends FileBaseOptions {
   /**
