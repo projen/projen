@@ -60,7 +60,7 @@ class Command implements yargs.CommandModule {
           // fail if .projenrc.js already exists
           checkForExistingProjenRc();
 
-          const params: any = { };
+          const params: any = {};
           for (const [key, value] of Object.entries(argv)) {
             for (const opt of type.options) {
               if (opt.switch === key) {
@@ -74,7 +74,7 @@ class Command implements yargs.CommandModule {
                   if (queue.length === 0) {
                     curr[p] = value;
                   } else {
-                    curr[p] = curr[p] ?? { };
+                    curr[p] = curr[p] ?? {};
                     curr = curr[p];
                   }
                 }
@@ -97,8 +97,7 @@ class Command implements yargs.CommandModule {
 
   public async handler(args: any) {
     if (args.from && args.from !== '') {
-      await handleFromNPM(args);
-      return;
+      return handleFromNPM(args);
     }
 
     yargs.showHelp();
@@ -147,13 +146,13 @@ function execOrUndefined(command: string): string | undefined {
   }
 }
 
-async function handleFromNPM(args: any) {
+function handleFromNPM(args: any) {
   // fail if .projenrc.js already exists
   checkForExistingProjenRc();
 
   const modulePath = args.from;
   const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
-  const packageDir = await addRemoteNpmModule(modulePath);
+  const packageDir = addRemoteNpmModule(modulePath);
 
   const externalJsii: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
 
@@ -218,7 +217,7 @@ async function handleFromNPM(args: any) {
   }
 }
 
-async function addRemoteNpmModule(module: string): Promise<string> {
+function addRemoteNpmModule(module: string): string {
   let modulePath = module;
   const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
