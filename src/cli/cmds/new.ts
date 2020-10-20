@@ -10,9 +10,6 @@ import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { synth } from '../synth';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
-
 const targetTmp = './tmp';
 
 class Command implements yargs.CommandModule {
@@ -120,9 +117,9 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(type: inventory.ProjectType, params: any) {
+function generateProjenConfig(type: inventory.ProjectType, params: any, moduleName: string = 'projen') {
   const lines = [
-    `const { ${type.typename} } = require('projen');`,
+    `const { ${type.typename} } = require('${moduleName}');`,
     '',
     `const project = new ${type.typename}(${renderParams(params)});`,
     '',
@@ -163,16 +160,13 @@ function execOrUndefined(command: string): string | undefined {
 }
 
 async function handleFromNPM(args: any) {
-  const module = args.from;
-  const packageDir = await downloadExtractRemoteModule(module);
+  const modulePath = args.from;
+  const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+  const packageDir = await downloadExtractRemoteModule(modulePath);
 
   const externalJsii: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
 
-  const projenJsonPath = path.join(__dirname, '..', '..', '..', '.jsii');
-  const projenJsii = fs.readJsonSync(projenJsonPath);
-  const projenTypes: { [name: string]: inventory.JsiiType } = projenJsii.types;
-
-  const projects = discover(externalJsii, projenTypes);
+  const projects = inventory.discoverRemote(externalJsii);
   if (projects.length < 1) {
     logging.error('No projects found in remote module');
     cleanup();
@@ -182,7 +176,6 @@ async function handleFromNPM(args: any) {
   let type: inventory.ProjectType | undefined = projects[0];
 
   if (projects.length > 1) {
-    // TODO: Check for --name arg
     const projectName = args.name;
     if (!projectName) {
       logging.error('Multiple projects found in package. Please specify a project name with --name option');
@@ -198,16 +191,14 @@ async function handleFromNPM(args: any) {
     }
   }
 
-  // TODO: Move this up
-  // fail if .projenrc.js already exists
-  if (fs.existsSync(PROJEN_RC)) {
-    logging.error(`Directory already contains ${PROJEN_RC}`);
-    process.exit(1);
-  }
-
   const params: any = {};
+
   for (const [key, value] of Object.entries(args)) {
     for (const opt of type.options) {
+      if (opt.type !== 'string' && opt.type !== 'number' && opt.type !== 'boolean') {
+        continue;
+      }
+
       if (opt.switch === key) {
         let curr = params;
         const queue = [...opt.path];
@@ -223,16 +214,33 @@ async function handleFromNPM(args: any) {
             curr = curr[p];
           }
         }
-
+      } else {
+        const required = !opt.optional;
+        if (opt.default && opt.default !== 'undefined') {
+          if (required) {
+            // if the field is required and we have a default, then assign the value here
+            params[opt.name] = processDefault(opt.default);
+          }
+        }
       }
     }
   }
 
+  params.devDeps = [modulePath];
 
-  generateProjenConfig(type, params);
+  console.log('PARAMS');
+  console.log(params);
+
+  // TODO: Move this up
+  // fail if .projenrc.js already exists
+  if (fs.existsSync(PROJEN_RC)) {
+    logging.error(`Directory already contains ${PROJEN_RC}`);
+    process.exit(1);
+  }
+
+  generateProjenConfig(type, params, moduleName);
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 
-  console.log('Cleaning up...');
   cleanup();
 }
 
@@ -272,129 +280,6 @@ function cleanup() {
   const baseDir = process.cwd();
   const tmpDir = path.join(baseDir, targetTmp);
   fs.removeSync(tmpDir);
-}
-
-function isProjenType(fqn: string, externalJsii: { [name: string]: inventory.JsiiType }, projenTypes: { [name: string]: inventory.JsiiType }) {
-  const type = externalJsii[fqn];
-
-  if (type.kind !== 'class') {
-    return false;
-  }
-  if (type.abstract) {
-    return false;
-  }
-
-  if (type.docs?.deprecated) {
-    return false;
-  }
-
-  let curr = type;
-  while (true) {
-    if (curr.fqn === 'projen.Project') {
-      return true;
-    }
-
-    if (!curr.base) {
-      return false;
-    }
-
-    curr = projenTypes[curr.base];
-    if (!curr) {
-      return false;
-    }
-  }
-}
-
-export function discover(externalJsii: { [name: string]: inventory.JsiiType }, projenTypes: { [name: string]: inventory.JsiiType }) {
-  const result = new Array<inventory.ProjectType>();
-
-  for (const [fqn, typeinfo] of Object.entries(externalJsii)) {
-    if (!isProjenType(fqn, externalJsii, projenTypes)) continue;
-
-    const [, typename] = fqn.split('.');
-    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
-    let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
-    result.push({
-      typename,
-      pjid,
-      fqn,
-      options: discoverOptions(fqn, externalJsii, projenTypes),
-      docs: typeinfo.docs?.summary,
-      docsurl,
-    });
-  }
-
-  return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
-}
-
-function discoverOptions(fqn: string, jsii: { [name: string]: inventory.JsiiType },
-  projenTypes: { [name: string]: inventory.JsiiType }): inventory.ProjectOption[] {
-
-  const options = new Array<inventory.ProjectOption>();
-  const params = jsii[fqn]?.initializer?.parameters ?? [];
-  const optionsParam = params[0];
-  const optionsTypeFqn = optionsParam?.type?.fqn;
-
-  if (params.length > 1 || (params.length === 1 && optionsParam?.name !== 'options')) {
-    throw new Error(`constructor for project ${fqn} must have a single "options" argument of a struct type. got ${JSON.stringify(params)}`);
-  }
-
-  addOptions(optionsTypeFqn);
-
-  return options.sort((a, b) => a.switch.localeCompare(b.switch));
-
-  function addOptions(ofqn?: string, basePath: string[] = [], optional = false) {
-    if (!ofqn) {
-      return;
-    }
-
-    let struct = jsii[ofqn];
-
-    // Check the subtype
-    if (!struct) struct = projenTypes[ofqn];
-
-    if (!struct) {
-      throw new Error(`unable to find options type ${ofqn} for project ${fqn}`);
-    }
-
-    for (const prop of struct.properties ?? []) {
-      const propPath = [...basePath, prop.name];
-
-      if (prop.type?.fqn) {
-        // recurse to sub-types only if this is a required property. otherwise, users can configure from .projenrc.js
-        if (!prop.optional) {
-          addOptions(prop.type?.fqn, propPath, true);
-        }
-        continue;
-      }
-
-      const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
-
-      options.push(filterUndefined({
-        path: propPath,
-        name: prop.name,
-        docs: prop.docs.summary,
-        type: prop.type?.primitive ?? 'unknown',
-        switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
-        default: defaultValue,
-        optional: optional || prop.optional,
-      }));
-    }
-
-    for (const ifc of struct.interfaces ?? []) {
-      addOptions(ifc);
-    }
-  }
-}
-
-function filterUndefined(obj: any) {
-  const ret: any = {};
-  for (const [k, v] of Object.entries(obj)) {
-    if (v !== undefined) {
-      ret[k] = v;
-    }
-  }
-  return ret;
 }
 
 module.exports = new Command();

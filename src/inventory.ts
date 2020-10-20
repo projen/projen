@@ -61,10 +61,10 @@ export interface JsiiType {
   };
 }
 
-export function discover(jsiiTypes: { [name: string]: JsiiType } = jsii) {
+export function discover() {
   const result = new Array<ProjectType>();
 
-  for (const [fqn, typeinfo] of Object.entries(jsiiTypes)) {
+  for (const [fqn, typeinfo] of Object.entries(jsii)) {
     if (!isProjectType(fqn)) {
       continue;
     }
@@ -84,9 +84,32 @@ export function discover(jsiiTypes: { [name: string]: JsiiType } = jsii) {
 
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
 }
-function discoverOptions(fqn: string): ProjectOption[] {
+
+export function discoverRemote(externalJsii: { [name: string]: JsiiType }) {
+  const result = new Array<ProjectType>();
+
+  for (const [fqn, typeinfo] of Object.entries(externalJsii)) {
+    if (!isProjenType(fqn, externalJsii)) continue;
+
+    const [, typename] = fqn.split('.');
+    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+    let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
+    result.push({
+      typename,
+      pjid,
+      fqn,
+      options: discoverOptions(fqn, externalJsii),
+      docs: typeinfo.docs?.summary,
+      docsurl,
+    });
+  }
+
+  return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
+}
+
+function discoverOptions(fqn: string, externalJsii?: { [name: string]: JsiiType }): ProjectOption[] {
   const options = new Array<ProjectOption>();
-  const params = jsii[fqn]?.initializer?.parameters ?? [];
+  const params = externalJsii && externalJsii[fqn] ? externalJsii[fqn].initializer?.parameters ?? [] : jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;
 
@@ -103,7 +126,7 @@ function discoverOptions(fqn: string): ProjectOption[] {
       return;
     }
 
-    const struct = jsii[ofqn];
+    const struct = externalJsii && externalJsii[ofqn] ? externalJsii[ofqn] : jsii[ofqn];
     if (!struct) {
       throw new Error(`unable to find options type ${ofqn} for project ${fqn}`);
     }
@@ -173,6 +196,37 @@ function isProjectType(fqn: string) {
     }
 
     curr = jsii[curr.base];
+    if (!curr) {
+      return false;
+    }
+  }
+}
+
+export function isProjenType(fqn: string, externalJsii: { [name: string]: JsiiType }) {
+  const type = externalJsii[fqn];
+
+  if (type.kind !== 'class') {
+    return false;
+  }
+  if (type.abstract) {
+    return false;
+  }
+
+  if (type.docs?.deprecated) {
+    return false;
+  }
+
+  let curr = type;
+  while (true) {
+    if (curr.fqn === 'projen.Project') {
+      return true;
+    }
+
+    if (!curr.base) {
+      return false;
+    }
+
+    curr = externalJsii[curr.base] ? externalJsii[curr.base] : jsii[curr.base];
     if (!curr) {
       return false;
     }
