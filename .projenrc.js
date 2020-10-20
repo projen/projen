@@ -18,7 +18,6 @@ const project = new JsiiProject({
     'inquirer',
     'chalk',
     '@iarna/toml',
-    'tar-fs'
   ],
 
   devDeps: [
@@ -27,7 +26,6 @@ const project = new JsiiProject({
     '@types/glob',
     '@types/inquirer',
     '@types/semver',
-    '@types/tar-fs',
     'markmac',
   ],
 

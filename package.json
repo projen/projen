@@ -39,7 +39,6 @@
     "@types/jest": "^26.0.7",
     "@types/node": "^10.17.0",
     "@types/semver": "^7.3.4",
-    "@types/tar-fs": "^2.0.0",
     "@types/yargs": "^15.0.7",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
@@ -68,7 +67,6 @@
     "glob": "^7",
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
-    "tar-fs": "^2.1.0",
     "yaml": "^1.10.0",
     "yargs": "^16.0.3"
   },
@@ -80,7 +78,6 @@
     "glob",
     "inquirer",
     "semver",
-    "tar-fs",
     "yaml",
     "yargs"
   ],
