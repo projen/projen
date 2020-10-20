@@ -97,7 +97,8 @@ class Command implements yargs.CommandModule {
 
   public async handler(args: any) {
     if (args.from && args.from !== '') {
-      return await handleFromNPM(args);
+      await handleFromNPM(args);
+      return;
     }
 
     yargs.showHelp();
