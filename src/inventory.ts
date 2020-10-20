@@ -61,10 +61,10 @@ export interface JsiiType {
   };
 }
 
-export function discover() {
+export function discover(jsiiTypes: { [name: string]: JsiiType } = jsii) {
   const result = new Array<ProjectType>();
 
-  for (const [fqn, typeinfo] of Object.entries(jsii)) {
+  for (const [fqn, typeinfo] of Object.entries(jsiiTypes)) {
     if (!isProjectType(fqn)) {
       continue;
     }
