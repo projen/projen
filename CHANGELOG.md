@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.116 (2020-10-20)
+
+
+### Features
+
+* **awscdk-construct:** documentation ([#179](https://github.com/eladb/projen/issues/179)) ([4624e36](https://github.com/eladb/projen/commit/4624e362047ff055f7dac306038ec01c72f50e85))
+
 ### 0.3.115 (2020-10-20)
 
 ### 0.3.114 (2020-10-19)
