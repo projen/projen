@@ -1,9 +1,6 @@
 import { execSync } from 'child_process';
 import * as path from 'path';
-import { Readable } from 'stream';
-import * as zlib from 'zlib';
 import * as fs from 'fs-extra';
-import * as tar from 'tar-fs';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
@@ -61,10 +58,7 @@ class Command implements yargs.CommandModule {
         handler: argv => {
 
           // fail if .projenrc.js already exists
-          if (fs.existsSync(PROJEN_RC)) {
-            logging.error(`Directory already contains ${PROJEN_RC}`);
-            process.exit(1);
-          }
+          checkForExistingProjenRc();
 
           const params: any = {};
           for (const [key, value] of Object.entries(argv)) {
@@ -84,7 +78,6 @@ class Command implements yargs.CommandModule {
                     curr = curr[p];
                   }
                 }
-
               }
             }
           }
@@ -160,10 +153,7 @@ function execOrUndefined(command: string): string | undefined {
 
 async function handleFromNPM(args: any) {
   // fail if .projenrc.js already exists
-  if (fs.existsSync(PROJEN_RC)) {
-    logging.error(`Directory already contains ${PROJEN_RC}`);
-    process.exit(1);
-  }
+  checkForExistingProjenRc();
 
   const modulePath = args.from;
   const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
@@ -194,7 +184,6 @@ async function handleFromNPM(args: any) {
   }
 
   const params: any = {};
-
   for (const [key, value] of Object.entries(args)) {
     for (const opt of type.options) {
       if (opt.type !== 'string' && opt.type !== 'number' && opt.type !== 'boolean') {
@@ -218,12 +207,7 @@ async function handleFromNPM(args: any) {
         }
       } else {
         const required = !opt.optional;
-        if (opt.default && opt.default !== 'undefined') {
-          if (required) {
-            // if the field is required and we have a default, then assign the value here
-            params[opt.name] = processDefault(opt.default);
-          }
-        }
+        if (opt.default && opt.default !== 'undefined' && required) params[opt.name] = processDefault(opt.default);
       }
     }
   }
@@ -246,39 +230,21 @@ async function downloadExtractRemoteModule(module: string): Promise<string> {
   // Yarn fails to extract tgz if it contains @ https://github.com/yarnpkg/yarn/issues/6339
   if (module.indexOf('.tgz') > -1) {
     const npmPackOutput = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
-    const packageZip = path.join(baseDir, npmPackOutput.toString('utf-8').trim());
 
-    const fileData = fs.readFileSync(packageZip);
-    const tarData = zlib.gunzipSync(fileData);
-
-    // Readable.from() doesn't work in TS?
-    // const stream = Readable.from(tarData);
-    // stream.pipe(tar.extract(target),); // consume the stream
-
-    const readable = new Readable();
-    readable._read = () => { }; // _read is required but you can noop it
-    readable.push(tarData);
-    readable.push(null);
-
-    const extractedPath = path.join(localNodeModules, moduleName);
-    fs.removeSync(extractedPath);
-
-    await new Promise((resolve, reject) => {
-      // consume the stream
-      readable.pipe(
-        tar.extract(extractedPath)
-          .on('finish', resolve)
-          .on('error', reject),
-      );
-    });
-
-    fs.removeSync(packageZip);
-
-    modulePath = path.join(baseDir, extractedPath, 'package');
+    fs.mkdirpSync(path.join(baseDir, localNodeModules));
+    fs.moveSync(path.join(baseDir, npmPackOutput.toString('utf-8').trim()), path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim()));
+    modulePath = path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim());
   }
 
   execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
   return path.join(baseDir, 'node_modules', moduleName);
+}
+
+function checkForExistingProjenRc() {
+  if (fs.existsSync(PROJEN_RC)) {
+    logging.error(`Directory already contains ${PROJEN_RC}`);
+    process.exit(1);
+  }
 }
 
 module.exports = new Command();
