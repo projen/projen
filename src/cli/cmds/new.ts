@@ -157,7 +157,7 @@ async function handleFromNPM(args: any) {
 
   const modulePath = args.from;
   const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
-  const packageDir = await downloadExtractRemoteModule(modulePath);
+  const packageDir = await addRemoteNpmModule(modulePath);
 
   const externalJsii: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
 
@@ -222,7 +222,7 @@ async function handleFromNPM(args: any) {
   }
 }
 
-async function downloadExtractRemoteModule(module: string): Promise<string> {
+async function addRemoteNpmModule(module: string): Promise<string> {
   let modulePath = module;
   const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
