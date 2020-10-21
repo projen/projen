@@ -190,15 +190,15 @@ function handleFromNPM(args: any) {
   let type: inventory.ProjectType | undefined = projects[0];
 
   if (projects.length > 1) {
+    const projectNames = projects.map(project => project.pjid);
     const projectType = args.projectType;
     if (!projectType) {
-      const projectNames = projects.map(project => project.typename);
-      throw new Error(`Multiple projects found in ${packageInfo.moduleName}: ${JSON.stringify(projectNames)}.\nPlease specify a project name with PROJECT-TYPE.\nExample: npx projen new vuejs-ts --from projen-vue`);
+      throw new Error(`Multiple projects found in ${packageInfo.moduleName}: ${JSON.stringify(projectNames)}. Please specify a project name with PROJECT-TYPE.\nExample: npx projen new ${projectNames[0]} --from ${packageInfo.moduleName}`);
     }
 
-    type = projects.find(project => project.typename === projectType);
+    type = projects.find(project => project.pjid === projectType);
     if (!type) {
-      throw new Error(`Project with name ${projectType} not found in ${packageInfo.moduleName}.`);
+      throw new Error(`Project with name ${projectType} not found in ${packageInfo.moduleName}. Found ${JSON.stringify(projectNames)}`);
     }
   }
 
@@ -224,9 +224,8 @@ function addRemoteNpmModule(module: string): PackageInfo {
 
   execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
 
-  const moduleNameAndVersionArray = modulePath.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+  const moduleNameAndVersionArray = module.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const moduleName = moduleNameAndVersionArray[0].trim();
-
   let moduleNameAndVersion = moduleNameAndVersionArray.join('@').trim(); // cdk-project || cdk-project@2 || cdk-project@^2
   if (moduleNameAndVersion.indexOf('.tgz') > -1) moduleNameAndVersion = `${moduleName}@${modulePath}`; // Solves the local package usecase
 
@@ -234,7 +233,7 @@ function addRemoteNpmModule(module: string): PackageInfo {
     packageDir: path.join(baseDir, 'node_modules', moduleName),
     modulePath: modulePath,
     moduleName: moduleName,
-    moduleVersion: moduleNameAndVersionArray[1].trim(),
+    moduleVersion: moduleNameAndVersionArray[1]?.trim() ?? '',
     moduleNameAndVersion: moduleNameAndVersion,
   };
 }
