@@ -12,9 +12,11 @@ class Command implements yargs.CommandModule {
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
-    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
+    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' })
+      .example('projen new awscdk-app-ts', '')
+      .example('projen new --from projen-vue@^2', '');
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
-    args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from' });
+    args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? '', {
         builder: cargs => {
@@ -93,10 +95,19 @@ class Command implements yargs.CommandModule {
   }
 
   public async handler(args: any) {
-    if (args.from && args.from !== '') {
+    if (args.from) {
       return handleFromNPM(args);
     }
 
+    if (args.projectType) {
+      console.log(`Invalid project type ${args.projectType}. Supported types:`);
+      for (const pjid of inventory.discover().map(x => x.pjid)) {
+        console.log(`  ${pjid}`);
+      }
+      return;
+    }
+
+    // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
     yargs.showHelp();
   }
 }
