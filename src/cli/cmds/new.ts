@@ -82,6 +82,9 @@ class Command implements yargs.CommandModule {
   }
 
   public async handler(args: any) {
+    // fail if .projenrc.js already exists
+    checkForExistingProjenRc();
+
     if (args.from) {
       return handleFromNPM(args);
     }
@@ -176,9 +179,6 @@ function buildProjenConfigParams(argv: any, type: inventory.ProjectType): any {
 }
 
 function handleFromNPM(args: any) {
-  // fail if .projenrc.js already exists
-  checkForExistingProjenRc();
-
   const packageInfo = addRemoteNpmModule(args.from);
 
   const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageInfo.packageDir, '.jsii')).types;
