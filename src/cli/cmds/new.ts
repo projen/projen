@@ -7,17 +7,14 @@ import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { synth } from '../synth';
 
-const localNodeModules = './node_modules.local';
-
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
-    args.positional('PROJECT-TYPE', { describe: 'Required if --from is not specified', type: 'string' });
+    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from' });
-    args.option('name', { type: 'string', alias: 'n', desc: 'Name of project type if module contains more than one project type' });
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? '', {
         builder: cargs => {
@@ -151,12 +148,12 @@ function handleFromNPM(args: any) {
   checkForExistingProjenRc();
 
   const modulePath = args.from;
-  const moduleName = modulePath.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+  const moduleNameAndVersionArray = modulePath.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+  const moduleName = moduleNameAndVersionArray[0].trim();
+
   const packageDir = addRemoteNpmModule(modulePath);
-
-  const externalJsii: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
-
-  const projects = inventory.discoverRemote(externalJsii);
+  const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
+  const projects = inventory.discover(externalJsiiTypes);
   if (projects.length < 1) {
     logging.error('No projects found in remote module');
     process.exit(1);
@@ -165,15 +162,15 @@ function handleFromNPM(args: any) {
   let type: inventory.ProjectType | undefined = projects[0];
 
   if (projects.length > 1) {
-    const projectName = args.name;
-    if (!projectName) {
-      logging.error('Multiple projects found in package. Please specify a project name with --name option');
+    const projectType = args.projectType;
+    if (!projectType) {
+      logging.error('Multiple projects found in package. Please specify a project name with PROJECT-TYPE.\nExample: npx projen new --from projen-vue vuejs-ts');
       process.exit(1);
     }
 
-    type = projects.find(project => project.typename === '');
+    type = projects.find(project => project.typename === projectType);
     if (!type) {
-      logging.error(`Project with name ${projectName} not found.`);
+      logging.error(`Project with name ${projectType} not found.`);
       process.exit(1);
     }
   }
@@ -207,7 +204,8 @@ function handleFromNPM(args: any) {
     }
   }
 
-  params.devDeps = [moduleName];
+  const moduleNameAndVersion = moduleNameAndVersionArray.join('@').replace('.jsii.tgz', '');
+  params.devDeps = [moduleNameAndVersion];
 
   generateProjenConfig(type, params, moduleName);
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
@@ -222,17 +220,29 @@ function addRemoteNpmModule(module: string): string {
   const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
 
-  // Yarn fails to extract tgz if it contains @ https://github.com/yarnpkg/yarn/issues/6339
+  // Yarn fails to extract tgz if it contains '@' in the name - see https://github.com/yarnpkg/yarn/issues/6339
   if (module.indexOf('.tgz') > -1) {
-    const npmPackOutput = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
-
-    fs.mkdirpSync(path.join(baseDir, localNodeModules));
-    fs.moveSync(path.join(baseDir, npmPackOutput.toString('utf-8').trim()), path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim()));
-    modulePath = path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim());
+    modulePath = packAndMoveGzipModule(module);
   }
 
   execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
   return path.join(baseDir, 'node_modules', moduleName);
+}
+
+function packAndMoveGzipModule(module: string) {
+  const baseDir = process.cwd();
+  const localNodeModules = './node_modules.local';
+  fs.mkdirpSync(path.join(baseDir, localNodeModules));
+
+  // Run pack to get the package from the module if it's local
+  const npmPackOutput = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
+
+  // Move the package to node_modules.local for yarn to work - see https://github.com/yarnpkg/yarn/issues/6339
+  const packagePath = path.join(baseDir, npmPackOutput.toString('utf-8').trim());
+  const newPackagePath = path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim());
+  fs.moveSync(packagePath, newPackagePath);
+
+  return newPackagePath;
 }
 
 function checkForExistingProjenRc() {

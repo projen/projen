@@ -57,35 +57,13 @@ export interface JsiiType {
   };
 }
 
-export function discover() {
+export function discover(externalJsii?: { [name: string]: JsiiType }) {
   const result = new Array<ProjectType>();
 
-  for (const [fqn, typeinfo] of Object.entries(jsii)) {
-    if (!isProjectType(fqn)) {
+  for (const [fqn, typeinfo] of Object.entries(externalJsii ?? jsii)) {
+    if (!isProjectType(fqn, externalJsii)) {
       continue;
     }
-
-    const [, typename] = fqn.split('.');
-    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
-    let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
-    result.push({
-      typename,
-      pjid,
-      fqn,
-      options: discoverOptions(fqn),
-      docs: typeinfo.docs?.summary,
-      docsurl,
-    });
-  }
-
-  return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
-}
-
-export function discoverRemote(externalJsii: { [name: string]: JsiiType }) {
-  const result = new Array<ProjectType>();
-
-  for (const [fqn, typeinfo] of Object.entries(externalJsii)) {
-    if (!isProjectType(fqn, externalJsii)) continue;
 
     const [, typename] = fqn.split('.');
     const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
