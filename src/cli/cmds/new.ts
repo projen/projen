@@ -67,28 +67,7 @@ class Command implements yargs.CommandModule {
           // fail if .projenrc.js already exists
           checkForExistingProjenRc();
 
-          const params: any = {};
-          for (const [key, value] of Object.entries(argv)) {
-            for (const opt of type.options) {
-              if (opt.switch === key) {
-                let curr = params;
-                const queue = [...opt.path];
-                while (true) {
-                  const p = queue.shift();
-                  if (!p) {
-                    break;
-                  }
-                  if (queue.length === 0) {
-                    curr[p] = value;
-                  } else {
-                    curr[p] = curr[p] ?? {};
-                    curr = curr[p];
-                  }
-                }
-              }
-            }
-          }
-
+          const params = buildProjenConfigParams(argv, type);
           generateProjenConfig(type, params);
           logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 
@@ -162,6 +141,40 @@ function execOrUndefined(command: string): string | undefined {
   }
 }
 
+function buildProjenConfigParams(argv: any, type: inventory.ProjectType): any {
+  const params: any = {};
+  for (const [key, value] of Object.entries(argv)) {
+    for (const opt of type.options) {
+      if (opt.switch === key) {
+        let curr = params;
+        const queue = [...opt.path];
+        while (true) {
+          const p = queue.shift();
+          if (!p) {
+            break;
+          }
+          if (queue.length === 0) {
+            curr[p] = value;
+          } else {
+            curr[p] = curr[p] ?? {};
+            curr = curr[p];
+          }
+        }
+      } else { // Handles the --from use case where we don't know options at build time
+        if (opt.type !== 'string' && opt.type !== 'number' && opt.type !== 'boolean') {
+          continue;
+        }
+
+        if (opt.default && opt.default !== 'undefined' && !opt.optional) {
+          params[opt.name] = processDefault(opt.default);
+        }
+      }
+    }
+  }
+
+  return params;
+}
+
 function handleFromNPM(args: any) {
   // fail if .projenrc.js already exists
   checkForExistingProjenRc();
@@ -189,35 +202,7 @@ function handleFromNPM(args: any) {
     }
   }
 
-  const params: any = {};
-  for (const [key, value] of Object.entries(args)) {
-    for (const opt of type.options) {
-      if (opt.type !== 'string' && opt.type !== 'number' && opt.type !== 'boolean') {
-        continue;
-      }
-
-      if (opt.switch === key) {
-        let curr = params;
-        const queue = [...opt.path];
-        while (true) {
-          const p = queue.shift();
-          if (!p) {
-            break;
-          }
-          if (queue.length === 0) {
-            curr[p] = value;
-          } else {
-            curr[p] = curr[p] ?? {};
-            curr = curr[p];
-          }
-        }
-      } else {
-        const required = !opt.optional;
-        if (opt.default && opt.default !== 'undefined' && required) params[opt.name] = processDefault(opt.default);
-      }
-    }
-  }
-
+  const params = buildProjenConfigParams(args, type);
   params.devDeps = [packageInfo.moduleNameAndVersion];
 
   generateProjenConfig(type, params, packageInfo.moduleName);
