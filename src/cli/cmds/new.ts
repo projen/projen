@@ -150,9 +150,9 @@ function handleFromNPM(args: any) {
   const modulePath = args.from;
   const moduleNameAndVersionArray = modulePath.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const moduleName = moduleNameAndVersionArray[0].trim();
+  const packageInfo = addRemoteNpmModule(modulePath);
 
-  const packageDir = addRemoteNpmModule(modulePath);
-  const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageDir, '.jsii')).types;
+  const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageInfo.packageDir, '.jsii')).types;
   const projects = inventory.discover(externalJsiiTypes);
   if (projects.length < 1) {
     logging.error('No projects found in remote module');
@@ -204,7 +204,8 @@ function handleFromNPM(args: any) {
     }
   }
 
-  const moduleNameAndVersion = moduleNameAndVersionArray.join('@').replace('.jsii.tgz', '');
+  let moduleNameAndVersion = moduleNameAndVersionArray.join('@').trim(); // cdk-project || cdk-project@2 || cdk-project@^2
+  if (moduleNameAndVersion.indexOf('.tgz') > -1) moduleNameAndVersion = `${moduleName}@${packageInfo.modulePath}`; // Solves the local package usecase
   params.devDeps = [moduleNameAndVersion];
 
   generateProjenConfig(type, params, moduleName);
@@ -215,7 +216,7 @@ function handleFromNPM(args: any) {
   }
 }
 
-function addRemoteNpmModule(module: string): string {
+function addRemoteNpmModule(module: string): { packageDir: string; modulePath: string } {
   let modulePath = module;
   const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
@@ -226,7 +227,10 @@ function addRemoteNpmModule(module: string): string {
   }
 
   execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
-  return path.join(baseDir, 'node_modules', moduleName);
+  return {
+    packageDir: path.join(baseDir, 'node_modules', moduleName),
+    modulePath: modulePath,
+  };
 }
 
 function packAndMoveGzipModule(module: string) {
