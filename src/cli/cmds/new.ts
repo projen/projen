@@ -7,6 +7,14 @@ import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { synth } from '../synth';
 
+interface PackageInfo {
+  packageDir: string;
+  modulePath: string;
+  moduleName: string;
+  moduleVersion: string;
+  moduleNameAndVersion: string;
+}
+
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
   public readonly describe = 'Creates a new projen project';
@@ -158,16 +166,12 @@ function handleFromNPM(args: any) {
   // fail if .projenrc.js already exists
   checkForExistingProjenRc();
 
-  const modulePath = args.from;
-  const moduleNameAndVersionArray = modulePath.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
-  const moduleName = moduleNameAndVersionArray[0].trim();
-  const packageInfo = addRemoteNpmModule(modulePath);
+  const packageInfo = addRemoteNpmModule(args.from);
 
   const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageInfo.packageDir, '.jsii')).types;
   const projects = inventory.discover(externalJsiiTypes);
   if (projects.length < 1) {
-    logging.error('No projects found in remote module');
-    process.exit(1);
+    throw new Error(`No projects found in remote module ${packageInfo.moduleName}. ${packageInfo.moduleName} .jsii must specify at least one project with a base of project.Project`);
   }
 
   let type: inventory.ProjectType | undefined = projects[0];
@@ -175,14 +179,13 @@ function handleFromNPM(args: any) {
   if (projects.length > 1) {
     const projectType = args.projectType;
     if (!projectType) {
-      logging.error('Multiple projects found in package. Please specify a project name with PROJECT-TYPE.\nExample: npx projen new --from projen-vue vuejs-ts');
-      process.exit(1);
+      const projectNames = projects.map(project => project.typename);
+      throw new Error(`Multiple projects found in ${packageInfo.moduleName}: ${JSON.stringify(projectNames)}.\nPlease specify a project name with PROJECT-TYPE.\nExample: npx projen new vuejs-ts --from projen-vue`);
     }
 
     type = projects.find(project => project.typename === projectType);
     if (!type) {
-      logging.error(`Project with name ${projectType} not found.`);
-      process.exit(1);
+      throw new Error(`Project with name ${projectType} not found in ${packageInfo.moduleName}.`);
     }
   }
 
@@ -215,11 +218,9 @@ function handleFromNPM(args: any) {
     }
   }
 
-  let moduleNameAndVersion = moduleNameAndVersionArray.join('@').trim(); // cdk-project || cdk-project@2 || cdk-project@^2
-  if (moduleNameAndVersion.indexOf('.tgz') > -1) moduleNameAndVersion = `${moduleName}@${packageInfo.modulePath}`; // Solves the local package usecase
-  params.devDeps = [moduleNameAndVersion];
+  params.devDeps = [packageInfo.moduleNameAndVersion];
 
-  generateProjenConfig(type, params, moduleName);
+  generateProjenConfig(type, params, packageInfo.moduleName);
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 
   if (args.synth) {
@@ -227,9 +228,8 @@ function handleFromNPM(args: any) {
   }
 }
 
-function addRemoteNpmModule(module: string): { packageDir: string; modulePath: string } {
+function addRemoteNpmModule(module: string): PackageInfo {
   let modulePath = module;
-  const moduleName = module.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
   const baseDir = process.cwd();
 
   // Yarn fails to extract tgz if it contains '@' in the name - see https://github.com/yarnpkg/yarn/issues/6339
@@ -238,9 +238,19 @@ function addRemoteNpmModule(module: string): { packageDir: string; modulePath: s
   }
 
   execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
+
+  const moduleNameAndVersionArray = modulePath.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+  const moduleName = moduleNameAndVersionArray[0].trim();
+
+  let moduleNameAndVersion = moduleNameAndVersionArray.join('@').trim(); // cdk-project || cdk-project@2 || cdk-project@^2
+  if (moduleNameAndVersion.indexOf('.tgz') > -1) moduleNameAndVersion = `${moduleName}@${modulePath}`; // Solves the local package usecase
+
   return {
     packageDir: path.join(baseDir, 'node_modules', moduleName),
     modulePath: modulePath,
+    moduleName: moduleName,
+    moduleVersion: moduleNameAndVersionArray[1].trim(),
+    moduleNameAndVersion: moduleNameAndVersion,
   };
 }
 
