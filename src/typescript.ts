@@ -652,17 +652,21 @@ class SampleCode extends SampleFile {
       '  }',
       '}',
     ].join('\n');
-    this.writeOnceFileContents(srcdir, 'index.ts', srcCode);
+    const codeWritten = this.writeOnceFileContents(srcdir, 'index.ts', srcCode);
 
-    const testdir = path.join(outdir, this.nodeProject.testdir);
-    const testCode = [
-      "import { Hello } from '../src'",
-      '',
-      "test('hello', () => {",
-      "  expect(new Hello().sayHello()).toBe('hello, world!');",
-      '});',
-    ].join('\n');
-    this.writeOnceFileContents(testdir, 'hello.test.ts', testCode);
+    if (codeWritten) {
+      // if the new code file was written then let's also write the test file
+      // if the new code file wasn't written then this test would likely fail anyways
+      const testdir = path.join(outdir, this.nodeProject.testdir);
+      const testCode = [
+        "import { Hello } from '../src'",
+        '',
+        "test('hello', () => {",
+        "  expect(new Hello().sayHello()).toBe('hello, world!');",
+        '});',
+      ].join('\n');
+      this.writeOnceFileContents(testdir, 'hello.test.ts', testCode);
+    }
   }
 }
 
