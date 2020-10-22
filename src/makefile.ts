@@ -47,8 +47,10 @@ export interface MakefileOptions extends FileBaseOptions {
 
   /**
    * Rules to include in the Makefile.
+   *
+   * @default []
    */
-  readonly rules: Rule[];
+  readonly rules?: Rule[];
 }
 
 /**
@@ -64,6 +66,8 @@ export class Makefile extends FileBase {
 
   /**
    * List of rule definitions.
+   *
+   * @default []
    */
   public readonly rules: Rule[];
 
@@ -71,17 +75,22 @@ export class Makefile extends FileBase {
   constructor(project: Project, filePath: string, options: MakefileOptions) {
     super(project, filePath, options);
 
-    if (!options.rules) {
-      throw new Error('"rules" cannot be undefined');
+    const all = options.all ? options.all : [];
+    const rules = options.rules ? options.rules : [];
+
+    for (const rule of rules) {
+      if (!rule.targets || !rule.targets.length) {
+        throw new Error('"targets" cannot be undefined or empty for items in "rules"');
+      }
     }
 
-    this.all = options.all;
-    this.rules = options.rules;
+    this.all = all;
+    this.rules = rules;
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    const rules = resolver.resolve(this.rules);
     const all = resolver.resolve(this.all);
+    const rules = resolver.resolve(this.rules);
 
     const lines = [
       ...(all ? [`.PHONY: all\nall: ${all.join(' ')}`] : []),
