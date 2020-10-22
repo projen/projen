@@ -1,30 +1,25 @@
 import { execSync } from 'child_process';
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
 import * as logging from '../../logging';
+import { exec } from '../../util';
 import { synth } from '../synth';
-
-interface PackageInfo {
-  packageDir: string;
-  modulePath: string;
-  moduleName: string;
-  moduleVersion: string;
-  moduleNameAndVersion: string;
-}
 
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
-    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' })
-      .example('projen new awscdk-app-ts', '')
-      .example('projen new --from projen-vue@^2', '');
+    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
+    args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
+    args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
+
     for (const type of inventory.discover()) {
       args.command(type.pjid, type.docs ?? '', {
         builder: cargs => {
@@ -32,7 +27,7 @@ class Command implements yargs.CommandModule {
 
           for (const option of type.options ?? []) {
             if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
-              continue;
+              continue; // we don't support non-primitive fields as command line options
             }
 
             let desc = [option.docs?.replace(/\ *\.$/, '') ?? ''];
@@ -61,20 +56,7 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-
-        handler: argv => {
-
-          // fail if .projenrc.js already exists
-          checkForExistingProjenRc();
-
-          const params = buildProjenConfigParams(argv, type);
-          generateProjenConfig(type, params);
-          logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
-
-          if (argv.synth) {
-            synth();
-          }
-        },
+        handler: argv => newProject(process.cwd(), type, argv),
       });
     }
 
@@ -82,13 +64,13 @@ class Command implements yargs.CommandModule {
   }
 
   public async handler(args: any) {
-    // fail if .projenrc.js already exists
-    checkForExistingProjenRc();
-
+    // handle --from which means we want to first install a jsii module and then
+    // create a project defined within this module.
     if (args.from) {
-      return handleFromNPM(args);
+      return newProjectFromModule(process.cwd(), args.from, args);
     }
 
+    // project type is defined but was not matched by yargs, so print the list of supported types
     if (args.projectType) {
       console.log(`Invalid project type ${args.projectType}. Supported types:`);
       for (const pjid of inventory.discover().map(x => x.pjid)) {
@@ -102,9 +84,15 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(type: inventory.ProjectType, params: any, moduleName: string = 'projen') {
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: any) {
+  const configPath = path.join(baseDir, PROJEN_RC);
+  if (fs.existsSync(configPath)) {
+    logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
+    process.exit(1);
+  }
+
   const lines = [
-    `const { ${type.typename} } = require('${moduleName}');`,
+    `const { ${type.typename} } = require('${type.moduleName}');`,
     '',
     `const project = new ${type.typename}(${renderParams(params)});`,
     '',
@@ -112,7 +100,8 @@ function generateProjenConfig(type: inventory.ProjectType, params: any, moduleNa
     '',
   ];
 
-  fs.writeFileSync(PROJEN_RC, lines.join('\n'));
+  fs.writeFileSync(configPath, lines.join('\n'));
+  logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 }
 
 function renderParams(params: any) {
@@ -144,13 +133,26 @@ function execOrUndefined(command: string): string | undefined {
   }
 }
 
-function buildProjenConfigParams(argv: any, type: inventory.ProjectType): any {
-  const params: any = {};
-  for (const [key, value] of Object.entries(argv)) {
-    for (const opt of type.options) {
-      if (opt.switch === key) {
-        let curr = params;
-        const queue = [...opt.path];
+/**
+ * Converts yargs command line switches to project type props.
+ * @param type Project type
+ * @param argv Command line switches
+ */
+function commandLineToProps(type: inventory.ProjectType, argv: any): Record<string, any> {
+  const props: any = {};
+
+  // initialize props with default values
+  for (const prop of type.options) {
+    if (prop.default && prop.default !== 'undefined' && !prop.optional) {
+      props[prop.name] = processDefault(prop.default);
+    }
+  }
+
+  for (const [arg, value] of Object.entries(argv)) {
+    for (const prop of type.options) {
+      if (prop.switch === arg) {
+        let curr = props;
+        const queue = [...prop.path];
         while (true) {
           const p = queue.shift();
           if (!p) {
@@ -163,101 +165,102 @@ function buildProjenConfigParams(argv: any, type: inventory.ProjectType): any {
             curr = curr[p];
           }
         }
-      } else { // Handles the --from use case where we don't know options at build time
-        if (opt.type !== 'string' && opt.type !== 'number' && opt.type !== 'boolean') {
-          continue;
-        }
-
-        if (opt.default && opt.default !== 'undefined' && !opt.optional) {
-          params[opt.name] = processDefault(opt.default);
-        }
       }
     }
   }
 
-  return params;
+  return props;
 }
 
-function handleFromNPM(args: any) {
-  const packageInfo = addRemoteNpmModule(args.from);
+/**
+ * Generates a new project from an external module.
+ *
+ * @param spec The name of the external module to load
+ * @param args Command line arguments (incl. project type)
+ */
+function newProjectFromModule(baseDir: string, spec: string, args: any) {
+  yarnAdd(baseDir, spec);
 
-  const externalJsiiTypes: { [name: string]: inventory.JsiiType } = fs.readJsonSync(path.join(packageInfo.packageDir, '.jsii')).types;
-  const projects = inventory.discover(externalJsiiTypes);
+  // collect projects by looking up all .jsii modules in `node_modules`.
+  const modulesDir = path.join(baseDir, 'node_modules');
+  const modules = fs.readdirSync(modulesDir).map(file => path.join(modulesDir, file));
+  const projects = inventory
+    .discover(...modules)
+    .filter(x => x.moduleName !== 'projen'); // filter built-in project types
+
   if (projects.length < 1) {
-    throw new Error(`No projects found in remote module ${packageInfo.moduleName}. ${packageInfo.moduleName} .jsii must specify at least one project with a base of project.Project`);
+    throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
   }
 
-  let type: inventory.ProjectType | undefined = projects[0];
+  const requested = args.projectType;
+  const types = projects.map(p => p.pjid);
 
-  if (projects.length > 1) {
-    const projectNames = projects.map(project => project.pjid);
-    const projectType = args.projectType;
-    if (!projectType) {
-      throw new Error(`Multiple projects found in ${packageInfo.moduleName}: ${JSON.stringify(projectNames)}. Please specify a project name with PROJECT-TYPE.\nExample: npx projen new ${projectNames[0]} --from ${packageInfo.moduleName}`);
-    }
-
-    type = projects.find(project => project.pjid === projectType);
-    if (!type) {
-      throw new Error(`Project with name ${projectType} not found in ${packageInfo.moduleName}. Found ${JSON.stringify(projectNames)}`);
-    }
+  // if user did not specify a project type but the module has more than one, we need them to tell us which one...
+  if (!requested && projects.length > 1) {
+    throw new Error(`Multiple projects found in after installing ${spec}: ${types.join(',')}. Please specify a project name.\nExample: npx projen new --from ${spec} ${types[0]}`);
   }
 
-  const params = buildProjenConfigParams(args, type);
-  params.devDeps = [packageInfo.moduleNameAndVersion];
+  // if user did not specify a type (and we know we have only one), the select it. otherwise, search by pjid.
+  const type = !requested ? projects[0] : projects.find(p => p.pjid === requested);
+  if (!type) {
+    throw new Error(`Project type ${requested} not found. Found ${types.join(',')}`);
+  }
 
-  generateProjenConfig(type, params, packageInfo.moduleName);
-  logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
+  // include a dev dependency for the external module
+  newProject(baseDir, type, args, {
+    devDeps: [spec],
+  });
+}
 
+/**
+ * Generates a new project.
+ * @param type Project type
+ * @param args Command line arguments
+ * @param additionalProps Additional parameters to include in .projenrc.js
+ */
+function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: any) {
+  // convert command line arguments to project props using type information
+  const props = commandLineToProps(type, args);
+
+  // merge in additional props if specified
+  for (const [k, v] of Object.entries(additionalProps ?? {})) {
+    props[k] = v;
+  }
+
+  // generate .projenrc.js
+  generateProjenConfig(baseDir, type, props);
+
+  // synthesize if synth is enabled (default).
   if (args.synth) {
     synth();
   }
 }
 
-function addRemoteNpmModule(module: string): PackageInfo {
-  let modulePath = module;
-  const baseDir = process.cwd();
+/**
+ * Installs the npm module (through `yarn add`) to node_modules under `projectDir`.
+ * @param spec The npm package spec (e.g. foo@^1.2)
+ */
+function yarnAdd(baseDir: string, spec: string) {
+  const packageJsonPath = path.join(baseDir, 'package.json');
+  const packageJsonExisted = fs.existsSync(packageJsonPath);
 
-  // Yarn fails to extract tgz if it contains '@' in the name - see https://github.com/yarnpkg/yarn/issues/6339
-  if (module.indexOf('.tgz') > -1) {
-    modulePath = packAndMoveGzipModule(module);
+  // workaround: yarn fails to extract tgz if it contains '@' in the name, so we
+  // create a temp copy called pkg.tgz and install from there.
+  // see: https://github.com/yarnpkg/yarn/issues/6339
+  if (spec.endsWith('.tgz') && spec.includes('@')) {
+    const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
+    const copy = path.join(tmpdir, 'pkg.tgz');
+    fs.copyFileSync(spec, copy);
+    spec = copy;
   }
 
-  execSync(`yarn add --dev ${modulePath}`, { stdio: ['inherit', 'pipe', 'ignore'] });
+  logging.info(`installing external module ${spec}...`);
+  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
 
-  const moduleNameAndVersionArray = module.split('/').slice(-1)[0].trim().split('@'); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
-  const moduleName = moduleNameAndVersionArray[0].trim();
-  let moduleNameAndVersion = moduleNameAndVersionArray.join('@').trim(); // cdk-project || cdk-project@2 || cdk-project@^2
-  if (moduleNameAndVersion.indexOf('.tgz') > -1) moduleNameAndVersion = `${moduleName}@${modulePath}`; // Solves the local package usecase
-
-  return {
-    packageDir: path.join(baseDir, 'node_modules', moduleName),
-    modulePath: modulePath,
-    moduleName: moduleName,
-    moduleVersion: moduleNameAndVersionArray[1]?.trim() ?? '',
-    moduleNameAndVersion: moduleNameAndVersion,
-  };
-}
-
-function packAndMoveGzipModule(module: string) {
-  const baseDir = process.cwd();
-  const localNodeModules = './node_modules.local';
-  fs.mkdirpSync(path.join(baseDir, localNodeModules));
-
-  // Run pack to get the package from the module if it's local
-  const npmPackOutput = execSync(`npm pack ${module}`, { stdio: ['inherit', 'pipe', 'ignore'] });
-
-  // Move the package to node_modules.local for yarn to work - see https://github.com/yarnpkg/yarn/issues/6339
-  const packagePath = path.join(baseDir, npmPackOutput.toString('utf-8').trim());
-  const newPackagePath = path.join(baseDir, localNodeModules, npmPackOutput.toString('utf-8').trim());
-  fs.moveSync(packagePath, newPackagePath);
-
-  return newPackagePath;
-}
-
-function checkForExistingProjenRc() {
-  if (fs.existsSync(PROJEN_RC)) {
-    logging.error(`Directory already contains ${PROJEN_RC}`);
-    process.exit(1);
+  // if package.json did not exist before calling yarn add, we should remove it
+  // so we can start off clean.
+  if (!packageJsonExisted) {
+    fs.removeSync(packageJsonPath);
   }
 }
 
