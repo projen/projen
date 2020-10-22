@@ -1,13 +1,13 @@
 import { execSync } from 'child_process';
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as os from 'os';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
 import * as logging from '../../logging';
-import { synth } from '../synth';
 import { exec } from '../../util';
+import { synth } from '../synth';
 
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
@@ -17,7 +17,7 @@ class Command implements yargs.CommandModule {
     args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
-    args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"')
+    args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
     args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
 
     for (const type of inventory.discover()) {
@@ -56,7 +56,7 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-        handler: argv => newProject(process.cwd(), type, argv)
+        handler: argv => newProject(process.cwd(), type, argv),
       });
     }
 
@@ -174,7 +174,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: any): Record<stri
 
 /**
  * Generates a new project from an external module.
- * 
+ *
  * @param spec The name of the external module to load
  * @param args Command line arguments (incl. project type)
  */
@@ -208,7 +208,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   newProject(baseDir, type, args, {
-    devDeps: [spec]
+    devDeps: [spec],
   });
 }
 
@@ -248,7 +248,7 @@ function yarnAdd(baseDir: string, spec: string) {
   // create a temp copy called pkg.tgz and install from there.
   // see: https://github.com/yarnpkg/yarn/issues/6339
   if (spec.endsWith('.tgz') && spec.includes('@')) {
-    const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'))
+    const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
     const copy = path.join(tmpdir, 'pkg.tgz');
     fs.copyFileSync(spec, copy);
     spec = copy;

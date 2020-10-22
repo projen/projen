@@ -66,7 +66,7 @@ export interface JsiiType {
  * Returns a list of project types exported the modules defined in `moduleDirs`.
  * This list will always also include the built-in projen project types.
  * Modules without a .jsii manifest are skipped.
- * 
+ *
  * @param moduleDirs A list of npm module directories
  */
 export function discover(...moduleDirs: string[]) {
@@ -74,11 +74,9 @@ export function discover(...moduleDirs: string[]) {
 
   // read all .jsii manifests from all modules (incl. projen itself) and merge
   // them all into a single map of fqn->type.
-  for (const dir of [ ...moduleDirs, PROJEN_MODULE_ROOT ]) {
+  for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
     const jsiiFile = path.join(dir, '.jsii');
-    console.error(`check ${jsiiFile}`);
     if (!fs.existsSync(jsiiFile)) { continue; } // no jsii manifest
-    console.error('!!!');
     const manifest = fs.readJsonSync(jsiiFile);
 
     for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
