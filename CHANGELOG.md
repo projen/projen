@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.118 (2020-10-22)
+
+### 0.3.117 (2020-10-21)
+
+### 0.3.116 (2020-10-20)
+
+
+### Features
+
+* **awscdk-construct:** documentation ([#179](https://github.com/eladb/projen/issues/179)) ([4624e36](https://github.com/eladb/projen/commit/4624e362047ff055f7dac306038ec01c72f50e85))
+
+### 0.3.115 (2020-10-20)
+
+### 0.3.114 (2020-10-19)
+
+### 0.3.113 (2020-10-18)
+
+
+### Bug Fixes
+
+* **node:** wrong npmIgnore field used ([#181](https://github.com/eladb/projen/issues/181)) ([4bb4c9d](https://github.com/eladb/projen/commit/4bb4c9dbe6df632cfdc3f06a7e209af8ba1fc7b8)), closes [#139](https://github.com/eladb/projen/issues/139)
+
+### 0.3.112 (2020-10-16)
+
 ### 0.3.111 (2020-10-15)
 
 ### 0.3.110 (2020-10-14)
