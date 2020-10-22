@@ -12,6 +12,7 @@ export * from './jest';
 export * from './jsii-project';
 export * from './json';
 export * from './license';
+export * from './makefile';
 export * from './mergify';
 export * from './next';
 export * from './node-project';

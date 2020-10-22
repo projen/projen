@@ -648,9 +648,9 @@
   integrity sha512-jVFzDV6NTbrLMxm4xDSIW/gKnk8rQLF9wAzLWIOg+5nU6ACrIMndeBdXci0FGtqJbP9tQvm6V39eshc96TO2wQ==
 
 "@types/node@^10.17.0":
-  version "10.17.40"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.40.tgz#8a50e47daff15fd4a89dc56f5221b3729e506be6"
-  integrity sha512-3hZT2z2/531A5pc8hYhn1gU5Qb1SIRSgMLQ6zuHA5xtt16lWAxUGprtr8lJuc9zNJMXEIIBWfSnzqBP/4mglpA==
+  version "10.17.42"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.42.tgz#90dd71b26fe4f4e2929df6b07e72ef2e9648a173"
+  integrity sha512-HElxYF7C/MSkuvlaHB2c+82zhXiuO49Cq056Dol8AQuTph7oJtduo2n6J8rFa+YhJyNgQ/Lm20ZaxqD0vxU0+Q==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3590,9 +3590,9 @@ jsii-diff@^1.11.0:
     yargs "^16.0.3"
 
 jsii-docgen@^1.3.2:
-  version "1.4.64"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.64.tgz#3432cfc6faff313b9ed59304094835ef8db98609"
-  integrity sha512-62tjo+324rVbJSWjGPmdViUvuVbYf/gCipdE7P8ek40InVP0MhpTctnvvMqQSjxlHZy/bRC8mvs3DGb+wHkZvw==
+  version "1.4.66"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.66.tgz#f18966a846754026f26053cffd114204d2879711"
+  integrity sha512-0vlads+rYiSvFU8CGYyYcnfwo18nZJSMo1eaVEJqGD41DANYskD499N+cHyixhzZSzxxJa1QjYFmBSrIdDosog==
   dependencies:
     "@jsii/spec" "^1.9.0"
     fs-extra "^9.0.0"
@@ -3963,9 +3963,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 markmac@^0.1.2:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.7.tgz#e4e4cfcd150f8e566911b88fc3021646bb1371be"
-  integrity sha512-xq5FP+UQlm8seBvtYOmbeimpe0WRBlL36rAQRwaBxTkNmwB8gzX8IHn49yXflBtL8BToIjP4ZQF19cNkDOEdjw==
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.8.tgz#eda4a30426289fbfe092af113383db8051b9715b"
+  integrity sha512-cR7GYia6Vv2tHiqSda4pf5sjhk7+p2RPvzxdnGkG5rzgz6XPjfTB69CI/8OVjFHcGM1vagChkp0gNxUBPlXeCA==
 
 mdurl@~1.0.1:
   version "1.0.1"
