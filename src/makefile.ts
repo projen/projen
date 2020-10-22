@@ -14,18 +14,22 @@ export interface Rule {
 
   /**
    * Files that are used as inputs to create a target.
+   *
+   * @default []
    */
   readonly prerequisites?: string[];
 
   /**
    * Commands that are run (using prerequisites as inputs) to create a target.
+   *
+   * @default []
    */
   readonly recipe?: string[];
 
   /**
    * Marks whether the target is phony.
    *
-   * False by default.
+   * @default false
    */
   readonly phony?: boolean;
 }
@@ -36,6 +40,8 @@ export interface Rule {
 export interface MakefileOptions extends FileBaseOptions {
   /**
    * List of targets to build when Make is invoked without specifying any targets.
+   *
+   * @default []
    */
   readonly all?: string[];
 
@@ -51,6 +57,8 @@ export interface MakefileOptions extends FileBaseOptions {
 export class Makefile extends FileBase {
   /**
    * Targets to make by default.
+   *
+   * @default []
    */
   public readonly all?: string[];
 
