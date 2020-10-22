@@ -10,24 +10,24 @@ export interface Rule {
    *
    * If the rule is phony then instead this represents the command's name(s).
    */
-  targets: string[];
+  readonly targets: string[];
 
   /**
    * Files that are used as inputs to create a target.
    */
-  prerequisites?: string[];
+  readonly prerequisites?: string[];
 
   /**
    * Commands that are run (using prerequisites as inputs) to create a target.
    */
-  recipe?: string[];
+  readonly recipe?: string[];
 
   /**
    * Marks whether the target is phony.
    *
    * False by default.
    */
-  phony?: boolean;
+  readonly phony?: boolean;
 }
 
 /**
@@ -71,7 +71,7 @@ export class Makefile extends FileBase {
     this.rules = options.rules;
   }
 
-  synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver) {
     const rules = resolver.resolve(this.rules);
     const all = resolver.resolve(this.all);
 
