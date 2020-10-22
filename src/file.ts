@@ -90,10 +90,11 @@ export interface IResolver {
 
 export abstract class SampleFile extends Component {
   protected writeOnceFileContents(dir: string, filename: string, contents: string) {
-    if (fileExists(filename)) {
+    const fullFilename = path.join(dir, filename);
+    if (fileExists(fullFilename)) {
       return;
     }
     fs.mkdirpSync(dir);
-    fs.writeFileSync(path.join(dir, filename), contents);
+    fs.writeFileSync(fullFilename, contents);
   }
 }
