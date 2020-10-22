@@ -1107,9 +1107,9 @@ export class NodeProject extends Project {
 
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
 
-    const readDeps = (user: Record<string, string>, current?: Record<string, string>) => {
+    const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
       for (const [name, userVersion] of Object.entries(user)) {
-        const currentVersion = current ? current[name] : undefined;
+        const currentVersion = current[name];
 
         // respect user version if it's not '*' or if current version is undefined
         if (userVersion !== '*' || !currentVersion || currentVersion === '*') {
