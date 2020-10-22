@@ -5,7 +5,7 @@ export interface Rule {
   targets: string[];
   prerequisites?: string[];
   recipe?: string[];
-  isPhony?: boolean;
+  phony?: boolean;
 }
 
 export interface MakefileOptions extends FileBaseOptions {
@@ -14,8 +14,8 @@ export interface MakefileOptions extends FileBaseOptions {
 }
 
 export class Makefile extends FileBase {
-  readonly all?: string[];
-  readonly rules: Rule[];
+  public readonly all?: string[];
+  public readonly rules: Rule[];
 
 
   constructor(project: Project, filePath: string, options: MakefileOptions) {
@@ -40,7 +40,7 @@ export class Makefile extends FileBase {
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
         const recipe = rule.recipe ? rule.recipe : [];
 
-        const phony = rule.isPhony ? [`.PHONY: ${targets}`] : [];
+        const phony = rule.phony ? [`.PHONY: ${targets}`] : [];
 
         return [
           ...phony,

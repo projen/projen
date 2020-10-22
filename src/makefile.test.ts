@@ -11,7 +11,7 @@ test('makefile synthesises correctly', () => {
       {
         targets: ['one'],
         recipe: ['touch one'],
-        isPhony: false,
+        phony: false,
       },
       {
         targets: ['two', 'three'],
@@ -21,7 +21,7 @@ test('makefile synthesises correctly', () => {
       {
         targets: ['clean'],
         recipe: ['rm -f one two three'],
-        isPhony: true,
+        phony: true,
       },
     ],
   });
