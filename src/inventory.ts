@@ -28,7 +28,7 @@ export interface ProjectType {
   docsurl: string;
 }
 
-export interface JsiiType {
+interface JsiiType {
   assembly: string;
   kind: string;
   abstract?: boolean;
