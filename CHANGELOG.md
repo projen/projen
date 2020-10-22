@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.119 (2020-10-22)
+
+
+### Features
+
+* **makefile:** add support for makefiles ([#199](https://github.com/eladb/projen/issues/199)) ([35406a9](https://github.com/eladb/projen/commit/35406a9f17e6e93c3eff0636e8091704fa6340d4))
+
 ### 0.3.118 (2020-10-22)
 
 ### 0.3.117 (2020-10-21)
