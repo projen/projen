@@ -89,12 +89,21 @@ export interface IResolver {
 
 
 export abstract class SampleFile extends Component {
+  /**
+   * A helper function that will write the file once and return if it was written or not.
+   * @param dir - the directory for the new file
+   * @param filename - the filename for the new file
+   * @param contents - the contents of the file to write
+   * @return boolean - whether a new file was written or not.
+   * @protected
+   */
   protected writeOnceFileContents(dir: string, filename: string, contents: string) {
     const fullFilename = path.join(dir, filename);
     if (fileExists(fullFilename)) {
-      return;
+      return false;
     }
     fs.mkdirpSync(dir);
     fs.writeFileSync(fullFilename, contents);
+    return true;
   }
 }

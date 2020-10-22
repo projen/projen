@@ -2529,18 +2529,18 @@ new SampleFile(project: Project)
 
 #### protected writeOnceFileContents(dir, filename, contents)🔹 <a id="projen-samplefile-writeoncefilecontents"></a>
 
-
+A helper function that will write the file once and return if it was written or not.
 
 ```ts
-protected writeOnceFileContents(dir: string, filename: string, contents: string): void
+protected writeOnceFileContents(dir: string, filename: string, contents: string): boolean
 ```
 
-* **dir** (<code>string</code>)  *No description*
-* **filename** (<code>string</code>)  *No description*
-* **contents** (<code>string</code>)  *No description*
+* **dir** (<code>string</code>)  - the directory for the new file.
+* **filename** (<code>string</code>)  - the filename for the new file.
+* **contents** (<code>string</code>)  - the contents of the file to write.
 
-
-
+__Returns__:
+* <code>boolean</code>
 
 
 
