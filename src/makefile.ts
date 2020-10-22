@@ -34,6 +34,10 @@ export interface Rule {
   readonly phony?: boolean;
 }
 
+interface AllRule extends Rule {
+  readonly prerequisites: string[];
+}
+
 /**
  * Options for Makefiles.
  */
@@ -58,42 +62,75 @@ export interface MakefileOptions extends FileBaseOptions {
  */
 export class Makefile extends FileBase {
   /**
-   * Targets to make by default.
-   *
-   * @default []
-   */
-  public readonly all?: string[];
-
-  /**
    * List of rule definitions.
-   *
-   * @default []
    */
   public readonly rules: Rule[];
 
+  private readonly all: AllRule;
 
-  constructor(project: Project, filePath: string, options: MakefileOptions) {
+
+  constructor(project: Project, filePath: string, options: MakefileOptions = {}) {
     super(project, filePath, options);
 
     const all = options.all ? options.all : [];
     const rules = options.rules ? options.rules : [];
 
-    for (const rule of rules) {
-      if (!rule.targets || !rule.targets.length) {
-        throw new Error('"targets" cannot be undefined or empty for items in "rules"');
-      }
-    }
+    rules.forEach(e => this.validateRule(e));
 
-    this.all = all;
-    this.rules = rules;
+    this.all = {
+      targets: ['all'],
+      prerequisites: all,
+      phony: true,
+    };
+    this.rules = [
+      this.all,
+      ...rules,
+    ];
+  }
+
+  /**
+   * Add a target to all
+   */
+  public addAll(target: string): Makefile {
+    this.all.prerequisites.push(target);
+    return this;
+  }
+
+  /**
+   * Add multiple targets to all
+   */
+  public addAlls(...targets: string[]): Makefile {
+    targets.forEach(e => this.addAll(e));
+    return this;
+  }
+
+  /**
+   * Add a rule to the Makefile.
+   */
+  public addRule(rule: Rule): Makefile {
+    this.validateRule(rule);
+    this.rules.push(rule);
+    return this;
+  }
+
+  /**
+   * Add multiple rules to the Makefile.
+   */
+  public addRules(...rules: Rule[]): Makefile {
+    rules.forEach(e => this.addRule(e));
+    return this;
+  }
+
+  private validateRule(rule: Rule) {
+    if (!rule.targets || !rule.targets.length) {
+      throw new Error('"targets" cannot be undefined or empty for items in "rules"');
+    }
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    const all = resolver.resolve(this.all);
     const rules = resolver.resolve(this.rules);
 
     const lines = [
-      ...(all ? [`.PHONY: all\nall: ${all.join(' ')}`] : []),
       ...rules.map((rule: Rule) => {
         const targets = rule.targets.join(' ');
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
@@ -109,6 +146,6 @@ export class Makefile extends FileBase {
       }),
     ];
 
-    return `${lines.join('\n\n')}`;
+    return `${lines.join('\n\n')}\n`;
   }
 }

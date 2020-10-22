@@ -1324,7 +1324,7 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new Makefile(project: Project, filePath: string, options: MakefileOptions)
+new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
@@ -1333,8 +1333,8 @@ new Makefile(project: Project, filePath: string, options: MakefileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **rules** (<code>Array<[Rule](#projen-rule)></code>)  Rules to include in the Makefile. 
-  * **all** (<code>Array<string></code>)  List of targets to build when Make is invoked without specifying any targets. __*Optional*__
+  * **all** (<code>Array<string></code>)  List of targets to build when Make is invoked without specifying any targets. __*Default*__: []
+  * **rules** (<code>Array<[Rule](#projen-rule)></code>)  Rules to include in the Makefile. __*Default*__: []
 
 
 
@@ -1344,10 +1344,69 @@ new Makefile(project: Project, filePath: string, options: MakefileOptions)
 Name | Type | Description 
 -----|------|-------------
 **rules**🔹 | <code>Array<[Rule](#projen-rule)></code> | List of rule definitions.
-**all**?🔹 | <code>Array<string></code> | Targets to make by default.<br/>__*Optional*__
 
 ### Methods
 
+
+#### addAll(target)🔹 <a id="projen-makefile-addall"></a>
+
+Add a target to all.
+
+```ts
+addAll(target: string): Makefile
+```
+
+* **target** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[Makefile](#projen-makefile)</code>
+
+#### addAlls(...targets)🔹 <a id="projen-makefile-addalls"></a>
+
+Add multiple targets to all.
+
+```ts
+addAlls(...targets: string[]): Makefile
+```
+
+* **targets** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[Makefile](#projen-makefile)</code>
+
+#### addRule(rule)🔹 <a id="projen-makefile-addrule"></a>
+
+Add a rule to the Makefile.
+
+```ts
+addRule(rule: Rule): Makefile
+```
+
+* **rule** (<code>[Rule](#projen-rule)</code>)  *No description*
+  * **targets** (<code>Array<string></code>)  Files to be created or updated by this rule. 
+  * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
+  * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
+  * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
+
+__Returns__:
+* <code>[Makefile](#projen-makefile)</code>
+
+#### addRules(...rules)🔹 <a id="projen-makefile-addrules"></a>
+
+Add multiple rules to the Makefile.
+
+```ts
+addRules(...rules: Rule[]): Makefile
+```
+
+* **rules** (<code>[Rule](#projen-rule)</code>)  *No description*
+  * **targets** (<code>Array<string></code>)  Files to be created or updated by this rule. 
+  * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
+  * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
+  * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
+
+__Returns__:
+* <code>[Makefile](#projen-makefile)</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-makefile-synthesizecontent"></a>
 
@@ -3297,11 +3356,11 @@ Options for Makefiles.
 
 Name | Type | Description 
 -----|------|-------------
-**rules**🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.
-**all**?🔹 | <code>Array<string></code> | List of targets to build when Make is invoked without specifying any targets.<br/>__*Optional*__
+**all**?🔹 | <code>Array<string></code> | List of targets to build when Make is invoked without specifying any targets.<br/>__*Default*__: []
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+**rules**?🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.<br/>__*Default*__: []
 
 
 
@@ -3584,9 +3643,9 @@ A Make rule.
 Name | Type | Description 
 -----|------|-------------
 **targets**🔹 | <code>Array<string></code> | Files to be created or updated by this rule.
-**phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Optional*__
-**prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Optional*__
-**recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Optional*__
+**phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Default*__: false
+**prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Default*__: []
+**recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Default*__: []
 
 
 
