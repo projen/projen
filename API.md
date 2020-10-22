@@ -19,6 +19,7 @@ Name|Description
 [JsiiProject](#projen-jsiiproject)|Multi-language jsii library project.
 [JsonFile](#projen-jsonfile)|*No description*
 [License](#projen-license)|*No description*
+[Makefile](#projen-makefile)|Minimal Makefile.
 [Mergify](#projen-mergify)|*No description*
 [NextJsProject](#projen-nextjsproject)|NextJS project.
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
@@ -56,6 +57,7 @@ Name|Description
 [JsiiPythonTarget](#projen-jsiipythontarget)|*No description*
 [JsonFileOptions](#projen-jsonfileoptions)|*No description*
 [LicenseOptions](#projen-licenseoptions)|*No description*
+[MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
 [NextJsProjectOptions](#projen-nextjsprojectoptions)|*No description*
@@ -63,6 +65,7 @@ Name|Description
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
+[Rule](#projen-rule)|A Make rule.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
@@ -882,7 +885,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [NodeBuildWorkflow](#projen-nodebuildworkflow), [TomlFile](#projen-tomlfile)
+__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NodeBuildWorkflow](#projen-nodebuildworkflow), [TomlFile](#projen-tomlfile)
 
 ### Initializer
 
@@ -1303,6 +1306,58 @@ protected synthesizeContent(_: IResolver): string
 ```
 
 * **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Makefile 🔹 <a id="projen-makefile"></a>
+
+Minimal Makefile.
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new Makefile(project: Project, filePath: string, options: MakefileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[MakefileOptions](#projen-makefileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **rules** (<code>Array<[Rule](#projen-rule)></code>)  Rules to include in the Makefile. 
+  * **all** (<code>Array<string></code>)  List of targets to build when Make is invoked without specifying any targets. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**🔹 | <code>Array<[Rule](#projen-rule)></code> | List of rule definitions.
+**all**?🔹 | <code>Array<string></code> | Targets to make by default.<br/>__*Optional*__
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-makefile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
 
 __Returns__:
 * <code>string</code>
@@ -3233,6 +3288,23 @@ Name | Type | Description
 
 
 
+## struct MakefileOptions 🔹 <a id="projen-makefileoptions"></a>
+
+
+Options for Makefiles.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.
+**all**?🔹 | <code>Array<string></code> | List of targets to build when Make is invoked without specifying any targets.<br/>__*Optional*__
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
 ## struct MergifyOptions 🔹 <a id="projen-mergifyoptions"></a>
 
 
@@ -3499,6 +3571,22 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **pinnedDevDependency**?🔹 | <code>boolean</code> | Automatically add a pinned dev dependency.<br/>__*Default*__: true
+
+
+
+## struct Rule 🔹 <a id="projen-rule"></a>
+
+
+A Make rule.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**targets**🔹 | <code>Array<string></code> | Files to be created or updated by this rule.
+**phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Optional*__
+**prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Optional*__
+**recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Optional*__
 
 
 
