@@ -1,8 +1,9 @@
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { resolve } from './_resolve';
 import { Component } from './component';
 import { Project } from './project';
-import { writeFile } from './util';
+import { fileExists, writeFile } from './util';
 
 export interface FileBaseOptions {
   /**
@@ -87,3 +88,12 @@ export interface IResolver {
 }
 
 
+export abstract class SampleFile extends Component {
+  protected writeOnceFileContents(dir: string, filename: string, contents: string) {
+    if (fileExists(filename)) {
+      return;
+    }
+    fs.mkdirpSync(dir);
+    fs.writeFileSync(path.join(dir, filename), contents);
+  }
+}

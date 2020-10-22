@@ -1,7 +1,6 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
-import { Component } from './component';
 import { Eslint } from './eslint';
+import { SampleFile } from './file';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
@@ -633,16 +632,6 @@ export class TypescriptConfig {
   }
 }
 
-
-export abstract class SampleFile extends Component {
-  protected writeOnceFileContents(dir: string, filename: string, contents: string) {
-    if (fs.pathExistsSync(dir) && fs.readdirSync(dir).filter(x => x === filename)) {
-      return;
-    }
-    fs.mkdirpSync(dir);
-    fs.writeFileSync(path.join(dir, filename), contents);
-  }
-}
 
 class SampleCode extends SampleFile {
   private nodeProject: TypeScriptProject;
