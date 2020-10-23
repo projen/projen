@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.121 (2020-10-23)
+
+
+### Features
+
+* projects from external modules (--from) ([#212](https://github.com/eladb/projen/issues/212)) ([abae45f](https://github.com/eladb/projen/commit/abae45f8a56cadc2e9651c68be2568dd430f833e))
+
 ### 0.3.120 (2020-10-23)
 
 ### 0.3.119 (2020-10-22)
