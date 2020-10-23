@@ -3,7 +3,10 @@ import * as fs from 'fs-extra';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
-const jsii: { [name: string]: JsiiType } = fs.readJsonSync(path.join(__dirname, '..', '.jsii')).types;
+const PROJEN_MODULE_ROOT = path.join(__dirname, '..');
+const PROJECT_BASE_FQN = 'projen.Project';
+
+type JsiiTypes = { [name: string]: JsiiType };
 
 export interface ProjectOption {
   path: string[];
@@ -16,6 +19,7 @@ export interface ProjectOption {
 }
 
 export interface ProjectType {
+  moduleName: string;
   pjid: string;
   fqn: string;
   typename: string;
@@ -25,6 +29,7 @@ export interface ProjectType {
 }
 
 interface JsiiType {
+  assembly: string;
   kind: string;
   abstract?: boolean;
   base?: string;
@@ -57,11 +62,32 @@ interface JsiiType {
   };
 }
 
-export function discover() {
+/**
+ * Returns a list of project types exported the modules defined in `moduleDirs`.
+ * This list will always also include the built-in projen project types.
+ * Modules without a .jsii manifest are skipped.
+ *
+ * @param moduleDirs A list of npm module directories
+ */
+export function discover(...moduleDirs: string[]) {
+  const jsii: JsiiTypes = {};
+
+  // read all .jsii manifests from all modules (incl. projen itself) and merge
+  // them all into a single map of fqn->type.
+  for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
+    const jsiiFile = path.join(dir, '.jsii');
+    if (!fs.existsSync(jsiiFile)) { continue; } // no jsii manifest
+    const manifest = fs.readJsonSync(jsiiFile);
+
+    for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
+      jsii[fqn] = type;
+    }
+  }
+
   const result = new Array<ProjectType>();
 
   for (const [fqn, typeinfo] of Object.entries(jsii)) {
-    if (!isProjectType(fqn)) {
+    if (!isProjectType(jsii, fqn)) {
       continue;
     }
 
@@ -69,10 +95,11 @@ export function discover() {
     const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
+      moduleName: typeinfo.assembly,
       typename,
       pjid,
       fqn,
-      options: discoverOptions(fqn),
+      options: discoverOptions(jsii, fqn),
       docs: typeinfo.docs?.summary,
       docsurl,
     });
@@ -80,7 +107,8 @@ export function discover() {
 
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
 }
-function discoverOptions(fqn: string): ProjectOption[] {
+
+function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   const options = new Array<ProjectOption>();
   const params = jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
@@ -144,7 +172,7 @@ function filterUndefined(obj: any) {
   return ret;
 }
 
-function isProjectType(fqn: string) {
+function isProjectType(jsii: JsiiTypes, fqn: string) {
   const type = jsii[fqn];
 
   if (type.kind !== 'class') {
@@ -160,7 +188,7 @@ function isProjectType(fqn: string) {
 
   let curr = type;
   while (true) {
-    if (curr.fqn === 'projen.Project') {
+    if (curr.fqn === PROJECT_BASE_FQN) {
       return true;
     }
 

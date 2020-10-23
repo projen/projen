@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.121 (2020-10-23)
+
+
+### Features
+
+* projects from external modules (--from) ([#212](https://github.com/eladb/projen/issues/212)) ([abae45f](https://github.com/eladb/projen/commit/abae45f8a56cadc2e9651c68be2568dd430f833e))
+
+### 0.3.120 (2020-10-23)
+
+### 0.3.119 (2020-10-22)
+
+
+### Features
+
+* **makefile:** add support for makefiles ([#199](https://github.com/eladb/projen/issues/199)) ([35406a9](https://github.com/eladb/projen/commit/35406a9f17e6e93c3eff0636e8091704fa6340d4))
+
+### 0.3.118 (2020-10-22)
+
+### 0.3.117 (2020-10-21)
+
+### 0.3.116 (2020-10-20)
+
+
+### Features
+
+* **awscdk-construct:** documentation ([#179](https://github.com/eladb/projen/issues/179)) ([4624e36](https://github.com/eladb/projen/commit/4624e362047ff055f7dac306038ec01c72f50e85))
+
+### 0.3.115 (2020-10-20)
+
+### 0.3.114 (2020-10-19)
+
 ### 0.3.113 (2020-10-18)
 
 

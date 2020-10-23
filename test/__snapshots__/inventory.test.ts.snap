@@ -6,6 +6,7 @@ Array [
     "docs": "AWS CDK app in TypeScript.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdktypescriptapp",
     "fqn": "projen.AwsCdkTypeScriptApp",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -752,6 +753,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "AWS CDK construct library project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-awscdkconstructlibrary",
     "fqn": "projen.AwsCdkConstructLibrary",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -1427,6 +1429,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "CDK8s construct library project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-constructlibrarycdk8s",
     "fqn": "projen.ConstructLibraryCdk8s",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -2071,6 +2074,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "Multi-language jsii library project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-jsiiproject",
     "fqn": "projen.JsiiProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -2705,6 +2709,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "Next.js project without TypeScript.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-nextjsproject",
     "fqn": "projen.NextJsProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -3321,6 +3326,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "Next.js project with TypeScript.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-nextjstypescriptproject",
     "fqn": "projen.NextJsTypeScriptProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -4037,6 +4043,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "Node.js project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject",
     "fqn": "projen.NodeProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -4631,6 +4638,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "Base project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-project",
     "fqn": "projen.Project",
+    "moduleName": "projen",
     "options": Array [],
     "pjid": "project",
     "typename": "Project",
@@ -4639,6 +4647,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "TypeScript project.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject",
     "fqn": "projen.TypeScriptProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
@@ -5333,6 +5342,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
     "docs": "TypeScript app.",
     "docsurl": "https://github.com/eladb/projen/blob/master/API.md#projen-typescriptappproject",
     "fqn": "projen.TypeScriptAppProject",
+    "moduleName": "projen",
     "options": Array [
       Object {
         "default": "true",
