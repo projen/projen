@@ -30,7 +30,7 @@ Name|Description
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
-[SampleFile](#projen-samplefile)|*No description*
+[SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [ReactComponent](#projen-reactcomponent)|*No description*
 [ReactProject](#projen-reactproject)|React project without TypeScript.
@@ -94,6 +94,7 @@ Name|Description
 [ReactTypeDefOptions](#projen-reacttypedefoptions)|*No description*
 [ReactTypeScriptProjectOptions](#projen-reacttypescriptprojectoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
+[SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
@@ -2508,23 +2509,49 @@ synth(outdir?: string): void
 
 ## class SampleFile 🔹 <a id="projen-samplefile"></a>
 
+Produces a file with the given contents but only once, if the file doesn't already exist.
 
+Use this for creating example code files or other resources.
 
 __Extends__: [Component](#projen-component)
 
 ### Initializer
 
 
-
+Creates a new SampleFile object.
 
 ```ts
-new SampleFile(project: Project)
+new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
+* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
+  * **contents** (<code>string</code>)  The contents of the file to write. 
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**created**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
+
+
+#### synthesize(outdir)🔹 <a id="projen-samplefile-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(outdir: string): void
+```
+
+* **outdir** (<code>string</code>)  *No description*
+
+
 
 
 #### protected writeOnceFileContents(dir, filename, contents)🔹 <a id="projen-samplefile-writeoncefilecontents"></a>
@@ -5010,6 +5037,19 @@ Name | Type | Description
 **phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Default*__: false
 **prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Default*__: []
 **recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Default*__: []
+
+
+
+## struct SampleFileOptions 🔹 <a id="projen-samplefileoptions"></a>
+
+
+Options for the SampleFile object.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**contents**🔹 | <code>string</code> | The contents of the file to write.
 
 
 
