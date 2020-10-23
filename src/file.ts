@@ -1,9 +1,8 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { resolve } from './_resolve';
 import { Component } from './component';
 import { Project } from './project';
-import { fileExists, writeFile } from './util';
+import { writeFile } from './util';
 
 export interface FileBaseOptions {
   /**
@@ -56,14 +55,6 @@ export abstract class FileBase extends Component {
   }
 
   /**
-   * Implemented by derived classes and returns the contents of the file to
-   * emit.
-   * @param resolver Call `resolver.resolve(obj)` on any objects in order to
-   * resolve token functions.
-   */
-  protected abstract synthesizeContent(resolver: IResolver): string;
-
-  /**
    * Writes the file to the project's output directory
    */
   public synthesize(outdir: string) {
@@ -73,6 +64,14 @@ export abstract class FileBase extends Component {
       readonly: this.readonly,
     });
   }
+
+  /**
+   * Implemented by derived classes and returns the contents of the file to
+   * emit.
+   * @param resolver Call `resolver.resolve(obj)` on any objects in order to
+   * resolve token functions.
+   */
+  protected abstract synthesizeContent(resolver: IResolver): string;
 }
 
 /**
@@ -85,25 +84,4 @@ export interface IResolver {
    * @param value The value to resolve
    */
   resolve(value: any): any;
-}
-
-
-export abstract class SampleFile extends Component {
-  /**
-   * A helper function that will write the file once and return if it was written or not.
-   * @param dir - the directory for the new file
-   * @param filename - the filename for the new file
-   * @param contents - the contents of the file to write
-   * @return boolean - whether a new file was written or not.
-   * @protected
-   */
-  protected writeOnceFileContents(dir: string, filename: string, contents: string) {
-    const fullFilename = path.join(dir, filename);
-    if (fileExists(fullFilename)) {
-      return false;
-    }
-    fs.mkdirpSync(dir);
-    fs.writeFileSync(fullFilename, contents);
-    return true;
-  }
 }

@@ -1,9 +1,9 @@
 import * as path from 'path';
 import { Eslint } from './eslint';
-import { SampleFile } from './file';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
+import { SampleFile } from './sample-file';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
@@ -633,18 +633,8 @@ export class TypescriptConfig {
 }
 
 
-class SampleCode extends SampleFile {
-  private nodeProject: TypeScriptProject;
-
+class SampleCode {
   constructor(project: TypeScriptProject) {
-    super(project);
-
-    this.nodeProject = project;
-  }
-
-  public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.nodeProject.srcdir);
-
     const srcCode = [
       'export class Hello {',
       '  public sayHello() {',
@@ -652,21 +642,19 @@ class SampleCode extends SampleFile {
       '  }',
       '}',
     ].join('\n');
-    const codeWritten = this.writeOnceFileContents(srcdir, 'index.ts', srcCode);
 
-    if (codeWritten) {
-      // if the new code file was written then let's also write the test file
-      // if the new code file wasn't written then this test would likely fail anyways
-      const testdir = path.join(outdir, this.nodeProject.testdir);
-      const testCode = [
-        "import { Hello } from '../src'",
-        '',
-        "test('hello', () => {",
-        "  expect(new Hello().sayHello()).toBe('hello, world!');",
-        '});',
-      ].join('\n');
-      this.writeOnceFileContents(testdir, 'hello.test.ts', testCode);
-    }
+    const testCode = [
+      "import { Hello } from '../src'",
+      '',
+      "test('hello', () => {",
+      "  expect(new Hello().sayHello()).toBe('hello, world!');",
+      '});',
+    ].join('\n');
+    new SampleFile(project, path.join(project.srcdir, 'index.ts'), { contents: srcCode });
+
+    // so here's a problem. I don't want this file to be written if the above file was written.
+    // and I don't know how to add that dependency here...
+    new SampleFile(project, path.join(project.testdir, 'hello.test.ts'), { contents: testCode });
   }
 }
 
