@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.122 (2020-10-23)
+
+
+### Features
+
+* typescript nextjs projects ([#197](https://github.com/eladb/projen/issues/197)) ([68e5206](https://github.com/eladb/projen/commit/68e5206ab781a2dee68394f6ccb106b986262234))
+
 ### 0.3.121 (2020-10-23)
 
 
