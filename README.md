@@ -163,6 +163,52 @@ Adding new project types is as simple as submitting a pull request to this repo 
 extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
+### Projects in external modules
+
+_projen_ is bundled with many project types out of the box, but it can also work
+with project types and components defined in external jsii modules (the reason
+we need jsii is because projen uses the jsii metadata to discover project types
+& options in projen new).
+
+Say we have a module in npm called `projen-vue` which includes a single project
+type for vue.js:
+
+```bash
+$ npx projen new --from projen-vue
+```
+
+If the referenced module includes multiple project types, the type is required.
+Switches can also be used to specify initial values based on the project type
+APIs. You can also use any package syntax supported by [yarn
+add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like
+`projen-vuejs@1.2.3`, `file:/path/to/local/folder`,
+`git@github.com/awesome/projen-vuejs#1.2.3`, etc.
+
+```bash
+$ npx projen new --from projen-vue@^2 vuejs-ts --description "my awesome vue project"
+```
+
+Under the hood, `projen new` will install the `projen-vuejs` module from npm
+(version 2.0.0 and above), discover the project types in it and bootstrap the
+`vuejs-ts` project type. It will assign the value `"my awesome vue project"` to
+the `description` field. If you examine your `.projenrc.js` file, you'll see
+that `projen-vuejs` is defined as a dev dependency:
+
+```javascript
+const { VueJsProject } = require('projen-vuejs');
+
+const project = new VueJsProject({
+  name: 'my-vuejs-sample',
+  description: "my awesome vue project",
+  // ...
+  devDeps: [
+    'projen-vuejs'
+  ]
+});
+
+project.synth();
+```
+
 ## Contributing
 
 Contributions of all kinds are welcome!

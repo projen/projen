@@ -1107,7 +1107,7 @@ export class NodeProject extends Project {
 
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
 
-    const readDeps = (user: Record<string, string>, current: Record<string, string>) => {
+    const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
       for (const [name, userVersion] of Object.entries(user)) {
         const currentVersion = current[name];
 
@@ -1121,7 +1121,7 @@ export class NodeProject extends Project {
       }
 
       // report removals
-      for (const name of Object.keys(current)) {
+      for (const name of Object.keys(current ?? {})) {
         if (!user[name]) {
           logging.verbose(`${name}: removed`);
         }
