@@ -321,7 +321,57 @@ export interface TypescriptConfigOptions {
   readonly compilerOptions: TypeScriptCompilerOptions;
 }
 
+/**
+ * Determines how modules get resolved.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html
+ */
+export enum TypeScriptModuleResolution {
+  /**
+   * TypeScript's former default resolution strategy.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic
+   */
+  CLASSIC = 'classic',
+
+  /**
+   * Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
+   */
+  NODE = 'node'
+}
+
+/**
+ * Determines how JSX should get transformed into valid JavaScript.
+ *
+ * @see https://www.typescriptlang.org/docs/handbook/jsx.html
+ */
+export enum TypeScriptJsxMode {
+  /**
+   * Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
+   */
+  PRESERVE = 'preserve',
+
+  /**
+   * Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
+   */
+  REACT = 'react',
+
+  /**
+   * Keeps all JSX like 'preserve' mode, but output will have a .js extension.
+   */
+  REACT_NATIVE = 'react-native'
+}
+
 export interface TypeScriptCompilerOptions {
+  /**
+   * Allow JavaScript files to be compiled.
+   *
+   * @default false
+   */
+  readonly allowJs?: boolean;
+
   /**
    * Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict”
    * for each source file.
@@ -343,11 +393,27 @@ export interface TypeScriptCompilerOptions {
   readonly declaration?: boolean;
 
   /**
+   * Emit __importStar and __importDefault helpers for runtime babel
+   * ecosystem compatibility and enable --allowSyntheticDefaultImports for
+   * typesystem compatibility.
+   *
+   * @default false
+   */
+  readonly esModuleInterop?: boolean;
+
+  /**
    * Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
    *
    * @default true
    */
   readonly experimentalDecorators?: boolean;
+
+  /**
+   * Disallow inconsistently-cased references to the same file.
+   *
+   * @default false
+   */
+  readonly forceConsistentCasingInFileNames?: boolean;
 
   /**
    * When set, instead of writing out a .js.map file to provide source maps,
@@ -366,6 +432,21 @@ export interface TypeScriptCompilerOptions {
   readonly inlineSources?: boolean;
 
   /**
+   * Perform additional checks to ensure that separate compilation (such as
+   * with transpileModule or @babel/plugin-transform-typescript) would be safe.
+   *
+   * @default false
+   */
+  readonly isolatedModules?: boolean;
+
+  /**
+   * Support JSX in .tsx files: "react", "preserve", "react-native"
+   *
+   * @default undefined
+   */
+  readonly jsx?: TypeScriptJsxMode;
+
+  /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
    *
    * @default [ 'es2018' ]
@@ -379,6 +460,20 @@ export interface TypeScriptCompilerOptions {
    * @default 'CommonJS'
    */
   readonly module?: string;
+
+  /**
+   * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
+   *
+   * @default 'node'
+   */
+  readonly moduleResolution?: TypeScriptModuleResolution;
+
+  /**
+   * Do not emit outputs.
+   *
+   * @default false
+   */
+  readonly noEmit?: boolean;
 
   /**
    * Do not emit compiler output files like JavaScript source code, source-maps or
@@ -442,6 +537,13 @@ export interface TypeScriptCompilerOptions {
   readonly resolveJsonModule?: boolean;
 
   /**
+   * Skip type checking of all declaration files (*.d.ts).
+   *
+   * @default false
+   */
+  readonly skipLibCheck?: boolean;
+
+  /**
    * The strict flag enables a wide range of type checking behavior that results in stronger guarantees
    * of program correctness. Turning this on is equivalent to enabling all of the strict mode family
    * options, which are outlined below. You can then turn off individual strict mode family checks as
@@ -503,6 +605,7 @@ export class TypescriptConfig {
   public readonly include: string[];
   public readonly exclude: string[];
   public readonly fileName: string;
+  public readonly file: JsonFile;
 
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
     const fileName = options.fileName ?? 'tsconfig.json';
@@ -513,7 +616,7 @@ export class TypescriptConfig {
 
     this.compilerOptions = options.compilerOptions;
 
-    new JsonFile(project, fileName, {
+    this.file = new JsonFile(project, fileName, {
       obj: {
         compilerOptions: this.compilerOptions,
         include: this.include,

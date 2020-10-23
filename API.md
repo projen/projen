@@ -21,7 +21,10 @@ Name|Description
 [License](#projen-license)|*No description*
 [Makefile](#projen-makefile)|Minimal Makefile.
 [Mergify](#projen-mergify)|*No description*
-[NextJsProject](#projen-nextjsproject)|NextJS project.
+[NextComponent](#projen-nextcomponent)|*No description*
+[NextJsProject](#projen-nextjsproject)|Next.js project without TypeScript.
+[NextJsTypeDef](#projen-nextjstypedef)|*No description*
+[NextJsTypeScriptProject](#projen-nextjstypescriptproject)|Next.js project with TypeScript.
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
@@ -60,7 +63,11 @@ Name|Description
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
 [MergifyOptions](#projen-mergifyoptions)|*No description*
 [MergifyRule](#projen-mergifyrule)|*No description*
+[NextComponentOptions](#projen-nextcomponentoptions)|*No description*
+[NextJsCommonProjectOptions](#projen-nextjscommonprojectoptions)|*No description*
 [NextJsProjectOptions](#projen-nextjsprojectoptions)|*No description*
+[NextJsTypeDefOptions](#projen-nextjstypedefoptions)|*No description*
+[NextJsTypeScriptProjectOptions](#projen-nextjstypescriptprojectoptions)|*No description*
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
@@ -93,6 +100,8 @@ Name|Description
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [Stability](#projen-stability)|*No description*
 [StartEntryCategory](#projen-startentrycategory)|*No description*
+[TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
+[TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 
 
@@ -889,7 +898,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NodeBuildWorkflow](#projen-nodebuildworkflow), [TomlFile](#projen-tomlfile)
+__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NextJsTypeDef](#projen-nextjstypedef), [NodeBuildWorkflow](#projen-nodebuildworkflow), [TomlFile](#projen-tomlfile)
 
 ### Initializer
 
@@ -1469,9 +1478,31 @@ addRule(rule: MergifyRule): void
 
 
 
+## class NextComponent 🔹 <a id="projen-nextcomponent"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new NextComponent(project: NodeProject, options: NextComponentOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[NextComponentOptions](#projen-nextcomponentoptions)</code>)  *No description*
+  * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript Next.js projects. __*Default*__: false
+
+
+
+
 ## class NextJsProject 🔹 <a id="projen-nextjsproject"></a>
 
-NextJS project.
+Next.js project without TypeScript.
 
 __Extends__: [NodeProject](#projen-nodeproject)
 
@@ -1485,6 +1516,8 @@ new NextJsProject(options: NextJsProjectOptions)
 ```
 
 * **options** (<code>[NextJsProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -1547,9 +1580,6 @@ new NextJsProject(options: NextJsProjectOptions)
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **assetsDir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
-  * **pagesDir** (<code>string</code>)  Pages directory. __*Default*__: 'pages'
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
 
 
 
@@ -1558,8 +1588,154 @@ new NextJsProject(options: NextJsProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**assetsDir**🔹 | <code>string</code> | The directory in which app assets reside.
-**pagesDir**🔹 | <code>string</code> | The directory in which NextJS pages are declared.
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+
+
+
+## class NextJsTypeDef 🔹 <a id="projen-nextjstypedef"></a>
+
+
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new NextJsTypeDef(project: NextJsTypeScriptProject, filePath: string, options?: NextJsTypeDefOptions)
+```
+
+* **project** (<code>[NextJsTypeScriptProject](#projen-nextjstypescriptproject)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[NextJsTypeDefOptions](#projen-nextjstypedefoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+
+
+### Methods
+
+
+#### protected synthesizeContent(_)🔹 <a id="projen-nextjstypedef-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class NextJsTypeScriptProject 🔹 <a id="projen-nextjstypescriptproject"></a>
+
+Next.js project with TypeScript.
+
+__Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
+
+### Initializer
+
+
+
+
+```ts
+new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
+```
+
+* **options** (<code>[NextJsTypeScriptProjectOptions](#projen-nextjstypescriptprojectoptions)</code>)  *No description*
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: 'master'
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true;
+  * **dependabotOptions** (<code>[DependabotOptions](#projen-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: lib/index.js
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **mergifyOptions** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: packageManager.YARN
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  *No description* __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ '0 6 * * *' ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: latest version
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **start** (<code>boolean</code>)  Defines a `yarn start` interactive experience. __*Default*__: true
+  * **startOptions** (<code>[StartOptions](#projen-startoptions)</code>)  Options for `yarn start`. __*Default*__: default options
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
+**nextJsTypeDef**🔹 | <code>[NextJsTypeDef](#projen-nextjstypedef)</code> | TypeScript definition file included that ensures Next.js types are picked up by the TypeScript compiler.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 
 
 
@@ -2589,6 +2765,7 @@ Name | Type | Description
 -----|------|-------------
 **compilerOptions**🔹 | <code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code> | <span></span>
 **exclude**🔹 | <code>Array<string></code> | <span></span>
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
 
@@ -3402,6 +3579,33 @@ Name | Type | Description
 
 
 
+## struct NextComponentOptions 🔹 <a id="projen-nextcomponentoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**typescript**?🔹 | <code>boolean</code> | Whether to apply options specific for TypeScript Next.js projects.<br/>__*Default*__: false
+
+
+
+## struct NextJsCommonProjectOptions 🔹 <a id="projen-nextjscommonprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
+
+
+
 ## struct NextJsProjectOptions 🔹 <a id="projen-nextjsprojectoptions"></a>
 
 
@@ -3414,7 +3618,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**assetsDir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -3450,7 +3654,6 @@ Name | Type | Description
 **npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
-**pagesDir**?🔹 | <code>string</code> | Pages directory.<br/>__*Default*__: 'pages'
 **peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
@@ -3473,6 +3676,108 @@ Name | Type | Description
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct NextJsTypeDefOptions 🔹 <a id="projen-nextjstypedefoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct NextJsTypeScriptProjectOptions 🔹 <a id="projen-nextjstypescriptprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?🔹 | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: 'master'
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true;
+**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | __*Optional*__
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: 'docs'
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: packageManager.YARN
+**peerDependencies**?🔹 | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | __*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | __*Optional*__
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ '0 6 * * *' ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: latest version
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ] - based on the value of defaultReleaseBranch.
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
+**startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
+**typescriptVersion**?🔹 | <code>[Semver](#projen-semver)</code> | TypeScript version to use.<br/>__*Default*__: ^3.9.5
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -3705,14 +4010,21 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**allowJs**?🔹 | <code>boolean</code> | Allow JavaScript files to be compiled.<br/>__*Default*__: false
 **alwaysStrict**?🔹 | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.<br/>__*Default*__: true
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
+**esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
+**forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
+**isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
+**jsx**?🔹 | <code>[TypeScriptJsxMode](#projen-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native".<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ 'es2018' ]
 **module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: 'CommonJS'
+**moduleResolution**?🔹 | <code>[TypeScriptModuleResolution](#projen-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: 'node'
+**noEmit**?🔹 | <code>boolean</code> | Do not emit outputs.<br/>__*Default*__: false
 **noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/>__*Default*__: true
 **noFallthroughCasesInSwitch**?🔹 | <code>boolean</code> | Report errors for fallthrough cases in switch statements.<br/>__*Default*__: true
 **noImplicitAny**?🔹 | <code>boolean</code> | In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type.<br/>__*Default*__: true
@@ -3723,6 +4035,7 @@ Name | Type | Description
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/>__*Optional*__
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.<br/>__*Default*__: true
 **rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/>__*Optional*__
+**skipLibCheck**?🔹 | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts).<br/>__*Default*__: false
 **strict**?🔹 | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness.<br/>__*Default*__: true
 **strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/>__*Default*__: true
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
@@ -3996,6 +4309,27 @@ Name | Description
 **RELEASE** 🔹|
 **MAINTAIN** 🔹|
 **MISC** 🔹|
+
+
+## enum TypeScriptJsxMode 🔹 <a id="projen-typescriptjsxmode"></a>
+
+Determines how JSX should get transformed into valid JavaScript.
+
+Name | Description
+-----|-----
+**PRESERVE** 🔹|Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
+**REACT** 🔹|Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
+**REACT_NATIVE** 🔹|Keeps all JSX like 'preserve' mode, but output will have a .js extension.
+
+
+## enum TypeScriptModuleResolution 🔹 <a id="projen-typescriptmoduleresolution"></a>
+
+Determines how modules get resolved.
+
+Name | Description
+-----|-----
+**CLASSIC** 🔹|TypeScript's former default resolution strategy.
+**NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 
 ## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>

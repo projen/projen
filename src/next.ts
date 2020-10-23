@@ -1,22 +1,18 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
+import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
+import { StartEntryCategory } from './start';
+import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
-export interface NextJsProjectOptions extends NodeProjectOptions {
-  /**
-   * Pages directory
-   *
-   * @default 'pages'
-   */
-  readonly pagesDir?: string;
-
+export interface NextJsCommonProjectOptions {
   /**
    * Assets directory
    *
    * @default 'public'
    */
-  readonly assetsDir?: string;
+  readonly assetsdir?: string;
 
   /**
    * Generate one-time sample in `pages/` and `public/` if there are no files there.
@@ -25,55 +21,234 @@ export interface NextJsProjectOptions extends NodeProjectOptions {
   readonly sampleCode?: boolean;
 }
 
+export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
+
+export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {}
+
 /**
- * NextJS project.
+ * Next.js project without TypeScript.
  *
  * @pjid nextjs
  */
 export class NextJsProject extends NodeProject {
   /**
-   * The directory in which NextJS pages are declared.
+   * The directory in which source files reside.
    */
-  public readonly pagesDir: string;
+  public readonly srcdir: string;
 
   /**
    * The directory in which app assets reside.
    */
-  public readonly assetsDir: string;
+  public readonly assetsdir: string;
 
   constructor(options: NextJsProjectOptions) {
-    super(options);
-
-    this.pagesDir = options.pagesDir ?? 'pages';
-    this.assetsDir = options.assetsDir ?? 'public';
-
-    this.addDeps('next', 'react', 'react-dom');
-
-    this.addScripts({
-      dev: 'next dev',
-      build: 'next build',
-      server: 'next start',
+    super({
+      srcdir: 'pages',
+      ...options,
     });
+
+    this.srcdir = options.srcdir ?? 'pages';
+    this.assetsdir = options.assetsdir ?? 'public';
+
+    new NextComponent(this, { typescript: false });
 
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
-      new SampleCode(this);
+      new NextSampleCode(this, {
+        fileExt: 'js',
+        srcdir: this.srcdir,
+        assetsdir: this.assetsdir,
+      });
     }
   }
 }
 
-class SampleCode extends Component {
-  private readonly nextProject: NextJsProject;
+/**
+ * Next.js project with TypeScript.
+ *
+ * @pjid nextjs-ts
+ */
+export class NextJsTypeScriptProject extends TypeScriptAppProject {
+  /**
+   * The directory in which source files reside.
+   */
+  public readonly srcdir: string;
 
-  constructor(project: NextJsProject) {
+  /**
+   * The directory in which app assets reside.
+   */
+  public readonly assetsdir: string;
+
+  /**
+   * TypeScript definition file included that ensures Next.js types are picked
+   * up by the TypeScript compiler.
+   *
+   * @see https://nextjs.org/docs/basic-features/typescript
+   */
+  public readonly nextJsTypeDef: NextJsTypeDef;
+
+  constructor(options: NextJsTypeScriptProjectOptions) {
+    super({
+      srcdir: 'pages',
+      eslint: false,
+      jest: false,
+      tsconfig: {
+        include: ['**/*.ts', '**/*.tsx'],
+        compilerOptions: {
+          // required by Next.js
+          esModuleInterop: true,
+          module: 'esnext',
+          moduleResolution: TypeScriptModuleResolution.NODE,
+          isolatedModules: true,
+          resolveJsonModule: true,
+          jsx: TypeScriptJsxMode.PRESERVE,
+
+          // recommended by Next.js
+          allowJs: true,
+          skipLibCheck: true,
+          forceConsistentCasingInFileNames: true,
+          noEmit: true,
+          lib: ['dom', 'dom.iterable', 'esnext'],
+          strict: false,
+          target: 'es5',
+
+          // user-specified overrides
+          ...options.tsconfig?.compilerOptions,
+        },
+        ...options.tsconfig,
+      },
+      ...options,
+
+      // never generate default TypeScript sample code, since this class provides its own
+      sampleCode: false,
+    });
+
+    this.srcdir = options.srcdir ?? 'pages';
+    this.assetsdir = options.assetsdir ?? 'public';
+
+    new NextComponent(this, { typescript: true });
+
+    // 'next build' command fails if tsconfig.json is immutable
+    if (this.tsconfig) {
+      this.tsconfig.file.readonly = false;
+    }
+
+    this.nextJsTypeDef = new NextJsTypeDef(this, 'next-env.d.ts');
+
+    // generate sample code in `pages` and `public` if these directories are empty or non-existent.
+    if (options.sampleCode ?? true) {
+      new NextSampleCode(this, {
+        fileExt: 'tsx',
+        srcdir: this.srcdir,
+        assetsdir: this.assetsdir,
+      });
+    }
+  }
+}
+
+export interface NextJsTypeDefOptions extends FileBaseOptions {}
+
+export class NextJsTypeDef extends FileBase {
+  constructor(project: NextJsTypeScriptProject, filePath: string, options: NextJsTypeDefOptions = {}) {
+    super(project, filePath, options);
+  }
+
+  protected synthesizeContent(_: IResolver) {
+    return [
+      '/// <reference types="next" />',
+      '/// <reference types="next/types/global" />',
+    ].join('\n');
+  }
+}
+
+export interface NextComponentOptions {
+  /**
+   * Whether to apply options specific for TypeScript Next.js projects.
+   *
+   * @default false
+   */
+  readonly typescript?: boolean;
+}
+
+export class NextComponent extends Component {
+  private readonly typescript: boolean;
+
+  constructor(project: NodeProject, options: NextComponentOptions) {
     super(project);
 
-    this.nextProject = project;
+    this.typescript = options.typescript ?? false;
+
+    project.addDeps('next', 'react', 'react-dom');
+    if (this.typescript) {
+      project.addDevDeps('@types/react', '@types/react-dom');
+    }
+
+    // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
+    project.addScript('dev', 'next dev');
+    project.start?.addEntry('dev', {
+      desc: 'Starts the Next.js application in development mode',
+      category: StartEntryCategory.BUILD,
+    });
+
+    project.addScript('build', 'next build');
+    project.start?.addEntry('build', {
+      desc: 'Creates an optimized production build of your Next.js application',
+      category: StartEntryCategory.BUILD,
+    });
+
+    project.addScript('server', 'next start');
+    project.start?.addEntry('server', {
+      desc: 'Starts the Next.js application in production mode',
+      category: StartEntryCategory.RELEASE,
+    });
+
+    project.addScript('telemetry', 'next telemetry');
+    project.start?.addEntry('telemetry', {
+      desc: 'Checks the status of Next.js telemetry collection',
+      category: StartEntryCategory.MISC,
+    });
+
+    project.npmignore?.exclude('# Next.js', '/.next/');
+    project.gitignore.exclude('# Next.js', '/.next/');
+  }
+}
+
+interface NextSampleCodeOptions {
+  /**
+   * File extension for sample javascript code to be saved as.
+   *
+   * @default 'js'
+   */
+  readonly fileExt?: string;
+
+  /**
+   * The directory in which Next.js pages are declared.
+   */
+  readonly srcdir: string;
+
+  /**
+   * The directory in which app assets reside.
+   */
+  readonly assetsdir: string;
+}
+
+class NextSampleCode extends Component {
+  private readonly fileExt: string;
+  private readonly srcdir: string;
+  private readonly assetsdir: string;
+
+  constructor(project: NodeProject, options: NextSampleCodeOptions) {
+    super(project);
+
+    this.fileExt = options.fileExt ?? 'js';
+    this.srcdir = options.srcdir;
+    this.assetsdir = options.assetsdir;
   }
 
   public synthesize(outdir: string) {
-    const pagesdir = path.join(outdir, this.nextProject.pagesDir);
-    if (fs.pathExistsSync(pagesdir) && fs.readdirSync(pagesdir).filter(x => x.endsWith('.js'))) {
+    const srcdir = path.join(outdir, this.srcdir);
+    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(
+      x => ['.js', '.jsx', '.ts', '.tsx'].some(suffix => x.endsWith(suffix)))) {
       return;
     }
 
@@ -289,10 +464,10 @@ class SampleCode extends Component {
       '',
     ];
 
-    fs.mkdirpSync(pagesdir);
-    fs.writeFileSync(path.join(pagesdir, 'index.js'), indexJs.join('\n'));
+    fs.mkdirpSync(srcdir);
+    fs.writeFileSync(path.join(srcdir, 'index.' + this.fileExt), indexJs.join('\n'));
 
-    const assetsdir = path.join(outdir, this.nextProject.assetsDir);
+    const assetsdir = path.join(outdir, this.assetsdir);
     if (fs.pathExistsSync(assetsdir) && fs.readdirSync(assetsdir)) {
       return;
     }
