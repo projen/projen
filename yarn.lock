@@ -3590,9 +3590,9 @@ jsii-diff@^1.11.0:
     yargs "^16.0.3"
 
 jsii-docgen@^1.3.2:
-  version "1.4.66"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.66.tgz#f18966a846754026f26053cffd114204d2879711"
-  integrity sha512-0vlads+rYiSvFU8CGYyYcnfwo18nZJSMo1eaVEJqGD41DANYskD499N+cHyixhzZSzxxJa1QjYFmBSrIdDosog==
+  version "1.4.68"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.4.68.tgz#886fe01b7c8f2393b89f552ddca929b4dac0f568"
+  integrity sha512-ep4T6fSO5rVral8fr0g3lgJHS1N6738RcWemEnfgZ67rPB/YOm0A1FCadRlpUsKLHi70mJJc0NL/+mSMghV8tQ==
   dependencies:
     "@jsii/spec" "^1.9.0"
     fs-extra "^9.0.0"
@@ -3963,9 +3963,9 @@ map-visit@^1.0.0:
     object-visit "^1.0.0"
 
 markmac@^0.1.2:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.8.tgz#eda4a30426289fbfe092af113383db8051b9715b"
-  integrity sha512-cR7GYia6Vv2tHiqSda4pf5sjhk7+p2RPvzxdnGkG5rzgz6XPjfTB69CI/8OVjFHcGM1vagChkp0gNxUBPlXeCA==
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.9.tgz#e5dc8f6ab0f30257f4f6e65b772483a43ef7ab2c"
+  integrity sha512-h0uoGoHVmzEEuyvmWdin8yT6PLovZDkowqAQxtptDgY0KVqIFfWE3nM40oT0Me6g2FTdWP5Uotp+pQ7B1ggzSA==
 
 mdurl@~1.0.1:
   version "1.0.1"
