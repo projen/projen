@@ -173,7 +173,7 @@ export class TypeScriptProject extends NodeProject {
       this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
     }
 
-    const compilerOptions = {
+    const compilerOptionDefaults = {
       alwaysStrict: true,
       declaration: true,
       experimentalDecorators: true,
@@ -203,12 +203,13 @@ export class TypeScriptProject extends NodeProject {
           'node_modules',
           this.libdir,
         ],
+        ...options.tsconfig,
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
-          ...compilerOptions,
+          ...compilerOptionDefaults,
+          ...options.tsconfig?.compilerOptions,
         },
-        ...options.tsconfig,
       });
     }
 
@@ -244,7 +245,7 @@ export class TypeScriptProject extends NodeProject {
         exclude: [
           'node_modules',
         ],
-        compilerOptions,
+        compilerOptions: compilerOptionDefaults,
       });
 
       eslintTsConfig = tsconfig.fileName;
