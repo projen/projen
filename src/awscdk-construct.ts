@@ -8,7 +8,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Minmum target version this library is tested against.
    *
-   * @default 1.60.0
+   * @default "1.60.0"
    */
   readonly cdkVersion: string;
 

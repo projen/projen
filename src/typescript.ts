@@ -18,7 +18,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * Jest options
-   * @default - default options
+   *
+   * @default - {}
    */
   readonly jestOptions?: JestOptions;
 
@@ -31,7 +32,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * TypeScript version to use.
-   * @default ^3.9.5
+   * @default "^3.9.5"
    */
   readonly typescriptVersion?: Semver;
 
@@ -45,13 +46,14 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Docs directory
    *
-   * @default 'docs'
+   * @default "docs"
    */
   readonly docsDirectory?: string;
 
   /**
    * Custom TSConfig
    *
+   * @default undefined
    */
   readonly tsconfig?: TypescriptConfigOptions;
 
@@ -66,8 +68,10 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Compile the code before running tests.
    *
-   * @default - the default behavior is to delete the lib/ directory and run
-   * jest typescript tests and only if all tests pass, run the compiler.
+   * The default behavior is to delete the lib/ directory and run jest
+   * typescript tests and only if all tests pass, run the compiler.
+   *
+   * @default false
    */
   readonly compileBeforeTest?: boolean;
 
@@ -79,7 +83,10 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * The .d.ts file that includes the type declarations for this module.
-   * @default - .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+   *
+   * By default, the value is derived from the project's entrypoint (usually lib/index.d.ts)
+   *
+   * @default "lib/index.d.ts"
    */
   readonly entrypointTypes?: string;
 

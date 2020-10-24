@@ -69,7 +69,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Version of projen to install.
    *
-   * @default - latest version
+   * @default - Semver.latest()
    */
   readonly projenVersion?: Semver;
 
@@ -109,14 +109,19 @@ export interface NodeProjectCommonOptions {
 
   /**
    * CRON schedule to trigger new releases.
-   * @default - no scheduled releases
+   *
+   * Default behavior is to have no scheduled releases.
+   *
+   * @default - undefined
    */
   readonly releaseSchedule?: string;
 
   /**
    * Branches which trigger a release.
    *
-   * @default [ "master" ] - based on the value of defaultReleaseBranch.
+   * By default includes the main release branch.
+   *
+   * @default [ "master" ]
    */
   readonly releaseBranches?: string[];
 
@@ -130,7 +135,9 @@ export interface NodeProjectCommonOptions {
   /**
    * Container image to use for GitHub workflows.
    *
-   * @default - default image
+   * Default behavior is to use the default image.
+   *
+   * @default - undefined
    */
   readonly workflowContainerImage?: string;
 
@@ -147,20 +154,29 @@ export interface NodeProjectCommonOptions {
   readonly antitamper?: boolean;
 
   /**
-   * Node.js version to require via package.json `engines` (inclusive).
-   * @default - no "engines" specified
+   * Minimum Node.js version to require via package.json `engines` (inclusive).
+   *
+   * By default, no minimum is applied.
+   *
+   * @default - undefined
    */
   readonly minNodeVersion?: string;
 
   /**
    * Minimum node.js version to require via `engines` (inclusive).
-   * @default - no max
+   *
+   * By default, no maximum is applied.
+   *
+   * @default - undefined
    */
   readonly maxNodeVersion?: string;
 
   /**
    * The node version to use in GitHub workflows.
-   * @default - same as `minNodeVersion`
+   *
+   * Default behavior is to take on the same value as minNodeVersion.
+   *
+   * @default - undefined
    */
   readonly workflowNodeVersion?: string;
 
@@ -188,7 +204,9 @@ export interface NodeProjectCommonOptions {
   /**
    * License copyright owner.
    *
-   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
+   * Defaults to the value of authorName or "" if authorName is undefined.
+   *
+   * @default - ""
    */
   readonly copyrightOwner?: string;
 
@@ -274,7 +292,9 @@ export interface NodeProjectCommonOptions {
    *
    * To create a personal access token see https://github.com/settings/tokens
    *
-   * @default - no automatic projen upgrade pull requests
+   * Default behavior is to have no automatic projen upgrade pull requests.
+   *
+   * @default - undefined
    */
   readonly projenUpgradeSecret?: string;
 
@@ -282,14 +302,16 @@ export interface NodeProjectCommonOptions {
    * Automatically merge projen upgrade PRs when build passes.
    * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
    *
-   * @default - "true" if mergify auto-merge is enabled (default)
+   * By default is true if mergify auto-merge is enabled (default).
+   *
+   * @default - true
    */
   readonly projenUpgradeAutoMerge?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
    *
-   @default [ '0 6 * * *' ]
+   @default [ "0 6 * * *"" ]
    */
   readonly projenUpgradeSchedule?: string[];
 
@@ -333,7 +355,7 @@ export interface NodeProjectCommonOptions {
    *
    * Set to an empty string to not include `main` in your package.json
    *
-   * @default lib/index.js
+   * @default "lib/index.js"
    */
   readonly entrypoint?: string;
 }

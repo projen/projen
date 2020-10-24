@@ -84,7 +84,7 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: any) {
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>) {
   const configPath = path.join(baseDir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
     logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
@@ -94,7 +94,7 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   const lines = [
     `const { ${type.typename} } = require('${type.moduleName}');`,
     '',
-    `const project = new ${type.typename}(${renderParams(params)});`,
+    `const project = new ${type.typename}(${renderParams(type, params)});`,
     '',
     'project.synth();',
     '',
@@ -104,9 +104,36 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 }
 
-function renderParams(params: any) {
-  return JSON.stringify(params, undefined, 2)
-    .replace(/\"(.*)\":/g, '$1:'); // remove quotes from field names
+function makePadding(paddingLength: number): string {
+  return Array(paddingLength + 1).join(' ');
+}
+
+function renderParams(type: inventory.ProjectType, params: Record<string, any>) {
+  let marginSize = 0;
+  let renders: Record<string, string> = {};
+
+  // calculate margin size
+  for (const option of type.options) {
+    let paramRender;
+    if (params.hasOwnProperty(option.name) && params[option.name] !== undefined) {
+      paramRender = `${option.name}: ${JSON.stringify(params[option.name])},`;
+    } else {
+      paramRender = `// ${option.name}: ${option.default ?? undefined},`;
+    }
+    marginSize = Math.max(marginSize, paramRender.length);
+    renders[option.name] = paramRender;
+  }
+
+  // generate rendering
+  const tab = makePadding(2);
+  const result: string[] = [];
+  result.push('{');
+  for (const option of type.options) {
+    let paramRender = renders[option.name];
+    result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/** ${option.docs} */`);
+  }
+  result.push('}');
+  return result.join('\n');
 }
 
 function processDefault(value: string) {
@@ -139,7 +166,7 @@ function execOrUndefined(command: string): string | undefined {
  * @param argv Command line switches
  */
 function commandLineToProps(type: inventory.ProjectType, argv: any): Record<string, any> {
-  const props: any = {};
+  const props: Record<string, any> = {};
 
   // initialize props with default values
   for (const prop of type.options) {
@@ -218,7 +245,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: any) {
+function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 

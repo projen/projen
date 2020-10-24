@@ -87,7 +87,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
 
   /**
    * Jest options
-   * @default - defaults
+   * @default {}
    */
   readonly jestOptions?: JestOptions;
 
@@ -110,7 +110,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * Name of the ignore file for API compatibility tests.
    *
-   * @default .compatignore
+   * @default ".compatignore"
    */
   readonly compatIgnore?: string;
 }
