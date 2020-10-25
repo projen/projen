@@ -7,7 +7,7 @@ import { SampleFile } from './sample-file';
  *
  * @param text - The initial contents of the README.md file. Defaults to '# replace this'
  */
-export class Readme extends SampleFile {
+export class SampleReadme extends SampleFile {
   constructor(project: Project, text?: string) {
     super(project, 'README.md', { contents: text ?? '# replace this' });
   }
