@@ -22,7 +22,7 @@ export interface SampleFileOptions {
  */
 export class SampleFile extends Component {
   private readonly filePath: string;
-  private options: SampleFileOptions;
+  private readonly options: SampleFileOptions;
   public created: boolean = false;
 
   /**
