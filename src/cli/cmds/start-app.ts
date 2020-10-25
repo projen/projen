@@ -5,6 +5,7 @@ import * as chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import { StartEntryCategory, StartEntryOptions } from '../../start';
 
+
 const EXIT_MARKER = '$exit';
 
 export async function showStartMenu() {
