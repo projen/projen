@@ -36,13 +36,9 @@ export class ProjenUpgrade {
   constructor(project: NodeProject, options: ProjenUpgradeOptions = { }) {
     const script = 'projen:upgrade';
 
-    project.addScript(script,
-      'yarn upgrade -L projen',
-      'CI="" yarn projen'); // if CI is defined, projen runs yarn with --frozen-lockfile
-
-    project.start?.addEntry(script, {
-      desc: 'upgrades projen to the latest version',
-      category: StartEntryCategory.MAINTAIN,
+    project.addScript(script, 'yarn upgrade -L projen && CI="" yarn projen', {
+      startDesc: 'upgrades projen to the latest version',
+      startCategory: StartEntryCategory.MAINTAIN,
     });
 
     if (options.autoUpgradeSecret) {

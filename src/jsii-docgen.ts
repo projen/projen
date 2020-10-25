@@ -11,10 +11,9 @@ import { StartEntryCategory } from './start';
 export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDependencies({ 'jsii-docgen': Semver.caret('1.3.2') });
-    project.addScript('docgen', 'jsii-docgen');
-    project.start?.addEntry('docgen', {
-      desc: 'Generate API.md from .jsii manifest',
-      category: StartEntryCategory.RELEASE,
+    project.addScript('docgen', 'jsii-docgen', {
+      startDesc: 'Generate API.md from .jsii manifest',
+      startCategory: StartEntryCategory.RELEASE,
     });
     project.addCompileCommand('jsii-docgen');
     project.gitignore.include('/API.md');

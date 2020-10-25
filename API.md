@@ -73,6 +73,7 @@ Name|Description
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
+[ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
@@ -2047,16 +2048,19 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addScript(name, ...commands)🔹 <a id="projen-nodeproject-addscript"></a>
+#### addScript(name, command, options?)🔹 <a id="projen-nodeproject-addscript"></a>
 
 Replaces the contents of an npm package.json script.
 
 ```ts
-addScript(name: string, ...commands: string[]): void
+addScript(name: string, command: string, options?: ScriptOptions): void
 ```
 
 * **name** (<code>string</code>)  The script name.
-* **commands** (<code>string</code>)  The commands to run (joined by "&&").
+* **command** (<code>string</code>)  The command to execute.
+* **options** (<code>[ScriptOptions](#projen-scriptoptions)</code>)  Options such as start menu description and category.
+  * **startCategory** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category in start menu. __*Default*__: StartEntryCategory.MISC
+  * **startDesc** (<code>string</code>)  Start menu description for this script. __*Default*__: no description
 
 
 
@@ -2364,6 +2368,7 @@ addEntry(name: string, options: StartEntryOptions): void
 
 * **name** (<code>string</code>)  The npm script name.
 * **options** (<code>[StartEntryOptions](#projen-startentryoptions)</code>)  Entry options.
+  * **command** (<code>string</code>)  The command to execute. 
   * **desc** (<code>string</code>)  The description of the start entry. 
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Priority-order (lower values will be shown first). __*Default*__: StartEntryCategory.MISC
 
@@ -3965,6 +3970,20 @@ Name | Type | Description
 
 
 
+## struct ScriptOptions 🔹 <a id="projen-scriptoptions"></a>
+
+
+Options for adding scripts.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**startCategory**?🔹 | <code>[StartEntryCategory](#projen-startentrycategory)</code> | Category in start menu.<br/>__*Default*__: StartEntryCategory.MISC
+**startDesc**?🔹 | <code>string</code> | Start menu description for this script.<br/>__*Default*__: no description
+
+
+
 ## struct StartEntryOptions 🔹 <a id="projen-startentryoptions"></a>
 
 
@@ -3974,6 +3993,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**command**🔹 | <code>string</code> | The command to execute.
 **desc**🔹 | <code>string</code> | The description of the start entry.
 **category**?🔹 | <code>[StartEntryCategory](#projen-startentrycategory)</code> | Priority-order (lower values will be shown first).<br/>__*Default*__: StartEntryCategory.MISC
 

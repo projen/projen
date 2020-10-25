@@ -113,15 +113,12 @@ export class Jest {
 
     project.addTestCommand(`jest ${jestOpts.join(' ')}`);
 
-    project.addScripts({
-      'test:watch': 'jest --watch',
-      'test:update': 'jest --updateSnapshot',
+    project.addScript('test:watch', 'jest --watch', {
+      startDesc: 'Run jest in watch mode',
+      startCategory: StartEntryCategory.TEST,
     });
 
-    project.start?.addEntry('test:watch', {
-      desc: 'Run jest in watch mode',
-      category: StartEntryCategory.TEST,
-    });
+    project.addScript('test:update', 'jest --updateSnapshot');
 
     project.addFields({ jest: this.config });
 

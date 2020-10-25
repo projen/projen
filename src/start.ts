@@ -14,7 +14,11 @@ export class Start extends Component {
     this.nodeProject = project;
 
     project.addScript('start', 'npx projen start -i');
+
+    // we have to explicitly add and not use `addScript` options since
+    // this `project.start` is undefined until we finish to initialize.
     this.addEntry('start', {
+      command: `${project.runScriptCommand} start`,
       desc: 'Shows this menu',
     });
   }
@@ -39,6 +43,11 @@ export interface StartEntryOptions {
    * The description of the start entry.
    */
   readonly desc: string;
+
+  /**
+   * The command to execute.
+   */
+  readonly command: string;
 
   /**
    * Priority-order (lower values will be shown first).
