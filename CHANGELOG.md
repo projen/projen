@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.124 (2020-10-25)
+
+
+### Bug Fixes
+
+* **typescript:** compilerOptions merging properly ([#226](https://github.com/eladb/projen/issues/226)) ([81b4e41](https://github.com/eladb/projen/commit/81b4e41c8f16ab203179ad661c1ae3a74a969fc5)), closes [#221](https://github.com/eladb/projen/issues/221)
+
 ### 0.3.123 (2020-10-25)
 
 ### 0.3.122 (2020-10-23)
