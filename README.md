@@ -171,11 +171,11 @@ with project types and components defined in external jsii modules (the reason
 we need jsii is because projen uses the jsii metadata to discover project types
 & options in projen new).
 
-Say we have a module in npm called `projen-vue` which includes a single project
+Say we have a module in npm called `projen-vuejs` which includes a single project
 type for vue.js:
 
 ```bash
-$ npx projen new --from projen-vue
+$ npx projen new --from projen-vuejs
 ```
 
 If the referenced module includes multiple project types, the type is required.
@@ -186,7 +186,7 @@ add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like
 `git@github.com/awesome/projen-vuejs#1.2.3`, etc.
 
 ```bash
-$ npx projen new --from projen-vue@^2 vuejs-ts --description "my awesome vue project"
+$ npx projen new --from projen-vuejs@^2 vuejs-ts --description "my awesome vue project"
 ```
 
 Under the hood, `projen new` will install the `projen-vuejs` module from npm
