@@ -234,62 +234,76 @@ describe('docker-compose', () => {
     assertDockerComposeFileValidates(tempDir);
   });
 
+  test('errors when a service reference by name does not exist', () => {
+    const project = new Project();
+
+    new DockerCompose(project, {
+      services: {
+        www: {
+          image: 'nginx',
+          dependsOn: [DockerCompose.serviceName('nope')],
+        },
+      },
+    });
+
+    expect(() => project.synth(tempDir))
+      .toThrow(/unable to resolve.*nope.*www/i);
+  });
+
   test('can create a service from the constructor', () => {
     const project = new Project();
 
     const dc = new DockerCompose(project, {
       services: {
+        setup: {
+          image: 'alpine',
+          command: ['sh', '-c', 'uname -a >/html/index.html'],
+          volumes: [DockerCompose.namedVolume('html', '/html')],
+        },
         www: {
+          dependsOn: [DockerCompose.serviceName('setup')],
           image: 'nginx',
+          ports: [DockerCompose.portMapping(8081, 80)],
+          volumes: [DockerCompose.namedVolume('html', '/usr/share/nginx/html')],
         },
       },
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
       services: {
-        www: {
-          image: 'nginx',
-        },
-      },
-      volumes: {},
-    });
-  });
-
-  test('can create volumes from the constructor', () => {
-    const project = new Project();
-
-    const dc = new DockerCompose(project, {
-      services: {
-        www: {
-          image: 'nginx',
+        setup: {
+          image: 'alpine',
+          command: ['sh', '-c', 'uname -a >/html/index.html'],
           volumes: [
-            DockerCompose.bindVolume('./html', '/var/www/html'),
-            DockerCompose.namedVolume('files', '/var/files'),
-          ],
-        },
-      },
-    });
-
-    expect(dc._synthesizeDockerCompose()).toEqual({
-      services: {
-        www: {
-          image: 'nginx',
-          volumes: [
-            {
-              type: 'bind',
-              source: './html',
-              target: '/var/www/html',
-            },
             {
               type: 'volume',
-              source: 'files',
-              target: '/var/files',
+              source: 'html',
+              target: '/html',
+            },
+          ],
+        },
+        www: {
+          depends_on: ['setup'],
+          image: 'nginx',
+          ports: [
+            {
+              mode: 'host',
+              published: 8081,
+              target: 80,
+              protocol: 'tcp',
+            },
+          ],
+          volumes: [
+            {
+              type: 'volume',
+              source: 'html',
+              target: '/usr/share/nginx/html',
             },
           ],
         },
       },
       volumes: {
-        files: {},
+        html: {},
       },
     });
 
@@ -309,8 +323,21 @@ describe('docker-compose', () => {
       ],
     });
 
+    const db = dc.addService('db', {
+      image: 'mysql:8',
+      volumes: [
+        DockerCompose.namedVolume('database', '/var/lib/mysql'),
+      ],
+      environment: {
+        MYSQL_RANDOM_ROOT_PASSWORD: '1',
+        MYSQL_USER: 'wpuser',
+        MYSQL_PASSWORD: 'wppass',
+        MYSQL_DATABASE: 'wp',
+      },
+    });
+
     dc.addService('wordpress', {
-      dependsOn: ['db'],
+      dependsOn: [db],
       image: 'wordpress:php7.4-apache',
       ports: [
         DockerCompose.portMapping(8081, 80),
@@ -329,18 +356,6 @@ describe('docker-compose', () => {
       },
     });
 
-    dc.addService('db', {
-      image: 'mysql:8',
-      volumes: [
-        DockerCompose.namedVolume('database', '/var/lib/mysql'),
-      ],
-      environment: {
-        MYSQL_RANDOM_ROOT_PASSWORD: '1',
-        MYSQL_USER: 'wpuser',
-        MYSQL_PASSWORD: 'wppass',
-        MYSQL_DATABASE: 'wp',
-      },
-    });
 
     project.synth(tempDir);
     assertDockerComposeFileValidates(tempDir);

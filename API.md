@@ -55,6 +55,7 @@ Name|Description
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposeProps](#projen-dockercomposeprops)|Props for DockerCompose.
 [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)|Description of a docker-compose.yml service.
+[DockerComposeServiceName](#projen-dockercomposeservicename)|An interface providing the name of a docker compose service.
 [DockerComposeServicePort](#projen-dockercomposeserviceport)|A service port mapping.
 [DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)|Volume configuration.
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
@@ -867,26 +868,26 @@ new DockerCompose(project: Project, props?: DockerComposeProps)
 ### Methods
 
 
-#### addService(name, description)🔹 <a id="projen-dockercompose-addservice"></a>
+#### addService(serviceName, description)🔹 <a id="projen-dockercompose-addservice"></a>
 
 Add a service to the docker-compose file.
 
 ```ts
-addService(name: string, description: DockerComposeServiceDescription): void
+addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeServiceName
 ```
 
-* **name** (<code>string</code>)  name of the service.
+* **serviceName** (<code>string</code>)  name of the service.
 * **description** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  a service description.
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
-  * **dependsOn** (<code>Array<string></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **dependsOn** (<code>Array<[DockerComposeServiceName](#projen-dockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
 
-
-
+__Returns__:
+* <code>[DockerComposeServiceName](#projen-dockercomposeservicename)</code>
 
 #### *static* bindVolume(sourcePath, targetPath)🔹 <a id="projen-dockercompose-bindvolume"></a>
 
@@ -940,6 +941,19 @@ static portMapping(publishedPort: number, targetPort: number, options?: PortMapp
 
 __Returns__:
 * <code>[DockerComposeServicePort](#projen-dockercomposeserviceport)</code>
+
+#### *static* serviceName(serviceName)🔹 <a id="projen-dockercompose-servicename"></a>
+
+Depends on a service name.
+
+```ts
+static serviceName(serviceName: string): DockerComposeServiceName
+```
+
+* **serviceName** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[DockerComposeServiceName](#projen-dockercomposeservicename)</code>
 
 
 
@@ -3459,12 +3473,26 @@ Description of a docker-compose.yml service.
 Name | Type | Description 
 -----|------|-------------
 **command**?🔹 | <code>Array<string></code> | Provide a command to the docker container.<br/>__*Default*__: use the container's default command
-**dependsOn**?🔹 | <code>Array<string></code> | Names of other services this service depends on.<br/>__*Default*__: no dependencies
+**dependsOn**?🔹 | <code>Array<[DockerComposeServiceName](#projen-dockercomposeservicename)></code> | Names of other services this service depends on.<br/>__*Default*__: no dependencies
 **environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
 **image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Map some ports.<br/>__*Default*__: no ports are mapped
 **volumes**?🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Mount some volumes into the service.<br/>__*Optional*__
+
+
+
+## struct DockerComposeServiceName 🔹 <a id="projen-dockercomposeservicename"></a>
+
+__Obtainable from__: [DockerCompose](#projen-dockercompose).[serviceName](#projen-dockercompose#projen-dockercompose-servicename)(), [DockerCompose](#projen-dockercompose).[addService](#projen-dockercompose#projen-dockercompose-addservice)()
+
+An interface providing the name of a docker compose service.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**serviceName**🔹 | <code>string</code> | The name of the docker compose service.
 
 
 

@@ -33,6 +33,15 @@ export interface PortMappingOptions {
  */
 export class DockerCompose extends Component {
   /**
+   * Depends on a service name.
+   */
+  static serviceName(serviceName: string): DockerComposeServiceName {
+    return {
+      serviceName,
+    };
+  }
+
+  /**
    * Create a port mapping
    * @param publishedPort Published port number
    * @param targetPort Container's port number
@@ -112,15 +121,19 @@ export class DockerCompose extends Component {
 
   /**
    * Add a service to the docker-compose file.
-   * @param name name of the service
+   * @param serviceName name of the service
    * @param description a service description
    */
-  public addService(name: string, description: DockerComposeServiceDescription): void {
+  public addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeServiceName {
     if ((!description.imageBuild && !description.image) || (description.imageBuild && description.image)) {
-      throw new Error(`A service ${name} requires exactly one of a \`imageBuild\` or \`image\` key`);
+      throw new Error(`A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`);
     }
 
-    this.services[name] = description;
+    this.services[serviceName] = description;
+
+    return {
+      serviceName,
+    };
   }
 
   /**
@@ -136,6 +149,16 @@ export class DockerCompose extends Component {
 }
 
 /**
+ * An interface providing the name of a docker compose service.
+ */
+export interface DockerComposeServiceName {
+  /**
+   * The name of the docker compose service.
+   */
+  readonly serviceName: string;
+}
+
+/**
  * Description of a docker-compose.yml service.
  */
 export interface DockerComposeServiceDescription {
@@ -143,7 +166,7 @@ export interface DockerComposeServiceDescription {
    * Names of other services this service depends on.
    * @default - no dependencies
    */
-  readonly dependsOn?: string[];
+  readonly dependsOn?: DockerComposeServiceName[];
 
   /**
    * Use a docker image.
@@ -359,10 +382,23 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
   // Render service configuration
   const services: Record<string, DockerComposeFileServiceSchema> = {};
   for (const [serviceName, serviceDescription] of Object.entries(serviceDescriptions ?? {})) {
-    const volumes: DockerComposeVolumeMount[] = [];
+    // Resolve the names of each dependency and check that they exist.
+    // Note: They may not exist if the user made a mistake when referencing a
+    // service by name via `DockerCompose.serviceName()`.
+    // @see DockerCompose.serviceName
+    const dependsOn = Array<string>();
+    for (const dependsOnServiceName of serviceDescription.dependsOn ?? []) {
+      const resolvedServiceName = dependsOnServiceName.serviceName;
+      if (!serviceDescriptions[resolvedServiceName]) {
+        throw new Error(`Unable to resolve service named ${resolvedServiceName} for ${serviceName}`);
+      }
+
+      dependsOn.push(resolvedServiceName);
+    }
 
     // Give each volume binding a chance to bind any necessary volume
     // configuration and provide volume mount information for the service.
+    const volumes: DockerComposeVolumeMount[] = [];
     for (const volumeBinding of serviceDescription.volumes ?? []) {
       volumes.push(volumeBinding.bind(volumeInfo));
     }
@@ -373,9 +409,9 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
       ...getObjectWithKeyAndValueIfValueIsDefined('image', serviceDescription.image),
       ...getObjectWithKeyAndValueIfValueIsDefined('build', serviceDescription.imageBuild),
       ...getObjectWithKeyAndValueIfValueIsDefined('command', serviceDescription.command),
-      ...getObjectWithKeyAndValueIfValueIsDefined('dependsOn', serviceDescription.dependsOn),
       ...getObjectWithKeyAndValueIfValueIsDefined('environment', serviceDescription.environment),
       ...getObjectWithKeyAndValueIfValueIsDefined('ports', serviceDescription.ports),
+      ...(dependsOn.length > 0 ? { dependsOn } : {}),
       ...(volumes.length > 0 ? { volumes } : {}),
     };
   }
