@@ -618,10 +618,9 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
-    this.start?.addEntry(PROJEN_SCRIPT, {
-      desc: 'Synthesize project configuration from .projenrc.js',
-      category: StartEntryCategory.MAINTAIN,
+    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`, {
+      startDesc: 'Synthesize project configuration from .projenrc.js',
+      startCategory: StartEntryCategory.MAINTAIN,
     });
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
@@ -876,10 +875,19 @@ export class NodeProject extends Project {
    * Replaces the contents of an npm package.json script.
    *
    * @param name The script name
-   * @param commands The commands to run (joined by "&&")
+   * @param command The command to execute
+   * @param options Options such as start menu description and category
    */
-  public addScript(name: string, ...commands: string[]) {
-    this.scripts[name] = commands;
+  public addScript(name: string, command: string, options: ScriptOptions = { }) {
+    this.scripts[name] = [command];
+
+    if (options.startDesc) {
+      this.start?.addEntry(name, {
+        desc: options.startDesc,
+        command: `${this.runScriptCommand} ${name}`,
+        category: options.startCategory,
+      });
+    }
   }
 
   /**
@@ -915,12 +923,20 @@ export class NodeProject extends Project {
    */
   public addCompileCommand(...commands: string[]) {
     this.addScriptCommand('compile', ...commands);
+
+    this.start?.addEntry('compile', {
+      desc: 'Only compile',
+      command: `${this.runScriptCommand} compile`,
+      category: StartEntryCategory.BUILD,
+    });
   }
 
   public addTestCommand(...commands: string[]) {
     this.addScriptCommand('test', ...commands);
+
     this.start?.addEntry('test', {
       desc: 'Run tests',
+      command: `${this.runScriptCommand} test`,
       category: StartEntryCategory.TEST,
     });
   }
@@ -1343,6 +1359,24 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
+}
+
+/**
+ * Options for adding scripts.
+ */
+export interface ScriptOptions {
+  /**
+   * Start menu description for this script
+   * @default - no description
+   */
+  readonly startDesc?: string;
+
+  /**
+   * Category in start menu
+   *
+   * @default StartEntryCategory.MISC
+   */
+  readonly startCategory?: StartEntryCategory;
 }
 
 function parseDep(dep: string) {

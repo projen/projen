@@ -89,58 +89,72 @@
   "license": "Apache-2.0",
   "start": {
     "start": {
+      "command": "yarn run start",
       "desc": "Shows this menu"
     },
     "projen": {
       "desc": "Synthesize project configuration from .projenrc.js",
+      "command": "yarn run projen",
       "category": 3
     },
     "bump": {
       "desc": "Commits a bump to the package version based on conventional commits",
+      "command": "yarn run bump",
       "category": 2
     },
     "release": {
       "desc": "Bumps version & push to master",
+      "command": "yarn run release",
       "category": 2
     },
     "projen:upgrade": {
       "desc": "upgrades projen to the latest version",
+      "command": "yarn run projen:upgrade",
       "category": 3
     },
     "compile": {
       "desc": "Only compile",
+      "command": "yarn run compile",
       "category": 0
     },
     "watch": {
       "desc": "Watch & compile in the background",
+      "command": "yarn run watch",
       "category": 0
     },
     "build": {
       "desc": "Full release build (test+compile)",
+      "command": "yarn run build",
       "category": 0
     },
     "package": {
       "desc": "Create an npm tarball",
+      "command": "yarn run package",
       "category": 2
     },
     "test": {
       "desc": "Run tests",
+      "command": "yarn run test",
       "category": 1
     },
     "test:watch": {
       "desc": "Run jest in watch mode",
+      "command": "yarn run test:watch",
       "category": 1
     },
     "eslint": {
       "desc": "Runs eslint against the codebase",
+      "command": "yarn run eslint",
       "category": 1
     },
     "compat": {
       "desc": "Perform API compatibility check against latest version",
+      "command": "yarn run compat",
       "category": 2
     },
     "docgen": {
       "desc": "Generate API.md from .jsii manifest",
+      "command": "yarn run docgen",
       "category": 2
     }
   },

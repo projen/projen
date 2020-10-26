@@ -129,15 +129,10 @@ export class TypeScriptProject extends NodeProject {
     this.docsDirectory = options.docsDirectory ?? 'docs/';
 
     this.addCompileCommand('tsc');
-    this.start?.addEntry('compile', {
-      desc: 'Only compile',
-      category: StartEntryCategory.BUILD,
-    });
 
-    this.addScript('watch', 'tsc -w');
-    this.start?.addEntry('watch', {
-      desc: 'Watch & compile in the background',
-      category: StartEntryCategory.BUILD,
+    this.addScript('watch', 'tsc -w', {
+      startDesc: 'Watch & compile in the background',
+      startCategory: StartEntryCategory.BUILD,
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
@@ -148,25 +143,21 @@ export class TypeScriptProject extends NodeProject {
     } else {
       this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
     }
-    this.start?.addEntry('build', {
-      desc: 'Full release build (test+compile)',
-      category: StartEntryCategory.BUILD,
-    });
 
     if (options.package ?? true) {
-      this.addScript('package',
+      const packageCommand = [
         'rm -fr dist',
         'mkdir -p dist/js',
         `${this.packageManager} pack`,
         'mv *.tgz dist/js/',
-      );
+      ].join(' && ');
+
+      this.addScript('package', packageCommand, {
+        startDesc: 'Create an npm tarball',
+        startCategory: StartEntryCategory.RELEASE,
+      });
 
       this.addBuildCommand(`${this.runScriptCommand} package`);
-
-      this.start?.addEntry('package', {
-        desc: 'Create an npm tarball',
-        category: StartEntryCategory.RELEASE,
-      });
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -295,6 +286,13 @@ export class TypeScriptProject extends NodeProject {
    */
   public addBuildCommand(...commands: string[]) {
     this.addScriptCommand('build', ...commands);
+
+    this.start?.addEntry('build', {
+      desc: 'Full release build (test+compile)',
+      command: `${this.runScriptCommand} build`,
+      category: StartEntryCategory.BUILD,
+    });
+
   }
 }
 
