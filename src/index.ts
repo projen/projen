@@ -4,6 +4,7 @@ export * from './cdk8s-construct';
 export * from './component';
 export * from './construct-lib';
 export * from './dependabot';
+export * from './docker-compose';
 export * from './eslint';
 export * from './file';
 export * from './github-workflow';
