@@ -599,6 +599,11 @@ export interface TypeScriptCompilerOptions {
    * Only use to control the output directory structure with `outDir`.
    */
   readonly rootDir?: string;
+
+  /**
+   * Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
+   */
+  readonly allowSyntheticDefaultImports?: boolean;
 }
 
 export class TypescriptConfig {
