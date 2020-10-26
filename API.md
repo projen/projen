@@ -79,6 +79,7 @@ Name|Description
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
+[PortMappingOptions](#projen-portmappingoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
@@ -924,17 +925,18 @@ static namedVolume(volumeName: string, targetPath: string, options?: DockerCompo
 __Returns__:
 * <code>[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)</code>
 
-#### *static* portMapping(publishedPort, targetPort, protocol?)🔹 <a id="projen-dockercompose-portmapping"></a>
+#### *static* portMapping(publishedPort, targetPort, options?)🔹 <a id="projen-dockercompose-portmapping"></a>
 
 Create a port mapping.
 
 ```ts
-static portMapping(publishedPort: number, targetPort: number, protocol?: DockerComposeProtocol): DockerComposeServicePort
+static portMapping(publishedPort: number, targetPort: number, options?: PortMappingOptions): DockerComposeServicePort
 ```
 
 * **publishedPort** (<code>number</code>)  Published port number.
 * **targetPort** (<code>number</code>)  Container's port number.
-* **protocol** (<code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code>)  Port's protocol (Default: TCP).
+* **options** (<code>[PortMappingOptions](#projen-portmappingoptions)</code>)  Port mapping options.
+  * **protocol** (<code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code>)  Port mapping protocol. __*Default*__: DockerComposeProtocol.TCP
 
 __Returns__:
 * <code>[DockerComposeServicePort](#projen-dockercomposeserviceport)</code>
@@ -4201,6 +4203,19 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **pinnedDevDependency**?🔹 | <code>boolean</code> | Automatically add a pinned dev dependency.<br/>__*Default*__: true
+
+
+
+## struct PortMappingOptions 🔹 <a id="projen-portmappingoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**protocol**?🔹 | <code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code> | Port mapping protocol.<br/>__*Default*__: DockerComposeProtocol.TCP
 
 
 

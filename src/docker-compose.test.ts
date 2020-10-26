@@ -199,7 +199,9 @@ describe('docker-compose', () => {
           image: 'nginx',
           ports: [
             DockerCompose.portMapping(8080, 80),
-            DockerCompose.portMapping(8080, 80, DockerComposeProtocol.UDP),
+            DockerCompose.portMapping(8080, 80, {
+              protocol: DockerComposeProtocol.UDP,
+            }),
           ],
         },
       },

@@ -10,7 +10,7 @@ export interface DockerComposeProps {
   /**
    * A name to add to the docker-compose.yml filename.
    * @example 'myname' yields 'docker-compose.myname.yml'
-   * @default no name is added
+   * @default - no name is added
    */
   readonly nameSuffix?: string;
 
@@ -18,6 +18,14 @@ export interface DockerComposeProps {
    * Service descriptions.
    */
   readonly services?: Record<string, DockerComposeServiceDescription>;
+}
+
+export interface PortMappingOptions {
+  /**
+   * Port mapping protocol.
+   * @default DockerComposeProtocol.TCP
+   */
+  readonly protocol?: DockerComposeProtocol;
 }
 
 /**
@@ -28,13 +36,11 @@ export class DockerCompose extends Component {
    * Create a port mapping
    * @param publishedPort Published port number
    * @param targetPort Container's port number
-   * @param protocol Port's protocol (Default: TCP)
+   * @param options Port mapping options
    */
-  static portMapping(
-    publishedPort: number,
-    targetPort: number,
-    protocol: DockerComposeProtocol = DockerComposeProtocol.TCP,
-  ): DockerComposeServicePort {
+  static portMapping(publishedPort: number, targetPort: number, options?: PortMappingOptions): DockerComposeServicePort {
+    const protocol = options?.protocol ?? DockerComposeProtocol.TCP;
+
     return {
       target: targetPort,
       published: publishedPort,
@@ -109,7 +115,7 @@ export class DockerCompose extends Component {
    * @param name name of the service
    * @param description a service description
    */
-  addService(name: string, description: DockerComposeServiceDescription): void {
+  public addService(name: string, description: DockerComposeServiceDescription): void {
     if ((!description.imageBuild && !description.image) || (description.imageBuild && description.image)) {
       throw new Error(`A service ${name} requires exactly one of a \`imageBuild\` or \`image\` key`);
     }
@@ -135,7 +141,7 @@ export class DockerCompose extends Component {
 export interface DockerComposeServiceDescription {
   /**
    * Names of other services this service depends on.
-   * @default no dependencies
+   * @default - no dependencies
    */
   readonly dependsOn?: string[];
 
@@ -155,7 +161,7 @@ export interface DockerComposeServiceDescription {
 
   /**
    * Provide a command to the docker container.
-   * @default use the container's default command
+   * @default - use the container's default command
    */
   readonly command?: string[];
 
@@ -169,13 +175,13 @@ export interface DockerComposeServiceDescription {
 
   /**
    * Map some ports.
-   * @default no ports are mapped
+   * @default - no ports are mapped
    */
   readonly ports?: DockerComposeServicePort[];
 
   /**
    * Add environment variables.
-   * @default no environment variables are provided
+   * @default - no environment variables are provided
    */
   readonly environment?: Record<string, string>;
 }
@@ -237,7 +243,7 @@ export interface DockerComposeBuild {
 
   /**
    * Build args.
-   * @default none are provided
+   * @default - none are provided
    */
   readonly args?: Record<string, string>;
 }
@@ -248,7 +254,7 @@ export interface DockerComposeBuild {
 export interface DockerComposeVolumeConfig {
   /**
    * Driver to use for the volume
-   * @default value is not provided
+   * @default - value is not provided
    */
   readonly driver?: string;
 
@@ -259,13 +265,13 @@ export interface DockerComposeVolumeConfig {
 
   /**
    * Set to true to indicate that the voluem is externally created.
-   * @default unset, indicating that docker-compose creates the volume
+   * @default - unset, indicating that docker-compose creates the volume
    */
   readonly external?: boolean;
 
   /**
    * Name of the volume for when the volume name isn't going to work in YAML.
-   * @default unset, indicating that docker-compose creates volumes as usual
+   * @default - unset, indicating that docker-compose creates volumes as usual
    */
   readonly name?: string;
 }
