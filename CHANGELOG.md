@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.126 (2020-10-26)
+
+
+### Bug Fixes
+
+* **react:** build error caused by API change ([#235](https://github.com/eladb/projen/issues/235)) ([d2bfb25](https://github.com/eladb/projen/commit/d2bfb25cc1685a90d585c6e26ffaca3f9a411760)), closes [#228](https://github.com/eladb/projen/issues/228) [#229](https://github.com/eladb/projen/issues/229)
+
 ### 0.3.125 (2020-10-26)
 
 ### 0.3.124 (2020-10-25)
