@@ -280,19 +280,19 @@ class ReactSampleCode extends Component {
       "import './index.css';",
       "import App from './App';",
       "import reportWebVitals from './reportWebVitals';",
-      "",
-      "ReactDOM.render(",
-      "  <React.StrictMode>",
-      "    <App />",
-      "  </React.StrictMode>,",
+      '',
+      'ReactDOM.render(',
+      '  <React.StrictMode>',
+      '    <App />',
+      '  </React.StrictMode>,',
       "  document.getElementById('root')",
-      ");",
-      "",
-      "// If you want to start measuring performance in your app, pass a function",
-      "// to log results (for example: reportWebVitals(console.log))",
-      "// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals",
-      "reportWebVitals();",
-      "",
+      ');',
+      '',
+      '// If you want to start measuring performance in your app, pass a function',
+      '// to log results (for example: reportWebVitals(console.log))',
+      '// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals',
+      'reportWebVitals();',
+      '',
     ];
 
     const reportWebVitalsJs = [
@@ -390,7 +390,7 @@ class ReactSampleCode extends Component {
     ];
 
     fs.writeFileSync(path.join(assetsdir, 'index.html'), indexHtml.join('\n'));
-    fs.writeJSONSync(path.join(assetsdir, 'manifest.json'), publicManifest);
+    fs.writeJSONSync(path.join(assetsdir, 'manifest.json'), publicManifest, { spaces: 2 });
     fs.writeFileSync(path.join(assetsdir, 'robot.txt'), robotTxt.join('\n'));
   }
 }
@@ -491,12 +491,12 @@ class ReactSetupTests extends FileBase {
 
   protected synthesizeContent(_: IResolver) {
     return [
-      "// jest-dom adds custom jest matchers for asserting on DOM nodes.",
-      "// allows you to do things like:",
-      "// expect(element).toHaveTextContent(/react/i)",
-      "// learn more: https://github.com/testing-library/jest-dom",
+      '// jest-dom adds custom jest matchers for asserting on DOM nodes.',
+      '// allows you to do things like:',
+      '// expect(element).toHaveTextContent(/react/i)',
+      '// learn more: https://github.com/testing-library/jest-dom',
       "import '@testing-library/jest-dom';",
-      "",
+      '',
     ].join('\n');
   }
 }
