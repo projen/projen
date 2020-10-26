@@ -256,7 +256,7 @@ class ReactSampleCode extends Component {
       '      <header className="App-header">',
       '        <img src={logo} className="App-logo" alt="logo" />',
       '        <p>',
-      '          Edit <code>src/App.tsx</code> and save to reload.',
+      `          Edit <code>src/App.${this.fileExt}</code> and save to reload.`,
       '        </p>',
       '        <a className="App-link"',
       '          href="https://reactjs.org"',
@@ -280,18 +280,19 @@ class ReactSampleCode extends Component {
       "import './index.css';",
       "import App from './App';",
       "import reportWebVitals from './reportWebVitals';",
-      'ReactDOM.render(',
-      '  <React.StrictMode>',
-      '    <App />',
-      '  </React.StrictMode>,',
+      "",
+      "ReactDOM.render(",
+      "  <React.StrictMode>",
+      "    <App />",
+      "  </React.StrictMode>,",
       "  document.getElementById('root')",
-      ');',
-      '',
-      '// If you want to start measuring performance in your app, pass a function',
-      '// to log results (for example: reportWebVitals(console.log))',
-      '// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals',
-      'reportWebVitals();',
-      '',
+      ");",
+      "",
+      "// If you want to start measuring performance in your app, pass a function",
+      "// to log results (for example: reportWebVitals(console.log))",
+      "// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals",
+      "reportWebVitals();",
+      "",
     ];
 
     const reportWebVitalsJs = [
@@ -490,12 +491,12 @@ class ReactSetupTests extends FileBase {
 
   protected synthesizeContent(_: IResolver) {
     return [
-      '// jest-dom adds custom jest matchers for asserting on DOM nodes.',
-      '// allows you to do things like:',
-      '// expect(element).toHaveTextContent(/react/i)',
-      '// learn more: https://github.com/testing-library/jest-dom',
+      "// jest-dom adds custom jest matchers for asserting on DOM nodes.",
+      "// allows you to do things like:",
+      "// expect(element).toHaveTextContent(/react/i)",
+      "// learn more: https://github.com/testing-library/jest-dom",
       "import '@testing-library/jest-dom';",
-      '',
+      "",
     ].join('\n');
   }
 }
