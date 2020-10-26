@@ -153,28 +153,24 @@ export class ReactComponent extends Component {
     }
 
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
-    project.addScript('start', 'react-scripts start');
-    project.start?.addEntry('start', {
-      desc: 'Starts the react application',
-      category: StartEntryCategory.BUILD,
+    project.addScript('start', 'react-scripts start', {
+      startDesc: 'Starts the react application',
+      startCategory: StartEntryCategory.BUILD,
     });
 
-    project.addScript('build', 'react-scripts build');
-    project.start?.addEntry('build', {
-      desc: 'Creates an optimized production build of your React application',
-      category: StartEntryCategory.BUILD,
+    project.addScript('build', 'react-scripts build', {
+      startDesc: 'Creates an optimized production build of your React application',
+      startCategory: StartEntryCategory.BUILD,
     });
 
-    project.addScript('eject', 'react-scripts eject');
-    project.start?.addEntry('build', {
-      desc: 'Ejects your React application from react-scripts',
-      category: StartEntryCategory.BUILD,
+    project.addScript('eject', 'react-scripts eject', {
+      startDesc: 'Ejects your React application from react-scripts',
+      startCategory: StartEntryCategory.MISC,
     });
 
-    project.addTestCommand('react-scripts test');
-    project.start?.addEntry('test', {
-      desc: 'Runs tests',
-      category: StartEntryCategory.BUILD,
+    project.addScript('test', 'react-scripts test', {
+      startDesc: 'Runs tests',
+      startCategory: StartEntryCategory.TEST,
     });
 
     project.npmignore?.exclude('# Build', '/build');
