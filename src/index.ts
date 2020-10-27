@@ -24,3 +24,5 @@ export * from './start';
 export * from './toml';
 export * from './typescript';
 export * from './version';
+export * from './textfile';
+export * from './pr-template';

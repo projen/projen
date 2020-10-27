@@ -8,6 +8,7 @@ import { JsonFile } from './json';
 import { License } from './license';
 import * as logging from './logging';
 import { Mergify, MergifyOptions } from './mergify';
+import { PullRequestTemplate } from './pr-template';
 import { Project } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
@@ -336,6 +337,20 @@ export interface NodeProjectCommonOptions {
    * @default lib/index.js
    */
   readonly entrypoint?: string;
+
+  /**
+   * Include a GitHub pull request template.
+   *
+   * @default true
+   */
+  readonly pullRequestTemplate?: boolean;
+
+  /**
+   * The contents of the pull request template.
+   *
+   * @default - default content
+   */
+  readonly pullRequestTemplateContents?: string;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -441,6 +456,7 @@ export class NodeProject extends Project {
   public readonly manifest: any;
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
+  public readonly pullRequestTemplate?: PullRequestTemplate;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -802,6 +818,12 @@ export class NodeProject extends Project {
     // override any scripts from options (if specified)
     for (const [n, v] of Object.entries(options.scripts ?? {})) {
       this.addScript(n, v);
+    }
+
+    if (options.pullRequestTemplate ?? true) {
+      this.pullRequestTemplate = new PullRequestTemplate(this, {
+        lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
+      });
     }
   }
 
