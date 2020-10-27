@@ -219,6 +219,7 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/tsconfig.json');
     this.npmignore?.exclude('/.github');
     this.npmignore?.exclude('/.vscode');
+    this.npmignore?.exclude('/.idea');
     this.npmignore?.exclude('/.projenrc.js');
 
     // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
