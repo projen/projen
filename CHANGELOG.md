@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.132 (2020-10-27)
+
+
+### Bug Fixes
+
+* duplicate "sampleCode" options in next/react projects ([0efba69](https://github.com/eladb/projen/commit/0efba69b33f937572f625d6e7295b5c5705ab8cc))
+
 ### 0.3.131 (2020-10-27)
 
 
