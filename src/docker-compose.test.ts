@@ -44,6 +44,43 @@ describe('docker-compose', () => {
     })).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
+  test('can build an image', () => {
+    const project = new Project();
+
+    const dc = new DockerCompose(project, {
+      services: {
+        custom: {
+          imageBuild: {
+            context: '.',
+            dockerfile: 'docker-compose.test.Dockerfile',
+            args: {
+              FROM: 'alpine',
+            },
+          },
+          command: ['sh', '-c', 'echo hi'],
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      services: {
+        custom: {
+          build: {
+            context: '.',
+            dockerfile: 'docker-compose.test.Dockerfile',
+            args: {
+              FROM: 'alpine',
+            },
+          },
+          command: ['sh', '-c', 'echo hi'],
+        },
+      },
+    });
+
+    project.synth(tempDir);
+    assertDockerComposeFileValidates(tempDir);
+  });
+
   test('can choose a name suffix for the docker-compose.yml', () => {
     const project = new Project();
     new DockerCompose(project, {

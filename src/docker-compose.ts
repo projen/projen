@@ -560,6 +560,12 @@ function shouldDecamelizeDockerComposeKey(path: string[]) {
     return false;
   }
 
+  // Does not decamelize build arguments
+  // services.namehere.build.args.*
+  if (/^services#[^#]+#build#args#/.test(poundPath)) {
+    return false;
+  }
+
   // Otherwise, let it all decamelize.
   return true;
 }
