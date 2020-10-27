@@ -11,6 +11,8 @@ Name|Description
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
+[DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
+[DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
 [GithubWorkflow](#projen-githubworkflow)|*No description*
@@ -55,6 +57,13 @@ Name|Description
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [DependabotOptions](#projen-dependabotoptions)|*No description*
+[DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
+[DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
+[DockerComposeProps](#projen-dockercomposeprops)|Props for DockerCompose.
+[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)|Description of a docker-compose.yml service.
+[DockerComposeServicePort](#projen-dockercomposeserviceport)|A service port mapping.
+[DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)|Volume configuration.
+[DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
@@ -97,6 +106,9 @@ Name|Description
 
 Name|Description
 ----|-----------
+[IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
+[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
+[IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 
 
@@ -107,6 +119,7 @@ Name|Description
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
 [DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [Stability](#projen-stability)|*No description*
 [StartEntryCategory](#projen-startentrycategory)|*No description*
@@ -836,6 +849,221 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 * **dependencyName** (<code>string</code>)  Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
 * **versions** (<code>string</code>)  Use to ignore specific versions or ranges of versions.
+
+
+
+
+
+
+## class DockerCompose 🔹 <a id="projen-dockercompose"></a>
+
+Create a docker-compose YAML file.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new DockerCompose(project: Project, props?: DockerComposeProps)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **props** (<code>[DockerComposeProps](#projen-dockercomposeprops)</code>)  *No description*
+  * **nameSuffix** (<code>string</code>)  A name to add to the docker-compose.yml filename. __*Default*__: no name is added
+  * **services** (<code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code>)  Service descriptions. __*Optional*__
+
+
+### Methods
+
+
+#### addService(serviceName, description)🔹 <a id="projen-dockercompose-addservice"></a>
+
+Add a service to the docker-compose file.
+
+```ts
+addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeService
+```
+
+* **serviceName** (<code>string</code>)  name of the service.
+* **description** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  a service description.
+  * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
+  * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
+  * **image** (<code>string</code>)  Use a docker image. __*Optional*__
+  * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
+  * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
+
+__Returns__:
+* <code>[DockerComposeService](#projen-dockercomposeservice)</code>
+
+#### *static* bindVolume(sourcePath, targetPath)🔹 <a id="projen-dockercompose-bindvolume"></a>
+
+Create a bind volume that binds a host path to the target path in the container.
+
+```ts
+static bindVolume(sourcePath: string, targetPath: string): IDockerComposeVolumeBinding
+```
+
+* **sourcePath** (<code>string</code>)  Host path name.
+* **targetPath** (<code>string</code>)  Target path name.
+
+__Returns__:
+* <code>[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)</code>
+
+#### *static* namedVolume(volumeName, targetPath, options?)🔹 <a id="projen-dockercompose-namedvolume"></a>
+
+Create a named volume and mount it to the target path.
+
+If you use this
+named volume in several services, the volume will be shared. In this
+case, the volume configuration of the first-provided options are used.
+
+```ts
+static namedVolume(volumeName: string, targetPath: string, options?: DockerComposeVolumeConfig): IDockerComposeVolumeBinding
+```
+
+* **volumeName** (<code>string</code>)  Name of the volume.
+* **targetPath** (<code>string</code>)  Target path.
+* **options** (<code>[DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)</code>)  volume configuration (default: docker compose defaults).
+  * **driver** (<code>string</code>)  Driver to use for the volume. __*Default*__: value is not provided
+  * **driverOpts** (<code>Map<string, string></code>)  Options to provide to the driver. __*Optional*__
+  * **external** (<code>boolean</code>)  Set to true to indicate that the volume is externally created. __*Default*__: unset, indicating that docker-compose creates the volume
+  * **name** (<code>string</code>)  Name of the volume for when the volume name isn't going to work in YAML. __*Default*__: unset, indicating that docker-compose creates volumes as usual
+
+__Returns__:
+* <code>[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)</code>
+
+#### *static* portMapping(publishedPort, targetPort, options?)🔹 <a id="projen-dockercompose-portmapping"></a>
+
+Create a port mapping.
+
+```ts
+static portMapping(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions): DockerComposeServicePort
+```
+
+* **publishedPort** (<code>number</code>)  Published port number.
+* **targetPort** (<code>number</code>)  Container's port number.
+* **options** (<code>[DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)</code>)  Port mapping options.
+  * **protocol** (<code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code>)  Port mapping protocol. __*Default*__: DockerComposeProtocol.TCP
+
+__Returns__:
+* <code>[DockerComposeServicePort](#projen-dockercomposeserviceport)</code>
+
+#### *static* serviceName(serviceName)🔹 <a id="projen-dockercompose-servicename"></a>
+
+Depends on a service name.
+
+```ts
+static serviceName(serviceName: string): IDockerComposeServiceName
+```
+
+* **serviceName** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[IDockerComposeServiceName](#projen-idockercomposeservicename)</code>
+
+
+
+## class DockerComposeService 🔹 <a id="projen-dockercomposeservice"></a>
+
+A docker-compose service.
+
+__Implements__: [IDockerComposeServiceName](#projen-idockercomposeservicename)
+
+### Initializer
+
+
+
+
+```ts
+new DockerComposeService(serviceName: string, serviceDescription: DockerComposeServiceDescription)
+```
+
+* **serviceName** (<code>string</code>)  *No description*
+* **serviceDescription** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  *No description*
+  * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
+  * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
+  * **image** (<code>string</code>)  Use a docker image. __*Optional*__
+  * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
+  * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependsOn**🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Other services that this service depends on.
+**environment**🔹 | <code>Map<string, string></code> | Environment variables.
+**ports**🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Published ports.
+**serviceName**🔹 | <code>string</code> | Name of the service.
+**volumes**🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Volumes mounted in the container.
+**command**?🔹 | <code>Array<string></code> | Command to run in the container.<br/>__*Optional*__
+**image**?🔹 | <code>string</code> | Docker image.<br/>__*Optional*__
+**imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Docker image build instructions.<br/>__*Optional*__
+
+### Methods
+
+
+#### addDependsOn(serviceName)🔹 <a id="projen-dockercomposeservice-adddependson"></a>
+
+Make the service depend on another service.
+
+```ts
+addDependsOn(serviceName: IDockerComposeServiceName): void
+```
+
+* **serviceName** (<code>[IDockerComposeServiceName](#projen-idockercomposeservicename)</code>)  *No description*
+
+
+
+
+#### addEnvironment(name, value)🔹 <a id="projen-dockercomposeservice-addenvironment"></a>
+
+Add an environment variable.
+
+```ts
+addEnvironment(name: string, value: string): void
+```
+
+* **name** (<code>string</code>)  environment variable name.
+* **value** (<code>string</code>)  value of the environment variable.
+
+
+
+
+#### addPort(publishedPort, targetPort, options?)🔹 <a id="projen-dockercomposeservice-addport"></a>
+
+Add a port mapping.
+
+```ts
+addPort(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions): void
+```
+
+* **publishedPort** (<code>number</code>)  Published port number.
+* **targetPort** (<code>number</code>)  Container's port number.
+* **options** (<code>[DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)</code>)  Port mapping options.
+  * **protocol** (<code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code>)  Port mapping protocol. __*Default*__: DockerComposeProtocol.TCP
+
+
+
+
+#### addVolume(volume)🔹 <a id="projen-dockercomposeservice-addvolume"></a>
+
+Add a volume to the service.
+
+```ts
+addVolume(volume: IDockerComposeVolumeBinding): void
+```
+
+* **volume** (<code>[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)</code>)  *No description*
 
 
 
@@ -3580,6 +3808,115 @@ Name | Type | Description
 
 
 
+## struct DockerComposeBuild 🔹 <a id="projen-dockercomposebuild"></a>
+
+
+Build arguments for creating a docker image.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**context**🔹 | <code>string</code> | Docker build context directory.
+**args**?🔹 | <code>Map<string, string></code> | Build args.<br/>__*Default*__: none are provided
+**dockerfile**?🔹 | <code>string</code> | A dockerfile to build from.<br/>__*Default*__: 'Dockerfile'
+
+
+
+## struct DockerComposePortMappingOptions 🔹 <a id="projen-dockercomposeportmappingoptions"></a>
+
+
+Options for port mappings.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**protocol**?🔹 | <code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code> | Port mapping protocol.<br/>__*Default*__: DockerComposeProtocol.TCP
+
+
+
+## struct DockerComposeProps 🔹 <a id="projen-dockercomposeprops"></a>
+
+
+Props for DockerCompose.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**nameSuffix**?🔹 | <code>string</code> | A name to add to the docker-compose.yml filename.<br/>__*Default*__: no name is added
+**services**?🔹 | <code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code> | Service descriptions.<br/>__*Optional*__
+
+
+
+## struct DockerComposeServiceDescription 🔹 <a id="projen-dockercomposeservicedescription"></a>
+
+
+Description of a docker-compose.yml service.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**?🔹 | <code>Array<string></code> | Provide a command to the docker container.<br/>__*Default*__: use the container's default command
+**dependsOn**?🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Names of other services this service depends on.<br/>__*Default*__: no dependencies
+**environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
+**image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
+**imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
+**ports**?🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Map some ports.<br/>__*Default*__: no ports are mapped
+**volumes**?🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Mount some volumes into the service.<br/>__*Optional*__
+
+
+
+## struct DockerComposeServicePort 🔹 <a id="projen-dockercomposeserviceport"></a>
+
+__Obtainable from__: [DockerCompose](#projen-dockercompose).[portMapping](#projen-dockercompose#projen-dockercompose-portmapping)()
+
+A service port mapping.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**mode**🔹 | <code>string</code> | Port mapping mode.
+**protocol**🔹 | <code>[DockerComposeProtocol](#projen-dockercomposeprotocol)</code> | Network protocol.
+**published**🔹 | <code>number</code> | Published port number.
+**target**🔹 | <code>number</code> | Target port number.
+
+
+
+## struct DockerComposeVolumeConfig 🔹 <a id="projen-dockercomposevolumeconfig"></a>
+
+
+Volume configuration.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**driver**?🔹 | <code>string</code> | Driver to use for the volume.<br/>__*Default*__: value is not provided
+**driverOpts**?🔹 | <code>Map<string, string></code> | Options to provide to the driver.<br/>__*Optional*__
+**external**?🔹 | <code>boolean</code> | Set to true to indicate that the volume is externally created.<br/>__*Default*__: unset, indicating that docker-compose creates the volume
+**name**?🔹 | <code>string</code> | Name of the volume for when the volume name isn't going to work in YAML.<br/>__*Default*__: unset, indicating that docker-compose creates volumes as usual
+
+
+
+## struct DockerComposeVolumeMount 🔹 <a id="projen-dockercomposevolumemount"></a>
+
+
+Service volume mounting information.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**source**🔹 | <code>string</code> | Volume source.
+**target**🔹 | <code>string</code> | Volume target.
+**type**🔹 | <code>string</code> | Type of volume.
+
+
+
 ## struct EslintOptions 🔹 <a id="projen-eslintoptions"></a>
 
 
@@ -3606,6 +3943,72 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## interface IDockerComposeServiceName 🔹 <a id="projen-idockercomposeservicename"></a>
+
+__Implemented by__: [DockerComposeService](#projen-dockercomposeservice)
+__Obtainable from__: [DockerCompose](#projen-dockercompose).[serviceName](#projen-dockercompose#projen-dockercompose-servicename)()
+
+An interface providing the name of a docker compose service.
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**serviceName**🔹 | <code>string</code> | The name of the docker compose service.
+
+
+
+## interface IDockerComposeVolumeBinding 🔹 <a id="projen-idockercomposevolumebinding"></a>
+
+__Obtainable from__: [DockerCompose](#projen-dockercompose).[bindVolume](#projen-dockercompose#projen-dockercompose-bindvolume)(), [DockerCompose](#projen-dockercompose).[namedVolume](#projen-dockercompose#projen-dockercompose-namedvolume)()
+
+Volume binding information.
+### Methods
+
+
+#### bind(volumeConfig)🔹 <a id="projen-idockercomposevolumebinding-bind"></a>
+
+Binds the requested volume to the docker-compose volume configuration and provide mounting instructions for synthesis.
+
+```ts
+bind(volumeConfig: IDockerComposeVolumeConfig): DockerComposeVolumeMount
+```
+
+* **volumeConfig** (<code>[IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)</code>)  the volume configuration.
+
+__Returns__:
+* <code>[DockerComposeVolumeMount](#projen-dockercomposevolumemount)</code>
+
+
+
+## interface IDockerComposeVolumeConfig 🔹 <a id="projen-idockercomposevolumeconfig"></a>
+
+
+Storage for volume configuration.
+### Methods
+
+
+#### addVolumeConfiguration(volumeName, configuration)🔹 <a id="projen-idockercomposevolumeconfig-addvolumeconfiguration"></a>
+
+Add volume configuration to the repository.
+
+```ts
+addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeConfig): void
+```
+
+* **volumeName** (<code>string</code>)  *No description*
+* **configuration** (<code>[DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)</code>)  *No description*
+  * **driver** (<code>string</code>)  Driver to use for the volume. __*Default*__: value is not provided
+  * **driverOpts** (<code>Map<string, string></code>)  Options to provide to the driver. __*Optional*__
+  * **external** (<code>boolean</code>)  Set to true to indicate that the volume is externally created. __*Default*__: unset, indicating that docker-compose creates the volume
+  * **name** (<code>string</code>)  Name of the volume for when the volume name isn't going to work in YAML. __*Default*__: unset, indicating that docker-compose creates volumes as usual
+
+
+
 
 
 
@@ -4764,6 +5167,16 @@ Name | Description
 **DAILY** 🔹|Runs on every weekday, Monday to Friday.
 **WEEKLY** 🔹|Runs once each week.
 **MONTHLY** 🔹|Runs once each month.
+
+
+## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
+
+Network protocol for port mapping.
+
+Name | Description
+-----|-----
+**TCP** 🔹|TCP protocol.
+**UDP** 🔹|UDP protocol.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>
