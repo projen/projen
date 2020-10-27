@@ -376,6 +376,57 @@ describe('docker-compose', () => {
     });
   });
 
+  describe('can add environment variables', () => {
+    const expected = {
+      services: {
+        www: {
+          image: 'nginx',
+          environment: {
+            FOO: 'bar',
+            Baz: 'xyz',
+          },
+        },
+      },
+    };
+
+    test('declaratively', () => {
+      const project = new Project();
+      const dc = new DockerCompose(project, {
+        services: {
+          www: {
+            image: 'nginx',
+            environment: {
+              FOO: 'bar',
+              Baz: 'xyz',
+            },
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual(expected);
+
+      project.synth(tempDir);
+      assertDockerComposeFileValidates(tempDir);
+    });
+
+    test('imperatively', () => {
+      const project = new Project();
+      const dc = new DockerCompose(project);
+
+      const service = dc.addService('www', {
+        image: 'nginx',
+      });
+
+      service.addEnvironment('FOO', 'bar');
+      service.addEnvironment('Baz', 'xyz');
+
+      expect(dc._synthesizeDockerCompose()).toEqual(expected);
+
+      project.synth(tempDir);
+      assertDockerComposeFileValidates(tempDir);
+    });
+  });
+
   test('errors when a service reference by name does not exist', () => {
     const project = new Project();
 
