@@ -2,6 +2,9 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Project } from '../src';
+import * as logging from '../src/logging';
+
+logging.disable(); // no logging during tests
 
 export interface SynthOutput {
   [filePath: string]: any;
