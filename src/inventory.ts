@@ -99,7 +99,7 @@ export function discover(...moduleDirs: string[]) {
       typename,
       pjid,
       fqn,
-      options: discoverOptions(jsii, fqn),
+      options: discoverOptions(jsii, fqn).sort((o1, o2) => o1.name.localeCompare(o2.name)),
       docs: typeinfo.docs?.summary,
       docsurl,
     });
