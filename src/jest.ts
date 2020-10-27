@@ -86,7 +86,7 @@ export class Jest {
       // specify tsconfig.json
       this.config.globals = {
         'ts-jest': {
-          tsConfig: options.typescript.fileName,
+          tsconfig: options.typescript.fileName,
         },
       };
 
