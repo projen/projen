@@ -36,8 +36,12 @@ describe('docker-compose', () => {
     const project = new Project();
     const dc = new DockerCompose(project);
 
-    expect(() => dc.addService('service', {}))
-      .toThrow(/requires exactly one of.*imageBuild.*image/i);
+    expect(() => dc.addService('service', {
+      image: 'nginx',
+      imageBuild: {
+        context: '.',
+      },
+    })).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
   test('can choose a name suffix for the docker-compose.yml', () => {
