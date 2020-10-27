@@ -4,7 +4,7 @@ let enabled = true;
 
 function log(color: chalk.ChalkFunction, ...text: any[]) {
   if (!enabled) { return; }
-  console.error(`🤖 ${chalk.bold(color(...text))}`);
+  console.error(`🤖 ${color(...text)}`);
 }
 
 export function verbose(...text: any[]) {

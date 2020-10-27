@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile } = require('./lib');
+const { JsiiProject, JsonFile, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',

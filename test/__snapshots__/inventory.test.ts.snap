@@ -123,6 +123,7 @@ Array [
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -238,6 +239,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -266,6 +269,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -520,6 +525,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -888,6 +895,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -1013,6 +1021,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -1041,6 +1051,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -1230,6 +1242,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -1586,6 +1600,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -1680,6 +1695,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -1708,6 +1725,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -1897,6 +1916,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -2253,6 +2274,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -2337,6 +2359,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -2365,6 +2389,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -2554,6 +2580,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -2914,6 +2942,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -2976,6 +3005,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -3004,6 +3035,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -3181,6 +3214,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -3553,6 +3588,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -3627,6 +3663,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -3655,6 +3693,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -3909,6 +3949,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -4270,6 +4312,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -4332,6 +4375,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -4360,6 +4405,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -4537,6 +4584,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -4896,6 +4945,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -4958,6 +5008,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -4986,6 +5038,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -5163,6 +5217,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -5524,6 +5580,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -5598,6 +5655,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -5626,6 +5685,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -5880,6 +5941,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -6241,6 +6304,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -6315,6 +6379,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -6343,6 +6409,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -6597,6 +6665,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
@@ -6958,6 +7028,7 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
         "path": Array [
@@ -7032,6 +7103,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Runtime dependencies of this module.",
         "name": "deps",
         "optional": true,
         "path": Array [
@@ -7060,6 +7133,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Build dependencies for this module.",
         "name": "devDeps",
         "optional": true,
         "path": Array [
@@ -7314,6 +7389,8 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "unknown",
       },
       Object {
+        "default": "[]",
+        "docs": "Peer dependencies for this module.",
         "name": "peerDeps",
         "optional": true,
         "path": Array [
