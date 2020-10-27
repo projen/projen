@@ -4,7 +4,7 @@ import { decamelizeKeysRecursively } from './util';
 import { YamlFile } from './yaml';
 
 /**
- * Props for DockerCompose
+ * Props for DockerCompose.
  */
 export interface DockerComposeProps {
   /**
@@ -20,7 +20,10 @@ export interface DockerComposeProps {
   readonly services?: Record<string, DockerComposeServiceDescription>;
 }
 
-export interface PortMappingOptions {
+/**
+ * Options for port mappings.
+ */
+export interface DockerComposePortMappingOptions {
   /**
    * Port mapping protocol.
    * @default DockerComposeProtocol.TCP
@@ -35,19 +38,19 @@ export class DockerCompose extends Component {
   /**
    * Depends on a service name.
    */
-  static serviceName(serviceName: string): DockerComposeServiceName {
+  static serviceName(serviceName: string): IDockerComposeServiceName {
     return {
       serviceName,
     };
   }
 
   /**
-   * Create a port mapping
+   * Create a port mapping.
    * @param publishedPort Published port number
    * @param targetPort Container's port number
    * @param options Port mapping options
    */
-  static portMapping(publishedPort: number, targetPort: number, options?: PortMappingOptions): DockerComposeServicePort {
+  static portMapping(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions): DockerComposeServicePort {
     const protocol = options?.protocol ?? DockerComposeProtocol.TCP;
 
     return {
@@ -98,7 +101,7 @@ export class DockerCompose extends Component {
     };
   }
 
-  private readonly services: Record<string, DockerComposeServiceDescription>;
+  private readonly services: Record<string, DockerComposeService>;
 
   constructor(project: Project, props?: DockerComposeProps) {
     super(project);
@@ -124,16 +127,10 @@ export class DockerCompose extends Component {
    * @param serviceName name of the service
    * @param description a service description
    */
-  public addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeServiceName {
-    if ((!description.imageBuild && !description.image) || (description.imageBuild && description.image)) {
-      throw new Error(`A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`);
-    }
-
-    this.services[serviceName] = description;
-
-    return {
-      serviceName,
-    };
+  public addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeService {
+    const service = new DockerComposeService(serviceName, description);
+    this.services[serviceName] = service;
+    return service;
   }
 
   /**
@@ -151,7 +148,7 @@ export class DockerCompose extends Component {
 /**
  * An interface providing the name of a docker compose service.
  */
-export interface DockerComposeServiceName {
+export interface IDockerComposeServiceName {
   /**
    * The name of the docker compose service.
    */
@@ -162,12 +159,6 @@ export interface DockerComposeServiceName {
  * Description of a docker-compose.yml service.
  */
 export interface DockerComposeServiceDescription {
-  /**
-   * Names of other services this service depends on.
-   * @default - no dependencies
-   */
-  readonly dependsOn?: DockerComposeServiceName[];
-
   /**
    * Use a docker image.
    * Note: You must specify either `build` or `image` key.
@@ -189,6 +180,12 @@ export interface DockerComposeServiceDescription {
   readonly command?: string[];
 
   /**
+   * Names of other services this service depends on.
+   * @default - no dependencies
+   */
+  readonly dependsOn?: IDockerComposeServiceName[];
+
+  /**
    * Mount some volumes into the service.
    * Use one of the following to create volumes:
    * @see DockerCompose.bindVolume() to mount a host path
@@ -207,6 +204,102 @@ export interface DockerComposeServiceDescription {
    * @default - no environment variables are provided
    */
   readonly environment?: Record<string, string>;
+}
+
+/**
+ * A docker-compose service.
+ */
+export class DockerComposeService implements IDockerComposeServiceName {
+  /**
+   * Name of the service.
+   */
+  public readonly serviceName: string;
+
+  /**
+   * Docker image.
+   */
+  public readonly image?: string;
+
+  /**
+   * Docker image build instructions.
+   */
+  public readonly imageBuild?: DockerComposeBuild;
+
+  /**
+   * Command to run in the container.
+   */
+  public readonly command?: string[];
+
+  /**
+   * Other services that this service depends on.
+   */
+  public readonly dependsOn: IDockerComposeServiceName[];
+
+  /**
+   * Volumes mounted in the container.
+   */
+  public readonly volumes: IDockerComposeVolumeBinding[];
+
+  /**
+   * Published ports.
+   */
+  public readonly ports: DockerComposeServicePort[];
+
+  /**
+   * Environment variables.
+   */
+  public readonly environment: Record<string, string>;
+
+  constructor(serviceName: string, serviceDescription: DockerComposeServiceDescription) {
+    if ((!serviceDescription.imageBuild && !serviceDescription.image)
+      || (serviceDescription.imageBuild && serviceDescription.image)) {
+      throw new Error(`A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`);
+    }
+
+    this.serviceName = serviceName;
+    this.command = serviceDescription.command;
+    this.image = serviceDescription.image;
+    this.imageBuild = serviceDescription.imageBuild;
+    this.dependsOn = serviceDescription.dependsOn ?? [];
+    this.volumes = serviceDescription.volumes ?? [];
+    this.ports = serviceDescription.ports ?? [];
+    this.environment = serviceDescription.environment ?? {};
+  }
+
+  /**
+   * Add a port mapping
+   * @param publishedPort Published port number
+   * @param targetPort Container's port number
+   * @param options Port mapping options
+   */
+  public addPort(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions) {
+    this.ports?.push(DockerCompose.portMapping(publishedPort, targetPort, options));
+  }
+
+  /**
+   * Add an environment variable
+   * @param name environment variable name
+   * @param value value of the environment variable
+   */
+  public addEnvironment(name: string, value: string) {
+    this.environment[name] = value;
+  }
+
+  /**
+   * Make the service depend on another service.
+   * @param serviceName
+   */
+  public addDependsOn(serviceName: IDockerComposeServiceName) {
+    this.dependsOn.push(serviceName);
+  }
+
+  /**
+   * Add a volume to the service.
+   * @param volume
+   */
+  public addVolume(volume: IDockerComposeVolumeBinding) {
+    this.volumes.push(volume);
+  }
 }
 
 /**
@@ -287,7 +380,7 @@ export interface DockerComposeVolumeConfig {
   readonly driverOpts?: Record<string, string>;
 
   /**
-   * Set to true to indicate that the voluem is externally created.
+   * Set to true to indicate that the volume is externally created.
    * @default - unset, indicating that docker-compose creates the volume
    */
   readonly external?: boolean;
@@ -350,7 +443,7 @@ export interface DockerComposeVolumeMount {
  */
 interface DockerComposeFileSchema {
   services: Record<string, DockerComposeFileServiceSchema>;
-  volumes: Record<string, DockerComposeVolumeConfig>;
+  volumes?: Record<string, DockerComposeVolumeConfig>;
 }
 
 /**
@@ -367,7 +460,7 @@ interface DockerComposeFileServiceSchema {
   readonly environment?: Record<string, string>;
 }
 
-function renderDockerComposeFile(serviceDescriptions: Record<string, DockerComposeServiceDescription>): object {
+function renderDockerComposeFile(serviceDescriptions: Record<string, DockerComposeService>): object {
   // Record volume configuration
   const volumeConfig: Record<string, DockerComposeVolumeConfig> = {};
   const volumeInfo: IDockerComposeVolumeConfig = {
@@ -389,6 +482,9 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
     const dependsOn = Array<string>();
     for (const dependsOnServiceName of serviceDescription.dependsOn ?? []) {
       const resolvedServiceName = dependsOnServiceName.serviceName;
+      if (resolvedServiceName === serviceName) {
+        throw new Error(`Service ${serviceName} cannot depend on itself`);
+      }
       if (!serviceDescriptions[resolvedServiceName]) {
         throw new Error(`Unable to resolve service named ${resolvedServiceName} for ${serviceName}`);
       }
@@ -409,8 +505,8 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
       ...getObjectWithKeyAndValueIfValueIsDefined('image', serviceDescription.image),
       ...getObjectWithKeyAndValueIfValueIsDefined('build', serviceDescription.imageBuild),
       ...getObjectWithKeyAndValueIfValueIsDefined('command', serviceDescription.command),
-      ...getObjectWithKeyAndValueIfValueIsDefined('environment', serviceDescription.environment),
-      ...getObjectWithKeyAndValueIfValueIsDefined('ports', serviceDescription.ports),
+      ...(Object.keys(serviceDescription.environment).length > 0 ? { environment: serviceDescription.environment } : {}),
+      ...(serviceDescription.ports.length > 0 ? { ports: serviceDescription.ports } : {}),
       ...(dependsOn.length > 0 ? { dependsOn } : {}),
       ...(volumes.length > 0 ? { volumes } : {}),
     };
@@ -420,7 +516,7 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
   // out types.
   const input: DockerComposeFileSchema = {
     services,
-    volumes: volumeConfig,
+    ...(Object.keys(volumeConfig).length > 0 ? { volumes: volumeConfig } : {}),
   };
 
   // Change most keys to snake case.
