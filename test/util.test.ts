@@ -1,4 +1,4 @@
-import { decamelizeKeysRecursively } from './util';
+import { decamelizeKeysRecursively } from '../src/util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {

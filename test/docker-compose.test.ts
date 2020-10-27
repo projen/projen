@@ -1,8 +1,10 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { DockerCompose, DockerComposeProtocol } from './docker-compose';
-import { Project } from './project';
+import { Project, DockerCompose, DockerComposeProtocol } from '../src';
+import * as logging from '../src/logging';
+
+logging.disable();
 
 let tempDir: string;
 beforeEach(() => {
