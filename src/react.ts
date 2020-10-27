@@ -8,17 +8,15 @@ import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
-export interface ReactCommonProjectOptions {
+export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
+
+export interface ReactProjectOptions extends NodeProjectOptions {
   /**
    * Generate one-time sample in `src/` and `public/` if there are no files there.
    * @default true
    */
   readonly sampleCode?: boolean;
 }
-
-export interface ReactTypeScriptProjectOptions extends ReactCommonProjectOptions, TypeScriptProjectOptions { }
-
-export interface ReactProjectOptions extends ReactCommonProjectOptions, NodeProjectOptions { }
 
 /**
  * React project without TypeScript.

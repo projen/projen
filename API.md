@@ -88,7 +88,6 @@ Name|Description
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
-[ReactCommonProjectOptions](#projen-reactcommonprojectoptions)|*No description*
 [ReactComponentOptions](#projen-reactcomponentoptions)|*No description*
 [ReactProjectOptions](#projen-reactprojectoptions)|*No description*
 [ReactTypeDefOptions](#projen-reacttypedefoptions)|*No description*
@@ -1771,7 +1770,6 @@ new NextJsProject(options: NextJsProjectOptions)
 
 * **options** (<code>[NextJsProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -1836,6 +1834,7 @@ new NextJsProject(options: NextJsProjectOptions)
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
 
 
 
@@ -1907,7 +1906,6 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 
 * **options** (<code>[NextJsTypeScriptProjectOptions](#projen-nextjstypescriptprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: 'public'
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -1981,6 +1979,7 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
 
@@ -2566,7 +2565,6 @@ new ReactProject(options: ReactProjectOptions)
 ```
 
 * **options** (<code>[ReactProjectOptions](#projen-reactprojectoptions)</code>)  *No description*
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -2631,6 +2629,7 @@ new ReactProject(options: ReactProjectOptions)
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
 
 
 
@@ -2700,7 +2699,6 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 ```
 
 * **options** (<code>[ReactTypeScriptProjectOptions](#projen-reacttypescriptprojectoptions)</code>)  *No description*
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -2774,6 +2772,7 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>[Semver](#projen-semver)</code>)  TypeScript version to use. __*Default*__: ^3.9.5
 
@@ -4398,7 +4397,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: 'public'
-**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
 
 
 
@@ -4763,19 +4761,6 @@ Options for `PullRequestTemplate`.
 Name | Type | Description 
 -----|------|-------------
 **lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
-
-
-
-## struct ReactCommonProjectOptions 🔹 <a id="projen-reactcommonprojectoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
 
 
 

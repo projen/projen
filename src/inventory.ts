@@ -109,7 +109,7 @@ export function discover(...moduleDirs: string[]) {
 }
 
 function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
-  const options = new Array<ProjectOption>();
+  const options: { [name: string]: ProjectOption } = { };
   const params = jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;
@@ -120,7 +120,9 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
   addOptions(optionsTypeFqn);
 
-  return options.sort((a, b) => a.switch.localeCompare(b.switch));
+  const opts = Object.values(options);
+
+  return opts.sort((a, b) => a.switch.localeCompare(b.switch));
 
   function addOptions(ofqn?: string, basePath: string[] = [], optional = false) {
     if (!ofqn) {
@@ -145,7 +147,12 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
 
-      options.push(filterUndefined({
+      // protect against double-booking
+      if (prop.name in options) {
+        throw new Error(`duplicate option "${prop.name}" in ${fqn}`);
+      }
+
+      options[prop.name] = filterUndefined({
         path: propPath,
         name: prop.name,
         docs: prop.docs.summary,
@@ -153,7 +160,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: optional || prop.optional,
-      }));
+      });
     }
 
     for (const ifc of struct.interfaces ?? []) {

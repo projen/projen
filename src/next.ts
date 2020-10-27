@@ -13,17 +13,17 @@ export interface NextJsCommonProjectOptions {
    * @default 'public'
    */
   readonly assetsdir?: string;
+}
 
+export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
+
+export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {
   /**
    * Generate one-time sample in `pages/` and `public/` if there are no files there.
    * @default true
    */
   readonly sampleCode?: boolean;
 }
-
-export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
-
-export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {}
 
 /**
  * Next.js project without TypeScript.
