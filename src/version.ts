@@ -20,17 +20,14 @@ export class Version extends Component {
 
     project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
 
-    project.addScript('bump', `${project.runScriptCommand} --silent no-changes || standard-version`);
-    project.addScript('release', `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`);
-
-    project.start?.addEntry('bump', {
-      desc: 'Commits a bump to the package version based on conventional commits',
-      category: StartEntryCategory.RELEASE,
+    project.addScript('bump', `${project.runScriptCommand} --silent no-changes || standard-version`, {
+      startDesc: 'Commits a bump to the package version based on conventional commits',
+      startCategory: StartEntryCategory.RELEASE,
     });
 
-    project.start?.addEntry('release', {
-      desc: `Bumps version & push to ${options.releaseBranch}`,
-      category: StartEntryCategory.RELEASE,
+    project.addScript('release', `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`, {
+      startDesc: `Bumps version & push to ${options.releaseBranch}`,
+      startCategory: StartEntryCategory.RELEASE,
     });
 
     project.addDevDependencies({

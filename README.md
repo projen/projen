@@ -43,6 +43,8 @@ list):
 * [nextjs-ts](https://github.com/eladb/projen/blob/master/API.md#projen-nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/eladb/projen/blob/master/API.md#projen-project) - Base project.
+* [react](https://github.com/eladb/projen/blob/master/API.md#projen-reactproject) - React project without TypeScript.
+* [react-ts](https://github.com/eladb/projen/blob/master/API.md#projen-reacttypescriptproject) - React project with TypeScript.
 * [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
 * [typescript-app](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
