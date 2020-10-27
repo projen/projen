@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.131 (2020-10-27)
+
+
+### Features
+
+* add .idea to .npmignore for webstorm developers ([#236](https://github.com/eladb/projen/issues/236)) ([4e6382a](https://github.com/eladb/projen/commit/4e6382afe12269337e62cd775739c94b6cebbacb)), closes [#222](https://github.com/eladb/projen/issues/222)
+
 ### 0.3.130 (2020-10-27)
 
 
