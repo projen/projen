@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.133 (2020-10-27)
+
+
+### Features
+
+* **node:** deprecate "xxxDependencies" in favor of "xxxDeps" (warning) ([a9f3890](https://github.com/eladb/projen/commit/a9f3890fbabcb12db3b4ee30d1d1327ef3dca3ff))
+
 ### 0.3.132 (2020-10-27)
 
 
