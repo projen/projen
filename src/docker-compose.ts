@@ -26,7 +26,7 @@ export interface DockerComposeProps {
 export interface DockerComposePortMappingOptions {
   /**
    * Port mapping protocol.
-   * @default - DockerComposeProtocol.TCP
+   * @default DockerComposeProtocol.TCP
    */
   readonly protocol?: DockerComposeProtocol;
 }
