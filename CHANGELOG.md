@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.130 (2020-10-27)
+
+
+### Features
+
+* add support for docker-compose.yml ([#230](https://github.com/eladb/projen/issues/230)) ([f385c45](https://github.com/eladb/projen/commit/f385c4538ffb13b53cbd18c64722cf9ea83caa5b))
+
 ### 0.3.129 (2020-10-27)
 
 ### 0.3.128 (2020-10-26)
