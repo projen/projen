@@ -4,9 +4,10 @@ This projen type is used for building AWS CDK constructs using the jsii. The [js
 you to write code once in Typescript and it will generate the Python, .net, and Java equivalents. Use this if you'd 
 like to build and distribute CDK constructs for others to use.
 
+Class heirarchy: `AwsCdkConstructLibrary` -> `ConstructLibrary` -> `JsiiProject` -> `TypeScriptProject` -> `NodeProject` -> `Project`
+
 # Table of Contents
 
-* [Project Heirarchy](#project-heirarchy)
 * [Getting Started](#getting-started)
   * [Standard Node Module Fields](#standard-node-module-fields)
   * [Dependencies](#dependencies)
@@ -18,10 +19,6 @@ like to build and distribute CDK constructs for others to use.
 * [Project structure](#project-structure)
 * [Migrating existing projects](#migrating-existing-projects)
 * [Feedback](#feedback)
-
-# Project Heirarchy
-
-AwsCdkConstructLibrary -> ConstructLibrary -> JsiiProject -> TypeScriptProject -> NodeProject -> Project
 
 # Getting Started
 
@@ -39,13 +36,13 @@ you may want to set explicitly.
 These fields are your basic Node module setup:
 
 ```typescript
-  authorAddress: 'benisrae@amazon.com',
-  authorName: 'Elad Ben-Israel',
-  description: 'Watching your CDK apps since 2019',
-  name: 'cdk-watchful',
-  license: 'MIT',
-  repository: 'https://github.com/eladb/cdk-watchful.git',
-  keywords: ['cloudwatch', 'monitoring']
+authorAddress: 'benisrae@amazon.com',
+authorName: 'Elad Ben-Israel',
+description: 'Watching your CDK apps since 2019',
+name: 'cdk-watchful',
+license: 'MIT',
+repository: 'https://github.com/eladb/cdk-watchful.git',
+keywords: ['cloudwatch', 'monitoring']
 ```
 
 All are pretty standard setup and nothing CDK-specific at this point. The `keywords` automatically gets 'cdk' so you don't
@@ -53,12 +50,14 @@ need to specify it.
 
 ## Dependencies
 
+### Depending on AWS CDK modules
+
 Next are getting CDK dependencies added:
 
 ```typescript
-  cdkVersion: '1.67.0',
-  cdkDependencies: ['@aws-cdk/aws-ec2'],
-  cdkTestDependencies: ['@aws-cdk/assert'],
+cdkVersion: '1.67.0',
+cdkDependencies: ['@aws-cdk/aws-ec2'],
+cdkTestDependencies: ['@aws-cdk/assert'],
 ```
 
 `cdkDependencies` will add both dependencies and peerDependencies to your package.json file with a caret semver 
@@ -74,11 +73,18 @@ project.addCdkDependencies('aws-cdk/aws-sqs', 'aws-cdk/aws-sns');
 project.addCdkTestDependencies('aws-cdk/something-else');
 ```
 
-The `@aws-cdk/assert` library is already added to the cdkTestDependencies for you.
+> The `@aws-cdk/assert` library is already added to the `cdkTestDependencies` for you.
 
-Additional dependencies can be added through `deps`/`dependencies` for jsii-based libraries or 
-`bundledDeps`/`bundledDependencies` for libraries that are not built with the jsii. You can read more 
+### Depending on other modules
+
+If your library consumes other jsii modules, you should declare them thorugh the `deps` or `peerDeps` options. `deps` should be used if 
+types from the consumed module is _not_ part of the public API of the library (the module is used as an implementation detail), 
+while `peerDeps` _must_ be used if types from the consumed module are exported as part of your library's API. You can read more 
 [here](https://github.com/aws/jsii/blob/master/docs/configuration.md#dependency-considerations).
+
+```ts
+deps: [ 'cdk-time-bomb' ]
+```
 
 A [dependabot](https://dependabot.com/) file will be added unless `dependabot` is set to 'false'.
 
@@ -103,22 +109,14 @@ any number of jsii target languages.
   },
 ```
 
-Each target requires a specific [Github project secret](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets) 
-to be setup:
+[jsii-release](https://github.com/aws/jsii-release) is used for publishing, and requires uploading [Github project secrets](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets) based on the repositories you wish to publish to:
 
-* npm - NPM_TOKEN
-* .NET - NUGET_API_KEY
-* Java:
-  * MAVEN_GPG_PRIVATE_KEY
-  * MAVEN_GPG_PRIVATE_KEY_PASSPHRASE
-  * MAVEN_PASSWORD
-  * MAVEN_USERNAME
-  * MAVEN_STAGING_PROFILE_ID
-* Python
-  * TWINE_USERNAME
-  * TWINE_PASSWORD
+* npm - `NPM_TOKEN` ([docs](https://github.com/aws/jsii-release#npm))
+* .NET - `NUGET_API_KEY` ([docs](https://github.com/aws/jsii-release#nuget))
+* Java: `MAVEN_GPG_PRIVATE_KEY`, `MAVEN_GPG_PRIVATE_KEY_PASSPHRASE`, `MAVEN_PASSWORD`, `MAVEN_USERNAME`, `MAVEN_STAGING_PROFILE_ID` ([docs](https://github.com/aws/jsii-release#maven))
+* Python: `TWINE_USERNAME`, `TWINE_PASSWORD` ([docs](https://github.com/aws/jsii-release#pypi))
   
-For help in getting these secrets for your project, read the [jsii-release](https://github.com/aws/jsii-release).  
+For help in getting these secrets for your project, read the [jsii-release](https://github.com/aws/jsii-release).
   
 If you don't want to publish a particular package, do not include the `dotnet`, `java`, or `python` field.
 
