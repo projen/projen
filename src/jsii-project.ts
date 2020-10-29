@@ -133,7 +133,8 @@ export interface JsiiPythonTarget {
 
   /**
    * The registry url to use when releasing packages.
-   * @default - twine default
+   *
+   * By default uses the default twine registry url.
    */
   readonly twineRegistryUrl?: string;
 }

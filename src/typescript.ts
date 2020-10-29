@@ -310,20 +310,21 @@ export interface TypescriptConfigOptions {
    */
   readonly fileName?: string;
   /**
-   * The directory in which typescript sources reside.
-   * @default - all .ts files recursively
+   * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
+   *
+   * By default, includes all .ts files recursively.
    */
   readonly include?: string[];
 
   /**
-   * @default - node_modules is excluded by default
+   * Filters results from the "include" option.
+   *
+   * By default, node_modules is excluded.
    */
   readonly exclude?: string[];
 
   /**
    * Compiler options to use.
-   *
-   * @default - see above
    */
   readonly compilerOptions: TypeScriptCompilerOptions;
 }
@@ -456,7 +457,7 @@ export interface TypeScriptCompilerOptions {
   /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
    *
-   * @default [ 'es2018' ]
+   * @default [ "es2018" ]
    */
   readonly lib?: string[];
 
@@ -464,14 +465,14 @@ export interface TypeScriptCompilerOptions {
    * Sets the module system for the program.
    * See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
    *
-   * @default 'CommonJS'
+   * @default "CommonJS"
    */
   readonly module?: string;
 
   /**
    * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
    *
-   * @default 'node'
+   * @default "node"
    */
   readonly moduleResolution?: TypeScriptModuleResolution;
 
@@ -590,7 +591,7 @@ export interface TypeScriptCompilerOptions {
    * a lower target if your code is deployed to older environments, or a higher target if your
    * code is guaranteed to run in newer environments.
    *
-   * @default 'ES2018'
+   * @default "ES2018"
    */
   readonly target?: string;
 

@@ -149,7 +149,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Version of projen to install.
    *
-   * @default - Semver.latest()
+   * @default "Semver.latest()"
    */
   readonly projenVersion?: Semver;
 
@@ -163,7 +163,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The name of the main release branch.
    *
-   * @default 'master'
+   * @default "master"
    */
   readonly defaultReleaseBranch?: string;
 
@@ -277,7 +277,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default packageManager.YARN
+   * @default "NodePackageManager.YARN"
    */
   readonly packageManager?: NodePackageManager;
 
@@ -285,14 +285,13 @@ export interface NodeProjectCommonOptions {
    * License copyright owner.
    *
    * Defaults to the value of authorName or "" if authorName is undefined.
-   *
-   * @default - ""
    */
   readonly copyrightOwner?: string;
 
   /**
    * The copyright years to put in the LICENSE file.
-   * @default - current year
+   *
+   * Defaults to the current year.
    */
   readonly copyrightPeriod?: string;
 
@@ -320,26 +319,28 @@ export interface NodeProjectCommonOptions {
   /**
    * Include dependabot configuration.
    *
-   * @default true;
+   * @default true
    */
   readonly dependabot?: boolean;
 
   /**
    * Options for dependabot.
    *
-   * @default - default options
+   * Defaults to default dependabot options.
    */
   readonly dependabotOptions?: DependabotOptions;
 
   /**
    * Adds mergify configuration.
+   *
    * @default true
    */
   readonly mergify?: boolean;
 
   /**
    * Options for mergify
-   * @default - default options
+   *
+   * Defaults to default mergify options.
    */
   readonly mergifyOptions?: MergifyOptions;
 
@@ -391,7 +392,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Customize the projenUpgrade schedule in cron expression.
    *
-   @default [ "0 6 * * *"" ]
+   @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
 
@@ -404,7 +405,8 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Options for `yarn start`.
-   * @default - default options
+   *
+   * Defaults to default start options.
    */
   readonly startOptions?: StartOptions;
 
@@ -449,7 +451,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The contents of the pull request template.
    *
-   * @default - default content
+   * Defaults to default pull request contents.
    */
   readonly pullRequestTemplateContents?: string;
 }

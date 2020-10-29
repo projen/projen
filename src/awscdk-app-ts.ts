@@ -24,7 +24,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
    *
-   * @default 1.63.0
+   * @default "1.63.0"
    */
   readonly cdkVersion: string;
 
@@ -60,7 +60,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
    *
-   * @default broadening
+   * @default "CdkApprovalLevel.BROADENING"
    */
   readonly requireApproval?: CdkApprovalLevel;
 

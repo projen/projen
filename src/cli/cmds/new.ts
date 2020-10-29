@@ -105,9 +105,18 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
 }
 
 function makePadding(paddingLength: number): string {
-  return Array(paddingLength + 1).join(' ');
+  return ' '.repeat(paddingLength);
 }
 
+/**
+ * Prints all parameters that can be used in a project type, alongside their descriptions.
+ *
+ * Parameters in `params` that aren't undefined are rendered as defaults,
+ * while all other parameters are rendered as commented out.
+ *
+ * @param type Project type
+ * @param params Parameters that should be uncommented in .projenrc.js
+ */
 function renderParams(type: inventory.ProjectType, params: Record<string, any>) {
   let marginSize = 0;
   let renders: Record<string, string> = {};
@@ -129,7 +138,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>) 
   const result: string[] = [];
   result.push('{');
   for (const option of type.options) {
-    let paramRender = renders[option.name];
+    const paramRender = renders[option.name];
     result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/** ${option.docs} */`);
   }
   result.push('}');
