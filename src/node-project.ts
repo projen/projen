@@ -8,6 +8,7 @@ import { JsonFile } from './json';
 import { License } from './license';
 import * as logging from './logging';
 import { Mergify, MergifyOptions } from './mergify';
+import { PullRequestTemplate } from './pr-template';
 import { Project } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
@@ -33,16 +34,95 @@ export enum NodePackageManager {
 }
 
 export interface NodeProjectCommonOptions {
-  readonly bundledDependencies?: string[];
-  readonly dependencies?: Record<string, Semver>;
-  readonly devDependencies?: Record<string, Semver>;
-  readonly peerDependencies?: Record<string, Semver>;
-  readonly peerDependencyOptions?: PeerDependencyOptions;
-
-  readonly bundledDeps?: string[];
+  /**
+   * Runtime dependencies of this module.
+   *
+   * The recommendation is to only specify the module name here (e.g.
+   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * sense that it will add the module as a dependency to your `package.json`
+   * file with the latest version (`^`). You can specify semver requirements in
+   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
+   * this will be what you `package.json` will eventually include.
+   *
+   * @example [ 'express', 'lodash', 'foo@^2' ]
+   * @default []
+   */
   readonly deps?: string[];
+
+  /**
+   * Build dependencies for this module. These dependencies will only be
+   * available in your build environment but will not be fetched when this
+   * module is consumed.
+   *
+   * The recommendation is to only specify the module name here (e.g.
+   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * sense that it will add the module as a dependency to your `package.json`
+   * file with the latest version (`^`). You can specify semver requirements in
+   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
+   * this will be what you `package.json` will eventually include.
+   *
+   * @example [ 'typescript', '@types/express' ]
+   * @default []
+   */
   readonly devDeps?: string[];
+
+  /**
+   * Peer dependencies for this module. Dependencies listed here are required to
+   * be installed (and satisfied) by the _consumer_ of this library. Using peer
+   * dependencies allows you to ensure that only a single module of a certain
+   * library exists in the `node_modules` tree of your consumers.
+   *
+   * Note that prior to npm@7, peer dependencies are _not_ automatically
+   * installed, which means that adding peer dependencies to a library will be a
+   * breaking change for your customers.
+   *
+   * Unless `peerDependencyOptions.pinnedDevDependency` is disabled (it is
+   * enabled by default), projen will automatically add a dev dependency with a
+   * pinned version for each peer dependency. This will ensure that you build &
+   * test your module against the lowest peer version required.
+   *
+   * @default []
+   */
   readonly peerDeps?: string[];
+
+  /**
+   * List of dependencies to bundle into this module. These modules will be
+   * added both to the `dependencies` section and `peerDependencies` section of
+   * your `package.json`.
+   *
+   * The recommendation is to only specify the module name here (e.g.
+   * `express`). This will behave similar to `yarn add` or `npm install` in the
+   * sense that it will add the module as a dependency to your `package.json`
+   * file with the latest version (`^`). You can specify semver requirements in
+   * the same syntax passed to `npm i` or `yarn add` (e.g. `express@^2`) and
+   * this will be what you `package.json` will eventually include.
+   */
+  readonly bundledDeps?: string[];
+
+  /**
+   * @deprecated use `bundledDeps`
+   */
+  readonly bundledDependencies?: string[];
+
+  /**
+   * @deprecated use `deps`
+   */
+  readonly dependencies?: Record<string, Semver>;
+
+  /**
+   * @deprecated use `devDeps`
+   */
+  readonly devDependencies?: Record<string, Semver>;
+
+  /**
+   * @deprecated use `peerDeps`
+   */
+  readonly peerDependencies?: Record<string, Semver>;
+
+  /**
+   * Options for `peerDeps`.
+   */
+  readonly peerDependencyOptions?: PeerDependencyOptions;
 
   /**
    * Binary programs vended with your module.
@@ -358,6 +438,20 @@ export interface NodeProjectCommonOptions {
    * @default "lib/index.js"
    */
   readonly entrypoint?: string;
+
+  /**
+   * Include a GitHub pull request template.
+   *
+   * @default true
+   */
+  readonly pullRequestTemplate?: boolean;
+
+  /**
+   * The contents of the pull request template.
+   *
+   * @default - default content
+   */
+  readonly pullRequestTemplateContents?: string;
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -463,6 +557,7 @@ export class NodeProject extends Project {
   public readonly manifest: any;
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
+  public readonly pullRequestTemplate?: PullRequestTemplate;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -640,10 +735,9 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
-    this.start?.addEntry(PROJEN_SCRIPT, {
-      desc: 'Synthesize project configuration from .projenrc.js',
-      category: StartEntryCategory.MAINTAIN,
+    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`, {
+      startDesc: 'Synthesize project configuration from .projenrc.js',
+      startCategory: StartEntryCategory.MAINTAIN,
     });
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
@@ -826,6 +920,12 @@ export class NodeProject extends Project {
     for (const [n, v] of Object.entries(options.scripts ?? {})) {
       this.addScript(n, v);
     }
+
+    if (options.pullRequestTemplate ?? true) {
+      this.pullRequestTemplate = new PullRequestTemplate(this, {
+        lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
+      });
+    }
   }
 
   public addBins(bins: Record<string, string>) {
@@ -834,6 +934,9 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * @deprecated use `addDeps()`
+   */
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [k, v] of Object.entries(deps)) {
       this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
@@ -844,6 +947,9 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * @deprecated use `addBundledDeps()`
+   */
   public addBundledDependencies(...deps: string[]) {
     if (deps.length && !this.allowLibraryDependencies) {
       throw new Error(`cannot add bundled dependencies to an APP project: ${deps.join(',')}`);
@@ -862,12 +968,18 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * @deprecated use `addDevDeps()`
+   */
   public addDevDependencies(deps: { [module: string]: Semver }) {
     for (const [k, v] of Object.entries(deps ?? {})) {
       this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
 
+  /**
+   * @deprecated use `addPeerDeps()`
+   */
   public addPeerDependencies(deps: { [module: string]: Semver }, options?: PeerDependencyOptions) {
     if (Object.keys(deps).length && !this.allowLibraryDependencies) {
       throw new Error(`cannot add peer dependencies to an APP project: ${Object.keys(deps).join(',')}`);
@@ -898,10 +1010,19 @@ export class NodeProject extends Project {
    * Replaces the contents of an npm package.json script.
    *
    * @param name The script name
-   * @param commands The commands to run (joined by "&&")
+   * @param command The command to execute
+   * @param options Options such as start menu description and category
    */
-  public addScript(name: string, ...commands: string[]) {
-    this.scripts[name] = commands;
+  public addScript(name: string, command: string, options: ScriptOptions = { }) {
+    this.scripts[name] = [command];
+
+    if (options.startDesc) {
+      this.start?.addEntry(name, {
+        desc: options.startDesc,
+        command: `${this.runScriptCommand} ${name}`,
+        category: options.startCategory,
+      });
+    }
   }
 
   /**
@@ -937,12 +1058,20 @@ export class NodeProject extends Project {
    */
   public addCompileCommand(...commands: string[]) {
     this.addScriptCommand('compile', ...commands);
+
+    this.start?.addEntry('compile', {
+      desc: 'Only compile',
+      command: `${this.runScriptCommand} compile`,
+      category: StartEntryCategory.BUILD,
+    });
   }
 
   public addTestCommand(...commands: string[]) {
     this.addScriptCommand('test', ...commands);
+
     this.start?.addEntry('test', {
       desc: 'Run tests',
+      command: `${this.runScriptCommand} test`,
       category: StartEntryCategory.TEST,
     });
   }
@@ -1069,6 +1198,17 @@ export class NodeProject extends Project {
   }
 
   private processDeps(options: NodeProjectCommonOptions) {
+    const deprecate = (key: string, alt: string) => {
+      if (Object.keys((options as any)[key] ?? {}).length) {
+        logging.warn(`The option "${key}" will soon be deprecated, use "${alt}" instead (see API docs)`);
+      }
+    };
+
+    deprecate('dependencies', 'deps');
+    deprecate('peerDependencies', 'peerDeps');
+    deprecate('devDependencies', 'devDeps');
+    deprecate('bundledDependencies', 'bundledDeps');
+
     this.addDependencies(options.dependencies ?? {});
     this.addPeerDependencies(options.peerDependencies ?? {});
     this.addDevDependencies(options.devDependencies ?? {});
@@ -1365,6 +1505,24 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
+}
+
+/**
+ * Options for adding scripts.
+ */
+export interface ScriptOptions {
+  /**
+   * Start menu description for this script
+   * @default - no description
+   */
+  readonly startDesc?: string;
+
+  /**
+   * Category in start menu
+   *
+   * @default StartEntryCategory.MISC
+   */
+  readonly startCategory?: StartEntryCategory;
 }
 
 function parseDep(dep: string) {

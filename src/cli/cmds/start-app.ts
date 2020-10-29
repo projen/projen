@@ -24,11 +24,11 @@ export async function showStartMenu() {
     return;
   }
 
-  child_process.spawnSync('yarn', ['-s', command], { stdio: 'inherit' });
+  child_process.spawnSync(command, { stdio: 'inherit' });
 }
 
 export function printStartMenu() {
-  console.error(chalk.cyanBright.underline('Commands ("yarn run COMMAND"):'));
+  console.error(chalk.cyanBright.underline('Commands:'));
   for (const entry of renderChoices()) {
     if (entry.type === 'separator') {
       console.error(entry.line);
@@ -55,7 +55,7 @@ function renderChoices() {
     category = cat;
     result.push({
       name: `${k.padEnd(width)}   ${entry.desc}`,
-      value: k,
+      value: entry.command,
       short: entry.desc,
     });
   }

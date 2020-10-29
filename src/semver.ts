@@ -1,5 +1,10 @@
 import * as semver from 'semver';
 
+/**
+ * @deprecated This class will be removed in upcoming releases. if you wish to
+ * specify semver requirements in `deps`, `devDeps`, etc, specify them like so
+ * `express@^2.1`.
+ */
 export class Semver {
 
   public static of(spec: string) { return new Semver(spec); }

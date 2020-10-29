@@ -40,10 +40,9 @@ export class Eslint extends Component {
 
     const dirs = options.dirs;
 
-    project.addScript('eslint', `eslint --ext .ts --fix ${dirs.join(' ')}`);
-    project.start?.addEntry('eslint', {
-      desc: 'Runs eslint against the codebase',
-      category: StartEntryCategory.TEST,
+    project.addScript('eslint', `eslint --ext .ts --fix ${dirs.join(' ')}`, {
+      startDesc: 'Runs eslint against the codebase',
+      startCategory: StartEntryCategory.TEST,
     });
     project.addTestCommand(`${project.runScriptCommand} eslint`);
 

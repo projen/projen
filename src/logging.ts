@@ -1,7 +1,10 @@
 import * as chalk from 'chalk';
 
+let enabled = true;
+
 function log(color: chalk.ChalkFunction, ...text: any[]) {
-  console.error(`🤖 ${chalk.bold(color(...text))}`);
+  if (!enabled) { return; }
+  console.error(`🤖 ${color(...text)}`);
 }
 
 export function verbose(...text: any[]) {
@@ -18,4 +21,8 @@ export function error(...text: any[]) {
 
 export function warn(...text: any[]) {
   log(chalk.yellow, ...text);
+}
+
+export function disable() {
+  enabled = false;
 }

@@ -13,17 +13,17 @@ export interface NextJsCommonProjectOptions {
    * @default "public"
    */
   readonly assetsdir?: string;
+}
 
+export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
+
+export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {
   /**
    * Generate one-time sample in `pages/` and `public/` if there are no files there.
    * @default true
    */
   readonly sampleCode?: boolean;
 }
-
-export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
-
-export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {}
 
 /**
  * Next.js project without TypeScript.
@@ -184,28 +184,24 @@ export class NextComponent extends Component {
     }
 
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
-    project.addScript('dev', 'next dev');
-    project.start?.addEntry('dev', {
-      desc: 'Starts the Next.js application in development mode',
-      category: StartEntryCategory.BUILD,
+    project.addScript('dev', 'next dev', {
+      startDesc: 'Starts the Next.js application in development mode',
+      startCategory: StartEntryCategory.BUILD,
     });
 
-    project.addScript('build', 'next build');
-    project.start?.addEntry('build', {
-      desc: 'Creates an optimized production build of your Next.js application',
-      category: StartEntryCategory.BUILD,
+    project.addScript('build', 'next build', {
+      startDesc: 'Creates an optimized production build of your Next.js application',
+      startCategory: StartEntryCategory.BUILD,
     });
 
-    project.addScript('server', 'next start');
-    project.start?.addEntry('server', {
-      desc: 'Starts the Next.js application in production mode',
-      category: StartEntryCategory.RELEASE,
+    project.addScript('server', 'next start', {
+      startDesc: 'Starts the Next.js application in production mode',
+      startCategory: StartEntryCategory.RELEASE,
     });
 
-    project.addScript('telemetry', 'next telemetry');
-    project.start?.addEntry('telemetry', {
-      desc: 'Checks the status of Next.js telemetry collection',
-      category: StartEntryCategory.MISC,
+    project.addScript('telemetry', 'next telemetry', {
+      startDesc: 'Checks the status of Next.js telemetry collection',
+      startCategory: StartEntryCategory.MISC,
     });
 
     project.npmignore?.exclude('# Next.js', '/.next/');

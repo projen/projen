@@ -1,6 +1,5 @@
-import * as fs from 'fs-extra';
-import { Makefile } from './makefile';
-import { Project } from './project';
+import { Makefile, Project } from '../src';
+import { synthSnapshot } from './util';
 
 test('makefile synthesises correctly', () => {
   const prj = new Project();
@@ -26,11 +25,7 @@ test('makefile synthesises correctly', () => {
     ],
   });
 
-  const outdir = fs.mkdtempSync('/tmp/projen-test-');
-  prj.synth(outdir);
-
-  const actual = fs.readFileSync(`${outdir}/Makefile`, 'utf-8');
-  expect(actual).toStrictEqual([
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
     '.PHONY: all',
     'all: one two three',
     '',
@@ -71,11 +66,7 @@ test('makefile synthesises correctly using imperative API', () => {
     .addAll('one')
     .addAlls('two', 'three');
 
-  const outdir = fs.mkdtempSync('/tmp/projen-test-');
-  prj.synth(outdir);
-
-  const actual = fs.readFileSync(`${outdir}/Makefile`, 'utf-8');
-  expect(actual).toStrictEqual([
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
     '.PHONY: all',
     'all: one two three',
     '',

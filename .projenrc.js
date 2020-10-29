@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile } = require('./lib');
+const { JsiiProject, JsonFile, Semver } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -36,7 +36,7 @@ const project = new JsiiProject({
 });
 
 // since this is projen, we need to compile before running projen, dah!
-project.addScript('projen', 'yarn compile', 'node .projenrc.js');
+project.addScript('projen', 'yarn compile && node .projenrc.js');
 
 project.gitignore.include('templates/**');
 

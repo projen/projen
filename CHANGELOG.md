@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.135 (2020-10-28)
+
+
+### Features
+
+* updates to awscdk-construct documentation ([3ae3e09](https://github.com/eladb/projen/commit/3ae3e0996259356515d37d8fefcae58b83525d11))
+
+### 0.3.134 (2020-10-28)
+
+### 0.3.133 (2020-10-27)
+
+
+### Features
+
+* **node:** deprecate "xxxDependencies" in favor of "xxxDeps" (warning) ([a9f3890](https://github.com/eladb/projen/commit/a9f3890fbabcb12db3b4ee30d1d1327ef3dca3ff))
+
+### 0.3.132 (2020-10-27)
+
+
+### Bug Fixes
+
+* duplicate "sampleCode" options in next/react projects ([0efba69](https://github.com/eladb/projen/commit/0efba69b33f937572f625d6e7295b5c5705ab8cc))
+
+### 0.3.131 (2020-10-27)
+
+
+### Features
+
+* add .idea to .npmignore for webstorm developers ([#236](https://github.com/eladb/projen/issues/236)) ([4e6382a](https://github.com/eladb/projen/commit/4e6382afe12269337e62cd775739c94b6cebbacb)), closes [#222](https://github.com/eladb/projen/issues/222)
+
+### 0.3.130 (2020-10-27)
+
+
+### Features
+
+* add support for docker-compose.yml ([#230](https://github.com/eladb/projen/issues/230)) ([f385c45](https://github.com/eladb/projen/commit/f385c4538ffb13b53cbd18c64722cf9ea83caa5b))
+
+### 0.3.129 (2020-10-27)
+
+### 0.3.128 (2020-10-26)
+
+### 0.3.127 (2020-10-26)
+
+### 0.3.126 (2020-10-26)
+
+
+### Bug Fixes
+
+* **react:** build error caused by API change ([#235](https://github.com/eladb/projen/issues/235)) ([d2bfb25](https://github.com/eladb/projen/commit/d2bfb25cc1685a90d585c6e26ffaca3f9a411760)), closes [#228](https://github.com/eladb/projen/issues/228) [#229](https://github.com/eladb/projen/issues/229)
+
+### 0.3.125 (2020-10-26)
+
+### 0.3.124 (2020-10-25)
+
+
+### Bug Fixes
+
+* **typescript:** compilerOptions merging properly ([#226](https://github.com/eladb/projen/issues/226)) ([81b4e41](https://github.com/eladb/projen/commit/81b4e41c8f16ab203179ad661c1ae3a74a969fc5)), closes [#221](https://github.com/eladb/projen/issues/221)
+
+### 0.3.123 (2020-10-25)
+
 ### 0.3.122 (2020-10-23)
 
 

@@ -136,15 +136,10 @@ export class TypeScriptProject extends NodeProject {
     this.docsDirectory = options.docsDirectory ?? 'docs/';
 
     this.addCompileCommand('tsc');
-    this.start?.addEntry('compile', {
-      desc: 'Only compile',
-      category: StartEntryCategory.BUILD,
-    });
 
-    this.addScript('watch', 'tsc -w');
-    this.start?.addEntry('watch', {
-      desc: 'Watch & compile in the background',
-      category: StartEntryCategory.BUILD,
+    this.addScript('watch', 'tsc -w', {
+      startDesc: 'Watch & compile in the background',
+      startCategory: StartEntryCategory.BUILD,
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
@@ -155,32 +150,28 @@ export class TypeScriptProject extends NodeProject {
     } else {
       this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
     }
-    this.start?.addEntry('build', {
-      desc: 'Full release build (test+compile)',
-      category: StartEntryCategory.BUILD,
-    });
 
     if (options.package ?? true) {
-      this.addScript('package',
+      const packageCommand = [
         'rm -fr dist',
         'mkdir -p dist/js',
         `${this.packageManager} pack`,
         'mv *.tgz dist/js/',
-      );
+      ].join(' && ');
+
+      this.addScript('package', packageCommand, {
+        startDesc: 'Create an npm tarball',
+        startCategory: StartEntryCategory.RELEASE,
+      });
 
       this.addBuildCommand(`${this.runScriptCommand} package`);
-
-      this.start?.addEntry('package', {
-        desc: 'Create an npm tarball',
-        category: StartEntryCategory.RELEASE,
-      });
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
       this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
     }
 
-    const compilerOptions = {
+    const compilerOptionDefaults = {
       alwaysStrict: true,
       declaration: true,
       experimentalDecorators: true,
@@ -210,12 +201,13 @@ export class TypeScriptProject extends NodeProject {
           'node_modules',
           this.libdir,
         ],
+        ...options.tsconfig,
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
-          ...compilerOptions,
+          ...compilerOptionDefaults,
+          ...options.tsconfig?.compilerOptions,
         },
-        ...options.tsconfig,
       });
     }
 
@@ -234,6 +226,7 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/tsconfig.json');
     this.npmignore?.exclude('/.github');
     this.npmignore?.exclude('/.vscode');
+    this.npmignore?.exclude('/.idea');
     this.npmignore?.exclude('/.projenrc.js');
 
     // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
@@ -251,7 +244,7 @@ export class TypeScriptProject extends NodeProject {
         exclude: [
           'node_modules',
         ],
-        compilerOptions,
+        compilerOptions: compilerOptionDefaults,
       });
 
       eslintTsConfig = tsconfig.fileName;
@@ -301,6 +294,13 @@ export class TypeScriptProject extends NodeProject {
    */
   public addBuildCommand(...commands: string[]) {
     this.addScriptCommand('build', ...commands);
+
+    this.start?.addEntry('build', {
+      desc: 'Full release build (test+compile)',
+      command: `${this.runScriptCommand} build`,
+      category: StartEntryCategory.BUILD,
+    });
+
   }
 }
 
@@ -605,6 +605,11 @@ export interface TypeScriptCompilerOptions {
    * Only use to control the output directory structure with `outDir`.
    */
   readonly rootDir?: string;
+
+  /**
+   * Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
+   */
+  readonly allowSyntheticDefaultImports?: boolean;
 }
 
 export class TypescriptConfig {

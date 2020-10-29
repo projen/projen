@@ -43,6 +43,8 @@ list):
 * [nextjs-ts](https://github.com/eladb/projen/blob/master/API.md#projen-nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/eladb/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/eladb/projen/blob/master/API.md#projen-project) - Base project.
+* [react](https://github.com/eladb/projen/blob/master/API.md#projen-reactproject) - React project without TypeScript.
+* [react-ts](https://github.com/eladb/projen/blob/master/API.md#projen-reacttypescriptproject) - React project with TypeScript.
 * [typescript](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
 * [typescript-app](https://github.com/eladb/projen/blob/master/API.md#projen-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
@@ -146,7 +148,7 @@ Some examples for features built-in to project types:
 * Automated releases to npm, maven, NuGet and PyPI
 * Mergify configuration
 * LICENSE file generation
-* gitignore + npmigonre management
+* gitignore + npmignore management
 * Node "engines" support with coupling to CI build environment and @types/node
 * Anti-tamper: CI builds will fail if a synthesized file is modified manually
 
@@ -171,11 +173,11 @@ with project types and components defined in external jsii modules (the reason
 we need jsii is because projen uses the jsii metadata to discover project types
 & options in projen new).
 
-Say we have a module in npm called `projen-vue` which includes a single project
+Say we have a module in npm called `projen-vuejs` which includes a single project
 type for vue.js:
 
 ```bash
-$ npx projen new --from projen-vue
+$ npx projen new --from projen-vuejs
 ```
 
 If the referenced module includes multiple project types, the type is required.
@@ -186,7 +188,7 @@ add](https://classic.yarnpkg.com/en/docs/cli/add#toc-adding-dependencies) like
 `git@github.com/awesome/projen-vuejs#1.2.3`, etc.
 
 ```bash
-$ npx projen new --from projen-vue@^2 vuejs-ts --description "my awesome vue project"
+$ npx projen new --from projen-vuejs@^2 vuejs-ts --description "my awesome vue project"
 ```
 
 Under the hood, `projen new` will install the `projen-vuejs` module from npm
