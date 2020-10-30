@@ -18,8 +18,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * Jest options
-   *
-   * @default - {}
+   * @default - default options
    */
   readonly jestOptions?: JestOptions;
 
@@ -52,8 +51,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * Custom TSConfig
-   *
-   * @default undefined
    */
   readonly tsconfig?: TypescriptConfigOptions;
 
@@ -68,10 +65,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Compile the code before running tests.
    *
-   * The default behavior is to delete the lib/ directory and run jest
-   * typescript tests and only if all tests pass, run the compiler.
-   *
-   * @default false
+   * @default - the default behavior is to delete the lib/ directory and run
+   * jest typescript tests and only if all tests pass, run the compiler.
    */
   readonly compileBeforeTest?: boolean;
 
@@ -83,10 +78,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * The .d.ts file that includes the type declarations for this module.
-   *
-   * By default, the value is derived from the project's entrypoint (usually lib/index.d.ts)
-   *
-   * @default "lib/index.d.ts"
+   * @default - .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
    */
   readonly entrypointTypes?: string;
 
@@ -312,14 +304,14 @@ export interface TypescriptConfigOptions {
   /**
    * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
    *
-   * By default, includes all .ts files recursively.
+   * @default - all .ts files recursively
    */
   readonly include?: string[];
 
   /**
    * Filters results from the "include" option.
    *
-   * By default, node_modules is excluded.
+   * @default - node_modules is excluded by default
    */
   readonly exclude?: string[];
 

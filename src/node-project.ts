@@ -149,7 +149,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Version of projen to install.
    *
-   * @default "Semver.latest()"
+   * @default Semver.latest()
    */
   readonly projenVersion?: Semver;
 
@@ -190,16 +190,14 @@ export interface NodeProjectCommonOptions {
   /**
    * CRON schedule to trigger new releases.
    *
-   * Default behavior is to have no scheduled releases.
-   *
-   * @default - undefined
+   * @default - no scheduled releases
    */
   readonly releaseSchedule?: string;
 
   /**
    * Branches which trigger a release.
    *
-   * By default includes the main release branch.
+   * Default value is based on defaultReleaseBranch.
    *
    * @default [ "master" ]
    */
@@ -215,9 +213,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Container image to use for GitHub workflows.
    *
-   * Default behavior is to use the default image.
-   *
-   * @default - undefined
+   * @default - default image
    */
   readonly workflowContainerImage?: string;
 
@@ -236,27 +232,21 @@ export interface NodeProjectCommonOptions {
   /**
    * Minimum Node.js version to require via package.json `engines` (inclusive).
    *
-   * By default, no minimum is applied.
-   *
-   * @default - undefined
+   * @default - no "engines" specified
    */
   readonly minNodeVersion?: string;
 
   /**
    * Minimum node.js version to require via `engines` (inclusive).
    *
-   * By default, no maximum is applied.
-   *
-   * @default - undefined
+   * @default - no max
    */
   readonly maxNodeVersion?: string;
 
   /**
    * The node version to use in GitHub workflows.
    *
-   * Default behavior is to take on the same value as minNodeVersion.
-   *
-   * @default - undefined
+   * @default - same as `minNodeVersion`
    */
   readonly workflowNodeVersion?: string;
 
@@ -277,21 +267,21 @@ export interface NodeProjectCommonOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default "NodePackageManager.YARN"
+   * @default NodePackageManager.YARN
    */
   readonly packageManager?: NodePackageManager;
 
   /**
    * License copyright owner.
    *
-   * Defaults to the value of authorName or "" if authorName is undefined.
+   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
    */
   readonly copyrightOwner?: string;
 
   /**
    * The copyright years to put in the LICENSE file.
    *
-   * Defaults to the current year.
+   * default - current year
    */
   readonly copyrightPeriod?: string;
 
@@ -326,7 +316,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Options for dependabot.
    *
-   * Defaults to default dependabot options.
+   * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
 
@@ -340,7 +330,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Options for mergify
    *
-   * Defaults to default mergify options.
+   * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
 
@@ -373,9 +363,7 @@ export interface NodeProjectCommonOptions {
    *
    * To create a personal access token see https://github.com/settings/tokens
    *
-   * Default behavior is to have no automatic projen upgrade pull requests.
-   *
-   * @default - undefined
+   * @default - no automatic projen upgrade pull requests
    */
   readonly projenUpgradeSecret?: string;
 
@@ -383,9 +371,7 @@ export interface NodeProjectCommonOptions {
    * Automatically merge projen upgrade PRs when build passes.
    * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
    *
-   * By default is true if mergify auto-merge is enabled (default).
-   *
-   * @default - true
+   * @default - "true" if mergify auto-merge is enabled (default)
    */
   readonly projenUpgradeAutoMerge?: boolean;
 
@@ -406,7 +392,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Options for `yarn start`.
    *
-   * Defaults to default start options.
+   * @default - default options
    */
   readonly startOptions?: StartOptions;
 
@@ -451,7 +437,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The contents of the pull request template.
    *
-   * Defaults to default pull request contents.
+   * @default - default content
    */
   readonly pullRequestTemplateContents?: string;
 }

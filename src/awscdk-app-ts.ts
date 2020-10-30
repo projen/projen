@@ -60,7 +60,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
    *
-   * @default "CdkApprovalLevel.BROADENING"
+   * @default CdkApprovalLevel.BROADENING
    */
   readonly requireApproval?: CdkApprovalLevel;
 

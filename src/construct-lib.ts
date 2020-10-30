@@ -16,7 +16,7 @@ export interface ConstructLibraryOptions extends JsiiProjectOptions {
    *
    * @see https://github.com/construct-catalog/catalog
    *
-   * Defaults to making announcements for new versions.
+   * @default - new version will be announced
    */
   readonly catalog?: Catalog;
 }

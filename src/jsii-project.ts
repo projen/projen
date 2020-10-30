@@ -87,7 +87,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
 
   /**
    * Jest options
-   * @default {}
+   * @default - defaults
    */
   readonly jestOptions?: JestOptions;
 
@@ -134,7 +134,7 @@ export interface JsiiPythonTarget {
   /**
    * The registry url to use when releasing packages.
    *
-   * By default uses the default twine registry url.
+   * @default - twine default
    */
   readonly twineRegistryUrl?: string;
 }
