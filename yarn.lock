@@ -3599,16 +3599,16 @@ jsesc@^2.5.1:
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
 jsii-diff@^1.11.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.13.0.tgz#91f3276dda151fdae2c9a0262666ecdcf44576ea"
-  integrity sha512-8yc4QjmXzoMjAPVMUD+BJNvBKhqM4sEXR3XUGz3/gCa8tbqvpEGsBjXHEnWlU5BHJU5uUpt0HFF+yEVpDg9YuQ==
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.14.0.tgz#d9bc6c3df853f52659fb798392280483c9c557b8"
+  integrity sha512-/8M8C+Qah4U6Dn6Jm4GtGQyjHyn8djSnyzQ+eVG90FbUHRbmNAN/r643AcbqipyFDqim4IjYUnX56EMtR6Xc+Q==
   dependencies:
-    "@jsii/spec" "^1.13.0"
+    "@jsii/spec" "^1.14.0"
     fs-extra "^9.0.1"
-    jsii-reflect "^1.13.0"
+    jsii-reflect "^1.14.0"
     log4js "^6.3.0"
     typescript "~3.9.7"
-    yargs "^16.0.3"
+    yargs "^16.1.0"
 
 jsii-docgen@^1.3.2:
   version "1.4.72"
