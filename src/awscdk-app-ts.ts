@@ -127,6 +127,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.removeScript('watch'); // because we use ts-node
     this.addBuildCommand(`${this.runScriptCommand} synth`);
 
+    this.addScript('destroy', 'cdk destroy', {
+      startDesc: 'Destroys your cdk app in the AWS cloud',
+      startCategory: StartEntryCategory.RELEASE,
+    });
+
     this.cdkConfig = {
       app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
     };

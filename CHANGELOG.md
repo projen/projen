@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.137 (2020-10-29)
+
+
+### Features
+
+* **scripts:** adds `destroy` -> cdk destroy for awscdk-app-ts ([#248](https://github.com/eladb/projen/issues/248)) ([bd56136](https://github.com/eladb/projen/commit/bd56136f2d8facd770673db09efadf8f62a3ea52))
+
+### 0.3.136 (2020-10-29)
+
 ### 0.3.135 (2020-10-28)
 
 
