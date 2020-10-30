@@ -21,29 +21,40 @@ test('remote discover project id simulation', () => {
 });
 
 test('renderable default values simulation', () => {
-  expect(() => throwIfNotRenderable(undefined)).not.toThrowError(); // the docstring has no default value
-  expect(() => throwIfNotRenderable('undefined')).not.toThrowError(); // the default value is 'undefined'
-  expect(() => throwIfNotRenderable('$BASEDIR')).not.toThrowError();
-  expect(() => throwIfNotRenderable('{ "a": 3 }')).not.toThrowError();
-  expect(() => throwIfNotRenderable('"MyEnum.OptionA"')).not.toThrowError();
-  expect(() => throwIfNotRenderable('2048')).not.toThrowError();
-  expect(() => throwIfNotRenderable('true')).not.toThrowError();
+  const baseOption = {
+    path: ['myOption'],
+    name: 'myOption',
+    switch: 'my-option',
+    type: 'boolean',
+  };
+  expect(() => throwIfNotRenderable(baseOption)).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'undefined' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '$BASEDIR' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '{ "a": 3 }' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '2048' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'true' })).not.toThrowError();
 
-  expect(() => throwIfNotRenderable('MyEnum.OptionA')).toThrowError();
-  expect(() => throwIfNotRenderable('current year')).toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'MyEnum' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA' })).toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'BaseEnum' })).toThrowError();
+
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year', isDefaultDescription: true })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year' })).toThrowError();
 });
 
 test('all default values in docstrings are renderable JS values', () => {
   result.forEach((project) => {
     project.options.forEach((option) => {
-      expect(() => throwIfNotRenderable(option.default)).not.toThrowError();
+      expect(() => throwIfNotRenderable(option)).not.toThrowError();
     });
   });
 });
 
-function throwIfNotRenderable(value?: string) {
-  return (value === undefined) ||
-    (value === 'undefined') ||
-    (value.startsWith('$')) ||
-    JSON.parse(value);
+function throwIfNotRenderable(option: inventory.ProjectOption) {
+  return (option.default === undefined) ||
+    (option.default === 'undefined') ||
+    (option.default.startsWith('$')) ||
+    (option.type && option.default.startsWith(option.type)) ||
+    option.isDefaultDescription ||
+    JSON.parse(option.default);
 };

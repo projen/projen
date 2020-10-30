@@ -127,7 +127,8 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>) 
     if (params.hasOwnProperty(option.name) && params[option.name] !== undefined) {
       paramRender = `${option.name}: ${JSON.stringify(params[option.name])},`;
     } else {
-      paramRender = `// ${option.name}: ${option.default ?? undefined},`;
+      const defaultValue = option.isDefaultDescription ? undefined : (option.default ?? undefined);
+      paramRender = `// ${option.name}: ${defaultValue},`;
     }
     marginSize = Math.max(marginSize, paramRender.length);
     renders[option.name] = paramRender;

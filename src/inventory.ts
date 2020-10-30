@@ -15,6 +15,7 @@ export interface ProjectOption {
   type: string;
   docs?: string;
   default?: string;
+  isDefaultDescription?: boolean;
   optional?: boolean;
 }
 
@@ -137,14 +138,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
     for (const prop of struct.properties ?? []) {
       const propPath = [...basePath, prop.name];
 
-      if (prop.type?.fqn) {
-        // recurse to sub-types only if this is a required property. otherwise, users can configure from .projenrc.js
-        if (!prop.optional) {
-          addOptions(prop.type?.fqn, propPath, true);
-        }
-        continue;
-      }
-
+      const isDescription = prop.docs?.default?.startsWith('-') ?? false;
       const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
 
       // protect against double-booking
@@ -152,13 +146,23 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         throw new Error(`duplicate option "${prop.name}" in ${fqn}`);
       }
 
+      let typeName;
+      if (prop.type?.primitive) {
+        typeName = prop.type?.primitive;
+      } else if (prop.type?.fqn) {
+        typeName = prop.type?.fqn.split('.').pop();
+      } else {
+        typeName = 'unknown';
+      }
+
       options[prop.name] = filterUndefined({
         path: propPath,
         name: prop.name,
         docs: prop.docs.summary,
-        type: prop.type?.primitive ?? 'unknown',
+        type: typeName,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
+        isDefaultDescription: isDescription,
         optional: optional || prop.optional,
       });
     }
