@@ -281,7 +281,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The copyright years to put in the LICENSE file.
    *
-   * default - current year
+   * @default - current year
    */
   readonly copyrightPeriod?: string;
 
