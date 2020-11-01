@@ -230,3 +230,6 @@ $ git clone git@github.com:eladb/projen
 $ cd projen
 $ yarn
 ```
+## License
+
+Distributed under the [Apache-2.0](./LICENSE) license.
