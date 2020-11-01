@@ -488,7 +488,7 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
 
   /**
    * License's SPDX identifier.
-   * See https://github.com/eladb/projen/tree/master/license-text for a list of supported licenses.
+   * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
    */
   readonly license?: string;
 
