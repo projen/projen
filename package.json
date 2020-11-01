@@ -4,7 +4,7 @@
   "description": "A new generation of project generators",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eladb/projen.git"
+    "url": "https://github.com/projen/projen.git"
   },
   "bin": {
     "projen": "bin/projen"

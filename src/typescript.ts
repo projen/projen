@@ -245,7 +245,7 @@ export class TypeScriptProject extends NodeProject {
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
       if (!compileBeforeTest) {
-        // make sure to delete "lib" *before* runninng tests to ensure that
+        // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
         this.addTestCommand(`rm -fr ${this.libdir}/`);
       }
