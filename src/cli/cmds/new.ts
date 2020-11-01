@@ -121,6 +121,13 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>) 
   let marginSize = 0;
   let renders: Record<string, string> = {};
 
+  // sort options by module
+  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
+  for (const option of type.options) {
+    optionsByModule[option.parent] = optionsByModule[option.parent] ?? [];
+    optionsByModule[option.parent].push(option);
+  }
+
   // calculate margin size
   for (const option of type.options) {
     let paramRender;
@@ -138,9 +145,16 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>) 
   const tab = makePadding(2);
   const result: string[] = [];
   result.push('{');
-  for (const option of type.options) {
-    const paramRender = renders[option.name];
-    result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/** ${option.docs} */`);
+  for (const [moduleName, options] of Object.entries(optionsByModule)) {
+    result.push(`${tab}/* ${moduleName} */`);
+    for (const option of options) {
+      const paramRender = renders[option.name];
+      result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
+    }
+    result.push('');
+  }
+  if (result.length > 1) {
+    result.pop();
   }
   result.push('}');
   return result.join('\n');

@@ -13,6 +13,7 @@ export interface ProjectOption {
   name: string;
   switch: string;
   type: string;
+  parent: string;
   docs?: string;
   default?: string;
   isDefaultDescription?: boolean;
@@ -30,6 +31,7 @@ export interface ProjectType {
 }
 
 interface JsiiType {
+  name: string;
   assembly: string;
   kind: string;
   abstract?: boolean;
@@ -157,6 +159,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       options[prop.name] = filterUndefined({
         path: propPath,
+        parent: struct.name,
         name: prop.name,
         docs: prop.docs.summary,
         type: typeName,

@@ -26,6 +26,7 @@ test('renderable default values simulation', () => {
     name: 'myOption',
     switch: 'my-option',
     type: 'boolean',
+    parent: 'MyModule',
   };
   expect(() => throwIfNotRenderable(baseOption)).not.toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'undefined' })).not.toThrowError();
