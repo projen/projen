@@ -8,6 +8,7 @@ export * from './docker-compose';
 export * from './eslint';
 export * from './file';
 export * from './github-workflow';
+export * from './gitpod';
 export * from './ignore-file';
 export * from './jest';
 export * from './jsii-project';

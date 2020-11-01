@@ -46,6 +46,7 @@ tsconfig.json
 !/.projenrc.js
 !version.json
 !/.versionrc.json
+!/.gitpod.yml
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
 !/.mergify.yml
