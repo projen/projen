@@ -123,7 +123,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
   let renders: Record<string, string> = {};
 
   // sort options by module
-  // and filter out options without defualts if removeComments is enabled
+  // and filter out options without defaults if removeComments is enabled
   const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
   for (const option of type.options) {
     if (removeComments && params[option.name] === undefined) {
@@ -162,7 +162,9 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
         result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
       }
     }
-    result.push('');
+    if (!removeComments) {
+      result.push('');
+    }
   }
   if (result.length > 1) {
     result.pop();
