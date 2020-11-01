@@ -16,6 +16,7 @@ class Command implements yargs.CommandModule {
   public builder(args: yargs.Argv) {
     args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
+    args.option('removeComments', { type: 'boolean', default: false, desc: 'Synthesize .projenrc.js without commented options' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
     args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
     args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
@@ -84,7 +85,7 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>) {
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>, removeComments: boolean) {
   const configPath = path.join(baseDir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
     logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
@@ -94,7 +95,7 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   const lines = [
     `const { ${type.typename} } = require('${type.moduleName}');`,
     '',
-    `const project = new ${type.typename}(${renderParams(type, params)});`,
+    `const project = new ${type.typename}(${renderParams(type, params, removeComments)});`,
     '',
     'project.synth();',
     '',
@@ -115,15 +116,19 @@ function makePadding(paddingLength: number): string {
  * while all other parameters are rendered as commented out.
  *
  * @param type Project type
- * @param params Parameters that should be uncommented in .projenrc.js
+ * @param params Object with parameter default values
  */
-function renderParams(type: inventory.ProjectType, params: Record<string, any>) {
+function renderParams(type: inventory.ProjectType, params: Record<string, any>, removeComments: boolean) {
   let marginSize = 0;
   let renders: Record<string, string> = {};
 
   // sort options by module
+  // and filter out options without defualts if removeComments is enabled
   const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
   for (const option of type.options) {
+    if (removeComments && params[option.name] === undefined) {
+      continue;
+    }
     optionsByModule[option.parent] = optionsByModule[option.parent] ?? [];
     optionsByModule[option.parent].push(option);
   }
@@ -146,10 +151,16 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>) 
   const result: string[] = [];
   result.push('{');
   for (const [moduleName, options] of Object.entries(optionsByModule)) {
-    result.push(`${tab}/* ${moduleName} */`);
+    if (!removeComments) {
+      result.push(`${tab}/* ${moduleName} */`);
+    };
     for (const option of options) {
       const paramRender = renders[option.name];
-      result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
+      if (removeComments) {
+        result.push(`${tab}${paramRender}`);
+      } else {
+        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
+      }
     }
     result.push('');
   }
@@ -279,7 +290,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
   }
 
   // generate .projenrc.js
-  generateProjenConfig(baseDir, type, props);
+  generateProjenConfig(baseDir, type, props, args.removeComments);
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
