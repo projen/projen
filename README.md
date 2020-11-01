@@ -1,4 +1,15 @@
-# projen
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Summary](#summary)
+- [Getting Started](#getting-started)
+- [Features](#features)
+- [API Reference](#api-reference)
+- [Ecosystem](#ecosystem)
+  - [Projects in external modules](#projects-in-external-modules)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Summary
 
 Define and maintain complex project configuration through code.
 
