@@ -45,6 +45,7 @@ Name|Description
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
+[YamlFile](#projen-yamlfile)|*No description*
 
 
 **Structs**
@@ -69,6 +70,7 @@ Name|Description
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[GitpodOptions](#projen-gitpodoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
 [JsiiJavaTarget](#projen-jsiijavatarget)|*No description*
@@ -104,6 +106,7 @@ Name|Description
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
+[YamlFileOptions](#projen-yamlfileoptions)|*No description*
 
 
 **Interfaces**
@@ -1155,7 +1158,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NextJsTypeDef](#projen-nextjstypedef), [NodeBuildWorkflow](#projen-nodebuildworkflow), [PullRequestTemplate](#projen-pullrequesttemplate), [ReactTypeDef](#projen-reacttypedef), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile)
+__Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NextJsTypeDef](#projen-nextjstypedef), [NodeBuildWorkflow](#projen-nodebuildworkflow), [PullRequestTemplate](#projen-pullrequesttemplate), [ReactTypeDef](#projen-reacttypedef), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
 
 ### Initializer
 
@@ -1289,10 +1292,15 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Gitpod(project: NodeProject)
+new Gitpod(project: NodeProject, options: GitpodOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  *No description* 
 
 
 
@@ -3453,6 +3461,48 @@ __Returns__:
 
 
 
+## class YamlFile 🔹 <a id="projen-yamlfile"></a>
+
+
+
+__Extends__: [JsonFile](#projen-jsonfile)
+
+### Initializer
+
+
+
+
+```ts
+new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[YamlFileOptions](#projen-yamlfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  *No description* 
+
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-yamlfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
 
 
@@ -4100,6 +4150,22 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct GitpodOptions 🔹 <a id="projen-gitpodoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>any</code> | <span></span>
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -5336,6 +5402,22 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **releaseBranch**🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.
+
+
+
+## struct YamlFileOptions 🔹 <a id="projen-yamlfileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>any</code> | <span></span>
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

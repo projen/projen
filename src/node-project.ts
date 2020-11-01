@@ -754,7 +754,14 @@ export class NodeProject extends Project {
     this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
 
     if (options.gitPod ?? true) {
-      this.gitPod = new Gitpod(this);
+      this.gitPod = new Gitpod(this, {
+        obj: {
+          tasks: [{
+            init: `${this.packageManager} install && ${this.runScriptCommand} build`,
+            command: `${this.runScriptCommand} start`,
+          }],
+        },
+      });
     }
 
     if (options.buildWorkflow ?? true) {
