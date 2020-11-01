@@ -14,7 +14,7 @@ export interface ProjenUpgradeOptions {
 
   /**
    * Apply labels to the PR. For example, you can add the label "auto-merge",
-   * which, in-tandem with mergify configuraiton will automatically merge these
+   * which, in-tandem with mergify configuration will automatically merge these
    * PRs if their build passes.
    *
    * @default []

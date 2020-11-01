@@ -92,7 +92,7 @@ export function discover(...moduleDirs: string[]) {
     }
 
     const [, typename] = fqn.split('.');
-    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+    const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
       moduleName: typeinfo.assembly,

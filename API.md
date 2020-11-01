@@ -284,7 +284,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **stability** (<code>string</code>)  *No description* __*Optional*__
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minmum target version this library is tested against. 
+  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
@@ -707,7 +707,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **stability** (<code>string</code>)  *No description* __*Optional*__
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minmum target version this library is tested against. 
+  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
@@ -854,7 +854,7 @@ Name | Type | Description
 
 #### addIgnore(dependencyName, ...versions)🔹 <a id="projen-dependabot-addignore"></a>
 
-Ignores a depepdency from automatic updates.
+Ignores a dependency from automatic updates.
 
 ```ts
 addIgnore(dependencyName: string, ...versions: string[]): void
@@ -3428,7 +3428,7 @@ Name | Type | Description
 -----|------|-------------
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **authorName**🔹 | <code>string</code> | The name of the library author.
-**cdkVersion**🔹 | <code>string</code> | Minmum target version this library is tested against.
+**cdkVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
 **name**🔹 | <code>string</code> | The name of the library.
 **repository**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -3626,7 +3626,7 @@ Name | Type | Description
 -----|------|-------------
 **authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
 **authorName**⚠️ | <code>string</code> | The name of the library author.
-**cdkVersion**⚠️ | <code>string</code> | Minmum target version this library is tested against.
+**cdkVersion**⚠️ | <code>string</code> | Minimum target version this library is tested against.
 **name**⚠️ | <code>string</code> | The name of the library.
 **repository**⚠️ | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
