@@ -14,7 +14,7 @@ export class YamlFile extends JsonFile {
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    // sanitize object references by serializaing and deserializing to JSON
+    // sanitize object references by serializing and deserializing to JSON
     const sanitized = JSON.parse(JSON.stringify(resolver.resolve(this.obj)));
     return [
       `# ${GENERATION_DISCLAIMER}`,

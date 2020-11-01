@@ -77,7 +77,7 @@ export class Jest {
     if (options.typescript) {
       this.config.preset = 'ts-jest';
 
-      // only processs .ts files
+      // only process .ts files
       this.config.testMatch = [
         '**/__tests__/**/*.ts?(x)',
         '**/?(*.)+(spec|test).ts?(x)',
