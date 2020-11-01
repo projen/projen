@@ -1,3 +1,10 @@
+## Badges
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/projen/projen)
+![Build](https://github.com/projen/projen/workflows/Build/badge.svg)
+![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
+
 # projen
 
 Define and maintain complex project configuration through code.
@@ -223,7 +230,3 @@ $ git clone git@github.com:eladb/projen
 $ cd projen
 $ yarn
 ```
-
-## License
-
-Distributed under the [Apache-2.0](./LICENSE) license.
