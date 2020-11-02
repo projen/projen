@@ -215,6 +215,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -357,6 +358,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -544,6 +546,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -638,6 +641,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -740,6 +744,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1408,6 +1413,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1775,6 +1781,7 @@ new NextJsProject(options: NextJsProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1911,6 +1918,7 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -2016,6 +2024,7 @@ new NodeBuildWorkflow(project: NodeProject, name: string, options: NodeBuildWork
 * **options** (<code>[NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)</code>)  *No description*
   * **trigger** (<code>Map<string, any></code>)  *No description* 
   * **bump** (<code>boolean</code>)  Bump a new version for this build. __*Default*__: false
+  * **codeCoverage** (<code>boolean</code>)  Run codecoverage step Send to https://codecov.io/. __*Default*__: false
   * **image** (<code>string</code>)  *No description* __*Default*__: default image
   * **uploadArtifact** (<code>boolean</code>)  *No description* __*Optional*__
 
@@ -2051,6 +2060,7 @@ new NodeProject(options: NodeProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -2128,6 +2138,7 @@ Name | Type | Description
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
+**workflowCodecoverageSteps**🔹 | <code>Array<any></code> | Returns a set of steps to run codecoverage action workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
@@ -2570,6 +2581,7 @@ new ReactProject(options: ReactProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -2704,6 +2716,7 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3045,6 +3058,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3141,6 +3155,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3237,6 +3252,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **buildWorkflowCodeCoverage** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. __*Default*__: false
   * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3439,6 +3455,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
@@ -3528,6 +3545,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.<br/>__*Optional*__
@@ -3637,6 +3655,7 @@ Name | Type | Description
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?⚠️ | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
@@ -3727,6 +3746,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
@@ -3813,6 +3833,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
@@ -4220,6 +4241,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
@@ -4420,6 +4442,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4513,6 +4536,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
@@ -4593,6 +4617,7 @@ Name | Type | Description
 -----|------|-------------
 **trigger**🔹 | <code>Map<string, any></code> | <span></span>
 **bump**?🔹 | <code>boolean</code> | Bump a new version for this build.<br/>__*Default*__: false
+**codeCoverage**?🔹 | <code>boolean</code> | Run codecoverage step Send to https://codecov.io/.<br/>__*Default*__: false
 **image**?🔹 | <code>string</code> | __*Default*__: default image
 **uploadArtifact**?🔹 | <code>boolean</code> | __*Optional*__
 
@@ -4612,6 +4637,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4681,6 +4707,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4796,6 +4823,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4888,6 +4916,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
@@ -5103,6 +5132,7 @@ Name | Type | Description
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
@@ -5191,6 +5221,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**buildWorkflowCodeCoverage**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.<br/>__*Default*__: false
 **bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.

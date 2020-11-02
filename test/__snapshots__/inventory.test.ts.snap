@@ -114,6 +114,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -886,6 +897,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -1591,6 +1613,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -2265,6 +2298,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -2933,6 +2977,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -3576,6 +3631,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
         "type": "boolean",
       },
       Object {
@@ -4303,6 +4369,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -4933,6 +5010,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
         "type": "boolean",
       },
       Object {
@@ -5568,6 +5656,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
         "type": "boolean",
       },
       Object {
@@ -6295,6 +6394,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
+        "type": "boolean",
+      },
+      Object {
         "name": "bundledDependencies",
         "optional": true,
         "path": Array [
@@ -7016,6 +7126,17 @@ jest typescript tests and only if all tests pass, run the compiler.",
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/.",
+        "name": "buildWorkflowCodeCoverage",
+        "optional": true,
+        "path": Array [
+          "buildWorkflowCodeCoverage",
+        ],
+        "switch": "build-workflow-code-coverage",
         "type": "boolean",
       },
       Object {

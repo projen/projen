@@ -174,6 +174,13 @@ export interface NodeProjectCommonOptions {
   readonly buildWorkflow?: boolean;
 
   /**
+   * Define a GitHub workflow step for sending
+   * code coverage metrics to https://codecov.io/
+   * @default false
+   */
+  readonly buildWorkflowCodeCoverage?: boolean;
+
+  /**
    * Define a GitHub workflow for releasing from "master" when new versions are
    * bumped. Requires that `version` will be undefined.
    *
@@ -748,6 +755,7 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         image: options.workflowContainerImage,
+        codeCoverage: options.buildWorkflowCodeCoverage ?? false,
       });
     }
 
@@ -769,6 +777,7 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
+        codeCoverage: options.buildWorkflowCodeCoverage ?? false,
       });
 
       if (options.releaseToNpm ?? false) {
@@ -1108,6 +1117,22 @@ export class NodeProject extends Project {
   }
 
   /**
+   * Returns a set of steps to run codecoverage action
+   * workflow.
+   */
+  public get workflowCodecoverageSteps(): any[] {
+    return [
+      {
+        name: 'Codecov',
+        uses: 'codecov/codecov-action@v1.0.14',
+        with: {
+          token: '${{ secrets.CODECOV_TOKEN }} # not required for public repos',
+        },
+      },
+    ];
+  }
+
+  /**
    * Defines normal dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
@@ -1401,6 +1426,13 @@ export interface NodeBuildWorkflowOptions {
    * @default false
    */
   readonly bump?: boolean;
+
+  /**
+   * Run codecoverage step
+   * Send to https://codecov.io/
+   * @default false
+   */
+  readonly codeCoverage?: boolean;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -1440,6 +1472,9 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
         // build (compile + test)
         { run: `${project.runScriptCommand} build` },
+
+        // run codecov if enabled
+        ...options.codeCoverage ? project.workflowCodecoverageSteps : [],
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
