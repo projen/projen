@@ -16,7 +16,7 @@ class Command implements yargs.CommandModule {
   public builder(args: yargs.Argv) {
     args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
-    args.option('removeComments', { type: 'boolean', default: false, desc: 'Synthesize .projenrc.js without commented options' });
+    args.option('comments', { type: 'boolean', default: true, desc: 'Include commented out options in .projenrc.js (use --no-comments to disable)' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
     args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
     args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
@@ -85,7 +85,7 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>, removeComments: boolean) {
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
   const configPath = path.join(baseDir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
     logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
@@ -95,7 +95,7 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   const lines = [
     `const { ${type.typename} } = require('${type.moduleName}');`,
     '',
-    `const project = new ${type.typename}(${renderParams(type, params, removeComments)});`,
+    `const project = new ${type.typename}(${renderParams(type, params, comments)});`,
     '',
     'project.synth();',
     '',
@@ -117,8 +117,9 @@ function makePadding(paddingLength: number): string {
  *
  * @param type Project type
  * @param params Object with parameter default values
+ * @param comments Whether to include optional parameters in commented out form
  */
-function renderParams(type: inventory.ProjectType, params: Record<string, any>, removeComments: boolean) {
+function renderParams(type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
   // preprocessing
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
@@ -166,7 +167,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
   }
 
   // render options without defaults
-  if (!removeComments) {
+  if (comments) {
     for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
       result.push(`${tab}/* ${moduleName} */`);
       for (const option of options) {
@@ -302,7 +303,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
   }
 
   // generate .projenrc.js
-  generateProjenConfig(baseDir, type, props, args.removeComments);
+  generateProjenConfig(baseDir, type, props, args.comments);
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
