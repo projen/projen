@@ -1,5 +1,4 @@
 import { ConstructLibraryOptions, ConstructLibrary } from './construct-lib';
-import { Semver } from './semver';
 
 /**
  * Options for the construct-lib-aws project.
@@ -101,7 +100,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * The target CDK version for this library.
    */
-  public readonly version: Semver;
+  public readonly version: string;
 
   constructor(options: AwsCdkConstructLibraryOptions) {
     super({
@@ -111,12 +110,12 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
-    this.version = Semver.caret(options.cdkVersion);
+    this.version = `^${options.cdkVersion}`;
 
-    this.addPeerDependencies({ constructs: Semver.caret('3.0.4') });
+    this.addPeerDeps('constructs@^3.0.4');
 
     if (options.cdkAssert ?? true) {
-      this.addDevDependencies({ '@aws-cdk/assert': this.version });
+      this.addDevDeps(`@aws-cdk/assert@${this.version}`);
     }
 
     this.addCdkDependencies(...options.cdkDependencies ?? []);
@@ -137,10 +136,8 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public addCdkDependencies(...deps: string[]) {
     // this ugliness will go away in cdk v2.0
-    for (const dep of deps) {
-      this.addPeerDependencies({ [dep]: this.version });
-      this.addDependencies({ [dep]: this.version });
-    }
+    this.addDeps(...deps.map(m => `${m}@${this.version}`));
+    this.addDeps(...deps.map(m => `${m}@${this.version}`));
   }
 
   /**
@@ -149,9 +146,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
    */
   public addCdkTestDependencies(...deps: string[]) {
-    for (const dep of deps) {
-      this.addDevDependencies({ [dep]: this.version });
-    }
+    this.addDevDeps(...deps.map(m => `${m}@${this.version}`));
   }
 }
 
