@@ -119,55 +119,64 @@ function makePadding(paddingLength: number): string {
  * @param params Object with parameter default values
  */
 function renderParams(type: inventory.ProjectType, params: Record<string, any>, removeComments: boolean) {
-  let marginSize = 0;
-  let renders: Record<string, string> = {};
+  // preprocessing
+  const renders: Record<string, string> = {};
+  const optionsWithDefaults: string[] = [];
+  const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
 
-  // sort options by module
-  // and filter out options without defaults if removeComments is enabled
-  // and filter out options that are deprecated
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
   for (const option of type.options) {
-    if ((removeComments && params[option.name] === undefined) || option.deprecated) {
+    if (option.deprecated) {
       continue;
     }
-    optionsByModule[option.parent] = optionsByModule[option.parent] ?? [];
-    optionsByModule[option.parent].push(option);
-  }
 
-  // calculate margin size
-  for (const option of type.options) {
+    const optionName = option.name;
     let paramRender;
-    if (params.hasOwnProperty(option.name) && params[option.name] !== undefined) {
-      paramRender = `${option.name}: ${JSON.stringify(params[option.name])},`;
+    if (params[optionName] !== undefined) {
+      paramRender = `${optionName}: ${JSON.stringify(params[optionName])},`;
+      optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.isDefaultDescription ? undefined : (option.default ?? undefined);
-      paramRender = `// ${option.name}: ${defaultValue},`;
+      paramRender = `// ${optionName}: ${defaultValue},`;
+
+      const parentModule = option.parent;
+      optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
+      optionsByModule[parentModule].push(option);
     }
-    marginSize = Math.max(marginSize, paramRender.length);
-    renders[option.name] = paramRender;
+    renders[optionName] = paramRender;
+  }
+
+  // alphabetize
+  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  optionsWithDefaults.sort();
+  for (const parentModule in optionsByModule) {
+    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
   }
 
   // generate rendering
   const tab = makePadding(2);
   const result: string[] = [];
   result.push('{');
-  for (const [moduleName, options] of Object.entries(optionsByModule)) {
-    if (!removeComments) {
+
+  // render options with defaults
+  for (const optionName of optionsWithDefaults) {
+    result.push(`${tab}${renders[optionName]}`);
+  }
+  if (result.length > 1) {
+    result.push('');
+  }
+
+  // render options without defaults
+  if (!removeComments) {
+    for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
       result.push(`${tab}/* ${moduleName} */`);
-    };
-    for (const option of options) {
-      const paramRender = renders[option.name];
-      if (removeComments) {
-        result.push(`${tab}${paramRender}`);
-      } else {
+      for (const option of options) {
+        const paramRender = renders[option.name];
         result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
       }
-    }
-    if (!removeComments) {
       result.push('');
     }
   }
-  if (result.length > 1) {
+  if (result[result.length - 1] === '') {
     result.pop();
   }
   result.push('}');
