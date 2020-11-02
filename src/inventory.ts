@@ -151,10 +151,10 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       let typeName;
       if (prop.type?.primitive) {
-        typeName = prop.type?.primitive;
+        typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
       } else if (prop.type?.fqn) {
-        typeName = prop.type?.fqn.split('.').pop();
-      } else {
+        typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      } else { // any other types such as collection types
         typeName = 'unknown';
       }
 
