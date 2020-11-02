@@ -115,7 +115,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     this.addPeerDeps('constructs@^3.0.4');
 
     if (options.cdkAssert ?? true) {
-      this.addDevDeps(`@aws-cdk/assert@${this.version}`);
+      this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
     }
 
     this.addCdkDependencies(...options.cdkDependencies ?? []);
@@ -136,8 +136,8 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public addCdkDependencies(...deps: string[]) {
     // this ugliness will go away in cdk v2.0
-    this.addPeerDeps(...deps.map(m => `${m}@${this.version}`));
-    this.addDeps(...deps.map(m => `${m}@${this.version}`));
+    this.addPeerDeps(...deps.map(this.formatModuleSpec));
+    this.addDeps(...deps.map(this.formatModuleSpec));
   }
 
   /**
@@ -146,7 +146,11 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
    */
   public addCdkTestDependencies(...deps: string[]) {
-    this.addDevDeps(...deps.map(m => `${m}@${this.version}`));
+    this.addDevDeps(...deps.map(this.formatModuleSpec));
+  }
+
+  private formatModuleSpec(module: string): string {
+    return `${module}@${this.version}`;
   }
 }
 
