@@ -35,6 +35,7 @@ Name|Description
 [ReactProject](#projen-reactproject)|React project without TypeScript.
 [ReactTypeDef](#projen-reacttypedef)|*No description*
 [ReactTypeScriptProject](#projen-reacttypescriptproject)|React project with TypeScript.
+[SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
@@ -94,7 +95,9 @@ Name|Description
 [ReactTypeDefOptions](#projen-reacttypedefoptions)|*No description*
 [ReactTypeScriptProjectOptions](#projen-reacttypescriptprojectoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
+[SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
+[SampleFiles](#projen-samplefiles)|Represents files and their string contents.
 [ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
@@ -2790,6 +2793,31 @@ Name | Type | Description
 
 
 
+## class SampleDir 🔹 <a id="projen-sampledir"></a>
+
+Renders the given files into the directory if the directory does not exist.
+
+Use this to create sample code files
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Create sample files in the given directory if the given directory does not exist.
+
+```ts
+new SampleDir(project: Project, dir: string, options: SampleDirOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
+* **dir** (<code>string</code>)  directory to add files to.
+* **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
+  * **files** (<code>[SampleFiles](#projen-samplefiles)</code>)  The files to render into the directory. 
+
+
+
+
 ## class SampleFile 🔹 <a id="projen-samplefile"></a>
 
 Produces a file with the given contents but only once, if the file doesn't already exist.
@@ -5024,6 +5052,19 @@ Name | Type | Description
 
 
 
+## struct SampleDirOptions 🔹 <a id="projen-samplediroptions"></a>
+
+
+SampleDir options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**files**🔹 | <code>[SampleFiles](#projen-samplefiles)</code> | The files to render into the directory.
+
+
+
 ## struct SampleFileOptions 🔹 <a id="projen-samplefileoptions"></a>
 
 
@@ -5035,6 +5076,12 @@ Name | Type | Description
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
 
+
+
+## struct SampleFiles 🔹 <a id="projen-samplefiles"></a>
+
+
+Represents files and their string contents.
 
 
 ## struct ScriptOptions 🔹 <a id="projen-scriptoptions"></a>
