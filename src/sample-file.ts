@@ -49,9 +49,9 @@ export class SampleFile extends Component {
    * @param filename - the filename for the new file
    * @param contents - the contents of the file to write
    * @return boolean - whether a new file was written or not.
-   * @protected
+   * @private
    */
-  protected writeOnceFileContents(dir: string, filename: string, contents: string) {
+  private writeOnceFileContents(dir: string, filename: string, contents: string) {
     const fullFilename = path.join(dir, filename);
     if (fileExists(fullFilename)) {
       return false;
