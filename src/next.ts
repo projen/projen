@@ -43,6 +43,7 @@ export class NextJsProject extends NodeProject {
 
   constructor(options: NextJsProjectOptions) {
     super({
+      jest: false,
       srcdir: 'pages',
       ...options,
     });

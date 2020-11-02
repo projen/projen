@@ -414,6 +414,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -424,8 +426,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -1360,9 +1360,10 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
+  * **coverageDirectory** (<code>string</code>)  The directory where Jest should output its coverage files. __*Default*__: coverage
   * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
-  * **jestVersion** (<code>[Semver](#projen-semver)</code>)  The version of jest to use. __*Default*__: ^26.4.2
+  * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: ^26.4.2
   * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
 
 
@@ -1837,6 +1838,8 @@ new NextJsProject(options: NextJsProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -1974,6 +1977,8 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -1984,8 +1989,6 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -2116,6 +2119,8 @@ new NodeProject(options: NodeProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -2136,10 +2141,12 @@ Name | Type | Description
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**testdir**🔹 | <code>string</code> | The directory in which .ts tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
 **workflowCodecoverageSteps**🔹 | <code>Array<any></code> | Returns the set of steps to run codecoverage action in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | __*Optional*__
@@ -2637,6 +2644,8 @@ new ReactProject(options: ReactProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -2772,6 +2781,8 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -2782,8 +2793,6 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -3114,6 +3123,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -3124,8 +3135,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -3211,6 +3220,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -3221,8 +3232,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -3308,6 +3317,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
@@ -3318,8 +3329,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: 'docs'
   * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
@@ -3335,10 +3344,8 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
-**testdir**🔹 | <code>string</code> | The directory in which .ts tests reside.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**jest**?🔹 | <code>[Jest](#projen-jest)</code> | __*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 ### Methods
@@ -4184,9 +4191,10 @@ __Returns__:
 Name | Type | Description 
 -----|------|-------------
 **coverage**?🔹 | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
+**coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: coverage
 **coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Optional*__
 **ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: "/node_modules/"
-**jestVersion**?🔹 | <code>[Semver](#projen-semver)</code> | The version of jest to use.<br/>__*Default*__: ^26.4.2
+**jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: ^26.4.2
 **typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/>__*Optional*__
 
 
@@ -4458,6 +4466,8 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
@@ -4723,6 +4733,8 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
@@ -4839,6 +4851,8 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: lib/index.js
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__

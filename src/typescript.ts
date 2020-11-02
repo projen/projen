@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { Eslint } from './eslint';
-import { Jest, JestOptions } from './jest';
+import { Jest } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { Semver } from './semver';
@@ -10,18 +10,6 @@ import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
-  /**
-   * Setup jest unit tests
-   * @default true
-   */
-  readonly jest?: boolean;
-
-  /**
-   * Jest options
-   * @default - default options
-   */
-  readonly jestOptions?: JestOptions;
-
   /**
    *
    * Setup eslint.
@@ -100,7 +88,6 @@ export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
-  public readonly jest?: Jest;
   public readonly tsconfig?: TypescriptConfig;
 
   /**
@@ -113,17 +100,11 @@ export class TypeScriptProject extends NodeProject {
    */
   public readonly libdir: string;
 
-  /**
-   * The directory in which .ts tests reside.
-   */
-  public readonly testdir: string;
-
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
-    this.testdir = options.testdir ?? 'test';
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? 'docs/';

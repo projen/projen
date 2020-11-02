@@ -4,6 +4,7 @@ import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
 import { IgnoreFile } from './ignore-file';
+import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { License } from './license';
 import * as logging from './logging';
@@ -508,6 +509,18 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
+
+  /**
+   * Setup jest unit tests
+   * @default true
+   */
+  readonly jest?: boolean;
+
+  /**
+   * Jest options
+   * @default - default options
+   */
+  readonly jestOptions?: JestOptions;
 }
 
 /**
@@ -595,6 +608,16 @@ export class NodeProject extends Project {
    */
   public readonly runScriptCommand: string;
 
+  /**
+   * The directory in which .ts tests reside.
+   */
+  public readonly testdir: string;
+
+  /**
+   * The Jest configuration
+   */
+  protected jest?: Jest;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -657,6 +680,8 @@ export class NodeProject extends Project {
         throw new Error('"authorName" is required if specifying "authorEmail" or "authorUrl"');
       }
     }
+
+    this.testdir = options.testdir ?? 'test';
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -912,6 +937,16 @@ export class NodeProject extends Project {
       this.pullRequestTemplate = new PullRequestTemplate(this, {
         lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
       });
+    }
+
+    console.log('Configuring jest...');
+    if (options.jest ?? true) {
+      this.jest = new Jest(this, {
+        ...options.jestOptions,
+      });
+
+      this.gitignore.include(`/${this.testdir}`);
+      this.npmignore?.exclude(`/${this.testdir}`);
     }
   }
 

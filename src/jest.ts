@@ -1,9 +1,8 @@
 import { NodeProject } from './node-project';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypescriptConfig } from './typescript';
 
-const DEFAULT_JEST_VERSION = Semver.caret('26.4.2');
+const DEFAULT_JEST_VERSION = '^26.4.2';
 
 export interface JestOptions {
 
@@ -12,6 +11,12 @@ export interface JestOptions {
    * @default true
    */
   readonly coverage?: boolean;
+
+  /**
+   * The directory where Jest should output its coverage files.
+   * @default coverage
+   */
+  readonly coverageDirectory?: string;
 
   /**
    * Specify the global coverage thresholds
@@ -34,7 +39,7 @@ export interface JestOptions {
    *
    * @default ^26.4.2
    */
-  readonly jestVersion?: Semver;
+  readonly jestVersion?: string;
 }
 
 export interface CoverageThreshold {
@@ -63,13 +68,14 @@ export class Jest {
   constructor(project: NodeProject, options: JestOptions = { }) {
     const version = options.jestVersion ?? DEFAULT_JEST_VERSION;
 
-    project.addDevDependencies({ jest: version });
+    project.addDevDeps(`jest@${version}`);
 
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
 
     this.config = {
       clearMocks: true,
       collectCoverage: options.coverage ?? true,
+      coverageDirectory: options.coverageDirectory ?? 'coverage',
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
     };
@@ -91,10 +97,10 @@ export class Jest {
       };
 
       // add relevant deps
-      project.addDevDependencies({
-        '@types/jest': Semver.caret('26.0.7'),
-        'ts-jest': Semver.caret('26.1.0'),
-      });
+      project.addDevDeps(
+        '@types/jest@^26.0.7',
+        'ts-jest@^26.1.0',
+      );
     }
 
     if (options.coverageThreshold) {
