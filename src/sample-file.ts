@@ -78,7 +78,7 @@ export interface SampleDirOptions {
   /**
    * The files to render into the directory
    */
-  readonly files: SampleFiles;
+  readonly files: { [fileName: string]: string };
 }
 
 /**
