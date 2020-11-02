@@ -2,7 +2,6 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { NodeProjectCommonOptions } from './node-project';
-import { Readme } from './readme';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptProject } from './typescript';

@@ -5,7 +5,7 @@ import { Component } from './component';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
 import { Start } from './start';
-import {Readme} from "./readme";
+import { SampleReadme } from './readme';
 
 /**
  * Base project
@@ -19,7 +19,7 @@ export class Project {
   constructor() {
     this.gitignore = new IgnoreFile(this, '.gitignore');
 
-    new Readme(this, '# jsii construct');
+    new SampleReadme(this, '# my project');
   }
 
   /**
