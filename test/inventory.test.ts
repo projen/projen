@@ -39,7 +39,7 @@ test('renderable default values simulation', () => {
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA' })).toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'BaseEnum' })).toThrowError();
 
-  expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year', isDefaultDescription: true })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '- current year' })).not.toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year' })).toThrowError();
 });
 
@@ -55,7 +55,7 @@ function throwIfNotRenderable(option: inventory.ProjectOption) {
   return (option.default === undefined) ||
     (option.default === 'undefined') ||
     (option.default.startsWith('$')) ||
+    (option.default.startsWith('-')) ||
     (option.type && option.default.startsWith(option.type)) ||
-    option.isDefaultDescription ||
     JSON.parse(option.default);
 };

@@ -16,7 +16,6 @@ export interface ProjectOption {
   parent: string;
   docs?: string;
   default?: string;
-  isDefaultDescription?: boolean;
   optional?: boolean;
   deprecated?: boolean;
 }
@@ -143,8 +142,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
     for (const prop of struct.properties ?? []) {
       const propPath = [...basePath, prop.name];
 
-      const isDescription = prop.docs?.default?.startsWith('-') ?? false;
-      const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
+      const defaultValue = prop.docs?.default;
 
       // protect against double-booking
       if (prop.name in options) {
@@ -168,7 +166,6 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         type: typeName,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
-        isDefaultDescription: isDescription,
         optional: optional || prop.optional,
         deprecated: prop.docs.stability === 'deprecated',
       });

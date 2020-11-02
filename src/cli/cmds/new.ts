@@ -135,7 +135,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
       paramRender = `${optionName}: ${JSON.stringify(params[optionName])},`;
       optionsWithDefaults.push(optionName);
     } else {
-      const defaultValue = option.isDefaultDescription ? undefined : (option.default ?? undefined);
+      const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
       paramRender = `// ${optionName}: ${defaultValue},`;
 
       const parentModule = option.parent;
