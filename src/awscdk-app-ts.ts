@@ -22,6 +22,8 @@ export enum CdkApprovalLevel {
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
+   *
+   * @default 1.63.0
    */
   readonly cdkVersion: string;
 

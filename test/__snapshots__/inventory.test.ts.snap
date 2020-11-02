@@ -143,6 +143,7 @@ Array [
         "type": "unknown",
       },
       Object {
+        "default": "1.63.0",
         "docs": "AWS CDK version to use.",
         "name": "cdkVersion",
         "path": Array [
