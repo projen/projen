@@ -124,9 +124,10 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
 
   // sort options by module
   // and filter out options without defaults if removeComments is enabled
+  // and filter out options that are deprecated
   const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
   for (const option of type.options) {
-    if (removeComments && params[option.name] === undefined) {
+    if ((removeComments && params[option.name] === undefined) || option.deprecated) {
       continue;
     }
     optionsByModule[option.parent] = optionsByModule[option.parent] ?? [];
