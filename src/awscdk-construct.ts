@@ -136,7 +136,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public addCdkDependencies(...deps: string[]) {
     // this ugliness will go away in cdk v2.0
-    this.addDeps(...deps.map(m => `${m}@${this.version}`));
+    this.addPeerDeps(...deps.map(m => `${m}@${this.version}`));
     this.addDeps(...deps.map(m => `${m}@${this.version}`));
   }
 
