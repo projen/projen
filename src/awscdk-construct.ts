@@ -6,7 +6,7 @@ import { Semver } from './semver';
  */
 export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
-   * Minmum target version this library is tested against.
+   * Minimum target version this library is tested against.
    *
    * @default "1.60.0"
    */

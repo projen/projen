@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.141 (2020-11-01)
+
+### 0.3.140 (2020-11-01)
+
+### 0.3.139 (2020-11-01)
+
+
+### Bug Fixes
+
+* **node:** fixes spelling issues in comments ([#254](https://github.com/eladb/projen/issues/254)) ([3a68deb](https://github.com/eladb/projen/commit/3a68deb759fac51c1a43fa8a73edf3a04d89eb03))
+
 ### 0.3.138 (2020-10-30)
 
 ### 0.3.137 (2020-10-29)
