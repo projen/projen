@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { Project } from './project';
-import { fileExists } from './util';
 
 /**
  * Options for the SampleFile object.
@@ -21,7 +20,6 @@ export interface SampleFileOptions {
  * Use this for creating example code files or other resources.
  */
 export class SampleFile extends Component {
-  public created: boolean = false;
   private readonly filePath: string;
   private readonly options: SampleFileOptions;
 
@@ -39,7 +37,7 @@ export class SampleFile extends Component {
 
   synthesize(outdir: string) {
     const contents = this.options.contents;
-    this.created = this.writeOnceFileContents(outdir, this.filePath, contents ?? '');
+    this.writeOnceFileContents(outdir, this.filePath, contents ?? '');
   }
 
   /**
@@ -52,23 +50,12 @@ export class SampleFile extends Component {
    */
   private writeOnceFileContents(dir: string, filename: string, contents: string) {
     const fullFilename = path.join(dir, filename);
-    if (fileExists(fullFilename)) {
-      return false;
+    if (fs.existsSync(fullFilename)) {
+      return;
     }
     fs.mkdirpSync(dir);
     fs.writeFileSync(fullFilename, contents);
-    return true;
   }
-}
-
-/**
- * Represents files and their string contents
- */
-export interface SampleFiles {
-  /**
-   * The key should be the filename and the value is the contents of the file.
-   */
-  readonly [key: string]: string;
 }
 
 /**

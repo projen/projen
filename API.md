@@ -97,7 +97,6 @@ Name|Description
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
-[SampleFiles](#projen-samplefiles)|Represents files and their string contents.
 [ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
@@ -2813,7 +2812,7 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 * **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
 * **dir** (<code>string</code>)  directory to add files to.
 * **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
-  * **files** (<code>[SampleFiles](#projen-samplefiles)</code>)  The files to render into the directory. 
+  * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
 
 
 
@@ -2840,14 +2839,6 @@ new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 * **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
   * **contents** (<code>string</code>)  The contents of the file to write. 
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**created**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -5061,7 +5052,7 @@ SampleDir options.
 
 Name | Type | Description 
 -----|------|-------------
-**files**🔹 | <code>[SampleFiles](#projen-samplefiles)</code> | The files to render into the directory.
+**files**🔹 | <code>Map<string, string></code> | The files to render into the directory.
 
 
 
@@ -5076,12 +5067,6 @@ Name | Type | Description
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
 
-
-
-## struct SampleFiles 🔹 <a id="projen-samplefiles"></a>
-
-
-Represents files and their string contents.
 
 
 ## struct ScriptOptions 🔹 <a id="projen-scriptoptions"></a>

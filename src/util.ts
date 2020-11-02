@@ -39,10 +39,6 @@ export function writeFile(filePath: string, data: any, options: { readonly?: boo
   }
 }
 
-export function fileExists(filePath: string) {
-  return fs.existsSync(filePath);
-}
-
 /**
  * Decamelizes the keys of an object structure, recursing through child objects and arrays.
  * @experimental

@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { Component } from './component';
 import { Eslint } from './eslint';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
@@ -633,8 +634,9 @@ export class TypescriptConfig {
 }
 
 
-class SampleCode {
+class SampleCode extends Component {
   constructor(project: TypeScriptProject) {
+    super(project);
     const srcCode = [
       'export class Hello {',
       '  public sayHello() {',
