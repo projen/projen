@@ -1117,16 +1117,15 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Returns a set of steps to run codecoverage action
-   * workflow.
+   * Returns the set of steps to run codecoverage action in a github workflow.
    */
   public get workflowCodecoverageSteps(): any[] {
     return [
       {
-        name: 'Codecov',
-        uses: 'codecov/codecov-action@v1.0.14',
+        name: 'Upload coverage to Codecov',
+        uses: 'codecov/codecov-action@v1',
         with: {
-          token: '${{ secrets.CODECOV_TOKEN }} # not required for public repos',
+          token: '${{ secrets.CODECOV_TOKEN }}',
         },
       },
     ];

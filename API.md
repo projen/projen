@@ -2138,7 +2138,7 @@ Name | Type | Description
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
-**workflowCodecoverageSteps**🔹 | <code>Array<any></code> | Returns a set of steps to run codecoverage action workflow.
+**workflowCodecoverageSteps**🔹 | <code>Array<any></code> | Returns the set of steps to run codecoverage action in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **mergify**?🔹 | <code>[Mergify](#projen-mergify)</code> | __*Optional*__
