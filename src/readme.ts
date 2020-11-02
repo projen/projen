@@ -2,7 +2,7 @@ import { Project } from './project';
 import { SampleFile } from './sample-file';
 
 /**
- * Represents a README.md file. Unlike most other files this will only be created if the file doesn't already exist.
+ * Represents a README.md sample file.
  * You are expected to manage this file after creation.
  *
  * @param text - The initial contents of the README.md file. Defaults to '# replace this'
