@@ -105,7 +105,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
 
     // CLI
-    this.addDevDeps(`aws-cdk@${this.cdkVersion}`);
+    this.addDevDeps(this.formatModuleSpec('aws-cdk'));
 
     this.addCdkDependency('@aws-cdk/assert');
     this.addCdkDependency('@aws-cdk/core');
@@ -170,7 +170,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
-    this.addDeps(...modules.map(m => `${m}@${this.cdkVersion}`));
+    this.addDeps(...modules.map(this.formatModuleSpec));
+  }
+
+  private formatModuleSpec(module: string): string {
+    return `${module}@${this.cdkVersion}`;
   }
 }
 
