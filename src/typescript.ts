@@ -3,7 +3,7 @@ import { Eslint } from './eslint';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleFile } from './sample-file';
+import { SampleDir } from './sample-file';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
@@ -650,11 +650,18 @@ class SampleCode {
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
       '});',
     ].join('\n');
-    new SampleFile(project, path.join(project.srcdir, 'index.ts'), { contents: srcCode });
 
-    // so here's a problem. I don't want this file to be written if the above file was written.
-    // and I don't know how to add that dependency here...
-    new SampleFile(project, path.join(project.testdir, 'hello.test.ts'), { contents: testCode });
+    new SampleDir(project, project.srcdir, {
+      files: {
+        'index.ts': srcCode,
+      },
+    });
+
+    new SampleDir(project, project.testdir, {
+      files: {
+        'hello.test.ts': testCode,
+      },
+    });
   }
 }
 

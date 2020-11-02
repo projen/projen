@@ -21,9 +21,9 @@ export interface SampleFileOptions {
  * Use this for creating example code files or other resources.
  */
 export class SampleFile extends Component {
+  public created: boolean = false;
   private readonly filePath: string;
   private readonly options: SampleFileOptions;
-  public created: boolean = false;
 
   /**
    * Creates a new SampleFile object
@@ -36,7 +36,6 @@ export class SampleFile extends Component {
     this.filePath = filePath;
     this.options = options;
   }
-
 
   synthesize(outdir: string) {
     const contents = this.options.contents;
@@ -59,5 +58,50 @@ export class SampleFile extends Component {
     fs.mkdirpSync(dir);
     fs.writeFileSync(fullFilename, contents);
     return true;
+  }
+}
+
+/**
+ * Represents files and their string contents
+ */
+export interface SampleFiles {
+  /**
+   * The key should be the filename and the value is the contents of the file.
+   */
+  readonly [key: string]: string;
+}
+
+/**
+ * SampleDir options
+ */
+export interface SampleDirOptions {
+  /**
+   * The files to render into the directory
+   */
+  readonly files: SampleFiles;
+}
+
+/**
+ * Renders the given files into the directory if the directory does not exist. Use this to create sample code files
+ */
+export class SampleDir extends Component {
+
+  /**
+   * Create sample files in the given directory if the given directory does not exist
+   * @param project Parent project to add files to.
+   * @param dir directory to add files to. If directory already exists, nothing is added.
+   * @param options options for which files to create.
+   */
+  constructor(project: Project, dir: string, options: SampleDirOptions) {
+    super(project);
+
+    if (fs.pathExistsSync(dir)) {
+      return;
+    }
+
+    fs.mkdirpSync(dir);
+    for (const filename in options.files) {
+      fs.writeFileSync(path.join(__dirname, dir, filename), options.files[filename]);
+    }
   }
 }
