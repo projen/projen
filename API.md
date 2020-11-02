@@ -30,12 +30,12 @@ Name|Description
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
-[SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [ReactComponent](#projen-reactcomponent)|*No description*
 [ReactProject](#projen-reactproject)|React project without TypeScript.
 [ReactTypeDef](#projen-reacttypedef)|*No description*
 [ReactTypeScriptProject](#projen-reacttypescriptproject)|React project with TypeScript.
+[SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
 [TextFile](#projen-textfile)|A text file.
@@ -2507,71 +2507,6 @@ synth(outdir?: string): void
 
 
 
-## class SampleFile 🔹 <a id="projen-samplefile"></a>
-
-Produces a file with the given contents but only once, if the file doesn't already exist.
-
-Use this for creating example code files or other resources.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-Creates a new SampleFile object.
-
-```ts
-new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
-* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
-* **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
-  * **contents** (<code>string</code>)  The contents of the file to write. 
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**created**🔹 | <code>boolean</code> | <span></span>
-
-### Methods
-
-
-#### synthesize(outdir)🔹 <a id="projen-samplefile-synthesize"></a>
-
-Synthesizes files to the project output directory.
-
-```ts
-synthesize(outdir: string): void
-```
-
-* **outdir** (<code>string</code>)  *No description*
-
-
-
-
-#### protected writeOnceFileContents(dir, filename, contents)🔹 <a id="projen-samplefile-writeoncefilecontents"></a>
-
-A helper function that will write the file once and return if it was written or not.
-
-```ts
-protected writeOnceFileContents(dir: string, filename: string, contents: string): boolean
-```
-
-* **dir** (<code>string</code>)  - the directory for the new file.
-* **filename** (<code>string</code>)  - the filename for the new file.
-* **contents** (<code>string</code>)  - the contents of the file to write.
-
-__Returns__:
-* <code>boolean</code>
-
-
-
-## class Semver 🔹 <a id="projen-semver"></a>
 ## class PullRequestTemplate 🔹 <a id="projen-pullrequesttemplate"></a>
 
 Template for GitHub pull requests.
@@ -2852,6 +2787,55 @@ Name | Type | Description
 -----|------|-------------
 **reactTypeDef**🔹 | <code>[ReactTypeDef](#projen-reacttypedef)</code> | TypeScript definition file included that ensures React types are picked up by the TypeScript compiler.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+
+
+
+## class SampleFile 🔹 <a id="projen-samplefile"></a>
+
+Produces a file with the given contents but only once, if the file doesn't already exist.
+
+Use this for creating example code files or other resources.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Creates a new SampleFile object.
+
+```ts
+new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
+* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
+  * **contents** (<code>string</code>)  The contents of the file to write. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**created**🔹 | <code>boolean</code> | <span></span>
+
+### Methods
+
+
+#### synthesize(outdir)🔹 <a id="projen-samplefile-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(outdir: string): void
+```
+
+* **outdir** (<code>string</code>)  *No description*
+
+
+
 
 
 
