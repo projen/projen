@@ -55,6 +55,14 @@ export abstract class FileBase extends Component {
   }
 
   /**
+   * Implemented by derived classes and returns the contents of the file to
+   * emit.
+   * @param resolver Call `resolver.resolve(obj)` on any objects in order to
+   * resolve token functions.
+   */
+  protected abstract synthesizeContent(resolver: IResolver): string;
+
+  /**
    * Writes the file to the project's output directory
    */
   public synthesize(outdir: string) {
@@ -65,13 +73,6 @@ export abstract class FileBase extends Component {
     });
   }
 
-  /**
-   * Implemented by derived classes and returns the contents of the file to
-   * emit.
-   * @param resolver Call `resolver.resolve(obj)` on any objects in order to
-   * resolve token functions.
-   */
-  protected abstract synthesizeContent(resolver: IResolver): string;
 }
 
 /**
@@ -85,3 +86,4 @@ export interface IResolver {
    */
   resolve(value: any): any;
 }
+
