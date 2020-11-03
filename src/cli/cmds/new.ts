@@ -42,7 +42,7 @@ class Command implements yargs.CommandModule {
                 desc.push(`(default: ${option.default.replace(/^\ +\-/, '')})`);
               } else {
                 // if the field is required and we have a default, then assign the value here
-                defaultValue = processDefault(option.default);
+                defaultValue = renderDefault(option.default);
               }
             }
 
@@ -184,11 +184,25 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
   return result.join('\n');
 }
 
-function processDefault(value: string) {
+/**
+ * Given a value from "@default", processes macros and returns a stringied
+ * (quoted) result.
+ */
+function renderDefault(value: string) {
+  const resolved = tryProcessMacro(value);
+  if (resolved) {
+    return JSON.stringify(resolved);
+  } else {
+    return value;
+  }
+}
+
+function tryProcessMacro(macro: string) {
+  if (!macro.startsWith('$')) { return undefined; }
+
   const basedir = path.basename(process.cwd());
   const userEmail = getFromGitConfig('user.email') ?? 'user@domain.com';
-
-  switch (value) {
+  switch (macro) {
     case '$BASEDIR': return basedir;
     case '$GIT_REMOTE':
       const origin = execOrUndefined('git remote get-url origin');
@@ -199,9 +213,9 @@ function processDefault(value: string) {
       return `https://github.com/${slug}/${basedir}.git`;
     case '$GIT_USER_NAME': return getFromGitConfig('user.name');
     case '$GIT_USER_EMAIL': return userEmail;
-    default:
-      return value;
   }
+
+  return undefined;
 }
 
 function getFromGitConfig(key: string): string | undefined {
@@ -229,7 +243,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: any): Record<stri
   // initialize props with default values
   for (const prop of type.options) {
     if (prop.default && prop.default !== 'undefined' && !prop.optional) {
-      props[prop.name] = processDefault(prop.default);
+      props[prop.name] = renderDefault(prop.default);
     }
   }
 
