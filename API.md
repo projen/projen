@@ -2815,6 +2815,22 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
   * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
 
 
+### Methods
+
+
+#### synthesize(_outdir)🔹 <a id="projen-sampledir-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(_outdir: string): void
+```
+
+* **_outdir** (<code>string</code>)  *No description*
+
+
+
+
 
 
 ## class SampleFile 🔹 <a id="projen-samplefile"></a>

@@ -70,6 +70,8 @@ export interface SampleDirOptions {
  * Renders the given files into the directory if the directory does not exist. Use this to create sample code files
  */
 export class SampleDir extends Component {
+  private readonly dir: string;
+  private readonly options: SampleDirOptions;
 
   /**
    * Create sample files in the given directory if the given directory does not exist
@@ -79,14 +81,19 @@ export class SampleDir extends Component {
    */
   constructor(project: Project, dir: string, options: SampleDirOptions) {
     super(project);
+    this.dir = dir;
+    this.options = options;
+  }
 
-    if (fs.pathExistsSync(dir)) {
+  synthesize(_outdir: string) {
+    const fullOutdir = path.join(_outdir, this.dir);
+    if (fs.pathExistsSync(fullOutdir)) {
       return;
     }
 
-    fs.mkdirpSync(dir);
-    for (const filename in options.files) {
-      fs.writeFileSync(path.join(__dirname, dir, filename), options.files[filename]);
+    fs.mkdirpSync(fullOutdir);
+    for (const filename in this.options.files) {
+      fs.writeFileSync(path.join(fullOutdir, filename), this.options.files[filename]);
     }
   }
 }
