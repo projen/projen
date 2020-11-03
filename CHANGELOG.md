@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.145 (2020-11-03)
+
+
+### Bug Fixes
+
+* **cli:** improve git config detection ([#270](https://github.com/projen/projen/issues/270)) ([de229f9](https://github.com/projen/projen/commit/de229f951305e1498316856fc0737cc68c003038))
+
 ### 0.3.144 (2020-11-03)
 
 
