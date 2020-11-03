@@ -16,6 +16,7 @@ class Command implements yargs.CommandModule {
   public builder(args: yargs.Argv) {
     args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
+    args.option('comments', { type: 'boolean', default: true, desc: 'Include commented out options in .projenrc.js (use --no-comments to disable)' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
     args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
     args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
@@ -84,7 +85,7 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: any) {
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
   const configPath = path.join(baseDir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
     logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
@@ -94,7 +95,7 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   const lines = [
     `const { ${type.typename} } = require('${type.moduleName}');`,
     '',
-    `const project = new ${type.typename}(${renderParams(params)});`,
+    `const project = new ${type.typename}(${renderParams(type, params, comments)});`,
     '',
     'project.synth();',
     '',
@@ -104,9 +105,83 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
 }
 
-function renderParams(params: any) {
-  return JSON.stringify(params, undefined, 2)
-    .replace(/\"(.*)\":/g, '$1:'); // remove quotes from field names
+function makePadding(paddingLength: number): string {
+  return ' '.repeat(paddingLength);
+}
+
+/**
+ * Prints all parameters that can be used in a project type, alongside their descriptions.
+ *
+ * Parameters in `params` that aren't undefined are rendered as defaults,
+ * while all other parameters are rendered as commented out.
+ *
+ * @param type Project type
+ * @param params Object with parameter default values
+ * @param comments Whether to include optional parameters in commented out form
+ */
+function renderParams(type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
+  // preprocessing
+  const renders: Record<string, string> = {};
+  const optionsWithDefaults: string[] = [];
+  const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
+
+  for (const option of type.options) {
+    if (option.deprecated) {
+      continue;
+    }
+
+    const optionName = option.name;
+    let paramRender;
+    if (params[optionName] !== undefined) {
+      paramRender = `${optionName}: ${JSON.stringify(params[optionName])},`;
+      optionsWithDefaults.push(optionName);
+    } else {
+      const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
+      paramRender = `// ${optionName}: ${defaultValue},`;
+
+      const parentModule = option.parent;
+      optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
+      optionsByModule[parentModule].push(option);
+    }
+    renders[optionName] = paramRender;
+  }
+
+  // alphabetize
+  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  optionsWithDefaults.sort();
+  for (const parentModule in optionsByModule) {
+    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
+  }
+
+  // generate rendering
+  const tab = makePadding(2);
+  const result: string[] = [];
+  result.push('{');
+
+  // render options with defaults
+  for (const optionName of optionsWithDefaults) {
+    result.push(`${tab}${renders[optionName]}`);
+  }
+  if (result.length > 1) {
+    result.push('');
+  }
+
+  // render options without defaults
+  if (comments) {
+    for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
+      result.push(`${tab}/* ${moduleName} */`);
+      for (const option of options) {
+        const paramRender = renders[option.name];
+        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
+      }
+      result.push('');
+    }
+  }
+  if (result[result.length - 1] === '') {
+    result.pop();
+  }
+  result.push('}');
+  return result.join('\n');
 }
 
 function processDefault(value: string) {
@@ -149,7 +224,7 @@ function execOrUndefined(command: string): string | undefined {
  * @param argv Command line switches
  */
 function commandLineToProps(type: inventory.ProjectType, argv: any): Record<string, any> {
-  const props: any = {};
+  const props: Record<string, any> = {};
 
   // initialize props with default values
   for (const prop of type.options) {
@@ -228,7 +303,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: any) {
+function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -238,7 +313,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
   }
 
   // generate .projenrc.js
-  generateProjenConfig(baseDir, type, props);
+  generateProjenConfig(baseDir, type, props, args.comments);
 
   // synthesize if synth is enabled (default).
   if (args.synth) {

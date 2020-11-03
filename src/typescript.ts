@@ -1,10 +1,10 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
 import { Eslint } from './eslint';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
+import { SampleDir } from './sample-file';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
@@ -31,7 +31,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * TypeScript version to use.
-   * @default ^3.9.5
+   * @default "^3.9.5"
    */
   readonly typescriptVersion?: Semver;
 
@@ -45,13 +45,12 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Docs directory
    *
-   * @default 'docs'
+   * @default "docs"
    */
   readonly docsDirectory?: string;
 
   /**
    * Custom TSConfig
-   *
    */
   readonly tsconfig?: TypescriptConfigOptions;
 
@@ -303,20 +302,21 @@ export interface TypescriptConfigOptions {
    */
   readonly fileName?: string;
   /**
-   * The directory in which typescript sources reside.
+   * Specifies a list of glob patterns that match TypeScript files to be included in compilation.
+   *
    * @default - all .ts files recursively
    */
   readonly include?: string[];
 
   /**
+   * Filters results from the "include" option.
+   *
    * @default - node_modules is excluded by default
    */
   readonly exclude?: string[];
 
   /**
    * Compiler options to use.
-   *
-   * @default - see above
    */
   readonly compilerOptions: TypeScriptCompilerOptions;
 }
@@ -449,7 +449,7 @@ export interface TypeScriptCompilerOptions {
   /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
    *
-   * @default [ 'es2018' ]
+   * @default [ "es2018" ]
    */
   readonly lib?: string[];
 
@@ -457,14 +457,14 @@ export interface TypeScriptCompilerOptions {
    * Sets the module system for the program.
    * See https://www.typescriptlang.org/docs/handbook/modules.html#ambient-modules.
    *
-   * @default 'CommonJS'
+   * @default "CommonJS"
    */
   readonly module?: string;
 
   /**
    * Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic".
    *
-   * @default 'node'
+   * @default "node"
    */
   readonly moduleResolution?: TypeScriptModuleResolution;
 
@@ -583,7 +583,7 @@ export interface TypeScriptCompilerOptions {
    * a lower target if your code is deployed to older environments, or a higher target if your
    * code is guaranteed to run in newer environments.
    *
-   * @default 'ES2018'
+   * @default "ES2018"
    */
   readonly target?: string;
 
@@ -635,35 +635,15 @@ export class TypescriptConfig {
 
 
 class SampleCode extends Component {
-  private readonly nodeProject: TypeScriptProject;
-
   constructor(project: TypeScriptProject) {
     super(project);
-
-    this.nodeProject = project;
-  }
-
-  public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.nodeProject.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
-
     const srcCode = [
       'export class Hello {',
       '  public sayHello() {',
       '    return \'hello, world!\'',
       '  }',
       '}',
-    ];
-
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
-
-    const testdir = path.join(outdir, this.nodeProject.testdir);
-    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
+    ].join('\n');
 
     const testCode = [
       "import { Hello } from '../src'",
@@ -671,10 +651,19 @@ class SampleCode extends Component {
       "test('hello', () => {",
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
       '});',
-    ];
+    ].join('\n');
 
-    fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
+    new SampleDir(project, project.srcdir, {
+      files: {
+        'index.ts': srcCode,
+      },
+    });
+
+    new SampleDir(project, project.testdir, {
+      files: {
+        'hello.test.ts': testCode,
+      },
+    });
   }
 }
 
@@ -698,9 +687,11 @@ export class TypeScriptAppProject extends TypeScriptProject {
 /**
  * @deprecated use `TypeScriptProject`
  */
-export class TypeScriptLibraryProject extends TypeScriptProject { };
+export class TypeScriptLibraryProject extends TypeScriptProject {
+};
 
 /**
  * @deprecated use TypeScriptProjectOptions
  */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions { }
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
+}
