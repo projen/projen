@@ -79,6 +79,9 @@ export class Jest {
       coverageDirectory: options.coverageDirectory ?? 'coverage',
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
+      testMatch: [
+        `**/${project.testdir}/**/*.js?(x)`,
+      ],
     };
 
     if (options.coverageThreshold) {
@@ -125,8 +128,7 @@ export class Jest {
 
     // only process .ts files
     this.config.testMatch = [
-      '**/__tests__/**/*.ts?(x)',
-      '**/?(*.)+(spec|test).ts?(x)',
+      `**/${this.project.testdir}/**/*.ts?(x)`,
     ];
 
     // specify tsconfig.json
