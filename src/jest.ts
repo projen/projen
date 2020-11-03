@@ -3,6 +3,7 @@ import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 import { TypescriptConfig } from './typescript';
 
+const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 
 export interface JestOptions {
   /**
@@ -34,6 +35,22 @@ export interface JestOptions {
   readonly typescript?: TypescriptConfig;
 
   /**
+   * Result processing with jest-junit.
+   *
+   * Output directory is `test-reports/`.
+   *
+   * @default true
+   */
+  readonly junitReporting?: boolean;
+
+  /**
+   * Preserve the default Jest reporter when additional reporters are added.
+   *
+   * @default true
+   */
+  readonly preserveDefaultReporters?: boolean;
+
+  /**
    * The version of jest to use.
    *
    * @default - installs the latest jest version
@@ -47,6 +64,8 @@ export interface CoverageThreshold {
   readonly lines?: number;
   readonly statements?: number;
 }
+
+type JestReporter = [string, {[key: string]: any}] | string;
 
 /**
  * Installs the following npm scripts:
@@ -64,6 +83,7 @@ export class Jest {
 
   private readonly ignorePatterns: string[];
   private readonly project: NodeProject;
+  private readonly reporters: JestReporter[];
 
   constructor(project: NodeProject, options: JestOptions = { }) {
     this.project = project;
@@ -75,6 +95,13 @@ export class Jest {
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
 
     const coverageDirectory = options.coverageDirectory ?? 'coverage';
+
+    this.reporters = [];
+
+    if (options.preserveDefaultReporters ?? true) {
+      this.reporters.unshift('default');
+    }
+
     this.config = {
       clearMocks: true,
       collectCoverage: options.coverage ?? true,
@@ -85,7 +112,25 @@ export class Jest {
         '**/__tests__/**/*.js?(x)',
         '**/?(*.)+(spec|test).js?(x)',
       ],
+      reporters: this.reporters,
     };
+
+    if (options.junitReporting ?? true) {
+      const reportsDir = DEFAULT_TEST_REPORTS_DIR;
+
+      this.addReporter([
+        'jest-junit',
+        { outputDirectory: reportsDir },
+      ]);
+
+      project.addDevDeps('jest-junit@^12');
+
+      project.gitignore.exclude(
+        '# jest-junit artifacts',
+        `/${reportsDir}/`,
+        'junit.xml',
+      );
+    }
 
     if (options.coverageThreshold) {
       this.config.coverageThreshold = {
@@ -152,5 +197,9 @@ export class Jest {
     });
 
     this.project.addScript('test:update', 'jest --updateSnapshot');
+  }
+
+  public addReporter(reporter: JestReporter) {
+    this.reporters.push(reporter);
   }
 }

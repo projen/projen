@@ -1421,6 +1421,8 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
+  * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
+  * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
   * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
 
 
@@ -1444,6 +1446,19 @@ addIgnorePattern(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addReporter(reporter)🔹 <a id="projen-jest-addreporter"></a>
+
+
+
+```ts
+addReporter(reporter: string &#124; json): void
+```
+
+* **reporter** (<code>string &#124; json</code>)  *No description*
 
 
 
@@ -4459,6 +4474,8 @@ Name | Type | Description
 **coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Optional*__
 **ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: "/node_modules/"
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
+**junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
+**preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
 **typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/>__*Optional*__
 
 
