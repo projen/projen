@@ -10,7 +10,7 @@ export interface NextJsCommonProjectOptions {
   /**
    * Assets directory
    *
-   * @default 'public'
+   * @default "public"
    */
   readonly assetsdir?: string;
 }
@@ -214,7 +214,7 @@ interface NextSampleCodeOptions {
   /**
    * File extension for sample javascript code to be saved as.
    *
-   * @default 'js'
+   * @default "js"
    */
   readonly fileExt?: string;
 
