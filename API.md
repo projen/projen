@@ -2818,15 +2818,15 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 ### Methods
 
 
-#### synthesize(_outdir)🔹 <a id="projen-sampledir-synthesize"></a>
+#### synthesize(outdir)🔹 <a id="projen-sampledir-synthesize"></a>
 
 Synthesizes files to the project output directory.
 
 ```ts
-synthesize(_outdir: string): void
+synthesize(outdir: string): void
 ```
 
-* **_outdir** (<code>string</code>)  *No description*
+* **outdir** (<code>string</code>)  *No description*
 
 
 
