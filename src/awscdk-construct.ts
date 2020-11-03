@@ -136,8 +136,8 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public addCdkDependencies(...deps: string[]) {
     // this ugliness will go away in cdk v2.0
-    this.addPeerDeps(...deps.map(this.formatModuleSpec));
-    this.addDeps(...deps.map(this.formatModuleSpec));
+    this.addPeerDeps(...deps.map(m => this.formatModuleSpec(m)));
+    this.addDeps(...deps.map(m => this.formatModuleSpec(m)));
   }
 
   /**
@@ -146,7 +146,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
    */
   public addCdkTestDependencies(...deps: string[]) {
-    this.addDevDeps(...deps.map(this.formatModuleSpec));
+    this.addDevDeps(...deps.map(m => this.formatModuleSpec(m)));
   }
 
   private formatModuleSpec(module: string): string {
