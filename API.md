@@ -1393,13 +1393,13 @@ addIgnorePattern(pattern: string): void
 
 #### addTypescriptOptions(config)🔹 <a id="projen-jest-addtypescriptoptions"></a>
 
-
+Configures jest with typescript options.
 
 ```ts
 addTypescriptOptions(config: TypescriptConfig): void
 ```
 
-* **config** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  *No description*
+* **config** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  The Jest Typescript Config.
 
 
 
