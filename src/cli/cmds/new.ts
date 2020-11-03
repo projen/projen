@@ -1,4 +1,3 @@
-import { execSync } from 'child_process';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
@@ -7,6 +6,7 @@ import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { exec } from '../../util';
+import { tryProcessMacro } from '../macros';
 import { synth } from '../synth';
 
 class Command implements yargs.CommandModule {
@@ -194,41 +194,6 @@ function renderDefault(value: string) {
     return JSON.stringify(resolved);
   } else {
     return value;
-  }
-}
-
-function tryProcessMacro(macro: string) {
-  if (!macro.startsWith('$')) { return undefined; }
-
-  const basedir = path.basename(process.cwd());
-  const userEmail = getFromGitConfig('user.email') ?? 'user@domain.com';
-  switch (macro) {
-    case '$BASEDIR': return basedir;
-    case '$GIT_REMOTE':
-      const origin = execOrUndefined('git remote get-url origin');
-      if (origin) {
-        return origin;
-      }
-      const slug = getFromGitConfig('github.user') ?? userEmail?.split('@')[0];
-      return `https://github.com/${slug}/${basedir}.git`;
-    case '$GIT_USER_NAME': return getFromGitConfig('user.name');
-    case '$GIT_USER_EMAIL': return userEmail;
-  }
-
-  return undefined;
-}
-
-function getFromGitConfig(key: string): string | undefined {
-  return execOrUndefined(`git config --get --global --includes ${key}`);
-}
-
-function execOrUndefined(command: string): string | undefined {
-  try {
-    const value = execSync(command, { stdio: ['inherit', 'pipe', 'ignore'] }).toString('utf-8').trim();
-    if (!value) { return undefined; } // an empty string is the same as undefined
-    return value;
-  } catch {
-    return undefined;
   }
 }
 

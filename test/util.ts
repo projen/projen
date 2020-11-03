@@ -10,17 +10,21 @@ export interface SynthOutput {
   [filePath: string]: any;
 }
 
+export function mkdtemp() {
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+}
+
 export function synthSnapshot(project: Project) {
-  const outdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  const outdir = mkdtemp();
   try {
     project.synth(outdir);
-    return snapshot(outdir);
+    return directorySnapshot(outdir);
   } finally {
     fs.removeSync(outdir);
   }
 }
 
-function snapshot(root: string) {
+function directorySnapshot(root: string) {
   const output: SynthOutput = { };
 
   const readdir = (relativeDir: string) => {
