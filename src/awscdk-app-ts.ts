@@ -170,7 +170,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
-    this.addDeps(...modules.map(this.formatModuleSpec));
+    this.addDeps(...modules.map(m => this.formatModuleSpec(m)));
   }
 
   private formatModuleSpec(module: string): string {
