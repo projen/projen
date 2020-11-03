@@ -774,13 +774,24 @@ export class NodeProject extends Project {
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
     this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
 
+    // configure jest if enabled
+    // must be before the build/release workflows
+    if (options.jest ?? true) {
+      this.jest = new Jest(this, {
+        ...options.jestOptions,
+      });
+
+      this.gitignore.include(`/${this.testdir}`);
+      this.npmignore?.exclude(`/${this.testdir}`);
+    }
+
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
           pull_request: { },
         },
         image: options.workflowContainerImage,
-        codeCoverage: options.buildWorkflowCodeCoverage ?? false,
+        codeCoverage: (options.buildWorkflowCodeCoverage ?? false) && this.jest !== undefined,
       });
     }
 
@@ -802,7 +813,7 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
-        codeCoverage: options.buildWorkflowCodeCoverage ?? false,
+        codeCoverage: (options.buildWorkflowCodeCoverage ?? false) && this.jest !== undefined,
       });
 
       if (options.releaseToNpm ?? false) {
@@ -937,16 +948,6 @@ export class NodeProject extends Project {
       this.pullRequestTemplate = new PullRequestTemplate(this, {
         lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
       });
-    }
-
-    console.log('Configuring jest...');
-    if (options.jest ?? true) {
-      this.jest = new Jest(this, {
-        ...options.jestOptions,
-      });
-
-      this.gitignore.include(`/${this.testdir}`);
-      this.npmignore?.exclude(`/${this.testdir}`);
     }
   }
 
@@ -1161,6 +1162,7 @@ export class NodeProject extends Project {
         uses: 'codecov/codecov-action@v1',
         with: {
           token: '${{ secrets.CODECOV_TOKEN }}',
+          directory: this.jest?.config?.coverageDirectory,
         },
       },
     ];
