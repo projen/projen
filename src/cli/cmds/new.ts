@@ -111,7 +111,7 @@ function renderParams(params: any) {
 
 function processDefault(value: string) {
   const basedir = path.basename(process.cwd());
-  const userEmail = execOrUndefined('git config --get --global --include user.email') ?? 'user@domain.com';
+  const userEmail = getFromGitConfig('user.email') ?? 'user@domain.com';
 
   switch (value) {
     case '$BASEDIR': return basedir;
@@ -120,13 +120,17 @@ function processDefault(value: string) {
       if (origin) {
         return origin;
       }
-      const slug = execOrUndefined('git config --get --global --include github.user') ?? userEmail?.split('@')[0];
+      const slug = getFromGitConfig('github.user') ?? userEmail?.split('@')[0];
       return `https://github.com/${slug}/${basedir}.git`;
-    case '$GIT_USER_NAME': return execOrUndefined('git config --get --global --include user.name');
+    case '$GIT_USER_NAME': return getFromGitConfig('user.name');
     case '$GIT_USER_EMAIL': return userEmail;
     default:
       return value;
   }
+}
+
+function getFromGitConfig(key: string): string | undefined {
+  return execOrUndefined(`git config --get --global --includes ${key}`);
 }
 
 function execOrUndefined(command: string): string | undefined {
