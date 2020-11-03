@@ -4,7 +4,6 @@ import { printStartMenu } from './cli/cmds/start-app';
 import { Component } from './component';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
-import { SampleReadme } from './readme';
 import { Start } from './start';
 
 /**
@@ -18,8 +17,6 @@ export class Project {
 
   constructor() {
     this.gitignore = new IgnoreFile(this, '.gitignore');
-
-    new SampleReadme(this, '# my project');
   }
 
   /**
