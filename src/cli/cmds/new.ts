@@ -186,16 +186,26 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
 
 function processDefault(value: string) {
   const basedir = path.basename(process.cwd());
-  const userEmail = execOrUndefined('git config --get --global user.email') ?? 'user@domain.com';
+  const userEmail = getFromGitConfig('user.email') ?? 'user@domain.com';
 
   switch (value) {
     case '$BASEDIR': return basedir;
-    case '$GIT_REMOTE': return execOrUndefined('git remote get-url origin') ?? `https://github.com/${userEmail?.split('@')[0]}/${basedir}.git`;
-    case '$GIT_USER_NAME': return execOrUndefined('git config --get --global user.name');
+    case '$GIT_REMOTE':
+      const origin = execOrUndefined('git remote get-url origin');
+      if (origin) {
+        return origin;
+      }
+      const slug = getFromGitConfig('github.user') ?? userEmail?.split('@')[0];
+      return `https://github.com/${slug}/${basedir}.git`;
+    case '$GIT_USER_NAME': return getFromGitConfig('user.name');
     case '$GIT_USER_EMAIL': return userEmail;
     default:
       return value;
   }
+}
+
+function getFromGitConfig(key: string): string | undefined {
+  return execOrUndefined(`git config --get --global --includes ${key}`);
 }
 
 function execOrUndefined(command: string): string | undefined {
