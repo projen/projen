@@ -5,8 +5,6 @@ import { Project } from './project';
 
 /**
  * Options for the SampleFile object.
- *
- * @field contents - The contents of the file.
  */
 export interface SampleFileOptions {
   /**
@@ -35,7 +33,7 @@ export class SampleFile extends Component {
     this.options = options;
   }
 
-  synthesize(outdir: string) {
+  public synthesize(outdir: string) {
     const contents = this.options.contents;
     this.writeOnceFileContents(outdir, this.filePath, contents ?? '');
   }
