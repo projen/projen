@@ -1510,8 +1510,8 @@ export class NodeBuildWorkflow extends GithubWorkflow {
           uses: 'codecov/codecov-action@v1',
           with: {
             token: '${{ secrets.CODECOV_TOKEN }}',
-            directory: project.jest.config.coverageDirectory ,
-          }
+            directory: project.jest.config.coverageDirectory,
+          },
         }] : [],
 
         // anti-tamper check (fails if there were changes to committed files)

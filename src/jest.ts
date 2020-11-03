@@ -80,7 +80,7 @@ export class Jest {
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       testMatch: [
-        `**/${project.testdir}/**/*.js?(x)`,
+        `**/${project.testdir}/?(*.)+(spec|test).js?(x)`,
       ],
     };
 
@@ -128,7 +128,7 @@ export class Jest {
 
     // only process .ts files
     this.config.testMatch = [
-      `**/${this.project.testdir}/**/*.ts?(x)`,
+      `**/${this.project.testdir}/?(*.)+(spec|test).ts?(x)`,
     ];
 
     // specify tsconfig.json

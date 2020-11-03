@@ -2040,7 +2040,7 @@ new NodeBuildWorkflow(project: NodeProject, name: string, options: NodeBuildWork
 * **options** (<code>[NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)</code>)  *No description*
   * **trigger** (<code>Map<string, any></code>)  *No description* 
   * **bump** (<code>boolean</code>)  Bump a new version for this build. __*Default*__: false
-  * **codeCoverage** (<code>boolean</code>)  Run codecoverage step Send to https://codecov.io/. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Run codecoverage step Send to https://codecov.io/. __*Default*__: false
   * **image** (<code>string</code>)  *No description* __*Default*__: default image
   * **uploadArtifact** (<code>boolean</code>)  *No description* __*Optional*__
 
@@ -2154,10 +2154,9 @@ Name | Type | Description
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testdir**🔹 | <code>string</code> | The directory in which .ts tests reside.
+**testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
-**workflowCodecoverageSteps**🔹 | <code>Array<any></code> | Returns the set of steps to run codecoverage action in a github workflow.
 **buildWorkflow**?🔹 | <code>[NodeBuildWorkflow](#projen-nodebuildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
@@ -4640,7 +4639,7 @@ Name | Type | Description
 -----|------|-------------
 **trigger**🔹 | <code>Map<string, any></code> | <span></span>
 **bump**?🔹 | <code>boolean</code> | Bump a new version for this build.<br/>__*Default*__: false
-**codeCoverage**?🔹 | <code>boolean</code> | Run codecoverage step Send to https://codecov.io/.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Run codecoverage step Send to https://codecov.io/.<br/>__*Default*__: false
 **image**?🔹 | <code>string</code> | __*Default*__: default image
 **uploadArtifact**?🔹 | <code>boolean</code> | __*Optional*__
 
