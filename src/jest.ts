@@ -117,6 +117,10 @@ export class Jest {
     this.ignorePatterns.push(pattern);
   }
 
+  /**
+   * Configures jest with typescript options
+   * @param config The Jest Typescript Config
+   */
   public addTypescriptOptions(config: TypescriptConfig) {
     this.config.preset = 'ts-jest';
 
