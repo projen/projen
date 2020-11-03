@@ -627,7 +627,7 @@ export class NodeProject extends Project {
   /**
    * The Jest configuration (if enabled)
    */
-  protected jest?: Jest;
+  public jest?: Jest;
 
   constructor(options: NodeProjectOptions) {
     super();
@@ -802,7 +802,7 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         image: options.workflowContainerImage,
-        codeCoverage: (options.codeCov ?? false) && this.jest !== undefined,
+        codeCov: (options.codeCov ?? false) && this.jest !== undefined,
       });
     }
 
@@ -824,7 +824,7 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
-        codeCoverage: (options.codeCov ?? false) && this.jest !== undefined,
+        codeCov: (options.codeCov ?? false) && this.jest !== undefined,
       });
 
       if (options.releaseToNpm ?? false) {
@@ -1164,22 +1164,6 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Returns the set of steps to run codecoverage action in a github workflow.
-   */
-  public get workflowCodecoverageSteps(): any[] {
-    return [
-      {
-        name: 'Upload coverage to Codecov',
-        uses: 'codecov/codecov-action@v1',
-        with: {
-          token: '${{ secrets.CODECOV_TOKEN }}',
-          directory: this.jest?.config?.coverageDirectory,
-        },
-      },
-    ];
-  }
-
-  /**
    * Defines normal dependencies.
    *
    * @param deps Names modules to install. By default, the the dependency will
@@ -1479,7 +1463,7 @@ export interface NodeBuildWorkflowOptions {
    * Send to https://codecov.io/
    * @default false
    */
-  readonly codeCoverage?: boolean;
+  readonly codeCov?: boolean;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -1520,8 +1504,15 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         // build (compile + test)
         { run: `${project.runScriptCommand} build` },
 
-        // run codecov if enabled
-        ...options.codeCoverage ? project.workflowCodecoverageSteps : [],
+        // run codecov if enabled and jest coverageDirectory
+        options.codeCov && project.jest?.config && {
+          name: 'Upload coverage to Codecov',
+          uses: 'codecov/codecov-action@v1',
+          with: {
+            token: '${{ secrets.CODECOV_TOKEN }}',
+            directory: project.jest.config.coverageDirectory ,
+          }
+        },
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
