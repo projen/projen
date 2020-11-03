@@ -85,7 +85,7 @@ export class SampleDir extends Component {
     this.options = options;
   }
 
-  synthesize(_outdir: string) {
+  public synthesize(outdir: string) {
     const fullOutdir = path.join(_outdir, this.dir);
     if (fs.pathExistsSync(fullOutdir)) {
       return;
