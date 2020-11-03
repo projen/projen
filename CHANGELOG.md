@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.153 (2020-11-03)
+
+### 0.3.152 (2020-11-03)
+
+
+### Bug Fixes
+
+* **eslint:** Fixes [#273](https://github.com/projen/projen/issues/273) by adding `--no-error-on-unmatched-pattern` to match `jest --passWithNoTests` ([#274](https://github.com/projen/projen/issues/274)) ([46340a8](https://github.com/projen/projen/commit/46340a8c121aee0b58fdd98dd64fc6141e1fedf9))
+
+### 0.3.151 (2020-11-03)
+
+
+### Bug Fixes
+
+* cannot read property version of undefined ([4dca5be](https://github.com/projen/projen/commit/4dca5be6af24550cf645f8dd0423e644ca4848f6))
+
 ### 0.3.150 (2020-11-03)
 
 ### 0.3.149 (2020-11-03)
