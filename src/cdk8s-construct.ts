@@ -5,7 +5,7 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default 0.28.0
+   * @default "0.28.0"
    */
   readonly cdk8sVersion: string;
 }
