@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.148 (2020-11-03)
+
+
+### Bug Fixes
+
+* macro values are unquoted ([a180b6a](https://github.com/projen/projen/commit/a180b6a22b6bdf18d273f105917d4c92bc998d3b))
+
 ### 0.3.147 (2020-11-03)
 
 
