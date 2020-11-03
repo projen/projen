@@ -13,6 +13,19 @@ export function exec(command: string, options?: child_process.ExecSyncOptions) {
   });
 }
 
+/**
+ * Executes `command` and returns its value or undefined if the command failed.
+ */
+export function execOrUndefined(command: string): string | undefined {
+  try {
+    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'] }).toString('utf-8').trim();
+    if (!value) { return undefined; } // an empty string is the same as undefined
+    return value;
+  } catch {
+    return undefined;
+  }
+}
+
 export function writeFile(filePath: string, data: any, options: { readonly?: boolean } = { }) {
   if (fs.existsSync(filePath)) {
     fs.chmodSync(filePath, '600');
