@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.143 (2020-11-03)
+
+
+### Features
+
+* initialize projenrc.js with commented options ([#227](https://github.com/projen/projen/issues/227)) ([b868fa3](https://github.com/projen/projen/commit/b868fa3e2612e74accba1ed497102642364a65a5)), closes [#168](https://github.com/projen/projen/issues/168)
+
 ### 0.3.142 (2020-11-03)
 
 ### 0.3.141 (2020-11-01)
