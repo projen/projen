@@ -620,7 +620,7 @@ export class NodeProject extends Project {
   public readonly runScriptCommand: string;
 
   /**
-   * The directory in which .ts tests reside.
+   * The directory in which tests reside.
    */
   public readonly testdir: string;
 
