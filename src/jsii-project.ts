@@ -110,7 +110,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * Name of the ignore file for API compatibility tests.
    *
-   * @default .compatignore
+   * @default ".compatignore"
    */
   readonly compatIgnore?: string;
 }
@@ -133,6 +133,7 @@ export interface JsiiPythonTarget {
 
   /**
    * The registry url to use when releasing packages.
+   *
    * @default - twine default
    */
   readonly twineRegistryUrl?: string;

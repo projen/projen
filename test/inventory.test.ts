@@ -19,3 +19,43 @@ test('remote discover project id simulation', () => {
   expect(remoteDiscoverResult.map(x => x.pjid).sort()).toContain('awscdk-construct');
   expect(remoteDiscoverResult.map(x => x.pjid).sort()).toContain('typescript');
 });
+
+test('renderable default values simulation', () => {
+  const baseOption = {
+    path: ['myOption'],
+    name: 'myOption',
+    switch: 'my-option',
+    type: 'boolean',
+    parent: 'MyModule',
+  };
+  expect(() => throwIfNotRenderable(baseOption)).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'undefined' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '$BASEDIR' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '{ "a": 3 }' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '2048' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'true' })).not.toThrowError();
+
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'MyEnum' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA' })).toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'BaseEnum' })).toThrowError();
+
+  expect(() => throwIfNotRenderable({ ...baseOption, default: '- current year' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year' })).toThrowError();
+});
+
+test('all default values in docstrings are renderable JS values', () => {
+  result.forEach((project) => {
+    project.options.forEach((option) => {
+      expect(() => throwIfNotRenderable(option)).not.toThrowError();
+    });
+  });
+});
+
+function throwIfNotRenderable(option: inventory.ProjectOption) {
+  return (option.default === undefined) ||
+    (option.default === 'undefined') ||
+    (option.default.startsWith('$')) ||
+    (option.default.startsWith('-')) ||
+    (option.type && option.default.startsWith(option.type)) ||
+    JSON.parse(option.default);
+};

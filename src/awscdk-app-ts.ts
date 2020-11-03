@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
@@ -24,7 +23,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
    *
-   * @default 1.63.0
+   * @default "1.63.0"
    */
   readonly cdkVersion: string;
 
@@ -60,7 +59,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
    *
-   * @default broadening
+   * @default CdkApprovalLevel.BROADENING
    */
   readonly requireApproval?: CdkApprovalLevel;
 
@@ -75,7 +74,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   /**
    * The CDK version this app is using.
    */
-  public readonly cdkVersion: Semver;
+  public readonly cdkVersion: string;
 
   /**
    * Contents of `cdk.json`.
@@ -103,10 +102,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
-    this.cdkVersion = options.cdkVersionPinning ? Semver.pinned(options.cdkVersion) : Semver.caret(options.cdkVersion);
+    this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
 
     // CLI
-    this.addDevDependencies({ 'aws-cdk': this.cdkVersion });
+    this.addDevDeps(this.formatModuleSpec('aws-cdk'));
 
     this.addCdkDependency('@aws-cdk/assert');
     this.addCdkDependency('@aws-cdk/core');
@@ -171,10 +170,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
-    for (const m of modules) {
-      // since synthesis runs at build time, CDK dependencies should be dev-dependencies
-      this.addDependencies({ [m]: this.cdkVersion });
-    }
+    this.addDeps(...modules.map(this.formatModuleSpec));
+  }
+
+  private formatModuleSpec(module: string): string {
+    return `${module}@${this.cdkVersion}`;
   }
 }
 
