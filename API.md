@@ -1391,6 +1391,19 @@ addIgnorePattern(pattern: string): void
 
 
 
+#### addTypescriptOptions(config)🔹 <a id="projen-jest-addtypescriptoptions"></a>
+
+
+
+```ts
+addTypescriptOptions(config: TypescriptConfig): void
+```
+
+* **config** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  *No description*
+
+
+
+
 
 
 ## class JsiiProject 🔹 <a id="projen-jsiiproject"></a>

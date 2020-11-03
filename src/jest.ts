@@ -64,10 +64,12 @@ export class Jest {
   public readonly config: any;
 
   private readonly ignorePatterns: string[];
+  private readonly project: NodeProject;
 
   constructor(project: NodeProject, options: JestOptions = { }) {
-    const version = options.jestVersion ?? DEFAULT_JEST_VERSION;
+    this.project = project;
 
+    const version = options.jestVersion ?? DEFAULT_JEST_VERSION;
     project.addDevDeps(`jest@${version}`);
 
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
@@ -79,29 +81,6 @@ export class Jest {
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
     };
-
-    if (options.typescript) {
-      this.config.preset = 'ts-jest';
-
-      // only process .ts files
-      this.config.testMatch = [
-        '**/__tests__/**/*.ts?(x)',
-        '**/?(*.)+(spec|test).ts?(x)',
-      ];
-
-      // specify tsconfig.json
-      this.config.globals = {
-        'ts-jest': {
-          tsconfig: options.typescript.fileName,
-        },
-      };
-
-      // add relevant deps
-      project.addDevDeps(
-        '@types/jest@^26.0.7',
-        'ts-jest@^26.1.0',
-      );
-    }
 
     if (options.coverageThreshold) {
       this.config.coverageThreshold = {
@@ -136,5 +115,28 @@ export class Jest {
 
   public addIgnorePattern(pattern: string) {
     this.ignorePatterns.push(pattern);
+  }
+
+  public addTypescriptOptions(config: TypescriptConfig) {
+    this.config.preset = 'ts-jest';
+
+    // only process .ts files
+    this.config.testMatch = [
+      '**/__tests__/**/*.ts?(x)',
+      '**/?(*.)+(spec|test).ts?(x)',
+    ];
+
+    // specify tsconfig.json
+    this.config.globals = {
+      'ts-jest': {
+        tsconfig: config.fileName,
+      },
+    };
+
+    // add relevant deps
+    this.project.addDevDeps(
+      '@types/jest@^26.0.7',
+      'ts-jest@^26.1.0',
+    );
   }
 }

@@ -2,7 +2,6 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { Eslint } from './eslint';
-import { Jest } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { Semver } from './semver';
@@ -101,10 +100,7 @@ export class TypeScriptProject extends NodeProject {
   public readonly libdir: string;
 
   constructor(options: TypeScriptProjectOptions) {
-    super({
-      jest: false,
-      ...options,
-    });
+    super(options);
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
@@ -234,13 +230,7 @@ export class TypeScriptProject extends NodeProject {
         this.addTestCommand(`rm -fr ${this.libdir}/`);
       }
 
-      this.jest = new Jest(this, {
-        typescript: tsconfig,
-        ...options.jestOptions,
-      });
-
-      this.gitignore.include(`/${this.testdir}`);
-      this.npmignore?.exclude(`/${this.testdir}`);
+      this.jest?.addTypescriptOptions(tsconfig);
     }
 
     if (options.eslint ?? true) {
