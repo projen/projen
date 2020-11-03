@@ -2,8 +2,6 @@ import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 import { TypescriptConfig } from './typescript';
 
-const DEFAULT_JEST_VERSION = '^26.4.2';
-
 export interface JestOptions {
 
   /**
@@ -14,7 +12,7 @@ export interface JestOptions {
 
   /**
    * The directory where Jest should output its coverage files.
-   * @default coverage
+   * @default "coverage"
    */
   readonly coverageDirectory?: string;
 
@@ -37,7 +35,7 @@ export interface JestOptions {
   /**
    * The version of jest to use.
    *
-   * @default ^26.4.2
+   * @default - installs the latest jest version
    */
   readonly jestVersion?: string;
 }
@@ -69,8 +67,9 @@ export class Jest {
   constructor(project: NodeProject, options: JestOptions = { }) {
     this.project = project;
 
-    const version = options.jestVersion ?? DEFAULT_JEST_VERSION;
-    project.addDevDeps(`jest@${version}`);
+    const version = options.jestVersion;
+    const jestDep = version ? `jest@${version}` : 'jest';
+    project.addDevDeps(jestDep);
 
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
 
@@ -139,8 +138,8 @@ export class Jest {
 
     // add relevant deps
     this.project.addDevDeps(
-      '@types/jest@^26.0.7',
-      'ts-jest@^26.1.0',
+      '@types/jest',
+      'ts-jest',
     );
   }
 }

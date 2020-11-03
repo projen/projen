@@ -20,8 +20,8 @@ const project = new AwsCdkTypeScriptApp({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -138,8 +138,8 @@ const project = new AwsCdkConstructLibrary({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -224,8 +224,8 @@ const project = new ConstructLibraryCdk8s({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -306,8 +306,8 @@ const project = new JsiiProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -374,8 +374,8 @@ const project = new NextJsProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -454,8 +454,8 @@ const project = new NextJsTypeScriptProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -543,8 +543,8 @@ const project = new NodeProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -630,8 +630,8 @@ const project = new ReactProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -710,8 +710,8 @@ const project = new ReactTypeScriptProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -799,8 +799,8 @@ const project = new TypeScriptProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -888,8 +888,8 @@ const project = new TypeScriptAppProject({
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowCodeCoverage: false,                                         /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret named 'CODECOV_TOKEN' is required for private repos. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */

@@ -175,11 +175,12 @@ export interface NodeProjectCommonOptions {
   readonly buildWorkflow?: boolean;
 
   /**
-   * Define a GitHub workflow step for sending
-   * code coverage metrics to https://codecov.io/
+   * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
+   * Uses codecov/codecov-action@v1
+   * A secret named 'CODECOV_TOKEN' is required for private repos
    * @default false
    */
-  readonly buildWorkflowCodeCoverage?: boolean;
+  readonly codeCov?: boolean;
 
   /**
    * Define a GitHub workflow for releasing from "master" when new versions are
@@ -624,7 +625,7 @@ export class NodeProject extends Project {
   public readonly testdir: string;
 
   /**
-   * The Jest configuration
+   * The Jest configuration (if enabled)
    */
   protected jest?: Jest;
 
@@ -801,7 +802,7 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         image: options.workflowContainerImage,
-        codeCoverage: (options.buildWorkflowCodeCoverage ?? false) && this.jest !== undefined,
+        codeCoverage: (options.codeCov ?? false) && this.jest !== undefined,
       });
     }
 
@@ -823,7 +824,7 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
-        codeCoverage: (options.buildWorkflowCodeCoverage ?? false) && this.jest !== undefined,
+        codeCoverage: (options.codeCov ?? false) && this.jest !== undefined,
       });
 
       if (options.releaseToNpm ?? false) {
