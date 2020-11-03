@@ -40,7 +40,7 @@ export class Eslint extends Component {
 
     const dirs = options.dirs;
 
-    project.addScript('eslint', `eslint --ext .ts --fix ${dirs.join(' ')}`, {
+    project.addScript('eslint', `eslint --ext .ts --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`, {
       startDesc: 'Runs eslint against the codebase',
       startCategory: StartEntryCategory.TEST,
     });
