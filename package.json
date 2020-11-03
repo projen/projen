@@ -4,7 +4,7 @@
   "description": "A new generation of project generators",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eladb/projen.git"
+    "url": "https://github.com/projen/projen.git"
   },
   "bin": {
     "projen": "bin/projen"
@@ -23,7 +23,7 @@
     "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
-    "eslint": "eslint --ext .ts --fix src test",
+    "eslint": "eslint --ext .ts --fix --no-error-on-unmatched-pattern src test",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen"
   },
@@ -158,7 +158,7 @@
       "category": 2
     }
   },
-  "version": "0.3.140",
+  "version": "0.3.152",
   "types": "lib/index.d.ts",
   "jest": {
     "clearMocks": true,

@@ -187,7 +187,7 @@ export class Dependabot {
   }
 
   /**
-   * Ignores a depepdency from automatic updates.
+   * Ignores a dependency from automatic updates.
    *
    * @param dependencyName Use to ignore updates for dependencies with matching
    * names, optionally using `*` to match zero or more characters.

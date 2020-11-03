@@ -2,6 +2,65 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.152 (2020-11-03)
+
+
+### Bug Fixes
+
+* **eslint:** Fixes [#273](https://github.com/projen/projen/issues/273) by adding `--no-error-on-unmatched-pattern` to match `jest --passWithNoTests` ([#274](https://github.com/projen/projen/issues/274)) ([46340a8](https://github.com/projen/projen/commit/46340a8c121aee0b58fdd98dd64fc6141e1fedf9))
+
+### 0.3.151 (2020-11-03)
+
+
+### Bug Fixes
+
+* cannot read property version of undefined ([4dca5be](https://github.com/projen/projen/commit/4dca5be6af24550cf645f8dd0423e644ca4848f6))
+
+### 0.3.150 (2020-11-03)
+
+### 0.3.149 (2020-11-03)
+
+### 0.3.148 (2020-11-03)
+
+
+### Bug Fixes
+
+* macro values are unquoted ([a180b6a](https://github.com/projen/projen/commit/a180b6a22b6bdf18d273f105917d4c92bc998d3b))
+
+### 0.3.147 (2020-11-03)
+
+
+### Bug Fixes
+
+* non-default assigned values are double-quoted ([52c2c9b](https://github.com/projen/projen/commit/52c2c9b20cadacf1b62797b0301e428fd653c969)), closes [#272](https://github.com/projen/projen/issues/272)
+
+### 0.3.146 (2020-11-03)
+
+### 0.3.145 (2020-11-03)
+
+
+### Bug Fixes
+
+* **cli:** improve git config detection ([#270](https://github.com/projen/projen/issues/270)) ([de229f9](https://github.com/projen/projen/commit/de229f951305e1498316856fc0737cc68c003038))
+
+### 0.3.144 (2020-11-03)
+
+
+### Features
+
+* README samples ([#203](https://github.com/projen/projen/issues/203)) ([28e85dc](https://github.com/projen/projen/commit/28e85dc54d5900b8802a3de9d60ebc8252caae9e))
+
+### 0.3.143 (2020-11-03)
+
+
+### Features
+
+* initialize projenrc.js with commented options ([#227](https://github.com/projen/projen/issues/227)) ([b868fa3](https://github.com/projen/projen/commit/b868fa3e2612e74accba1ed497102642364a65a5)), closes [#168](https://github.com/projen/projen/issues/168)
+
+### 0.3.142 (2020-11-03)
+
+### 0.3.141 (2020-11-01)
+
 ### 0.3.140 (2020-11-01)
 
 ### 0.3.139 (2020-11-01)

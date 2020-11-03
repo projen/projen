@@ -3,7 +3,7 @@ const { JsiiProject, JsonFile } = require('./lib');
 const project = new JsiiProject({
   name: 'projen',
   description: 'A new generation of project generators',
-  repository: 'https://github.com/eladb/projen.git',
+  repository: 'https://github.com/projen/projen.git',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
@@ -32,7 +32,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
-  compileBeforeTest: true,
+  compileBeforeTest: true, // since we want to run the cli in tests
 });
 
 // since this is projen, we need to compile before running projen, dah!

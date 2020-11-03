@@ -100,7 +100,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * Automatically run API compatibility test against the latest version published to npm after compilation.
    *
-   * - You can manually run compatbility tests using `yarn compat` if this feature is disabled.
+   * - You can manually run compatibility tests using `yarn compat` if this feature is disabled.
    * - You can ignore compatibility failures by adding lines to a ".compatignore" file.
    *
    * @default false
@@ -110,7 +110,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   /**
    * Name of the ignore file for API compatibility tests.
    *
-   * @default .compatignore
+   * @default ".compatignore"
    */
   readonly compatIgnore?: string;
 }
@@ -133,6 +133,7 @@ export interface JsiiPythonTarget {
 
   /**
    * The registry url to use when releasing packages.
+   *
    * @default - twine default
    */
   readonly twineRegistryUrl?: string;

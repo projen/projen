@@ -13,9 +13,11 @@ export interface ProjectOption {
   name: string;
   switch: string;
   type: string;
+  parent: string;
   docs?: string;
   default?: string;
   optional?: boolean;
+  deprecated?: boolean;
 }
 
 export interface ProjectType {
@@ -29,6 +31,7 @@ export interface ProjectType {
 }
 
 interface JsiiType {
+  name: string;
   assembly: string;
   kind: string;
   abstract?: boolean;
@@ -46,6 +49,8 @@ interface JsiiType {
     docs: {
       summary?: string;
       default?: string;
+      deprecated?: string;
+      stability?: string;
     };
     optional?: boolean;
     type?: {
@@ -92,7 +97,7 @@ export function discover(...moduleDirs: string[]) {
     }
 
     const [, typename] = fqn.split('.');
-    const docsurl = `https://github.com/eladb/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+    const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
       moduleName: typeinfo.assembly,
@@ -137,29 +142,32 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
     for (const prop of struct.properties ?? []) {
       const propPath = [...basePath, prop.name];
 
-      if (prop.type?.fqn) {
-        // recurse to sub-types only if this is a required property. otherwise, users can configure from .projenrc.js
-        if (!prop.optional) {
-          addOptions(prop.type?.fqn, propPath, true);
-        }
-        continue;
-      }
-
-      const defaultValue = prop.docs?.default?.replace(/^\ *\-/, '').trim();
+      const defaultValue = prop.docs?.default;
 
       // protect against double-booking
       if (prop.name in options) {
         throw new Error(`duplicate option "${prop.name}" in ${fqn}`);
       }
 
+      let typeName;
+      if (prop.type?.primitive) {
+        typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
+      } else if (prop.type?.fqn) {
+        typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      } else { // any other types such as collection types
+        typeName = 'unknown';
+      }
+
       options[prop.name] = filterUndefined({
         path: propPath,
+        parent: struct.name,
         name: prop.name,
         docs: prop.docs.summary,
-        type: prop.type?.primitive ?? 'unknown',
+        type: typeName,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: optional || prop.optional,
+        deprecated: prop.docs.stability === 'deprecated',
       });
     }
 
