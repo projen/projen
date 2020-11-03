@@ -101,7 +101,10 @@ export class TypeScriptProject extends NodeProject {
   public readonly libdir: string;
 
   constructor(options: TypeScriptProjectOptions) {
-    super(options);
+    super({
+      jest: false,
+      ...options,
+    });
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
