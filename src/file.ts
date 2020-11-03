@@ -72,7 +72,6 @@ export abstract class FileBase extends Component {
       readonly: this.readonly,
     });
   }
-
 }
 
 /**
@@ -86,4 +85,3 @@ export interface IResolver {
    */
   resolve(value: any): any;
 }
-
