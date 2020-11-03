@@ -35,6 +35,8 @@ Name|Description
 [ReactProject](#projen-reactproject)|React project without TypeScript.
 [ReactTypeDef](#projen-reacttypedef)|*No description*
 [ReactTypeScriptProject](#projen-reacttypescriptproject)|React project with TypeScript.
+[SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
+[SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
 [TextFile](#projen-textfile)|A text file.
@@ -93,6 +95,8 @@ Name|Description
 [ReactTypeDefOptions](#projen-reacttypedefoptions)|*No description*
 [ReactTypeScriptProjectOptions](#projen-reacttypescriptprojectoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
+[SampleDirOptions](#projen-samplediroptions)|SampleDir options.
+[SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
@@ -2788,6 +2792,72 @@ Name | Type | Description
 
 
 
+## class SampleDir 🔹 <a id="projen-sampledir"></a>
+
+Renders the given files into the directory if the directory does not exist.
+
+Use this to create sample code files
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Create sample files in the given directory if the given directory does not exist.
+
+```ts
+new SampleDir(project: Project, dir: string, options: SampleDirOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
+* **dir** (<code>string</code>)  directory to add files to.
+* **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
+  * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
+
+
+
+
+## class SampleFile 🔹 <a id="projen-samplefile"></a>
+
+Produces a file with the given contents but only once, if the file doesn't already exist.
+
+Use this for creating example code files or other resources.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Creates a new SampleFile object.
+
+```ts
+new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
+* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
+  * **contents** (<code>string</code>)  The contents of the file to write. 
+
+
+### Methods
+
+
+#### synthesize(outdir)🔹 <a id="projen-samplefile-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(outdir: string): void
+```
+
+* **outdir** (<code>string</code>)  *No description*
+
+
+
+
+
+
 ## class Semver ⚠️ <a id="projen-semver"></a>
 
 
@@ -4970,6 +5040,32 @@ Name | Type | Description
 **phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Default*__: false
 **prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Default*__: []
 **recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Default*__: []
+
+
+
+## struct SampleDirOptions 🔹 <a id="projen-samplediroptions"></a>
+
+
+SampleDir options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**files**🔹 | <code>Map<string, string></code> | The files to render into the directory.
+
+
+
+## struct SampleFileOptions 🔹 <a id="projen-samplefileoptions"></a>
+
+
+Options for the SampleFile object.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**contents**🔹 | <code>string</code> | The contents of the file to write.
 
 
 

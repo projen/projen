@@ -26,3 +26,4 @@ export * from './typescript';
 export * from './version';
 export * from './textfile';
 export * from './pr-template';
+export * from './sample-file';
