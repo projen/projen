@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.147 (2020-11-03)
+
+
+### Bug Fixes
+
+* non-default assigned values are double-quoted ([52c2c9b](https://github.com/projen/projen/commit/52c2c9b20cadacf1b62797b0301e428fd653c969)), closes [#272](https://github.com/projen/projen/issues/272)
+
 ### 0.3.146 (2020-11-03)
 
 ### 0.3.145 (2020-11-03)
