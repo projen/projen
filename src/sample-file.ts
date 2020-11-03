@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { Project } from './project';
+import { writeFile } from './util';
 
 /**
  * Options for the SampleFile object.
@@ -51,8 +52,7 @@ export class SampleFile extends Component {
     if (fs.existsSync(fullFilename)) {
       return;
     }
-    fs.mkdirpSync(dir);
-    fs.writeFileSync(fullFilename, contents);
+    writeFile(fullFilename, contents);
   }
 }
 
@@ -91,9 +91,8 @@ export class SampleDir extends Component {
       return;
     }
 
-    fs.mkdirpSync(fullOutdir);
     for (const filename in this.options.files) {
-      fs.writeFileSync(path.join(fullOutdir, filename), this.options.files[filename]);
+      writeFile(path.join(fullOutdir, filename), this.options.files[filename]);
     }
   }
 }
