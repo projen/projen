@@ -296,7 +296,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**version**🔹 | <code>[Semver](#projen-semver)</code> | The target CDK version for this library.
+**version**🔹 | <code>string</code> | The target CDK version for this library.
 
 ### Methods
 
@@ -444,7 +444,7 @@ Name | Type | Description
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK app entrypoint.
 **cdkConfig**🔹 | <code>any</code> | Contents of `cdk.json`.
-**cdkVersion**🔹 | <code>[Semver](#projen-semver)</code> | The CDK version this app is using.
+**cdkVersion**🔹 | <code>string</code> | The CDK version this app is using.
 
 ### Methods
 
