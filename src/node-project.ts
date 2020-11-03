@@ -1505,14 +1505,14 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         { run: `${project.runScriptCommand} build` },
 
         // run codecov if enabled and jest coverageDirectory
-        options.codeCov && project.jest?.config && {
+        ...options.codeCov && project.jest?.config ? [{
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
           with: {
             token: '${{ secrets.CODECOV_TOKEN }}',
             directory: project.jest.config.coverageDirectory ,
           }
-        },
+        }] : [],
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
