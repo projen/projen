@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.151 (2020-11-03)
+
+
+### Bug Fixes
+
+* cannot read property version of undefined ([4dca5be](https://github.com/projen/projen/commit/4dca5be6af24550cf645f8dd0423e644ca4848f6))
+
 ### 0.3.150 (2020-11-03)
 
 ### 0.3.149 (2020-11-03)
