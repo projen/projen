@@ -52,7 +52,7 @@ export class SampleFile extends Component {
     if (fs.existsSync(fullFilename)) {
       return;
     }
-    writeFile(fullFilename, contents);
+    writeFile(fullFilename, contents, { readonly: false });
   }
 }
 
