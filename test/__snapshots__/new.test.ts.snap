@@ -22,7 +22,7 @@ const project = new AwsCdkTypeScriptApp({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -141,7 +141,7 @@ const project = new AwsCdkConstructLibrary({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -228,7 +228,7 @@ const project = new ConstructLibraryCdk8s({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -311,7 +311,7 @@ const project = new JsiiProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -380,7 +380,7 @@ const project = new NextJsProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -461,7 +461,7 @@ const project = new NextJsTypeScriptProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -551,7 +551,7 @@ const project = new NodeProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -639,7 +639,7 @@ const project = new ReactProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -720,7 +720,7 @@ const project = new ReactTypeScriptProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -810,7 +810,7 @@ const project = new TypeScriptProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -900,7 +900,7 @@ const project = new TypeScriptAppProject({
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: \\"CODECOV_TOKEN\\",                                      /* Define the secret name for a specified https://codecov.io/ token. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */

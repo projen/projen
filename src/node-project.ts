@@ -184,7 +184,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Define the secret name for a specified https://codecov.io/ token
-   * @default "CODECOV_TOKEN"
+   * A secret is required to send coverage for private repositories
    */
   readonly codeCovTokenSecret?: string;
 
@@ -574,13 +574,13 @@ export class NodeProject extends Project {
   public readonly entrypoint: string;
   public readonly pullRequestTemplate?: PullRequestTemplate;
 
-  private readonly peerDependencies: Record<string, string> = { };
+  private readonly peerDependencies: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly devDependencies: Record<string, string> = { };
-  private readonly dependencies: Record<string, string> = { };
+  private readonly devDependencies: Record<string, string> = {};
+  private readonly dependencies: Record<string, string> = {};
   private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string[]>;
-  private readonly bin: Record<string, string> = { };
+  private readonly bin: Record<string, string> = {};
   private readonly keywords: Set<string>;
   private readonly _version: Version;
 
@@ -699,6 +699,7 @@ export class NodeProject extends Project {
     }
 
     this.testdir = options.testdir ?? 'test';
+    this.testdir = options.jestOptions?.testdir ?? options.testdir ?? 'test';
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -770,7 +771,7 @@ export class NodeProject extends Project {
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
-    this.addBins(options.bin ?? { });
+    this.addBins(options.bin ?? {});
 
     const projen = options.projenDevDependency ?? true;
     if (projen) {
@@ -795,6 +796,7 @@ export class NodeProject extends Project {
     // must be before the build/release workflows
     if (options.jest ?? true) {
       this.jest = new Jest(this, {
+        testdir: this.testdir,
         ...options.jestOptions,
       });
 
@@ -805,7 +807,7 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
-          pull_request: { },
+          pull_request: {},
         },
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -919,7 +921,7 @@ export class NodeProject extends Project {
           strict_method: 'merge',
         },
 
-        delete_head_branch: { },
+        delete_head_branch: {},
       };
 
       this.mergify.addRule({
@@ -981,7 +983,7 @@ export class NodeProject extends Project {
    */
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [k, v] of Object.entries(deps)) {
-      this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
+      this.dependencies[k] = typeof (v) === 'string' ? v : v.spec;
 
       if (bundle) {
         this.addBundledDependencies(k);
@@ -1015,7 +1017,7 @@ export class NodeProject extends Project {
    */
   public addDevDependencies(deps: { [module: string]: Semver }) {
     for (const [k, v] of Object.entries(deps ?? {})) {
-      this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
+      this.devDependencies[k] = typeof (v) === 'string' ? v : v.spec;
     }
   }
 
@@ -1029,7 +1031,7 @@ export class NodeProject extends Project {
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
     for (const [k, v] of Object.entries(deps)) {
-      this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
+      this.peerDependencies[k] = typeof (v) === 'string' ? v : v.spec;
 
       if (pinned && v.version) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
@@ -1055,7 +1057,7 @@ export class NodeProject extends Project {
    * @param command The command to execute
    * @param options Options such as start menu description and category
    */
-  public addScript(name: string, command: string, options: ScriptOptions = { }) {
+  public addScript(name: string, command: string, options: ScriptOptions = {}) {
     this.scripts[name] = [command];
 
     if (options.startDesc) {
@@ -1341,7 +1343,7 @@ export class NodeProject extends Project {
     const root = path.join(outdir, 'package.json');
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
 
-    const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
+    const resolveDeps = (current: { [name: string]: string }, user: Record<string, string>) => {
       const result: Record<string, string> = {};
 
       for (const [name, currentDefinition] of Object.entries(user)) {
@@ -1475,7 +1477,6 @@ export interface NodeBuildWorkflowOptions {
 
   /**
    * The secret name for the https://codecov.io/ token
-   * @default "CODECOV_TOKEN"
    */
   readonly codeCovTokenSecret?: string;
 }
@@ -1523,10 +1524,13 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         ...(options.codeCov || options.codeCovTokenSecret) && project.jest?.config ? [{
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
-          with: {
-            token: `\${{ secrets.${options.codeCovTokenSecret ?? 'CODECOV_TOKEN'} }}`,
-            directory: project.jest.config.coverageDirectory,
-          },
+          with: options.codeCovTokenSecret
+            ? {
+              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+              directory: project.jest.config.coverageDirectory,
+            } : {
+              directory: project.jest.config.coverageDirectory,
+            },
         }] : [],
 
         // anti-tamper check (fails if there were changes to committed files)
