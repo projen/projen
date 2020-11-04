@@ -177,10 +177,16 @@ export interface NodeProjectCommonOptions {
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
    * Uses codecov/codecov-action@v1
-   * A secret named 'CODECOV_TOKEN' is required for private repos
+   * A secret is required for private repos. Configured with @codeCovTokenSecret
    * @default false
    */
   readonly codeCov?: boolean;
+
+  /**
+   * Define the secret name for a specified https://codecov.io/ token
+   * @default "CODECOV_TOKEN"
+   */
+  readonly codeCovTokenSecret?: string;
 
   /**
    * Define a GitHub workflow for releasing from "master" when new versions are
@@ -802,7 +808,8 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         image: options.workflowContainerImage,
-        codeCov: (options.codeCov ?? false) && this.jest !== undefined,
+        codeCov: options.codeCov ?? false,
+        codeCovTokenSecret: options.codeCovTokenSecret,
       });
     }
 
@@ -824,7 +831,8 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
-        codeCov: (options.codeCov ?? false) && this.jest !== undefined,
+        codeCov: options.codeCov ?? false,
+        codeCovTokenSecret: options.codeCovTokenSecret,
       });
 
       if (options.releaseToNpm ?? false) {
@@ -1464,6 +1472,12 @@ export interface NodeBuildWorkflowOptions {
    * @default false
    */
   readonly codeCov?: boolean;
+
+  /**
+   * The secret name for the https://codecov.io/ token
+   * @default "CODECOV_TOKEN"
+   */
+  readonly codeCovTokenSecret?: string;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -1504,12 +1518,13 @@ export class NodeBuildWorkflow extends GithubWorkflow {
         // build (compile + test)
         { run: `${project.runScriptCommand} build` },
 
-        // run codecov if enabled and jest coverageDirectory
-        ...options.codeCov && project.jest?.config ? [{
+        // run codecov if enabled or a secret token name is passed in
+        // AND jest must be configured
+        ...(options.codeCov || options.codeCovTokenSecret) && project.jest?.config ? [{
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
           with: {
-            token: '${{ secrets.CODECOV_TOKEN }}',
+            token: `\${{ secrets.${options.codeCovTokenSecret ?? 'CODECOV_TOKEN'} }}`,
             directory: project.jest.config.coverageDirectory,
           },
         }] : [],
