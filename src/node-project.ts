@@ -700,10 +700,6 @@ export class NodeProject extends Project {
     }
 
     this.testdir = options.testdir ?? 'test';
-    if (options.jestOptions?.testdir && options.jestOptions.testdir !== this.testdir) {
-      throw new Error(`project "testdir" must be the same as jestOptions "testdir".
-      Provided: "${this.testdir}" !== "${options.jestOptions.testdir}"`);
-    }
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -800,7 +796,6 @@ export class NodeProject extends Project {
     // must be before the build/release workflows
     if (options.jest ?? true) {
       this.jest = new Jest(this, {
-        testdir: this.testdir,
         ...options.jestOptions,
       });
 

@@ -170,7 +170,8 @@
       "/node_modules/"
     ],
     "testMatch": [
-      "**/test/?(*.)+(spec|test).ts?(x)"
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
     ],
     "preset": "ts-jest",
     "globals": {

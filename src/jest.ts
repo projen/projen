@@ -6,12 +6,6 @@ import { TypescriptConfig } from './typescript';
 
 export interface JestOptions {
   /**
-   * The directory in which tests reside.
-   * @default "test"
-   */
-  readonly testdir?: string;
-
-  /**
    * Collect coverage.
    * @default true
    */
@@ -70,11 +64,9 @@ export class Jest {
 
   private readonly ignorePatterns: string[];
   private readonly project: NodeProject;
-  private readonly testdir: string;
 
   constructor(project: NodeProject, options: JestOptions = { }) {
     this.project = project;
-    this.testdir = options.testdir ?? 'test';
 
     const version = options.jestVersion;
     const jestDep = version ? `jest@${version}` : 'jest';
@@ -90,7 +82,8 @@ export class Jest {
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       testMatch: [
-        `**/${project.testdir}/?(*.)+(spec|test).js?(x)`,
+        '**/__tests__/**/*.js?(x)',
+        '**/?(*.)+(spec|test).js?(x)',
       ],
     };
 
@@ -124,7 +117,8 @@ export class Jest {
 
     // only process .ts files
     this.config.testMatch = [
-      `**/${this.testdir}/?(*.)+(spec|test).ts?(x)`,
+      '**/__tests__/**/*.ts?(x)',
+      '**/?(*.)+(spec|test).ts?(x)',
     ];
 
     // specify tsconfig.json

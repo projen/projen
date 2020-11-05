@@ -1369,7 +1369,6 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
-  * **testdir** (<code>string</code>)  The directory in which tests reside. __*Default*__: "test"
   * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
 
 
@@ -4240,7 +4239,6 @@ Name | Type | Description
 **coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Optional*__
 **ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: "/node_modules/"
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
-**testdir**?🔹 | <code>string</code> | The directory in which tests reside.<br/>__*Default*__: "test"
 **typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/>__*Optional*__
 
 
