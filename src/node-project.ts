@@ -149,7 +149,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Version of projen to install.
    *
-   * @default - latest version
+   * @default Semver.latest()
    */
   readonly projenVersion?: Semver;
 
@@ -163,7 +163,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The name of the main release branch.
    *
-   * @default 'master'
+   * @default "master"
    */
   readonly defaultReleaseBranch?: string;
 
@@ -189,6 +189,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * CRON schedule to trigger new releases.
+   *
    * @default - no scheduled releases
    */
   readonly releaseSchedule?: string;
@@ -196,7 +197,9 @@ export interface NodeProjectCommonOptions {
   /**
    * Branches which trigger a release.
    *
-   * @default [ "master" ] - based on the value of defaultReleaseBranch.
+   * Default value is based on defaultReleaseBranch.
+   *
+   * @default [ "master" ]
    */
   readonly releaseBranches?: string[];
 
@@ -227,19 +230,22 @@ export interface NodeProjectCommonOptions {
   readonly antitamper?: boolean;
 
   /**
-   * Node.js version to require via package.json `engines` (inclusive).
+   * Minimum Node.js version to require via package.json `engines` (inclusive).
+   *
    * @default - no "engines" specified
    */
   readonly minNodeVersion?: string;
 
   /**
    * Minimum node.js version to require via `engines` (inclusive).
+   *
    * @default - no max
    */
   readonly maxNodeVersion?: string;
 
   /**
    * The node version to use in GitHub workflows.
+   *
    * @default - same as `minNodeVersion`
    */
   readonly workflowNodeVersion?: string;
@@ -261,7 +267,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The Node Package Manager used to execute scripts
    *
-   * @default packageManager.YARN
+   * @default NodePackageManager.YARN
    */
   readonly packageManager?: NodePackageManager;
 
@@ -274,6 +280,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * The copyright years to put in the LICENSE file.
+   *
    * @default - current year
    */
   readonly copyrightPeriod?: string;
@@ -302,7 +309,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Include dependabot configuration.
    *
-   * @default true;
+   * @default true
    */
   readonly dependabot?: boolean;
 
@@ -315,12 +322,14 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Adds mergify configuration.
+   *
    * @default true
    */
   readonly mergify?: boolean;
 
   /**
    * Options for mergify
+   *
    * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
@@ -369,7 +378,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Customize the projenUpgrade schedule in cron expression.
    *
-   @default [ '0 6 * * *' ]
+   @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
 
@@ -382,6 +391,7 @@ export interface NodeProjectCommonOptions {
 
   /**
    * Options for `yarn start`.
+   *
    * @default - default options
    */
   readonly startOptions?: StartOptions;
@@ -413,7 +423,7 @@ export interface NodeProjectCommonOptions {
    *
    * Set to an empty string to not include `main` in your package.json
    *
-   * @default lib/index.js
+   * @default "lib/index.js"
    */
   readonly entrypoint?: string;
 
