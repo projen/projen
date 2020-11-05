@@ -9,6 +9,7 @@ test('sample src code synthesises correctly', () => {
       cdkVersion: '1.2.3',
     },
   );
+
   expect(prj.cdkConfig.context).toBeUndefined;
   expect(prj.cdkConfig.requireApproval).toBeUndefined;
   // there will be console outputs
@@ -16,19 +17,9 @@ test('sample src code synthesises correctly', () => {
   console.error = jest.fn();
   const snap = synthSnapshot(prj);
 
-  expect(snap['.github/workflows/build.yml']).toBeDefined;
-  expect(snap['.eslintrc.json']).toBeDefined;
-  expect(snap['.github/pull_request_template.md']).toBeDefined;
-  expect(snap['.github/workflows/build.yml']).toBeDefined;
-  expect(snap.LICENSE).toBeDefined;
-  expect(snap['package.json']).toBeDefined;
-  expect(snap['cdk.json']).toBeDefined
-  expect(snap['src/mein.ts']).toBeUndefined;
-  expect(snap['src/main.ts']).toBeDefined;
-  expect(snap['src/main.test.ts']).toBeDefined;
-  expect(snap['tsconfig.jest.json']).toBeDefined;
-  expect(snap['tsconfig.json']).toBeDefined;
-  expect(snap['version.json']).toBeDefined;
+  expect(snap).toMatchSnapshot();
+
+
 });
 
 test('src dir error', () => {
