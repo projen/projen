@@ -1,6 +1,8 @@
+import * as path from 'path';
 import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 import { TypescriptConfig } from './typescript';
+
 
 export interface JestOptions {
   /**
@@ -80,10 +82,11 @@ export class Jest {
 
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
 
+    const coverageDirectory = options.coverageDirectory ?? 'coverage';
     this.config = {
       clearMocks: true,
       collectCoverage: options.coverage ?? true,
-      coverageDirectory: options.coverageDirectory ?? 'coverage',
+      coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns: this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       testMatch: [
@@ -97,27 +100,13 @@ export class Jest {
       };
     }
 
-    const jestOpts = ['--passWithNoTests'];
-
-    // if the project has anti-tamper configured, it should be safe to always run tests
-    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
-    if (project.antitamper) {
-      jestOpts.push('--updateSnapshot');
-    }
-
-    project.addTestCommand(`jest ${jestOpts.join(' ')}`);
-
-    project.addScript('test:watch', 'jest --watch', {
-      startDesc: 'Run jest in watch mode',
-      startCategory: StartEntryCategory.TEST,
-    });
-
-    project.addScript('test:update', 'jest --updateSnapshot');
+    this.configureTestCommand();
 
     project.addFields({ jest: this.config });
 
-    project.npmignore?.exclude('/coverage');
-    project.gitignore.exclude('/coverage');
+    const coverageDirectoryPath = path.join('/', coverageDirectory);
+    project.npmignore?.exclude(coverageDirectoryPath);
+    project.gitignore.exclude(coverageDirectoryPath);
 
     project.addTip('The VSCode jest extension watches in the background and shows inline test results');
   }
@@ -150,5 +139,26 @@ export class Jest {
       '@types/jest',
       'ts-jest',
     );
+
+    this.configureTestCommand();
+  }
+
+  private configureTestCommand() {
+    const jestOpts = ['--passWithNoTests'];
+
+    // if the project has anti-tamper configured, it should be safe to always run tests
+    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
+    if (this.project.antitamper) {
+      jestOpts.push('--updateSnapshot');
+    }
+
+    this.project.addTestCommand(`jest ${jestOpts.join(' ')}`);
+
+    this.project.addScript('test:watch', 'jest --watch', {
+      startDesc: 'Run jest in watch mode',
+      startCategory: StartEntryCategory.TEST,
+    });
+
+    this.project.addScript('test:update', 'jest --updateSnapshot');
   }
 }

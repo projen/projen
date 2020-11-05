@@ -185,6 +185,7 @@ export interface NodeProjectCommonOptions {
   /**
    * Define the secret name for a specified https://codecov.io/ token
    * A secret is required to send coverage for private repositories
+   * @default - if this option is not specified, only public repositories are supported
    */
   readonly codeCovTokenSecret?: string;
 
@@ -574,13 +575,13 @@ export class NodeProject extends Project {
   public readonly entrypoint: string;
   public readonly pullRequestTemplate?: PullRequestTemplate;
 
-  private readonly peerDependencies: Record<string, string> = {};
+  private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly devDependencies: Record<string, string> = {};
-  private readonly dependencies: Record<string, string> = {};
+  private readonly devDependencies: Record<string, string> = { };
+  private readonly dependencies: Record<string, string> = { };
   private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string[]>;
-  private readonly bin: Record<string, string> = {};
+  private readonly bin: Record<string, string> = { };
   private readonly keywords: Set<string>;
   private readonly _version: Version;
 
@@ -633,7 +634,7 @@ export class NodeProject extends Project {
   /**
    * The Jest configuration (if enabled)
    */
-  public jest?: Jest;
+  public readonly jest?: Jest;
 
   constructor(options: NodeProjectOptions) {
     super();
@@ -699,7 +700,10 @@ export class NodeProject extends Project {
     }
 
     this.testdir = options.testdir ?? 'test';
-    this.testdir = options.jestOptions?.testdir ?? options.testdir ?? 'test';
+    if (options.jestOptions?.testdir && options.jestOptions.testdir !== this.testdir) {
+      throw new Error(`project "testdir" must be the same as jestOptions "testdir".
+      Provided: "${this.testdir}" !== "${options.jestOptions.testdir}"`);
+    }
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -771,7 +775,7 @@ export class NodeProject extends Project {
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
-    this.addBins(options.bin ?? {});
+    this.addBins(options.bin ?? { });
 
     const projen = options.projenDevDependency ?? true;
     if (projen) {
@@ -807,7 +811,7 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
         trigger: {
-          pull_request: {},
+          pull_request: { },
         },
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -818,7 +822,7 @@ export class NodeProject extends Project {
     if (options.releaseWorkflow ?? true) {
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
-      const trigger: { [event: string]: any } = {};
+      const trigger: { [event: string]: any } = { };
 
       if (options.releaseEveryCommit ?? true) {
         trigger.push = { branches: releaseBranches };
@@ -921,7 +925,7 @@ export class NodeProject extends Project {
           strict_method: 'merge',
         },
 
-        delete_head_branch: {},
+        delete_head_branch: { },
       };
 
       this.mergify.addRule({
@@ -983,7 +987,7 @@ export class NodeProject extends Project {
    */
   public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
     for (const [k, v] of Object.entries(deps)) {
-      this.dependencies[k] = typeof (v) === 'string' ? v : v.spec;
+      this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (bundle) {
         this.addBundledDependencies(k);
@@ -1017,7 +1021,7 @@ export class NodeProject extends Project {
    */
   public addDevDependencies(deps: { [module: string]: Semver }) {
     for (const [k, v] of Object.entries(deps ?? {})) {
-      this.devDependencies[k] = typeof (v) === 'string' ? v : v.spec;
+      this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
     }
   }
 
@@ -1031,7 +1035,7 @@ export class NodeProject extends Project {
     const opts = options ?? this.peerDependencyOptions;
     const pinned = opts.pinnedDevDependency ?? true;
     for (const [k, v] of Object.entries(deps)) {
-      this.peerDependencies[k] = typeof (v) === 'string' ? v : v.spec;
+      this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
 
       if (pinned && v.version) {
         this.addDevDependencies({ [k]: Semver.pinned(v.version) });
@@ -1057,7 +1061,7 @@ export class NodeProject extends Project {
    * @param command The command to execute
    * @param options Options such as start menu description and category
    */
-  public addScript(name: string, command: string, options: ScriptOptions = {}) {
+  public addScript(name: string, command: string, options: ScriptOptions = { }) {
     this.scripts[name] = [command];
 
     if (options.startDesc) {
