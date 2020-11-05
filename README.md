@@ -219,7 +219,7 @@ project.synth();
 
 ## Contributing
 
-Contributions of all kinds are welcome!
+Contributions of all kinds are welcome! See our [code of conduct](./CODE_OF_CONDUCT.md).
 
 To check out a development environment:
 
