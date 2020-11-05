@@ -139,11 +139,9 @@ export class Jest {
       '@types/jest',
       'ts-jest',
     );
-
-    this.configureTestCommand();
   }
 
-  private configureTestCommand() {
+  public configureTestCommand() {
     const jestOpts = ['--passWithNoTests'];
 
     // if the project has anti-tamper configured, it should be safe to always run tests

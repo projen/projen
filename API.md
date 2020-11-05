@@ -1410,6 +1410,18 @@ addTypescriptOptions(config: TypescriptConfig): void
 
 
 
+#### configureTestCommand()🔹 <a id="projen-jest-configuretestcommand"></a>
+
+
+
+```ts
+configureTestCommand(): void
+```
+
+
+
+
+
 
 
 ## class JsiiProject 🔹 <a id="projen-jsiiproject"></a>

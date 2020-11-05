@@ -227,6 +227,9 @@ export class TypeScriptProject extends NodeProject {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
         this.addScript('test', `rm -fr ${this.libdir}/`);
+
+        // Reconfigure test command because the above line replaces it
+        this.jest?.configureTestCommand();
       }
 
       this.jest?.addTypescriptOptions(tsconfig);
