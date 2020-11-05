@@ -15,7 +15,7 @@
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn run --silent no-changes || standard-version",
     "release": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)",
-    "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
+    "test": "jest --passWithNoTests --updateSnapshot && jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "test:watch": "jest --watch",
     "test:update": "jest --updateSnapshot",
     "projen:upgrade": "yarn upgrade -L projen && CI=\"\" yarn projen",
@@ -158,7 +158,7 @@
       "category": 2
     }
   },
-  "version": "0.3.153",
+  "version": "0.3.155",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,

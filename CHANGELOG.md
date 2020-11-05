@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.155 (2020-11-05)
+
+
+### Features
+
+* **license:** adds some common licenses ([#264](https://github.com/projen/projen/issues/264)) ([20615c3](https://github.com/projen/projen/commit/20615c3637fa82b802b68aca70513893b8b06343))
+
+### 0.3.154 (2020-11-05)
+
 ### 0.3.153 (2020-11-03)
 
 ### 0.3.152 (2020-11-03)
