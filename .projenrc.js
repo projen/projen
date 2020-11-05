@@ -32,7 +32,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
-  compileBeforeTest: true,
+  compileBeforeTest: true, // since we want to run the cli in tests
 });
 
 // since this is projen, we need to compile before running projen, dah!
