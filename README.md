@@ -224,7 +224,7 @@ Contributions of all kinds are welcome! See our [code of conduct](./CODE_OF_COND
 To check out a development environment:
 
 ```bash
-$ git clone git@github.com:eladb/projen
+$ git clone git@github.com:projen/projen
 $ cd projen
 $ yarn
 ```
