@@ -16,9 +16,9 @@ export interface SubdirComponentOptions {
  * A sub-directory in which to synthesize components.
  */
 export class Subdir extends Component implements IComponentScope {
-  readonly gitignore: IgnoreFile;
-  readonly components: Component[];
-  readonly subdirPath: string;
+  public readonly gitignore: IgnoreFile;
+  public readonly subdirPath: string;
+  private readonly components: Component[];
 
   constructor(public readonly project: IComponentScope, private readonly options: SubdirComponentOptions) {
     super(project);
