@@ -69,6 +69,8 @@ test('creates several subdirs', () => {
   const p = new Project();
 
   // WHEN
+
+  // Frontend Dockerfile and context in its own directory
   const frontend = new Subdir(p, {
     subdirPath: 'frontend',
   });
@@ -79,6 +81,7 @@ test('creates several subdirs', () => {
     ],
   });
 
+  // API Dockerfile and context in its own directory
   const api = new Subdir(p, {
     subdirPath: 'cms',
   });
@@ -89,7 +92,7 @@ test('creates several subdirs', () => {
     ],
   });
 
-  // Dockerfile at the root
+  // Docker compose at the root
   new DockerCompose(p, {
     services: {
       http: {
