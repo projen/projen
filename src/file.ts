@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { resolve } from './_resolve';
-import { Component } from './component';
-import { Project } from './project';
+import { Component, IComponentScope } from './component';
 import { writeFile } from './util';
 
 export interface FileBaseOptions {
@@ -32,7 +31,7 @@ export abstract class FileBase extends Component {
   public readonly path: string;
   public readonly: boolean;
 
-  constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
+  constructor(project: IComponentScope, filePath: string, options: FileBaseOptions = { }) {
     super(project);
 
     this.readonly = options.readonly ?? true;

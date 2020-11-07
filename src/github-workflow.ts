@@ -1,14 +1,14 @@
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
+import { IComponentScope } from './component';
 import { FileBase, IResolver } from './file';
-import { Project } from './project';
 
 export class GithubWorkflow extends FileBase {
   private readonly name: string;
   private events: { [event: string]: any } = { };
   private jobs: { [jobid: string]: any } = { };
 
-  constructor(project: Project, name: string) {
+  constructor(project: IComponentScope, name: string) {
     super(project, `.github/workflows/${name.toLocaleLowerCase()}.yml`);
     this.name = name;
   }

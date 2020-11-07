@@ -1,9 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Component } from './component';
+import { Component, IComponentScope } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
-import { Project } from './project';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
@@ -404,7 +403,7 @@ export class ReactTypeDef extends FileBase {
 }
 
 class ReactAppCss extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
+  constructor(project: IComponentScope, filePath: string, options: FileBaseOptions = {}) {
     super(project, filePath, options);
   }
 
@@ -454,7 +453,7 @@ class ReactAppCss extends FileBase {
 }
 
 class ReactIndexCss extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
+  constructor(project: IComponentScope, filePath: string, options: FileBaseOptions = {}) {
     super(project, filePath, options);
   }
 
@@ -479,7 +478,7 @@ class ReactIndexCss extends FileBase {
 }
 
 class ReactSetupTests extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
+  constructor(project: IComponentScope, filePath: string, options: FileBaseOptions = {}) {
     super(project, filePath, options);
   }
 
@@ -496,7 +495,7 @@ class ReactSetupTests extends FileBase {
 }
 
 class ReactAppTest extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
+  constructor(project: IComponentScope, filePath: string, options: FileBaseOptions = {}) {
     super(project, filePath, options);
   }
 

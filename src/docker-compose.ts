@@ -1,5 +1,4 @@
-import { Component } from './component';
-import { Project } from './project';
+import { Component, IComponentScope } from './component';
 import { decamelizeKeysRecursively } from './util';
 import { YamlFile } from './yaml';
 
@@ -103,7 +102,7 @@ export class DockerCompose extends Component {
 
   private readonly services: Record<string, DockerComposeService>;
 
-  constructor(project: Project, props?: DockerComposeProps) {
+  constructor(project: IComponentScope, props?: DockerComposeProps) {
     super(project);
 
     const nameSuffix = props?.nameSuffix ? `${props!.nameSuffix}.yml` : 'yml';

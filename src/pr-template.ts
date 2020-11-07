@@ -1,4 +1,4 @@
-import { Project } from './project';
+import { IComponentScope } from './component';
 import { TextFile } from './textfile';
 
 /**
@@ -17,7 +17,7 @@ export interface PullRequestTemplateOptions {
  * Template for GitHub pull requests.
  */
 export class PullRequestTemplate extends TextFile {
-  constructor(project: Project, options: PullRequestTemplateOptions = { }) {
+  constructor(project: IComponentScope, options: PullRequestTemplateOptions = { }) {
     super(project, '.github/pull_request_template.md', {
       lines: options.lines ?? [
         'Fixes #',

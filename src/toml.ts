@@ -1,6 +1,6 @@
 import * as TOML from '@iarna/toml';
+import { IComponentScope } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
 
 export interface TomlFileOptions extends FileBaseOptions {
   /**
@@ -15,7 +15,7 @@ export interface TomlFileOptions extends FileBaseOptions {
 export class TomlFile extends FileBase {
   protected readonly obj: object;
 
-  constructor(project: Project, filePath: string, options: TomlFileOptions) {
+  constructor(project: IComponentScope, filePath: string, options: TomlFileOptions) {
     super(project, filePath, options);
 
     if (!options.obj) {

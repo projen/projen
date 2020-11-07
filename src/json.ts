@@ -1,5 +1,5 @@
+import { IComponentScope } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
 
 export interface JsonFileOptions extends FileBaseOptions {
   readonly obj: any;
@@ -8,7 +8,7 @@ export interface JsonFileOptions extends FileBaseOptions {
 export class JsonFile extends FileBase {
   protected readonly obj: object;
 
-  constructor(project: Project, filePath: string, options: JsonFileOptions) {
+  constructor(project: IComponentScope, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
 
     if (!options.obj) {

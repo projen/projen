@@ -1,10 +1,28 @@
-import { Project } from './project';
+import { IgnoreFile } from './ignore-file';
+
+/**
+ * A scope for components. i.e., a project or a subdirectory.
+ */
+export interface IComponentScope {
+  readonly gitignore: IgnoreFile;
+
+  /**
+   * @internal
+   */
+  _addComponent(component: Component): void;
+
+  /**
+   * Prints a "tip" message during synthesis.
+   * @param message The message
+   */
+  addTip(message: string): void;
+}
 
 /**
  * Represents a project component.
  */
 export class Component {
-  constructor(public readonly project: Project) {
+  constructor(public readonly project: IComponentScope) {
     project._addComponent(this);
   }
 

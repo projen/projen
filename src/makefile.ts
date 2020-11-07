@@ -1,5 +1,5 @@
+import { IComponentScope } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
 
 /**
  * A Make rule.
@@ -69,7 +69,7 @@ export class Makefile extends FileBase {
   private readonly all: AllRule;
 
 
-  constructor(project: Project, filePath: string, options: MakefileOptions = {}) {
+  constructor(project: IComponentScope, filePath: string, options: MakefileOptions = {}) {
     super(project, filePath, options);
 
     const all = options.all ? options.all : [];

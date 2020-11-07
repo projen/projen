@@ -109,6 +109,7 @@ Name|Description
 
 Name|Description
 ----|-----------
+[IComponentScope](#projen-icomponentscope)|A scope for components.
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
@@ -198,6 +199,7 @@ const project = new ConstructLibraryAws({
 project.synth();
 ```
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [ConstructLibrary](#projen-constructlibrary)
 
 ### Initializer
@@ -340,6 +342,7 @@ addCdkTestDependencies(...deps: string[]): void
 
 AWS CDK app in TypeScript.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
 
 ### Initializer
@@ -475,10 +478,10 @@ Represents a project component.
 
 
 ```ts
-new Component(project: Project)
+new Component(project: IComponentScope)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 
 
 
@@ -487,7 +490,7 @@ new Component(project: Project)
 
 Name | Type | Description 
 -----|------|-------------
-**project**🔹 | <code>[Project](#projen-project)</code> | <span></span>
+**project**🔹 | <code>[IComponentScope](#projen-icomponentscope)</code> | <span></span>
 
 ### Methods
 
@@ -526,6 +529,7 @@ synthesize(_outdir: string): void
 
 A multi-language library for CDK constructs.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [JsiiProject](#projen-jsiiproject)
 __Implemented by__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary), [ConstructLibraryAws](#projen-constructlibraryaws), [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)
 
@@ -621,6 +625,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 
 
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)
 
 ### Initializer
@@ -723,6 +728,7 @@ A multi-language (jsii) construct library which vends constructs designed to
 use within the CDK for Kubernetes (CDK8s), with a friendly workflow and
 automatic publishing to the construct catalog.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [ConstructLibrary](#projen-constructlibrary)
 
 ### Initializer
@@ -880,10 +886,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new DockerCompose(project: Project, props?: DockerComposeProps)
+new DockerCompose(project: IComponentScope, props?: DockerComposeProps)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **props** (<code>[DockerComposeProps](#projen-dockercomposeprops)</code>)  *No description*
   * **nameSuffix** (<code>string</code>)  A name to add to the docker-compose.yml filename. __*Default*__: no name is added
   * **services** (<code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code>)  Service descriptions. __*Optional*__
@@ -1157,10 +1163,10 @@ __Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#proj
 
 
 ```ts
-new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
+new FileBase(project: IComponentScope, filePath: string, options?: FileBaseOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[FileBaseOptions](#projen-filebaseoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
@@ -1220,10 +1226,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new GithubWorkflow(project: Project, name: string)
+new GithubWorkflow(project: IComponentScope, name: string)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 
 
@@ -1283,10 +1289,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new IgnoreFile(project: Project, filePath: string)
+new IgnoreFile(project: IComponentScope, filePath: string)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 
 
@@ -1391,6 +1397,7 @@ addIgnorePattern(pattern: string): void
 
 Multi-language jsii library project.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
@@ -1501,10 +1508,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
+new JsonFile(project: IComponentScope, filePath: string, options: JsonFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[JsonFileOptions](#projen-jsonfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
@@ -1551,10 +1558,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new License(project: Project, spdx: string, options: LicenseOptions)
+new License(project: IComponentScope, spdx: string, options: LicenseOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **spdx** (<code>string</code>)  *No description*
 * **options** (<code>[LicenseOptions](#projen-licenseoptions)</code>)  *No description*
   * **copyrightOwner** (<code>string</code>)  Copyright owner. __*Default*__: ""
@@ -1591,10 +1598,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new Makefile(project: Project, filePath: string, options?: MakefileOptions)
+new Makefile(project: IComponentScope, filePath: string, options?: MakefileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[MakefileOptions](#projen-makefileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
@@ -1702,10 +1709,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Mergify(project: Project, options?: MergifyOptions)
+new Mergify(project: IComponentScope, options?: MergifyOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **options** (<code>[MergifyOptions](#projen-mergifyoptions)</code>)  *No description*
   * **rules** (<code>Array<[MergifyRule](#projen-mergifyrule)></code>)  *No description* __*Optional*__
 
@@ -1757,6 +1764,7 @@ new NextComponent(project: NodeProject, options: NextComponentOptions)
 
 Next.js project without TypeScript.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [NodeProject](#projen-nodeproject)
 
 ### Initializer
@@ -1893,6 +1901,7 @@ __Returns__:
 
 Next.js project with TypeScript.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
 
 ### Initializer
@@ -2034,6 +2043,7 @@ Name | Type | Description
 
 Node.js project.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [Project](#projen-project)
 
 ### Initializer
@@ -2426,6 +2436,7 @@ removeScript(name: string): void
 
 Base project.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 
 ### Initializer
 
@@ -2517,10 +2528,10 @@ __Extends__: [TextFile](#projen-textfile)
 
 
 ```ts
-new PullRequestTemplate(project: Project, options?: PullRequestTemplateOptions)
+new PullRequestTemplate(project: IComponentScope, options?: PullRequestTemplateOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **options** (<code>[PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)</code>)  *No description*
   * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
 
@@ -2553,6 +2564,7 @@ new ReactComponent(project: NodeProject, options: ReactComponentOptions)
 
 React project without TypeScript.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [NodeProject](#projen-nodeproject)
 
 ### Initializer
@@ -2687,6 +2699,7 @@ __Returns__:
 
 React project with TypeScript.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
 
 ### Initializer
@@ -2931,10 +2944,10 @@ __Extends__: [FileBase](#projen-filebase)
 Defines a text file.
 
 ```ts
-new TextFile(project: Project, filePath: string, options?: TextFileOptions)
+new TextFile(project: IComponentScope, filePath: string, options?: TextFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  The project.
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  The project.
 * **filePath** (<code>string</code>)  File path.
 * **options** (<code>[TextFileOptions](#projen-textfileoptions)</code>)  Options.
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
@@ -2986,10 +2999,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
+new TomlFile(project: IComponentScope, filePath: string, options: TomlFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[IComponentScope](#projen-icomponentscope)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[TomlFileOptions](#projen-tomlfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
@@ -3028,6 +3041,7 @@ __Returns__:
 
 TypeScript app.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
@@ -3124,6 +3138,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 
 
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [TypeScriptProject](#projen-typescriptproject)
 
 ### Initializer
@@ -3220,6 +3235,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 TypeScript project.
 
+__Implements__: [IComponentScope](#projen-icomponentscope)
 __Extends__: [NodeProject](#projen-nodeproject)
 
 ### Initializer
@@ -4062,6 +4078,39 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## interface IComponentScope 🔹 <a id="projen-icomponentscope"></a>
+
+__Implemented by__: [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary), [AwsCdkTypeScriptApp](#projen-awscdktypescriptapp), [ConstructLibraryAws](#projen-constructlibraryaws), [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s), [JsiiProject](#projen-jsiiproject), [NextJsProject](#projen-nextjsproject), [NextJsTypeScriptProject](#projen-nextjstypescriptproject), [NodeProject](#projen-nodeproject), [Project](#projen-project), [ReactProject](#projen-reactproject), [ReactTypeScriptProject](#projen-reacttypescriptproject), [TypeScriptAppProject](#projen-typescriptappproject), [TypeScriptLibraryProject](#projen-typescriptlibraryproject), [TypeScriptProject](#projen-typescriptproject)
+
+A scope for components.
+
+i.e., a project or a subdirectory.
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | <span></span>
+
+### Methods
+
+
+#### addTip(message)🔹 <a id="projen-icomponentscope-addtip"></a>
+
+Prints a "tip" message during synthesis.
+
+```ts
+addTip(message: string): void
+```
+
+* **message** (<code>string</code>)  The message.
+
+
+
 
 
 

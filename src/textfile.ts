@@ -1,5 +1,5 @@
+import { IComponentScope } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
 
 /**
  * Options for `TextFile`.
@@ -26,7 +26,7 @@ export class TextFile extends FileBase {
    * @param filePath File path
    * @param options Options
    */
-  constructor(project: Project, filePath: string, options: TextFileOptions = { }) {
+  constructor(project: IComponentScope, filePath: string, options: TextFileOptions = { }) {
     super(project, filePath, options);
 
     this.lines = options.lines ?? [];

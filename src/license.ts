@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
+import { IComponentScope } from './component';
 import { FileBase, IResolver } from './file';
-import { Project } from './project';
 
 export interface LicenseOptions {
   /**
@@ -21,7 +21,7 @@ export interface LicenseOptions {
 export class License extends FileBase {
   private readonly text: string;
 
-  constructor(project: Project, spdx: string, options: LicenseOptions) {
+  constructor(project: IComponentScope, spdx: string, options: LicenseOptions) {
     super(project, 'LICENSE');
 
     const textFile = `${__dirname}/../license-text/${spdx}.txt`;

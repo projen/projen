@@ -1,12 +1,12 @@
 import { GENERATION_DISCLAIMER } from './common';
+import { IComponentScope } from './component';
 import { FileBase, IResolver } from './file';
-import { Project } from './project';
 
 export class IgnoreFile extends FileBase {
   private readonly excludes = new Array<string>();
   private readonly includes = new Array<string>();
 
-  constructor(project: Project, filePath: string) {
+  constructor(project: IComponentScope, filePath: string) {
     super(project, filePath, { editGitignore: filePath !== '.gitignore' });
   }
 

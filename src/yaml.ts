@@ -1,15 +1,15 @@
 import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
+import { IComponentScope } from './component';
 import { IResolver } from './file';
 import { JsonFile, JsonFileOptions } from './json';
-import { Project } from './project';
 
 export interface YamlFileOptions extends JsonFileOptions {
 
 }
 
 export class YamlFile extends JsonFile {
-  constructor(project: Project, filePath: string, options: YamlFileOptions) {
+  constructor(project: IComponentScope, filePath: string, options: YamlFileOptions) {
     super(project, filePath, options);
   }
 

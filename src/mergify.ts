@@ -1,5 +1,4 @@
-import { Component } from './component';
-import { Project } from './project';
+import { Component, IComponentScope } from './component';
 import { YamlFile } from './yaml';
 
 export interface MergifyRule {
@@ -15,7 +14,7 @@ export interface MergifyOptions {
 export class Mergify extends Component {
   private readonly rules = new Array<MergifyRule>();
 
-  constructor(project: Project, options: MergifyOptions = { }) {
+  constructor(project: IComponentScope, options: MergifyOptions = { }) {
     super(project);
 
     new YamlFile(project, '.mergify.yml', {
