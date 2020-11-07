@@ -64,6 +64,28 @@ test('creates a text file in a subdir', () => {
   fs.existsSync(path.join(tempDir, 'mysubdir', 'example.txt'));
 });
 
+test('creates a text file in a subdir nested in subdir', () => {
+  const p = new Project();
+
+  const subdir = new Subdir(p, {
+    subdirPath: 'mysubdir',
+  });
+
+  // WHEN
+  const nestedSubdir = new Subdir(subdir, {
+    subdirPath: 'deeper',
+  });
+
+  new TextFile(nestedSubdir, 'example.txt', {
+    lines: ['foo', 'bar', 'baz'],
+  });
+
+  p.synth(tempDir);
+
+  // THEN
+  expect(fs.existsSync(path.join(tempDir, 'mysubdir', 'deeper', 'example.txt'))).toBeTruthy();
+});
+
 test('creates several subdirs', () => {
   // GIVEN
   const p = new Project();
