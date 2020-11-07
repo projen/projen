@@ -23,6 +23,6 @@ test('license file is not added if licensed is false', () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project, ['LICENSE', '.gitignore']);
+  const snapshot = synthSnapshot(project, ['LICENSE', '.gitignore', 'package.json']);
   expect(snapshot).toMatchSnapshot();
 });
