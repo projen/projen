@@ -2407,6 +2407,22 @@ preSynthesize(outdir: string): void
 
 
 
+#### prependScriptCommand(name, ...commands)🔹 <a id="projen-nodeproject-prependscriptcommand"></a>
+
+Prepends a command to run for an npm script.
+
+Joined by "&&"
+
+```ts
+prependScriptCommand(name: string, ...commands: string[]): void
+```
+
+* **name** (<code>string</code>)  The name of the script.
+* **commands** (<code>string</code>)  The commands to prepend.
+
+
+
+
 #### removeScript(name)🔹 <a id="projen-nodeproject-removescript"></a>
 
 Removes the npm script (always successful).

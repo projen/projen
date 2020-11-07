@@ -1041,6 +1041,16 @@ export class NodeProject extends Project {
   }
 
   /**
+   * Prepends a command to run for an npm script. Joined by "&&"
+   * @param name The name of the script
+   * @param commands The commands to prepend.
+   */
+  public prependScriptCommand(name: string, ...commands: string[]) {
+    this.scripts[name] = this.scripts[name] ?? [];
+    this.scripts[name].unshift(...commands);
+  }
+
+  /**
    * Adds commands which will be executed after compilation
    * @param commands The commands to execute during compile
    */
