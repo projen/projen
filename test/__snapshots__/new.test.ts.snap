@@ -73,6 +73,7 @@ const project = new AwsCdkTypeScriptApp({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -423,6 +424,7 @@ const project = new NextJsProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -500,6 +502,7 @@ const project = new NextJsTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -588,6 +591,7 @@ const project = new NodeProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -672,6 +676,7 @@ const project = new ReactProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -749,6 +754,7 @@ const project = new ReactTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -837,6 +843,7 @@ const project = new TypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
@@ -925,6 +932,7 @@ const project = new TypeScriptAppProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */

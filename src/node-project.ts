@@ -503,6 +503,13 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
   readonly license?: string;
 
   /**
+ * Indicates if a license should be added.
+ *
+ * @default true
+ */
+  readonly licensed?: boolean;
+
+  /**
    * Package's Stability
    */
   readonly stability?: string;
@@ -713,12 +720,17 @@ export class NodeProject extends Project {
     }
 
     // set license and produce license file
-    const license = options.license ?? 'Apache-2.0';
-    this.manifest.license = license;
-    new License(this, license, {
-      copyrightOwner: options.copyrightOwner ?? options.authorName,
-      copyrightPeriod: options.copyrightPeriod,
-    });
+    if (options.licensed ?? true) {
+      const license = options.license ?? 'Apache-2.0';
+      this.manifest.license = license;
+
+      new License(this, license, {
+        copyrightOwner: options.copyrightOwner ?? options.authorName,
+        copyrightPeriod: options.copyrightPeriod,
+      });
+    } else {
+      this.manifest.license = 'UNLICENSED';
+    }
 
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
