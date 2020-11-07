@@ -6,11 +6,11 @@ test('license file is added by default', () => {
   const project = new NodeProject({
     name: 'test-node-project',
     start: false,
-    mergify: false
+    mergify: false,
   });
 
   // THEN
-  expect(synthSnapshot(project, ['LICENSE'])['LICENSE']).toContain("Apache License");
+  expect(synthSnapshot(project, ['LICENSE']).LICENSE).toContain('Apache License');
 });
 
 test('license file is not added if licensed is false', () => {
@@ -19,7 +19,7 @@ test('license file is not added if licensed is false', () => {
     name: 'test-node-project',
     licensed: false,
     start: false,
-    mergify: false
+    mergify: false,
   });
 
   // THEN
@@ -27,5 +27,5 @@ test('license file is not added if licensed is false', () => {
   console.log(snapshot);
   expect(Object.keys(snapshot).sort()).toEqual(['.gitignore', 'package.json'].sort());
   expect(snapshot['.gitignore']).not.toContain('LICENSE');
-  expect(snapshot['package.json']['license']).toEqual('UNLICENSED');
+  expect(snapshot['package.json'].license).toEqual('UNLICENSED');
 });
