@@ -84,6 +84,7 @@ const project = new AwsCdkTypeScriptApp({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
@@ -511,6 +512,7 @@ const project = new NextJsTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
@@ -760,6 +762,7 @@ const project = new ReactTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
@@ -848,6 +851,7 @@ const project = new TypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
@@ -936,6 +940,7 @@ const project = new TypeScriptAppProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */

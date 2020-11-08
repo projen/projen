@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { Component } from './component';
-import { Eslint } from './eslint';
+import { Eslint, EslintOptions } from './eslint';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
@@ -23,11 +23,16 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly jestOptions?: JestOptions;
 
   /**
-   *
    * Setup eslint.
    * @default true
    */
   readonly eslint?: boolean;
+
+  /**
+   * Eslint options
+   * @default - opinionated default options
+   */
+  readonly eslintOptions?: EslintOptions;
 
   /**
    * TypeScript version to use.
@@ -262,6 +267,8 @@ export class TypeScriptProject extends NodeProject {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${eslintTsConfig}`,
         dirs: [this.srcdir, this.testdir],
+        fileExtensions: ['.ts', '.tsx'],
+        ...options.eslintOptions,
       });
     }
 
