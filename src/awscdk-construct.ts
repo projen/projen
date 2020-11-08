@@ -112,7 +112,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
 
     this.version = `^${options.cdkVersion}`;
 
-    this.addPeerDeps('constructs@^3.0.4');
+    this.addPeerDeps('constructs@^3.2.0');
 
     if (options.cdkAssert ?? true) {
       this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
