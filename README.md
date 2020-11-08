@@ -219,12 +219,12 @@ project.synth();
 
 ## Contributing
 
-Contributions of all kinds are welcome!
+Contributions of all kinds are welcome! See our [code of conduct](./CODE_OF_CONDUCT.md).
 
 To check out a development environment:
 
 ```bash
-$ git clone git@github.com:eladb/projen
+$ git clone git@github.com:projen/projen
 $ cd projen
 $ yarn
 ```
