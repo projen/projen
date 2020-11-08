@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.158 (2020-11-08)
+
+
+### Features
+
+* README samples (again) ([#276](https://github.com/projen/projen/issues/276)) ([1a34ca8](https://github.com/projen/projen/commit/1a34ca81602a01cc46193a9eae1d062e78e218cf))
+
 ### 0.3.157 (2020-11-08)
 
 ### 0.3.156 (2020-11-06)
