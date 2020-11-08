@@ -47,8 +47,8 @@ export class CompositeProject extends Project {
     }
 
     this.projects[subPath] = new SubProjectComponent(this, {
-      subPath: subPath,
-      subProject: project,
+      path: subPath,
+      project: project,
     });
   }
 }
@@ -61,12 +61,12 @@ export interface SubProjectComponentOptions {
   /**
    * Subpath of the sub-project.
    */
-  readonly subPath: string;
+  readonly path: string;
 
   /**
    * The sub-project.
    */
-  readonly subProject: Project;
+  readonly project: Project;
 }
 
 /**
@@ -79,6 +79,6 @@ export class SubProjectComponent extends Component {
   }
 
   synthesize(outdir: string) {
-    this.options.subProject.synth(path.join(outdir, this.options.subPath));
+    this.options.project.synth(path.join(outdir, this.options.path));
   }
 }
