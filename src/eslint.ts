@@ -10,6 +10,19 @@ export interface EslintOptions {
    * Directories with source files to lint (e.g. [ "src", "test" ])
    */
   readonly dirs: string[];
+
+  /**
+   * File types that should be linted (e.g. [ ".js", ".ts" ])
+   */
+  readonly fileExtensions: string[];
+
+  /**
+   * List of file patterns that should not be linted, using the same syntax
+   * as .gitignore patterns.
+   *
+   * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+   */
+  readonly ignorePatterns?: string[];
 }
 
 export class Eslint extends Component {
@@ -23,7 +36,10 @@ export class Eslint extends Component {
    */
   public readonly config: any;
 
-  private readonly ignorePatterns: string[];
+  /**
+   * File patterns that should not be linted
+   */
+  public readonly ignorePatterns: string[];
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -39,8 +55,9 @@ export class Eslint extends Component {
     );
 
     const dirs = options.dirs;
+    const fileExtensions = options.fileExtensions;
 
-    project.addScript('eslint', `eslint --ext .ts --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`, {
+    project.addScript('eslint', `eslint --ext ${fileExtensions.join(',')} --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`, {
       startDesc: 'Runs eslint against the codebase',
       startCategory: StartEntryCategory.TEST,
     });
@@ -162,7 +179,7 @@ export class Eslint extends Component {
       }],
     };
 
-    this.ignorePatterns = [
+    this.ignorePatterns = options.ignorePatterns ?? [
       '*.js',
       '*.d.ts',
       'node_modules/',

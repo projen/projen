@@ -1,9 +1,9 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
-import { Eslint } from './eslint';
+import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
+import { SampleDir } from './sample-file';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
@@ -15,6 +15,12 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default true
    */
   readonly eslint?: boolean;
+
+  /**
+   * Eslint options
+   * @default - opinionated default options
+   */
+  readonly eslintOptions?: EslintOptions;
 
   /**
    * TypeScript version to use.
@@ -239,6 +245,8 @@ export class TypeScriptProject extends NodeProject {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${eslintTsConfig}`,
         dirs: [this.srcdir, this.testdir],
+        fileExtensions: ['.ts', '.tsx'],
+        ...options.eslintOptions,
       });
     }
 
@@ -612,35 +620,15 @@ export class TypescriptConfig {
 
 
 class SampleCode extends Component {
-  private readonly nodeProject: TypeScriptProject;
-
   constructor(project: TypeScriptProject) {
     super(project);
-
-    this.nodeProject = project;
-  }
-
-  public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.nodeProject.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
-
     const srcCode = [
       'export class Hello {',
       '  public sayHello() {',
       '    return \'hello, world!\'',
       '  }',
       '}',
-    ];
-
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'index.ts'), srcCode.join('\n'));
-
-    const testdir = path.join(outdir, this.nodeProject.testdir);
-    if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
-      return;
-    }
+    ].join('\n');
 
     const testCode = [
       "import { Hello } from '../src'",
@@ -648,10 +636,19 @@ class SampleCode extends Component {
       "test('hello', () => {",
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
       '});',
-    ];
+    ].join('\n');
 
-    fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'hello.test.ts'), testCode.join('\n'));
+    new SampleDir(project, project.srcdir, {
+      files: {
+        'index.ts': srcCode,
+      },
+    });
+
+    new SampleDir(project, project.testdir, {
+      files: {
+        'hello.test.ts': testCode,
+      },
+    });
   }
 }
 
@@ -675,9 +672,11 @@ export class TypeScriptAppProject extends TypeScriptProject {
 /**
  * @deprecated use `TypeScriptProject`
  */
-export class TypeScriptLibraryProject extends TypeScriptProject { };
+export class TypeScriptLibraryProject extends TypeScriptProject {
+};
 
 /**
  * @deprecated use TypeScriptProjectOptions
  */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions { }
+export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
+}

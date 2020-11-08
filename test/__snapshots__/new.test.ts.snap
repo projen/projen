@@ -88,6 +88,7 @@ const project = new AwsCdkTypeScriptApp({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -527,6 +528,7 @@ const project = new NextJsTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -786,6 +788,7 @@ const project = new ReactTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -876,6 +879,7 @@ const project = new TypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -966,6 +970,7 @@ const project = new TypeScriptAppProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
