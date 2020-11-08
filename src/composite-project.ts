@@ -9,13 +9,31 @@ export interface CompositeProjectOptions {
   /**
    * Declaratively define sub-projects by their sub paths.
    * @example ```ts
-   * {
-   *   'packages/foo': new NodeProject({ name: 'foo' }),
-   *   'packages/bar': new NextjsProject({ name: 'bar' }),
-   * }
+   * [
+   *   {
+   *     path: path.join('packages', 'foo'),
+   *     project: new NodeProject({ name: 'foo' }),
+   *   },
+   *   ...
+   * ]
    * ```
    */
-  projects?: Record<string, Project>;
+  projects?: CompositeProjectDeclarativeSubProject[];
+}
+
+/**
+ * Declares
+ */
+export interface CompositeProjectDeclarativeSubProject {
+  /**
+   * Project subpath.
+   */
+  readonly path: string;
+
+  /**
+   * Projen project to synthesize in `path`.
+   */
+  readonly project: Project;
 }
 
 /**
@@ -31,8 +49,8 @@ export class CompositeProject extends Project {
     this.projects = {};
 
     // Add declaratively defined subprojects.
-    for (const [subPath, project] of Object.entries(options?.projects ?? {})) {
-      this.addProject(subPath, project);
+    for (const subProject of options?.projects ?? []) {
+      this.addProject(subProject.path, subProject.project);
     }
   }
 
