@@ -32,6 +32,7 @@ export class ReactProject extends NodeProject {
 
   constructor(options: ReactProjectOptions) {
     super({
+      jest: false,
       srcdir: options.srcdir ?? 'src',
       ...options,
     });
