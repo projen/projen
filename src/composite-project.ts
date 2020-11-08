@@ -23,7 +23,7 @@ export interface CompositeProjectOptions {
  */
 export class CompositeProject extends Project {
   // Tracks which sub paths have already been added.
-  private readonly projects: Record<string, boolean>;
+  private readonly projects: Record<string, SubProjectComponent>;
 
   constructor(options?: CompositeProjectOptions) {
     super();
@@ -46,9 +46,7 @@ export class CompositeProject extends Project {
       throw new Error(`Cannot add project as the sub path ${subPath} is already in use`);
     }
 
-    this.projects[subPath] = true;
-
-    new SubProjectComponent(this, {
+    this.projects[subPath] = new SubProjectComponent(this, {
       subPath: subPath,
       subProject: project,
     });
