@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
+import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import { License } from './license';
@@ -166,6 +167,12 @@ export interface NodeProjectCommonOptions {
    * @default "master"
    */
   readonly defaultReleaseBranch?: string;
+
+  /**
+   * Define a Gitpod config
+   * @default true
+   */
+  readonly gitpod?: boolean;
 
   /**
    * Define a GitHub workflow for building PRs.
@@ -558,6 +565,11 @@ export class NodeProject extends Project {
   private readonly _version: Version;
 
   /**
+   * The Gitpod config. `undefined` if `gitpod` is disabled.
+   */
+  protected readonly gitpod?: Gitpod;
+
+  /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
   protected readonly buildWorkflow?: NodeBuildWorkflow;
@@ -751,6 +763,17 @@ export class NodeProject extends Project {
     // to decide if we can always run with --updateSnapshot
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
     this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
+
+    if (options.gitpod ?? true) {
+      this.gitpod = new Gitpod(this, {
+        tasks: [
+          {
+            init: `${this.packageManager} install && ${this.runScriptCommand} build`,
+            command: `${this.runScriptCommand} start`,
+          },
+        ],
+      });
+    }
 
     if (options.buildWorkflow ?? true) {
       this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
