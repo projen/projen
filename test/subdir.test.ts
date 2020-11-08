@@ -22,9 +22,7 @@ test('creates a subdir', () => {
   const p = new Project();
 
   // WHEN
-  new Subdir(p, {
-    subdirPath: 'mysubdir',
-  });
+  new Subdir(p, 'mysubdir');
   p.synth(tempDir);
 
   // THEN
@@ -37,9 +35,7 @@ test('adds gitignores to the right file', () => {
   const p = new Project();
 
   // WHEN
-  const sub = new Subdir(p, {
-    subdirPath: 'mysubdir',
-  });
+  const sub = new Subdir(p, 'mysubdir');
   sub.gitignore.exclude('ignore-me');
   p.synth(tempDir);
 
@@ -50,9 +46,7 @@ test('adds gitignores to the right file', () => {
 test('creates a text file in a subdir', () => {
   // GIVEN
   const p = new Project();
-  const subdir = new Subdir(p, {
-    subdirPath: 'mysubdir',
-  });
+  const subdir = new Subdir(p, 'mysubdir');
 
   // WHEN
   new TextFile(subdir, 'example.txt', {
@@ -67,14 +61,10 @@ test('creates a text file in a subdir', () => {
 test('creates a text file in a subdir nested in subdir', () => {
   const p = new Project();
 
-  const subdir = new Subdir(p, {
-    subdirPath: 'mysubdir',
-  });
+  const subdir = new Subdir(p, 'mysubdir');
 
   // WHEN
-  const nestedSubdir = new Subdir(subdir, {
-    subdirPath: 'deeper',
-  });
+  const nestedSubdir = new Subdir(subdir, 'deeper');
 
   new TextFile(nestedSubdir, 'example.txt', {
     lines: ['foo', 'bar', 'baz'],
@@ -93,9 +83,7 @@ test('creates several subdirs', () => {
   // WHEN
 
   // Frontend Dockerfile and context in its own directory
-  const frontend = new Subdir(p, {
-    subdirPath: 'frontend',
-  });
+  const frontend = new Subdir(p, 'frontend');
 
   new TextFile(frontend, 'Dockerfile', {
     lines: [
@@ -104,9 +92,7 @@ test('creates several subdirs', () => {
   });
 
   // API Dockerfile and context in its own directory
-  const api = new Subdir(p, {
-    subdirPath: 'cms',
-  });
+  const api = new Subdir(p, 'cms');
 
   new TextFile(api, 'Dockerfile', {
     lines: [

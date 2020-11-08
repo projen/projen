@@ -3,28 +3,16 @@ import { Component, IComponentScope } from './component';
 import { IgnoreFile } from './ignore-file';
 
 /**
- * Options for `SubdirComponent`
- */
-export interface SubdirComponentOptions {
-  /**
-   * Path relative to the project's synth directory to use as a subdirectory.
-   */
-  readonly subdirPath: string;
-}
-
-/**
  * A sub-directory in which to synthesize components.
  */
 export class Subdir extends Component implements IComponentScope {
   public readonly gitignore: IgnoreFile;
-  public readonly subdirPath: string;
   private readonly components: Component[];
 
-  constructor(public readonly project: IComponentScope, private readonly options: SubdirComponentOptions) {
+  constructor(public readonly project: IComponentScope, public readonly subdirPath: string) {
     super(project);
     this.components = [];
     this.gitignore = new IgnoreFile(this, '.gitignore');
-    this.subdirPath = options.subdirPath;
   }
 
   /**
@@ -39,7 +27,7 @@ export class Subdir extends Component implements IComponentScope {
   }
 
   synthesize(outdir: string) {
-    const subDir = path.join(outdir, this.options.subdirPath);
+    const subDir = path.join(outdir, this.subdirPath);
 
     for (const comp of this.components) {
       comp.synthesize(subDir);
