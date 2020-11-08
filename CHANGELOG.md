@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.159 (2020-11-08)
+
+
+### Features
+
+* **eslint:** add file extension and ignore pattern options ([#288](https://github.com/projen/projen/issues/288)) ([ebe65fa](https://github.com/projen/projen/commit/ebe65fa0c7e0dfe19662248f7095e78fa32ad1f9))
+
 ### 0.3.158 (2020-11-08)
 
 
