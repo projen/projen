@@ -23,7 +23,7 @@ export class IgnoreFile extends FileBase {
       `# ${GENERATION_DISCLAIMER}`,
       ...this.excludes,
 
-      // includes must follow includes
+      // includes must follow excludes
       ...this.includes.map(x => `!${x}`),
     ]).join('\n');
   }
