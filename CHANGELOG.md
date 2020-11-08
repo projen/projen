@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.160 (2020-11-08)
+
+
+### Features
+
+* codecov.io ([#266](https://github.com/projen/projen/issues/266)) ([24f2dc6](https://github.com/projen/projen/commit/24f2dc603719af4526cbb1358078a769920fb7b6))
+
 ### 0.3.159 (2020-11-08)
 
 
