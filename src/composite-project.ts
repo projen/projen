@@ -22,7 +22,7 @@ export interface CompositeProjectOptions {
 }
 
 /**
- * Declares a sub-project.
+ * Declares a sub-project of the composite project.
  */
 export interface CompositeProjectDeclarativeSubProject {
   /**
@@ -41,7 +41,7 @@ export interface CompositeProjectDeclarativeSubProject {
  */
 export class CompositeProject extends Project {
   // Tracks which sub paths have already been added.
-  private readonly projects: Record<string, SubProjectComponent>;
+  private readonly projects: Record<string, ProjectComponent>;
 
   constructor(options?: CompositeProjectOptions) {
     super();
@@ -64,7 +64,7 @@ export class CompositeProject extends Project {
       throw new Error(`Cannot add project as the sub path ${subPath} is already in use`);
     }
 
-    this.projects[subPath] = new SubProjectComponent(this, {
+    this.projects[subPath] = new ProjectComponent(this, {
       path: subPath,
       project: project,
     });
@@ -72,31 +72,32 @@ export class CompositeProject extends Project {
 }
 
 /**
- * Options for `SubProjectComponent`
- * @internal
+ * Options for `ProjectComponent`
+ * @experimental
  */
-export interface SubProjectComponentOptions {
+export interface ProjectComponentOptions {
   /**
-   * Subpath of the sub-project.
+   * Path of the subdirectory to synth the project into.
    */
   readonly path: string;
 
   /**
-   * The sub-project.
+   * The project.
    */
   readonly project: Project;
 }
 
 /**
- * Component representation of a sub-project.
- * @internal
+ * Represent a project as a component in another project.
+ * @experimental
  */
-export class SubProjectComponent extends Component {
-  constructor(project: Project, private readonly options: SubProjectComponentOptions) {
+export class ProjectComponent extends Component {
+  constructor(project: Project, private readonly options: ProjectComponentOptions) {
     super(project);
   }
 
   synthesize(outdir: string) {
+    // Synths the project into a subdir given by `path`
     this.options.project.synth(path.join(outdir, this.options.path));
   }
 }
