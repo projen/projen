@@ -133,11 +133,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
     const optionName = option.name;
     let paramRender;
     if (params[optionName] !== undefined) {
-      if (Array.isArray(params[optionName])) {
-        paramRender = `${optionName}: ${JSON.stringify(params[optionName])},`;
-      } else {
-        paramRender = `${optionName}: ${params[optionName]},`;
-      }
+      paramRender = `${optionName}: ${params[optionName]},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
@@ -276,7 +272,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   newProject(baseDir, type, args, {
-    devDeps: [specDependencyInfo],
+    devDeps: JSON.stringify([specDependencyInfo]),
   });
 }
 
