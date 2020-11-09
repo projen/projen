@@ -133,7 +133,11 @@ function renderParams(type: inventory.ProjectType, params: Record<string, any>, 
     const optionName = option.name;
     let paramRender;
     if (params[optionName] !== undefined) {
-      paramRender = `${optionName}: ${params[optionName]},`;
+      if (Array.isArray(params[optionName])) {
+        paramRender = `${optionName}: ${JSON.stringify(params[optionName])},`;
+      } else {
+        paramRender = `${optionName}: ${params[optionName]},`;
+      }
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
