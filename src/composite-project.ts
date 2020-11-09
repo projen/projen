@@ -22,7 +22,7 @@ export interface CompositeProjectOptions {
 }
 
 /**
- * Declares
+ * Declares a sub-project.
  */
 export interface CompositeProjectDeclarativeSubProject {
   /**
