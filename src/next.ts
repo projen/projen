@@ -1,8 +1,7 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
+import { SampleDir } from './sample-file';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
@@ -240,14 +239,6 @@ class NextSampleCode extends Component {
     this.fileExt = options.fileExt ?? 'js';
     this.srcdir = options.srcdir;
     this.assetsdir = options.assetsdir;
-  }
-
-  public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(
-      x => ['.js', '.jsx', '.ts', '.tsx'].some(suffix => x.endsWith(suffix)))) {
-      return;
-    }
 
     const indexJs = [
       'import Head from "next/head"',
@@ -461,14 +452,6 @@ class NextSampleCode extends Component {
       '',
     ];
 
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'index.' + this.fileExt), indexJs.join('\n'));
-
-    const assetsdir = path.join(outdir, this.assetsdir);
-    if (fs.pathExistsSync(assetsdir) && fs.readdirSync(assetsdir)) {
-      return;
-    }
-
     const vercelSvg = [
       '<svg width="283" height="64" viewBox="0 0 283 64" fill="none" ',
       '    xmlns="http://www.w3.org/2000/svg">',
@@ -476,7 +459,16 @@ class NextSampleCode extends Component {
       '</svg>',
     ];
 
-    fs.mkdirpSync(assetsdir);
-    fs.writeFileSync(path.join(assetsdir, 'vercel.svg'), vercelSvg.join('\n'));
+    new SampleDir(project, this.srcdir, {
+      files: {
+        ['index.' + this.fileExt]: indexJs.join('\n'),
+      },
+    });
+
+    new SampleDir(project, this.assetsdir, {
+      files: {
+        'vercel.svg': vercelSvg.join('\n'),
+      },
+    });
   }
 }
