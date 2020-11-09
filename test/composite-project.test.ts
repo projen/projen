@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { NodeProject, Project } from '../src';
-import { CompositeProject } from '../src/composite-project';
+import { CompositeProject, ProjectComponent } from '../src/composite-project';
 import * as logging from '../src/logging';
 
 logging.disable();
@@ -64,4 +64,27 @@ test('errors when paths overlap', () => {
   expect(() => {
     comp.addProject('packages/foo', new NodeProject({ name: 'bar' }));
   }).toThrowError(/foo.*already in use/i);
+});
+
+test('ProjectComponent attaches to general project types', () => {
+  // GIVEN
+  const rootProject = new NodeProject({ name: 'root' });
+
+  // WHEN
+  new ProjectComponent(rootProject, {
+    path: path.join('packages', 'foo'),
+    project: new NodeProject({ name: 'foo' }),
+  });
+
+  rootProject.synth(tempDir);
+
+  // THEN
+  expect(fs.readJSONSync(path.join(tempDir, 'package.json')))
+    .toEqual(expect.objectContaining({
+      name: 'root',
+    }));
+  expect(fs.readJSONSync(path.join(tempDir, 'packages', 'foo', 'package.json')))
+    .toEqual(expect.objectContaining({
+      name: 'foo',
+    }));
 });
