@@ -18,13 +18,13 @@ export interface CompositeProjectOptions {
    * ]
    * ```
    */
-  projects?: CompositeProjectDeclarativeSubProject[];
+  projects?: CompositeProjectChild[];
 }
 
 /**
  * Declares a sub-project of the composite project.
  */
-export interface CompositeProjectDeclarativeSubProject {
+export interface CompositeProjectChild {
   /**
    * Project subpath.
    */
