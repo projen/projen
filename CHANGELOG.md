@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.163 (2020-11-10)
+
+
+### Bug Fixes
+
+* **awscdk-construct:** constructs 3.2.0 is required for latest CDK ([#291](https://github.com/projen/projen/issues/291)) ([51e34e2](https://github.com/projen/projen/commit/51e34e2291195f8c91131f5ddbb869f15089cc73)), closes [#290](https://github.com/projen/projen/issues/290)
+
 ### 0.3.162 (2020-11-09)
 
 ### 0.3.161 (2020-11-09)
