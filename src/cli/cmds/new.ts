@@ -259,9 +259,6 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
     .discover(...modules)
     .filter(x => x.moduleName !== 'projen'); // filter built-in project types
 
-  console.log('PROJECTS');
-  console.log(projects);
-
   if (projects.length < 1) {
     throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
   }
