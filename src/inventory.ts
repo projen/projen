@@ -93,9 +93,10 @@ export function discover(...moduleDirs: string[]) {
     discoverJsii(dir);
 
     if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
-      fs.readdirSync(dir).map(file => path.join(dir, file)).forEach(child => {
+      const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
+      for (const child of childDirs) {
         discoverJsii(child);
-      });
+      }
     }
   }
 
