@@ -85,7 +85,14 @@ class Command implements yargs.CommandModule {
   }
 }
 
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
+/**
+ *
+ * @param baseDir Base directory for reading and writing files
+ * @param type Project type
+ * @param params Object with parameter default values. Values should be strings
+ * @param comments Whether to include optional parameters in commented out form
+ */
+function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, string>, comments: boolean) {
   const configPath = path.join(baseDir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
     logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
@@ -119,7 +126,7 @@ function makePadding(paddingLength: number): string {
  * @param params Object with parameter default values
  * @param comments Whether to include optional parameters in commented out form
  */
-function renderParams(type: inventory.ProjectType, params: Record<string, any>, comments: boolean) {
+function renderParams(type: inventory.ProjectType, params: Record<string, string>, comments: boolean) {
   // preprocessing
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
@@ -282,7 +289,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
+function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
