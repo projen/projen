@@ -8,7 +8,7 @@ import { Project } from './project';
 export interface CompositeProjectOptions {
   /**
    * Declaratively define sub-projects by their sub paths.
-   * @example ```ts
+   * @example
    * [
    *   {
    *     path: path.join('packages', 'foo'),
@@ -16,9 +16,8 @@ export interface CompositeProjectOptions {
    *   },
    *   ...
    * ]
-   * ```
    */
-  projects?: CompositeProjectChild[];
+  readonly projects?: CompositeProjectChild[];
 }
 
 /**

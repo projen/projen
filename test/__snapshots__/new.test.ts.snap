@@ -272,6 +272,18 @@ project.synth();
 "
 `;
 
+exports[`projen new composite 1`] = `
+"const { CompositeProject } = require('projen');
+
+const project = new CompositeProject({
+  /* CompositeProjectOptions */
+  // projects: undefined,  /* Declaratively define sub-projects by their sub paths. */
+});
+
+project.synth();
+"
+`;
+
 exports[`projen new jsii 1`] = `
 "const { JsiiProject } = require('projen');
 

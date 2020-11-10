@@ -7,6 +7,7 @@ Name|Description
 [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
 [AwsCdkTypeScriptApp](#projen-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [Component](#projen-component)|Represents a project component.
+[CompositeProject](#projen-compositeproject)|Creates a composite project.
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
@@ -55,6 +56,8 @@ Name|Description
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
+[CompositeProjectChild](#projen-compositeprojectchild)|Declares a sub-project of the composite project.
+[CompositeProjectOptions](#projen-compositeprojectoptions)|Options for `CompositeProject`.
 [ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
@@ -521,6 +524,44 @@ synthesize(_outdir: string): void
 ```
 
 * **_outdir** (<code>string</code>)  The project directory*.
+
+
+
+
+
+
+## class CompositeProject 🔹 <a id="projen-compositeproject"></a>
+
+Creates a composite project.
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new CompositeProject(options?: CompositeProjectOptions)
+```
+
+* **options** (<code>[CompositeProjectOptions](#projen-compositeprojectoptions)</code>)  *No description*
+  * **projects** (<code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code>)  Declaratively define sub-projects by their sub paths. __*Optional*__
+
+
+### Methods
+
+
+#### addProject(subPath, project)🔹 <a id="projen-compositeproject-addproject"></a>
+
+Adds a project as a sub-project at a sub path.
+
+```ts
+addProject(subPath: string, project: Project): void
+```
+
+* **subPath** (<code>string</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 
 
 
@@ -3708,6 +3749,33 @@ Name | Type | Description
 -----|------|-------------
 **announce**?🔹 | <code>boolean</code> | Should we announce new versions?<br/>__*Default*__: true
 **twitter**?🔹 | <code>string</code> | Twitter account to @mention in announcement tweet.<br/>__*Optional*__
+
+
+
+## struct CompositeProjectChild 🔹 <a id="projen-compositeprojectchild"></a>
+
+
+Declares a sub-project of the composite project.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**path**🔹 | <code>string</code> | Project subpath.
+**project**🔹 | <code>[Project](#projen-project)</code> | Projen project to synthesize in `path`.
+
+
+
+## struct CompositeProjectOptions 🔹 <a id="projen-compositeprojectoptions"></a>
+
+
+Options for `CompositeProject`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**projects**?🔹 | <code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code> | Declaratively define sub-projects by their sub paths.<br/>__*Optional*__
 
 
 
