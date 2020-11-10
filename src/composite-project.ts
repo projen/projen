@@ -75,7 +75,7 @@ export class CompositeProject extends Project {
  * Options for `ProjectComponent`
  * @experimental
  */
-export interface ProjectComponentOptions {
+interface ProjectComponentOptions {
   /**
    * Path of the subdirectory to synth the project into.
    */
@@ -91,7 +91,7 @@ export interface ProjectComponentOptions {
  * Represent a project as a component in another project.
  * @experimental
  */
-export class ProjectComponent extends Component {
+class ProjectComponent extends Component {
   constructor(project: Project, private readonly options: ProjectComponentOptions) {
     super(project);
   }
