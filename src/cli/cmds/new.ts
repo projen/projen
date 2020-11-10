@@ -272,7 +272,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   newProject(baseDir, type, args, {
-    devDeps: [specDependencyInfo],
+    devDeps: JSON.stringify([specDependencyInfo]),
   });
 }
 
