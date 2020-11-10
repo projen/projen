@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { NodeProject, Project } from '../src';
-import { CompositeProject } from '../src/composite-project';
+import { NodeProject, Project, CompositeProject } from '../src';
 import * as logging from '../src/logging';
 
 logging.disable();
@@ -38,8 +37,8 @@ test('composing projects synthesizes to subdirs', () => {
   const comp = new CompositeProject();
 
   // WHEN
-  comp.addProject('packages/foo', new NodeProject({ name: 'foo' }));
-  comp.addProject('packages/bar', new NodeProject({ name: 'bar' }));
+  comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'foo' }));
+  comp.addProject(path.join('packages', 'bar'), new NodeProject({ name: 'bar' }));
 
   comp.synth(tempDir);
 
@@ -58,10 +57,10 @@ test('composing projects synthesizes to subdirs', () => {
 test('errors when paths overlap', () => {
   // GIVEN
   const comp = new CompositeProject();
-  comp.addProject('packages/foo', new NodeProject({ name: 'foo' }));
+  comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'foo' }));
 
   // WHEN/THEN
   expect(() => {
-    comp.addProject('packages/foo', new NodeProject({ name: 'bar' }));
+    comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'bar' }));
   }).toThrowError(/foo.*already in use/i);
 });
