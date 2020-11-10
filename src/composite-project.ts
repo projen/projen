@@ -71,27 +71,11 @@ export class CompositeProject extends Project {
 }
 
 /**
- * Options for `ProjectComponent`
- * @experimental
- */
-interface ProjectComponentOptions {
-  /**
-   * Path of the subdirectory to synth the project into.
-   */
-  readonly path: string;
-
-  /**
-   * The project.
-   */
-  readonly project: Project;
-}
-
-/**
  * Represent a project as a component in another project.
  * @experimental
  */
 class ProjectComponent extends Component {
-  constructor(project: Project, private readonly options: ProjectComponentOptions) {
+  constructor(project: Project, private readonly options: CompositeProjectChild) {
     super(project);
   }
 
