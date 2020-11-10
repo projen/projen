@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.164 (2020-11-10)
+
+
+### Bug Fixes
+
+* **cli:** new --from scoped packages is broken ([#297](https://github.com/projen/projen/issues/297)) ([97bd338](https://github.com/projen/projen/commit/97bd338146b2c9e90c4114714d71979131467a02)), closes [#296](https://github.com/projen/projen/issues/296)
+
 ### 0.3.163 (2020-11-10)
 
 
