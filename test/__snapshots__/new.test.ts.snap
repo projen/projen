@@ -21,6 +21,8 @@ const project = new AwsCdkTypeScriptApp({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -73,6 +75,8 @@ const project = new AwsCdkTypeScriptApp({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -85,8 +89,7 @@ const project = new AwsCdkTypeScriptApp({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -139,6 +142,8 @@ const project = new AwsCdkConstructLibrary({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -225,6 +230,8 @@ const project = new ConstructLibraryCdk8s({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -307,6 +314,8 @@ const project = new JsiiProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -375,6 +384,8 @@ const project = new NextJsProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -427,6 +438,8 @@ const project = new NextJsProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -453,6 +466,8 @@ const project = new NextJsTypeScriptProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -505,6 +520,8 @@ const project = new NextJsTypeScriptProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -517,8 +534,7 @@ const project = new NextJsTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -542,6 +558,8 @@ const project = new NodeProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -594,6 +612,8 @@ const project = new NodeProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -627,6 +647,8 @@ const project = new ReactProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -679,6 +701,8 @@ const project = new ReactProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -705,6 +729,8 @@ const project = new ReactTypeScriptProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -757,6 +783,8 @@ const project = new ReactTypeScriptProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -769,8 +797,7 @@ const project = new ReactTypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -794,6 +821,8 @@ const project = new TypeScriptProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -846,6 +875,8 @@ const project = new TypeScriptProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -858,8 +889,7 @@ const project = new TypeScriptProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
@@ -883,6 +913,8 @@ const project = new TypeScriptAppProject({
   // bin: undefined,                                                           /* Binary programs vended with your module. */
   // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: \\"master\\",                                           /* The name of the main release branch. */
@@ -935,6 +967,8 @@ const project = new TypeScriptAppProject({
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
   // license: undefined,                                                       /* License's SPDX identifier. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
@@ -947,8 +981,7 @@ const project = new TypeScriptAppProject({
   // docsDirectory: \\"docs\\",                                                    /* Docs directory. */
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */

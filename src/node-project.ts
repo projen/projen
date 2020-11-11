@@ -5,6 +5,7 @@ import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
+import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { License } from './license';
 import * as logging from './logging';
@@ -179,6 +180,21 @@ export interface NodeProjectCommonOptions {
    * @default true
    */
   readonly buildWorkflow?: boolean;
+
+  /**
+   * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
+   * Uses codecov/codecov-action@v1
+   * A secret is required for private repos. Configured with @codeCovTokenSecret
+   * @default false
+   */
+  readonly codeCov?: boolean;
+
+  /**
+   * Define the secret name for a specified https://codecov.io/ token
+   * A secret is required to send coverage for private repositories
+   * @default - if this option is not specified, only public repositories are supported
+   */
+  readonly codeCovTokenSecret?: string;
 
   /**
    * Define a GitHub workflow for releasing from "master" when new versions are
@@ -518,6 +534,18 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
+
+  /**
+   * Setup jest unit tests
+   * @default true
+   */
+  readonly jest?: boolean;
+
+  /**
+   * Jest options
+   * @default - default options
+   */
+  readonly jestOptions?: JestOptions;
 }
 
 /**
@@ -610,6 +638,16 @@ export class NodeProject extends Project {
    */
   public readonly runScriptCommand: string;
 
+  /**
+   * The directory in which tests reside.
+   */
+  public readonly testdir: string;
+
+  /**
+   * The Jest configuration (if enabled)
+   */
+  public readonly jest?: Jest;
+
   constructor(options: NodeProjectOptions) {
     super();
 
@@ -672,6 +710,8 @@ export class NodeProject extends Project {
         throw new Error('"authorName" is required if specifying "authorEmail" or "authorUrl"');
       }
     }
+
+    this.testdir = options.testdir ?? 'test';
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
@@ -773,6 +813,16 @@ export class NodeProject extends Project {
           },
         ],
       });
+
+    // configure jest if enabled
+    // must be before the build/release workflows
+    if (options.jest ?? true) {
+      this.jest = new Jest(this, {
+        ...options.jestOptions,
+      });
+
+      this.gitignore.include(`/${this.testdir}`);
+      this.npmignore?.exclude(`/${this.testdir}`);
     }
 
     if (options.buildWorkflow ?? true) {
@@ -781,13 +831,15 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         image: options.workflowContainerImage,
+        codeCov: options.codeCov ?? false,
+        codeCovTokenSecret: options.codeCovTokenSecret,
       });
     }
 
     if (options.releaseWorkflow ?? true) {
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
-      const trigger: { [event: string]: any } = {};
+      const trigger: { [event: string]: any } = { };
 
       if (options.releaseEveryCommit ?? true) {
         trigger.push = { branches: releaseBranches };
@@ -802,6 +854,8 @@ export class NodeProject extends Project {
         bump: true,
         uploadArtifact: true,
         image: options.workflowContainerImage,
+        codeCov: options.codeCov ?? false,
+        codeCovTokenSecret: options.codeCovTokenSecret,
       });
 
       if (options.releaseToNpm ?? false) {
@@ -1310,7 +1364,7 @@ export class NodeProject extends Project {
     const root = path.join(outdir, 'package.json');
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
 
-    const resolveDeps = (current: {[name: string]: string}, user: Record<string, string>) => {
+    const resolveDeps = (current: { [name: string]: string }, user: Record<string, string>) => {
       const result: Record<string, string> = {};
 
       for (const [name, currentDefinition] of Object.entries(user)) {
@@ -1434,6 +1488,18 @@ export interface NodeBuildWorkflowOptions {
    * @default false
    */
   readonly bump?: boolean;
+
+  /**
+   * Run codecoverage step
+   * Send to https://codecov.io/
+   * @default false
+   */
+  readonly codeCov?: boolean;
+
+  /**
+   * The secret name for the https://codecov.io/ token
+   */
+  readonly codeCovTokenSecret?: string;
 }
 
 export class NodeBuildWorkflow extends GithubWorkflow {
@@ -1473,6 +1539,20 @@ export class NodeBuildWorkflow extends GithubWorkflow {
 
         // build (compile + test)
         { run: `${project.runScriptCommand} build` },
+
+        // run codecov if enabled or a secret token name is passed in
+        // AND jest must be configured
+        ...(options.codeCov || options.codeCovTokenSecret) && project.jest?.config ? [{
+          name: 'Upload coverage to Codecov',
+          uses: 'codecov/codecov-action@v1',
+          with: options.codeCovTokenSecret
+            ? {
+              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+              directory: project.jest.config.coverageDirectory,
+            } : {
+              directory: project.jest.config.coverageDirectory,
+            },
+        }] : [],
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)

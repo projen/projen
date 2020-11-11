@@ -92,10 +92,12 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       sampleCode: false,
     });
 
+    // encode a hidden assumption further down the chain
     if (this.srcdir !== 'src') {
       throw new Error('sources are expected under the "src" directory');
     }
 
+    // encode a hidden assumption further down the chain
     if (this.testdir !== 'test') {
       throw new Error('test sources are expected under the "test" directory');
     }
