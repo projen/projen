@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
+import { GithubAspect } from './github-aspect';
 import { GithubWorkflow } from './github-workflow';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
@@ -636,8 +637,13 @@ export class NodeProject extends Project {
    */
   public readonly jest?: Jest;
 
+  /**
+   * Provides access to GitHub related APIs.
+   */
+  public readonly github: GithubAspect;
+
   constructor(options: NodeProjectOptions) {
-    super();
+    super(options.name);
 
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
@@ -703,7 +709,7 @@ export class NodeProject extends Project {
 
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
-      'name': options.name,
+      'name': this.name,
       'description': options.description,
       'repository': !options.repository ? undefined : {
         type: 'git',
@@ -969,6 +975,13 @@ export class NodeProject extends Project {
         lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
       });
     }
+
+    // indicates this is a project designed to be hosted on github so it has
+    // capabilities like adding workflows, etc. slowly I want all github-related
+    // aspects to be modeled behind this api.
+    this.github = new GithubAspect(this, {
+      workflowBootstrapSteps: this.workflowBootstrapSteps,
+    });
   }
 
   public addBins(bins: Record<string, string>) {

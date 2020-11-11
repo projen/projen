@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bar 1`] = `
+Object {
+  "..awscdk/11223344555/us-east-1/cdk.out": "{\\"version\\":\\"6.0.0\\"}",
+  "..awscdk/11223344555/us-east-1/manifest.json": Object {
+    "artifacts": Object {
+      "Tree": Object {
+        "properties": Object {
+          "file": "tree.json",
+        },
+        "type": "cdk:tree",
+      },
+      "test": Object {
+        "environment": "aws://11223344555/us-east-1",
+        "metadata": Object {
+          "/test/Bucket/Resource": Array [
+            Object {
+              "data": "Bucket83908E77",
+              "type": "aws:cdk:logicalId",
+            },
+          ],
+          "/test/SecureBucket/Key/Resource": Array [
+            Object {
+              "data": "SecureBucketKey9F35052D",
+              "type": "aws:cdk:logicalId",
+            },
+          ],
+          "/test/SecureBucket/Resource": Array [
+            Object {
+              "data": "SecureBucket1ED1C5CE",
+              "type": "aws:cdk:logicalId",
+            },
+          ],
+        },
+        "properties": Object {
+          "templateFile": "test.template.json",
+        },
+        "type": "aws:cloudformation:stack",
+      },
+    },
+    "version": "6.0.0",
+  },
+  "..awscdk/11223344555/us-east-1/test.template.json": Object {
+    "Resources": Object {
+      "Bucket83908E77": Object {
+        "DeletionPolicy": "Retain",
+        "Type": "AWS::S3::Bucket",
+        "UpdateReplacePolicy": "Retain",
+      },
+      "SecureBucket1ED1C5CE": Object {
+        "DeletionPolicy": "Retain",
+        "Properties": Object {
+          "BucketEncryption": Object {
+            "ServerSideEncryptionConfiguration": Array [
+              Object {
+                "ServerSideEncryptionByDefault": Object {
+                  "KMSMasterKeyID": Object {
+                    "Fn::GetAtt": Array [
+                      "SecureBucketKey9F35052D",
+                      "Arn",
+                    ],
+                  },
+                  "SSEAlgorithm": "aws:kms",
+                },
+              },
+            ],
+          },
+        },
+        "Type": "AWS::S3::Bucket",
+        "UpdateReplacePolicy": "Retain",
+      },
+      "SecureBucketKey9F35052D": Object {
+        "DeletionPolicy": "Retain",
+        "Properties": Object {
+          "Description": "Created by test/SecureBucket",
+          "KeyPolicy": Object {
+            "Statement": Array [
+              Object {
+                "Action": Array [
+                  "kms:Create*",
+                  "kms:Describe*",
+                  "kms:Enable*",
+                  "kms:List*",
+                  "kms:Put*",
+                  "kms:Update*",
+                  "kms:Revoke*",
+                  "kms:Disable*",
+                  "kms:Get*",
+                  "kms:Delete*",
+                  "kms:ScheduleKeyDeletion",
+                  "kms:CancelKeyDeletion",
+                  "kms:GenerateDataKey",
+                  "kms:TagResource",
+                  "kms:UntagResource",
+                ],
+                "Effect": "Allow",
+                "Principal": Object {
+                  "AWS": Object {
+                    "Fn::Join": Array [
+                      "",
+                      Array [
+                        "arn:",
+                        Object {
+                          "Ref": "AWS::Partition",
+                        },
+                        ":iam::11223344555:root",
+                      ],
+                    ],
+                  },
+                },
+                "Resource": "*",
+              },
+            ],
+            "Version": "2012-10-17",
+          },
+        },
+        "Type": "AWS::KMS::Key",
+        "UpdateReplacePolicy": "Retain",
+      },
+    },
+  },
+  "..awscdk/11223344555/us-east-1/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        "Tree": Object {
+          "id": "Tree",
+          "path": "Tree",
+        },
+        "test": Object {
+          "children": Object {
+            "Bucket": Object {
+              "children": Object {
+                "Notifications": Object {
+                  "id": "Notifications",
+                  "path": "test/Bucket/Notifications",
+                },
+                "Resource": Object {
+                  "attributes": Object {
+                    "aws:cdk:cloudformation:props": Object {},
+                    "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  },
+                  "id": "Resource",
+                  "path": "test/Bucket/Resource",
+                },
+              },
+              "id": "Bucket",
+              "path": "test/Bucket",
+            },
+            "SecureBucket": Object {
+              "children": Object {
+                "Key": Object {
+                  "children": Object {
+                    "Resource": Object {
+                      "attributes": Object {
+                        "aws:cdk:cloudformation:props": Object {
+                          "description": "Created by test/SecureBucket",
+                          "keyPolicy": Object {
+                            "Statement": Array [
+                              Object {
+                                "Action": Array [
+                                  "kms:Create*",
+                                  "kms:Describe*",
+                                  "kms:Enable*",
+                                  "kms:List*",
+                                  "kms:Put*",
+                                  "kms:Update*",
+                                  "kms:Revoke*",
+                                  "kms:Disable*",
+                                  "kms:Get*",
+                                  "kms:Delete*",
+                                  "kms:ScheduleKeyDeletion",
+                                  "kms:CancelKeyDeletion",
+                                  "kms:GenerateDataKey",
+                                  "kms:TagResource",
+                                  "kms:UntagResource",
+                                ],
+                                "Effect": "Allow",
+                                "Principal": Object {
+                                  "AWS": Object {
+                                    "Fn::Join": Array [
+                                      "",
+                                      Array [
+                                        "arn:",
+                                        Object {
+                                          "Ref": "AWS::Partition",
+                                        },
+                                        ":iam::11223344555:root",
+                                      ],
+                                    ],
+                                  },
+                                },
+                                "Resource": "*",
+                              },
+                            ],
+                            "Version": "2012-10-17",
+                          },
+                        },
+                        "aws:cdk:cloudformation:type": "AWS::KMS::Key",
+                      },
+                      "id": "Resource",
+                      "path": "test/SecureBucket/Key/Resource",
+                    },
+                  },
+                  "id": "Key",
+                  "path": "test/SecureBucket/Key",
+                },
+                "Notifications": Object {
+                  "id": "Notifications",
+                  "path": "test/SecureBucket/Notifications",
+                },
+                "Resource": Object {
+                  "attributes": Object {
+                    "aws:cdk:cloudformation:props": Object {
+                      "bucketEncryption": Object {
+                        "serverSideEncryptionConfiguration": Array [
+                          Object {
+                            "serverSideEncryptionByDefault": Object {
+                              "kmsMasterKeyId": Object {
+                                "Fn::GetAtt": Array [
+                                  "SecureBucketKey9F35052D",
+                                  "Arn",
+                                ],
+                              },
+                              "sseAlgorithm": "aws:kms",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  },
+                  "id": "Resource",
+                  "path": "test/SecureBucket/Resource",
+                },
+              },
+              "id": "SecureBucket",
+              "path": "test/SecureBucket",
+            },
+          },
+          "id": "test",
+          "path": "test",
+        },
+      },
+      "id": "App",
+      "path": "",
+    },
+    "version": "tree-0.1",
+  },
+}
+`;

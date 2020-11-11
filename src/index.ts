@@ -27,3 +27,5 @@ export * from './version';
 export * from './textfile';
 export * from './pr-template';
 export * from './sample-file';
+export * from './awscdk';
+export * from './project-construct';

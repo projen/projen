@@ -1,4 +1,5 @@
 const { JsiiProject, JsonFile } = require('./lib');
+const { AwsEnvironment } = require('./src');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -57,5 +58,10 @@ new JsonFile(project, '.markdownlint.json', {
   }
 });
 
+//------------------------------------------------------------------
+// awscdk
+//------------------------------------------------------------------
+project.addPeerDeps('constructs');
+project.addPeerDeps('@aws-cdk/core');
 
 project.synth();
