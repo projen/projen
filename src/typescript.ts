@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { Component } from './component';
 import { Eslint, EslintOptions } from './eslint';
-import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
@@ -11,18 +10,7 @@ import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
-   * Setup jest unit tests
-   * @default true
-   */
-  readonly jest?: boolean;
-
-  /**
-   * Jest options
-   * @default - default options
-   */
-  readonly jestOptions?: JestOptions;
-
-  /**
+   *
    * Setup eslint.
    * @default true
    */
@@ -104,7 +92,6 @@ export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
-  public readonly jest?: Jest;
   public readonly tsconfig?: TypescriptConfig;
 
   /**
@@ -117,17 +104,11 @@ export class TypeScriptProject extends NodeProject {
    */
   public readonly libdir: string;
 
-  /**
-   * The directory in which .ts tests reside.
-   */
-  public readonly testdir: string;
-
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
-    this.testdir = options.testdir ?? 'test';
 
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? 'docs/';
@@ -251,16 +232,13 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.addTestCommand(`rm -fr ${this.libdir}/`);
+        this.addScript('test', `rm -fr ${this.libdir}/`);
+
+        // Reconfigure test command because the above line replaces it
+        this.jest?.configureTestCommand();
       }
 
-      this.jest = new Jest(this, {
-        typescript: tsconfig,
-        ...options.jestOptions,
-      });
-
-      this.gitignore.include(`/${this.testdir}`);
-      this.npmignore?.exclude(`/${this.testdir}`);
+      this.jest?.addTypescriptOptions(tsconfig);
     }
 
     if (options.eslint ?? true) {

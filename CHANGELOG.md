@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.164 (2020-11-10)
+
+
+### Bug Fixes
+
+* **cli:** new --from scoped packages is broken ([#297](https://github.com/projen/projen/issues/297)) ([97bd338](https://github.com/projen/projen/commit/97bd338146b2c9e90c4114714d71979131467a02)), closes [#296](https://github.com/projen/projen/issues/296)
+
+### 0.3.163 (2020-11-10)
+
+
+### Bug Fixes
+
+* **awscdk-construct:** constructs 3.2.0 is required for latest CDK ([#291](https://github.com/projen/projen/issues/291)) ([51e34e2](https://github.com/projen/projen/commit/51e34e2291195f8c91131f5ddbb869f15089cc73)), closes [#290](https://github.com/projen/projen/issues/290)
+
+### 0.3.162 (2020-11-09)
+
+### 0.3.161 (2020-11-09)
+
+### 0.3.160 (2020-11-08)
+
+
+### Features
+
+* codecov.io ([#266](https://github.com/projen/projen/issues/266)) ([24f2dc6](https://github.com/projen/projen/commit/24f2dc603719af4526cbb1358078a769920fb7b6))
+
 ### 0.3.159 (2020-11-08)
 
 
