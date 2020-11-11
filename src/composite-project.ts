@@ -8,6 +8,7 @@ import { Project } from './project';
 export interface CompositeProjectOptions {
   /**
    * Declaratively define sub-projects by their sub paths.
+   * @default []
    * @example
    * [
    *   {
@@ -58,7 +59,7 @@ export class CompositeProject extends Project {
    * @param subPath
    * @param project
    */
-  addProject(subPath: string, project: Project) {
+  addProject(subdir: string, project: Project) {
     if (this.projects[subPath]) {
       throw new Error(`Cannot add project as the sub path ${subPath} is already in use`);
     }
