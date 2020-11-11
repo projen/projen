@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { NodeProject, Project, CompositeProject } from '../src';
+import { Project, CompositeProject } from '../src';
 import * as logging from '../src/logging';
 
 logging.disable();
@@ -37,30 +37,24 @@ test('composing projects synthesizes to subdirs', () => {
   const comp = new CompositeProject();
 
   // WHEN
-  comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'foo' }));
-  comp.addProject(path.join('packages', 'bar'), new NodeProject({ name: 'bar' }));
+  comp.addProject(path.join('packages', 'foo'), new Project());
+  comp.addProject(path.join('packages', 'bar'), new Project());
 
   comp.synth(tempDir);
 
   // THEN
   expect(fs.pathExistsSync(path.join(tempDir, 'README.md')));
-  expect(fs.readJSONSync(path.join(tempDir, 'packages', 'foo', 'package.json')))
-    .toEqual(expect.objectContaining({
-      name: 'foo',
-    }));
-  expect(fs.readJSONSync(path.join(tempDir, 'packages', 'bar', 'package.json')))
-    .toEqual(expect.objectContaining({
-      name: 'bar',
-    }));
+  expect(fs.pathExistsSync(path.join(tempDir, 'packages', 'foo', '.gitignore')));
+  expect(fs.pathExistsSync(path.join(tempDir, 'packages', 'bar', '.gitignore')));
 });
 
 test('errors when paths overlap', () => {
   // GIVEN
   const comp = new CompositeProject();
-  comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'foo' }));
+  comp.addProject(path.join('packages', 'foo'), new Project());
 
   // WHEN/THEN
   expect(() => {
-    comp.addProject(path.join('packages', 'foo'), new NodeProject({ name: 'bar' }));
+    comp.addProject(path.join('packages', 'foo'), new Project());
   }).toThrowError(/foo.*already in use/i);
 });
