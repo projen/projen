@@ -77,15 +77,26 @@ interface JsiiType {
 export function discover(...moduleDirs: string[]) {
   const jsii: JsiiTypes = {};
 
+  const discoverJsii = (dir: string) => {
+    const jsiiFile = path.join(dir, '.jsii');
+    if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
+
+    const manifest = fs.readJsonSync(jsiiFile);
+    for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
+      jsii[fqn] = type;
+    }
+  };
+
   // read all .jsii manifests from all modules (incl. projen itself) and merge
   // them all into a single map of fqn->type.
   for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
-    const jsiiFile = path.join(dir, '.jsii');
-    if (!fs.existsSync(jsiiFile)) { continue; } // no jsii manifest
-    const manifest = fs.readJsonSync(jsiiFile);
+    discoverJsii(dir);
 
-    for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
-      jsii[fqn] = type;
+    if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
+      const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
+      for (const child of childDirs) {
+        discoverJsii(child);
+      }
     }
   }
 
@@ -114,7 +125,7 @@ export function discover(...moduleDirs: string[]) {
 }
 
 function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
-  const options: { [name: string]: ProjectOption } = { };
+  const options: { [name: string]: ProjectOption } = {};
   const params = jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;
