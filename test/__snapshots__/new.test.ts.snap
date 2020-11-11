@@ -277,7 +277,7 @@ exports[`projen new composite 1`] = `
 
 const project = new CompositeProject({
   /* CompositeProjectOptions */
-  // projects: undefined,  /* Declaratively define sub-projects by their sub paths. */
+  // projects: [],  /* Declaratively define sub-projects by their sub paths. */
 });
 
 project.synth();

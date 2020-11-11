@@ -56,16 +56,16 @@ export class CompositeProject extends Project {
 
   /**
    * Adds a project as a sub-project at a sub path.
-   * @param subPath
+   * @param subdir
    * @param project
    */
   addProject(subdir: string, project: Project) {
-    if (this.projects[subPath]) {
-      throw new Error(`Cannot add project as the sub path ${subPath} is already in use`);
+    if (this.projects[subdir]) {
+      throw new Error(`Cannot add project as the sub path ${subdir} is already in use`);
     }
 
-    this.projects[subPath] = new ProjectComponent(this, {
-      path: subPath,
+    this.projects[subdir] = new ProjectComponent(this, {
+      path: subdir,
       project: project,
     });
   }

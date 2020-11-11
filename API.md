@@ -546,21 +546,21 @@ new CompositeProject(options?: CompositeProjectOptions)
 ```
 
 * **options** (<code>[CompositeProjectOptions](#projen-compositeprojectoptions)</code>)  *No description*
-  * **projects** (<code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code>)  Declaratively define sub-projects by their sub paths. __*Optional*__
+  * **projects** (<code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code>)  Declaratively define sub-projects by their sub paths. __*Default*__: []
 
 
 ### Methods
 
 
-#### addProject(subPath, project)🔹 <a id="projen-compositeproject-addproject"></a>
+#### addProject(subdir, project)🔹 <a id="projen-compositeproject-addproject"></a>
 
 Adds a project as a sub-project at a sub path.
 
 ```ts
-addProject(subPath: string, project: Project): void
+addProject(subdir: string, project: Project): void
 ```
 
-* **subPath** (<code>string</code>)  *No description*
+* **subdir** (<code>string</code>)  *No description*
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 
 
@@ -3775,7 +3775,7 @@ Options for `CompositeProject`.
 
 Name | Type | Description 
 -----|------|-------------
-**projects**?🔹 | <code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code> | Declaratively define sub-projects by their sub paths.<br/>__*Optional*__
+**projects**?🔹 | <code>Array<[CompositeProjectChild](#projen-compositeprojectchild)></code> | Declaratively define sub-projects by their sub paths.<br/>__*Default*__: []
 
 
 
