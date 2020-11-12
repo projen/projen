@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.167 (2020-11-12)
+
+
+### Bug Fixes
+
+* add missing yaml export ([#303](https://github.com/projen/projen/issues/303)) ([90c853c](https://github.com/projen/projen/commit/90c853c82ced3b560cb9381d7eb7350ddec3ce94))
+
 ### 0.3.166 (2020-11-12)
 
 
