@@ -625,13 +625,13 @@ class SampleCode extends Component {
     const srcCode = [
       'export class Hello {',
       '  public sayHello() {',
-      '    return \'hello, world!\'',
+      '    return \'hello, world!\';',
       '  }',
       '}',
     ].join('\n');
 
     const testCode = [
-      "import { Hello } from '../src'",
+      "import { Hello } from '../src';",
       '',
       "test('hello', () => {",
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
