@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { resolve } from './_resolve';
 import { Component } from './component';
-import { Project } from './project';
+import { Project } from './projects/project';
 import { writeFile } from './util';
 
 export interface FileBaseOptions {

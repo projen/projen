@@ -1,9 +1,9 @@
-import { Eslint } from './eslint';
-import { JestOptions } from './jest';
-import { JsiiDocgen } from './jsii-docgen';
+import { Eslint } from '../eslint';
+import { JestOptions } from '../jest';
+import { JsiiDocgen } from '../jsii-docgen';
+import { Semver } from '../semver';
+import { StartEntryCategory } from '../start';
 import { NodeProjectCommonOptions } from './node-project';
-import { Semver } from './semver';
-import { StartEntryCategory } from './start';
 import { TypeScriptProject } from './typescript';
 
 const DEFAULT_JSII_VERSION = '1.11.0';

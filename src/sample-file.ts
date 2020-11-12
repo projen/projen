@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
-import { Project } from './project';
+import { Project } from './projects/project';
 import { writeFile } from './util';
 
 /**

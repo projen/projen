@@ -1,12 +1,12 @@
 import * as path from 'path';
-import { Component } from './component';
-import { Eslint, EslintOptions } from './eslint';
-import { JsonFile } from './json';
+import { Component } from '../component';
+import { Eslint, EslintOptions } from '../eslint';
+import { JsonFile } from '../json';
+import { SampleDir } from '../sample-file';
+import { Semver } from '../semver';
+import { StartEntryCategory } from '../start';
+import { TypedocDocgen } from '../typescript-typedoc';
 import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleDir } from './sample-file';
-import { Semver } from './semver';
-import { StartEntryCategory } from './start';
-import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**

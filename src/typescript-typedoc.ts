@@ -1,6 +1,6 @@
+import { TypeScriptProject } from './projects/typescript';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
-import { TypeScriptProject } from './typescript';
 
 /**
   Adds a simple Typescript documentation generator

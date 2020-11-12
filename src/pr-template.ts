@@ -1,4 +1,4 @@
-import { Project } from './project';
+import { Project } from './projects/project';
 import { TextFile } from './textfile';
 
 /**

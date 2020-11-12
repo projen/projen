@@ -1,6 +1,6 @@
 import * as TOML from '@iarna/toml';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
+import { Project } from './projects/project';
 
 export interface TomlFileOptions extends FileBaseOptions {
   /**

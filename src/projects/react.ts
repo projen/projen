@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Component } from './component';
-import { FileBase, FileBaseOptions, IResolver } from './file';
+import { Component } from '../component';
+import { FileBase, FileBaseOptions, IResolver } from '../file';
+import { Semver } from '../semver';
+import { StartEntryCategory } from '../start';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { Project } from './project';
-import { Semver } from './semver';
-import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
 export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }

@@ -1,7 +1,7 @@
 import * as path from 'path';
-import { NodeProject } from './node-project';
+import { NodeProject } from './projects/node-project';
+import { TypescriptConfig } from './projects/typescript';
 import { StartEntryCategory } from './start';
-import { TypescriptConfig } from './typescript';
 
 
 export interface JestOptions {

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Component } from './component';
+import { Component } from '../component';
 import { Project } from './project';
 
 /**

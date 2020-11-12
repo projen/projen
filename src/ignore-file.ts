@@ -1,6 +1,6 @@
 import { GENERATION_DISCLAIMER } from './common';
 import { FileBase, IResolver } from './file';
-import { Project } from './project';
+import { Project } from './projects/project';
 
 export class IgnoreFile extends FileBase {
   private readonly excludes = new Array<string>();

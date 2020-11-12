@@ -1,21 +1,21 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
-import { Dependabot, DependabotOptions } from './dependabot';
-import { GithubWorkflow } from './github-workflow';
-import { IgnoreFile } from './ignore-file';
-import { Jest, JestOptions } from './jest';
-import { JsonFile } from './json';
-import { License } from './license';
-import * as logging from './logging';
-import { Mergify, MergifyOptions } from './mergify';
-import { PullRequestTemplate } from './pr-template';
+import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from '../common';
+import { Dependabot, DependabotOptions } from '../dependabot';
+import { GithubWorkflow } from '../github-workflow';
+import { IgnoreFile } from '../ignore-file';
+import { Jest, JestOptions } from '../jest';
+import { JsonFile } from '../json';
+import { License } from '../license';
+import * as logging from '../logging';
+import { Mergify, MergifyOptions } from '../mergify';
+import { PullRequestTemplate } from '../pr-template';
+import { ProjenUpgrade } from '../projen-upgrade';
+import { Semver } from '../semver';
+import { Start, StartEntryCategory, StartOptions } from '../start';
+import { exec, writeFile } from '../util';
+import { Version } from '../version';
 import { Project } from './project';
-import { ProjenUpgrade } from './projen-upgrade';
-import { Semver } from './semver';
-import { Start, StartEntryCategory, StartOptions } from './start';
-import { exec, writeFile } from './util';
-import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 

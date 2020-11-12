@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { NodeProject } from './node-project';
+import { NodeProject } from './projects/node-project';
 
 export interface StartOptions {
 

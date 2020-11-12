@@ -1,5 +1,5 @@
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
+import { Project } from './projects/project';
 
 /**
  * Options for `TextFile`.

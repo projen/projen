@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { Project } from './project';
+import { Project } from './projects/project';
 import { decamelizeKeysRecursively } from './util';
 import { YamlFile } from './yaml';
 

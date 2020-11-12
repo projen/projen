@@ -1,4 +1,4 @@
-import { JsiiProject } from './jsii-project';
+import { JsiiProject } from './projects/jsii-project';
 import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 

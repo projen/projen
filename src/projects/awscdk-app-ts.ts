@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Component } from './component';
-import { JsonFile } from './json';
-import { StartEntryCategory } from './start';
+import { Component } from '../component';
+import { JsonFile } from '../json';
+import { StartEntryCategory } from '../start';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export enum CdkApprovalLevel {

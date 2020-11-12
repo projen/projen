@@ -1,5 +1,5 @@
 import { GithubWorkflow } from './github-workflow';
-import { NodeProject } from './node-project';
+import { NodeProject } from './projects/node-project';
 import { StartEntryCategory } from './start';
 
 export interface ProjenUpgradeOptions {

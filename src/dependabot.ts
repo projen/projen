@@ -1,5 +1,5 @@
 import { version } from 'yargs';
-import { NodeProject } from './node-project';
+import { NodeProject } from './projects/node-project';
 import { YamlFile } from './yaml';
 
 export interface DependabotOptions {

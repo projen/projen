@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { JsonFile } from './json';
-import { NodeProject } from './node-project';
+import { NodeProject } from './projects/node-project';
 import { StartEntryCategory } from './start';
 
 export interface EslintOptions {

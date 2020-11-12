@@ -1,11 +1,11 @@
 import * as chalk from 'chalk';
-import { cleanup } from './cleanup';
-import { printStartMenu } from './cli/cmds/start-app';
-import { Component } from './component';
-import { IgnoreFile } from './ignore-file';
-import * as logging from './logging';
-import { SampleReadme } from './readme';
-import { Start } from './start';
+import { cleanup } from '../cleanup';
+import { printStartMenu } from '../cli/cmds/start-app';
+import { Component } from '../component';
+import { IgnoreFile } from '../ignore-file';
+import * as logging from '../logging';
+import { SampleReadme } from '../readme';
+import { Start } from '../start';
 
 /**
  * Base project

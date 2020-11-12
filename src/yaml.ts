@@ -2,7 +2,7 @@ import * as YAML from 'yaml';
 import { GENERATION_DISCLAIMER } from './common';
 import { IResolver } from './file';
 import { JsonFile, JsonFileOptions } from './json';
-import { Project } from './project';
+import { Project } from './projects/project';
 
 export interface YamlFileOptions extends JsonFileOptions {
 

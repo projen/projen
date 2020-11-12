@@ -1,5 +1,5 @@
+import { Semver } from '../semver';
 import { ConstructLibraryOptions, ConstructLibrary } from './construct-lib';
-import { Semver } from './semver';
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**

@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import { FileBase, IResolver } from './file';
-import { Project } from './project';
+import { Project } from './projects/project';
 
 export interface LicenseOptions {
   /**
