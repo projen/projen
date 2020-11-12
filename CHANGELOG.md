@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.166 (2020-11-12)
+
+
+### Bug Fixes
+
+* **typescript:** typescript uses semi colons ([#302](https://github.com/projen/projen/issues/302)) ([6f7f725](https://github.com/projen/projen/commit/6f7f7258941eb0e89c5ac7d922b541804dfb98d7)), closes [#203](https://github.com/projen/projen/issues/203) [#203](https://github.com/projen/projen/issues/203)
+
 ### 0.3.165 (2020-11-11)
 
 
