@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.165 (2020-11-11)
+
+
+### Bug Fixes
+
+* CompositeProject tests reference unreleased projen version after bump ([#300](https://github.com/projen/projen/issues/300)) ([0c2382e](https://github.com/projen/projen/commit/0c2382eb282600dac7c8d5af1ef333054a398b9e)), closes [#289](https://github.com/projen/projen/issues/289)
+
 ### 0.3.164 (2020-11-10)
 
 

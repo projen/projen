@@ -2,6 +2,7 @@ export * from './awscdk-app-ts';
 export * from './awscdk-construct';
 export * from './cdk8s-construct';
 export * from './component';
+export * from './composite-project';
 export * from './construct-lib';
 export * from './dependabot';
 export * from './docker-compose';
