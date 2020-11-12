@@ -14,17 +14,17 @@ export function mkdtemp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
 }
 
-export function synthSnapshot(project: Project, onlyIncludeFiles?: string[]) {
+export function synthSnapshot(project: Project, ...includeFiles: string[]) {
   const outdir = mkdtemp();
   try {
     project.synth(outdir);
-    return directorySnapshot(outdir, onlyIncludeFiles);
+    return directorySnapshot(outdir, includeFiles);
   } finally {
     fs.removeSync(outdir);
   }
 }
 
-function directorySnapshot(root: string, onlyIncludeFiles?: string[]) {
+function directorySnapshot(root: string, includeFiles: string[]) {
   const output: SynthOutput = { };
 
   const readdir = (relativeDir: string) => {
@@ -38,7 +38,7 @@ function directorySnapshot(root: string, onlyIncludeFiles?: string[]) {
         continue;
       }
 
-      if (onlyIncludeFiles && !onlyIncludeFiles.includes(relPath)) {
+      if (includeFiles.length > 0 && !includeFiles.includes(relPath)) {
         continue;
       }
 
