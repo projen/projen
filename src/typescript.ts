@@ -4,7 +4,6 @@ import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
 
@@ -26,7 +25,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * TypeScript version to use.
    * @default "^3.9.5"
    */
-  readonly typescriptVersion?: string | Semver;
+  readonly typescriptVersion?: string;
 
   /**
    * Docgen by Typedoc

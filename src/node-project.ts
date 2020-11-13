@@ -1,5 +1,5 @@
-import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
@@ -788,7 +788,7 @@ export class NodeProject extends Project {
     const projen = options.projenDevDependency ?? true;
     if (projen) {
       const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
-      this.addDevDeps( `projen: ${projenVersion}` );
+      this.addDevDeps( `projen@${projenVersion}` );
     }
 
     const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';

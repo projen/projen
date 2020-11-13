@@ -198,7 +198,7 @@ exports[`projen new cdk8s-construct 1`] = `
 const project = new ConstructLibraryCdk8s({
   authorAddress: \\"my@user.email.com\\",
   authorName: \\"My User Name\\",
-  cdk8sVersion: \\"0.28.0\\",
+  cdk8sVersion: \\"0.33.0\\",
   name: \\"my-project\\",
   repository: \\"git@boom.com:foo/bar.git\\",
 

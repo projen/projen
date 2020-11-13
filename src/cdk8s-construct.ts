@@ -4,7 +4,7 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "0.28.0"
+   * @default "0.33.0"
    */
   readonly cdk8sVersion: string;
 }
@@ -25,7 +25,7 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     const ver = options.cdk8sVersion;
 
     this.addPeerDeps(
-      'constructs@^2.0.2',
+      'constructs@^3.2.27',
       `cdk8s@^${ver}`,
       `cdk8s-plus@^${ver}`,
     );

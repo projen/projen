@@ -9,7 +9,7 @@ import { StartEntryCategory } from './start';
  */
 export class JsiiDocgen {
   constructor(project: JsiiProject) {
-    project.addDevDeps('jsii-docgen@^1.3.2');
+    project.addDevDeps('jsii-docgen');
     project.addScript('docgen', 'jsii-docgen', {
       startDesc: 'Generate API.md from .jsii manifest',
       startCategory: StartEntryCategory.RELEASE,
