@@ -26,7 +26,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * TypeScript version to use.
    * @default "^3.9.5"
    */
-  readonly typescriptVersion?: Semver;
+  readonly typescriptVersion?: string | Semver;
 
   /**
    * Docgen by Typedoc
@@ -250,10 +250,10 @@ export class TypeScriptProject extends NodeProject {
       });
     }
 
-    this.addDevDependencies({
-      'typescript': options.typescriptVersion ?? Semver.caret('3.9.5'),
-      '@types/node': Semver.caret(this.minNodeVersion ?? '10.17.0'), // install the minimum version to ensure compatibility
-    });
+    this.addDevDeps(
+      `typescript@${options.typescriptVersion ?? '^3.9.5'}`,
+      `@types/node@^${this.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+    );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {

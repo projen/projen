@@ -2,7 +2,6 @@ import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 
 const VERSION_FILE = 'version.json';
@@ -30,9 +29,9 @@ export class Version extends Component {
       startCategory: StartEntryCategory.RELEASE,
     });
 
-    project.addDevDependencies({
-      'standard-version': Semver.caret('9.0.0'),
-    });
+    project.addDevDeps(
+      'standard-version@^9.0.0',
+    );
 
     project.npmignore?.exclude('/.versionrc.json');
     project.gitignore.include(VERSION_FILE);
