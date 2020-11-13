@@ -289,7 +289,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
   * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>string</code>)  version as string carets or other npm version strings are possible. __*Optional*__
   * **license** (<code>string</code>)  *No description* __*Optional*__
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
@@ -662,7 +661,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
   * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>string</code>)  version as string carets or other npm version strings are possible. __*Optional*__
   * **license** (<code>string</code>)  *No description* __*Optional*__
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
@@ -758,7 +756,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
   * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>string</code>)  version as string carets or other npm version strings are possible. __*Optional*__
   * **license** (<code>string</code>)  *No description* __*Optional*__
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
@@ -862,7 +859,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
   * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>string</code>)  version as string carets or other npm version strings are possible. __*Optional*__
   * **license** (<code>string</code>)  *No description* __*Optional*__
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
@@ -1561,7 +1557,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **java** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  *No description* __*Optional*__
   * **jest** (<code>boolean</code>)  Use jest for unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: defaults
-  * **jsiiVersion** (<code>string</code>)  version as string carets or other npm version strings are possible. __*Optional*__
   * **license** (<code>string</code>)  *No description* __*Optional*__
   * **python** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
@@ -3717,7 +3712,6 @@ Name | Type | Description
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?🔹 | <code>string</code> | version as string carets or other npm version strings are possible.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__
@@ -3948,7 +3942,6 @@ Name | Type | Description
 **java**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?⚠️ | <code>string</code> | version as string carets or other npm version strings are possible.<br/>__*Optional*__
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?⚠️ | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?⚠️ | <code>string</code> | __*Optional*__
@@ -4037,7 +4030,6 @@ Name | Type | Description
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?🔹 | <code>string</code> | version as string carets or other npm version strings are possible.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__
@@ -4125,7 +4117,6 @@ Name | Type | Description
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?🔹 | <code>string</code> | version as string carets or other npm version strings are possible.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__
@@ -4536,7 +4527,6 @@ Name | Type | Description
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
-**jsiiVersion**?🔹 | <code>string</code> | version as string carets or other npm version strings are possible.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | __*Optional*__

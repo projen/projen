@@ -69,12 +69,6 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   readonly dotnet?: JsiiDotNetTarget;
 
   /**
-   * version as string carets or other npm version strings are possible
-   * @example '^1.11.0'
-   */
-  readonly jsiiVersion?: string;
-
-  /**
    * Install eslint.
    *
    * @default true
@@ -251,12 +245,10 @@ export class JsiiProject extends TypeScriptProject {
       this.addTip('Use the "java", "python" and "dotnet" options to define publishing settings');
     }
 
-    const jsiiVersion = `@${options.jsiiVersion}` ?? '';
-
     this.addDevDeps(
-      `jsii${jsiiVersion}`,
-      `jsii-diff${jsiiVersion}`,
-      `jsii-pacmak${jsiiVersion}`,
+      'jsii',
+      'jsii-diff',
+      'jsii-pacmak',
       'jsii-release',
       `@types/node@^${minNodeVersion}`,
     );
