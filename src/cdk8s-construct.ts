@@ -1,5 +1,4 @@
-import { ConstructLibraryOptions, ConstructLibrary } from './construct-lib';
-import { Semver } from './semver';
+import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
@@ -25,10 +24,10 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
 
     const ver = options.cdk8sVersion;
 
-    this.addPeerDependencies({
-      'constructs': Semver.caret('2.0.2'),
-      'cdk8s': Semver.caret(ver),
-      'cdk8s-plus': Semver.caret(ver),
-    });
+    this.addPeerDeps(
+      'constructs@^2.0.2',
+      `cdk8s@^${ver}`,
+      `cdk8s-plus@^${ver}`,
+    );
   }
 }

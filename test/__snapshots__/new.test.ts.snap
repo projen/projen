@@ -4,7 +4,7 @@ exports[`projen new awscdk-app-ts 1`] = `
 "const { AwsCdkTypeScriptApp } = require('projen');
 
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: \\"1.63.0\\",
+  cdkVersion: \\"1.73.0\\",
   name: \\"my-project\\",
 
   /* AwsCdkTypeScriptAppOptions */
@@ -106,7 +106,7 @@ exports[`projen new awscdk-construct 1`] = `
 const project = new AwsCdkConstructLibrary({
   authorAddress: \\"my@user.email.com\\",
   authorName: \\"My User Name\\",
-  cdkVersion: \\"1.60.0\\",
+  cdkVersion: \\"1.73.0\\",
   name: \\"my-project\\",
   repository: \\"git@boom.com:foo/bar.git\\",
 
