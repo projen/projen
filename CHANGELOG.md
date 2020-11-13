@@ -2,6 +2,68 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.167 (2020-11-12)
+
+
+### Bug Fixes
+
+* add missing yaml export ([#303](https://github.com/projen/projen/issues/303)) ([90c853c](https://github.com/projen/projen/commit/90c853c82ced3b560cb9381d7eb7350ddec3ce94))
+
+### 0.3.166 (2020-11-12)
+
+
+### Bug Fixes
+
+* **typescript:** typescript uses semi colons ([#302](https://github.com/projen/projen/issues/302)) ([6f7f725](https://github.com/projen/projen/commit/6f7f7258941eb0e89c5ac7d922b541804dfb98d7)), closes [#203](https://github.com/projen/projen/issues/203) [#203](https://github.com/projen/projen/issues/203)
+
+### 0.3.165 (2020-11-11)
+
+
+### Bug Fixes
+
+* CompositeProject tests reference unreleased projen version after bump ([#300](https://github.com/projen/projen/issues/300)) ([0c2382e](https://github.com/projen/projen/commit/0c2382eb282600dac7c8d5af1ef333054a398b9e)), closes [#289](https://github.com/projen/projen/issues/289)
+
+### 0.3.164 (2020-11-10)
+
+
+### Bug Fixes
+
+* **cli:** new --from scoped packages is broken ([#297](https://github.com/projen/projen/issues/297)) ([97bd338](https://github.com/projen/projen/commit/97bd338146b2c9e90c4114714d71979131467a02)), closes [#296](https://github.com/projen/projen/issues/296)
+
+### 0.3.163 (2020-11-10)
+
+
+### Bug Fixes
+
+* **awscdk-construct:** constructs 3.2.0 is required for latest CDK ([#291](https://github.com/projen/projen/issues/291)) ([51e34e2](https://github.com/projen/projen/commit/51e34e2291195f8c91131f5ddbb869f15089cc73)), closes [#290](https://github.com/projen/projen/issues/290)
+
+### 0.3.162 (2020-11-09)
+
+### 0.3.161 (2020-11-09)
+
+### 0.3.160 (2020-11-08)
+
+
+### Features
+
+* codecov.io ([#266](https://github.com/projen/projen/issues/266)) ([24f2dc6](https://github.com/projen/projen/commit/24f2dc603719af4526cbb1358078a769920fb7b6))
+
+### 0.3.159 (2020-11-08)
+
+
+### Features
+
+* **eslint:** add file extension and ignore pattern options ([#288](https://github.com/projen/projen/issues/288)) ([ebe65fa](https://github.com/projen/projen/commit/ebe65fa0c7e0dfe19662248f7095e78fa32ad1f9))
+
+### 0.3.158 (2020-11-08)
+
+
+### Features
+
+* README samples (again) ([#276](https://github.com/projen/projen/issues/276)) ([1a34ca8](https://github.com/projen/projen/commit/1a34ca81602a01cc46193a9eae1d062e78e218cf))
+
+### 0.3.157 (2020-11-08)
+
 ### 0.3.156 (2020-11-06)
 
 ### 0.3.155 (2020-11-05)

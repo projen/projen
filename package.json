@@ -15,15 +15,15 @@
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "yarn run --silent no-changes || standard-version",
     "release": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)",
+    "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
+    "test:watch": "jest --watch",
+    "test:update": "jest --updateSnapshot",
     "projen:upgrade": "yarn upgrade -L projen && CI=\"\" yarn projen",
     "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
     "watch": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
     "build": "yarn run compile && yarn run test && yarn run package && mv README.md README.md.bak && cat README.md.bak | npx markmac > README.md && rm README.md.bak",
     "package": "jsii-pacmak",
-    "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
-    "test:watch": "jest --watch",
-    "test:update": "jest --updateSnapshot",
-    "eslint": "eslint --ext .ts --fix --no-error-on-unmatched-pattern src test",
+    "eslint": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test",
     "compat": "npx jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen"
   },
@@ -107,6 +107,16 @@
       "command": "yarn run release",
       "category": 2
     },
+    "test": {
+      "desc": "Run tests",
+      "command": "yarn run test",
+      "category": 1
+    },
+    "test:watch": {
+      "desc": "Run jest in watch mode",
+      "command": "yarn run test:watch",
+      "category": 1
+    },
     "projen:upgrade": {
       "desc": "upgrades projen to the latest version",
       "command": "yarn run projen:upgrade",
@@ -132,16 +142,6 @@
       "command": "yarn run package",
       "category": 2
     },
-    "test": {
-      "desc": "Run tests",
-      "command": "yarn run test",
-      "category": 1
-    },
-    "test:watch": {
-      "desc": "Run jest in watch mode",
-      "command": "yarn run test:watch",
-      "category": 1
-    },
     "eslint": {
       "desc": "Runs eslint against the codebase",
       "command": "yarn run eslint",
@@ -158,28 +158,29 @@
       "category": 2
     }
   },
-  "version": "0.3.156",
-  "types": "lib/index.d.ts",
+  "version": "0.3.167",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
     ],
-    "preset": "ts-jest",
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",
       "**/?(*.)+(spec|test).ts?(x)"
     ],
+    "preset": "ts-jest",
     "globals": {
       "ts-jest": {
         "tsconfig": "tsconfig.jest.json"
       }
     }
   },
+  "types": "lib/index.d.ts",
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",
