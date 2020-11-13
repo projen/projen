@@ -255,11 +255,11 @@ export class JsiiProject extends TypeScriptProject {
     const jsiiVersion = options.jsiiVersion ?? DEFAULT_JSII_VERSION;
 
     this.addDevDeps(
-      `jsii@${jsiiVersion}`,
-      `jsii-diff@${jsiiVersion}`,
-      `jsii-pacmak@${jsiiVersion}`,
+      `jsii@^${jsiiVersion}`,
+      `jsii-diff@^${jsiiVersion}`,
+      `jsii-pacmak@^${jsiiVersion}`,
       'jsii-release@^0.1.6',
-      `@types/node@${minNodeVersion}`,
+      `@types/node@^${minNodeVersion}`,
     );
 
     this.gitignore.exclude('.jsii', 'tsconfig.json');
