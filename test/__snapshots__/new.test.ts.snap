@@ -129,7 +129,7 @@ const project = new AwsCdkConstructLibrary({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
+  // jsiiVersion: undefined,                                                   /* version as string carets or other npm version strings are possible. */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */
@@ -216,7 +216,7 @@ const project = new ConstructLibraryCdk8s({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
+  // jsiiVersion: undefined,                                                   /* version as string carets or other npm version strings are possible. */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */
@@ -311,7 +311,7 @@ const project = new JsiiProject({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
+  // jsiiVersion: undefined,                                                   /* version as string carets or other npm version strings are possible. */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */

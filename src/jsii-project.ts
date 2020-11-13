@@ -2,7 +2,6 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { NodeProjectCommonOptions } from './node-project';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptProject } from './typescript';
 
@@ -70,7 +69,11 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   readonly python?: JsiiPythonTarget;
   readonly dotnet?: JsiiDotNetTarget;
 
-  readonly jsiiVersion?: Semver;
+  /**
+   * version as string carets or other npm version strings are possible
+   * @example '^1.11.0'
+   */
+  readonly jsiiVersion?: string;
 
   /**
    * Install eslint.
@@ -249,15 +252,15 @@ export class JsiiProject extends TypeScriptProject {
       this.addTip('Use the "java", "python" and "dotnet" options to define publishing settings');
     }
 
-    const jsiiVersion = options.jsiiVersion ?? Semver.caret(DEFAULT_JSII_VERSION);
+    const jsiiVersion = options.jsiiVersion ?? DEFAULT_JSII_VERSION;
 
-    this.addDevDependencies({
-      'jsii': jsiiVersion,
-      'jsii-diff': jsiiVersion,
-      'jsii-pacmak': jsiiVersion,
-      'jsii-release': Semver.caret('0.1.6'),
-      '@types/node': Semver.caret(minNodeVersion),
-    });
+    this.addDevDeps(
+      `jsii@${jsiiVersion}`,
+      `jsii-diff@${jsiiVersion}`,
+      `jsii-pacmak@${jsiiVersion}`,
+      'jsii-release@^0.1.6',
+      `@types/node@${minNodeVersion}`,
+    );
 
     this.gitignore.exclude('.jsii', 'tsconfig.json');
     this.npmignore?.include('.jsii');
