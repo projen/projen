@@ -1,4 +1,4 @@
-import { ConstructLibraryOptions, ConstructLibrary } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 /**
  * Options for the construct-lib-aws project.
@@ -7,7 +7,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.60.0"
+   * @default "1.73.0"
    */
   readonly cdkVersion: string;
 
