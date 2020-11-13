@@ -428,6 +428,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -1924,6 +1925,7 @@ new NextJsProject(options: NextJsProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2064,6 +2066,7 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2209,6 +2212,7 @@ new NodeProject(options: NodeProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2734,6 +2738,7 @@ new ReactProject(options: ReactProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -2872,6 +2877,7 @@ new ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -3298,6 +3304,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -3397,6 +3404,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -3496,6 +3504,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
@@ -3804,6 +3813,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -4727,6 +4737,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -4831,6 +4842,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -4999,6 +5011,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -5118,6 +5131,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -5221,6 +5235,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -5465,6 +5480,7 @@ Name | Type | Description
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?⚠️ | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -5556,6 +5572,7 @@ Name | Type | Description
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
