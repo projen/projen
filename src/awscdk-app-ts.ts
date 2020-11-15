@@ -134,7 +134,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     this.cdkConfig = {
-      app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
+      app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
 
     if (options.context) {
