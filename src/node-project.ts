@@ -788,7 +788,7 @@ export class NodeProject extends Project {
     const projen = options.projenDevDependency ?? true;
     if (projen) {
       const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
-      this.addDevDeps( `projen@${projenVersion}` );
+      this.addDevDeps(`projen@${projenVersion}`);
     }
 
     const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
