@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.170 (2020-11-16)
+
+
+### Bug Fixes
+
+* cdk app starter test code syntax and linting errors ([#312](https://github.com/projen/projen/issues/312)) ([e574217](https://github.com/projen/projen/commit/e5742171a97bd40797953926a0e8af181c7175a3))
+
 ### 0.3.169 (2020-11-15)
 
 
