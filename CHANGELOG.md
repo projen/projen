@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.171 (2020-11-17)
+
+
+### Features
+
+* **jest:** test results processing ([#279](https://github.com/projen/projen/issues/279)) ([453ad63](https://github.com/projen/projen/commit/453ad63194cfd4862ef624401cf80aa57ba61db6)), closes [#278](https://github.com/projen/projen/issues/278)
+
 ### 0.3.170 (2020-11-16)
 
 
