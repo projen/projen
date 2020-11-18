@@ -38,10 +38,8 @@ const project = new AwsCdkTypeScriptApp({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -50,6 +48,7 @@ const project = new AwsCdkTypeScriptApp({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -158,10 +157,8 @@ const project = new AwsCdkConstructLibrary({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -170,6 +167,7 @@ const project = new AwsCdkConstructLibrary({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -244,10 +242,8 @@ const project = new ConstructLibraryCdk8s({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -256,6 +252,7 @@ const project = new ConstructLibraryCdk8s({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -338,10 +335,8 @@ const project = new JsiiProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -350,6 +345,7 @@ const project = new JsiiProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -407,10 +403,8 @@ const project = new NextJsProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -419,6 +413,7 @@ const project = new NextJsProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -489,10 +484,8 @@ const project = new NextJsTypeScriptProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -501,6 +494,7 @@ const project = new NextJsTypeScriptProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -581,10 +575,8 @@ const project = new NodeProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -593,6 +585,7 @@ const project = new NodeProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -670,10 +663,8 @@ const project = new ReactProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -682,6 +673,7 @@ const project = new ReactProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -752,10 +744,8 @@ const project = new ReactTypeScriptProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -764,6 +754,7 @@ const project = new ReactTypeScriptProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -844,10 +835,8 @@ const project = new TypeScriptProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -856,6 +845,7 @@ const project = new TypeScriptProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
@@ -936,10 +926,8 @@ const project = new TypeScriptAppProject({
   // mergifyAutoMergeLabel: \\"auto-merge\\",                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmDistTag: \\"latest\\",                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -948,6 +936,7 @@ const project = new TypeScriptAppProject({
   // projenUpgradeSchedule: [ \\"0 6 * * *\\" ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // publishConfig: undefined,                                                 /* undefined */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ \\"master\\" ],                                            /* Branches which trigger a release. */
