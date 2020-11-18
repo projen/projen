@@ -1,5 +1,5 @@
-import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as path from 'path';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { GithubWorkflow } from './github-workflow';
@@ -281,6 +281,10 @@ export interface NodeProjectCommonOptions {
   readonly npmRegistry?: string;
 
   /**
+   *
+   */
+  readonly publishConfig?: PublishConfigOptions;
+  /**
    * The Node Package Manager used to execute scripts
    *
    * @default NodePackageManager.YARN
@@ -458,6 +462,13 @@ export interface NodeProjectCommonOptions {
   readonly pullRequestTemplateContents?: string;
 }
 
+export interface PublishConfigOptions {
+  readonly registry: string;
+  readonly tag: string;
+  readonly access?: string;
+  readonly additionalProperties?: {[name: string]: string};
+}
+
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
   /**
    * This is the name of your package. It gets used in URLs, as an argument on the command line,
@@ -623,6 +634,8 @@ export class NodeProject extends Project {
 
   protected readonly npmRegistry: string;
 
+  protected readonly npmPublishConfig: PublishConfigOptions;
+
   /**
    * The package manager to use.
    */
@@ -708,6 +721,14 @@ export class NodeProject extends Project {
 
     this.testdir = options.testdir ?? 'test';
 
+    this.npmPublishConfig = { registry: this.npmRegistry, tag: this.npmDistTag };
+    if (options.publishConfig) {
+      this.npmPublishConfig = { ...this.npmPublishConfig, ...options.publishConfig };
+      if (options.publishConfig.additionalProperties) {
+        this.npmPublishConfig = { ...this.npmPublishConfig, ...options.publishConfig.additionalProperties };
+      }
+    }
+
     this.manifest = {
       '//': GENERATION_DISCLAIMER,
       'name': options.name,
@@ -727,6 +748,7 @@ export class NodeProject extends Project {
       'bundledDependencies': sorted(this.bundledDependencies),
       'keywords': () => Array.from(this.keywords).sort(),
       'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
+      'publishConfig': this.npmPublishConfig,
     };
 
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
@@ -867,8 +889,8 @@ export class NodeProject extends Project {
                 run: 'npx -p jsii-release jsii-release-npm',
                 env: {
                   NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-                  NPM_DIST_TAG: this.npmDistTag,
-                  NPM_REGISTRY: this.npmRegistry,
+                  NPM_DIST_TAG: this.npmPublishConfig.tag,
+                  NPM_REGISTRY: this.npmPublishConfig.registry,
                 },
               },
             ],
