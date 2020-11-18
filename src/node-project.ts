@@ -468,7 +468,7 @@ export interface PublishConfigOptions {
   readonly registry: string;
   readonly tag: string;
   readonly access?: string;
-  readonly additionalProperties?: {[name: string]: string};
+  readonly additionalProperties?: {[name: string]: any};
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
