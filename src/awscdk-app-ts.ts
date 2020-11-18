@@ -134,7 +134,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     this.cdkConfig = {
-      app: `npx ts-node ${path.join(this.srcdir, this.appEntrypoint)}`,
+      app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,
     };
 
     if (options.context) {
@@ -225,8 +225,8 @@ app.synth();`;
     }
 
     const testCode = `import '@aws-cdk/assert/jest';
-import { MyStack } from '../src/main'
 import { App } from '@aws-cdk/core';
+import { MyStack } from '../src/main';
 
 test('Snapshot', () => {
   const app = new App();

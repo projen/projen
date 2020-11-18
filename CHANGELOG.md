@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.172 (2020-11-17)
+
+### 0.3.171 (2020-11-17)
+
+
+### Features
+
+* **jest:** test results processing ([#279](https://github.com/projen/projen/issues/279)) ([453ad63](https://github.com/projen/projen/commit/453ad63194cfd4862ef624401cf80aa57ba61db6)), closes [#278](https://github.com/projen/projen/issues/278)
+
+### 0.3.170 (2020-11-16)
+
+
+### Bug Fixes
+
+* cdk app starter test code syntax and linting errors ([#312](https://github.com/projen/projen/issues/312)) ([e574217](https://github.com/projen/projen/commit/e5742171a97bd40797953926a0e8af181c7175a3))
+
+### 0.3.169 (2020-11-15)
+
+
+### Features
+
+* prefer ts files for ts-node ([#308](https://github.com/projen/projen/issues/308)) ([4dd57aa](https://github.com/projen/projen/commit/4dd57aa59c7df7c6a7dd127b542a44067af0a733))
+
+### 0.3.168 (2020-11-15)
+
 ### 0.3.167 (2020-11-12)
 
 

@@ -7,6 +7,7 @@ test('license file is added by default', () => {
     name: 'test-node-project',
     start: false,
     mergify: false,
+    projenDevDependency: false,
   });
 
   // THEN
@@ -20,6 +21,7 @@ test('license file is not added if licensed is false', () => {
     licensed: false,
     start: false,
     mergify: false,
+    projenDevDependency: false,
   });
 
   // THEN
