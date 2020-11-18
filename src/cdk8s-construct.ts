@@ -1,11 +1,10 @@
-import { ConstructLibraryOptions, ConstructLibrary } from './construct-lib';
-import { Semver } from './semver';
+import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "0.28.0"
+   * @default "0.33.0"
    */
   readonly cdk8sVersion: string;
 }
@@ -25,10 +24,10 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
 
     const ver = options.cdk8sVersion;
 
-    this.addPeerDependencies({
-      'constructs': Semver.caret('2.0.2'),
-      'cdk8s': Semver.caret(ver),
-      'cdk8s-plus': Semver.caret(ver),
-    });
+    this.addPeerDeps(
+      'constructs@^3.2.27',
+      `cdk8s@^${ver}`,
+      `cdk8s-plus@^${ver}`,
+    );
   }
 }

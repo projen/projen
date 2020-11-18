@@ -4,7 +4,6 @@ import { Component } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { Project } from './project';
-import { Semver } from './semver';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
@@ -103,7 +102,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         ...options.tsconfig,
       },
       ...options,
-      typescriptVersion: options.typescriptVersion ?? Semver.caret('4.0.3'),
+      typescriptVersion: options.typescriptVersion ?? '^4.0.3',
 
       // never generate default TypeScript sample code, since this class provides its own
       sampleCode: false,

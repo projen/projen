@@ -4,7 +4,7 @@ exports[`projen new awscdk-app-ts 1`] = `
 "const { AwsCdkTypeScriptApp } = require('projen');
 
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: \\"1.63.0\\",
+  cdkVersion: \\"1.73.0\\",
   name: \\"my-project\\",
 
   /* AwsCdkTypeScriptAppOptions */
@@ -106,7 +106,7 @@ exports[`projen new awscdk-construct 1`] = `
 const project = new AwsCdkConstructLibrary({
   authorAddress: \\"my@user.email.com\\",
   authorName: \\"My User Name\\",
-  cdkVersion: \\"1.60.0\\",
+  cdkVersion: \\"1.73.0\\",
   name: \\"my-project\\",
   repository: \\"git@boom.com:foo/bar.git\\",
 
@@ -129,7 +129,6 @@ const project = new AwsCdkConstructLibrary({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */
@@ -198,7 +197,7 @@ exports[`projen new cdk8s-construct 1`] = `
 const project = new ConstructLibraryCdk8s({
   authorAddress: \\"my@user.email.com\\",
   authorName: \\"My User Name\\",
-  cdk8sVersion: \\"0.28.0\\",
+  cdk8sVersion: \\"0.33.0\\",
   name: \\"my-project\\",
   repository: \\"git@boom.com:foo/bar.git\\",
 
@@ -216,7 +215,6 @@ const project = new ConstructLibraryCdk8s({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */
@@ -311,7 +309,6 @@ const project = new JsiiProject({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiVersion: undefined,                                                   /* undefined */
   // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: \\".\\",                                                             /* undefined */
