@@ -269,6 +269,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The dist-tag to use when releasing to npm.
    *
+   * @deprecated use `publishConfig`
    * @default "latest"
    */
   readonly npmDistTag?: string;
@@ -276,6 +277,7 @@ export interface NodeProjectCommonOptions {
   /**
    * The registry url to use when releasing packages.
    *
+   * @deprecated use `publishConfig`
    * @default "registry.npmjs.org"
    */
   readonly npmRegistry?: string;
