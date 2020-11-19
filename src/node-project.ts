@@ -816,7 +816,7 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? true) {
-      this.createBuildWorkflow('Build', {
+      const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
         trigger: {
           pull_request: { },
         },
@@ -824,6 +824,9 @@ export class NodeProject extends Project {
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
       });
+
+      this.buildWorkflow = workflow;
+      this.buildWorkflowJobId = buildJobId;
     }
 
     if (options.releaseWorkflow ?? true) {
@@ -839,7 +842,7 @@ export class NodeProject extends Project {
         trigger.schedule = { cron: options.releaseSchedule };
       }
 
-      const { workflow: releaseWorkflow, buildJobId: releaseWorkflowJobId } = this.createBuildWorkflow('Release', {
+      const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
         bump: true,
         uploadArtifact: true,
@@ -848,8 +851,8 @@ export class NodeProject extends Project {
         codeCovTokenSecret: options.codeCovTokenSecret,
       });
 
-      this.releaseWorkflow = releaseWorkflow;
-      this.releaseWorkflowJobId = releaseWorkflowJobId;
+      this.releaseWorkflow = workflow;
+      this.releaseWorkflowJobId = buildJobId;
 
       if (options.releaseToNpm ?? false) {
         this.releaseWorkflow.addJobs({
