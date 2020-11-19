@@ -1,4 +1,3 @@
-import { GithubWorkflow } from './github-workflow';
 import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
 
@@ -42,7 +41,11 @@ export class ProjenUpgrade {
     });
 
     if (options.autoUpgradeSecret) {
-      const workflow = new GithubWorkflow(project, 'ProjenUpgrade');
+      if (!project.github) {
+        throw new Error('github workflows are required in order for auto-update');
+      }
+
+      const workflow = project.github.addWorkflow('ProjenUpgrade');
 
       workflow.on({
         schedule: options.autoUpgradeSchedule

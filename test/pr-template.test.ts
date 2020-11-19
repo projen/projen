@@ -1,5 +1,4 @@
 import { Project } from '../src';
-import { PullRequestTemplate } from '../src/pr-template';
 import { synthSnapshot } from './util';
 
 const PULL_REQUEST_TEMPLATE_FILE = '.github/pull_request_template.md';
@@ -9,7 +8,7 @@ test('default', () => {
   const project = new Project();
 
   // WHEN
-  new PullRequestTemplate(project);
+  project.github?.addPullRequestTemplate();
 
   // THEN
   expect(synthSnapshot(project, PULL_REQUEST_TEMPLATE_FILE)).toStrictEqual({
@@ -22,14 +21,12 @@ test('custom content', () => {
   const project = new Project();
 
   // WHEN
-  new PullRequestTemplate(project, {
-    lines: [
-      'hello',
-      'world',
-      '',
-      'foobar',
-    ],
-  });
+  project.github?.addPullRequestTemplate(
+    'hello',
+    'world',
+    '',
+    'foobar',
+  );
 
   // THEN
   expect(synthSnapshot(project, PULL_REQUEST_TEMPLATE_FILE)).toStrictEqual({

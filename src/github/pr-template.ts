@@ -1,5 +1,5 @@
-import { Project } from './project';
-import { TextFile } from './textfile';
+import { TextFile } from '../textfile';
+import { GitHub } from './github';
 
 /**
  * Options for `PullRequestTemplate`.
@@ -17,11 +17,11 @@ export interface PullRequestTemplateOptions {
  * Template for GitHub pull requests.
  */
 export class PullRequestTemplate extends TextFile {
-  constructor(project: Project, options: PullRequestTemplateOptions = { }) {
-    super(project, '.github/pull_request_template.md', {
-      lines: options.lines ?? [
-        'Fixes #',
-      ],
+  constructor(github: GitHub, options: PullRequestTemplateOptions = { }) {
+    super(github.project, '.github/pull_request_template.md', {
+      lines: (options.lines && options.lines?.length > 0)
+        ? options.lines
+        : ['Fixes #'],
     });
   }
 }

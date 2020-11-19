@@ -1,6 +1,6 @@
-import { Component } from './component';
-import { Project } from './project';
-import { YamlFile } from './yaml';
+import { Component } from '../component';
+import { YamlFile } from '../yaml';
+import { GitHub } from './github';
 
 export interface MergifyRule {
   readonly name: string;
@@ -15,10 +15,10 @@ export interface MergifyOptions {
 export class Mergify extends Component {
   private readonly rules = new Array<MergifyRule>();
 
-  constructor(project: Project, options: MergifyOptions = { }) {
-    super(project);
+  constructor(github: GitHub, options: MergifyOptions = { }) {
+    super(github.project);
 
-    new YamlFile(project, '.mergify.yml', {
+    new YamlFile(this.project, '.mergify.yml', {
       obj: {
         pull_request_rules: this.rules,
       },
@@ -26,7 +26,7 @@ export class Mergify extends Component {
 
     (options.rules ?? []).forEach(rule => this.addRule(rule));
 
-    project.addTip('Install Mergify in your GitHub repository to enable automatic merges of approved PRs');
+    this.project.addTip('Install Mergify in your GitHub repository to enable automatic merges of approved PRs');
   }
 
   public addRule(rule: MergifyRule) {

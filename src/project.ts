@@ -2,10 +2,12 @@ import * as chalk from 'chalk';
 import { cleanup } from './cleanup';
 import { printStartMenu } from './cli/cmds/start-app';
 import { Component } from './component';
+import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
 import { Start } from './start';
+import { VsCode } from './vscode';
 
 /**
  * Base project
@@ -16,9 +18,20 @@ export class Project {
   private readonly components = new Array<Component>();
   private readonly tips = new Array<string>();
 
+  /**
+   * Access all github components.
+   */
+  public readonly github?: GitHub;
+
+  /**
+   * Access all VSCode components.
+   */
+  public readonly vscode?: VsCode;
+
   constructor() {
     this.gitignore = new IgnoreFile(this, '.gitignore');
-
+    this.github = new GitHub(this);
+    this.vscode = new VsCode(this);
     new SampleReadme(this, '# my project');
   }
 

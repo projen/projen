@@ -1,15 +1,14 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
-import { Dependabot, DependabotOptions } from './dependabot';
-import { GithubWorkflow } from './github-workflow';
+import { GithubWorkflow } from './github';
+import { DependabotOptions } from './github/dependabot';
+import { Mergify, MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { JsonFile } from './json';
 import { License } from './license';
 import * as logging from './logging';
-import { Mergify, MergifyOptions } from './mergify';
-import { PullRequestTemplate } from './pr-template';
 import { Project } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
@@ -580,7 +579,6 @@ export class NodeProject extends Project {
   public readonly manifest: any;
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
-  public readonly pullRequestTemplate?: PullRequestTemplate;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -595,12 +593,14 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  protected readonly buildWorkflow?: NodeBuildWorkflow;
+  protected readonly buildWorkflow?: GithubWorkflow;
+  protected readonly buildWorkflowJobId?: string;
 
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
    */
-  protected readonly releaseWorkflow?: NodeBuildWorkflow;
+  protected readonly releaseWorkflow?: GithubWorkflow;
+  protected readonly releaseWorkflowJobId?: string;
 
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
@@ -816,7 +816,7 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? true) {
-      this.buildWorkflow = new NodeBuildWorkflow(this, 'Build', {
+      this.createBuildWorkflow('Build', {
         trigger: {
           pull_request: { },
         },
@@ -839,7 +839,7 @@ export class NodeProject extends Project {
         trigger.schedule = { cron: options.releaseSchedule };
       }
 
-      this.releaseWorkflow = new NodeBuildWorkflow(this, 'Release', {
+      const { workflow: releaseWorkflow, buildJobId: releaseWorkflowJobId } = this.createBuildWorkflow('Release', {
         trigger,
         bump: true,
         uploadArtifact: true,
@@ -848,11 +848,14 @@ export class NodeProject extends Project {
         codeCovTokenSecret: options.codeCovTokenSecret,
       });
 
+      this.releaseWorkflow = releaseWorkflow;
+      this.releaseWorkflowJobId = releaseWorkflowJobId;
+
       if (options.releaseToNpm ?? false) {
         this.releaseWorkflow.addJobs({
           release_npm: {
             'name': 'Release to NPM',
-            'needs': this.releaseWorkflow.buildJobId,
+            'needs': this.releaseWorkflowJobId,
             'runs-on': 'ubuntu-latest',
             'steps': [
               {
@@ -913,10 +916,8 @@ export class NodeProject extends Project {
     let autoMergeLabel;
 
     if (options.mergify ?? true) {
-      this.mergify = new Mergify(this, options.mergifyOptions);
-
       const successfulBuild = this.buildWorkflow
-        ? [`status-success=${this.buildWorkflow.buildJobId}`]
+        ? [`status-success=${this.buildWorkflowJobId}`]
         : [];
 
       const mergeAction = {
@@ -935,7 +936,7 @@ export class NodeProject extends Project {
         delete_head_branch: { },
       };
 
-      this.mergify.addRule({
+      this.github?.addMergifyRules({
         name: 'Automatic merge on approval and successful build',
         actions: mergeAction,
         conditions: [
@@ -947,7 +948,7 @@ export class NodeProject extends Project {
       // empty string means disabled.
       autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
       if (autoMergeLabel !== '') {
-        this.mergify.addRule({
+        this.github?.addMergifyRules({
           name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
           actions: mergeAction,
           conditions: [
@@ -961,7 +962,7 @@ export class NodeProject extends Project {
     }
 
     if (options.dependabot ?? true) {
-      new Dependabot(this, options.dependabotOptions);
+      this.github?.addDependabot(options.dependabotOptions);
     }
 
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
@@ -977,9 +978,7 @@ export class NodeProject extends Project {
     }
 
     if (options.pullRequestTemplate ?? true) {
-      this.pullRequestTemplate = new PullRequestTemplate(this, {
-        lines: options.pullRequestTemplateContents ? [options.pullRequestTemplateContents] : undefined,
-      });
+      this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
   }
 
@@ -1452,6 +1451,92 @@ export class NodeProject extends Project {
       '.cache',
     );
   }
+
+  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): BuildWorkflow {
+    const buildJobId = 'build';
+
+    const github = this.github;
+    if (!github) { throw new Error('no github support'); }
+
+    const workflow = github.addWorkflow(name);
+
+    workflow.on(options.trigger);
+
+    workflow.on({
+      workflow_dispatch: {}, // allow manual triggering
+    });
+
+    const job: any = {
+      'runs-on': 'ubuntu-latest',
+      'env': {
+        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+      },
+      'steps': [
+        // bootstrap
+        ...this.workflowBootstrapSteps,
+
+        // sets git identity so we can push later
+        {
+          name: 'Set git identity',
+          run: [
+            'git config user.name "Auto-bump"',
+            'git config user.email "github-actions@github.com"',
+          ].join('\n'),
+        },
+
+        // if there are changes, creates a bump commit
+        ...options.bump ? [{ run: `${this.runScriptCommand} bump` }] : [],
+
+        // build (compile + test)
+        { run: `${this.runScriptCommand} build` },
+
+        // run codecov if enabled or a secret token name is passed in
+        // AND jest must be configured
+        ...(options.codeCov || options.codeCovTokenSecret) && this.jest?.config ? [{
+          name: 'Upload coverage to Codecov',
+          uses: 'codecov/codecov-action@v1',
+          with: options.codeCovTokenSecret
+            ? {
+              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+              directory: this.jest.config.coverageDirectory,
+            } : {
+              directory: this.jest.config.coverageDirectory,
+            },
+        }] : [],
+
+        // anti-tamper check (fails if there were changes to committed files)
+        // this will identify any non-committed files generated during build (e.g. test snapshots)
+        ...this.workflowAntitamperSteps,
+
+        // push bump commit
+        ...options.bump ? [{ run: 'git push --follow-tags origin $GITHUB_REF' }] : [],
+      ],
+    };
+
+    if (options.image) {
+      job.container = { image: options.image };
+    }
+
+    if (options.uploadArtifact) {
+      job.steps.push({
+        name: 'Upload artifact',
+        uses: 'actions/upload-artifact@v2.1.1',
+        with: {
+          name: 'dist',
+          path: 'dist',
+        },
+      });
+    }
+
+    workflow.addJobs({ [buildJobId]: job });
+
+    return { workflow, buildJobId };
+  }
+}
+
+interface BuildWorkflow {
+  readonly workflow: GithubWorkflow;
+  readonly buildJobId: string;
 }
 
 export interface PeerDependencyOptions {
@@ -1490,86 +1575,6 @@ export interface NodeBuildWorkflowOptions {
    * The secret name for the https://codecov.io/ token
    */
   readonly codeCovTokenSecret?: string;
-}
-
-export class NodeBuildWorkflow extends GithubWorkflow {
-  public readonly buildJobId: string;
-
-  constructor(project: NodeProject, name: string, options: NodeBuildWorkflowOptions) {
-    super(project, name);
-
-    this.buildJobId = 'build';
-
-    this.on(options.trigger);
-
-    this.on({
-      workflow_dispatch: {}, // allow manual triggering
-    });
-
-    const job: any = {
-      'runs-on': 'ubuntu-latest',
-      'env': {
-        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-      },
-      'steps': [
-        // bootstrap
-        ...project.workflowBootstrapSteps,
-
-        // sets git identity so we can push later
-        {
-          name: 'Set git identity',
-          run: [
-            'git config user.name "Auto-bump"',
-            'git config user.email "github-actions@github.com"',
-          ].join('\n'),
-        },
-
-        // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: `${project.runScriptCommand} bump` }] : [],
-
-        // build (compile + test)
-        { run: `${project.runScriptCommand} build` },
-
-        // run codecov if enabled or a secret token name is passed in
-        // AND jest must be configured
-        ...(options.codeCov || options.codeCovTokenSecret) && project.jest?.config ? [{
-          name: 'Upload coverage to Codecov',
-          uses: 'codecov/codecov-action@v1',
-          with: options.codeCovTokenSecret
-            ? {
-              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-              directory: project.jest.config.coverageDirectory,
-            } : {
-              directory: project.jest.config.coverageDirectory,
-            },
-        }] : [],
-
-        // anti-tamper check (fails if there were changes to committed files)
-        // this will identify any non-committed files generated during build (e.g. test snapshots)
-        ...project.workflowAntitamperSteps,
-
-        // push bump commit
-        ...options.bump ? [{ run: 'git push --follow-tags origin $GITHUB_REF' }] : [],
-      ],
-    };
-
-    if (options.image) {
-      job.container = { image: options.image };
-    }
-
-    if (options.uploadArtifact) {
-      job.steps.push({
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
-        with: {
-          name: 'dist',
-          path: 'dist',
-        },
-      });
-    }
-
-    this.addJobs({ [this.buildJobId]: job });
-  }
 }
 
 function sorted<T>(toSort: T) {
