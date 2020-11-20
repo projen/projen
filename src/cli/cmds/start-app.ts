@@ -27,9 +27,12 @@ export async function showStartMenu() {
   child_process.spawnSync(command, { stdio: 'inherit' });
 }
 
-export function printStartMenu() {
+export function printStartMenu(root?: string) {
+  if (root && root !== '.') {
+    console.error(chalk.cyanBright.bold(`Project: ${root}`));
+  }
   console.error(chalk.cyanBright.underline('Commands:'));
-  for (const entry of renderChoices()) {
+  for (const entry of renderChoices(root)) {
     if (entry.type === 'separator') {
       console.error(entry.line);
     } else if (entry.name && entry.value !== '$exit') {
@@ -38,8 +41,8 @@ export function printStartMenu() {
   }
 }
 
-function renderChoices() {
-  const manifest = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
+function renderChoices(root: string = process.cwd()) {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf-8'));
   const start: { [name: string]: StartEntryOptions } = manifest.start ?? {};
   const result = new Array();
   let category;
