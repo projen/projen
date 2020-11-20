@@ -379,6 +379,7 @@ const project = new NextJsProject({
 
   /* NextJsCommonProjectOptions */
   // assetsdir: \\"public\\",                                                      /* Assets directory. */
+  // tailwind: true,                                                           /* Setup Tailwind as a PostCSS plugin. */
 
   /* NextJsProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`pages/\` and \`public/\` if there are no files there. */
@@ -464,6 +465,7 @@ const project = new NextJsTypeScriptProject({
 
   /* NextJsCommonProjectOptions */
   // assetsdir: \\"public\\",                                                      /* Assets directory. */
+  // tailwind: true,                                                           /* Setup Tailwind as a PostCSS plugin. */
 
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */

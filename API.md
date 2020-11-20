@@ -30,6 +30,7 @@ Name|Description
 [NextJsTypeScriptProject](#projen-nextjstypescriptproject)|Next.js project with TypeScript.
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
+[PostCssConfig](#projen-postcssconfig)|*No description*
 [Project](#projen-project)|Base project.
 [PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [ReactComponent](#projen-reactcomponent)|*No description*
@@ -40,6 +41,7 @@ Name|Description
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
+[TailwindConfig](#projen-tailwindconfig)|*No description*
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|TOML file.
 [TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
@@ -93,6 +95,7 @@ Name|Description
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
+[PostCssConfigOptions](#projen-postcssconfigoptions)|*No description*
 [PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [ReactComponentOptions](#projen-reactcomponentoptions)|*No description*
 [ReactProjectOptions](#projen-reactprojectoptions)|*No description*
@@ -104,6 +107,7 @@ Name|Description
 [ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
+[TailwindConfigOptions](#projen-tailwindconfigoptions)|*No description*
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -1848,6 +1852,7 @@ new NextComponent(project: NodeProject, options: NextComponentOptions)
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[NextComponentOptions](#projen-nextcomponentoptions)</code>)  *No description*
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind as a PostCSS plugin. __*Default*__: true
   * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript Next.js projects. __*Default*__: false
 
 
@@ -1870,6 +1875,7 @@ new NextJsProject(options: NextJsProjectOptions)
 
 * **options** (<code>[NextJsProjectOptions](#projen-nextjsprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind as a PostCSS plugin. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -1950,6 +1956,7 @@ Name | Type | Description
 -----|------|-------------
 **assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+**tailwind**🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.
 
 
 
@@ -2011,6 +2018,7 @@ new NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 
 * **options** (<code>[NextJsTypeScriptProjectOptions](#projen-nextjstypescriptprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind as a PostCSS plugin. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
@@ -2102,6 +2110,7 @@ Name | Type | Description
 **assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
 **nextJsTypeDef**🔹 | <code>[NextJsTypeDef](#projen-nextjstypedef)</code> | TypeScript definition file included that ensures Next.js types are picked up by the TypeScript compiler.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+**tailwind**🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.
 
 
 
@@ -2537,6 +2546,36 @@ removeScript(name: string): void
 
 
 
+
+
+
+## class PostCssConfig 🔹 <a id="projen-postcssconfig"></a>
+
+
+
+
+### Initializer
+
+
+
+
+```ts
+new PostCssConfig(project: NodeProject, options?: PostCssConfigOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[PostCssConfigOptions](#projen-postcssconfigoptions)</code>)  *No description*
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "postcss.config.json"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+**fileName**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -3125,6 +3164,36 @@ addEntry(name: string, options: StartEntryOptions): void
 
 
 
+
+
+
+## class TailwindConfig 🔹 <a id="projen-tailwindconfig"></a>
+
+
+
+
+### Initializer
+
+
+
+
+```ts
+new TailwindConfig(project: NodeProject, options?: TailwindConfigOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[TailwindConfigOptions](#projen-tailwindconfigoptions)</code>)  *No description*
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tailwind.config.json"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+**fileName**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -4685,6 +4754,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.<br/>__*Default*__: true
 **typescript**?🔹 | <code>boolean</code> | Whether to apply options specific for TypeScript Next.js projects.<br/>__*Default*__: false
 
 
@@ -4699,6 +4769,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.<br/>__*Default*__: true
 
 
 
@@ -4778,6 +4849,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.<br/>__*Default*__: true
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -4884,6 +4956,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **start**?🔹 | <code>boolean</code> | Defines a `yarn start` interactive experience.<br/>__*Default*__: true
 **startOptions**?🔹 | <code>[StartOptions](#projen-startoptions)</code> | Options for `yarn start`.<br/>__*Default*__: default options
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.<br/>__*Default*__: true
 **testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "^3.9.5"
@@ -5068,6 +5141,19 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **pinnedDevDependency**?🔹 | <code>boolean</code> | Automatically add a pinned dev dependency.<br/>__*Default*__: true
+
+
+
+## struct PostCssConfigOptions 🔹 <a id="projen-postcssconfigoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**fileName**?🔹 | <code>string</code> | __*Default*__: "postcss.config.json"
 
 
 
@@ -5360,6 +5446,19 @@ Name | Type | Description
 ## struct StartOptions 🔹 <a id="projen-startoptions"></a>
 
 
+
+
+
+## struct TailwindConfigOptions 🔹 <a id="projen-tailwindconfigoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**fileName**?🔹 | <code>string</code> | __*Default*__: "tailwind.config.json"
 
 
 
