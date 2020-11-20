@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { PROJEN_RC } from '../common';
@@ -20,7 +21,7 @@ export function synth() {
   if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
     fs.removeSync(projenModulePath);
     fs.mkdirpSync('node_modules');
-    fs.symlinkSync(projen, projenModulePath);
+    fs.symlinkSync(projen, projenModulePath, (os.platform() === 'win32') ? 'junction' : null);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
