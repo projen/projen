@@ -1420,6 +1420,7 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
+  * **typescriptConfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description* __*Optional*__
 
 
 
@@ -1459,19 +1460,6 @@ addReporter(reporter: string &#124; json): void
 
 
 
-#### addTypescriptOptions(config)🔹 <a id="projen-jest-addtypescriptoptions"></a>
-
-Configures jest with typescript options.
-
-```ts
-addTypescriptOptions(config: TypescriptConfig): void
-```
-
-* **config** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  The Jest Typescript Config.
-
-
-
-
 #### configureTestCommand()🔹 <a id="projen-jest-configuretestcommand"></a>
 
 
@@ -1483,6 +1471,23 @@ configureTestCommand(): void
 
 
 
+
+#### generateTypescriptConfig(options)🔹 <a id="projen-jest-generatetypescriptconfig"></a>
+
+Merges passed in typescript config options with jest configured typescript options from .projenrc Add Jest config settings for typescript options.
+
+```ts
+generateTypescriptConfig(options: TypescriptConfigOptions): TypescriptConfig
+```
+
+* **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  TypescriptConfigOptions.
+  * **compilerOptions** (<code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code>)  Compiler options to use. 
+  * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
+  * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
+
+__Returns__:
+* <code>[TypescriptConfig](#projen-typescriptconfig)</code>
 
 
 
@@ -4477,7 +4482,6 @@ __Returns__:
 
 Name | Type | Description 
 -----|------|-------------
-**setupFilesAfterEnv**🔹 | <code>Array<string></code> | A list of paths to modules that run some code to configure or set up the testing framework  before each test file in the suite is executed.
 **automock**?🔹 | <code>boolean</code> | This option tells Jest that all imported modules in your tests should be mocked automatically.<br/>__*Default*__: false
 **bail**?🔹 | <code>number &#124; boolean</code> | By default, Jest runs all tests and produces all errors into the console upon completion.<br/>__*Default*__: 0
 **cacheDirectory**?🔹 | <code>string</code> | The directory where Jest should store its cached dependency information.<br/>__*Default*__: "/tmp/<path>"
@@ -4519,6 +4523,7 @@ Name | Type | Description
 **roots**?🔹 | <code>Array<string></code> | A list of paths to directories that Jest should use to search for files in.<br/>__*Default*__: ["<rootDir>"]
 **runner**?🔹 | <code>string</code> | This option allows you to use a custom runner instead of Jest's default test runner.<br/>__*Default*__: "jest-runner"
 **setupFiles**?🔹 | <code>Array<string></code> | A list of paths to modules that run some code to configure or set up the testing environment.<br/>__*Default*__: []
+**setupFilesAfterEnv**?🔹 | <code>Array<string></code> | A list of paths to modules that run some code to configure or set up the testing framework before each test file in the suite is executed.<br/>__*Default*__: []
 **slowTestThreshold**?🔹 | <code>number</code> | The number of seconds after which a test is considered as slow and reported as such in the results.<br/>__*Default*__: 5
 **snapshotResolver**?🔹 | <code>string</code> | The path to a module that can resolve test<->snapshot path.<br/>__*Default*__: undefined
 **snapshotSerializers**?🔹 | <code>Array<string></code> | A list of paths to snapshot serializer modules Jest should use for snapshot testing.<br/>__*Default*__: = []
@@ -4536,9 +4541,9 @@ Name | Type | Description
 **timers**?🔹 | <code>string</code> | Setting this value to legacy or fake allows the use of fake timers for functions such as setTimeout.<br/>__*Default*__: "real"
 **transform**?🔹 | <code>Map<string, string &#124; json></code> | A map from regular expressions to paths to transformers.<br/>__*Default*__: {"\\.[jt]sx?$": "babel-jest"}
 **transformIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all source file paths before transformation.<br/>__*Default*__: ["/node_modules/", "\\.pnp\\.[^\\\/]+$"]
-**unmockedModulePathPatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all modules before the module loader will  automatically return a mock for them.<br/>__*Default*__: []
+**unmockedModulePathPatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them.<br/>__*Default*__: []
 **verbose**?🔹 | <code>boolean</code> | Indicates whether each individual test should be reported during the run.<br/>__*Default*__: false
-**watchPathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of RegExp patterns that are matched against all source file paths before re-running tests  in watch mode.<br/>__*Default*__: []
+**watchPathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of RegExp patterns that are matched against all source file paths before re-running tests in watch mode.<br/>__*Default*__: []
 **watchPlugins**?🔹 | <code>json</code> | __*Default*__: -
 **watchman**?🔹 | <code>boolean</code> | Whether to use watchman for file crawling.<br/>__*Default*__: true
 
@@ -4559,6 +4564,7 @@ Name | Type | Description
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
+**typescriptConfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | __*Optional*__
 
 
 

@@ -26,7 +26,6 @@ test('license file is not added if licensed is false', () => {
 
   // THEN
   const snapshot = synthSnapshot(project, 'LICENSE', '.gitignore', 'package.json');
-  console.log(snapshot);
   expect(Object.keys(snapshot).sort()).toEqual(['.gitignore', 'package.json'].sort());
   expect(snapshot['.gitignore']).not.toContain('LICENSE');
   expect(snapshot['package.json'].license).toEqual('UNLICENSED');

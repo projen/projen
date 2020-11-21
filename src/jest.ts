@@ -1,13 +1,11 @@
 import * as path from 'path';
 import { NodeProject } from './node-project';
 import { StartEntryCategory } from './start';
-import { TypescriptConfig } from './typescript';
+import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 
 // Pulled from https://jestjs.io/docs/en/configuration
-// and https://github.com/facebook/jest/blob/master/packages/jest-config/src/Defaults.ts
-// and https://github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts
 export interface JestConfigOptions {
   /**
    * This option tells Jest that all imported modules in your tests should be mocked automatically.
@@ -304,7 +302,7 @@ export interface JestConfigOptions {
    * running some code immediately after the test framework has been installed in the environment.
    * @default - []
    */
-  readonly setupFilesAfterEnv: string[];
+  readonly setupFilesAfterEnv?: string[];
 
   /**
    * The number of seconds after which a test is considered as slow and reported as such in the results.
@@ -503,6 +501,8 @@ export interface JestOptions {
   readonly jestVersion?: string;
 
   readonly jestConfig?: JestConfigOptions;
+
+  readonly typescriptConfig?: TypescriptConfigOptions;
 }
 
 export interface CoverageThreshold {
@@ -539,6 +539,8 @@ export class Jest {
   private readonly ignorePatterns: string[];
   private readonly project: NodeProject;
   private readonly reporters: JestReporter[];
+  private readonly jestConfig?: JestConfigOptions;
+  private readonly typescriptConfig?: TypescriptConfigOptions;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
@@ -547,8 +549,10 @@ export class Jest {
     project.addDevDeps(jestDep);
 
     this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
+    this.jestConfig = options.jestConfig;
+    this.typescriptConfig = options.typescriptConfig;
 
-    const coverageDirectory = options.jestConfig?.coverageDirectory ?? 'coverage';
+    const coverageDirectory = this.jestConfig?.coverageDirectory ?? 'coverage';
 
     this.reporters = [];
 
@@ -557,13 +561,13 @@ export class Jest {
     }
 
     this.config = {
-      ...options.jestConfig,
-      clearMocks: options.jestConfig?.clearMocks ?? true,
-      collectCoverage: options.coverage ?? options.jestConfig?.collectCoverage ?? true,
+      ...this.jestConfig,
+      clearMocks: this.jestConfig?.clearMocks ?? true,
+      collectCoverage: options.coverage ?? this.jestConfig?.collectCoverage ?? true,
       coverageDirectory: coverageDirectory,
-      coveragePathIgnorePatterns: options.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
-      testPathIgnorePatterns: options.jestConfig?.testPathIgnorePatterns ?? this.ignorePatterns,
-      testMatch: options.jestConfig?.testMatch ?? [
+      coveragePathIgnorePatterns: this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
+      testPathIgnorePatterns: this.jestConfig?.testPathIgnorePatterns ?? this.ignorePatterns,
+      testMatch: this.jestConfig?.testMatch ?? [
         '**/__tests__/**/*.js?(x)',
         '**/?(*.)+(spec|test).js?(x)',
       ],
@@ -587,15 +591,15 @@ export class Jest {
       );
     }
 
-    if (options.jestConfig?.reporters) {
-      for (const reporter of options.jestConfig.reporters) {
+    if (this.jestConfig?.reporters) {
+      for (const reporter of this.jestConfig.reporters) {
         this.addReporter(reporter);
       }
     }
 
-    if (options.jestConfig?.coverageThreshold) {
+    if (this.jestConfig?.coverageThreshold) {
       this.config.coverageThreshold = {
-        global: options.jestConfig?.coverageThreshold,
+        global: this.jestConfig?.coverageThreshold,
       };
     }
 
@@ -612,33 +616,6 @@ export class Jest {
 
   public addIgnorePattern(pattern: string) {
     this.ignorePatterns.push(pattern);
-  }
-
-  /**
-   * Configures jest with typescript options
-   * @param config The Jest Typescript Config
-   */
-  public addTypescriptOptions(config: TypescriptConfig) {
-    this.config.preset = 'ts-jest';
-
-    // only process .ts files
-    this.config.testMatch = [
-      '**/__tests__/**/*.ts?(x)',
-      '**/?(*.)+(spec|test).ts?(x)',
-    ];
-
-    // specify tsconfig.json
-    this.config.globals = {
-      'ts-jest': {
-        tsconfig: config.fileName,
-      },
-    };
-
-    // add relevant deps
-    this.project.addDevDeps(
-      '@types/jest',
-      'ts-jest',
-    );
   }
 
   public configureTestCommand() {
@@ -662,5 +639,51 @@ export class Jest {
 
   public addReporter(reporter: JestReporter) {
     this.reporters.push(reporter);
+  }
+
+  /**
+   * Merges passed in typescript config options with jest configured typescript options from .projenrc
+   * Add Jest config settings for typescript options
+   * @param options TypescriptConfigOptions
+   */
+  public generateTypescriptConfig(options: TypescriptConfigOptions) {
+    const tsconfig = new TypescriptConfig(this.project, {
+      fileName: options.fileName ?? 'tsconfig.jest.json',
+      include: [
+        ...options.include ? options.include : [],
+        ...this.typescriptConfig?.include ? this.typescriptConfig?.include : [],
+      ],
+      exclude: [
+        ...options.exclude ? options.exclude : [],
+        ...this.typescriptConfig?.exclude ? this.typescriptConfig?.exclude : [],
+      ],
+      compilerOptions: {
+        ...options.compilerOptions,
+        ...this.typescriptConfig?.compilerOptions,
+      },
+    });
+
+    this.config.preset = 'ts-jest';
+
+    // only process .ts files
+    this.config.testMatch = this.jestConfig?.testMatch ?? [
+      '**/__tests__/**/*.ts?(x)',
+      '**/?(*.)+(spec|test).ts?(x)',
+    ];
+
+    // specify tsconfig.json
+    this.config.globals = {
+      'ts-jest': {
+        tsconfig: tsconfig.fileName,
+      },
+    };
+
+    // add relevant deps
+    this.project.addDevDeps(
+      '@types/jest',
+      'ts-jest',
+    );
+
+    return tsconfig;
   }
 }
