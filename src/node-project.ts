@@ -10,7 +10,7 @@ import { License } from './license';
 import * as logging from './logging';
 import { Mergify, MergifyOptions } from './mergify';
 import { PullRequestTemplate } from './pr-template';
-import { Project } from './project';
+import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
 import { Start, StartEntryCategory, StartOptions } from './start';
@@ -34,7 +34,7 @@ export enum NodePackageManager {
   NPM = 'npm'
 }
 
-export interface NodeProjectCommonOptions {
+export interface NodeProjectCommonOptions extends ProjectOptions {
   /**
    * Runtime dependencies of this module.
    *
@@ -644,7 +644,7 @@ export class NodeProject extends Project {
   public readonly jest?: Jest;
 
   constructor(options: NodeProjectOptions) {
-    super();
+    super(options);
 
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
@@ -1274,12 +1274,14 @@ export class NodeProject extends Project {
     this.addBundledDeps(...options.bundledDeps ?? []);
   }
 
-  public preSynthesize(outdir: string) {
-    this.loadDependencies(outdir);
+  public preSynthesize() {
+    this.loadDependencies();
   }
 
-  public postSynthesize(outdir: string) {
-    super.postSynthesize(outdir);
+  public postSynthesize() {
+    super.postSynthesize();
+
+    const outdir = this.outdir;
 
     // now we run `yarn install`, but before we do that, remove the
     // `node_modules/projen` symlink so that yarn won't hate us.
@@ -1314,7 +1316,8 @@ export class NodeProject extends Project {
     }
   }
 
-  private loadDependencies(outdir: string) {
+  private loadDependencies() {
+    const outdir = this.outdir;
     const root = path.join(outdir, 'package.json');
 
     // nothing to do if package.json file does not exist

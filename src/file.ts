@@ -65,7 +65,8 @@ export abstract class FileBase extends Component {
   /**
    * Writes the file to the project's output directory
    */
-  public synthesize(outdir: string) {
+  public synthesize() {
+    const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
     const resolver: IResolver = { resolve: obj => resolve(obj, outdir) };
     writeFile(filePath, this.synthesizeContent(resolver), {
