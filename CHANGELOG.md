@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.178 (2020-11-23)
+
+
+### Features
+
+* add full jest config support ([#331](https://github.com/projen/projen/issues/331)) ([a3d1ed0](https://github.com/projen/projen/commit/a3d1ed09a038f45385546dadbe182b6f268ce042)), closes [#320](https://github.com/projen/projen/issues/320) [/github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts#L118](https://github.com/projen//github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts/issues/L118) [#320](https://github.com/projen/projen/issues/320)
+
 ### 0.3.177 (2020-11-23)
 
 
