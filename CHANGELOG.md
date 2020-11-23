@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.174 (2020-11-23)
+
+
+### Bug Fixes
+
+* **cdk8s-construct:** converts cdk8s-plus to cdk8s-plus-17 AND bumps constructs ([#329](https://github.com/projen/projen/issues/329)) ([333948e](https://github.com/projen/projen/commit/333948efc8fee629b0e0ed17648bf5fa6f81cb55)), closes [/github.com/awslabs/cdk8s/blob/master/CHANGELOG.md#100-beta1-2020-11-18](https://github.com/projen//github.com/awslabs/cdk8s/blob/master/CHANGELOG.md/issues/100-beta1-2020-11-18) [#327](https://github.com/projen/projen/issues/327)
+
 ### 0.3.173 (2020-11-18)
 
 ### 0.3.172 (2020-11-17)
