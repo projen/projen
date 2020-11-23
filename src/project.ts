@@ -58,7 +58,7 @@ export class Project {
     if (start) {
       console.error();
       console.error('-'.repeat(100));
-      printStartMenu();
+      printStartMenu(outdir);
     }
 
     if (this.tips.length) {
