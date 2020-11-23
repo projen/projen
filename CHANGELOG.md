@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.3.177 (2020-11-23)
+
+
+### Bug Fixes
+
+* **composite-project:** prevent child NodeProjects failure during synth ([#324](https://github.com/projen/projen/issues/324)) ([ee9af0e](https://github.com/projen/projen/commit/ee9af0efa037d6dc23b43f93bd7c51a3d3bf2117)), closes [#323](https://github.com/projen/projen/issues/323)
+
 ### 0.3.176 (2020-11-23)
 
 ### 0.3.175 (2020-11-23)
