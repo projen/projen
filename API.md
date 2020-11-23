@@ -74,6 +74,8 @@ Name|Description
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [EslintOptions](#projen-eslintoptions)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[HasteConfig](#projen-hasteconfig)|*No description*
+[JestConfigOptions](#projen-jestconfigoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
 [JsiiDotNetTarget](#projen-jsiidotnettarget)|*No description*
 [JsiiJavaTarget](#projen-jsiijavatarget)|*No description*
@@ -1413,13 +1415,12 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
-  * **coverageDirectory** (<code>string</code>)  The directory where Jest should output its coverage files. __*Default*__: "coverage"
-  * **coverageThreshold** (<code>[CoverageThreshold](#projen-coveragethreshold)</code>)  Specify the global coverage thresholds. __*Optional*__
-  * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: "/node_modules/"
+  * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
+  * **jestConfig** (<code>[JestConfigOptions](#projen-jestconfigoptions)</code>)  *No description* __*Optional*__
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
-  * **typescript** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  Configure for typescript. __*Optional*__
+  * **typescriptConfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description* __*Optional*__
 
 
 
@@ -1459,19 +1460,6 @@ addReporter(reporter: string &#124; json): void
 
 
 
-#### addTypescriptOptions(config)🔹 <a id="projen-jest-addtypescriptoptions"></a>
-
-Configures jest with typescript options.
-
-```ts
-addTypescriptOptions(config: TypescriptConfig): void
-```
-
-* **config** (<code>[TypescriptConfig](#projen-typescriptconfig)</code>)  The Jest Typescript Config.
-
-
-
-
 #### configureTestCommand()🔹 <a id="projen-jest-configuretestcommand"></a>
 
 
@@ -1483,6 +1471,23 @@ configureTestCommand(): void
 
 
 
+
+#### generateTypescriptConfig(options)🔹 <a id="projen-jest-generatetypescriptconfig"></a>
+
+Merges passed in typescript config options with jest configured typescript options from .projenrc Add Jest config settings for typescript options.
+
+```ts
+generateTypescriptConfig(options: TypescriptConfigOptions): TypescriptConfig
+```
+
+* **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  TypescriptConfigOptions.
+  * **compilerOptions** (<code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code>)  Compiler options to use. 
+  * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
+  * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
+
+__Returns__:
+* <code>[TypescriptConfig](#projen-typescriptconfig)</code>
 
 
 
@@ -4363,6 +4368,23 @@ Name | Type | Description
 
 
 
+## struct HasteConfig 🔹 <a id="projen-hasteconfig"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**computeSha1**?🔹 | <code>boolean</code> | __*Optional*__
+**defaultPlatform**?🔹 | <code>string</code> | __*Optional*__
+**hasteImplModulePath**?🔹 | <code>string</code> | __*Optional*__
+**platforms**?🔹 | <code>Array<string></code> | __*Optional*__
+**throwOnModuleCollision**?🔹 | <code>boolean</code> | __*Optional*__
+
+
+
 ## interface IDockerComposeServiceName 🔹 <a id="projen-idockercomposeservicename"></a>
 
 __Implemented by__: [DockerComposeService](#projen-dockercomposeservice)
@@ -4451,6 +4473,82 @@ __Returns__:
 
 
 
+## struct JestConfigOptions 🔹 <a id="projen-jestconfigoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**automock**?🔹 | <code>boolean</code> | This option tells Jest that all imported modules in your tests should be mocked automatically.<br/>__*Default*__: false
+**bail**?🔹 | <code>number &#124; boolean</code> | By default, Jest runs all tests and produces all errors into the console upon completion.<br/>__*Default*__: 0
+**cacheDirectory**?🔹 | <code>string</code> | The directory where Jest should store its cached dependency information.<br/>__*Default*__: "/tmp/<path>"
+**clearMocks**?🔹 | <code>boolean</code> | Automatically clear mock calls and instances before every test.<br/>__*Default*__: true
+**collectCoverage**?🔹 | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test.<br/>__*Default*__: true
+**collectCoverageFrom**?🔹 | <code>boolean</code> | An array of glob patterns indicating a set of files for which coverage information should be collected.<br/>__*Default*__: undefined
+**coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
+**coveragePathIgnorePatterns**?🔹 | <code>string</code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
+**coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
+**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
+**coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
+**dependencyExtractor**?🔹 | <code>string</code> | This option allows the use of a custom dependency extractor.<br/>__*Default*__: undefined
+**displayName**?🔹 | <code>any</code> | Allows for a label to be printed alongside a test while it is running.<br/>__*Default*__: undefined
+**errorOnDeprecated**?🔹 | <code>boolean</code> | Make calling deprecated APIs throw helpful error messages.<br/>__*Default*__: false
+**extraGlobals**?🔹 | <code>Array<string></code> | Test files run inside a vm, which slows calls to global context properties (e.g. Math). With this option you can specify extra properties to be defined inside the vm for faster lookups.<br/>__*Default*__: undefined
+**forceCoverageMatch**?🔹 | <code>Array<string></code> | Test files are normally ignored from collecting code coverage.<br/>__*Default*__: ['']
+**globalSetup**?🔹 | <code>string</code> | This option allows the use of a custom global setup module which exports an async function that is triggered once before all test suites.<br/>__*Default*__: undefined
+**globalTeardown**?🔹 | <code>string</code> | This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites.<br/>__*Default*__: undefined
+**globals**?🔹 | <code>any</code> | A set of global variables that need to be available in all test environments.<br/>__*Default*__: {}
+**haste**?🔹 | <code>[HasteConfig](#projen-hasteconfig)</code> | This will be used to configure the behavior of jest-haste-map, Jest's internal file crawler/cache system.<br/>__*Default*__: {}
+**injectGlobals**?🔹 | <code>boolean</code> | Insert Jest's globals (expect, test, describe, beforeEach etc.) into the global environment. If you set this to false, you should import from @jest/globals.<br/>__*Default*__: true
+**maxConcurrency**?🔹 | <code>number</code> | A number limiting the number of tests that are allowed to run at the same time when using test.concurrent. Any test above this limit will be queued and executed once a slot is released.<br/>__*Default*__: 5
+**moduleDirectories**?🔹 | <code>Array<string></code> | An array of directory names to be searched recursively up from the requiring module's location.<br/>__*Default*__: ["node_modules"]
+**moduleFileExtensions**?🔹 | <code>Array<string></code> | An array of file extensions your modules use.<br/>__*Default*__: ["js", "json", "jsx", "ts", "tsx", "node"]
+**moduleNameMapper**?🔹 | <code>Map<string, string &#124; Array<string>></code> | A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.<br/>__*Default*__: null
+**modulePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all module paths before those paths are to be considered 'visible' to the module loader.<br/>__*Default*__: []
+**modulePaths**?🔹 | <code>Array<string></code> | An alternative API to setting the NODE_PATH env variable, modulePaths is an array of absolute paths to additional locations to search when resolving modules.<br/>__*Default*__: []
+**notify**?🔹 | <code>boolean</code> | Activates notifications for test results.<br/>__*Default*__: false
+**notifyMode**?🔹 | <code>string</code> | Specifies notification mode.<br/>__*Default*__: failure-change
+**preset**?🔹 | <code>string</code> | A preset that is used as a base for Jest's configuration.<br/>__*Default*__: undefined
+**prettierPath**?🔹 | <code>string</code> | Sets the path to the prettier node module used to update inline snapshots.<br/>__*Default*__: "prettier"
+**projects**?🔹 | <code>Array<string &#124; Map<string, any>></code> | When the projects configuration is provided with an array of paths or glob patterns, Jest will run tests in all of the specified projects at the same time.<br/>__*Default*__: undefined
+**reporters**?🔹 | <code>Array<string &#124; json></code> | Use this configuration option to add custom reporters to Jest.<br/>__*Default*__: undefined
+**resetMocks**?🔹 | <code>boolean</code> | Automatically reset mock state before every test.<br/>__*Default*__: false
+**resetModules**?🔹 | <code>boolean</code> | By default, each test file gets its own independent module registry.<br/>__*Default*__: false
+**resolver**?🔹 | <code>string</code> | This option allows the use of a custom resolver.<br/>__*Default*__: undefined
+**restoreMocks**?🔹 | <code>boolean</code> | Automatically restore mock state before every test.<br/>__*Default*__: false
+**rootDir**?🔹 | <code>string</code> | The root directory that Jest should scan for tests and modules within.<br/>__*Default*__: directory of the package.json
+**roots**?🔹 | <code>Array<string></code> | A list of paths to directories that Jest should use to search for files in.<br/>__*Default*__: ["<rootDir>"]
+**runner**?🔹 | <code>string</code> | This option allows you to use a custom runner instead of Jest's default test runner.<br/>__*Default*__: "jest-runner"
+**setupFiles**?🔹 | <code>Array<string></code> | A list of paths to modules that run some code to configure or set up the testing environment.<br/>__*Default*__: []
+**setupFilesAfterEnv**?🔹 | <code>Array<string></code> | A list of paths to modules that run some code to configure or set up the testing framework before each test file in the suite is executed.<br/>__*Default*__: []
+**slowTestThreshold**?🔹 | <code>number</code> | The number of seconds after which a test is considered as slow and reported as such in the results.<br/>__*Default*__: 5
+**snapshotResolver**?🔹 | <code>string</code> | The path to a module that can resolve test<->snapshot path.<br/>__*Default*__: undefined
+**snapshotSerializers**?🔹 | <code>Array<string></code> | A list of paths to snapshot serializer modules Jest should use for snapshot testing.<br/>__*Default*__: = []
+**testEnvironment**?🔹 | <code>string</code> | The test environment that will be used for testing.<br/>__*Default*__: "jsdom"
+**testEnvironmentOptions**?🔹 | <code>any</code> | Test environment options that will be passed to the testEnvironment.<br/>__*Default*__: {}
+**testFailureExitCode**?🔹 | <code>number</code> | The exit code Jest returns on test failure.<br/>__*Default*__: 1
+**testMatch**?🔹 | <code>Array<string></code> | The glob patterns Jest uses to detect test files.<br/>__*Default*__: ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)']
+**testPathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all test paths before executing the test.<br/>__*Default*__: ["/node_modules/"]
+**testRegex**?🔹 | <code>string &#124; Array<string></code> | The pattern or patterns Jest uses to detect test files.<br/>__*Default*__: (/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$
+**testResultsProcessor**?🔹 | <code>string</code> | This option allows the use of a custom results processor.<br/>__*Default*__: undefined
+**testRunner**?🔹 | <code>string</code> | This option allows the use of a custom test runner.<br/>__*Default*__: "jasmine2"
+**testSequencer**?🔹 | <code>string</code> | This option allows you to use a custom sequencer instead of Jest's default.<br/>__*Default*__: "
+**testTimeout**?🔹 | <code>number</code> | Default timeout of a test in milliseconds.<br/>__*Default*__: 5000
+**testURL**?🔹 | <code>string</code> | This option sets the URL for the jsdom environment.<br/>__*Default*__: "http://localhost"
+**timers**?🔹 | <code>string</code> | Setting this value to legacy or fake allows the use of fake timers for functions such as setTimeout.<br/>__*Default*__: "real"
+**transform**?🔹 | <code>Map<string, string &#124; json></code> | A map from regular expressions to paths to transformers.<br/>__*Default*__: {"\\.[jt]sx?$": "babel-jest"}
+**transformIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all source file paths before transformation.<br/>__*Default*__: ["/node_modules/", "\\.pnp\\.[^\\\/]+$"]
+**unmockedModulePathPatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them.<br/>__*Default*__: []
+**verbose**?🔹 | <code>boolean</code> | Indicates whether each individual test should be reported during the run.<br/>__*Default*__: false
+**watchPathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of RegExp patterns that are matched against all source file paths before re-running tests in watch mode.<br/>__*Default*__: []
+**watchPlugins**?🔹 | <code>json</code> | __*Default*__: -
+**watchman**?🔹 | <code>boolean</code> | Whether to use watchman for file crawling.<br/>__*Default*__: true
+
+
+
 ## struct JestOptions 🔹 <a id="projen-jestoptions"></a>
 
 
@@ -4460,14 +4558,13 @@ __Returns__:
 
 Name | Type | Description 
 -----|------|-------------
-**coverage**?🔹 | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
-**coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
-**coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Optional*__
-**ignorePatterns**?🔹 | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: "/node_modules/"
+**coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
+**ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
+**jestConfig**?🔹 | <code>[JestConfigOptions](#projen-jestconfigoptions)</code> | __*Optional*__
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
-**typescript**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | Configure for typescript.<br/>__*Optional*__
+**typescriptConfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | __*Optional*__
 
 
 
