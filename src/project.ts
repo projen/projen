@@ -63,13 +63,17 @@ export class Project {
 
   /**
    * Access all github components.
+   *
+   * This will be `undefined` for subprojects.
    */
-  public readonly github?: GitHub;
+  public readonly github: GitHub | undefined;
 
   /**
    * Access all VSCode components.
+   *
+   * This will be `undefined` for subprojects.
    */
-  public readonly vscode?: VsCode;
+  public readonly vscode: VsCode | undefined;
 
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
@@ -105,8 +109,12 @@ export class Project {
     // ------------------------------------------------------------------------
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
-    this.github = new GitHub(this);
-    this.vscode = new VsCode(this);
+
+    // we only allow these global services to be used in root projects
+    this.github = !this.parent ? new GitHub(this) : undefined;
+    this.vscode = !this.parent ? new VsCode(this) : undefined;
+
+
     new SampleReadme(this, '# my project');
   }
 
