@@ -1178,6 +1178,7 @@ addRules(rules: Map<string, any>): void
 
 __Extends__: [Component](#projen-component)
 __Implemented by__: [GithubWorkflow](#projen-githubworkflow), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [NextJsTypeDef](#projen-nextjstypedef), [NodeBuildWorkflow](#projen-nodebuildworkflow), [PullRequestTemplate](#projen-pullrequesttemplate), [ReactTypeDef](#projen-reacttypedef), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Obtainable from__: [Project](#projen-project).[findFile](#projen-project#projen-project-findfile)()
 
 ### Initializer
 
@@ -1202,8 +1203,9 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**path**🔹 | <code>string</code> | <span></span>
-**readonly**🔹 | <code>boolean</code> | <span></span>
+**absolutePath**🔹 | <code>string</code> | The absoluate path of this file.
+**path**🔹 | <code>string</code> | The file path, relative to the project root.
+**readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
 
 ### Methods
 
@@ -2543,8 +2545,10 @@ new Project(options?: ProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
-**outdir**🔹 | <code>string</code> | Synthesis output directory.
+**outdir**🔹 | <code>string</code> | Absolute output directory of this project.
+**root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 
 ### Methods
@@ -2562,6 +2566,19 @@ addTip(message: string): void
 
 
 
+
+#### findFile(filePath)🔹 <a id="projen-project-findfile"></a>
+
+Finds a file at the specified relateive path within this project and all its subprojects.
+
+```ts
+findFile(filePath: string): FileBase
+```
+
+* **filePath** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[FileBase](#projen-filebase)</code>
 
 #### postSynthesize()🔹 <a id="projen-project-postsynthesize"></a>
 
