@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.1 (2020-11-24)
+
+
+### Bug Fixes
+
+* github/vscode accessors should not be available in subprojects ([#333](https://github.com/projen/projen/issues/333)) ([0a06f75](https://github.com/projen/projen/commit/0a06f751e05e0dbc81966fcc09bfcba0fe981690))
+
 ## 0.5.0 (2020-11-24)
 
 
