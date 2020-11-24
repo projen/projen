@@ -1,35 +1,21 @@
 import * as path from 'path';
 import { chdir, cwd } from 'process';
 import * as fs from 'fs-extra';
-import { Project } from '../src';
-import * as logging from '../src/logging';
+import { Project, TextFile } from '../src';
 import { mkdtemp, TestProject } from './util';
 
-logging.disable();
-
-let tempDir: string;
-beforeEach(() => {
-  tempDir = fs.mkdtempSync(path.join(__dirname, 'tmp.subdir'));
-});
-
-afterEach(() => {
-  if (tempDir) {
-    fs.removeSync(tempDir);
-  }
-});
-
 test('composing projects declaratively', () => {
-  const comp = new Project({ outdir: tempDir });
+  const comp = new TestProject();
   new Project({ parent: comp, outdir: path.join('packages', 'foo') });
   comp.synth();
 
   // THEN
-  expect(fs.existsSync(path.join(tempDir, 'packages', 'foo', '.gitignore'))).toBeTruthy();
+  expect(fs.existsSync(path.join(comp.outdir, 'packages', 'foo', '.gitignore'))).toBeTruthy();
 });
 
 test('composing projects synthesizes to subdirs', () => {
   // GIVEN
-  const comp = new Project({ outdir: tempDir });
+  const comp = new TestProject();
 
   // WHEN
   new Project({ parent: comp, outdir: path.join('packages', 'foo') });
@@ -38,14 +24,14 @@ test('composing projects synthesizes to subdirs', () => {
   comp.synth();
 
   // THEN
-  expect(fs.pathExistsSync(path.join(tempDir, 'README.md')));
-  expect(fs.pathExistsSync(path.join(tempDir, 'packages', 'foo', '.gitignore')));
-  expect(fs.pathExistsSync(path.join(tempDir, 'packages', 'bar', '.gitignore')));
+  expect(fs.pathExistsSync(path.join(comp.outdir, 'README.md')));
+  expect(fs.pathExistsSync(path.join(comp.outdir, 'packages', 'foo', '.gitignore')));
+  expect(fs.pathExistsSync(path.join(comp.outdir, 'packages', 'bar', '.gitignore')));
 });
 
 test('errors when paths overlap', () => {
   // GIVEN
-  const comp = new Project({ outdir: tempDir });
+  const comp = new TestProject();
   new Project({ parent: comp, outdir: path.join('packages', 'foo') });
 
   // WHEN/THEN
@@ -70,4 +56,17 @@ test('outdir="." can only be used if projenrc.js is present in the same director
   } finally {
     chdir(restore);
   }
+});
+
+test('subprojects cannot introduce files that override each other', () => {
+  const root = new TestProject();
+  const child = new Project({ parent: root, outdir: 'sub-project' });
+
+  new TextFile(root, 'sub-project/file.txt');
+  expect(() => new TextFile(child, 'file.txt')).toThrow(/there is already a file under sub-project\/file\.txt/);
+});
+
+test('"outdir" for subprojects must be relative', () => {
+  const root = new TestProject();
+  expect(() => new Project({ parent: root, outdir: '/foo/bar' })).toThrow(/"outdir" must be a relative path/);
 });

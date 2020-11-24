@@ -1,10 +1,11 @@
 import { existsSync } from 'fs';
-import { join, resolve } from 'path';
+import * as path from 'path';
 import * as chalk from 'chalk';
 import { cleanup } from './cleanup';
 import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { FileBase } from './file';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
@@ -45,38 +46,88 @@ export class Project {
   public readonly parent?: Project;
 
   /**
-   * Synthesis output directory. The root of the project, relative to it's
-   * parent (if any).
+   * Absolute output directory of this project.
    */
   public readonly outdir: string;
+
+  /**
+   * The root project.
+   **/
+  public readonly root: Project;
 
   private readonly components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
 
   constructor(options: ProjectOptions = { }) {
-    this.gitignore = new IgnoreFile(this, '.gitignore');
     this.parent = options.parent;
+
+    if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
+      throw new Error('"outdir" must be a relative path');
+    }
+
+    let outdir;
     if (options.parent) {
       if (!options.outdir) {
         throw new Error('"outdir" must be specified for subprojects');
       }
 
-      this.outdir = join(options.parent.outdir, options.outdir);
+      outdir = path.join(options.parent.outdir, options.outdir);
     } else {
-      this.outdir = options.outdir ?? '.';
+      outdir = options.outdir ?? '.';
     }
 
-    if (this.outdir === '.') {
-      if (!existsSync(join(this.outdir, PROJEN_RC))) {
+    if (outdir === '.') {
+      if (!existsSync(path.join(outdir, PROJEN_RC))) {
         throw new Error('cannot use outdir="." because projenrc.js does not exist in the current directory');
       }
     }
 
-    // must happen after this.outdir and this.parent are set
+    this.outdir = path.resolve(outdir);
+
+    this.root = this.parent ? this.parent.root : this;
+
+    // must happen after this.outdir, this.parent and this.root are initialized
     this.parent?._addSubProject(this);
 
+    // ------------------------------------------------------------------------
+
+    this.gitignore = new IgnoreFile(this, '.gitignore');
     new SampleReadme(this, '# my project');
+  }
+
+  /**
+   * All files in this project.
+   */
+  public get files(): FileBase[] {
+    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
+    return this.components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+  }
+
+  /**
+   * Finds a file at the specified relateive path within this project and all
+   * its subprojects.
+   *
+   * @param path The file path. If this path is relative, it will be resolved
+   * from the root of _this_ project.
+   * @returns a `FileBase` or undefined if there is no file in that path
+   */
+  public findFile(filePath: string): FileBase | undefined {
+    const absolute = path.isAbsolute(filePath) ? filePath : path.resolve(this.outdir, filePath);
+    for (const file of this.files) {
+      if (absolute === file.absolutePath) {
+        return file;
+      }
+    }
+
+    for (const child of this.subprojects) {
+      const file = child.findFile(absolute);
+      if (file) {
+        return file;
+      }
+    }
+
+    return undefined;
   }
 
   /**
@@ -171,7 +222,7 @@ export class Project {
 
     // check that `outdir` is exclusive
     for (const p of this.subprojects) {
-      if (resolve(p.outdir) === resolve(subproject.outdir)) {
+      if (path.resolve(p.outdir) === path.resolve(subproject.outdir)) {
         throw new Error(`there is already a sub-project with "outdir": ${subproject.outdir}`);
       }
     }

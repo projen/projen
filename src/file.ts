@@ -29,14 +29,34 @@ export interface FileBaseOptions {
 }
 
 export abstract class FileBase extends Component {
+  /**
+   * The file path, relative to the project root.
+   */
   public readonly path: string;
+
+  /**
+   * Indicates if the file should be read-only or read-write.
+   */
   public readonly: boolean;
+
+  /**
+   * The absoluate path of this file.
+   */
+  public readonly absolutePath: string;
 
   constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
     super(project);
 
     this.readonly = options.readonly ?? true;
     this.path = filePath;
+
+    this.absolutePath = path.resolve(project.outdir, filePath);
+
+    // verify file path is unique within project tree
+    const existing = project.root.findFile(this.absolutePath);
+    if (existing && existing !== this) {
+      throw new Error(`there is already a file under ${path.relative(project.root.outdir, this.absolutePath)}`);
+    }
 
     const gitignore = options.editGitignore ?? true;
     if (gitignore) {

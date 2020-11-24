@@ -1,5 +1,8 @@
 import { NodeProject } from '../src';
+import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
+
+logging.disable();
 
 test('license file is added by default', () => {
   // WHEN
