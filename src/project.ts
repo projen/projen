@@ -6,10 +6,12 @@ import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
+import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
 import { Start } from './start';
+import { VsCode } from './vscode';
 
 export interface ProjectOptions {
   /**
@@ -59,6 +61,16 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
 
+  /**
+   * Access all github components.
+   */
+  public readonly github?: GitHub;
+
+  /**
+   * Access all VSCode components.
+   */
+  public readonly vscode?: VsCode;
+
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
 
@@ -93,6 +105,8 @@ export class Project {
     // ------------------------------------------------------------------------
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
+    this.github = new GitHub(this);
+    this.vscode = new VsCode(this);
     new SampleReadme(this, '# my project');
   }
 
@@ -108,7 +122,7 @@ export class Project {
    * Finds a file at the specified relateive path within this project and all
    * its subprojects.
    *
-   * @param path The file path. If this path is relative, it will be resolved
+   * @param filePath The file path. If this path is relative, it will be resolved
    * from the root of _this_ project.
    * @returns a `FileBase` or undefined if there is no file in that path
    */

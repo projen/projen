@@ -273,7 +273,7 @@ export class JsiiProject extends TypeScriptProject {
     this.releaseWorkflow.addJobs({
       release_npm: {
         'name': 'Release to NPM',
-        'needs': this.releaseWorkflow.buildJobId,
+        'needs': this.releaseWorkflowJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           image: 'jsii/superchain',
@@ -307,7 +307,7 @@ export class JsiiProject extends TypeScriptProject {
     this.releaseWorkflow.addJobs({
       release_nuget: {
         'name': 'Release to Nuget',
-        'needs': this.releaseWorkflow.buildJobId,
+        'needs': this.releaseWorkflowJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           image: 'jsii/superchain',
@@ -339,7 +339,7 @@ export class JsiiProject extends TypeScriptProject {
     this.releaseWorkflow.addJobs({
       release_maven: {
         'name': 'Release to Maven',
-        'needs': this.releaseWorkflow.buildJobId,
+        'needs': this.releaseWorkflowJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           image: 'jsii/superchain',
@@ -375,7 +375,7 @@ export class JsiiProject extends TypeScriptProject {
     this.releaseWorkflow.addJobs({
       release_pypi: {
         'name': 'Release to PyPi',
-        'needs': this.releaseWorkflow.buildJobId,
+        'needs': this.releaseWorkflowJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
           image: 'jsii/superchain',
