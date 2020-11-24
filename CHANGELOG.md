@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.5.0 (2020-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* there are multiple breaking changes in in how github components are used.
+
+### Features
+
+* consolidate github capabilities behind a centralized api ([#319](https://github.com/projen/projen/issues/319)) ([19815c1](https://github.com/projen/projen/commit/19815c19c8aa6185311dd2851510c7bb91abb120)), closes [#318](https://github.com/projen/projen/issues/318)
+
 ## 0.4.0 (2020-11-24)
 
 
