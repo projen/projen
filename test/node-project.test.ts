@@ -1,9 +1,13 @@
 import { NodeProject } from '../src';
-import { synthSnapshot } from './util';
+import * as logging from '../src/logging';
+import { mkdtemp, synthSnapshot } from './util';
+
+logging.disable();
 
 test('license file is added by default', () => {
   // WHEN
   const project = new NodeProject({
+    outdir: mkdtemp(),
     name: 'test-node-project',
     start: false,
     mergify: false,
@@ -17,6 +21,7 @@ test('license file is added by default', () => {
 test('license file is not added if licensed is false', () => {
   // WHEN
   const project = new NodeProject({
+    outdir: mkdtemp(),
     name: 'test-node-project',
     licensed: false,
     start: false,

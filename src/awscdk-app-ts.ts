@@ -187,7 +187,8 @@ class SampleCode extends Component {
     this.appProject = project;
   }
 
-  public synthesize(outdir: string) {
+  public synthesize() {
+    const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
     if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
       return;

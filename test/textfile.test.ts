@@ -1,9 +1,9 @@
-import { Project, TextFile } from '../src';
-import { synthSnapshot } from './util';
+import { TextFile } from '../src';
+import { synthSnapshot, TestProject } from './util';
 
 test('empty file', () => {
   // GIVEN
-  const project = new Project();
+  const project = new TestProject();
 
   // WHEN
   new TextFile(project, 'hello/foo.txt');
@@ -15,7 +15,7 @@ test('empty file', () => {
 
 test('initialized with some lines', () => {
   // GIVEN
-  const project = new Project();
+  const project = new TestProject();
 
   // WHEN
   new TextFile(project, 'boom/boom/bam.txt', {
@@ -33,7 +33,7 @@ test('initialized with some lines', () => {
 
 test('addLine() can add lines later', () => {
 // GIVEN
-  const project = new Project();
+  const project = new TestProject();
   const tf = new TextFile(project, 'hello-world.txt', { lines: ['line1', 'line2'] });
 
   // WHEN

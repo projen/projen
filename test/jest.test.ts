@@ -1,5 +1,8 @@
 import { NodeProject, TypeScriptProject } from '../src';
-import { synthSnapshot } from './util';
+import * as logging from '../src/logging';
+import { mkdtemp, synthSnapshot } from './util';
+
+logging.disable();
 
 const compilerOptionDefaults = {
   alwaysStrict: true,
@@ -26,6 +29,7 @@ const compilerOptionDefaults = {
 
 test('Node Project Jest Defaults Configured', () => {
   const project = new NodeProject({
+    outdir: mkdtemp(),
     name: 'test-node-project',
     start: false,
     mergify: false,
@@ -48,6 +52,7 @@ test('Node Project Jest Defaults Configured', () => {
 
 test('Node Project Jest With Options Configured', () => {
   const project = new NodeProject({
+    outdir: mkdtemp(),
     name: 'test-node-project',
     start: false,
     mergify: false,
@@ -74,6 +79,7 @@ test('Node Project Jest With Options Configured', () => {
 test('Typescript Project Jest Defaults Configured', () => {
   // WHEN
   const project = new TypeScriptProject({
+    outdir: mkdtemp(),
     name: 'test-typescript-project',
     start: false,
     mergify: false,
@@ -98,6 +104,7 @@ test('Typescript Project Jest With Compiler Options', () => {
   };
 
   const project = new TypeScriptProject({
+    outdir: mkdtemp(),
     name: 'test-typescript-project',
     start: false,
     mergify: false,

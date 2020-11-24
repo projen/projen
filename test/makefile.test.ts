@@ -1,8 +1,8 @@
-import { Makefile, Project } from '../src';
-import { synthSnapshot } from './util';
+import { Makefile } from '../src';
+import { synthSnapshot, TestProject } from './util';
 
 test('makefile synthesises correctly', () => {
-  const prj = new Project();
+  const prj = new TestProject();
 
   new Makefile(prj, 'Makefile', {
     all: ['one', 'two', 'three'],
@@ -43,7 +43,7 @@ test('makefile synthesises correctly', () => {
 });
 
 test('makefile synthesises correctly using imperative API', () => {
-  const prj = new Project();
+  const prj = new TestProject();
 
   new Makefile(prj, 'Makefile')
     .addRule({

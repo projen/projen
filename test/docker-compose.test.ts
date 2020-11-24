@@ -19,15 +19,15 @@ afterEach(() => {
 
 describe('docker-compose', () => {
   test('errors when no services', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
     new DockerCompose(project);
 
-    expect(() => project.synth(tempDir))
+    expect(() => project.synth())
       .toThrow(/at least one service/i);
   });
 
   test('errors when imageBuild and image not specified in service', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
     const dc = new DockerCompose(project);
 
     expect(() => dc.addService('service', {}))
@@ -35,7 +35,7 @@ describe('docker-compose', () => {
   });
 
   test('errors when imageBuild and image are both specified in service', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
     const dc = new DockerCompose(project);
 
     expect(() => dc.addService('service', {
@@ -47,7 +47,7 @@ describe('docker-compose', () => {
   });
 
   test('can build an image', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
 
     const dc = new DockerCompose(project, {
       services: {
@@ -79,12 +79,12 @@ describe('docker-compose', () => {
       },
     });
 
-    project.synth(tempDir);
+    project.synth();
     assertDockerComposeFileValidates(tempDir);
   });
 
   test('can choose a name suffix for the docker-compose.yml', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
     new DockerCompose(project, {
       nameSuffix: 'myname',
       services: {
@@ -94,12 +94,12 @@ describe('docker-compose', () => {
       },
     });
 
-    project.synth(tempDir);
+    project.synth();
     expect(fs.existsSync(path.join(tempDir, 'docker-compose.myname.yml')));
   });
 
   test('can add a container command', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
     const dc = new DockerCompose(project, {
       services: {
         alpine: {
@@ -118,13 +118,13 @@ describe('docker-compose', () => {
       },
     });
 
-    project.synth(tempDir);
+    project.synth();
     assertDockerComposeFileValidates(tempDir);
   });
 
   describe('can add a volume', () => {
     test('bind volume', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           myservice: {
@@ -151,12 +151,12 @@ describe('docker-compose', () => {
         },
       });
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('named volume', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           myservice: {
@@ -186,12 +186,12 @@ describe('docker-compose', () => {
         },
       });
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('named volume with special driver', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           web: {
@@ -233,12 +233,12 @@ describe('docker-compose', () => {
         },
       });
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('imperatively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project);
 
       const service = dc.addService('myservice', {
@@ -264,7 +264,7 @@ describe('docker-compose', () => {
         },
       });
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
   });
@@ -293,7 +293,7 @@ describe('docker-compose', () => {
     };
 
     test('declaratively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           port: {
@@ -310,12 +310,12 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('imperatively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project);
 
       const service = dc.addService('port', {
@@ -329,7 +329,7 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
   });
@@ -346,7 +346,7 @@ describe('docker-compose', () => {
     };
 
     test('declaratively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           first: { image: 'alpine' },
@@ -359,12 +359,12 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('imperatively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project);
 
       const first = dc.addService('first', { image: 'alpine' });
@@ -373,7 +373,7 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
   });
@@ -392,7 +392,7 @@ describe('docker-compose', () => {
     };
 
     test('declaratively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           www: {
@@ -407,12 +407,12 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('imperatively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project);
 
       const service = dc.addService('www', {
@@ -424,13 +424,13 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
   });
 
   test('errors when a service reference by name does not exist', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
 
     new DockerCompose(project, {
       services: {
@@ -441,12 +441,12 @@ describe('docker-compose', () => {
       },
     });
 
-    expect(() => project.synth(tempDir))
+    expect(() => project.synth())
       .toThrow(/unable to resolve.*nope.*www/i);
   });
 
   test('errors when a service depends on itself', () => {
-    const project = new Project();
+    const project = new Project({ outdir: tempDir });
 
     new DockerCompose(project, {
       services: {
@@ -457,7 +457,7 @@ describe('docker-compose', () => {
       },
     });
 
-    expect(() => project.synth(tempDir))
+    expect(() => project.synth())
       .toThrow(/depend on itself/i);
   });
 
@@ -542,7 +542,7 @@ describe('docker-compose', () => {
     };
 
     test('declaratively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project, {
         services: {
           setup: {
@@ -591,12 +591,12 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
 
     test('imperatively', () => {
-      const project = new Project();
+      const project = new Project({ outdir: tempDir });
       const dc = new DockerCompose(project);
 
       const setup = dc.addService('setup', {
@@ -644,7 +644,7 @@ describe('docker-compose', () => {
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
 
-      project.synth(tempDir);
+      project.synth();
       assertDockerComposeFileValidates(tempDir);
     });
   });
