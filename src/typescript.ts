@@ -209,10 +209,10 @@ export class TypeScriptProject extends NodeProject {
     // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
     let eslintTsConfig = 'tsconfig.json';
 
-    if (options.jest ?? true) {
+    if ((options.jest ?? true) && this.jest) {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
-      const tsconfig = new TypescriptConfig(this, {
+      const tsconfig = this.jest.generateTypescriptConfig({
         fileName: 'tsconfig.jest.json',
         include: [
           `${this.srcdir}/**/*.ts`,
@@ -224,6 +224,8 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
+      // const tsconfig = new TypescriptConfig(this, );
+
       eslintTsConfig = tsconfig.fileName;
 
       // if we test before compilation, remove the lib/ directory before running
@@ -234,10 +236,8 @@ export class TypeScriptProject extends NodeProject {
         this.addScript('test', `rm -fr ${this.libdir}/`);
 
         // Reconfigure test command because the above line replaces it
-        this.jest?.configureTestCommand();
+        this.jest.configureTestCommand();
       }
-
-      this.jest?.addTypescriptOptions(tsconfig);
     }
 
     if (options.eslint ?? true) {

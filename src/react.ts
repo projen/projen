@@ -1,9 +1,7 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { NodeProject, NodeProjectOptions } from './node-project';
-import { Project } from './project';
+import { SampleDir } from './sample-file';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
 
@@ -219,14 +217,6 @@ class ReactSampleCode extends Component {
 
     this.fileExt = options.fileExt ?? 'jsx';
     this.srcdir = options.srcdir;
-  }
-
-  public synthesize(outdir: string) {
-    const srcdir = path.join(outdir, this.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(
-      x => ['.js', '.jsx', '.ts', '.tsx'].some(suffix => x.endsWith(suffix)))) {
-      return;
-    }
 
     const logoSvg = [
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.9 595.3">',
@@ -268,6 +258,61 @@ class ReactSampleCode extends Component {
       '',
     ];
 
+    const appCss = [
+      '.App {',
+      '  text-align: center;',
+      '}',
+      '',
+      '.App-logo {',
+      '  height: 40vmin;',
+      '  pointer-events: none;',
+      '}',
+      '',
+      '@media (prefers-reduced-motion: no-preference) {',
+      '  .App-logo {',
+      '    animation: App-logo-spin infinite 20s linear;',
+      '  }',
+      '}',
+      '',
+      '.App-header {',
+      '  background-color: #282c34;',
+      '  min-height: 100vh;',
+      '  display: flex;',
+      '  flex-direction: column;',
+      '  align-items: center;',
+      '  justify-content: center;',
+      '  font-size: calc(10px + 2vmin);',
+      '  color: white;',
+      '}',
+      '',
+      '.App-link {',
+      '  color: #61dafb;',
+      '}',
+      '',
+      '@keyframes App-logo-spin {',
+      '  from {',
+      '    transform: rotate(0deg);',
+      '  }',
+      '  to {',
+      '    transform: rotate(360deg);',
+      '  }',
+      '}',
+      '',
+    ];
+
+    const appTestJsx = [
+      "import React from 'react';",
+      "import { render, screen } from '@testing-library/react';",
+      "import App from './App';",
+      '',
+      "test('renders learn react link', () => {",
+      '  render(<App />);',
+      '  const linkElement = screen.getByText(/learn react/i);',
+      '  expect(linkElement).toBeInTheDocument();',
+      '});',
+      '',
+    ];
+
     const indexJsx = [
       "import React from 'react';",
       "import ReactDOM from 'react-dom';",
@@ -289,6 +334,23 @@ class ReactSampleCode extends Component {
       '',
     ];
 
+    const indexCss = [
+      'body {',
+      '  margin: 0;',
+      "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',",
+      "    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',",
+      '    sans-serif;',
+      '  -webkit-font-smoothing: antialiased;',
+      '  -moz-osx-font-smoothing: grayscale;',
+      '}',
+      '',
+      'code {',
+      "  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',",
+      '    monospace;',
+      '}',
+      '',
+    ];
+
     const reportWebVitalsJs = [
       "import { ReportHandler } from 'web-vitals';",
       '',
@@ -307,23 +369,30 @@ class ReactSampleCode extends Component {
       'export default reportWebVitals;',
     ];
 
-    fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, 'App.' + this.fileExt), appJsx.join('\n'));
-    fs.writeFileSync(path.join(srcdir, 'index.' + this.fileExt), indexJsx.join('\n'));
-    fs.writeFileSync(path.join(srcdir, 'logo.svg'), logoSvg.join('\n'));
+    const setupTestsJs = [
+      '// jest-dom adds custom jest matchers for asserting on DOM nodes.',
+      '// allows you to do things like:',
+      '// expect(element).toHaveTextContent(/react/i)',
+      '// learn more: https://github.com/testing-library/jest-dom',
+      "import '@testing-library/jest-dom';",
+      '',
+    ];
 
-    new ReactAppTest(this.project, path.join(srcdir, 'App.test.' + this.fileExt));
-    new ReactAppCss(this.project, path.join(srcdir, 'App.css'));
-    new ReactIndexCss(this.project, path.join(srcdir, 'index.css'));
+    // js/ts not jsx/tsx
+    const fileExtWithoutX = this.fileExt.replace('x', '');
 
-    // js or ts not jsx/tsx
-    fs.writeFileSync(path.join(srcdir, 'reportWebVitals.' + this.fileExt.replace('x', '')), reportWebVitalsJs.join('\n'));
-    new ReactSetupTests(this.project, path.join(srcdir, 'setupTests.' + this.fileExt.replace('x', '')));
-
-    const assetsdir = path.join(outdir, 'public');
-    if (fs.pathExistsSync(assetsdir) && fs.readdirSync(assetsdir)) return;
-
-    fs.mkdirpSync(assetsdir);
+    new SampleDir(project, this.srcdir, {
+      files: {
+        'logo.svg': logoSvg.join('\n'),
+        ['App.' + this.fileExt]: appJsx.join('\n'),
+        ['App.test.' + this.fileExt]: appTestJsx.join('\n'),
+        'App.css': appCss.join('\n'),
+        ['index.' + this.fileExt]: indexJsx.join('\n'),
+        'index.css': indexCss.join('\n'),
+        ['reportWebVitals.' + fileExtWithoutX]: reportWebVitalsJs.join('\n'),
+        ['setupTests.' + fileExtWithoutX]: setupTestsJs.join('\n'),
+      },
+    });
 
     const indexHtml = [
       '<!DOCTYPE html>',
@@ -383,9 +452,13 @@ class ReactSampleCode extends Component {
       'Disallow:',
     ];
 
-    fs.writeFileSync(path.join(assetsdir, 'index.html'), indexHtml.join('\n'));
-    fs.writeJSONSync(path.join(assetsdir, 'manifest.json'), publicManifest, { spaces: 2 });
-    fs.writeFileSync(path.join(assetsdir, 'robot.txt'), robotTxt.join('\n'));
+    new SampleDir(project, 'public', {
+      files: {
+        'index.html': indexHtml.join('\n'),
+        'manifest.json': JSON.stringify(publicManifest, undefined, 2),
+        'robots.txt': robotTxt.join('\n'),
+      },
+    });
   }
 }
 
@@ -399,119 +472,6 @@ export class ReactTypeDef extends FileBase {
   protected synthesizeContent(_: IResolver) {
     return [
       '/// <reference types="react-scripts" />',
-    ].join('\n');
-  }
-}
-
-class ReactAppCss extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver) {
-    return [
-      '.App {',
-      '  text-align: center;',
-      '}',
-      '',
-      '.App-logo {',
-      '  height: 40vmin;',
-      '  pointer-events: none;',
-      '}',
-      '',
-      '@media (prefers-reduced-motion: no-preference) {',
-      '  .App-logo {',
-      '    animation: App-logo-spin infinite 20s linear;',
-      '  }',
-      '}',
-      '',
-      '.App-header {',
-      '  background-color: #282c34;',
-      '  min-height: 100vh;',
-      '  display: flex;',
-      '  flex-direction: column;',
-      '  align-items: center;',
-      '  justify-content: center;',
-      '  font-size: calc(10px + 2vmin);',
-      '  color: white;',
-      '}',
-      '',
-      '.App-link {',
-      '  color: #61dafb;',
-      '}',
-      '',
-      '@keyframes App-logo-spin {',
-      '  from {',
-      '    transform: rotate(0deg);',
-      '  }',
-      '  to {',
-      '    transform: rotate(360deg);',
-      '  }',
-      '}',
-      '',
-    ].join('\n');
-  }
-}
-
-class ReactIndexCss extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver) {
-    return [
-      'body {',
-      '  margin: 0;',
-      "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',",
-      "    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',",
-      '    sans-serif;',
-      '  -webkit-font-smoothing: antialiased;',
-      '  -moz-osx-font-smoothing: grayscale;',
-      '}',
-      '',
-      'code {',
-      "  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',",
-      '    monospace;',
-      '}',
-      '',
-    ].join('\n');
-  }
-}
-
-class ReactSetupTests extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver) {
-    return [
-      '// jest-dom adds custom jest matchers for asserting on DOM nodes.',
-      '// allows you to do things like:',
-      '// expect(element).toHaveTextContent(/react/i)',
-      '// learn more: https://github.com/testing-library/jest-dom',
-      "import '@testing-library/jest-dom';",
-      '',
-    ].join('\n');
-  }
-}
-
-class ReactAppTest extends FileBase {
-  constructor(project: Project, filePath: string, options: FileBaseOptions = {}) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver) {
-    return [
-      "import React from 'react';",
-      "import { render, screen } from '@testing-library/react';",
-      "import App from './App';",
-      '',
-      "test('renders learn react link', () => {",
-      '  render(<App />);',
-      '  const linkElement = screen.getByText(/learn react/i);',
-      '  expect(linkElement).toBeInTheDocument();',
-      '});',
-      '',
     ].join('\n');
   }
 }

@@ -1,11 +1,10 @@
-import { Project } from '../src';
-import { synthSnapshot } from './util';
+import { synthSnapshot, TestProject } from './util';
 
 const PULL_REQUEST_TEMPLATE_FILE = '.github/pull_request_template.md';
 
 test('default', () => {
   // GIVEN
-  const project = new Project();
+  const project = new TestProject();
 
   // WHEN
   project.github?.addPullRequestTemplate();
@@ -18,7 +17,7 @@ test('default', () => {
 
 test('custom content', () => {
   // GIVEN
-  const project = new Project();
+  const project = new TestProject();
 
   // WHEN
   project.github?.addPullRequestTemplate(
