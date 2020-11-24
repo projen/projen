@@ -1,5 +1,8 @@
 import { NodeProject, TypeScriptProject } from '../src';
+import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
+
+logging.disable();
 
 const compilerOptionDefaults = {
   alwaysStrict: true,
