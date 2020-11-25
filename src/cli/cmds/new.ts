@@ -308,7 +308,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
-    synth();
+    synth(); // eslint-disable-line @typescript-eslint/no-floating-promises
   }
 }
 
