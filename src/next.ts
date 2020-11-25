@@ -1,10 +1,10 @@
 import { Component } from './component';
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
+import { PostCss, TailwindConfig } from './web';
 
 export interface NextJsCommonProjectOptions {
   /**
@@ -222,9 +222,8 @@ export class NextComponent extends Component {
       project.addDevDeps('@types/react', '@types/react-dom');
     }
     if (this.tailwind) {
-      new PostCssConfig(project);
+      new PostCss(project, { tailwind: true });
       new TailwindConfig(project);
-      project.addDeps('tailwindcss', 'postcss', 'autoprefixer');
     }
 
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
@@ -525,64 +524,5 @@ class NextSampleCode extends Component {
         'vercel.svg': vercelSvg.join('\n'),
       },
     });
-  }
-}
-
-export interface PostCssConfigOptions {
-  /**
-   * @default "postcss.config.json"
-   */
-  readonly fileName?: string;
-}
-
-export class PostCssConfig {
-  public readonly fileName: string;
-  public readonly file: JsonFile;
-
-  constructor(project: NodeProject, options?: PostCssConfigOptions) {
-    this.fileName = options?.fileName ?? 'postcss.config.json';
-
-    this.file = new JsonFile(project, this.fileName, {
-      obj: {
-        plugins: {
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
-    });
-
-    project.npmignore?.exclude(`/${this.fileName}`);
-  }
-}
-
-export interface TailwindConfigOptions {
-  /**
-   * @default "tailwind.config.json"
-   */
-  readonly fileName?: string;
-}
-
-export class TailwindConfig {
-  public readonly fileName: string;
-  public readonly file: JsonFile;
-
-  constructor(project: NodeProject, options?: TailwindConfigOptions) {
-    this.fileName = options?.fileName ?? 'tailwind.config.json';
-
-    this.file = new JsonFile(project, this.fileName, {
-      obj: {
-        purge: [],
-        darkMode: false,
-        theme: {
-          extend: {},
-        },
-        variants: {
-          extend: {},
-        },
-        plugins: [],
-      },
-    });
-
-    project.npmignore?.exclude(`/${this.fileName}`);
   }
 }

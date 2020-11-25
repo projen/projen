@@ -30,7 +30,7 @@ Name|Description
 [NextJsTypeScriptProject](#projen-nextjstypescriptproject)|Next.js project with TypeScript.
 [NodeBuildWorkflow](#projen-nodebuildworkflow)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
-[PostCssConfig](#projen-postcssconfig)|*No description*
+[PostCss](#projen-postcss)|Declares a PostCSS dependency with a default config file.
 [Project](#projen-project)|Base project.
 [PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [ReactComponent](#projen-reactcomponent)|*No description*
@@ -41,7 +41,7 @@ Name|Description
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [Semver](#projen-semver)|*No description*
 [Start](#projen-start)|*No description*
-[TailwindConfig](#projen-tailwindconfig)|*No description*
+[TailwindConfig](#projen-tailwindconfig)|Declares a Tailwind CSS configuration file.
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|TOML file.
 [TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
@@ -95,7 +95,7 @@ Name|Description
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
-[PostCssConfigOptions](#projen-postcssconfigoptions)|*No description*
+[PostCssOptions](#projen-postcssoptions)|*No description*
 [PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [ReactComponentOptions](#projen-reactcomponentoptions)|*No description*
 [ReactProjectOptions](#projen-reactprojectoptions)|*No description*
@@ -2549,9 +2549,9 @@ removeScript(name: string): void
 
 
 
-## class PostCssConfig 🔹 <a id="projen-postcssconfig"></a>
+## class PostCss 🔹 <a id="projen-postcss"></a>
 
-
+Declares a PostCSS dependency with a default config file.
 
 
 ### Initializer
@@ -2560,12 +2560,14 @@ removeScript(name: string): void
 
 
 ```ts
-new PostCssConfig(project: NodeProject, options?: PostCssConfigOptions)
+new PostCss(project: NodeProject, options?: PostCssOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[PostCssConfigOptions](#projen-postcssconfigoptions)</code>)  *No description*
+* **options** (<code>[PostCssOptions](#projen-postcssoptions)</code>)  *No description*
   * **fileName** (<code>string</code>)  *No description* __*Default*__: "postcss.config.json"
+  * **tailwind** (<code>boolean</code>)  Install Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **tailwindOptions** (<code>[TailwindConfigOptions](#projen-tailwindconfigoptions)</code>)  Tailwind CSS options. __*Optional*__
 
 
 
@@ -2576,6 +2578,7 @@ Name | Type | Description
 -----|------|-------------
 **file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
 **fileName**🔹 | <code>string</code> | <span></span>
+**tailwind**?🔹 | <code>[TailwindConfig](#projen-tailwindconfig)</code> | __*Optional*__
 
 
 
@@ -3169,7 +3172,10 @@ addEntry(name: string, options: StartEntryOptions): void
 
 ## class TailwindConfig 🔹 <a id="projen-tailwindconfig"></a>
 
+Declares a Tailwind CSS configuration file.
 
+There are multiple ways to add Tailwind CSS in your node project - see:
+https://tailwindcss.com/docs/installation
 
 
 ### Initializer
@@ -5144,7 +5150,7 @@ Name | Type | Description
 
 
 
-## struct PostCssConfigOptions 🔹 <a id="projen-postcssconfigoptions"></a>
+## struct PostCssOptions 🔹 <a id="projen-postcssoptions"></a>
 
 
 
@@ -5154,6 +5160,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **fileName**?🔹 | <code>string</code> | __*Default*__: "postcss.config.json"
+**tailwind**?🔹 | <code>boolean</code> | Install Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**tailwindOptions**?🔹 | <code>[TailwindConfigOptions](#projen-tailwindconfigoptions)</code> | Tailwind CSS options.<br/>__*Optional*__
 
 
 
