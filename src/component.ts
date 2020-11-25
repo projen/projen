@@ -10,13 +10,11 @@ export class Component {
 
   /**
    * Synthesizes files to the project output directory.
-   * @param _outdir The project directory*
    */
-  public synthesize(_outdir: string) {}
+  public synthesize() {}
 
   /**
    * Called after synthesis. Order is *not* guaranteed.
-   * @param _outdir The project directory
    */
-  public postSynthesize(_outdir: string) {}
+  public postSynthesize() {}
 }

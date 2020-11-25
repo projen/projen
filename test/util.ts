@@ -6,6 +6,13 @@ import * as logging from '../src/logging';
 
 logging.disable(); // no logging during tests
 
+export class TestProject extends Project {
+  constructor() {
+    const tmpdir = mkdtemp();
+    super({ outdir: tmpdir });
+  }
+}
+
 export interface SynthOutput {
   [filePath: string]: any;
 }
@@ -15,12 +22,11 @@ export function mkdtemp() {
 }
 
 export function synthSnapshot(project: Project, ...includeFiles: string[]) {
-  const outdir = mkdtemp();
   try {
-    project.synth(outdir);
-    return directorySnapshot(outdir, includeFiles);
+    project.synth();
+    return directorySnapshot(project.outdir, includeFiles);
   } finally {
-    fs.removeSync(outdir);
+    fs.removeSync(project.outdir);
   }
 }
 

@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.1 (2020-11-24)
+
+
+### Bug Fixes
+
+* github/vscode accessors should not be available in subprojects ([#333](https://github.com/projen/projen/issues/333)) ([0a06f75](https://github.com/projen/projen/commit/0a06f751e05e0dbc81966fcc09bfcba0fe981690))
+
+## 0.5.0 (2020-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* there are multiple breaking changes in in how github components are used.
+
+### Features
+
+* consolidate github capabilities behind a centralized api ([#319](https://github.com/projen/projen/issues/319)) ([19815c1](https://github.com/projen/projen/commit/19815c19c8aa6185311dd2851510c7bb91abb120)), closes [#318](https://github.com/projen/projen/issues/318)
+
+## 0.4.0 (2020-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* The `CompositeProject` and `ProjectComponent` classes have been superseded by subprojects in order to allow safely accessing the parent project during subproject initialization phase. Use `new Project({ parent, outdir })` to define this relationship.
+* The various `synth()` methods no longer accept an `outdir`. Instead, specify `outdir` in the project options.
+
+### Features
+
+* subprojects ([#332](https://github.com/projen/projen/issues/332)) ([53244ae](https://github.com/projen/projen/commit/53244aef42258344c90e5f08241cb61c2e4566b6)), closes [#289](https://github.com/projen/projen/issues/289)
+
+### 0.3.178 (2020-11-23)
+
+
+### Features
+
+* add full jest config support ([#331](https://github.com/projen/projen/issues/331)) ([a3d1ed0](https://github.com/projen/projen/commit/a3d1ed09a038f45385546dadbe182b6f268ce042)), closes [#320](https://github.com/projen/projen/issues/320) [/github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts#L118](https://github.com/projen//github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts/issues/L118) [#320](https://github.com/projen/projen/issues/320)
+
+### 0.3.177 (2020-11-23)
+
+
+### Bug Fixes
+
+* **composite-project:** prevent child NodeProjects failure during synth ([#324](https://github.com/projen/projen/issues/324)) ([ee9af0e](https://github.com/projen/projen/commit/ee9af0efa037d6dc23b43f93bd7c51a3d3bf2117)), closes [#323](https://github.com/projen/projen/issues/323)
+
+### 0.3.176 (2020-11-23)
+
+### 0.3.175 (2020-11-23)
+
+### 0.3.174 (2020-11-23)
+
+
+### Bug Fixes
+
+* **cdk8s-construct:** converts cdk8s-plus to cdk8s-plus-17 AND bumps constructs ([#329](https://github.com/projen/projen/issues/329)) ([333948e](https://github.com/projen/projen/commit/333948efc8fee629b0e0ed17648bf5fa6f81cb55)), closes [/github.com/awslabs/cdk8s/blob/master/CHANGELOG.md#100-beta1-2020-11-18](https://github.com/projen//github.com/awslabs/cdk8s/blob/master/CHANGELOG.md/issues/100-beta1-2020-11-18) [#327](https://github.com/projen/projen/issues/327)
+
 ### 0.3.173 (2020-11-18)
 
 ### 0.3.172 (2020-11-17)

@@ -1,6 +1,7 @@
 import { version } from 'yargs';
-import { NodeProject } from './node-project';
-import { YamlFile } from './yaml';
+import { Component } from '../component';
+import { YamlFile } from '../yaml';
+import { GitHub } from './github';
 
 export interface DependabotOptions {
   /**
@@ -128,7 +129,7 @@ export enum VersioningStrategy {
  * configured to "lockfile-only" which means that only updates that can be done
  * on the lockfile itself will be proposed.
  */
-export class Dependabot {
+export class Dependabot extends Component {
   /**
    * The raw dependabot configuration.
    * @see https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
@@ -137,7 +138,10 @@ export class Dependabot {
 
   private readonly ignore: any[];
 
-  constructor(project: NodeProject, options: DependabotOptions = {}) {
+  constructor(github: GitHub, options: DependabotOptions = {}) {
+    super(github.project);
+
+    const project = github.project;
 
     this.ignore = [];
 
@@ -162,7 +166,7 @@ export class Dependabot {
     });
 
     if (options.autoMerge ?? true) {
-      project.mergify?.addRule({
+      github.addMergifyRules({
         name: 'Merge pull requests from dependabot if CI passes',
         conditions: [
           'author=dependabot[bot]',

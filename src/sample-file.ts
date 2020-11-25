@@ -34,9 +34,9 @@ export class SampleFile extends Component {
     this.options = options;
   }
 
-  public synthesize(outdir: string) {
+  public synthesize() {
     const contents = this.options.contents;
-    this.writeOnceFileContents(outdir, this.filePath, contents ?? '');
+    this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
   }
 
   /**
@@ -85,8 +85,8 @@ export class SampleDir extends Component {
     this.options = options;
   }
 
-  public synthesize(outdir: string) {
-    const fullOutdir = path.join(outdir, this.dir);
+  public synthesize() {
+    const fullOutdir = path.join(this.project.outdir, this.dir);
     if (fs.pathExistsSync(fullOutdir)) {
       return;
     }
