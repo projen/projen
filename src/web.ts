@@ -36,7 +36,7 @@ export class PostCss {
     const config: { [key: string]: any } = { plugins: {} };
 
     if (options?.tailwind ?? true) {
-      config.plugins.tailwind = {};
+      config.plugins.tailwindcss = {};
       config.plugins.autoprefixer = {};
       this.tailwind = new TailwindConfig(project, options?.tailwindOptions);
       project.addDeps('tailwindcss', 'autoprefixer');

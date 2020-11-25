@@ -4,7 +4,7 @@ import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
 import { StartEntryCategory } from './start';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
-import { PostCss, TailwindConfig } from './web';
+import { PostCss } from './web';
 
 export interface NextJsCommonProjectOptions {
   /**
@@ -15,7 +15,7 @@ export interface NextJsCommonProjectOptions {
   readonly assetsdir?: string;
 
   /**
-   * Setup Tailwind as a PostCSS plugin.
+   * Setup Tailwind CSS as a PostCSS plugin.
    *
    * @see https://tailwindcss.com/docs/installation
    *
@@ -223,7 +223,6 @@ export class NextComponent extends Component {
     }
     if (this.tailwind) {
       new PostCss(project, { tailwind: true });
-      new TailwindConfig(project);
     }
 
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
