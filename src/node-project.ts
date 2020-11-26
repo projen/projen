@@ -807,7 +807,7 @@ export class NodeProject extends Project {
 
     this.bootstrapSteps = options.workflowBootstrapSteps ?? [
       { run: this.renderInstallCommand(true) },
-      { run: `npx ${PROJEN_SCRIPT}` },
+      { run: `npm run ${PROJEN_SCRIPT}` },
     ];
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest

@@ -13,7 +13,7 @@
     "test": "projen test",
     "build": "projen build",
     "start": "npx projen start -i",
-    "projen": "node .projenrc.js",
+    "projen": "yarn compile && node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "projen bump",
     "release": "projen release",
