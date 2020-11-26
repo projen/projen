@@ -1,3 +1,3 @@
 export * from './seq';
-export * from './seqs';
+export * from './runtime';
 export * from './spec';

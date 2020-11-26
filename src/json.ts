@@ -6,8 +6,10 @@ export interface JsonFileOptions extends FileBaseOptions {
   /**
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
+   *
+   * @default {} an empty object (use `file.obj` to mutate).
    */
-  readonly obj: any;
+  readonly obj?: any;
 
   /**
    * Adds the projen marker as a "JSON-comment" to the root object.
@@ -15,10 +17,16 @@ export interface JsonFileOptions extends FileBaseOptions {
    * @default false
    */
   readonly marker?: boolean;
+
+  /**
+   * Omits undefined values.
+   * @default false
+   */
+  readonly omitUndefined?: boolean;
 }
 
 export class JsonFile extends FileBase {
-  protected readonly obj: object;
+  public readonly obj: object;
 
   public readonly marker: boolean;
 
@@ -30,7 +38,7 @@ export class JsonFile extends FileBase {
     }
 
     this.marker = options.marker ?? false;
-    this.obj = options.obj;
+    this.obj = options.obj ?? {};
   }
 
   protected synthesizeContent(resolver: IResolver) {
@@ -41,6 +49,7 @@ export class JsonFile extends FileBase {
     if (this.marker) {
       obj['//'] = GENERATION_DISCLAIMER;
     }
+
     return JSON.stringify(resolver.resolve(obj), undefined, 2);
   }
 }

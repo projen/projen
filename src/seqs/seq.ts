@@ -1,9 +1,10 @@
+import { join } from 'path';
 import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
 import { StartEntryCategory } from '../start';
-import { SequenceSpec, TaskOptions } from './spec';
+import { SequenceSpec, SequenceManifest, SequenceCommandOptions, SequenceCommand } from './spec';
 
 export interface SequenceOptions {
   /**
@@ -39,9 +40,7 @@ export interface SequenceProps extends SequenceOptions {
  * A modeled sequence of shell commands.
  */
 export class Sequence extends Component {
-  public static readonly FILE_SUFFIX = 'seq.json';
-
-  private readonly spec: SequenceSpec;
+  public static readonly MANIFEST_FILE = join(PROJEN_DIR, 'sequences.json');
 
   /**
    * The name of the sequence.
@@ -58,23 +57,28 @@ export class Sequence extends Component {
    */
   public readonly category: StartEntryCategory;
 
+  private readonly manifest: Sequences;
+
+  private readonly _env: { [name: string]: string };
+  private readonly _commands: SequenceCommand[];
+
   constructor(project: Project, name: string, props: SequenceProps = { }) {
     super(project);
+
+    this.manifest = Sequences.of(project); // get/create
 
     this.name = name;
     this.description = props.description ?? name;
     this.category = props.category ?? StartEntryCategory.MISC;
 
-    this.spec = {
-      name,
-      tasks: [],
-      description: this.description,
-      env: props.env ?? {},
-    };
+    this._env = {};
+    this._commands = [];
 
-    new JsonFile(project, `${PROJEN_DIR}/${name}.${Sequence.FILE_SUFFIX}`, {
-      obj: this.spec,
-      marker: true,
+    this.manifest.addSequenceSpec(name, {
+      name,
+      env: this._env,
+      commands: this._commands,
+      description: this.description,
     });
 
     if (props.shell) {
@@ -87,8 +91,8 @@ export class Sequence extends Component {
    * @param command the command to add to the sequence after it was cleared.
   */
   public reset(command?: string) {
-    while (this.spec.tasks.length) {
-      this.spec.tasks.shift();
+    while (this._commands.length) {
+      this._commands.shift();
     }
 
     if (command) {
@@ -109,7 +113,7 @@ export class Sequence extends Component {
    * @param command The command to add.
    */
   public prepend(command: string) {
-    this.spec.tasks.unshift({
+    this._commands.unshift({
       commands: [command],
     });
   }
@@ -130,7 +134,7 @@ export class Sequence extends Component {
    * environment variable.
    */
   public env(name: string, value: string) {
-    this.spec.env[name] = value;
+    this._env[name] = value;
   }
 
   /**
@@ -138,8 +142,8 @@ export class Sequence extends Component {
    * @param commands The commands to add
    * @param options Task options
    */
-  public addCommands(commands: string[], options: TaskOptions = {}) {
-    this.spec.tasks.push({
+  public addCommands(commands: string[], options: SequenceCommandOptions = {}) {
+    this._commands.push({
       commands: this.project.renderShellCommands(commands),
       ...options,
     });
@@ -153,7 +157,7 @@ export class Sequence extends Component {
    */
   public get commands() {
     const result = new Array<string>();
-    for (const task of this.spec.tasks) {
+    for (const task of this._commands) {
       result.push(...task.commands ?? []);
 
       for (const seq of task.sequences ?? []) {
@@ -170,10 +174,51 @@ export class Sequence extends Component {
    */
   private addSequences(builds: Sequence[]) {
     for (const t of builds) {
-      this.spec.tasks.push({
+      this._commands.push({
         sequences: [t.name],
       });
     }
+  }
+}
+
+class Sequences extends Component {
+  public static of(project: Project): Sequences {
+    let found = project.components.find(c => c instanceof Sequences) as Sequences | undefined;
+    if (!found) {
+      found = new Sequences(project);
+    }
+    return found;
+  }
+
+
+  private readonly seqs: { [name: string]: SequenceSpec };
+  private readonly env: { [name: string]: string };
+
+  constructor(project: Project) {
+    super(project);
+
+    this.seqs = {};
+    this.env = {};
+
+    new JsonFile(project, Sequence.MANIFEST_FILE, {
+      marker: true,
+      obj: {
+        seqs: this.seqs,
+        env: this.env,
+      } as SequenceManifest,
+    });
+  }
+
+  public addSequenceSpec(name: string, spec: SequenceSpec) {
+    if (name in this.seqs) {
+      throw new Error(`duplicate sequence "${name}"`);
+    }
+
+    this.seqs[name] = spec;
+  }
+
+  public addEnv(name: string, value: string) {
+    this.env[name] = value;
   }
 }
 

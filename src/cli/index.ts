@@ -1,5 +1,5 @@
 import * as yargs from 'yargs';
-import { Sequences } from '../seqs';
+import { SequenceRuntime } from '../seqs';
 import { synth } from './synth';
 
 function main() {
@@ -22,21 +22,22 @@ function main() {
 
 function addSequences(ya: yargs.Argv) {
   const workdir = '.';
-  const builds = new Sequences(workdir);
-  for (const cmd of Object.values(builds.all)) {
-    ya.command(cmd.name, cmd.description ?? cmd.name, args => {
+  const runtime = new SequenceRuntime(workdir);
+  const seqs = runtime.manifest.seqs ?? {};
+  for (const seq of Object.values(seqs)) {
+    ya.command(seq.name, seq.description ?? seq.name, args => {
       args.option('inspect', { alias: 'i', desc: 'show all commands in this sequence' });
 
       const argv = args.argv;
       if (argv.inspect) {
         const inspect = (name: string, indent = 0) => {
           const prefix = ' '.repeat(indent);
-          const c = builds.all[name];
-          for (const t of c.tasks) {
+          const c = seqs[name];
+          for (const t of c.commands) {
             if (t.sequences) {
-              for (const seq of t.sequences) {
-                console.log(prefix + `${seq}:`);
-                inspect(seq, indent + 2);
+              for (const other of t.sequences) {
+                console.log(prefix + `${other}:`);
+                inspect(other, indent + 2);
               }
             } else if (t.commands) {
               console.log(prefix + t.commands.join(' && '));
@@ -44,12 +45,12 @@ function addSequences(ya: yargs.Argv) {
           }
         };
 
-        inspect(cmd.name);
+        inspect(seq.name);
 
         return;
       }
 
-      builds.run(workdir, cmd.name);
+      runtime.run(workdir, seq.name);
     });
   }
 }

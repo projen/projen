@@ -1,0 +1,242 @@
+{
+  "seqs": {
+    "compile": {
+      "name": "compile",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          ]
+        },
+        {
+          "commands": [
+            "jsii-docgen"
+          ]
+        }
+      ],
+      "description": "Only compile"
+    },
+    "test": {
+      "name": "test",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jest --passWithNoTests --updateSnapshot"
+          ]
+        },
+        {
+          "sequences": [
+            "eslint"
+          ]
+        }
+      ],
+      "description": "Run tests"
+    },
+    "build": {
+      "name": "build",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "sequences": [
+            "compile"
+          ]
+        },
+        {
+          "sequences": [
+            "test"
+          ]
+        },
+        {
+          "sequences": [
+            "package"
+          ]
+        },
+        {
+          "sequences": [
+            "readme-macros"
+          ]
+        }
+      ],
+      "description": "Full release build (test+compile)"
+    },
+    "bump": {
+      "name": "bump",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "yarn run --silent no-changes || standard-version"
+          ]
+        }
+      ],
+      "description": "Commits a bump to the package version based on conventional commits"
+    },
+    "release": {
+      "name": "release",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
+          ]
+        }
+      ],
+      "description": "Bumps version & push to master"
+    },
+    "test:watch": {
+      "name": "test:watch",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jest --watch"
+          ]
+        }
+      ],
+      "description": "Run jest in watch mode"
+    },
+    "test:update": {
+      "name": "test:update",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jest --updateSnapshot"
+          ]
+        }
+      ],
+      "description": "Update jest snapshots"
+    },
+    "projen:upgrade": {
+      "name": "projen:upgrade",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "yarn upgrade -L projen"
+          ]
+        },
+        {
+          "commands": [
+            "CI=\"\" yarn projen"
+          ]
+        }
+      ],
+      "description": "upgrades projen to the latest version"
+    },
+    "watch": {
+      "name": "watch",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          ]
+        }
+      ],
+      "description": "Watch & compile in the background"
+    },
+    "package": {
+      "name": "package",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jsii-pacmak"
+          ]
+        }
+      ],
+      "description": "Create an npm tarball"
+    },
+    "eslint": {
+      "name": "eslint",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
+          ]
+        }
+      ],
+      "description": "Runs eslint against the codebase"
+    },
+    "compat": {
+      "name": "compat",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
+          ]
+        }
+      ],
+      "description": "Perform API compatibility check against latest version"
+    },
+    "docgen": {
+      "name": "docgen",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "jsii-docgen"
+          ]
+        }
+      ],
+      "description": "Generate API.md from .jsii manifest"
+    },
+    "readme-macros": {
+      "name": "readme-macros",
+      "env": {
+        "PATH": "$(npx -c 'echo $PATH')"
+      },
+      "commands": [
+        {
+          "commands": [
+            "mv README.md README.md.bak"
+          ]
+        },
+        {
+          "commands": [
+            "cat README.md.bak | markmac > README.md"
+          ]
+        },
+        {
+          "commands": [
+            "rm README.md.bak"
+          ]
+        }
+      ],
+      "description": "readme-macros"
+    }
+  },
+  "env": {},
+  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \"npx projen\"."
+}

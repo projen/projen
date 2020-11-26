@@ -1,36 +1,28 @@
 import { spawnSync } from 'child_process';
-import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import * as chalk from 'chalk';
-import { PROJEN_DIR } from '../common';
 import { Sequence } from './seq';
-import { SequenceSpec } from './spec';
+import { SequenceManifest, SequenceSpec } from './spec';
 
-export class Sequences {
+export class SequenceRuntime {
 
-  public readonly all: { [name: string]: SequenceSpec };
+  public readonly manifest: SequenceManifest;
 
   constructor(rootdir: string) {
-    const dir = join(rootdir, PROJEN_DIR);
+    const filePath = join(rootdir, Sequence.MANIFEST_FILE);
+    this.manifest = existsSync(filePath)
+      ? JSON.parse(readFileSync(filePath, 'utf-8'))
+      : { seqs: { } };
+  }
 
-    this.all = {};
-    if (!existsSync(dir) || !statSync(dir).isDirectory()) {
-      return;
-    }
-
-    for (const file of readdirSync(dir)) {
-      const filePath = join(dir, file);
-      if (!file.endsWith(Sequence.FILE_SUFFIX)) {
-        continue;
-      }
-
-      const cmd = JSON.parse(readFileSync(filePath, 'utf-8')) as SequenceSpec;
-      this.all[cmd.name] = cmd;
-    }
+  public find(name: string): SequenceSpec | undefined {
+    if (!this.manifest.seqs) { return undefined; }
+    return this.manifest.seqs[name];
   }
 
   public run(cwd: string, name: string) {
-    const cmd = this.all[name];
+    const cmd = this.find(name);
     if (!cmd) {
       throw new Error(`cannot find command ${cmd}`);
     }
@@ -55,7 +47,7 @@ export class Sequences {
       }
     }
 
-    for (const task of cmd.tasks) {
+    for (const task of cmd.commands) {
       if (task.sequences) {
         for (const seq of task.sequences) {
           this.run(cwd, seq);

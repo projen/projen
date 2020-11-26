@@ -646,6 +646,15 @@ export class NodeProject extends Project {
     this.scripts = {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
+    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.runScriptCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.NPM: return 'npm run';
+        case NodePackageManager.YARN: return 'yarn run';
+        default: throw new Error(`unexpected package manager ${this.packageManager}`);
+      }
+    })();
+
     this.processDeps(options);
 
     this.minNodeVersion = options.minNodeVersion;
@@ -683,15 +692,6 @@ export class NodeProject extends Project {
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
-
-    this.runScriptCommand = (() => {
-      switch (this.packageManager) {
-        case NodePackageManager.NPM: return 'npm run';
-        case NodePackageManager.YARN: return 'yarn run';
-        default: throw new Error(`unexpected package manager ${this.packageManager}`);
-      }
-    })();
 
     const renderScripts = () => {
       const result: any = {};
@@ -1105,10 +1105,11 @@ export class NodeProject extends Project {
   public addSequence(name: string, props: SequenceProps = { }) {
     const seq = super.addSequence(name, props);
 
+    // add PATH which includes the project's npm .bin list
     seq.env('PATH', '$(npx -c \'echo $PATH\')');
 
     // add an npm script with the same name which delegates to `projen <NAME>`.
-    const npmCommand = `npx projen ${name}`;
+    const npmCommand = `${this.runScriptCommand} projen ${name}`;
     this.setScript(seq.name, npmCommand);
 
     // add a start menu entry

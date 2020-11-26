@@ -8,6 +8,7 @@ import { Component } from './component';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
+import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
 import { Sequence, SequenceOptions, SequenceProps } from './seqs';
@@ -58,7 +59,7 @@ export class Project {
    **/
   public readonly root: Project;
 
-  private readonly components = new Array<Component>();
+  private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
 
@@ -123,11 +124,18 @@ export class Project {
   }
 
   /**
+   * Returns all the components within this project.
+   */
+  public get components() {
+    return [...this._components];
+  }
+
+  /**
    * All files in this project.
    */
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    return this.components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+    return this._components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
   }
 
   /**
@@ -185,6 +193,23 @@ export class Project {
   }
 
   /**
+   * Finds a json file by name.
+   * @param filePath The file path.
+   */
+  public findJsonFile(filePath: string): JsonFile | undefined {
+    const file = this.findFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof JsonFile)) {
+      throw new Error(`found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
    * Prints a "tip" message during synthesis.
    * @param message The message
    */
@@ -213,11 +238,11 @@ export class Project {
       subproject.synth();
     }
 
-    for (const comp of this.components) {
+    for (const comp of this._components) {
       comp.synthesize();
     }
 
-    for (const comp of this.components) {
+    for (const comp of this._components) {
       comp.postSynthesize();
     }
 
@@ -227,7 +252,7 @@ export class Project {
 
     logging.info('Synthesis complete');
 
-    const start = this.components.find(c => c instanceof Start);
+    const start = this._components.find(c => c instanceof Start);
     if (start) {
       console.error();
       console.error('-'.repeat(100));
@@ -257,7 +282,7 @@ export class Project {
    * @internal
    */
   public _addComponent(component: Component) {
-    this.components.push(component);
+    this._components.push(component);
   }
 
   /**

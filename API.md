@@ -1444,8 +1444,9 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  The object that will be serialized. 
   * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
+  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
+  * **omitUndefined** (<code>boolean</code>)  Omits undefined values. __*Default*__: false
 
 
 
@@ -2330,6 +2331,7 @@ new Project(options?: ProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
@@ -2403,6 +2405,19 @@ findFile(filePath: string): FileBase
 
 __Returns__:
 * <code>[FileBase](#projen-filebase)</code>
+
+#### findJsonFile(filePath)🔹 <a id="projen-project-findjsonfile"></a>
+
+Finds a json file by name.
+
+```ts
+findJsonFile(filePath: string): JsonFile
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[JsonFile](#projen-jsonfile)</code>
 
 #### postSynthesize()🔹 <a id="projen-project-postsynthesize"></a>
 
@@ -3473,8 +3488,9 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  The object that will be serialized. 
   * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
+  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
+  * **omitUndefined** (<code>boolean</code>)  Omits undefined values. __*Default*__: false
 
 
 ### Methods
@@ -4471,10 +4487,11 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>any</code> | The object that will be serialized.
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
+**obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
+**omitUndefined**?🔹 | <code>boolean</code> | Omits undefined values.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -5498,10 +5515,11 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>any</code> | The object that will be serialized.
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
+**obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
+**omitUndefined**?🔹 | <code>boolean</code> | Omits undefined values.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 

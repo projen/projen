@@ -1,11 +1,26 @@
+/**
+ * Schema for `.projen/sequences.json`.
+ */
+export interface SequenceManifest {
+  /**
+   * All sequences supporteds by this project.
+   */
+  readonly seqs?: { [name: string]: SequenceSpec };
+
+  /**
+   * Environment variables to use for all sequences in this project.
+   */
+  readonly env?: { [name: string]: string };
+}
+
 export interface SequenceSpec {
   readonly name: string;
   readonly description?: string;
-  readonly tasks: Task[];
-  readonly env: { [name: string]: string };
+  readonly commands: SequenceCommand[];
+  readonly env?: { [name: string]: string };
 }
 
-export interface TaskOptions {
+export interface SequenceCommandOptions {
   readonly sources?: string[];
   readonly artifacts?: string[];
 
@@ -15,7 +30,7 @@ export interface TaskOptions {
   readonly invalidation?: TaskInvalidation;
 }
 
-export interface Task extends TaskOptions {
+export interface SequenceCommand extends SequenceCommandOptions {
   readonly commands?: string[];
   readonly sequences?: string[];
 }
