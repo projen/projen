@@ -2292,7 +2292,7 @@ removeScript(name: string): void
 
 Allows subclasses to customize how shell commands are rendered.
 
-For example, in `NodeProject` this is used to add an `npm exec --` prefix
+For example, in `NodeProject` this is used to add an `npx -c` prefix
 to each command to it is executed in the npm environment.
 
 ```ts
@@ -2447,7 +2447,7 @@ preSynthesize(): void
 
 Allows subclasses to customize how shell commands are rendered.
 
-For example, in `NodeProject` this is used to add an `npm exec --` prefix
+For example, in `NodeProject` this is used to add an `npx -c` prefix
 to each command to it is executed in the npm environment.
 
 ```ts

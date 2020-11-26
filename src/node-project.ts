@@ -1106,7 +1106,7 @@ export class NodeProject extends Project {
     const seq = super.addSequence(name, props);
 
     // add an npm script with the same name which delegates to `projen <NAME>`.
-    const npmCommand = `projen ${name}`;
+    const npmCommand = `npx projen ${name}`;
     this.setScript(seq.name, npmCommand);
 
     // add a start menu entry

@@ -10,22 +10,22 @@
   },
   "scripts": {
     "compile": "npx -q --no-install -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\" && npx -q --no-install -c \"jsii-docgen\"",
-    "test": "projen test",
-    "build": "projen build",
+    "test": "npx projen test",
+    "build": "npx projen build",
     "start": "npx projen start -i",
     "projen": "yarn compile && node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
-    "bump": "projen bump",
-    "release": "projen release",
-    "test:watch": "projen test:watch",
-    "test:update": "projen test:update",
-    "projen:upgrade": "projen projen:upgrade",
-    "watch": "projen watch",
-    "package": "projen package",
-    "eslint": "projen eslint",
-    "compat": "projen compat",
-    "docgen": "projen docgen",
-    "readme-macros": "projen readme-macros"
+    "bump": "npx projen bump",
+    "release": "npx projen release",
+    "test:watch": "npx projen test:watch",
+    "test:update": "npx projen test:update",
+    "projen:upgrade": "npx projen projen:upgrade",
+    "watch": "npx projen watch",
+    "package": "npx projen package",
+    "eslint": "npx projen eslint",
+    "compat": "npx projen compat",
+    "docgen": "npx projen docgen",
+    "readme-macros": "npx projen readme-macros"
   },
   "author": {
     "name": "Elad Ben-Israel",
@@ -95,57 +95,57 @@
     },
     "bump": {
       "desc": "Commits a bump to the package version based on conventional commits",
-      "command": "projen bump",
+      "command": "npx projen bump",
       "category": 2
     },
     "release": {
       "desc": "Bumps version & push to master",
-      "command": "projen release",
+      "command": "npx projen release",
       "category": 2
     },
     "test:watch": {
       "desc": "Run jest in watch mode",
-      "command": "projen test:watch",
+      "command": "npx projen test:watch",
       "category": 1
     },
     "test:update": {
       "desc": "Update jest snapshots",
-      "command": "projen test:update",
+      "command": "npx projen test:update",
       "category": 1
     },
     "projen:upgrade": {
       "desc": "upgrades projen to the latest version",
-      "command": "projen projen:upgrade",
+      "command": "npx projen projen:upgrade",
       "category": 3
     },
     "watch": {
       "desc": "Watch & compile in the background",
-      "command": "projen watch",
+      "command": "npx projen watch",
       "category": 0
     },
     "package": {
       "desc": "Create an npm tarball",
-      "command": "projen package",
+      "command": "npx projen package",
       "category": 2
     },
     "eslint": {
       "desc": "Runs eslint against the codebase",
-      "command": "projen eslint",
+      "command": "npx projen eslint",
       "category": 1
     },
     "compat": {
       "desc": "Perform API compatibility check against latest version",
-      "command": "projen compat",
+      "command": "npx projen compat",
       "category": 2
     },
     "docgen": {
       "desc": "Generate API.md from .jsii manifest",
-      "command": "projen docgen",
+      "command": "npx projen docgen",
       "category": 2
     },
     "readme-macros": {
       "desc": "readme-macros",
-      "command": "projen readme-macros"
+      "command": "npx projen readme-macros"
     }
   },
   "version": "0.5.1",
