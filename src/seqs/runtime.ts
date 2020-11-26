@@ -2,8 +2,8 @@ import { spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import * as chalk from 'chalk';
+import { SequenceManifest, SequenceSpec } from './model';
 import { Sequence } from './seq';
-import { SequenceManifest, SequenceSpec } from './spec';
 
 export class SequenceRuntime {
 

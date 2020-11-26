@@ -4,7 +4,7 @@ import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
 import { StartEntryCategory } from '../start';
-import { SequenceSpec, SequenceManifest, SequenceCommandOptions, SequenceCommand } from './spec';
+import { SequenceSpec, SequenceManifest, SequenceCommandOptions, SequenceCommand } from './model';
 
 export interface SequenceOptions {
   /**

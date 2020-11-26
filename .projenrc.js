@@ -1,5 +1,4 @@
 const { JsiiProject, JsonFile } = require('./lib');
-const { Build } = require('./lib/core');
 
 const project = new JsiiProject({
   name: 'projen',
