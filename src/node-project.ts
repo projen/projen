@@ -807,7 +807,7 @@ export class NodeProject extends Project {
 
     this.bootstrapSteps = options.workflowBootstrapSteps ?? [
       { run: this.renderInstallCommand(true) },
-      { run: `npm run ${PROJEN_SCRIPT}` },
+      { run: `${this.runScriptCommand} run ${PROJEN_SCRIPT}` },
     ];
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
@@ -1076,7 +1076,7 @@ export class NodeProject extends Project {
       if (seq.name === name) {
         seq.reset();
         seq.add(command);
-        this.scripts[name] = [`projen ${name}`];
+        this.scripts[name] = [`${this.runScriptCommand} run projen ${name}`];
         return;
       }
     }

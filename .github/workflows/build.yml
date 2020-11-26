@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 10.17.0
       - run: yarn install --check-files --frozen-lockfile
-      - run: npm run projen
+      - run: yarn run run projen
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Set git identity
