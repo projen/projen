@@ -2023,7 +2023,6 @@ Name | Type | Description
 **releaseWorkflow**?🔹 | <code>[GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 **releaseWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **start**?🔹 | <code>[Start](#projen-start)</code> | The start menu.<br/>__*Optional*__
-*static* **DEFAULT_WORKFLOW_BOOTSTRAP**🔹 | <code>Array<any></code> | The default command to execute when bootstrapping projen-based workflows.
 
 ### Methods
 
