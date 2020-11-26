@@ -37,7 +37,7 @@ const project = new JsiiProject({
 
 // since this is projen, we need to be able to compile without `projen` itself
 project.setScript('compile', project.compileCmd.commands.join(' && '));
-project.setScript('projen', 'yarn compile && node .projenrc.js')
+project.setScript('projen', 'yarn compile && node bin/projen');
 
 project.gitignore.include('templates/**');
 

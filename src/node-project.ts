@@ -786,7 +786,8 @@ export class NodeProject extends Project {
       this.start = new Start(this, options.startOptions ?? {});
     }
 
-    this.setScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
+    // script to run the CLI
+    this.setScript(PROJEN_SCRIPT, 'projen');
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
