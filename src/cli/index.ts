@@ -1,12 +1,12 @@
 import * as yargs from 'yargs';
-import { Sequences } from '../core';
+import { Sequences } from '../seqs';
 import { synth } from './synth';
 
 function main() {
   const ya = yargs;
   ya.commandDir('cmds');
 
-  addBuildCommands(ya);
+  addSequences(ya);
 
   ya.recommendCommands();
   ya.wrap(yargs.terminalWidth());
@@ -20,12 +20,12 @@ function main() {
   }
 }
 
-function addBuildCommands(ya: yargs.Argv) {
+function addSequences(ya: yargs.Argv) {
   const workdir = '.';
   const builds = new Sequences(workdir);
   for (const cmd of Object.values(builds.all)) {
     ya.command(cmd.name, cmd.description ?? cmd.name, args => {
-      args.option('inspect', { alias: 'i', desc: 'show all tasks in this command' });
+      args.option('inspect', { alias: 'i', desc: 'show all commands in this sequence' });
 
       const argv = args.argv;
       if (argv.inspect) {

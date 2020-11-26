@@ -1,14 +1,9 @@
-import { spawnSync } from 'child_process';
-import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
-import { join, resolve } from 'path';
-import * as chalk from 'chalk';
 import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
 import { StartEntryCategory } from '../start';
-
-const FILE_SUFFIX = 'seq.json';
+import { SequenceSpec, TaskOptions } from './spec';
 
 export interface SequenceOptions {
   /**
@@ -44,6 +39,8 @@ export interface SequenceProps extends SequenceOptions {
  * A modeled sequence of shell commands.
  */
 export class Sequence extends Component {
+  public static readonly FILE_SUFFIX = 'seq.json';
+
   private readonly spec: SequenceSpec;
 
   /**
@@ -75,7 +72,7 @@ export class Sequence extends Component {
       env: props.env ?? {},
     };
 
-    new JsonFile(project, `${PROJEN_DIR}/${name}.${FILE_SUFFIX}`, {
+    new JsonFile(project, `${PROJEN_DIR}/${name}.${Sequence.FILE_SUFFIX}`, {
       obj: this.spec,
       marker: true,
     });
@@ -180,110 +177,3 @@ export class Sequence extends Component {
   }
 }
 
-export interface TaskOptions {
-  readonly sources?: string[];
-  readonly artifacts?: string[];
-
-  /**
-   * What invalidates the task so it is executed again.
-   */
-  readonly invalidation?: TaskInvalidation;
-}
-
-export interface Task extends TaskOptions {
-  readonly commands?: string[];
-  readonly sequences?: string[];
-}
-
-export enum TaskInvalidation {
-  /**
-   * Task will always be executed, regardless of the artifact.
-   */
-  ALWAYS,
-
-  // /**
-  //  * Task is only executed if the hash of all files listed in `sources`
-  //  * is different from the hash associated with the artifact.
-  //  *
-  //  * For example, if `sources` is `[ 'file1.txt' ]` and `artifacts` is
-  //  * [ `output.foo` ], then a hash will be calculated on `file1.txt` and
-  //  * will be stored under `output.foo`
-  //  */
-  // HASH
-}
-
-export class Sequences {
-
-  public readonly all: { [name: string]: SequenceSpec };
-
-  constructor(rootdir: string) {
-    const dir = join(rootdir, PROJEN_DIR);
-
-    this.all = {};
-    if (!existsSync(dir) || !statSync(dir).isDirectory()) {
-      return;
-    }
-
-    for (const file of readdirSync(dir)) {
-      const filePath = join(dir, file);
-      if (!file.endsWith(FILE_SUFFIX)) {
-        continue;
-      }
-
-      const cmd = JSON.parse(readFileSync(filePath, 'utf-8')) as SequenceSpec;
-      this.all[cmd.name] = cmd;
-    }
-  }
-
-  public run(cwd: string, name: string) {
-    const cmd = this.all[name];
-    if (!cmd) {
-      throw new Error(`cannot find command ${cmd}`);
-    }
-
-    // evaluating environment
-    const env: { [name: string]: string | undefined } = {
-      ...process.env,
-    };
-
-    console.log(`${chalk.magentaBright('-'.repeat(80))}`);
-
-    for (const [key, value] of Object.entries(cmd.env ?? {})) {
-      if (value.startsWith('$(') && value.endsWith(')')) {
-        const query = value.substring(2, value.length - 1);
-        const result = spawnSync(query, { cwd, shell: true });
-        if (result.status !== 0) {
-          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
-        }
-        env[key] = result.stdout.toString('utf-8').trim();
-      } else {
-        env[key] = value;
-      }
-    }
-
-    for (const task of cmd.tasks) {
-      if (task.sequences) {
-        for (const seq of task.sequences) {
-          this.run(cwd, seq);
-        }
-      }
-
-      for (const script of task.commands ?? []) {
-        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${script}`);
-        const result = spawnSync(script, { cwd, shell: true, stdio: 'inherit', env });
-        if (result.status !== 0) {
-          console.log(chalk.red(`${name} failed in: "${script}" at ${resolve(cwd)}`));
-          process.exit(1);
-        }
-      }
-    }
-  }
-
-}
-
-export interface SequenceSpec {
-  readonly name: string;
-  readonly description?: string;
-  readonly tasks: Task[];
-  readonly env: { [name: string]: string };
-}

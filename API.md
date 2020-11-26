@@ -2001,15 +2001,15 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
-**compileCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**buildCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
+**compileCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**testCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
@@ -2215,14 +2215,14 @@ addSequence(name: string, props?: SequenceProps): Sequence
 ```
 
 * **name** (<code>string</code>)  *No description*
-* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
+* **props** (<code>[SequenceProps](#projen-seqs-sequenceprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
   * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
 
 __Returns__:
-* <code>[Sequence](#projen-core-sequence)</code>
+* <code>[Sequence](#projen-seqs-sequence)</code>
 
 #### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
 
@@ -2334,7 +2334,7 @@ Name | Type | Description
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
-**sequences**🔹 | <code>Array<[Sequence](#projen-core-sequence)></code> | <span></span>
+**sequences**🔹 | <code>Array<[Sequence](#projen-seqs-sequence)></code> | <span></span>
 **github**?🔹 | <code>[GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
@@ -2352,13 +2352,13 @@ addCommand(name: string, command?: string, props?: SequenceOptions): Sequence
 
 * **name** (<code>string</code>)  The sequence name (`projen NAME`).
 * **command** (<code>string</code>)  First command in the sequence (or undefined to start with an empty sequence).
-* **props** (<code>[SequenceOptions](#projen-core-sequenceoptions)</code>)  Options.
+* **props** (<code>[SequenceOptions](#projen-seqs-sequenceoptions)</code>)  Options.
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
 
 __Returns__:
-* <code>[Sequence](#projen-core-sequence)</code>
+* <code>[Sequence](#projen-seqs-sequence)</code>
 
 #### addSequence(name, props?)🔹 <a id="projen-project-addsequence"></a>
 
@@ -2369,14 +2369,14 @@ addSequence(name: string, props?: SequenceProps): Sequence
 ```
 
 * **name** (<code>string</code>)  *No description*
-* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
+* **props** (<code>[SequenceProps](#projen-seqs-sequenceprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
   * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
 
 __Returns__:
-* <code>[Sequence](#projen-core-sequence)</code>
+* <code>[Sequence](#projen-seqs-sequence)</code>
 
 #### addTip(message)🔹 <a id="projen-project-addtip"></a>
 
@@ -3370,10 +3370,10 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
-**watchCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | The "watch" command.
+**watchCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | The "watch" command.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**packageCmd**?🔹 | <code>[Sequence](#projen-core-sequence)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
+**packageCmd**?🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 

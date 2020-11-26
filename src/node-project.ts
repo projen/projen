@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { PROJEN_RC, PROJEN_VERSION } from './common';
-import { Sequence, SequenceProps } from './core/seq';
 import { GithubWorkflow } from './github';
 import { DependabotOptions } from './github/dependabot';
 import { Mergify, MergifyOptions } from './github/mergify';
@@ -13,6 +12,7 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
+import { Sequence, SequenceProps } from './seqs';
 import { Start, StartEntryCategory, StartOptions } from './start';
 import { exec, writeFile } from './util';
 import { Version } from './version';

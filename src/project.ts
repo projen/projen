@@ -5,12 +5,12 @@ import { cleanup } from './cleanup';
 import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
-import { Sequence, SequenceOptions, SequenceProps } from './core';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
+import { Sequence, SequenceOptions, SequenceProps } from './seqs';
 import { Start } from './start';
 import { VsCode } from './vscode';
 

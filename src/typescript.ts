@@ -1,10 +1,10 @@
 import * as path from 'path';
 import { Component } from './component';
-import { Sequence } from './core';
 import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
+import { Sequence } from './seqs';
 import { StartEntryCategory } from './start';
 import { TypedocDocgen } from './typescript-typedoc';
 
