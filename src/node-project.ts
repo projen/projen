@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
+import { PROJEN_RC, PROJEN_VERSION } from './common';
+import { Sequence, SequenceProps } from './core/seq';
 import { GithubWorkflow } from './github';
 import { DependabotOptions } from './github/dependabot';
 import { Mergify, MergifyOptions } from './github/mergify';
@@ -580,6 +581,10 @@ export class NodeProject extends Project {
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
 
+  public readonly compile: Sequence;
+  public readonly test: Sequence;
+  public readonly bld: Sequence;
+
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly devDependencies: Record<string, string> = { };
@@ -646,6 +651,7 @@ export class NodeProject extends Project {
   constructor(options: NodeProjectOptions) {
     super(options);
 
+    this.scripts = {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.processDeps(options);
@@ -655,6 +661,21 @@ export class NodeProject extends Project {
 
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
+
+    this.compile = this.addSequence('compile', {
+      description: 'Only compile',
+      category: StartEntryCategory.BUILD,
+    });
+
+    this.test = this.addSequence('test', {
+      description: 'Run tests',
+      category: StartEntryCategory.TEST,
+    });
+
+    this.bld = this.addSequence('build', {
+      description: 'Full release build (test+compile)',
+      category: StartEntryCategory.BUILD,
+    });
 
     let nodeVersion = '';
 
@@ -679,8 +700,6 @@ export class NodeProject extends Project {
         default: throw new Error(`unexpected package manager ${this.packageManager}`);
       }
     })();
-
-    this.scripts = {};
 
     const renderScripts = () => {
       const result: any = {};
@@ -709,24 +728,23 @@ export class NodeProject extends Project {
     this.testdir = options.testdir ?? 'test';
 
     this.manifest = {
-      '//': GENERATION_DISCLAIMER,
-      'name': options.name,
-      'description': options.description,
-      'repository': !options.repository ? undefined : {
+      name: options.name,
+      description: options.description,
+      repository: !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
         directory: options.repositoryDirectory,
       },
-      'bin': this.bin,
-      'scripts': renderScripts,
-      'author': author,
-      'homepage': options.homepage,
-      'devDependencies': sorted(this.devDependencies),
-      'peerDependencies': sorted(this.peerDependencies),
-      'dependencies': sorted(this.dependencies),
-      'bundledDependencies': sorted(this.bundledDependencies),
-      'keywords': () => Array.from(this.keywords).sort(),
-      'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
+      bin: this.bin,
+      scripts: renderScripts,
+      author: author,
+      homepage: options.homepage,
+      devDependencies: sorted(this.devDependencies),
+      peerDependencies: sorted(this.peerDependencies),
+      dependencies: sorted(this.dependencies),
+      bundledDependencies: sorted(this.bundledDependencies),
+      keywords: () => Array.from(this.keywords).sort(),
+      engines: nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
@@ -775,10 +793,8 @@ export class NodeProject extends Project {
     if (options.start ?? true) {
       this.start = new Start(this, options.startOptions ?? {});
     }
-    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`, {
-      startDesc: 'Synthesize project configuration from .projenrc.js',
-      startCategory: StartEntryCategory.MAINTAIN,
-    });
+
+    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -1070,16 +1086,21 @@ export class NodeProject extends Project {
    * @param command The command to execute
    * @param options Options such as start menu description and category
    */
-  public addScript(name: string, command: string, options: ScriptOptions = { }) {
-    this.scripts[name] = [command];
+  public addScript(name: string, command: string) {
+    this.scripts[name] = this.scripts[name] ?? [];
 
-    if (options.startDesc) {
-      this.start?.addEntry(name, {
-        desc: options.startDesc,
-        command: `${this.runScriptCommand} ${name}`,
-        category: options.startCategory,
-      });
+    // hijack `addScript()` by adding a shell task into the sequence
+    // and setting the npm script to be `npx projen SCRIPT`.
+    for (const seq of this.sequences) {
+      if (seq.name === name) {
+        seq.add(command);
+        this.scripts[name] = [`projen ${name}`];
+        return;
+      }
     }
+
+    // add a command to the npm script
+    this.scripts[name].push(command);
   }
 
   /**
@@ -1099,14 +1120,28 @@ export class NodeProject extends Project {
     return name in this.scripts;
   }
 
-  /**
-   * Appends a command to run for an npm script. Joined by "&&"
-   * @param name The name of the script
-   * @param commands The commands to append.
-   */
-  public addScriptCommand(name: string, ...commands: string[]) {
-    this.scripts[name] = this.scripts[name] ?? [];
-    this.scripts[name].push(...commands);
+  public addSequence(name: string, props: SequenceProps = { }) {
+    const seq = super.addSequence(name, props);
+    const command = `projen ${name}`;
+
+    this.addScript(seq.name, command);
+    this.start?.addEntry(name, {
+      desc: props.description ?? name,
+      command: command,
+      category: props.category,
+    });
+
+    return seq;
+  }
+
+  public renderShellCommands(commands: string[]) {
+    return commands.map(c => {
+      if (c.startsWith(this.runScriptCommand)) {
+        return c;
+      } else {
+        return `npm exec -- ${c}`;
+      }
+    });
   }
 
   /**
@@ -1114,23 +1149,19 @@ export class NodeProject extends Project {
    * @param commands The commands to execute during compile
    */
   public addCompileCommand(...commands: string[]) {
-    this.addScriptCommand('compile', ...commands);
-
-    this.start?.addEntry('compile', {
-      desc: 'Only compile',
-      command: `${this.runScriptCommand} compile`,
-      category: StartEntryCategory.BUILD,
-    });
+    this.compile.addCommands(commands);
   }
 
   public addTestCommand(...commands: string[]) {
-    this.addScriptCommand('test', ...commands);
+    this.test.addCommands(commands);
+  }
 
-    this.start?.addEntry('test', {
-      desc: 'Run tests',
-      command: `${this.runScriptCommand} test`,
-      category: StartEntryCategory.TEST,
-    });
+  /**
+   * Adds commands to run as part of `yarn build`.
+   * @param commands The commands to add
+   */
+  public addBuildCommand(...commands: string[]) {
+    this.bld.addCommands(commands);
   }
 
   public addFields(fields: { [name: string]: any }) {
@@ -1597,24 +1628,6 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
-}
-
-/**
- * Options for adding scripts.
- */
-export interface ScriptOptions {
-  /**
-   * Start menu description for this script
-   * @default - no description
-   */
-  readonly startDesc?: string;
-
-  /**
-   * Category in start menu
-   *
-   * @default StartEntryCategory.MISC
-   */
-  readonly startCategory?: StartEntryCategory;
 }
 
 function parseDep(dep: string) {

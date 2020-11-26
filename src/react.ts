@@ -149,24 +149,28 @@ export class ReactComponent extends Component {
     }
 
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
-    project.addScript('start', 'react-scripts start', {
-      startDesc: 'Starts the react application',
-      startCategory: StartEntryCategory.BUILD,
+    project.addSequence('start', {
+      description: 'Starts the react application',
+      category: StartEntryCategory.BUILD,
+      shell: 'react-scripts start',
     });
 
-    project.addScript('build', 'react-scripts build', {
-      startDesc: 'Creates an optimized production build of your React application',
-      startCategory: StartEntryCategory.BUILD,
+    project.addSequence('build', {
+      description: 'Creates an optimized production build of your React application',
+      category: StartEntryCategory.BUILD,
+      shell: 'react-scripts build',
     });
 
-    project.addScript('eject', 'react-scripts eject', {
-      startDesc: 'Ejects your React application from react-scripts',
-      startCategory: StartEntryCategory.MISC,
+    project.addSequence('eject', {
+      description: 'Ejects your React application from react-scripts',
+      category: StartEntryCategory.MISC,
+      shell: 'react-scripts eject',
     });
 
-    project.addScript('test', 'react-scripts test', {
-      startDesc: 'Runs tests',
-      startCategory: StartEntryCategory.TEST,
+    project.addSequence('test', {
+      description: 'Runs tests',
+      category: StartEntryCategory.TEST,
+      shell: 'react-scripts test',
     });
 
     project.npmignore?.exclude('# Build', '/build');

@@ -1457,7 +1457,8 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  *No description* 
+  * **obj** (<code>any</code>)  The object that will be serialized. 
+  * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
 
 
 
@@ -1466,6 +1467,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**marker**🔹 | <code>boolean</code> | <span></span>
 **obj**🔹 | <code>json</code> | <span></span>
 
 ### Methods
@@ -2012,12 +2014,15 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
+**bld**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**compile**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**test**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
@@ -2045,6 +2050,19 @@ addBins(bins: Map<string, string>): void
 ```
 
 * **bins** (<code>Map<string, string></code>)  *No description*
+
+
+
+
+#### addBuildCommand(...commands)🔹 <a id="projen-nodeproject-addbuildcommand"></a>
+
+Adds commands to run as part of `yarn build`.
+
+```ts
+addBuildCommand(...commands: string[]): void
+```
+
+* **commands** (<code>string</code>)  The commands to add.
 
 
 
@@ -2248,6 +2266,23 @@ addScripts(scripts: Map<string, string>): void
 
 
 
+#### addSequence(name, props?)🔹 <a id="projen-nodeproject-addsequence"></a>
+
+Adds a sequence to this project.
+
+```ts
+addSequence(name: string, props?: SequenceProps): Sequence
+```
+
+* **name** (<code>string</code>)  *No description*
+* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
+  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+  * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
+
+__Returns__:
+* <code>[Sequence](#projen-core-sequence)</code>
+
 #### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
 
 
@@ -2313,6 +2348,22 @@ removeScript(name: string): void
 
 
 
+#### renderShellCommands(commands)🔹 <a id="projen-nodeproject-rendershellcommands"></a>
+
+Allows subclasses to customize how shell commands are rendered.
+
+For example, in `NodeProject` this is used to add an `npm exec --` prefix
+to each command to it is executed in the npm environment.
+
+```ts
+renderShellCommands(commands: Array<string>): Array<string>
+```
+
+* **commands** (<code>Array<string></code>)  *No description*
+
+__Returns__:
+* <code>Array<string></code>
+
 
 
 ## class Project 🔹 <a id="projen-project"></a>
@@ -2344,12 +2395,30 @@ Name | Type | Description
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
+**sequences**🔹 | <code>Array<[Sequence](#projen-core-sequence)></code> | <span></span>
 **github**?🔹 | <code>[GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
 
 ### Methods
 
+
+#### addSequence(name, props?)🔹 <a id="projen-project-addsequence"></a>
+
+Adds a sequence to this project.
+
+```ts
+addSequence(name: string, props?: SequenceProps): Sequence
+```
+
+* **name** (<code>string</code>)  The sequence name (`projen NAME`).
+* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  Props.
+  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+  * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
+
+__Returns__:
+* <code>[Sequence](#projen-core-sequence)</code>
 
 #### addTip(message)🔹 <a id="projen-project-addtip"></a>
 
@@ -2402,6 +2471,22 @@ preSynthesize(): void
 
 
 
+
+#### renderShellCommands(commands)🔹 <a id="projen-project-rendershellcommands"></a>
+
+Allows subclasses to customize how shell commands are rendered.
+
+For example, in `NodeProject` this is used to add an `npm exec --` prefix
+to each command to it is executed in the npm environment.
+
+```ts
+renderShellCommands(commands: Array<string>): Array<string>
+```
+
+* **commands** (<code>Array<string></code>)  The commands to render.
+
+__Returns__:
+* <code>Array<string></code>
 
 #### synth()🔹 <a id="projen-project-synth"></a>
 
@@ -3331,22 +3416,6 @@ Name | Type | Description
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
-### Methods
-
-
-#### addBuildCommand(...commands)🔹 <a id="projen-typescriptproject-addbuildcommand"></a>
-
-Adds commands to run as part of `yarn build`.
-
-```ts
-addBuildCommand(...commands: string[]): void
-```
-
-* **commands** (<code>string</code>)  The commands to add.
-
-
-
-
 
 
 ## class TypescriptConfig 🔹 <a id="projen-typescriptconfig"></a>
@@ -3444,7 +3513,8 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  *No description* 
+  * **obj** (<code>any</code>)  The object that will be serialized. 
+  * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
 
 
 ### Methods
@@ -4441,9 +4511,10 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>any</code> | <span></span>
+**obj**🔹 | <code>any</code> | The object that will be serialized.
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -5481,9 +5552,10 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>any</code> | <span></span>
+**obj**🔹 | <code>any</code> | The object that will be serialized.
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 

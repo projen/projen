@@ -627,14 +627,19 @@ export class Jest {
       jestOpts.push('--updateSnapshot');
     }
 
-    this.project.addTestCommand(`jest ${jestOpts.join(' ')}`);
+    this.project.test.add(`jest ${jestOpts.join(' ')}`);
 
-    this.project.addScript('test:watch', 'jest --watch', {
-      startDesc: 'Run jest in watch mode',
-      startCategory: StartEntryCategory.TEST,
+    this.project.addSequence('test:watch', {
+      description: 'Run jest in watch mode',
+      category: StartEntryCategory.TEST,
+      shell: 'jest --watch',
     });
 
-    this.project.addScript('test:update', 'jest --updateSnapshot');
+    this.project.addSequence('test:update', {
+      description: 'Update jest snapshots',
+      category: StartEntryCategory.TEST,
+      shell: 'jest --updateSnapshot',
+    });
   }
 
   public addReporter(reporter: JestReporter) {

@@ -174,10 +174,19 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    this.addScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`, {
-      startDesc: 'Perform API compatibility check against latest version',
-      startCategory: StartEntryCategory.RELEASE,
+    const compatSeq = this.addSequence('compat', {
+      description: 'Perform API compatibility check against latest version',
+      category: StartEntryCategory.RELEASE,
     });
+
+    compatSeq.add(`jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
+
+    const compat = options.compat ?? false;
+    if (compat) {
+      this.compile.addSequence(compatSeq);
+    } else {
+      this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
+    }
 
     this.addScript('compile', `jsii ${jsiiFlags}`);
     this.addScript('watch', `jsii -w ${jsiiFlags}`);
@@ -250,13 +259,6 @@ export class JsiiProject extends TypeScriptProject {
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
-    }
-
-    const compat = options.compat ?? false;
-    if (compat) {
-      this.addCompileCommand(`${this.runScriptCommand} compat`);
-    } else {
-      this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
 
     // jsii updates .npmignore, so we make it writable

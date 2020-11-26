@@ -18,7 +18,7 @@ export class Start extends Component {
     // we have to explicitly add and not use `addScript` options since
     // this `project.start` is undefined until we finish to initialize.
     this.addEntry('start', {
-      command: `${project.runScriptCommand} start`,
+      command: 'npx projen start',
       desc: 'Shows this menu',
     });
   }

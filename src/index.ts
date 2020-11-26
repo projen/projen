@@ -26,5 +26,6 @@ export * from './sample-file';
 export * from './yaml';
 
 // export submobules
+export * as core from './core';
 export * as github from './github';
 export * as vscode from './vscode';

@@ -114,34 +114,35 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
 
-    this.addScript('watch', 'tsc -w', {
-      startDesc: 'Watch & compile in the background',
-      startCategory: StartEntryCategory.BUILD,
+    this.addSequence('watch', {
+      description: 'Watch & compile in the background',
+      category: StartEntryCategory.BUILD,
+      shell: 'tsc -w',
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.addBuildCommand(`${this.runScriptCommand} compile`, `${this.runScriptCommand} test`);
+      this.bld.addSequence(this.compile);
+      this.bld.addSequence(this.test);
     } else {
-      this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
+      this.bld.addSequence(this.test);
+      this.bld.addSequence(this.compile);
     }
 
     if (options.package ?? true) {
-      const packageCommand = [
-        'rm -fr dist',
-        'mkdir -p dist/js',
-        `${this.packageManager} pack`,
-        'mv *.tgz dist/js/',
-      ].join(' && ');
-
-      this.addScript('package', packageCommand, {
-        startDesc: 'Create an npm tarball',
-        startCategory: StartEntryCategory.RELEASE,
+      const packaging = this.addSequence('package', {
+        description: 'Create an npm tarball',
+        category: StartEntryCategory.RELEASE,
       });
 
-      this.addBuildCommand(`${this.runScriptCommand} package`);
+      packaging.add('rm -fr dist');
+      packaging.add('mkdir -p dist/js');
+      packaging.add(`${this.packageManager} pack`);
+      packaging.add('mv *.tgz dist/js/');
+
+      this.bld.addSequence(packaging);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -262,21 +263,6 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
-  }
-
-  /**
-   * Adds commands to run as part of `yarn build`.
-   * @param commands The commands to add
-   */
-  public addBuildCommand(...commands: string[]) {
-    this.addScriptCommand('build', ...commands);
-
-    this.start?.addEntry('build', {
-      desc: 'Full release build (test+compile)',
-      command: `${this.runScriptCommand} build`,
-      category: StartEntryCategory.BUILD,
-    });
-
   }
 }
 

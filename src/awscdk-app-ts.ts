@@ -113,25 +113,37 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addCdkDependency('@aws-cdk/core');
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    this.addScript('cdk', 'cdk');
-    this.addScript('synth', 'cdk synth', {
-      startDesc: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
-      startCategory: StartEntryCategory.BUILD,
+    const synth = this.addSequence('synth', {
+      description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
+      category: StartEntryCategory.BUILD,
+      shell: 'cdk synth',
     });
-    this.addScript('deploy', 'cdk deploy', {
-      startDesc: 'Deploys your cdk app to the AWS cloud',
-      startCategory: StartEntryCategory.RELEASE,
-    });
-    this.addScript('diff', 'cdk diff');
 
-    this.addScript('compile', 'true');
+    this.addSequence('deploy', {
+      description: 'Deploys your CDK app to the AWS cloud',
+      category: StartEntryCategory.RELEASE,
+      shell: 'cdk deploy',
+    });
+
+    this.addSequence('destroy', {
+      description: 'Destroys your cdk app in the AWS cloud',
+      category: StartEntryCategory.RELEASE,
+      shell: 'cdk destroy',
+    });
+
+    this.addSequence('diff', {
+      description: 'Diffs the currently deployed app against your code',
+      category: StartEntryCategory.MISC,
+      shell: 'cdk diff',
+    });
+
+    // no compile step because we do all of it in typescript directly
+    this.compile.reset();
+
     this.removeScript('watch'); // because we use ts-node
-    this.addBuildCommand(`${this.runScriptCommand} synth`);
 
-    this.addScript('destroy', 'cdk destroy', {
-      startDesc: 'Destroys your cdk app in the AWS cloud',
-      startCategory: StartEntryCategory.RELEASE,
-    });
+    // add synth to the build
+    this.bld.addSequence(synth);
 
     this.cdkConfig = {
       app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,

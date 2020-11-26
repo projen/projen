@@ -1,4 +1,5 @@
 const { JsiiProject, JsonFile } = require('./lib');
+const { Build } = require('./lib/core');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -41,11 +42,11 @@ project.addScript('projen', 'yarn compile && node .projenrc.js');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
-project.addBuildCommand(
-  'mv README.md README.md.bak',
-  'cat README.md.bak | npx markmac > README.md',
-  'rm README.md.bak',
-);
+const macros = project.addSequence('readme-macros')
+macros.add('mv README.md README.md.bak');
+macros.add('cat README.md.bak | npx markmac > README.md');
+macros.add('rm README.md.bak');
+project.bld.addSequence(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {
@@ -56,6 +57,5 @@ new JsonFile(project, '.markdownlint.json', {
     }
   }
 });
-
 
 project.synth();

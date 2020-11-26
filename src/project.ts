@@ -5,6 +5,7 @@ import { cleanup } from './cleanup';
 import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { Sequence, SequenceProps } from './core';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
@@ -75,8 +76,11 @@ export class Project {
    */
   public readonly vscode: VsCode | undefined;
 
+  public readonly sequences: Sequence[];
+
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
+    this.sequences = [];
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -124,6 +128,26 @@ export class Project {
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
     return this.components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+  }
+
+  /**
+   * Adds a sequence to this project.
+   * @param name The sequence name (`projen NAME`)
+   * @param props Props
+   */
+  public addSequence(name: string, props: SequenceProps = { }): Sequence {
+    return new Sequence(this, name, props);
+  }
+
+  /**
+   * Allows subclasses to customize how shell commands are rendered.
+   * For example, in `NodeProject` this is used to add an `npm exec --` prefix
+   * to each command to it is executed in the npm environment.
+   * @param commands The commands to render
+   * @returns Commands ready to execute in a shell.
+   */
+  public renderShellCommands(commands: string[]) {
+    return commands;
   }
 
   /**
@@ -252,3 +276,4 @@ export class Project {
     this.subprojects.push(subproject);
   }
 }
+
