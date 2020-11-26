@@ -254,7 +254,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: Record<string, un
  * @param spec The name of the external module to load
  * @param args Command line arguments (incl. project type)
  */
-function newProjectFromModule(baseDir: string, spec: string, args: any) {
+async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
   // collect projects by looking up all .jsii modules in `node_modules`.
@@ -283,7 +283,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
   }
 
   // include a dev dependency for the external module
-  newProject(baseDir, type, args, {
+  await newProject(baseDir, type, args, {
     devDeps: JSON.stringify([specDependencyInfo]),
   });
 }
@@ -294,7 +294,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
+async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -308,7 +308,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
-    synth(); // eslint-disable-line @typescript-eslint/no-floating-promises
+    await synth();
   }
 }
 

@@ -19,65 +19,7 @@ export async function synth() {
   let pushInitialToGithub = false;
 
   if (!fs.existsSync(gitFolder)) {
-    logging.info('We notice that you do not have a local git repository.');
-    const { setUpGit } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'setUpGit',
-        message: 'Do you want to set that up now?',
-      },
-    ]);
-
-    if (setUpGit) {
-      const { plan } = await inquirer.prompt(githubPlanOptions);
-
-      const { gh, git } = plan;
-
-      if (!git && !gh) {
-        logging.info('Ok! Have a great day.');
-      }
-
-      if (git) {
-        const { gitRepoURL } = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'gitRepoURL',
-            message: 'What is the repo? (example: https://github.com/projen/projen)',
-          },
-        ]);
-
-        exec('git init');
-
-        let formattedGitRepoURL = gitRepoURL;
-        if (!gitRepoURL.includes('https')) {
-          formattedGitRepoURL = `https://github/${gitRepoURL}`;
-        }
-
-        exec(`git remote add origin ${formattedGitRepoURL}`);
-
-        logging.info(`Great! We've 'git init'd for you and set the remote to ${formattedGitRepoURL}`);
-      }
-
-      if (!git && gh) {
-        logging.info('Ok! We will make you a repository on Github.');
-
-        const { gitProjectName } = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'gitProjectName',
-            message: 'What would you like to name it?',
-            default: path.basename(path.dirname(process.cwd())),
-          },
-        ]);
-
-        logging.info(`Wow! ${gitProjectName} is such a great name!`);
-
-        exec('git init');
-
-        exec(`gh repo create ${gitProjectName}`);
-        pushInitialToGithub = true;
-      }
-    }
+    pushInitialToGithub = await askAboutGit();
   }
 
   // if node_modules/projen is not a directory or does not exist, create a
@@ -102,6 +44,69 @@ export async function synth() {
   }
 }
 
+async function askAboutGit(): Promise<boolean> {
+  logging.info('We notice that you do not have a local git repository.');
+  const { setUpGit } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'setUpGit',
+      message: 'Do you want to set that up now?',
+    },
+  ]);
+
+  if (setUpGit) {
+    const { plan } = await inquirer.prompt(githubPlanOptions);
+
+    const { gh, git } = plan;
+
+    if (!git && !gh) {
+      logging.info('Ok! Have a great day.');
+    }
+
+    if (git) {
+      const { gitRepoURL } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'gitRepoURL',
+          message: 'What is the repo? (example: https://github.com/projen/projen)',
+        },
+      ]);
+
+      exec('git init');
+
+      let formattedGitRepoURL = gitRepoURL;
+      if (!gitRepoURL.includes('https')) {
+        formattedGitRepoURL = `https://github.com/${gitRepoURL}`;
+      }
+
+      exec(`git remote add origin ${formattedGitRepoURL}`);
+
+      logging.info(`Great! We've 'git init'd for you and set the remote to ${formattedGitRepoURL}`);
+    }
+
+    if (!git && gh) {
+      logging.info('Ok! We will make you a repository on GitHub.');
+
+      const { gitProjectName } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'gitProjectName',
+          message: 'What would you like to name it?',
+          default: path.basename(path.dirname(process.cwd())),
+        },
+      ]);
+
+      logging.info(`Wow! ${gitProjectName} is such a great name!`);
+
+      exec('git init');
+
+      exec(`gh repo create ${gitProjectName}`);
+      return true;
+    }
+  }
+  return false;
+}
+
 const githubPlanOptions = [
   {
     type: 'list',
@@ -119,14 +124,14 @@ const githubPlanOptions = [
           gh: true,
           git: false,
         },
-        name: 'I don\'t have a git repository and want to make one on Github',
+        name: 'I don\'t have a git repository and want to make one on GitHub',
       },
       {
         value: {
           gh: false,
           git: false,
         },
-        name: 'I don\'t have a git repository and I don\'t want to use Github',
+        name: 'I don\'t have a git repository and I don\'t want to use GitHub',
       },
     ],
   },
