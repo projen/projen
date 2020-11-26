@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.2 (2020-11-25)
+
+
+### Bug Fixes
+
+* **new:** cannot pass string paramaeters as CLI switches ([#335](https://github.com/projen/projen/issues/335)) ([db51548](https://github.com/projen/projen/commit/db515481e14a59ec014209e082c57496a56dc769)), closes [#305](https://github.com/projen/projen/issues/305)
+
 ### 0.5.1 (2020-11-24)
 
 
