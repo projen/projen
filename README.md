@@ -44,12 +44,12 @@ list):
 * [awscdk-construct](https://github.com/projen/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
 * [jsii](https://github.com/projen/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
-* [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-nextjsproject) - Next.js project without TypeScript.
-* [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-nextjstypescriptproject) - Next.js project with TypeScript.
+* [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjsproject) - Next.js project without TypeScript.
+* [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/projen/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/projen/projen/blob/master/API.md#projen-project) - Base project.
-* [react](https://github.com/projen/projen/blob/master/API.md#projen-reactproject) - React project without TypeScript.
-* [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-reacttypescriptproject) - React project with TypeScript.
+* [react](https://github.com/projen/projen/blob/master/API.md#projen-web.reactproject) - React project without TypeScript.
+* [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.reacttypescriptproject) - React project with TypeScript.
 * [typescript](https://github.com/projen/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
 * [typescript-app](https://github.com/projen/projen/blob/master/API.md#projen-typescriptappproject) - TypeScript app.
 <!-- </macro> -->

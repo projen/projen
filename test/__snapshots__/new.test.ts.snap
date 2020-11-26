@@ -376,9 +376,9 @@ project.synth();
 `;
 
 exports[`projen new nextjs 1`] = `
-"const { NextJsProject } = require('projen');
+"const { web } = require('projen');
 
-const project = new NextJsProject({
+const project = new web.NextJsProject({
   name: \\"my-project\\",
 
   /* NextJsCommonProjectOptions */
@@ -466,9 +466,9 @@ project.synth();
 `;
 
 exports[`projen new nextjs-ts 1`] = `
-"const { NextJsTypeScriptProject } = require('projen');
+"const { web } = require('projen');
 
-const project = new NextJsTypeScriptProject({
+const project = new web.NextJsTypeScriptProject({
   name: \\"my-project\\",
 
   /* NextJsCommonProjectOptions */
@@ -662,9 +662,9 @@ project.synth();
 `;
 
 exports[`projen new react 1`] = `
-"const { ReactProject } = require('projen');
+"const { web } = require('projen');
 
-const project = new ReactProject({
+const project = new web.ReactProject({
   name: \\"my-project\\",
 
   /* NodeProjectCommonOptions */
@@ -748,9 +748,9 @@ project.synth();
 `;
 
 exports[`projen new react-ts 1`] = `
-"const { ReactTypeScriptProject } = require('projen');
+"const { web } = require('projen');
 
-const project = new ReactTypeScriptProject({
+const project = new web.ReactTypeScriptProject({
   name: \\"my-project\\",
 
   /* NodeProjectCommonOptions */

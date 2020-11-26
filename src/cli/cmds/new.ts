@@ -99,8 +99,10 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
     process.exit(1);
   }
 
+  const [importName] = type.typename.split('.');
+
   const lines = [
-    `const { ${type.typename} } = require('${type.moduleName}');`,
+    `const { ${importName} } = require('${type.moduleName}');`,
     '',
     `const project = new ${type.typename}(${renderParams(type, params, comments)});`,
     '',

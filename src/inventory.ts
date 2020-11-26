@@ -107,7 +107,9 @@ export function discover(...moduleDirs: string[]) {
       continue;
     }
 
-    const [, typename] = fqn.split('.');
+    // projen.web.ReactProject -> web.ReactProject
+    const typename = fqn.substring(fqn.indexOf('.') + 1);
+
     const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
