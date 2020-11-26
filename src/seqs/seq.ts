@@ -190,7 +190,6 @@ class Sequences extends Component {
     return found;
   }
 
-
   private readonly seqs: { [name: string]: SequenceSpec };
   private readonly env: { [name: string]: string };
 
@@ -217,6 +216,11 @@ class Sequences extends Component {
     this.seqs[name] = spec;
   }
 
+  /**
+   * Adds global environment to be included in all sequences of this project.
+   * @param name
+   * @param value
+   */
   public addEnv(name: string, value: string) {
     this.env[name] = value;
   }
