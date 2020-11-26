@@ -567,14 +567,6 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
-  /**
-   * The default command to execute when bootstrapping projen-based workflows.
-   */
-  public static readonly DEFAULT_WORKFLOW_BOOTSTRAP: any[] = [
-    { run: 'yarn install --frozen-lockfile' },
-    { run: `yarn ${PROJEN_SCRIPT}` },
-  ];
-
   public readonly npmignore?: IgnoreFile;
   public readonly mergify?: Mergify;
   public readonly manifest: any;
@@ -813,7 +805,10 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
+    this.bootstrapSteps = options.workflowBootstrapSteps ?? [
+      { run: this.renderInstallCommand(true) },
+      { run: `npx ${PROJEN_SCRIPT}` },
+    ];
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -1315,22 +1310,22 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    exec(this.installDepsCommand, { cwd: outdir });
+    exec(this.renderInstallCommand(process.env.CI !== undefined), { cwd: outdir });
 
     this.resolveDependencies(outdir);
   }
 
-  private get installDepsCommand() {
+  private renderInstallCommand(frozen: boolean) {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
         return [
           'yarn install',
           '--check-files', // ensure all modules exist (especially projen which was just removed).
-          ...process.env.CI ? ['--frozen-lockfile'] : [],
+          ...frozen ? ['--frozen-lockfile'] : [],
         ].join(' ');
 
       case NodePackageManager.NPM:
-        return process.env.CI
+        return frozen
           ? 'npm ci'
           : 'npm install';
 
