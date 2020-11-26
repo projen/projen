@@ -9,11 +9,11 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "compile": "projen compile",
+    "compile": "npm exec -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\" && npm exec -c \"jsii-docgen\"",
     "test": "projen test",
     "build": "projen build",
     "start": "npx projen start -i",
-    "projen": "yarn compile && node .projenrc.js",
+    "projen": "node .projenrc.js",
     "no-changes": "(git log --oneline -1 | grep -q \"chore(release):\") && echo \"No changes to release.\"",
     "bump": "projen bump",
     "release": "projen release",

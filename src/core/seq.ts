@@ -130,6 +130,25 @@ export class Sequence extends Component {
   }
 
   /**
+   * Returns a list of all the shell commands that make up this sequence, which
+   * can technically be executed as a shell script.
+   *
+   * Sub-sequences will be expanded to their specific commands.
+   */
+  public get commands() {
+    const result = new Array<string>();
+    for (const task of this.spec.tasks) {
+      result.push(...task.commands ?? []);
+
+      for (const seq of task.sequences ?? []) {
+        result.push(`projen ${seq}`);
+      }
+    }
+
+    return result;
+  }
+
+  /**
    * Adds another build as a task
    * @param builds
    */

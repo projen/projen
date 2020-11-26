@@ -36,8 +36,8 @@ const project = new JsiiProject({
   compileBeforeTest: true, // since we want to run the cli in tests
 });
 
-// since this is projen, we need to compile before running projen, dah!
-project.setScript('projen', 'yarn compile && node .projenrc.js');
+// since this is projen, we need to be able to compile without `projen` itself
+project.setScript('compile', project.compileCmd.commands.join(' && '));
 
 project.gitignore.include('templates/**');
 
