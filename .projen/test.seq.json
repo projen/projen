@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- jest --passWithNoTests --updateSnapshot"
+        "npm exec -c \"jest --passWithNoTests --updateSnapshot\""
       ]
     },
     {

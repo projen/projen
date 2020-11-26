@@ -680,16 +680,14 @@ export class Jest {
 
     this.project.testCmd.add(`jest ${jestOpts.join(' ')}`);
 
-    this.project.addSequence('test:watch', {
+    this.project.addCommand('test:watch', 'jest --watch', {
       description: 'Run jest in watch mode',
       category: StartEntryCategory.TEST,
-      shell: 'jest --watch',
     });
 
-    this.project.addSequence('test:update', {
+    this.project.addCommand('test:update', 'jest --updateSnapshot', {
       description: 'Update jest snapshots',
       category: StartEntryCategory.TEST,
-      shell: 'jest --updateSnapshot',
     });
   }
 }

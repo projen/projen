@@ -662,17 +662,17 @@ export class NodeProject extends Project {
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
 
-    this.compileCmd = this.addSequence('compile', {
+    this.compileCmd = this.addCommand('compile', undefined, {
       description: 'Only compile',
       category: StartEntryCategory.BUILD,
     });
 
-    this.testCmd = this.addSequence('test', {
+    this.testCmd = this.addCommand('test', undefined, {
       description: 'Run tests',
       category: StartEntryCategory.TEST,
     });
 
-    this.buildCmd = this.addSequence('build', {
+    this.buildCmd = this.addCommand('build', undefined, {
       description: 'Full release build (test+compile)',
       category: StartEntryCategory.BUILD,
     });
@@ -993,7 +993,7 @@ export class NodeProject extends Project {
 
     // override any scripts from options (if specified)
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
-      this.addSequence(cmdname, { shell });
+      this.addCommand(cmdname, shell);
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -1109,12 +1109,15 @@ export class NodeProject extends Project {
 
   public addSequence(name: string, props: SequenceProps = { }) {
     const seq = super.addSequence(name, props);
-    const command = `projen ${name}`;
 
-    this.setScript(seq.name, command);
+    // add an npm script with the same name which delegates to `projen <NAME>`.
+    const npmCommand = `projen ${name}`;
+    this.setScript(seq.name, npmCommand);
+
+    // add a start menu entry
     this.start?.addEntry(name, {
       desc: props.description ?? name,
-      command: command,
+      command: npmCommand,
       category: props.category,
     });
 
@@ -1126,7 +1129,7 @@ export class NodeProject extends Project {
       if (c.startsWith(this.runScriptCommand)) {
         return c;
       } else {
-        return `npm exec -- ${c}`;
+        return `npm exec -c "${c}"`;
       }
     });
   }

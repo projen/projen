@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- jest --updateSnapshot"
+        "npm exec -c \"jest --updateSnapshot\""
       ]
     }
   ],

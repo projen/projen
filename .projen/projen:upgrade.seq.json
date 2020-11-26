@@ -3,7 +3,12 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- yarn upgrade -L projen && CI=\"\" yarn projen"
+        "npm exec -c \"yarn upgrade -L projen\""
+      ]
+    },
+    {
+      "commands": [
+        "npm exec -c \"CI=\"\" yarn projen\""
       ]
     }
   ],

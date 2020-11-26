@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- jest --watch"
+        "npm exec -c \"jest --watch\""
       ]
     }
   ],

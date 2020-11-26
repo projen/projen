@@ -3,17 +3,17 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- mv README.md README.md.bak"
+        "npm exec -c \"mv README.md README.md.bak\""
       ]
     },
     {
       "commands": [
-        "npm exec -- cat README.md.bak | npx markmac > README.md"
+        "npm exec -c \"cat README.md.bak | markmac > README.md\""
       ]
     },
     {
       "commands": [
-        "npm exec -- rm README.md.bak"
+        "npm exec -c \"rm README.md.bak\""
       ]
     }
   ],

@@ -11,10 +11,9 @@ export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDeps('jsii-docgen');
 
-    project.addSequence('docgen', {
+    project.addCommand('docgen', 'jsii-docgen', {
       description: 'Generate API.md from .jsii manifest',
       category: StartEntryCategory.RELEASE,
-      shell: 'jsii-docgen',
     });
     project.compileCmd.add('jsii-docgen');
     project.gitignore.include('/API.md');

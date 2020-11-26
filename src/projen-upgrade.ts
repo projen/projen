@@ -35,11 +35,13 @@ export class ProjenUpgrade {
   constructor(project: NodeProject, options: ProjenUpgradeOptions = { }) {
     const script = 'projen:upgrade';
 
-    project.addSequence(script, {
+    const upgrade = project.addCommand(script, undefined, {
       description: 'upgrades projen to the latest version',
       category: StartEntryCategory.MAINTAIN,
-      shell: 'yarn upgrade -L projen && CI="" yarn projen',
     });
+
+    upgrade.add('yarn upgrade -L projen');
+    upgrade.add('CI="" yarn projen');
 
     if (options.autoUpgradeSecret) {
       if (!project.github) {

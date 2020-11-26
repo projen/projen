@@ -2209,7 +2209,7 @@ addPeerDeps(...deps: string[]): void
 
 #### addSequence(name, props?)🔹 <a id="projen-nodeproject-addsequence"></a>
 
-Adds a sequence to this project.
+
 
 ```ts
 addSequence(name: string, props?: SequenceProps): Sequence
@@ -2358,16 +2358,33 @@ Name | Type | Description
 ### Methods
 
 
-#### addSequence(name, props?)🔹 <a id="projen-project-addsequence"></a>
+#### addCommand(name, command?, props?)🔹 <a id="projen-project-addcommand"></a>
 
 Adds a sequence to this project.
+
+```ts
+addCommand(name: string, command?: string, props?: SequenceOptions): Sequence
+```
+
+* **name** (<code>string</code>)  The sequence name (`projen NAME`).
+* **command** (<code>string</code>)  First command in the sequence (or undefined to start with an empty sequence).
+* **props** (<code>[SequenceOptions](#projen-core-sequenceoptions)</code>)  Options.
+  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+
+__Returns__:
+* <code>[Sequence](#projen-core-sequence)</code>
+
+#### addSequence(name, props?)🔹 <a id="projen-project-addsequence"></a>
+
+
 
 ```ts
 addSequence(name: string, props?: SequenceProps): Sequence
 ```
 
-* **name** (<code>string</code>)  The sequence name (`projen NAME`).
-* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  Props.
+* **name** (<code>string</code>)  *No description*
+* **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
   * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`

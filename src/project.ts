@@ -5,7 +5,7 @@ import { cleanup } from './cleanup';
 import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
-import { Sequence, SequenceProps } from './core';
+import { Sequence, SequenceOptions, SequenceProps } from './core';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
@@ -133,9 +133,17 @@ export class Project {
   /**
    * Adds a sequence to this project.
    * @param name The sequence name (`projen NAME`)
-   * @param props Props
+   * @param command First command in the sequence (or undefined to start with an empty sequence)
+   * @param props Options
    */
-  public addSequence(name: string, props: SequenceProps = { }): Sequence {
+  public addCommand(name: string, command: string | undefined, props: SequenceOptions = { }): Sequence {
+    return this.addSequence(name, {
+      ...props,
+      shell: command,
+    });
+  }
+
+  public addSequence(name: string, props: SequenceProps = { }) {
     return new Sequence(this, name, props);
   }
 

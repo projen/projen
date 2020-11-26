@@ -10,7 +10,7 @@ import { StartEntryCategory } from '../start';
 
 const FILE_SUFFIX = 'seq.json';
 
-export interface SequenceProps {
+export interface SequenceOptions {
   /**
    * The description of this build command.
    * @default - the sequence name
@@ -23,7 +23,9 @@ export interface SequenceProps {
    * @default StartEntryCategory.MISC
    */
   readonly category?: StartEntryCategory;
+}
 
+export interface SequenceProps extends SequenceOptions {
   /**
    * Shell command to execute as the first command of the sequence.
    * @default - add commands using `seq.shell()` or `seq.run()`

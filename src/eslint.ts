@@ -57,12 +57,17 @@ export class Eslint extends Component {
     const dirs = options.dirs;
     const fileExtensions = options.fileExtensions;
 
-    const eslint = project.addSequence('eslint', {
+    const cmd = [
+      'eslint',
+      `--ext ${fileExtensions.join(',')}`,
+      '--fix',
+      '--no-error-on-unmatched-pattern',
+      dirs.join(' '),
+    ];
+    const eslint = project.addCommand('eslint', cmd.join(' '), {
       description: 'Runs eslint against the codebase',
       category: StartEntryCategory.TEST,
     });
-
-    eslint.add(`eslint --ext ${fileExtensions.join(',')} --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`);
 
     project.testCmd.addSequence(eslint);
 

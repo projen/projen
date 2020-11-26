@@ -184,28 +184,24 @@ export class NextComponent extends Component {
     }
 
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
-    project.addSequence('dev', {
+    project.addCommand('dev', 'next dev', {
       description: 'Starts the Next.js application in development mode',
       category: StartEntryCategory.BUILD,
-      shell: 'next dev',
     });
 
-    project.addSequence('build', {
+    project.addCommand('build', 'next build', {
       description: 'Creates an optimized production build of your Next.js application',
       category: StartEntryCategory.BUILD,
-      shell: 'next build',
     });
 
-    project.addSequence('server', {
+    project.addCommand('server', 'next start', {
       description: 'Starts the Next.js application in production mode',
       category: StartEntryCategory.RELEASE,
-      shell: 'next start',
     });
 
-    project.addSequence('telemetry', {
+    project.addCommand('telemetry', 'next telemetry', {
       description: 'Checks the status of Next.js telemetry collection',
       category: StartEntryCategory.MISC,
-      shell: 'next telemetry',
     });
 
     project.npmignore?.exclude('# Next.js', '/.next/');

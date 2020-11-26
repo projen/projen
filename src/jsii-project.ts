@@ -174,16 +174,15 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    const compatSeq = this.addSequence('compat', {
+    const cmd = `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`;
+    const compatCmd = this.addCommand('compat', cmd, {
       description: 'Perform API compatibility check against latest version',
       category: StartEntryCategory.RELEASE,
     });
 
-    compatSeq.add(`jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`);
-
     const compat = options.compat ?? false;
     if (compat) {
-      this.compileCmd.addSequence(compatSeq);
+      this.compileCmd.addSequence(compatCmd);
     } else {
       this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }

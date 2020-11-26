@@ -7,10 +7,9 @@ import { TypeScriptProject } from './typescript';
 export class TypedocDocgen {
   constructor(project: TypeScriptProject) {
     project.addDevDeps('typedoc');
-    project.addSequence('docgen', {
+    project.addCommand('docgen', 'typedoc --out ' + project.docsDirectory, {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
       category: StartEntryCategory.RELEASE,
-      shell: 'typedoc --out ' + project.docsDirectory,
     });
   }
 }

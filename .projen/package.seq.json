@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- jsii-pacmak"
+        "npm exec -c \"jsii-pacmak\""
       ]
     }
   ],

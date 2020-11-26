@@ -42,9 +42,9 @@ project.setScript('projen', 'yarn compile && node .projenrc.js');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
-const macros = project.addSequence('readme-macros')
+const macros = project.addCommand('readme-macros')
 macros.add('mv README.md README.md.bak');
-macros.add('cat README.md.bak | npx markmac > README.md');
+macros.add('cat README.md.bak | markmac > README.md');
 macros.add('rm README.md.bak');
 project.buildCmd.addSequence(macros);
 

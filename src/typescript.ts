@@ -125,10 +125,9 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
 
-    this.watchCmd = this.addSequence('watch', {
+    this.watchCmd = this.addCommand('watch', 'tsc -w', {
       description: 'Watch & compile in the background',
       category: StartEntryCategory.BUILD,
-      shell: 'tsc -w',
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
