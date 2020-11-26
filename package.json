@@ -9,7 +9,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "compile": "npm exec -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\" && npm exec -c \"jsii-docgen\"",
+    "compile": "npx -q --no-install -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\" && npx -q --no-install -c \"jsii-docgen\"",
     "test": "projen test",
     "build": "projen build",
     "start": "npx projen start -i",
@@ -69,7 +69,7 @@
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
     "yaml": "^1.10.0",
-    "yargs": "*"
+    "yargs": "^16.1.1"
   },
   "bundledDependencies": [
     "@iarna/toml",

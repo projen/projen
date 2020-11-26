@@ -3,12 +3,12 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\""
+        "npx -q --no-install -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\""
       ]
     },
     {
       "commands": [
-        "npm exec -c \"jsii-docgen\""
+        "npx -q --no-install -c \"jsii-docgen\""
       ]
     }
   ],

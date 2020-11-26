@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test\""
+        "npx -q --no-install -c \"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test\""
       ]
     }
   ],

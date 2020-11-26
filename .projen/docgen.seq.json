@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"jsii-docgen\""
+        "npx -q --no-install -c \"jsii-docgen\""
       ]
     }
   ],

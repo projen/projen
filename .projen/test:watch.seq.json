@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"jest --watch\""
+        "npx -q --no-install -c \"jest --watch\""
       ]
     }
   ],

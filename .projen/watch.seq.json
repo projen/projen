@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies\""
+        "npx -q --no-install -c \"jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies\""
       ]
     }
   ],

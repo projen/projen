@@ -3,12 +3,12 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"yarn upgrade -L projen\""
+        "npx -q --no-install -c \"yarn upgrade -L projen\""
       ]
     },
     {
       "commands": [
-        "npm exec -c \"CI=\"\" yarn projen\""
+        "npx -q --no-install -c \"CI=\"\" yarn projen\""
       ]
     }
   ],

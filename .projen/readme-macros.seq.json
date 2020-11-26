@@ -3,17 +3,17 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -c \"mv README.md README.md.bak\""
+        "npx -q --no-install -c \"mv README.md README.md.bak\""
       ]
     },
     {
       "commands": [
-        "npm exec -c \"cat README.md.bak | markmac > README.md\""
+        "npx -q --no-install -c \"cat README.md.bak | markmac > README.md\""
       ]
     },
     {
       "commands": [
-        "npm exec -c \"rm README.md.bak\""
+        "npx -q --no-install -c \"rm README.md.bak\""
       ]
     }
   ],

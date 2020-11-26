@@ -1124,7 +1124,7 @@ export class NodeProject extends Project {
       if (c.startsWith(this.runScriptCommand)) {
         return c;
       } else {
-        return `npm exec -c "${c}"`;
+        return `npx -q --no-install -c "${c}"`;
       }
     });
   }
