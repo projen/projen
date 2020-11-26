@@ -1105,6 +1105,8 @@ export class NodeProject extends Project {
   public addSequence(name: string, props: SequenceProps = { }) {
     const seq = super.addSequence(name, props);
 
+    seq.env('PATH', '$(npx -c \'echo $PATH\')');
+
     // add an npm script with the same name which delegates to `projen <NAME>`.
     const npmCommand = `npx projen ${name}`;
     this.setScript(seq.name, npmCommand);
@@ -1117,16 +1119,6 @@ export class NodeProject extends Project {
     });
 
     return seq;
-  }
-
-  public renderShellCommands(commands: string[]) {
-    return commands.map(c => {
-      if (c.startsWith(this.runScriptCommand)) {
-        return c;
-      } else {
-        return `npx -q --no-install -c "${c}"`;
-      }
-    });
   }
 
   /**

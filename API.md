@@ -2218,6 +2218,7 @@ addSequence(name: string, props?: SequenceProps): Sequence
 * **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
   * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
 
 __Returns__:
@@ -2288,22 +2289,6 @@ removeScript(name: string): void
 
 
 
-#### renderShellCommands(commands)🔹 <a id="projen-nodeproject-rendershellcommands"></a>
-
-Allows subclasses to customize how shell commands are rendered.
-
-For example, in `NodeProject` this is used to add an `npx -c` prefix
-to each command to it is executed in the npm environment.
-
-```ts
-renderShellCommands(commands: Array<string>): Array<string>
-```
-
-* **commands** (<code>Array<string></code>)  *No description*
-
-__Returns__:
-* <code>Array<string></code>
-
 #### setScript(name, command)🔹 <a id="projen-nodeproject-setscript"></a>
 
 Replaces the contents of an npm package.json script.
@@ -2370,6 +2355,7 @@ addCommand(name: string, command?: string, props?: SequenceOptions): Sequence
 * **props** (<code>[SequenceOptions](#projen-core-sequenceoptions)</code>)  Options.
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
 
 __Returns__:
 * <code>[Sequence](#projen-core-sequence)</code>
@@ -2386,6 +2372,7 @@ addSequence(name: string, props?: SequenceProps): Sequence
 * **props** (<code>[SequenceProps](#projen-core-sequenceprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
   * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
 
 __Returns__:

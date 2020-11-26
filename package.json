@@ -9,7 +9,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "compile": "npx -q --no-install -c \"jsii --silence-warnings=reserved-word --no-fix-peer-dependencies\" && npx -q --no-install -c \"jsii-docgen\"",
+    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
     "test": "npx projen test",
     "build": "npx projen build",
     "start": "npx projen start -i",

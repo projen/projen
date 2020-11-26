@@ -23,6 +23,13 @@ export interface SequenceOptions {
    * @default StartEntryCategory.MISC
    */
   readonly category?: StartEntryCategory;
+
+  /**
+   * Defines environment variables for the execution of this sequence.
+   * Values in this map will be evaluated in a shell, so you can do stuff like `$(echo "foo")`.
+   * @default {}
+   */
+  readonly env?: { [name: string]: string };
 }
 
 export interface SequenceProps extends SequenceOptions {
@@ -65,6 +72,7 @@ export class Sequence extends Component {
       name,
       tasks: [],
       description: this.description,
+      env: props.env ?? {},
     };
 
     new JsonFile(project, `${PROJEN_DIR}/${name}.${FILE_SUFFIX}`, {
@@ -115,6 +123,17 @@ export class Sequence extends Component {
    */
   public addSequence(seq: Sequence) {
     this.addSequences([seq]);
+  }
+
+  /**
+   * Adds an environment variable to this sequence.
+   * @param name The name of the variable
+   * @param value The value. If the value is surrounded by `$()`, we will
+   * evaluate it within a subshell and use the result as the value of the
+   * environment variable.
+   */
+  public env(name: string, value: string) {
+    this.spec.env[name] = value;
   }
 
   /**
@@ -222,7 +241,25 @@ export class Sequences {
       throw new Error(`cannot find command ${cmd}`);
     }
 
+    // evaluating environment
+    const env: { [name: string]: string | undefined } = {
+      ...process.env,
+    };
+
     console.log(`${chalk.magentaBright('-'.repeat(80))}`);
+
+    for (const [key, value] of Object.entries(cmd.env ?? {})) {
+      if (value.startsWith('$(') && value.endsWith(')')) {
+        const query = value.substring(2, value.length - 1);
+        const result = spawnSync(query, { cwd, shell: true });
+        if (result.status !== 0) {
+          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
+        }
+        env[key] = result.stdout.toString('utf-8').trim();
+      } else {
+        env[key] = value;
+      }
+    }
 
     for (const task of cmd.tasks) {
       if (task.sequences) {
@@ -233,7 +270,7 @@ export class Sequences {
 
       for (const script of task.commands ?? []) {
         console.log(`${chalk.magentaBright(cmd.name + ' |')} ${script}`);
-        const result = spawnSync(script, { shell: true, stdio: 'inherit', cwd });
+        const result = spawnSync(script, { cwd, shell: true, stdio: 'inherit', env });
         if (result.status !== 0) {
           console.log(chalk.red(`${name} failed in: "${script}" at ${resolve(cwd)}`));
           process.exit(1);
@@ -248,4 +285,5 @@ export interface SequenceSpec {
   readonly name: string;
   readonly description?: string;
   readonly tasks: Task[];
+  readonly env: { [name: string]: string };
 }
