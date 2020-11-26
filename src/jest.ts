@@ -618,29 +618,6 @@ export class Jest {
     this.ignorePatterns.push(pattern);
   }
 
-  public configureTestCommand() {
-    const jestOpts = ['--passWithNoTests'];
-
-    // if the project has anti-tamper configured, it should be safe to always run tests
-    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
-    if (this.project.antitamper) {
-      jestOpts.push('--updateSnapshot');
-    }
-
-    this.project.test.add(`jest ${jestOpts.join(' ')}`);
-
-    this.project.addSequence('test:watch', {
-      description: 'Run jest in watch mode',
-      category: StartEntryCategory.TEST,
-      shell: 'jest --watch',
-    });
-
-    this.project.addSequence('test:update', {
-      description: 'Update jest snapshots',
-      category: StartEntryCategory.TEST,
-      shell: 'jest --updateSnapshot',
-    });
-  }
 
   public addReporter(reporter: JestReporter) {
     this.reporters.push(reporter);
@@ -690,5 +667,29 @@ export class Jest {
     );
 
     return tsconfig;
+  }
+
+  private configureTestCommand() {
+    const jestOpts = ['--passWithNoTests'];
+
+    // if the project has anti-tamper configured, it should be safe to always run tests
+    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
+    if (this.project.antitamper) {
+      jestOpts.push('--updateSnapshot');
+    }
+
+    this.project.testCmd.add(`jest ${jestOpts.join(' ')}`);
+
+    this.project.addSequence('test:watch', {
+      description: 'Run jest in watch mode',
+      category: StartEntryCategory.TEST,
+      shell: 'jest --watch',
+    });
+
+    this.project.addSequence('test:update', {
+      description: 'Update jest snapshots',
+      category: StartEntryCategory.TEST,
+      shell: 'jest --updateSnapshot',
+    });
   }
 }

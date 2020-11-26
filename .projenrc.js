@@ -37,7 +37,7 @@ const project = new JsiiProject({
 });
 
 // since this is projen, we need to compile before running projen, dah!
-project.addScript('projen', 'yarn compile && node .projenrc.js');
+project.setScript('projen', 'yarn compile && node .projenrc.js');
 
 project.gitignore.include('templates/**');
 
@@ -46,7 +46,7 @@ const macros = project.addSequence('readme-macros')
 macros.add('mv README.md README.md.bak');
 macros.add('cat README.md.bak | npx markmac > README.md');
 macros.add('rm README.md.bak');
-project.bld.addSequence(macros);
+project.buildCmd.addSequence(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

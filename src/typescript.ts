@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { Component } from './component';
+import { Sequence } from './core';
 import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
@@ -103,6 +104,16 @@ export class TypeScriptProject extends NodeProject {
    */
   public readonly libdir: string;
 
+  /**
+   * The "watch" command.
+   */
+  public readonly watchCmd: Sequence;
+
+  /**
+   * The "package" command (or undefined if `package` is set to `false`).
+   */
+  public readonly packageCmd?: Sequence;
+
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
@@ -114,7 +125,7 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
 
-    this.addSequence('watch', {
+    this.watchCmd = this.addSequence('watch', {
       description: 'Watch & compile in the background',
       category: StartEntryCategory.BUILD,
       shell: 'tsc -w',
@@ -124,25 +135,25 @@ export class TypeScriptProject extends NodeProject {
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.bld.addSequence(this.compile);
-      this.bld.addSequence(this.test);
+      this.buildCmd.addSequence(this.compileCmd);
+      this.buildCmd.addSequence(this.testCmd);
     } else {
-      this.bld.addSequence(this.test);
-      this.bld.addSequence(this.compile);
+      this.buildCmd.addSequence(this.testCmd);
+      this.buildCmd.addSequence(this.compileCmd);
     }
 
     if (options.package ?? true) {
-      const packaging = this.addSequence('package', {
+      this.packageCmd = this.addSequence('package', {
         description: 'Create an npm tarball',
         category: StartEntryCategory.RELEASE,
       });
 
-      packaging.add('rm -fr dist');
-      packaging.add('mkdir -p dist/js');
-      packaging.add(`${this.packageManager} pack`);
-      packaging.add('mv *.tgz dist/js/');
+      this.packageCmd.add('rm -fr dist');
+      this.packageCmd.add('mkdir -p dist/js');
+      this.packageCmd.add(`${this.packageManager} pack`);
+      this.packageCmd.add('mv *.tgz dist/js/');
 
-      this.bld.addSequence(packaging);
+      this.buildCmd.addSequence(this.packageCmd);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -234,10 +245,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.addScript('test', `rm -fr ${this.libdir}/`);
-
-        // Reconfigure test command because the above line replaces it
-        this.jest.configureTestCommand();
+        this.testCmd.prepend(`rm -fr ${this.libdir}/`);
       }
     }
 

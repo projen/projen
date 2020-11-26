@@ -16,7 +16,7 @@ export class JsiiDocgen {
       category: StartEntryCategory.RELEASE,
       shell: 'jsii-docgen',
     });
-    project.compile.add('jsii-docgen');
+    project.compileCmd.add('jsii-docgen');
     project.gitignore.include('/API.md');
 
     project.addTip('`API.md` includes the API reference for your library');

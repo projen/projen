@@ -183,14 +183,14 @@ export class JsiiProject extends TypeScriptProject {
 
     const compat = options.compat ?? false;
     if (compat) {
-      this.compile.addSequence(compatSeq);
+      this.compileCmd.addSequence(compatSeq);
     } else {
       this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
 
-    this.addScript('compile', `jsii ${jsiiFlags}`);
-    this.addScript('watch', `jsii -w ${jsiiFlags}`);
-    this.addScript('package', 'jsii-pacmak');
+    this.compileCmd.reset(`jsii ${jsiiFlags}`);
+    this.watchCmd.reset(`jsii -w ${jsiiFlags}`);
+    this.packageCmd?.reset('jsii-pacmak');
 
     const targets: Record<string, any> = { };
 

@@ -13,7 +13,7 @@ export class Start extends Component {
 
     this.nodeProject = project;
 
-    project.addScript('start', 'npx projen start -i');
+    project.setScript('start', 'npx projen start -i');
 
     // we have to explicitly add and not use `addScript` options since
     // this `project.start` is undefined until we finish to initialize.

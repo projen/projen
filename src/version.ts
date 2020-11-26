@@ -17,7 +17,7 @@ export class Version extends Component {
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
-    project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
+    project.setScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
 
     project.addSequence('bump', {
       description: 'Commits a bump to the package version based on conventional commits',

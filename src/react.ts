@@ -140,7 +140,7 @@ export class ReactComponent extends Component {
     this.typescript = options.typescript ?? false;
 
     // No compile for react app
-    project.addScript('compile', 'true');
+    project.compileCmd.reset();
 
     project.addDeps('react', 'react-dom', 'react-scripts@^4.0.0', 'web-vitals');
     project.addDevDeps('@testing-library/jest-dom', '@testing-library/react', '@testing-library/user-event');

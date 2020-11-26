@@ -64,7 +64,7 @@ export class Eslint extends Component {
 
     eslint.add(`eslint --ext ${fileExtensions.join(',')} --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`);
 
-    project.test.addSequence(eslint);
+    project.testCmd.addSequence(eslint);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');

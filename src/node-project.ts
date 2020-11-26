@@ -581,9 +581,9 @@ export class NodeProject extends Project {
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
 
-  public readonly compile: Sequence;
-  public readonly test: Sequence;
-  public readonly bld: Sequence;
+  public readonly compileCmd: Sequence;
+  public readonly testCmd: Sequence;
+  public readonly buildCmd: Sequence;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -662,17 +662,17 @@ export class NodeProject extends Project {
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
 
-    this.compile = this.addSequence('compile', {
+    this.compileCmd = this.addSequence('compile', {
       description: 'Only compile',
       category: StartEntryCategory.BUILD,
     });
 
-    this.test = this.addSequence('test', {
+    this.testCmd = this.addSequence('test', {
       description: 'Run tests',
       category: StartEntryCategory.TEST,
     });
 
-    this.bld = this.addSequence('build', {
+    this.buildCmd = this.addSequence('build', {
       description: 'Full release build (test+compile)',
       category: StartEntryCategory.BUILD,
     });
@@ -794,7 +794,7 @@ export class NodeProject extends Project {
       this.start = new Start(this, options.startOptions ?? {});
     }
 
-    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
+    this.setScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -992,8 +992,8 @@ export class NodeProject extends Project {
     });
 
     // override any scripts from options (if specified)
-    for (const [n, v] of Object.entries(options.scripts ?? {})) {
-      this.addScript(n, v);
+    for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
+      this.addSequence(cmdname, { shell });
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -1069,30 +1069,17 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Replaces the contents of a set of npm package.json scripts.
-   *
-   * @param scripts script names and commands
-   */
-  public addScripts(scripts: { [name: string]: string }) {
-    for (const [name, command] of Object.entries(scripts)) {
-      this.addScript(name, command);
-    }
-  }
-
-  /**
    * Replaces the contents of an npm package.json script.
    *
    * @param name The script name
    * @param command The command to execute
-   * @param options Options such as start menu description and category
    */
-  public addScript(name: string, command: string) {
-    this.scripts[name] = this.scripts[name] ?? [];
-
-    // hijack `addScript()` by adding a shell task into the sequence
+  public setScript(name: string, command: string) {
+    // hijack `setScript()` by adding a shell task into the sequence
     // and setting the npm script to be `npx projen SCRIPT`.
     for (const seq of this.sequences) {
       if (seq.name === name) {
+        seq.reset();
         seq.add(command);
         this.scripts[name] = [`projen ${name}`];
         return;
@@ -1100,7 +1087,7 @@ export class NodeProject extends Project {
     }
 
     // add a command to the npm script
-    this.scripts[name].push(command);
+    this.scripts[name] = [command];
   }
 
   /**
@@ -1124,7 +1111,7 @@ export class NodeProject extends Project {
     const seq = super.addSequence(name, props);
     const command = `projen ${name}`;
 
-    this.addScript(seq.name, command);
+    this.setScript(seq.name, command);
     this.start?.addEntry(name, {
       desc: props.description ?? name,
       command: command,
@@ -1149,11 +1136,11 @@ export class NodeProject extends Project {
    * @param commands The commands to execute during compile
    */
   public addCompileCommand(...commands: string[]) {
-    this.compile.addCommands(commands);
+    this.compileCmd.addCommands(commands);
   }
 
   public addTestCommand(...commands: string[]) {
-    this.test.addCommands(commands);
+    this.testCmd.addCommands(commands);
   }
 
   /**
@@ -1161,7 +1148,7 @@ export class NodeProject extends Project {
    * @param commands The commands to add
    */
   public addBuildCommand(...commands: string[]) {
-    this.bld.addCommands(commands);
+    this.buildCmd.addCommands(commands);
   }
 
   public addFields(fields: { [name: string]: any }) {

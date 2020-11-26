@@ -91,7 +91,6 @@ Name|Description
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
-[ScriptOptions](#projen-scriptoptions)|Options for adding scripts.
 [StartEntryOptions](#projen-startentryoptions)|*No description*
 [StartOptions](#projen-startoptions)|*No description*
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
@@ -1300,18 +1299,6 @@ addReporter(reporter: string &#124; json): void
 
 
 
-#### configureTestCommand()🔹 <a id="projen-jest-configuretestcommand"></a>
-
-
-
-```ts
-configureTestCommand(): void
-```
-
-
-
-
-
 #### generateTypescriptConfig(options)🔹 <a id="projen-jest-generatetypescriptconfig"></a>
 
 Merges passed in typescript config options with jest configured typescript options from .projenrc Add Jest config settings for typescript options.
@@ -2014,15 +2001,15 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**bld**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
-**compile**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**buildCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**compileCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**test**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
+**testCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | <span></span>
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
@@ -2220,52 +2207,6 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addScript(name, command, options?)🔹 <a id="projen-nodeproject-addscript"></a>
-
-Replaces the contents of an npm package.json script.
-
-```ts
-addScript(name: string, command: string, options?: ScriptOptions): void
-```
-
-* **name** (<code>string</code>)  The script name.
-* **command** (<code>string</code>)  The command to execute.
-* **options** (<code>[ScriptOptions](#projen-scriptoptions)</code>)  Options such as start menu description and category.
-  * **startCategory** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category in start menu. __*Default*__: StartEntryCategory.MISC
-  * **startDesc** (<code>string</code>)  Start menu description for this script. __*Default*__: no description
-
-
-
-
-#### addScriptCommand(name, ...commands)🔹 <a id="projen-nodeproject-addscriptcommand"></a>
-
-Appends a command to run for an npm script.
-
-Joined by "&&"
-
-```ts
-addScriptCommand(name: string, ...commands: string[]): void
-```
-
-* **name** (<code>string</code>)  The name of the script.
-* **commands** (<code>string</code>)  The commands to append.
-
-
-
-
-#### addScripts(scripts)🔹 <a id="projen-nodeproject-addscripts"></a>
-
-Replaces the contents of a set of npm package.json scripts.
-
-```ts
-addScripts(scripts: Map<string, string>): void
-```
-
-* **scripts** (<code>Map<string, string></code>)  script names and commands.
-
-
-
-
 #### addSequence(name, props?)🔹 <a id="projen-nodeproject-addsequence"></a>
 
 Adds a sequence to this project.
@@ -2363,6 +2304,20 @@ renderShellCommands(commands: Array<string>): Array<string>
 
 __Returns__:
 * <code>Array<string></code>
+
+#### setScript(name, command)🔹 <a id="projen-nodeproject-setscript"></a>
+
+Replaces the contents of an npm package.json script.
+
+```ts
+setScript(name: string, command: string): void
+```
+
+* **name** (<code>string</code>)  The script name.
+* **command** (<code>string</code>)  The command to execute.
+
+
+
 
 
 
@@ -3412,8 +3367,10 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
+**watchCmd**🔹 | <code>[Sequence](#projen-core-sequence)</code> | The "watch" command.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
+**packageCmd**?🔹 | <code>[Sequence](#projen-core-sequence)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 
@@ -5212,20 +5169,6 @@ Options for the SampleFile object.
 Name | Type | Description 
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
-
-
-
-## struct ScriptOptions 🔹 <a id="projen-scriptoptions"></a>
-
-
-Options for adding scripts.
-
-
-
-Name | Type | Description 
------|------|-------------
-**startCategory**?🔹 | <code>[StartEntryCategory](#projen-startentrycategory)</code> | Category in start menu.<br/>__*Default*__: StartEntryCategory.MISC
-**startDesc**?🔹 | <code>string</code> | Start menu description for this script.<br/>__*Default*__: no description
 
 
 

@@ -3,7 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- tsc"
+        "npm exec -- jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
       ]
     },
     {

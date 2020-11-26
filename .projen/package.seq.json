@@ -3,22 +3,7 @@
   "tasks": [
     {
       "commands": [
-        "npm exec -- rm -fr dist"
-      ]
-    },
-    {
-      "commands": [
-        "npm exec -- mkdir -p dist/js"
-      ]
-    },
-    {
-      "commands": [
-        "npm exec -- yarn pack"
-      ]
-    },
-    {
-      "commands": [
-        "npm exec -- mv *.tgz dist/js/"
+        "npm exec -- jsii-pacmak"
       ]
     }
   ],

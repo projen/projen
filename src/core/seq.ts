@@ -31,12 +31,25 @@ export interface SequenceProps {
   readonly shell?: string;
 }
 
+/**
+ * A modeled sequence of shell commands.
+ */
 export class Sequence extends Component {
-
   private readonly spec: SequenceSpec;
 
+  /**
+   * The name of the sequence.
+   */
   public readonly name: string;
+
+  /**
+   * The description of the sequence.
+   */
   public readonly description: string;
+
+  /**
+   * The start menu category of the sequence.
+   */
   public readonly category: StartEntryCategory;
 
   constructor(project: Project, name: string, props: SequenceProps = { }) {
@@ -62,9 +75,17 @@ export class Sequence extends Component {
     }
   }
 
-  public reset() {
+  /**
+   * Reset the sequence so it no longer has any commands.
+   * @param command the command to add to the sequence after it was cleared.
+  */
+  public reset(command?: string) {
     while (this.spec.tasks.length) {
       this.spec.tasks.shift();
+    }
+
+    if (command) {
+      this.add(command);
     }
   }
 
@@ -77,6 +98,16 @@ export class Sequence extends Component {
   }
 
   /**
+   * Adds a command at the beginning of the sequence.
+   * @param command The command to add.
+   */
+  public prepend(command: string) {
+    this.spec.tasks.unshift({
+      commands: [command],
+    });
+  }
+
+  /**
    * Runs another sequence.
    * @param seq The sequences to execute
    */
@@ -86,8 +117,8 @@ export class Sequence extends Component {
 
   /**
    * Adds a build task
-   * @param command The command to execute
-   * @param options Build task options
+   * @param commands The commands to add
+   * @param options Task options
    */
   public addCommands(commands: string[], options: TaskOptions = {}) {
     this.spec.tasks.push({

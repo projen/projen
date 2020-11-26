@@ -138,12 +138,12 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     // no compile step because we do all of it in typescript directly
-    this.compile.reset();
+    this.compileCmd.reset();
 
     this.removeScript('watch'); // because we use ts-node
 
     // add synth to the build
-    this.bld.addSequence(synth);
+    this.buildCmd.addSequence(synth);
 
     this.cdkConfig = {
       app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,
