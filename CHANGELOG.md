@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.3 (2020-11-26)
+
+
+### Features
+
+* **nextjs:** add tailwindcss option ([#326](https://github.com/projen/projen/issues/326)) ([e02eb65](https://github.com/projen/projen/commit/e02eb650256b2a3f6421b42629ed8e5e4d654642)), closes [#325](https://github.com/projen/projen/issues/325)
+
 ### 0.5.2 (2020-11-25)
 
 
