@@ -90,7 +90,7 @@ async function askAboutGit(): Promise<boolean> {
       const ghCLIPath = execOrUndefined(`${os.platform() === 'win32' ? 'where' : 'which'} gh`);
 
       if (!ghCLIPath) {
-        logging.warn('Looks like you do not have the GitHub CLI installed. Please install with \'brew install gh\' and try again.');
+        logging.warn('Looks like you do not have the GitHub CLI installed. Please go to https://cli.github.com/ to install and try again.');
       } else {
         const { gitProjectName } = await inquirer.prompt([
           {
