@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import * as inquirer from 'inquirer';
 import { PROJEN_RC } from '../common';
 import * as logging from '../logging';
-import { exec } from '../util';
+import { exec, execOrUndefined } from '../util';
 
 const projenfile = path.resolve(PROJEN_RC);
 const projen = path.join(__dirname, '..');
@@ -87,21 +87,27 @@ async function askAboutGit(): Promise<boolean> {
     if (!git && gh) {
       logging.info('Ok! We will make you a repository on GitHub.');
 
-      const { gitProjectName } = await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'gitProjectName',
-          message: 'What would you like to name it?',
-          default: path.basename(path.dirname(process.cwd())),
-        },
-      ]);
+      const ghCLIPath = execOrUndefined(`${os.platform() === 'win32' ? 'where' : 'which'} gh`);
 
-      logging.info(`Wow! ${gitProjectName} is such a great name!`);
+      if (!ghCLIPath) {
+        logging.warn('Looks like you do not have the GitHub CLI installed. Please install with \'brew install gh\' and try again.');
+      } else {
+        const { gitProjectName } = await inquirer.prompt([
+          {
+            type: 'input',
+            name: 'gitProjectName',
+            message: 'What would you like to name it?',
+            default: path.basename(path.dirname(process.cwd())),
+          },
+        ]);
 
-      exec('git init');
+        logging.info(`Wow! ${gitProjectName} is such a great name!`);
 
-      exec(`gh repo create ${gitProjectName}`);
-      return true;
+        exec('git init');
+
+        exec(`gh repo create ${gitProjectName}`);
+        return true;
+      }
     }
   }
   return false;
