@@ -15,7 +15,7 @@ test('json object can be mutated before synthesis', () => {
     foo: 1234,
   };
 
-  expect(synthSnapshot(prj)['my/json/file.json']).toStrictEqual({
+  expect(synthSnapshot(prj, true)['my/json/file.json']).toStrictEqual({
     hello: 'world',
     anotherField: { foo: 1234 },
   });

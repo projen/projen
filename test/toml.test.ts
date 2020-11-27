@@ -16,7 +16,7 @@ test('toml object can be mutated before synthesis', () => {
     foo: 1234,
   };
 
-  const out = synthSnapshot(prj);
+  const out = synthSnapshot(prj, true);
   expect(TOML.parse(out['my/toml/file.toml'])).toStrictEqual({
     hello: 'world',
     anotherField: { foo: 1234 },

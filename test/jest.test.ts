@@ -41,7 +41,7 @@ test('Node Project Jest Defaults Configured', () => {
   expect(project.jest?.config.clearMocks).toEqual(true);
   expect(project.jest?.config.collectCoverage).toEqual(true);
 
-  const snapshot = synthSnapshot(project, 'package.json');
+  const snapshot = synthSnapshot(project, false, 'package.json');
   expect(snapshot['package.json'].jest).toBeTruthy();
 
   const jest = snapshot['package.json'].jest;
@@ -67,7 +67,7 @@ test('Node Project Jest With Options Configured', () => {
     },
   });
 
-  const snapshot = synthSnapshot(project, 'package.json');
+  const snapshot = synthSnapshot(project, false, 'package.json');
   expect(snapshot['package.json'].jest).toBeTruthy();
 
   const jest = snapshot['package.json'].jest;
@@ -87,7 +87,7 @@ test('Typescript Project Jest Defaults Configured', () => {
     jest: true,
   });
 
-  const snapshot = synthSnapshot(project, 'tsconfig.jest.json');
+  const snapshot = synthSnapshot(project, false, 'tsconfig.jest.json');
   const jestTypescriptConfig = snapshot['tsconfig.jest.json'];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
@@ -122,7 +122,7 @@ test('Typescript Project Jest With Compiler Options', () => {
     ...compilerOptions,
   };
 
-  const snapshot = synthSnapshot(project, 'tsconfig.jest.json');
+  const snapshot = synthSnapshot(project, false, 'tsconfig.jest.json');
   const jestTypescriptConfig = snapshot['tsconfig.jest.json'];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();

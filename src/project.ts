@@ -185,12 +185,14 @@ export class Project {
       comp.synthesize();
     }
 
-    for (const comp of this.components) {
-      comp.postSynthesize();
-    }
+    if (process.env.POST_SYNTHESIS_ENABLED !== 'false') {
+      for (const comp of this.components) {
+        comp.postSynthesize();
+      }
 
-    // project-level hook
-    this.postSynthesize();
+      // project-level hook
+      this.postSynthesize();
+    }
 
 
     logging.info('Synthesis complete');

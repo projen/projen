@@ -11,6 +11,10 @@ export class TestProject extends Project {
     const tmpdir = mkdtemp();
     super({ outdir: tmpdir });
   }
+
+  postSynthesize() {
+    fs.writeFileSync(path.join(this.outdir, '.postsynth'), '# postsynth');
+  }
 }
 
 export interface SynthOutput {
@@ -21,8 +25,9 @@ export function mkdtemp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
 }
 
-export function synthSnapshot(project: Project, ...includeFiles: string[]) {
+export function synthSnapshot(project: Project, postSynth: boolean, ...includeFiles: string[]) {
   try {
+    process.env.POST_SYNTHESIS_ENABLED = postSynth.toString();
     project.synth();
     return directorySnapshot(project.outdir, includeFiles);
   } finally {

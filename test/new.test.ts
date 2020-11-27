@@ -5,7 +5,7 @@ import { join } from 'path';
 import { mkdirSync, readFileSync, removeSync } from 'fs-extra';
 import { PROJEN_RC } from '../src/common';
 import * as inventory from '../src/inventory';
-import { mkdtemp } from './util';
+import { mkdtemp, synthSnapshot, TestProject } from './util';
 
 const cli = require.resolve('../bin/projen');
 
@@ -30,6 +30,18 @@ for (const type of inventory.discover()) {
     }
   });
 }
+
+test('post-synthesis option enabled', () => {
+  const project = new TestProject();
+
+  expect(synthSnapshot(project, true)['.postsynth']).toContain('postsynth');
+});
+
+test('post-synthesis option disabled', () => {
+  const project = new TestProject();
+
+  expect(synthSnapshot(project, false)['.postsynth']).toBeUndefined();
+});
 
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
