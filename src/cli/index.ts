@@ -10,5 +10,5 @@ const args = yargs
 
 // no command means just require .projenrc.js
 if (args._.length === 0) {
-  synth();
+  synth(); // eslint-disable-line @typescript-eslint/no-floating-promises
 }
