@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.4 (2020-11-28)
+
+
+### Features
+
+* create github repository ([#336](https://github.com/projen/projen/issues/336)) ([5590e08](https://github.com/projen/projen/commit/5590e0838b202de1902f1ab697be5296192bb85d)), closes [#310](https://github.com/projen/projen/issues/310)
+
 ### 0.5.3 (2020-11-26)
 
 
