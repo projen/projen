@@ -3,7 +3,6 @@ import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
-import { StartEntryCategory } from '../start';
 import { TaskSpec, TaskManifest, TaskStep } from './model';
 
 export interface TaskOptions {
@@ -16,9 +15,9 @@ export interface TaskOptions {
   /**
    * Category for start menu.
    *
-   * @default StartEntryCategory.MISC
+   * @default TaskCategory.MISC
    */
-  readonly category?: StartEntryCategory;
+  readonly category?: TaskCategory;
 
   /**
    * Defines environment variables for the execution of this task.
@@ -26,6 +25,13 @@ export interface TaskOptions {
    * @default {}
    */
   readonly env?: { [name: string]: string };
+
+  /**
+   * A shell command which determines if the steps of this task should be
+   * skipped. If the program exits with a zero exit code, steps will be skipped.
+   * A non-zero code means that task should be executed.
+   */
+  readonly skipIf?: string;
 }
 
 export interface TaskProps extends TaskOptions {
@@ -59,7 +65,7 @@ export class Task extends Component {
   /**
    * The start menu category of the task.
    */
-  public readonly category: StartEntryCategory;
+  public readonly category: TaskCategory;
 
   private readonly manifest: ProjectTasks;
 
@@ -73,7 +79,7 @@ export class Task extends Component {
 
     this.name = name;
     this.description = props.description;
-    this.category = props.category ?? StartEntryCategory.MISC;
+    this.category = props.category ?? TaskCategory.MISC;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -83,6 +89,7 @@ export class Task extends Component {
       env: this._env,
       steps: this._steps,
       description: this.description,
+      category: props.category,
     });
 
     if (props.exec) {
@@ -212,3 +219,10 @@ class ProjectTasks extends Component {
   }
 }
 
+export enum TaskCategory {
+  BUILD = '00.build',
+  TEST = '10.test',
+  RELEASE = '20.release',
+  MAINTAIN = '30.maintain',
+  MISC = '99.misc',
+}

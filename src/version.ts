@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 const VERSION_FILE = 'version.json';
 
@@ -17,19 +17,23 @@ export class Version extends Component {
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
-    project.setScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
+    const noChanges = 'git log --oneline -1 | grep -q "chore(release):"';
 
-    project.addTask('bump', {
+    const bump = project.addTask('bump', {
       description: 'Commits a bump to the package version based on conventional commits',
-      category: StartEntryCategory.RELEASE,
-      exec: `${project.runScriptCommand} --silent no-changes || standard-version`,
+      category: TaskCategory.RELEASE,
+      exec: 'standard-version',
+      skipIf: noChanges,
     });
 
-    project.addTask('release', {
+    const release = project.addTask('release', {
       description: `Bumps version & push to ${options.releaseBranch}`,
-      category: StartEntryCategory.RELEASE,
-      exec: `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`,
+      category: TaskCategory.RELEASE,
+      skipIf: noChanges,
     });
+
+    release.subtask(bump);
+    release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
 
     project.addDevDeps(
       'standard-version@^9.0.0',

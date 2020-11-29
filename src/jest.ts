@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
@@ -682,13 +682,13 @@ export class Jest {
 
     this.project.addTask('test:watch', {
       description: 'Run jest in watch mode',
-      category: StartEntryCategory.TEST,
+      category: TaskCategory.TEST,
       exec: 'jest --watch',
     });
 
     this.project.addTask('test:update', {
       description: 'Update jest snapshots',
-      category: StartEntryCategory.TEST,
+      category: TaskCategory.TEST,
       exec: 'jest --updateSnapshot',
     });
   }

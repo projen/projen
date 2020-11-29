@@ -13,7 +13,8 @@
           "exec": "jsii-docgen"
         }
       ],
-      "description": "Only compile"
+      "description": "Only compile",
+      "category": "00.build"
     },
     "test": {
       "name": "test",
@@ -28,7 +29,8 @@
           "subtask": "eslint"
         }
       ],
-      "description": "Run tests"
+      "description": "Run tests",
+      "category": "10.test"
     },
     "build": {
       "name": "build",
@@ -49,7 +51,8 @@
           "subtask": "readme-macros"
         }
       ],
-      "description": "Full release build (test+compile)"
+      "description": "Full release build (test+compile)",
+      "category": "00.build"
     },
     "bump": {
       "name": "bump",
@@ -58,10 +61,11 @@
       },
       "steps": [
         {
-          "exec": "yarn run --silent no-changes || standard-version"
+          "exec": "standard-version"
         }
       ],
-      "description": "Commits a bump to the package version based on conventional commits"
+      "description": "Commits a bump to the package version based on conventional commits",
+      "category": "20.release"
     },
     "release": {
       "name": "release",
@@ -70,10 +74,14 @@
       },
       "steps": [
         {
-          "exec": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
+          "subtask": "bump"
+        },
+        {
+          "exec": "git push --follow-tags origin master"
         }
       ],
-      "description": "Bumps version & push to master"
+      "description": "Bumps version & push to master",
+      "category": "20.release"
     },
     "test:watch": {
       "name": "test:watch",
@@ -85,7 +93,8 @@
           "exec": "jest --watch"
         }
       ],
-      "description": "Run jest in watch mode"
+      "description": "Run jest in watch mode",
+      "category": "10.test"
     },
     "test:update": {
       "name": "test:update",
@@ -97,7 +106,8 @@
           "exec": "jest --updateSnapshot"
         }
       ],
-      "description": "Update jest snapshots"
+      "description": "Update jest snapshots",
+      "category": "10.test"
     },
     "projen:upgrade": {
       "name": "projen:upgrade",
@@ -112,7 +122,8 @@
           "exec": "CI=\"\" yarn projen"
         }
       ],
-      "description": "upgrades projen to the latest version"
+      "description": "upgrades projen to the latest version",
+      "category": "30.maintain"
     },
     "watch": {
       "name": "watch",
@@ -124,7 +135,8 @@
           "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
         }
       ],
-      "description": "Watch & compile in the background"
+      "description": "Watch & compile in the background",
+      "category": "00.build"
     },
     "package": {
       "name": "package",
@@ -136,7 +148,8 @@
           "exec": "jsii-pacmak"
         }
       ],
-      "description": "Create an npm tarball"
+      "description": "Create an npm tarball",
+      "category": "20.release"
     },
     "eslint": {
       "name": "eslint",
@@ -148,7 +161,8 @@
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
         }
       ],
-      "description": "Runs eslint against the codebase"
+      "description": "Runs eslint against the codebase",
+      "category": "10.test"
     },
     "compat": {
       "name": "compat",
@@ -160,7 +174,8 @@
           "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
         }
       ],
-      "description": "Perform API compatibility check against latest version"
+      "description": "Perform API compatibility check against latest version",
+      "category": "20.release"
     },
     "docgen": {
       "name": "docgen",
@@ -172,7 +187,8 @@
           "exec": "jsii-docgen"
         }
       ],
-      "description": "Generate API.md from .jsii manifest"
+      "description": "Generate API.md from .jsii manifest",
+      "category": "20.release"
     },
     "readme-macros": {
       "name": "readme-macros",

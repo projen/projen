@@ -1,5 +1,5 @@
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 export interface ProjenUpgradeOptions {
   /**
@@ -37,7 +37,7 @@ export class ProjenUpgrade {
 
     const upgrade = project.addTask(script, {
       description: 'upgrades projen to the latest version',
-      category: StartEntryCategory.MAINTAIN,
+      category: TaskCategory.MAINTAIN,
     });
 
     upgrade.exec('yarn upgrade -L projen');

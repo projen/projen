@@ -12,8 +12,7 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
-import { Start, StartEntryCategory, StartOptions } from './start';
-import { Task, TaskProps } from './tasks';
+import { Task, TaskCategory, TaskProps } from './tasks';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
@@ -406,13 +405,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   readonly start?: boolean;
 
   /**
-   * Options for `yarn start`.
-   *
-   * @default - default options
-   */
-  readonly startOptions?: StartOptions;
-
-  /**
    * Allow the project to include `peerDependencies` and `bundledDependencies`.
    * This is normally only allowed for libraries. For apps, there's no meaning
    * for specifying these.
@@ -611,11 +603,6 @@ export class NodeProject extends Project {
    */
   public readonly antitamper: boolean;
 
-  /**
-   * The start menu
-   */
-  public readonly start?: Start;
-
   protected readonly npmDistTag: string;
 
   protected readonly npmRegistry: string;
@@ -665,17 +652,17 @@ export class NodeProject extends Project {
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
-      category: StartEntryCategory.BUILD,
+      category: TaskCategory.BUILD,
     });
 
     this.testTask = this.addTask('test', {
       description: 'Run tests',
-      category: StartEntryCategory.TEST,
+      category: TaskCategory.TEST,
     });
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
-      category: StartEntryCategory.BUILD,
+      category: TaskCategory.BUILD,
     });
 
     let nodeVersion = '';
@@ -783,7 +770,7 @@ export class NodeProject extends Project {
     }
 
     if (options.start ?? true) {
-      this.start = new Start(this, options.startOptions ?? {});
+      this.setScript('start', `${this.runScriptCommand} projen start`);
     }
 
     // script to run the CLI
@@ -1121,13 +1108,6 @@ export class NodeProject extends Project {
     // add an npm script with the same name which delegates to `projen <NAME>`.
     const npmCommand = `${this.runScriptCommand} projen ${name}`;
     this.setScript(task.name, npmCommand);
-
-    // add a start menu entry
-    this.start?.addEntry(name, {
-      desc: props.description ?? name,
-      command: npmCommand,
-      category: props.category,
-    });
 
     return task;
   }

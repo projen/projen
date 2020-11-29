@@ -1,3 +1,5 @@
+import { TaskCategory } from './task';
+
 /**
  * Schema for `tasks.json`.
  */
@@ -21,6 +23,11 @@ export interface TaskSpec {
    * Task description.
    */
   readonly description?: string;
+
+  /**
+   * Task category.
+   */
+  readonly category?: TaskCategory;
 
   /**
    * Task steps.

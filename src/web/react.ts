@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
-import { StartEntryCategory } from '../start';
+import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
 
 export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
@@ -151,25 +151,25 @@ export class ReactComponent extends Component {
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask('start', {
       description: 'Starts the react application',
-      category: StartEntryCategory.BUILD,
+      category: TaskCategory.BUILD,
       exec: 'react-scripts start',
     });
 
     project.addTask('build', {
       description: 'Creates an optimized production build of your React application',
-      category: StartEntryCategory.BUILD,
+      category: TaskCategory.BUILD,
       exec: 'react-scripts build',
     });
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',
-      category: StartEntryCategory.MISC,
+      category: TaskCategory.MISC,
       exec: 'react-scripts eject',
     });
 
     project.addTask('test', {
       description: 'Runs tests',
-      category: StartEntryCategory.TEST,
+      category: TaskCategory.TEST,
       exec: 'react-scripts test',
     });
 

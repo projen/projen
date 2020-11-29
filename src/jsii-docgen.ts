@@ -1,5 +1,5 @@
 import { JsiiProject } from './jsii-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 /**
  * Creates an API.md file based on the jsii manifest:
@@ -13,7 +13,7 @@ export class JsiiDocgen {
 
     project.addTask('docgen', {
       description: 'Generate API.md from .jsii manifest',
-      category: StartEntryCategory.RELEASE,
+      category: TaskCategory.RELEASE,
       exec: 'jsii-docgen',
     });
 

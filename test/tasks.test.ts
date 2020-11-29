@@ -86,9 +86,5 @@ function expectManifest(p: Project, toStrictEqual: any) {
   const manifest = synthSnapshot(p)[Task.MANIFEST_FILE];
   delete manifest['//'];
 
-  if (JSON.stringify(manifest) !== JSON.stringify(toStrictEqual)) {
-    process.stdout.write(JSON.stringify(manifest, undefined, 2));
-  }
-
   expect(manifest).toStrictEqual(toStrictEqual);
 }

@@ -1,8 +1,6 @@
 import { existsSync } from 'fs';
 import * as path from 'path';
-import * as chalk from 'chalk';
 import { cleanup } from './cleanup';
-import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
@@ -11,7 +9,6 @@ import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
-import { Start } from './start';
 import { Task, TaskProps } from './tasks';
 import { VsCode } from './vscode';
 
@@ -256,20 +253,6 @@ export class Project {
     this.postSynthesize();
 
     logging.info('Synthesis complete');
-
-    const start = this._components.find(c => c instanceof Start);
-    if (start) {
-      console.error();
-      console.error('-'.repeat(100));
-      printStartMenu(outdir);
-    }
-
-    if (this.tips.length) {
-      console.error(chalk.cyanBright.underline('Tips:'));
-      for (const tip of this.tips) {
-        console.error(`💡 ${tip}`);
-      }
-    }
   }
 
   /**

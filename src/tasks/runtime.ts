@@ -24,11 +24,25 @@ export class TaskRuntime {
       : { tasks: { } };
   }
 
+  /**
+   * The tasks in this project.
+   */
+  public get tasks(): TaskSpec[] {
+    return Object.values(this.manifest.tasks ?? {});
+  }
+
+  /**
+   * Find a task by name, or `undefined` if not found.
+   */
   public find(name: string): TaskSpec | undefined {
     if (!this.manifest.tasks) { return undefined; }
     return this.manifest.tasks[name];
   }
 
+  /**
+   * Runs the task.
+   * @param name The task name.
+   */
   public run(name: string) {
     const cmd = this.find(name);
     if (!cmd) {
@@ -63,7 +77,6 @@ export class TaskRuntime {
       }
     }
   }
-
 
   private renderRuntimeEnvironment(cmd: TaskSpec, cwd: string) {
     const env: { [name: string]: string | undefined } = {

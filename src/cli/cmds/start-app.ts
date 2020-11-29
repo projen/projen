@@ -1,20 +1,16 @@
-import * as child_process from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
 import * as chalk from 'chalk';
 import * as inquirer from 'inquirer';
-import { StartEntryCategory, StartEntryOptions } from '../../start';
-
+import { TaskCategory, TaskRuntime, TaskSpec } from '../../tasks';
 
 const EXIT_MARKER = '$exit';
 
-export async function showStartMenu() {
+export async function showStartMenu(tasks: TaskRuntime) {
   const { command } = await inquirer.prompt([
     {
       type: 'list',
       name: 'command',
       message: 'Scripts:',
-      choices: renderChoices(),
+      choices: renderChoices(tasks),
       pageSize: 100,
       loop: false,
     },
@@ -24,15 +20,15 @@ export async function showStartMenu() {
     return;
   }
 
-  child_process.spawnSync(command, { stdio: 'inherit' });
+  tasks.run(command);
 }
 
-export function printStartMenu(root?: string) {
+export function printStartMenu(tasks: TaskRuntime, root?: string) {
   if (root && root !== '.') {
     console.error(chalk.cyanBright.bold(`Project: ${root}`));
   }
   console.error(chalk.cyanBright.underline('Commands:'));
-  for (const entry of renderChoices(root)) {
+  for (const entry of renderChoices(tasks)) {
     if (entry.type === 'separator') {
       console.error(entry.line);
     } else if (entry.name && entry.value !== '$exit') {
@@ -41,25 +37,26 @@ export function printStartMenu(root?: string) {
   }
 }
 
-function renderChoices(root: string = process.cwd()) {
-  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf-8'));
-  const start: { [name: string]: StartEntryOptions } = manifest.start ?? {};
+function renderChoices(tasksrt: TaskRuntime) {
+  const tasks = tasksrt.tasks;
+  const taskNames = tasks.map(t => t.name);
+
   const result = new Array();
   let category;
 
-  const width = Math.max(...Object.keys(start).map(k => k.length));
+  const width = Math.max(...taskNames.map(k => k.length));
 
-  for (const [k, entry] of Object.entries(start).sort(sortByPriority)) {
-    const cat = entry.category ?? StartEntryCategory.MISC;
+  for (const task of tasks.sort(sortByPriority)) {
+    const cat = task.category ?? TaskCategory.MISC;
     if (cat !== category) {
       result.push(new inquirer.Separator('  '));
       result.push(new inquirer.Separator(headingForCategory(cat)));
     }
     category = cat;
     result.push({
-      name: `${k.padEnd(width)}   ${entry.desc}`,
-      value: entry.command,
-      short: entry.desc,
+      name: `${task.name.padEnd(width)}   ${task.description ?? ''}`,
+      value: task.name,
+      short: task.description,
     });
   }
 
@@ -72,21 +69,21 @@ function renderChoices(root: string = process.cwd()) {
   return result;
 }
 
-function headingForCategory(category: StartEntryCategory) {
+function headingForCategory(category: TaskCategory) {
   switch (category) {
-    case StartEntryCategory.BUILD: return 'BUILD';
-    case StartEntryCategory.TEST: return 'TEST';
-    case StartEntryCategory.RELEASE: return 'RELEASE';
-    case StartEntryCategory.MAINTAIN: return 'MAINTAIN';
-    case StartEntryCategory.MISC:
+    case TaskCategory.BUILD: return 'BUILD';
+    case TaskCategory.TEST: return 'TEST';
+    case TaskCategory.RELEASE: return 'RELEASE';
+    case TaskCategory.MAINTAIN: return 'MAINTAIN';
+    case TaskCategory.MISC:
     default:
       return 'MISC';
   }
 }
 
-function sortByPriority([_1, e1]: [string, StartEntryOptions], [_2, e2]: [string, StartEntryOptions]) {
-  const p1 = e1.category ?? StartEntryCategory.MISC;
-  const p2 = e2.category ?? StartEntryCategory.MISC;
+function sortByPriority(e1: TaskSpec, e2: TaskSpec) {
+  const p1 = e1.category ?? TaskCategory.MISC;
+  const p2 = e2.category ?? TaskCategory.MISC;
   if (p1 > p2) return 1;
   if (p1 < p2) return -1;
   return 0;

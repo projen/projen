@@ -1,7 +1,7 @@
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 export interface EslintOptions {
   readonly tsconfigPath: string;
@@ -59,7 +59,7 @@ export class Eslint extends Component {
 
     const eslint = project.addTask('eslint', {
       description: 'Runs eslint against the codebase',
-      category: StartEntryCategory.TEST,
+      category: TaskCategory.TEST,
       exec: [
         'eslint',
         `--ext ${fileExtensions.join(',')}`,
