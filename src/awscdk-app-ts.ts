@@ -239,30 +239,5 @@ test('Snapshot', () => {
 
     fs.mkdirpSync(testdir);
     fs.writeFileSync(path.join(testdir, 'main.test.ts'), testCode);
-
-    const vsCodeConfigDir = path.join(outdir, '.vscode');
-    if (fs.pathExistsSync(vsCodeConfigDir) && fs.readdirSync(vsCodeConfigDir).filter(x => x === 'launch.json')) {
-      return;
-    }
-
-    const launchConfigurationCode = `{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "CDK Debugger",
-      "skipFiles": ["<node_internals>/**"],
-      "runtimeArgs": [
-          "-r",
-          "./node_modules/ts-node/register/transpile-only"
-      ],
-      // Entry point of your stack
-      "args": ["\${workspaceFolder}/src/main.ts"]
-    }
-  ]
-}`;
-    fs.mkdirpSync(vsCodeConfigDir);
-    fs.writeFileSync(path.join(vsCodeConfigDir, 'launch.json'), launchConfigurationCode);
   }
 }
