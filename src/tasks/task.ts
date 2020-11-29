@@ -63,8 +63,8 @@ export class Task extends Component {
 
   private readonly manifest: ProjectTasks;
 
+  private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
-  private readonly _commands: TaskStep[];
 
   constructor(project: Project, name: string, props: TaskProps = { }) {
     super(project);
@@ -76,12 +76,12 @@ export class Task extends Component {
     this.category = props.category ?? StartEntryCategory.MISC;
 
     this._env = {};
-    this._commands = [];
+    this._steps = [];
 
     this.manifest.addTaskSpec(name, {
       name,
       env: this._env,
-      steps: this._commands,
+      steps: this._steps,
       description: this.description,
     });
 
@@ -95,8 +95,8 @@ export class Task extends Component {
    * @param command the first command to add to the task after it was cleared.
   */
   public reset(command?: string) {
-    while (this._commands.length) {
-      this._commands.shift();
+    while (this._steps.length) {
+      this._steps.shift();
     }
 
     if (command) {
@@ -109,10 +109,9 @@ export class Task extends Component {
    * @param shell Shell command
    */
   public exec(shell: string) {
-    this._commands.push({
+    this._steps.push({
       exec: this.project.renderShellCommand(shell),
     });
-
   }
 
   /**
@@ -120,7 +119,7 @@ export class Task extends Component {
    * @param shell The command to add.
    */
   public prepend(shell: string) {
-    this._commands.unshift({
+    this._steps.unshift({
       exec: shell,
     });
   }
@@ -130,7 +129,7 @@ export class Task extends Component {
    * @param subtask The subtask to execute.
    */
   public subtask(subtask: Task) {
-    this._commands.push({ subtask: subtask.name });
+    this._steps.push({ subtask: subtask.name });
   }
 
   /**
@@ -152,8 +151,10 @@ export class Task extends Component {
    */
   public get commands() {
     const result = new Array<string>();
-    for (const task of this._commands) {
-      result.push(...task.exec ?? []);
+    for (const task of this._steps) {
+      if (task.exec) {
+        result.push(task.exec);
+      }
 
       for (const sub of task.subtask ?? []) {
         result.push(`projen ${sub}`);
@@ -198,6 +199,7 @@ class ProjectTasks extends Component {
     }
 
     this.tasks[name] = spec;
+    return spec;
   }
 
   /**

@@ -9,7 +9,7 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "compile": "j && s && i && i &&   && - && - && s && i && l && e && n && c && e && - && w && a && r && n && i && n && g && s && = && r && e && s && e && r && v && e && d && - && w && o && r && d &&   && - && - && n && o && - && f && i && x && - && p && e && e && r && - && d && e && p && e && n && d && e && n && c && i && e && s && j && s && i && i && - && d && o && c && g && e && n",
+    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
     "test": "yarn run projen test",
     "build": "yarn run projen build",
     "start": "npx projen start -i",

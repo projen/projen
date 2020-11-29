@@ -1709,15 +1709,15 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
-**compileCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
+**buildTask**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
+**compileTask**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
+**testTask**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
@@ -1916,21 +1916,21 @@ addPeerDeps(...deps: string[]): void
 
 #### addTask(name, props?)🔹 <a id="projen-nodeproject-addtask"></a>
 
-Adds a new task to this project.
+Adds a task to this project.
 
-This will fail if the project already has
-a task with this name.
+Since this is a node project, the task commands will also be rendered as an
+npm script so they can be executed without `projen` involved.
 
 ```ts
 addTask(name: string, props?: TaskProps): Task
 ```
 
-* **name** (<code>string</code>)  *No description*
-* **props** (<code>[TaskProps](#projen-tasks-taskprops)</code>)  *No description*
+* **name** (<code>string</code>)  The name of the task.
+* **props** (<code>[TaskProps](#projen-tasks-taskprops)</code>)  Task properties.
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **shell** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
 
 __Returns__:
 * <code>[Task](#projen-tasks-task)</code>
@@ -2054,23 +2054,21 @@ Name | Type | Description
 ### Methods
 
 
-#### addCommand(task, shell?, props?)🔹 <a id="projen-project-addcommand"></a>
+#### addExcludeFromCleanup(...globs)🔹 <a id="projen-project-addexcludefromcleanup"></a>
 
-Adds a task with a shell command to this project.
+Exclude the matching files from pre-synth cleanup.
+
+Can be used when, for example, some
+source files include the projen marker and we don't want them to be erased during synth.
 
 ```ts
-addCommand(task: string, shell?: string, props?: TaskOptions): Task
+addExcludeFromCleanup(...globs: string[]): void
 ```
 
-* **task** (<code>string</code>)  The task name (`projen NAME`).
-* **shell** (<code>string</code>)  First command in the task.
-* **props** (<code>[TaskOptions](#projen-tasks-taskoptions)</code>)  Task options.
-  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+* **globs** (<code>string</code>)  The glob patterns to match.
 
-__Returns__:
-* <code>[Task](#projen-tasks-task)</code>
+
+
 
 #### addTask(name, props?)🔹 <a id="projen-project-addtask"></a>
 
@@ -2088,7 +2086,7 @@ addTask(name: string, props?: TaskProps): Task
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **shell** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
 
 __Returns__:
 * <code>[Task](#projen-tasks-task)</code>
@@ -2824,10 +2822,10 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
-**watchCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | The "watch" command.
+**watchTask**🔹 | <code>[Task](#projen-tasks-task)</code> | The "watch" task.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**packageCmd**?🔹 | <code>[Task](#projen-tasks-task)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
+**packageTask**?🔹 | <code>[Task](#projen-tasks-task)</code> | The "package" task (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 
