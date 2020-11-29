@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.5 (2020-11-29)
+
+
+### Features
+
+* Add version pinning option to construct project ([#340](https://github.com/projen/projen/issues/340)) ([a6dc7cb](https://github.com/projen/projen/commit/a6dc7cb0b990178082acec2bb3b51857034eb79b))
+
 ### 0.5.4 (2020-11-28)
 
 

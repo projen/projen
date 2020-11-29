@@ -12,6 +12,16 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   readonly cdkVersion: string;
 
   /**
+   * Use pinned version instead of caret version for CDK.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdkVersionPinning?: boolean;
+
+  /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
    * require when consumed?
    */
@@ -110,7 +120,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
-    this.version = `^${options.cdkVersion}`;
+    this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
 
     this.addPeerDeps('constructs@^3.2.27');
 

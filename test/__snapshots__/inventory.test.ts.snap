@@ -1242,6 +1242,18 @@ jest typescript tests and only if all tests pass, run the compiler.",
       },
       Object {
         "default": "false",
+        "docs": "Use pinned version instead of caret version for CDK.",
+        "name": "cdkVersionPinning",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "cdkVersionPinning",
+        ],
+        "switch": "cdk-version-pinning",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
         "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "name": "codeCov",
         "optional": true,
