@@ -9,17 +9,31 @@ interface VsCodeLaunchConfiguration {
 
 /**
  * Options for a 'VsCodeLaunchConfigurationEntry'
+ * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
  */
 export interface VsCodeLaunchConfigurationEntry {
   readonly type: string;
   readonly request: string;
   readonly name: string;
-  readonly skipFiles: string[];
-  readonly runtimeArgs?: string[];
   readonly args?: string[];
-  readonly program?: string;
+  readonly debugServer?: number;
+  readonly internalConsoleOptions: 'neverOpen' | 'openOnFirstSessionStart' | 'openOnSessionStart';
+  readonly runtimeArgs?: string[];
+  readonly postDebugTask?: string;
   readonly preLaunchTask?: string;
+  readonly presentation?: {
+    hidden: boolean;
+    group: string;
+    order: number;
+  };
+  readonly program?: string;
+  readonly serverReadyAction?: {
+    action: string;
+  };
+  readonly skipFiles?: string[];
   readonly outFiles?: string[];
+  readonly url?: string;
+  readonly webRoot?: string;
 }
 
 /**
