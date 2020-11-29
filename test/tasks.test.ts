@@ -10,8 +10,11 @@ test('empty task', () => {
 
   // THEN
   expectManifest(p, {
-    name: 'empty',
-    description: 'empty',
+    tasks: {
+      empty: {
+        name: 'empty',
+      },
+    },
   });
 });
 
@@ -58,6 +61,7 @@ test('subtasks', () => {
   const world = p.addTask('world');
 
   // WHEN
+  world.exec('echo "running hello"');
   world.subtask(hello);
 
   // THEN
@@ -66,12 +70,13 @@ test('subtasks', () => {
       hello: {
         name: 'hello',
         steps: [{ exec: 'echo hello' }],
-        description: 'hello',
       },
       world: {
         name: 'world',
-        steps: [{ subtask: 'hello' }],
-        description: 'world',
+        steps: [
+          { exec: 'echo "running hello"' },
+          { subtask: 'hello' },
+        ],
       },
     },
   });
