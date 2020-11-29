@@ -71,6 +71,7 @@ Name|Description
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
+[ResolveOptions](#projen-resolveoptions)|Resolve options.
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
@@ -1429,7 +1430,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
-  * **omitUndefined** (<code>boolean</code>)  Omits undefined values. __*Default*__: false
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
 
 
@@ -1440,6 +1441,7 @@ Name | Type | Description
 -----|------|-------------
 **marker**🔹 | <code>boolean</code> | <span></span>
 **obj**🔹 | <code>json</code> | <span></span>
+**omitEmpty**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -2921,7 +2923,7 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
-  * **omitUndefined** (<code>boolean</code>)  Omits undefined values. __*Default*__: false
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
 
 ### Methods
@@ -3667,15 +3669,17 @@ API for resolving tokens when synthesizing file content.
 ### Methods
 
 
-#### resolve(value)🔹 <a id="projen-iresolver-resolve"></a>
+#### resolve(value, options?)🔹 <a id="projen-iresolver-resolve"></a>
 
 Given a value (object/string/array/whatever, looks up any functions inside the object and returns an object where all functions are called.
 
 ```ts
-resolve(value: any): any
+resolve(value: any, options?: ResolveOptions): any
 ```
 
 * **value** (<code>any</code>)  The value to resolve.
+* **options** (<code>[ResolveOptions](#projen-resolveoptions)</code>)  *No description*
+  * **omitEmpty** (<code>boolean</code>)  Omits empty arrays and objects. __*Default*__: false
 
 __Returns__:
 * <code>any</code>
@@ -3922,7 +3926,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
-**omitUndefined**?🔹 | <code>boolean</code> | Omits undefined values.<br/>__*Default*__: false
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -4151,6 +4155,19 @@ Name | Type | Description
 -----|------|-------------
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+
+
+
+## struct ResolveOptions 🔹 <a id="projen-resolveoptions"></a>
+
+
+Resolve options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty arrays and objects.<br/>__*Default*__: false
 
 
 
@@ -4523,7 +4540,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
-**omitUndefined**?🔹 | <code>boolean</code> | Omits undefined values.<br/>__*Default*__: false
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 

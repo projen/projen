@@ -28,11 +28,38 @@ export class SequenceRuntime {
     }
 
     // evaluating environment
+    const env = this.renderRuntimeEnvironment(cmd, cwd);
+
+    let firstCommandInSequence = true;
+
+    for (const task of cmd.commands ?? []) {
+      if (task.sequences) {
+        for (const seq of task.sequences) {
+          this.run(cwd, seq);
+        }
+      }
+
+      for (const script of task.commands ?? []) {
+        if (firstCommandInSequence) {
+          console.log(`${chalk.magentaBright('-'.repeat(80))}`);
+          firstCommandInSequence = false;
+        }
+
+        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${script}`);
+        const result = spawnSync(script, { cwd, shell: true, stdio: 'inherit', env });
+        if (result.status !== 0) {
+          console.log(chalk.red(`${name} failed in: "${script}" at ${resolve(cwd)}`));
+          process.exit(1);
+        }
+      }
+    }
+  }
+
+
+  private renderRuntimeEnvironment(cmd: SequenceSpec, cwd: string) {
     const env: { [name: string]: string | undefined } = {
       ...process.env,
     };
-
-    console.log(`${chalk.magentaBright('-'.repeat(80))}`);
 
     for (const [key, value] of Object.entries(cmd.env ?? {})) {
       if (value.startsWith('$(') && value.endsWith(')')) {
@@ -45,25 +72,9 @@ export class SequenceRuntime {
       } else {
         env[key] = value;
       }
-    }
 
-    for (const task of cmd.commands) {
-      if (task.sequences) {
-        for (const seq of task.sequences) {
-          this.run(cwd, seq);
-        }
-      }
-
-      for (const script of task.commands ?? []) {
-        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${script}`);
-        const result = spawnSync(script, { cwd, shell: true, stdio: 'inherit', env });
-        if (result.status !== 0) {
-          console.log(chalk.red(`${name} failed in: "${script}" at ${resolve(cwd)}`));
-          process.exit(1);
-        }
-      }
     }
+    return env;
   }
-
 }
 

@@ -16,7 +16,7 @@ export interface SequenceManifest {
 export interface SequenceSpec {
   readonly name: string;
   readonly description?: string;
-  readonly commands: SequenceCommand[];
+  readonly commands?: SequenceCommand[];
   readonly env?: { [name: string]: string };
 }
 

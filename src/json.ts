@@ -2,6 +2,9 @@ import { GENERATION_DISCLAIMER } from './common';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
+/**
+ * Options for `JsonFile`.
+ */
 export interface JsonFileOptions extends FileBaseOptions {
   /**
    * The object that will be serialized. You can modify the object's contents
@@ -25,11 +28,25 @@ export interface JsonFileOptions extends FileBaseOptions {
   readonly omitEmpty?: boolean;
 }
 
+/**
+ * Represents a JSON file.
+ */
 export class JsonFile extends FileBase {
+  /**
+   * The output object. This object can be mutated until the project is
+   * synthesized.
+   */
   public readonly obj: object;
 
+  /**
+   * Indicates if the projen marker JSON-comment will be added to the output
+   * object.
+   */
   public readonly marker: boolean;
 
+  /**
+   * Indicates if empty objects and arrays are omitted from the output object.
+   */
   public readonly omitEmpty: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {

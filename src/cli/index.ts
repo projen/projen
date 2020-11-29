@@ -33,7 +33,7 @@ function addSequences(ya: yargs.Argv) {
         const inspect = (name: string, indent = 0) => {
           const prefix = ' '.repeat(indent);
           const c = seqs[name];
-          for (const t of c.commands) {
+          for (const t of c.commands ?? []) {
             if (t.sequences) {
               for (const other of t.sequences) {
                 console.log(prefix + `${other}:`);
