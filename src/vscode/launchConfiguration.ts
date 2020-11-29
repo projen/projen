@@ -1,4 +1,4 @@
-import { FileBase } from '../file';
+import { FileBase, IResolver } from '../file';
 import { VsCode } from './vscode';
 
 /**
@@ -12,7 +12,7 @@ export class VSCodeLaunchConfiguration extends FileBase {
     this.entryPoint = entryPoint;
   }
 
-  protected synthesizeContent() {
+  protected synthesizeContent(_: IResolver) {
     return `{
         "version": "0.2.0",
         "configurations": [
