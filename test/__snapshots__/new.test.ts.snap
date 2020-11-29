@@ -60,7 +60,6 @@ const project = new AwsCdkTypeScriptApp({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -184,7 +183,6 @@ const project = new AwsCdkConstructLibrary({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -274,7 +272,6 @@ const project = new ConstructLibraryCdk8s({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -360,7 +357,6 @@ const project = new JsiiProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -434,7 +430,6 @@ const project = new web.NextJsProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -521,7 +516,6 @@ const project = new web.NextJsTypeScriptProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -617,7 +611,6 @@ const project = new NodeProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -713,7 +706,6 @@ const project = new web.ReactProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -799,7 +791,6 @@ const project = new web.ReactTypeScriptProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -895,7 +886,6 @@ const project = new TypeScriptProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -991,7 +981,6 @@ const project = new TypeScriptAppProject({
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
   // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
-  // startOptions: undefined,                                                  /* Options for \`yarn start\`. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
