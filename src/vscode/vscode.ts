@@ -1,13 +1,13 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { VSCodeLaunchConfiguration } from './launchConfiguration';
+import { VsCodeLaunchConfig } from './launch-config';
 
 export class VsCode extends Component {
   constructor(project: Project) {
     super(project);
   }
 
-  public addLaunchConfiguration(entryPoint = 'main.ts') {
-    return new VSCodeLaunchConfiguration(this, entryPoint);
+  public addLaunchConfiguration() {
+    return new VsCodeLaunchConfig(this);
   }
 }

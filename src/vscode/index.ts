@@ -1,3 +1,3 @@
 export * from './vscode';
 
-export * from './launchConfiguration';
+export * from './launch-config';
