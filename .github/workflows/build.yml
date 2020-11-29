@@ -22,6 +22,10 @@ jobs:
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
       - run: yarn run build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: coverage
       - name: Anti-tamper check
         run: git diff --exit-code
     container:

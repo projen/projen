@@ -25,7 +25,7 @@ function addTasks(ya: yargs.Argv) {
   const runtime = new TaskRuntime(workdir);
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
-    ya.command(task.name, task.description ?? task.name, args => {
+    ya.command(task.name, task.description ?? '', args => {
       args.option('inspect', { alias: 'i', desc: 'show all steps in this task' });
 
       const argv = args.argv;

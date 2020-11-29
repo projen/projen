@@ -54,7 +54,7 @@ export class Task extends Component {
   /**
    * The description of the task.
    */
-  public readonly description: string;
+  public readonly description?: string;
 
   /**
    * The start menu category of the task.
@@ -72,10 +72,10 @@ export class Task extends Component {
     this.manifest = ProjectTasks.of(project); // get/create
 
     this.name = name;
-    this.description = props.description ?? name;
+    this.description = props.description;
     this.category = props.category ?? StartEntryCategory.MISC;
 
-    this._env = {};
+    this._env = props.env ?? {};
     this._steps = [];
 
     this.manifest.addTaskSpec(name, {
