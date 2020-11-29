@@ -24,7 +24,7 @@ test('adding a launch configuration entry', () => {
 
   // WHEN
   const launchConfig = project.vscode?.addLaunchConfiguration();
-  launchConfig.addConfiguration({
+  launchConfig?.addConfiguration({
     type: 'node',
     request: 'launch',
     name: 'CDK Debugger',
@@ -57,7 +57,7 @@ test('adding multiple launch configuration entries', () => {
 
   // WHEN
   const launchConfig = project.vscode?.addLaunchConfiguration();
-  launchConfig.addConfiguration({
+  launchConfig?.addConfiguration({
     type: 'node',
     request: 'launch',
     name: 'CDK Debugger',
@@ -66,7 +66,7 @@ test('adding multiple launch configuration entries', () => {
     args: ['${workspaceFolder}/src/main.ts'],
   });
 
-  launchConfig.addConfiguration({
+  launchConfig?.addConfiguration({
     type: 'node',
     request: 'launch',
     name: 'Launch Program',
@@ -76,7 +76,7 @@ test('adding multiple launch configuration entries', () => {
     outFiles: ['${workspaceFolder}/lib/**/*.js'],
   });
 
-  launchConfig.addConfiguration({
+  launchConfig?.addConfiguration({
     type: 'pwa-chrome',
     request: 'launch',
     name: 'Launch Chrome against localhost',
