@@ -1,6 +1,9 @@
 import { FileBase } from '../file';
 import { VsCode } from './vscode';
 
+/**
+ * Template for a VSCode Launch Configuration (useful for enabling in-editor debugger)
+ */
 export class VSCodeLaunchConfiguration extends FileBase {
   private readonly entryPoint: string;
 
