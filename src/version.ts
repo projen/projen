@@ -22,13 +22,13 @@ export class Version extends Component {
     project.addTask('bump', {
       description: 'Commits a bump to the package version based on conventional commits',
       category: StartEntryCategory.RELEASE,
-      shell: `${project.runScriptCommand} --silent no-changes || standard-version`,
+      exec: `${project.runScriptCommand} --silent no-changes || standard-version`,
     });
 
     project.addTask('release', {
       description: `Bumps version & push to ${options.releaseBranch}`,
       category: StartEntryCategory.RELEASE,
-      shell: `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`,
+      exec: `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`,
     });
 
     project.addDevDeps(

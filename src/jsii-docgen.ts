@@ -11,11 +11,13 @@ export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDeps('jsii-docgen');
 
-    project.addCommand('docgen', 'jsii-docgen', {
+    project.addTask('docgen', {
       description: 'Generate API.md from .jsii manifest',
       category: StartEntryCategory.RELEASE,
+      exec: 'jsii-docgen',
     });
-    project.compileCmd.add('jsii-docgen');
+
+    project.compileTask.exec('jsii-docgen');
     project.gitignore.include('/API.md');
 
     project.addTip('`API.md` includes the API reference for your library');

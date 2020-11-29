@@ -174,22 +174,22 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    const cmd = `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`;
-    const compatCmd = this.addCommand('compat', cmd, {
+    const compatCmd = this.addTask('compat', {
       description: 'Perform API compatibility check against latest version',
       category: StartEntryCategory.RELEASE,
+      exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
     });
 
     const compat = options.compat ?? false;
     if (compat) {
-      this.compileCmd.addSubtask(compatCmd);
+      this.compileTask.subtask(compatCmd);
     } else {
       this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
 
-    this.compileCmd.reset(`jsii ${jsiiFlags}`);
-    this.watchCmd.reset(`jsii -w ${jsiiFlags}`);
-    this.packageCmd?.reset('jsii-pacmak');
+    this.compileTask.reset(`jsii ${jsiiFlags}`);
+    this.watchTask.reset(`jsii -w ${jsiiFlags}`);
+    this.packageTask?.reset('jsii-pacmak');
 
     const targets: Record<string, any> = { };
 

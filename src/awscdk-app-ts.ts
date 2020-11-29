@@ -113,33 +113,37 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addCdkDependency('@aws-cdk/core');
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    const synth = this.addCommand('synth', 'cdk synth', {
+    const synth = this.addTask('synth', {
       description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
       category: StartEntryCategory.BUILD,
+      exec: 'cdk synth',
     });
 
-    this.addCommand('deploy', 'cdk deploy', {
+    this.addTask('deploy', {
       description: 'Deploys your CDK app to the AWS cloud',
       category: StartEntryCategory.RELEASE,
+      exec: 'cdk deploy',
     });
 
-    this.addCommand('destroy', 'cdk destroy', {
+    this.addTask('destroy', {
       description: 'Destroys your cdk app in the AWS cloud',
       category: StartEntryCategory.RELEASE,
+      exec: 'cdk destroy',
     });
 
-    this.addCommand('diff', 'cdk diff', {
+    this.addTask('diff', {
       description: 'Diffs the currently deployed app against your code',
       category: StartEntryCategory.MISC,
+      exec: 'cdk diff',
     });
 
     // no compile step because we do all of it in typescript directly
-    this.compileCmd.reset();
+    this.compileTask.reset();
 
     this.removeScript('watch'); // because we use ts-node
 
     // add synth to the build
-    this.buildCmd.addSubtask(synth);
+    this.buildTask.subtask(synth);
 
     this.cdkConfig = {
       app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,

@@ -46,18 +46,18 @@ export class TaskRuntime {
         this.run(task.subtask);
       }
 
-      if (task.shell) {
-        const shell = task.shell;
+      if (task.exec) {
+        const exec = task.exec;
 
         if (firstCommandInSequence) {
           console.log(`${chalk.magentaBright('-'.repeat(80))}`);
           firstCommandInSequence = false;
         }
 
-        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${shell}`);
-        const result = spawnSync(shell, { cwd, shell: true, stdio: 'inherit', env });
+        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${exec}`);
+        const result = spawnSync(exec, { cwd, shell: true, stdio: 'inherit', env });
         if (result.status !== 0) {
-          console.log(chalk.red(`${name} failed in: "${shell}" at ${resolve(cwd)}`));
+          console.log(chalk.red(`${name} failed in: "${exec}" at ${resolve(cwd)}`));
           process.exit(1);
         }
       }

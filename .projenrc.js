@@ -35,18 +35,20 @@ const project = new JsiiProject({
   compileBeforeTest: true, // since we want to run the cli in tests
 });
 
+project.addExcludeFromCleanup('test/**');
+
 // since this is projen, we need to be able to compile without `projen` itself
-project.setScript('compile', project.compileCmd.commands.join(' && '));
+project.setScript('compile', project.compileTask.commands.join(' && '));
 project.setScript('projen', 'yarn compile && node bin/projen');
 
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
 const macros = project.addTask('readme-macros')
-macros.add('mv README.md README.md.bak');
-macros.add('cat README.md.bak | markmac > README.md');
-macros.add('rm README.md.bak');
-project.buildCmd.addSubtask(macros);
+macros.exec('mv README.md README.md.bak');
+macros.exec('cat README.md.bak | markmac > README.md');
+macros.exec('rm README.md.bak');
+project.buildTask.subtask(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

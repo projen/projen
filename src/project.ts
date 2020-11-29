@@ -12,7 +12,7 @@ import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
 import { Start } from './start';
-import { Task, TaskOptions, TaskProps } from './tasks';
+import { Task, TaskProps } from './tasks';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
@@ -59,10 +59,6 @@ export class Project {
    **/
   public readonly root: Project;
 
-  private readonly _components = new Array<Component>();
-  private readonly subprojects = new Array<Project>();
-  private readonly tips = new Array<string>();
-
   /**
    * Access all github components.
    *
@@ -79,9 +75,15 @@ export class Project {
 
   public readonly tasks: Task[];
 
+  private readonly _components = new Array<Component>();
+  private readonly subprojects = new Array<Project>();
+  private readonly tips = new Array<string>();
+  private readonly excludeFromCleanup: string[];
+
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
     this.tasks = [];
+    this.excludeFromCleanup = [];
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -136,19 +138,6 @@ export class Project {
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
     return this._components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
-  }
-
-  /**
-   * Adds a task with a shell command to this project.
-   * @param task The task name (`projen NAME`)
-   * @param shell First command in the task. An `undefined` value here is equivalent to `project.addTask()`
-   * @param props Task options
-   */
-  public addCommand(task: string, shell: string | undefined, props: TaskOptions = { }): Task {
-    return this.addTask(task, {
-      ...props,
-      shell,
-    });
   }
 
   /**
@@ -225,6 +214,16 @@ export class Project {
   }
 
   /**
+   * Exclude the matching files from pre-synth cleanup. Can be used when, for example, some
+   * source files include the projen marker and we don't want them to be erased during synth.
+   *
+   * @param globs The glob patterns to match
+   */
+  public addExcludeFromCleanup(...globs: string[]) {
+    this.excludeFromCleanup.push(...globs);
+  }
+
+  /**
    * Synthesize all project files into `outdir`.
    *
    * 1. Call "this.preSynthesize()"
@@ -239,7 +238,7 @@ export class Project {
     this.preSynthesize();
 
     // delete all generated files before we start synthesizing new ones
-    cleanup(outdir);
+    cleanup(outdir, this.excludeFromCleanup);
 
     for (const subproject of this.subprojects) {
       subproject.synth();
@@ -255,7 +254,6 @@ export class Project {
 
     // project-level hook
     this.postSynthesize();
-
 
     logging.info('Synthesis complete');
 

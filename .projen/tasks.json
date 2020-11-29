@@ -7,10 +7,10 @@
       },
       "steps": [
         {
-          "shell": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
         },
         {
-          "shell": "jsii-docgen"
+          "exec": "jsii-docgen"
         }
       ],
       "description": "Only compile"
@@ -22,7 +22,7 @@
       },
       "steps": [
         {
-          "shell": "jest --passWithNoTests --updateSnapshot"
+          "exec": "jest --passWithNoTests --updateSnapshot"
         },
         {
           "subtask": "eslint"
@@ -58,7 +58,7 @@
       },
       "steps": [
         {
-          "shell": "yarn run --silent no-changes || standard-version"
+          "exec": "yarn run --silent no-changes || standard-version"
         }
       ],
       "description": "Commits a bump to the package version based on conventional commits"
@@ -70,7 +70,7 @@
       },
       "steps": [
         {
-          "shell": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
+          "exec": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
         }
       ],
       "description": "Bumps version & push to master"
@@ -82,7 +82,7 @@
       },
       "steps": [
         {
-          "shell": "jest --watch"
+          "exec": "jest --watch"
         }
       ],
       "description": "Run jest in watch mode"
@@ -94,7 +94,7 @@
       },
       "steps": [
         {
-          "shell": "jest --updateSnapshot"
+          "exec": "jest --updateSnapshot"
         }
       ],
       "description": "Update jest snapshots"
@@ -106,10 +106,10 @@
       },
       "steps": [
         {
-          "shell": "yarn upgrade -L projen"
+          "exec": "yarn upgrade -L projen"
         },
         {
-          "shell": "CI=\"\" yarn projen"
+          "exec": "CI=\"\" yarn projen"
         }
       ],
       "description": "upgrades projen to the latest version"
@@ -121,7 +121,7 @@
       },
       "steps": [
         {
-          "shell": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
         }
       ],
       "description": "Watch & compile in the background"
@@ -133,7 +133,7 @@
       },
       "steps": [
         {
-          "shell": "jsii-pacmak"
+          "exec": "jsii-pacmak"
         }
       ],
       "description": "Create an npm tarball"
@@ -145,7 +145,7 @@
       },
       "steps": [
         {
-          "shell": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
         }
       ],
       "description": "Runs eslint against the codebase"
@@ -157,7 +157,7 @@
       },
       "steps": [
         {
-          "shell": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
+          "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
         }
       ],
       "description": "Perform API compatibility check against latest version"
@@ -169,7 +169,7 @@
       },
       "steps": [
         {
-          "shell": "jsii-docgen"
+          "exec": "jsii-docgen"
         }
       ],
       "description": "Generate API.md from .jsii manifest"
@@ -181,13 +181,13 @@
       },
       "steps": [
         {
-          "shell": "mv README.md README.md.bak"
+          "exec": "mv README.md README.md.bak"
         },
         {
-          "shell": "cat README.md.bak | markmac > README.md"
+          "exec": "cat README.md.bak | markmac > README.md"
         },
         {
-          "shell": "rm README.md.bak"
+          "exec": "rm README.md.bak"
         }
       ],
       "description": "readme-macros"

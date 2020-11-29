@@ -678,16 +678,18 @@ export class Jest {
       jestOpts.push('--updateSnapshot');
     }
 
-    this.project.testCmd.add(`jest ${jestOpts.join(' ')}`);
+    this.project.testTask.exec(`jest ${jestOpts.join(' ')}`);
 
-    this.project.addCommand('test:watch', 'jest --watch', {
+    this.project.addTask('test:watch', {
       description: 'Run jest in watch mode',
       category: StartEntryCategory.TEST,
+      exec: 'jest --watch',
     });
 
-    this.project.addCommand('test:update', 'jest --updateSnapshot', {
+    this.project.addTask('test:update', {
       description: 'Update jest snapshots',
       category: StartEntryCategory.TEST,
+      exec: 'jest --updateSnapshot',
     });
   }
 }

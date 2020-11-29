@@ -105,14 +105,14 @@ export class TypeScriptProject extends NodeProject {
   public readonly libdir: string;
 
   /**
-   * The "watch" command.
+   * The "watch" task.
    */
-  public readonly watchCmd: Task;
+  public readonly watchTask: Task;
 
   /**
-   * The "package" command (or undefined if `package` is set to `false`).
+   * The "package" task (or undefined if `package` is set to `false`).
    */
-  public readonly packageCmd?: Task;
+  public readonly packageTask?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
     super(options);
@@ -125,34 +125,35 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
 
-    this.watchCmd = this.addCommand('watch', 'tsc -w', {
+    this.watchTask = this.addTask('watch', {
       description: 'Watch & compile in the background',
       category: StartEntryCategory.BUILD,
+      exec: 'tsc -w',
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.buildCmd.addSubtask(this.compileCmd);
-      this.buildCmd.addSubtask(this.testCmd);
+      this.buildTask.subtask(this.compileTask);
+      this.buildTask.subtask(this.testTask);
     } else {
-      this.buildCmd.addSubtask(this.testCmd);
-      this.buildCmd.addSubtask(this.compileCmd);
+      this.buildTask.subtask(this.testTask);
+      this.buildTask.subtask(this.compileTask);
     }
 
     if (options.package ?? true) {
-      this.packageCmd = this.addTask('package', {
+      this.packageTask = this.addTask('package', {
         description: 'Create an npm tarball',
         category: StartEntryCategory.RELEASE,
       });
 
-      this.packageCmd.add('rm -fr dist');
-      this.packageCmd.add('mkdir -p dist/js');
-      this.packageCmd.add(`${this.packageManager} pack`);
-      this.packageCmd.add('mv *.tgz dist/js/');
+      this.packageTask.exec('rm -fr dist');
+      this.packageTask.exec('mkdir -p dist/js');
+      this.packageTask.exec(`${this.packageManager} pack`);
+      this.packageTask.exec('mv *.tgz dist/js/');
 
-      this.buildCmd.addSubtask(this.packageCmd);
+      this.buildTask.subtask(this.packageTask);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -244,7 +245,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.testCmd.prepend(`rm -fr ${this.libdir}/`);
+        this.testTask.prepend(`rm -fr ${this.libdir}/`);
       }
     }
 

@@ -573,9 +573,9 @@ export class NodeProject extends Project {
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
 
-  public readonly compileCmd: Task;
-  public readonly testCmd: Task;
-  public readonly buildCmd: Task;
+  public readonly compileTask: Task;
+  public readonly testTask: Task;
+  public readonly buildTask: Task;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -663,17 +663,17 @@ export class NodeProject extends Project {
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
 
-    this.compileCmd = this.addCommand('compile', undefined, {
+    this.compileTask = this.addTask('compile', {
       description: 'Only compile',
       category: StartEntryCategory.BUILD,
     });
 
-    this.testCmd = this.addCommand('test', undefined, {
+    this.testTask = this.addTask('test', {
       description: 'Run tests',
       category: StartEntryCategory.TEST,
     });
 
-    this.buildCmd = this.addCommand('build', undefined, {
+    this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
       category: StartEntryCategory.BUILD,
     });
@@ -989,7 +989,7 @@ export class NodeProject extends Project {
 
     // override any scripts from options (if specified)
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
-      this.addCommand(cmdname, shell);
+      this.addTask(cmdname, { exec: shell });
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -1076,7 +1076,7 @@ export class NodeProject extends Project {
     for (const task of this.tasks) {
       if (task.name === name) {
         task.reset();
-        task.add(command);
+        task.exec(command);
         this.scripts[name] = [`${this.runScriptCommand} projen ${name}`];
         return;
       }
@@ -1103,6 +1103,15 @@ export class NodeProject extends Project {
     return name in this.scripts;
   }
 
+  /**
+   * Adds a task to this project.
+   *
+   * Since this is a node project, the task commands will also be rendered as an
+   * npm script so they can be executed without `projen` involved.
+   *
+   * @param name The name of the task
+   * @param props Task properties
+   */
   public addTask(name: string, props: TaskProps = { }) {
     const task = super.addTask(name, props);
 
@@ -1129,13 +1138,13 @@ export class NodeProject extends Project {
    */
   public addCompileCommand(...commands: string[]) {
     for (const c of commands) {
-      this.compileCmd.add(c);
+      this.compileTask.exec(c);
     }
   }
 
   public addTestCommand(...commands: string[]) {
     for (const c of commands) {
-      this.testCmd.add(c);
+      this.testTask.exec(c);
     }
   }
 
@@ -1145,7 +1154,7 @@ export class NodeProject extends Project {
    */
   public addBuildCommand(...commands: string[]) {
     for (const c of commands) {
-      this.buildCmd.add(c);
+      this.buildTask.exec(c);
     }
   }
 

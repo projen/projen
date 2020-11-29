@@ -26,21 +26,22 @@ function addTasks(ya: yargs.Argv) {
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
     ya.command(task.name, task.description ?? task.name, args => {
-      args.option('inspect', { alias: 'i', desc: 'show all commands in this task' });
+      args.option('inspect', { alias: 'i', desc: 'show all steps in this task' });
 
       const argv = args.argv;
       if (argv.inspect) {
         const inspect = (name: string, indent = 0) => {
           const prefix = ' '.repeat(indent);
           const c = tasks[name];
+          if (!c) {
+            throw new Error(`${name}: unable to resolve subtask with name "${name}"`);
+          }
           for (const t of c.steps ?? []) {
             if (t.subtask) {
-              for (const other of t.subtask) {
-                console.log(prefix + `${other}:`);
-                inspect(other, indent + 2);
-              }
-            } else if (t.shell) {
-              console.log(prefix + t.shell);
+              console.log(prefix + `${t.subtask}:`);
+              inspect(t.subtask, indent + 2);
+            } else if (t.exec) {
+              console.log(prefix + t.exec);
             }
           }
         };

@@ -41,7 +41,7 @@ export interface TaskStep {
   /**
    * Shell command to execute
    */
-  readonly shell?: string;
+  readonly exec?: string;
 
   /**
    * Subtask to execute

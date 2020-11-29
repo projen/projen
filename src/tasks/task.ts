@@ -33,7 +33,7 @@ export interface TaskProps extends TaskOptions {
    * Shell command to execute as the first command of the task.
    * @default - add commands using `task.add()` or `task.addSubtask()`
    */
-  readonly shell?: string;
+  readonly exec?: string;
 }
 
 /**
@@ -85,8 +85,8 @@ export class Task extends Component {
       description: this.description,
     });
 
-    if (props.shell) {
-      this.add(props.shell);
+    if (props.exec) {
+      this.exec(props.exec);
     }
   }
 
@@ -100,7 +100,7 @@ export class Task extends Component {
     }
 
     if (command) {
-      this.add(command);
+      this.exec(command);
     }
   }
 
@@ -108,9 +108,9 @@ export class Task extends Component {
    * Executes a shell command
    * @param shell Shell command
    */
-  public add(shell: string) {
+  public exec(shell: string) {
     this._commands.push({
-      shell: this.project.renderShellCommand(shell),
+      exec: this.project.renderShellCommand(shell),
     });
 
   }
@@ -121,7 +121,7 @@ export class Task extends Component {
    */
   public prepend(shell: string) {
     this._commands.unshift({
-      shell,
+      exec: shell,
     });
   }
 
@@ -129,7 +129,7 @@ export class Task extends Component {
    * Runs a sub-task.
    * @param subtask The subtask to execute.
    */
-  public addSubtask(subtask: Task) {
+  public subtask(subtask: Task) {
     this._commands.push({ subtask: subtask.name });
   }
 
@@ -153,7 +153,7 @@ export class Task extends Component {
   public get commands() {
     const result = new Array<string>();
     for (const task of this._commands) {
-      result.push(...task.shell ?? []);
+      result.push(...task.exec ?? []);
 
       for (const sub of task.subtask ?? []) {
         result.push(`projen ${sub}`);
