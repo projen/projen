@@ -17,24 +17,33 @@ export interface VsCodeLaunchConfigurationEntry {
   readonly name: string;
   readonly args?: string[];
   readonly debugServer?: number;
-  readonly internalConsoleOptions: 'neverOpen' | 'openOnFirstSessionStart' | 'openOnSessionStart';
+  readonly internalConsoleOptions:
+    | 'neverOpen'
+    | 'openOnFirstSessionStart'
+    | 'openOnSessionStart';
   readonly runtimeArgs?: string[];
   readonly postDebugTask?: string;
   readonly preLaunchTask?: string;
-  readonly presentation?: {
-    hidden: boolean;
-    group: string;
-    order: number;
-  };
+  readonly presentation?: Presentation;
   readonly program?: string;
-  readonly serverReadyAction?: {
-    action: string;
-  };
+  readonly serverReadyAction?: ServerReadyAction;
   readonly skipFiles?: string[];
   readonly outFiles?: string[];
   readonly url?: string;
   readonly webRoot?: string;
 }
+
+type Presentation = {
+  hidden: boolean;
+  group: string;
+  order: number;
+};
+
+type ServerReadyAction = {
+  action: string;
+  pattern?: string;
+  uriFormat?: string;
+};
 
 /**
  * VSCode launch configuration file (launch.json), useful for enabling in-editor debugger
