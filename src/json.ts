@@ -19,16 +19,18 @@ export interface JsonFileOptions extends FileBaseOptions {
   readonly marker?: boolean;
 
   /**
-   * Omits undefined values.
+   * Omits empty objects and arrays.
    * @default false
    */
-  readonly omitUndefined?: boolean;
+  readonly omitEmpty?: boolean;
 }
 
 export class JsonFile extends FileBase {
   public readonly obj: object;
 
   public readonly marker: boolean;
+
+  public readonly omitEmpty: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
@@ -39,6 +41,7 @@ export class JsonFile extends FileBase {
 
     this.marker = options.marker ?? false;
     this.obj = options.obj ?? {};
+    this.omitEmpty = options.omitEmpty ?? false;
   }
 
   protected synthesizeContent(resolver: IResolver) {
@@ -50,6 +53,10 @@ export class JsonFile extends FileBase {
       obj['//'] = GENERATION_DISCLAIMER;
     }
 
-    return JSON.stringify(resolver.resolve(obj), undefined, 2);
+    const resolved = resolver.resolve(obj, {
+      omitEmpty: this.omitEmpty,
+    });
+
+    return JSON.stringify(resolved, undefined, 2);
   }
 }

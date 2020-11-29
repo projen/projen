@@ -88,7 +88,7 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = { resolve: obj => resolve(obj, outdir) };
+    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, [outdir], options) };
     writeFile(filePath, this.synthesizeContent(resolver), {
       readonly: this.readonly,
     });
@@ -103,8 +103,18 @@ export interface IResolver {
    * Given a value (object/string/array/whatever, looks up any functions inside
    * the object and returns an object where all functions are called.
    * @param value The value to resolve
+   * @package options Resolve options
    */
-  resolve(value: any): any;
+  resolve(value: any, options?: ResolveOptions): any;
 }
 
-
+/**
+ * Resolve options.
+ */
+export interface ResolveOptions {
+  /**
+   * Omits empty arrays and objects.
+   * @default false
+   */
+  readonly omitEmpty?: boolean;
+}

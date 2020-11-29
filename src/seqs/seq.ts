@@ -201,6 +201,7 @@ class Sequences extends Component {
 
     new JsonFile(project, Sequence.MANIFEST_FILE, {
       marker: true,
+      omitEmpty: true,
       obj: {
         seqs: this.seqs,
         env: this.env,
