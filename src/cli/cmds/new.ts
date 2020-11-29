@@ -39,9 +39,10 @@ class Command implements yargs.CommandModule {
             if (option.default && option.default !== 'undefined') {
               if (!required) {
                 // if the field is not required, just describe the default but don't actually assign a value
-                desc.push(`(default: ${option.default.replace(/^\ +\-/, '')})`);
+                desc.push(`[default: ${option.default.replace(/^\ *-/, '').replace(/\.$/, '').trim()}]`);
               } else {
-                // if the field is required and we have a default, then assign the value here
+                // if the field is required and we have a @default, then assign
+                // the value here so it appears in `--help`
                 defaultValue = renderDefault(option.default);
               }
             }
@@ -99,8 +100,10 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
     process.exit(1);
   }
 
+  const [importName] = type.typename.split('.');
+
   const lines = [
-    `const { ${type.typename} } = require('${type.moduleName}');`,
+    `const { ${importName} } = require('${type.moduleName}');`,
     '',
     `const project = new ${type.typename}(${renderParams(type, params, comments)});`,
     '',
@@ -194,14 +197,11 @@ function renderParams(type: inventory.ProjectType, params: Record<string, string
 /**
  * Given a value from "@default", processes macros and returns a stringied
  * (quoted) result.
+ *
+ * @returns a javascript primitive (could be a string, number or boolean)
  */
 function renderDefault(value: string) {
-  const resolved = tryProcessMacro(value);
-  if (resolved) {
-    return JSON.stringify(resolved);
-  } else {
-    return value;
-  }
+  return tryProcessMacro(value) ?? JSON.parse(value);
 }
 
 /**
@@ -209,7 +209,7 @@ function renderDefault(value: string) {
  * @param type Project type
  * @param argv Command line switches
  */
-function commandLineToProps(type: inventory.ProjectType, argv: any): Record<string, any> {
+function commandLineToProps(type: inventory.ProjectType, argv: Record<string, unknown>): Record<string, any> {
   const props: Record<string, any> = {};
 
   // initialize props with default values
@@ -230,7 +230,14 @@ function commandLineToProps(type: inventory.ProjectType, argv: any): Record<stri
             break;
           }
           if (queue.length === 0) {
-            curr[p] = value;
+            let val = value;
+
+            // if this is a string, then quote it
+            if (val && typeof(val) === 'string') {
+              val = JSON.stringify(val);
+            }
+
+            curr[p] = val;
           } else {
             curr[p] = curr[p] ?? {};
             curr = curr[p];
@@ -249,7 +256,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: any): Record<stri
  * @param spec The name of the external module to load
  * @param args Command line arguments (incl. project type)
  */
-function newProjectFromModule(baseDir: string, spec: string, args: any) {
+async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
   // collect projects by looking up all .jsii modules in `node_modules`.
@@ -278,7 +285,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
   }
 
   // include a dev dependency for the external module
-  newProject(baseDir, type, args, {
+  await newProject(baseDir, type, args, {
     devDeps: JSON.stringify([specDependencyInfo]),
   });
 }
@@ -289,7 +296,7 @@ function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
+async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -303,7 +310,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
-    synth();
+    await synth();
   }
 }
 

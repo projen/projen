@@ -1,9 +1,9 @@
-import { Component } from './component';
-import { FileBase, FileBaseOptions, IResolver } from './file';
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleDir } from './sample-file';
-import { StartEntryCategory } from './start';
-import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from './typescript';
+import { Component } from '../component';
+import { FileBase, FileBaseOptions, IResolver } from '../file';
+import { NodeProject, NodeProjectOptions } from '../node-project';
+import { SampleDir } from '../sample-file';
+import { StartEntryCategory } from '../start';
+import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
 
 export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
 

@@ -107,7 +107,9 @@ export function discover(...moduleDirs: string[]) {
       continue;
     }
 
-    const [, typename] = fqn.split('.');
+    // projen.web.ReactProject -> web.ReactProject
+    const typename = fqn.substring(fqn.indexOf('.') + 1);
+
     const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
     let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
     result.push({
@@ -153,8 +155,6 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
     for (const prop of struct.properties ?? []) {
       const propPath = [...basePath, prop.name];
 
-      const defaultValue = prop.docs?.default;
-
       // protect against double-booking
       if (prop.name in options) {
         throw new Error(`duplicate option "${prop.name}" in ${fqn}`);
@@ -169,6 +169,22 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         typeName = 'unknown';
       }
 
+      const isOptional = optional || prop.optional;
+      let defaultValue = prop.docs?.default;
+
+      if (defaultValue === 'undefined') {
+        defaultValue = undefined;
+      }
+
+      // if this is a mandatory option and we have a default value, it has to be JSON-parsable to the correct type
+      if (!isOptional && defaultValue) {
+        if (!prop.type?.primitive) {
+          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${typeName}`);
+        }
+
+        checkDefaultIsParsable(prop.name, defaultValue, prop.type?.primitive);
+      }
+
       options[prop.name] = filterUndefined({
         path: propPath,
         parent: struct.name,
@@ -177,8 +193,8 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         type: typeName,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
-        optional: optional || prop.optional,
-        deprecated: prop.docs.stability === 'deprecated',
+        optional: isOptional,
+        deprecated: prop.docs.stability === 'deprecated' ? true : undefined,
       });
     }
 
@@ -226,5 +242,21 @@ function isProjectType(jsii: JsiiTypes, fqn: string) {
     if (!curr) {
       return false;
     }
+  }
+}
+
+function checkDefaultIsParsable(prop: string, value: string, type: string) {
+  // macros are pass-through
+  if (value.startsWith('$')) {
+    return;
+  }
+  try {
+    const parsed = JSON.parse(value);
+    if (typeof(parsed) !== type) {
+      throw new Error(`cannot parse @default value for mandatory option ${prop} as a ${type}: ${parsed}`);
+    }
+
+  } catch (e) {
+    throw new Error(`unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${e.message}`);
   }
 }

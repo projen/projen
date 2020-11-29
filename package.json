@@ -148,7 +148,7 @@
       "command": "yarn run projen readme-macros"
     }
   },
-  "version": "0.5.1",
+  "version": "0.5.4",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,

@@ -2,7 +2,7 @@ import * as yargs from 'yargs';
 import { SequenceRuntime } from '../seqs';
 import { synth } from './synth';
 
-function main() {
+async function main() {
   const ya = yargs;
   ya.commandDir('cmds');
 
@@ -16,7 +16,7 @@ function main() {
 
   // no command means just require .projenrc.js
   if (args._.length === 0) {
-    synth();
+    await synth();
   }
 }
 
@@ -55,4 +55,7 @@ function addSequences(ya: yargs.Argv) {
   }
 }
 
-main();
+main().catch(e => {
+  console.error(e.stack);
+  process.exit(1);
+});
