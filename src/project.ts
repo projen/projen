@@ -9,7 +9,8 @@ import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
-import { Task, TaskProps } from './tasks';
+import { TaskOptions } from './tasks';
+import { Tasks } from './tasks/tasks';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
@@ -70,7 +71,7 @@ export class Project {
    */
   public readonly vscode: VsCode | undefined;
 
-  public readonly tasks: Task[];
+  public readonly tasks: Tasks;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -79,7 +80,6 @@ export class Project {
 
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
-    this.tasks = [];
     this.excludeFromCleanup = [];
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
@@ -114,10 +114,13 @@ export class Project {
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
 
+    // oh no: tasks depends on gitignore so it has to be initialized after
+    // smells like dep injectionn but god forbid.
+    this.tasks = new Tasks(this);
+
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
-
 
     new SampleReadme(this, '# my project');
   }
@@ -144,19 +147,8 @@ export class Project {
    * @param name The task name to add
    * @param props Task properties
    */
-  public addTask(name: string, props: TaskProps = { }) {
-    return new Task(this, name, props);
-  }
-
-  /**
-   * Allows subclasses to customize how shell commands are rendered.
-   * For example, in `NodeProject` this is used to add an `npx -c` prefix
-   * to each command to it is executed in the npm environment.
-   * @param command The command to render
-   * @returns Command ready to execute in a shell.
-   */
-  public renderShellCommand(command: string) {
-    return command;
+  public addTask(name: string, props: TaskOptions = { }) {
+    return this.tasks.addTask(name, props);
   }
 
   /**

@@ -12,7 +12,7 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
-import { Task, TaskCategory, TaskProps } from './tasks';
+import { Task, TaskCategory, TaskOptions } from './tasks';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
@@ -448,6 +448,35 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * @default - default content
    */
   readonly pullRequestTemplateContents?: string;
+
+  /**
+   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   */
+  readonly npmTaskExecution?: NpmTaskExecution;
+}
+
+export enum NpmTaskExecution {
+  /**
+   * `packagwe.json` scripts invoke to the projen CLI.
+   *
+   * @example
+   *
+   * scripts: {
+   *   "compile": "projen compile"
+   * }
+   */
+  PROJEN = 'projen',
+
+  /**
+   * Task is implemented directly as a shell script within `package.json`.
+   *
+   * @example
+   *
+   * scripts: {
+   *   "compile": "tsc"
+   * }
+   */
+  SHELL = 'shell'
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -679,13 +708,21 @@ export class NodeProject extends Project {
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-
     const renderScripts = () => {
       const result: any = {};
       for (const [name, commands] of Object.entries(this.scripts)) {
         const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
         result[name] = cmds.join(' && ');
       }
+      const npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
+      for (const task of this.tasks.all) {
+        const command = npmTaskExecution === NpmTaskExecution.PROJEN
+          ? `projen ${task.name}`
+          : this.taskAsShellScript(task);
+
+        result[task.name] = command;
+      }
+
       return result;
     };
 
@@ -1058,18 +1095,6 @@ export class NodeProject extends Project {
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    // hijack `setScript()` by adding a shell task into the task
-    // and setting the npm script to be `npx projen SCRIPT`.
-    for (const task of this.tasks) {
-      if (task.name === name) {
-        task.reset();
-        task.exec(command);
-        this.scripts[name] = [`${this.runScriptCommand} projen ${name}`];
-        return;
-      }
-    }
-
-    // add a command to the npm script
     this.scripts[name] = [command];
   }
 
@@ -1099,15 +1124,11 @@ export class NodeProject extends Project {
    * @param name The name of the task
    * @param props Task properties
    */
-  public addTask(name: string, props: TaskProps = { }) {
+  public addTask(name: string, props: TaskOptions = { }) {
     const task = super.addTask(name, props);
 
     // add PATH which includes the project's npm .bin list
     task.env('PATH', '$(npx -c \'echo $PATH\')');
-
-    // add an npm script with the same name which delegates to `projen <NAME>`.
-    const npmCommand = `${this.runScriptCommand} projen ${name}`;
-    this.setScript(task.name, npmCommand);
 
     return task;
   }
@@ -1543,6 +1564,20 @@ export class NodeProject extends Project {
 
     return { workflow, buildJobId };
   }
+
+  private taskAsShellScript(task: Task) {
+    const lines = new Array<string>();
+    for (const step of task.steps) {
+      if (step.exec) {
+        lines.push(step.exec);
+      }
+      if (step.subtask) {
+        lines.push(`${this.runScriptCommand} ${step.subtask}`);
+      }
+    }
+
+    return lines.join(' && ');
+  }
 }
 
 interface BuildWorkflow {
@@ -1614,3 +1649,4 @@ function parseDep(dep: string) {
   let depname = scope ? `@${name}` : name;
   return { [depname]: Semver.of(version ?? '*') };
 }
+

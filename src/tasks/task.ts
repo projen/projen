@@ -1,9 +1,7 @@
 import { join } from 'path';
 import { PROJEN_DIR } from '../common';
-import { Component } from '../component';
-import { JsonFile } from '../json';
-import { Project } from '../project';
-import { TaskSpec, TaskManifest, TaskStep } from './model';
+import { TaskSpec, TaskStep } from './model';
+import { Tasks } from './tasks';
 
 export interface TaskOptions {
   /**
@@ -32,9 +30,7 @@ export interface TaskOptions {
    * A non-zero code means that task should be executed.
    */
   readonly skipIf?: string;
-}
 
-export interface TaskProps extends TaskOptions {
   /**
    * Shell command to execute as the first command of the task.
    * @default - add commands using `task.add()` or `task.addSubtask()`
@@ -46,7 +42,7 @@ export interface TaskProps extends TaskOptions {
  * A task that can be performed on the project. Modeled as a series of shell
  * commands and subtasks.
  */
-export class Task extends Component {
+export class Task {
   /**
    * The manifest file where all tasks are declared.
    */
@@ -65,32 +61,24 @@ export class Task extends Component {
   /**
    * The start menu category of the task.
    */
-  public readonly category: TaskCategory;
+  public readonly category?: TaskCategory;
 
-  private readonly manifest: ProjectTasks;
+  /**
+   * Project task list.
+   */
+  public readonly tasks: Tasks;
 
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
 
-  constructor(project: Project, name: string, props: TaskProps = { }) {
-    super(project);
-
-    this.manifest = ProjectTasks.of(project); // get/create
-
+  constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
+    this.tasks = tasks;
     this.name = name;
     this.description = props.description;
-    this.category = props.category ?? TaskCategory.MISC;
+    this.category = props.category;
 
     this._env = props.env ?? {};
     this._steps = [];
-
-    this.manifest.addTaskSpec(name, {
-      name,
-      env: this._env,
-      steps: this._steps,
-      description: this.description,
-      category: props.category,
-    });
 
     if (props.exec) {
       this.exec(props.exec);
@@ -113,12 +101,10 @@ export class Task extends Component {
 
   /**
    * Executes a shell command
-   * @param shell Shell command
+   * @param command Shell command
    */
-  public exec(shell: string) {
-    this._steps.push({
-      exec: this.project.renderShellCommand(shell),
-    });
+  public exec(command: string) {
+    this._steps.push({ exec: command });
   }
 
   /**
@@ -151,71 +137,25 @@ export class Task extends Component {
   }
 
   /**
-   * Returns a list of all the shell commands that make up this subtask, which
-   * can technically be executed as a shell script.
-   *
-   * Sub-tasks will be expanded to their specific commands.
+   * Returns an immutable copy of all the step specifications of the task.
    */
-  public get commands() {
-    const result = new Array<string>();
-    for (const task of this._steps) {
-      if (task.exec) {
-        result.push(task.exec);
-      }
-
-      for (const sub of task.subtask ?? []) {
-        result.push(`projen ${sub}`);
-      }
-    }
-
-    return result;
-  }
-}
-
-class ProjectTasks extends Component {
-  public static of(project: Project): ProjectTasks {
-    let found = project.components.find(c => c instanceof ProjectTasks) as ProjectTasks | undefined;
-    if (!found) {
-      found = new ProjectTasks(project);
-    }
-    return found;
-  }
-
-  private readonly tasks: { [name: string]: TaskSpec };
-  private readonly env: { [name: string]: string };
-
-  constructor(project: Project) {
-    super(project);
-
-    this.tasks = {};
-    this.env = {};
-
-    new JsonFile(project, Task.MANIFEST_FILE, {
-      marker: true,
-      omitEmpty: true,
-      obj: {
-        tasks: this.tasks,
-        env: this.env,
-      } as TaskManifest,
-    });
-  }
-
-  public addTaskSpec(name: string, spec: TaskSpec) {
-    if (name in this.tasks) {
-      throw new Error(`duplicate task "${name}"`);
-    }
-
-    this.tasks[name] = spec;
-    return spec;
+  public get steps() {
+    return [...this._steps];
   }
 
   /**
-   * Adds global environment to be included in all tasks of this project.
-   * @param name
-   * @param value
+   * Renders a task spec into the manifest.
+   *
+   * @internal
    */
-  public addEnv(name: string, value: string) {
-    this.env[name] = value;
+  public _renderSpec(): TaskSpec {
+    return {
+      name: this.name,
+      category: this.category,
+      description: this.description,
+      env: this._env,
+      steps: this._steps,
+    };
   }
 }
 

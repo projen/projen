@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile } = require('./lib');
+const { JsiiProject, JsonFile, NpmTaskExecution } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -34,12 +34,12 @@ const project = new JsiiProject({
   minNodeVersion: '10.17.0',
   codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
+  npmTaskExecution: NpmTaskExecution.SHELL,
 });
 
 project.addExcludeFromCleanup('test/**');
 
 // since this is projen, we need to be able to compile without `projen` itself
-project.setScript('compile', project.compileTask.commands.join(' && '));
 project.setScript('projen', 'yarn compile && node bin/projen');
 
 project.gitignore.include('templates/**');
