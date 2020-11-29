@@ -1,12 +1,12 @@
 import * as yargs from 'yargs';
-import { SequenceRuntime } from '../seqs';
+import { TaskRuntime } from '../tasks';
 import { synth } from './synth';
 
 async function main() {
   const ya = yargs;
   ya.commandDir('cmds');
 
-  addSequences(ya);
+  addTasks(ya);
 
   ya.recommendCommands();
   ya.wrap(yargs.terminalWidth());
@@ -20,37 +20,37 @@ async function main() {
   }
 }
 
-function addSequences(ya: yargs.Argv) {
+function addTasks(ya: yargs.Argv) {
   const workdir = '.';
-  const runtime = new SequenceRuntime(workdir);
-  const seqs = runtime.manifest.seqs ?? {};
-  for (const seq of Object.values(seqs)) {
-    ya.command(seq.name, seq.description ?? seq.name, args => {
-      args.option('inspect', { alias: 'i', desc: 'show all commands in this sequence' });
+  const runtime = new TaskRuntime(workdir);
+  const tasks = runtime.manifest.tasks ?? {};
+  for (const task of Object.values(tasks)) {
+    ya.command(task.name, task.description ?? task.name, args => {
+      args.option('inspect', { alias: 'i', desc: 'show all commands in this task' });
 
       const argv = args.argv;
       if (argv.inspect) {
         const inspect = (name: string, indent = 0) => {
           const prefix = ' '.repeat(indent);
-          const c = seqs[name];
-          for (const t of c.commands ?? []) {
-            if (t.sequences) {
-              for (const other of t.sequences) {
+          const c = tasks[name];
+          for (const t of c.steps ?? []) {
+            if (t.subtask) {
+              for (const other of t.subtask) {
                 console.log(prefix + `${other}:`);
                 inspect(other, indent + 2);
               }
-            } else if (t.commands) {
-              console.log(prefix + t.commands.join(' && '));
+            } else if (t.shell) {
+              console.log(prefix + t.shell);
             }
           }
         };
 
-        inspect(seq.name);
+        inspect(task.name);
 
         return;
       }
 
-      runtime.run(workdir, seq.name);
+      runtime.run(task.name);
     });
   }
 }

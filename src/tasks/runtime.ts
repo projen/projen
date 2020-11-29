@@ -2,53 +2,62 @@ import { spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import * as chalk from 'chalk';
-import { SequenceManifest, SequenceSpec } from './model';
-import { Sequence } from './seq';
+import { TaskManifest, TaskSpec } from './model';
+import { Task } from './task';
 
-export class SequenceRuntime {
+/**
+ * The runtime component of the tasks engine.
+ */
+export class TaskRuntime {
+  public readonly manifest: TaskManifest;
 
-  public readonly manifest: SequenceManifest;
+  /**
+   * The root directory of the project and the cwd for executing tasks.
+   */
+  public readonly rootdir: string;
 
   constructor(rootdir: string) {
-    const filePath = join(rootdir, Sequence.MANIFEST_FILE);
+    this.rootdir = rootdir;
+    const filePath = join(rootdir, Task.MANIFEST_FILE);
     this.manifest = existsSync(filePath)
       ? JSON.parse(readFileSync(filePath, 'utf-8'))
-      : { seqs: { } };
+      : { tasks: { } };
   }
 
-  public find(name: string): SequenceSpec | undefined {
-    if (!this.manifest.seqs) { return undefined; }
-    return this.manifest.seqs[name];
+  public find(name: string): TaskSpec | undefined {
+    if (!this.manifest.tasks) { return undefined; }
+    return this.manifest.tasks[name];
   }
 
-  public run(cwd: string, name: string) {
+  public run(name: string) {
     const cmd = this.find(name);
     if (!cmd) {
       throw new Error(`cannot find command ${cmd}`);
     }
 
     // evaluating environment
+    const cwd = this.rootdir;
     const env = this.renderRuntimeEnvironment(cmd, cwd);
 
     let firstCommandInSequence = true;
 
-    for (const task of cmd.commands ?? []) {
-      if (task.sequences) {
-        for (const seq of task.sequences) {
-          this.run(cwd, seq);
-        }
+    for (const task of cmd.steps ?? []) {
+      if (task.subtask) {
+        this.run(task.subtask);
       }
 
-      for (const script of task.commands ?? []) {
+      if (task.shell) {
+        const shell = task.shell;
+
         if (firstCommandInSequence) {
           console.log(`${chalk.magentaBright('-'.repeat(80))}`);
           firstCommandInSequence = false;
         }
 
-        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${script}`);
-        const result = spawnSync(script, { cwd, shell: true, stdio: 'inherit', env });
+        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${shell}`);
+        const result = spawnSync(shell, { cwd, shell: true, stdio: 'inherit', env });
         if (result.status !== 0) {
-          console.log(chalk.red(`${name} failed in: "${script}" at ${resolve(cwd)}`));
+          console.log(chalk.red(`${name} failed in: "${shell}" at ${resolve(cwd)}`));
           process.exit(1);
         }
       }
@@ -56,7 +65,7 @@ export class SequenceRuntime {
   }
 
 
-  private renderRuntimeEnvironment(cmd: SequenceSpec, cwd: string) {
+  private renderRuntimeEnvironment(cmd: TaskSpec, cwd: string) {
     const env: { [name: string]: string | undefined } = {
       ...process.env,
     };

@@ -1,5 +1,5 @@
 import * as child_process from 'child_process';
-import { SequenceRuntime } from '../src/seqs';
+import { tasks } from '../src';
 import { TestProject, synthSnapshot } from './util';
 
 afterEach(() => {
@@ -7,19 +7,19 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-test('empty sequence', () => {
+test('empty task', () => {
   const consoleSpy = jest.spyOn(console, 'log');
   const spawnSpy = jest.spyOn(child_process, 'spawnSync');
 
   const p = new TestProject();
-  p.addSequence('empty');
+  p.addTask('empty');
 
   // WHEN
   p.synth();
 
   // THEN
-  const rt = new SequenceRuntime(p.outdir);
-  rt.run(p.outdir, 'empty');
+  const rt = new tasks.TaskRuntime(p.outdir);
+  rt.run('empty');
 
   expect(synthSnapshot(p)).toMatchSnapshot();
   expect(consoleSpy).not.toHaveBeenCalled();

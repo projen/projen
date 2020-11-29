@@ -17,7 +17,7 @@ Name|Description
 [IgnoreFile](#projen-ignorefile)|*No description*
 [Jest](#projen-jest)|Installs the following npm scripts:.
 [JsiiProject](#projen-jsiiproject)|Multi-language jsii library project.
-[JsonFile](#projen-jsonfile)|*No description*
+[JsonFile](#projen-jsonfile)|Represents a JSON file.
 [License](#projen-license)|*No description*
 [Makefile](#projen-makefile)|Minimal Makefile.
 [NodeProject](#projen-nodeproject)|Node.js project.
@@ -63,7 +63,7 @@ Name|Description
 [JsiiJavaTarget](#projen-jsiijavatarget)|*No description*
 [JsiiProjectOptions](#projen-jsiiprojectoptions)|*No description*
 [JsiiPythonTarget](#projen-jsiipythontarget)|*No description*
-[JsonFileOptions](#projen-jsonfileoptions)|*No description*
+[JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
 [NodeBuildWorkflowOptions](#projen-nodebuildworkflowoptions)|*No description*
@@ -1409,7 +1409,7 @@ Name | Type | Description
 
 ## class JsonFile 🔹 <a id="projen-jsonfile"></a>
 
-
+Represents a JSON file.
 
 __Extends__: [FileBase](#projen-filebase)
 
@@ -1439,9 +1439,9 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**marker**🔹 | <code>boolean</code> | <span></span>
-**obj**🔹 | <code>json</code> | <span></span>
-**omitEmpty**🔹 | <code>boolean</code> | <span></span>
+**marker**🔹 | <code>boolean</code> | Indicates if the projen marker JSON-comment will be added to the output object.
+**obj**🔹 | <code>json</code> | The output object.
+**omitEmpty**🔹 | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object.
 
 ### Methods
 
@@ -1709,15 +1709,15 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
-**compileCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
+**buildCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
+**compileCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | <span></span>
+**testCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **workflowAntitamperSteps**🔹 | <code>Array<any></code> | Returns the set of steps to perform anti-tamper check in a github workflow.
 **workflowBootstrapSteps**🔹 | <code>Array<any></code> | Returns a set of steps to checkout and bootstrap the project in a github workflow.
@@ -1914,23 +1914,26 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addSequence(name, props?)🔹 <a id="projen-nodeproject-addsequence"></a>
+#### addTask(name, props?)🔹 <a id="projen-nodeproject-addtask"></a>
 
+Adds a new task to this project.
 
+This will fail if the project already has
+a task with this name.
 
 ```ts
-addSequence(name: string, props?: SequenceProps): Sequence
+addTask(name: string, props?: TaskProps): Task
 ```
 
 * **name** (<code>string</code>)  *No description*
-* **props** (<code>[SequenceProps](#projen-seqs-sequenceprops)</code>)  *No description*
+* **props** (<code>[TaskProps](#projen-tasks-taskprops)</code>)  *No description*
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
-  * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **shell** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
 
 __Returns__:
-* <code>[Sequence](#projen-seqs-sequence)</code>
+* <code>[Task](#projen-tasks-task)</code>
 
 #### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
 
@@ -2043,7 +2046,7 @@ Name | Type | Description
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
-**sequences**🔹 | <code>Array<[Sequence](#projen-seqs-sequence)></code> | <span></span>
+**tasks**🔹 | <code>Array<[Task](#projen-tasks-task)></code> | <span></span>
 **github**?🔹 | <code>[GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
@@ -2051,41 +2054,44 @@ Name | Type | Description
 ### Methods
 
 
-#### addCommand(name, command?, props?)🔹 <a id="projen-project-addcommand"></a>
+#### addCommand(task, shell?, props?)🔹 <a id="projen-project-addcommand"></a>
 
-Adds a sequence to this project.
-
-```ts
-addCommand(name: string, command?: string, props?: SequenceOptions): Sequence
-```
-
-* **name** (<code>string</code>)  The sequence name (`projen NAME`).
-* **command** (<code>string</code>)  First command in the sequence (or undefined to start with an empty sequence).
-* **props** (<code>[SequenceOptions](#projen-seqs-sequenceoptions)</code>)  Options.
-  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
-
-__Returns__:
-* <code>[Sequence](#projen-seqs-sequence)</code>
-
-#### addSequence(name, props?)🔹 <a id="projen-project-addsequence"></a>
-
-
+Adds a task with a shell command to this project.
 
 ```ts
-addSequence(name: string, props?: SequenceProps): Sequence
+addCommand(task: string, shell?: string, props?: TaskOptions): Task
 ```
 
-* **name** (<code>string</code>)  *No description*
-* **props** (<code>[SequenceProps](#projen-seqs-sequenceprops)</code>)  *No description*
+* **task** (<code>string</code>)  The task name (`projen NAME`).
+* **shell** (<code>string</code>)  First command in the task.
+* **props** (<code>[TaskOptions](#projen-tasks-taskoptions)</code>)  Task options.
   * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the sequence name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this sequence. __*Default*__: {}
-  * **shell** (<code>string</code>)  Shell command to execute as the first command of the sequence. __*Default*__: add commands using `seq.shell()` or `seq.run()`
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
 
 __Returns__:
-* <code>[Sequence](#projen-seqs-sequence)</code>
+* <code>[Task](#projen-tasks-task)</code>
+
+#### addTask(name, props?)🔹 <a id="projen-project-addtask"></a>
+
+Adds a new task to this project.
+
+This will fail if the project already has
+a task with this name.
+
+```ts
+addTask(name: string, props?: TaskProps): Task
+```
+
+* **name** (<code>string</code>)  The task name to add.
+* **props** (<code>[TaskProps](#projen-tasks-taskprops)</code>)  Task properties.
+  * **category** (<code>[StartEntryCategory](#projen-startentrycategory)</code>)  Category for start menu. __*Default*__: StartEntryCategory.MISC
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **shell** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
+
+__Returns__:
+* <code>[Task](#projen-tasks-task)</code>
 
 #### addTip(message)🔹 <a id="projen-project-addtip"></a>
 
@@ -2152,7 +2158,7 @@ preSynthesize(): void
 
 
 
-#### renderShellCommands(commands)🔹 <a id="projen-project-rendershellcommands"></a>
+#### renderShellCommand(command)🔹 <a id="projen-project-rendershellcommand"></a>
 
 Allows subclasses to customize how shell commands are rendered.
 
@@ -2160,13 +2166,13 @@ For example, in `NodeProject` this is used to add an `npx -c` prefix
 to each command to it is executed in the npm environment.
 
 ```ts
-renderShellCommands(commands: Array<string>): Array<string>
+renderShellCommand(command: string): string
 ```
 
-* **commands** (<code>Array<string></code>)  The commands to render.
+* **command** (<code>string</code>)  The command to render.
 
 __Returns__:
-* <code>Array<string></code>
+* <code>string</code>
 
 #### synth()🔹 <a id="projen-project-synth"></a>
 
@@ -2818,10 +2824,10 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
-**watchCmd**🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | The "watch" command.
+**watchCmd**🔹 | <code>[Task](#projen-tasks-task)</code> | The "watch" command.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**packageCmd**?🔹 | <code>[Sequence](#projen-seqs-sequence)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
+**packageCmd**?🔹 | <code>[Task](#projen-tasks-task)</code> | The "package" command (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 
@@ -3916,7 +3922,7 @@ Name | Type | Description
 ## struct JsonFileOptions 🔹 <a id="projen-jsonfileoptions"></a>
 
 
-
+Options for `JsonFile`.
 
 
 

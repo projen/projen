@@ -4,8 +4,8 @@ import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
-import { Sequence } from './seqs';
 import { StartEntryCategory } from './start';
+import { Task } from './tasks';
 import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
@@ -107,12 +107,12 @@ export class TypeScriptProject extends NodeProject {
   /**
    * The "watch" command.
    */
-  public readonly watchCmd: Sequence;
+  public readonly watchCmd: Task;
 
   /**
    * The "package" command (or undefined if `package` is set to `false`).
    */
-  public readonly packageCmd?: Sequence;
+  public readonly packageCmd?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
     super(options);
@@ -134,15 +134,15 @@ export class TypeScriptProject extends NodeProject {
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.buildCmd.addSequence(this.compileCmd);
-      this.buildCmd.addSequence(this.testCmd);
+      this.buildCmd.addSubtask(this.compileCmd);
+      this.buildCmd.addSubtask(this.testCmd);
     } else {
-      this.buildCmd.addSequence(this.testCmd);
-      this.buildCmd.addSequence(this.compileCmd);
+      this.buildCmd.addSubtask(this.testCmd);
+      this.buildCmd.addSubtask(this.compileCmd);
     }
 
     if (options.package ?? true) {
-      this.packageCmd = this.addSequence('package', {
+      this.packageCmd = this.addTask('package', {
         description: 'Create an npm tarball',
         category: StartEntryCategory.RELEASE,
       });
@@ -152,7 +152,7 @@ export class TypeScriptProject extends NodeProject {
       this.packageCmd.add(`${this.packageManager} pack`);
       this.packageCmd.add('mv *.tgz dist/js/');
 
-      this.buildCmd.addSequence(this.packageCmd);
+      this.buildCmd.addSubtask(this.packageCmd);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {

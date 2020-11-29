@@ -11,8 +11,8 @@ import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
-import { Sequence, SequenceOptions, SequenceProps } from './seqs';
 import { Start } from './start';
+import { Task, TaskOptions, TaskProps } from './tasks';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
@@ -77,11 +77,11 @@ export class Project {
    */
   public readonly vscode: VsCode | undefined;
 
-  public readonly sequences: Sequence[];
+  public readonly tasks: Task[];
 
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
-    this.sequences = [];
+    this.tasks = [];
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -139,31 +139,38 @@ export class Project {
   }
 
   /**
-   * Adds a sequence to this project.
-   * @param name The sequence name (`projen NAME`)
-   * @param command First command in the sequence (or undefined to start with an empty sequence)
-   * @param props Options
+   * Adds a task with a shell command to this project.
+   * @param task The task name (`projen NAME`)
+   * @param shell First command in the task. An `undefined` value here is equivalent to `project.addTask()`
+   * @param props Task options
    */
-  public addCommand(name: string, command: string | undefined, props: SequenceOptions = { }): Sequence {
-    return this.addSequence(name, {
+  public addCommand(task: string, shell: string | undefined, props: TaskOptions = { }): Task {
+    return this.addTask(task, {
       ...props,
-      shell: command,
+      shell,
     });
   }
 
-  public addSequence(name: string, props: SequenceProps = { }) {
-    return new Sequence(this, name, props);
+  /**
+   * Adds a new task to this project. This will fail if the project already has
+   * a task with this name.
+   *
+   * @param name The task name to add
+   * @param props Task properties
+   */
+  public addTask(name: string, props: TaskProps = { }) {
+    return new Task(this, name, props);
   }
 
   /**
    * Allows subclasses to customize how shell commands are rendered.
    * For example, in `NodeProject` this is used to add an `npx -c` prefix
    * to each command to it is executed in the npm environment.
-   * @param commands The commands to render
-   * @returns Commands ready to execute in a shell.
+   * @param command The command to render
+   * @returns Command ready to execute in a shell.
    */
-  public renderShellCommands(commands: string[]) {
-    return commands;
+  public renderShellCommand(command: string) {
+    return command;
   }
 
   /**

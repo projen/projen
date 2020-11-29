@@ -12,8 +12,8 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
-import { Sequence, SequenceProps } from './seqs';
 import { Start, StartEntryCategory, StartOptions } from './start';
+import { Task, TaskProps } from './tasks';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
@@ -573,9 +573,9 @@ export class NodeProject extends Project {
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
 
-  public readonly compileCmd: Sequence;
-  public readonly testCmd: Sequence;
-  public readonly buildCmd: Sequence;
+  public readonly compileCmd: Task;
+  public readonly testCmd: Task;
+  public readonly buildCmd: Task;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -1071,12 +1071,12 @@ export class NodeProject extends Project {
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    // hijack `setScript()` by adding a shell task into the sequence
+    // hijack `setScript()` by adding a shell task into the task
     // and setting the npm script to be `npx projen SCRIPT`.
-    for (const seq of this.sequences) {
-      if (seq.name === name) {
-        seq.reset();
-        seq.add(command);
+    for (const task of this.tasks) {
+      if (task.name === name) {
+        task.reset();
+        task.add(command);
         this.scripts[name] = [`${this.runScriptCommand} projen ${name}`];
         return;
       }
@@ -1103,15 +1103,15 @@ export class NodeProject extends Project {
     return name in this.scripts;
   }
 
-  public addSequence(name: string, props: SequenceProps = { }) {
-    const seq = super.addSequence(name, props);
+  public addTask(name: string, props: TaskProps = { }) {
+    const task = super.addTask(name, props);
 
     // add PATH which includes the project's npm .bin list
-    seq.env('PATH', '$(npx -c \'echo $PATH\')');
+    task.env('PATH', '$(npx -c \'echo $PATH\')');
 
     // add an npm script with the same name which delegates to `projen <NAME>`.
     const npmCommand = `${this.runScriptCommand} projen ${name}`;
-    this.setScript(seq.name, npmCommand);
+    this.setScript(task.name, npmCommand);
 
     // add a start menu entry
     this.start?.addEntry(name, {
@@ -1120,7 +1120,7 @@ export class NodeProject extends Project {
       category: props.category,
     });
 
-    return seq;
+    return task;
   }
 
   /**
@@ -1128,11 +1128,15 @@ export class NodeProject extends Project {
    * @param commands The commands to execute during compile
    */
   public addCompileCommand(...commands: string[]) {
-    this.compileCmd.addCommands(commands);
+    for (const c of commands) {
+      this.compileCmd.add(c);
+    }
   }
 
   public addTestCommand(...commands: string[]) {
-    this.testCmd.addCommands(commands);
+    for (const c of commands) {
+      this.testCmd.add(c);
+    }
   }
 
   /**
@@ -1140,7 +1144,9 @@ export class NodeProject extends Project {
    * @param commands The commands to add
    */
   public addBuildCommand(...commands: string[]) {
-    this.buildCmd.addCommands(commands);
+    for (const c of commands) {
+      this.buildCmd.add(c);
+    }
   }
 
   public addFields(fields: { [name: string]: any }) {

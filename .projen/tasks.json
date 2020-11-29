@@ -1,20 +1,16 @@
 {
-  "seqs": {
+  "tasks": {
     "compile": {
       "name": "compile",
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-          ]
+          "shell": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
         },
         {
-          "commands": [
-            "jsii-docgen"
-          ]
+          "shell": "jsii-docgen"
         }
       ],
       "description": "Only compile"
@@ -24,16 +20,12 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jest --passWithNoTests --updateSnapshot"
-          ]
+          "shell": "jest --passWithNoTests --updateSnapshot"
         },
         {
-          "sequences": [
-            "eslint"
-          ]
+          "subtask": "eslint"
         }
       ],
       "description": "Run tests"
@@ -43,26 +35,18 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "sequences": [
-            "compile"
-          ]
+          "subtask": "compile"
         },
         {
-          "sequences": [
-            "test"
-          ]
+          "subtask": "test"
         },
         {
-          "sequences": [
-            "package"
-          ]
+          "subtask": "package"
         },
         {
-          "sequences": [
-            "readme-macros"
-          ]
+          "subtask": "readme-macros"
         }
       ],
       "description": "Full release build (test+compile)"
@@ -72,11 +56,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "yarn run --silent no-changes || standard-version"
-          ]
+          "shell": "yarn run --silent no-changes || standard-version"
         }
       ],
       "description": "Commits a bump to the package version based on conventional commits"
@@ -86,11 +68,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
-          ]
+          "shell": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin master)"
         }
       ],
       "description": "Bumps version & push to master"
@@ -100,11 +80,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jest --watch"
-          ]
+          "shell": "jest --watch"
         }
       ],
       "description": "Run jest in watch mode"
@@ -114,11 +92,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jest --updateSnapshot"
-          ]
+          "shell": "jest --updateSnapshot"
         }
       ],
       "description": "Update jest snapshots"
@@ -128,16 +104,12 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "yarn upgrade -L projen"
-          ]
+          "shell": "yarn upgrade -L projen"
         },
         {
-          "commands": [
-            "CI=\"\" yarn projen"
-          ]
+          "shell": "CI=\"\" yarn projen"
         }
       ],
       "description": "upgrades projen to the latest version"
@@ -147,11 +119,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
-          ]
+          "shell": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
         }
       ],
       "description": "Watch & compile in the background"
@@ -161,11 +131,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jsii-pacmak"
-          ]
+          "shell": "jsii-pacmak"
         }
       ],
       "description": "Create an npm tarball"
@@ -175,11 +143,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
-          ]
+          "shell": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test"
         }
       ],
       "description": "Runs eslint against the codebase"
@@ -189,11 +155,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
-          ]
+          "shell": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
         }
       ],
       "description": "Perform API compatibility check against latest version"
@@ -203,11 +167,9 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "jsii-docgen"
-          ]
+          "shell": "jsii-docgen"
         }
       ],
       "description": "Generate API.md from .jsii manifest"
@@ -217,26 +179,19 @@
       "env": {
         "PATH": "$(npx -c 'echo $PATH')"
       },
-      "commands": [
+      "steps": [
         {
-          "commands": [
-            "mv README.md README.md.bak"
-          ]
+          "shell": "mv README.md README.md.bak"
         },
         {
-          "commands": [
-            "cat README.md.bak | markmac > README.md"
-          ]
+          "shell": "cat README.md.bak | markmac > README.md"
         },
         {
-          "commands": [
-            "rm README.md.bak"
-          ]
+          "shell": "rm README.md.bak"
         }
       ],
       "description": "readme-macros"
     }
   },
-  "env": {},
   "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \"npx projen\"."
 }

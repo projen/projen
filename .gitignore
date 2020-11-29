@@ -43,7 +43,7 @@ junit.xml
 /dist
 .jsii
 tsconfig.json
-!/.projen/sequences.json
+!/.projen/tasks.json
 !/package.json
 !/.npmignore
 !/LICENSE

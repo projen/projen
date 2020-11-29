@@ -69,7 +69,7 @@ export class Eslint extends Component {
       category: StartEntryCategory.TEST,
     });
 
-    project.testCmd.addSequence(eslint);
+    project.testCmd.addSubtask(eslint);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');

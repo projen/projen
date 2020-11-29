@@ -24,7 +24,7 @@ export * from './version';
 export * from './yaml';
 
 // export submobules
-export * as seqs from './seqs';
+export * as tasks from './tasks';
 export * as web from './web';
 export * as github from './github';
 export * as vscode from './vscode';

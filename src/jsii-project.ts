@@ -182,7 +182,7 @@ export class JsiiProject extends TypeScriptProject {
 
     const compat = options.compat ?? false;
     if (compat) {
-      this.compileCmd.addSequence(compatCmd);
+      this.compileCmd.addSubtask(compatCmd);
     } else {
       this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
