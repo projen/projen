@@ -451,6 +451,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
 
   /**
    * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   * @default NpmTaskExecution.PROJEN
    */
   readonly npmTaskExecution?: NpmTaskExecution;
 }
@@ -1635,4 +1636,3 @@ function parseDep(dep: string) {
   let depname = scope ? `@${name}` : name;
   return { [depname]: Semver.of(version ?? '*') };
 }
-
