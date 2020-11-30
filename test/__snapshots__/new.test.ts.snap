@@ -118,6 +118,7 @@ const project = new AwsCdkConstructLibrary({
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
   // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
   // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
+  // cdkVersionPinning: false,                                                 /* Use pinned version instead of caret version for CDK. */
 
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
