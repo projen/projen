@@ -61,4 +61,9 @@ new JsonFile(project, '.markdownlint.json', {
   }
 });
 
+project.addTask('failme', {
+  condition: 'echo fail && false',
+  exec: 'echo hi'
+});
+
 project.synth();

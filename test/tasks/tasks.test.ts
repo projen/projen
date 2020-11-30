@@ -1,6 +1,6 @@
-import { Project } from '../src';
-import { Task, TaskManifest, TaskStep } from '../src/tasks';
-import { TestProject, synthSnapshot } from './util';
+import { Project } from '../../src';
+import { Tasks, TasksManifest, TaskStep } from '../../src/tasks';
+import { TestProject, synthSnapshot } from '../util';
 
 test('empty task', () => {
   const p = new TestProject();
@@ -191,9 +191,31 @@ test('.steps can be used to list all steps in the current task', () => {
   ] as TaskStep[]);
 });
 
+test('"condition" can be used to define a command that will determine if a task should be skipped', () => {
+  // GIVEN
+  const p = new TestProject();
+  p.addTask('foo', {
+    condition: 'false',
+    exec: 'foo bar',
+  });
 
-function expectManifest(p: Project, toStrictEqual: TaskManifest) {
-  const manifest = synthSnapshot(p)[Task.MANIFEST_FILE];
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      foo: {
+        name: 'foo',
+        condition: 'false',
+        steps: [
+          { exec: 'foo bar' },
+        ],
+      },
+    },
+  });
+});
+
+
+function expectManifest(p: Project, toStrictEqual: TasksManifest) {
+  const manifest = synthSnapshot(p)[Tasks.MANIFEST_FILE];
   delete manifest['//'];
 
   expect(manifest).toStrictEqual(toStrictEqual);

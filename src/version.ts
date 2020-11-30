@@ -17,19 +17,22 @@ export class Version extends Component {
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
-    const noChanges = 'git log --oneline -1 | grep -q "chore(release):"';
+    // this command determines if there were any changes since the last release
+    // (the top-most commit is not a bump). it is used as a condition for both
+    // the `bump` and the `release` tasks.
+    const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
 
     const bump = project.addTask('bump', {
       description: 'Commits a bump to the package version based on conventional commits',
       category: TaskCategory.RELEASE,
       exec: 'standard-version',
-      skipIf: noChanges,
+      condition: changesSinceLastRelease,
     });
 
     const release = project.addTask('release', {
       description: `Bumps version & push to ${options.releaseBranch}`,
       category: TaskCategory.RELEASE,
-      skipIf: noChanges,
+      condition: changesSinceLastRelease,
     });
 
     release.subtask(bump);

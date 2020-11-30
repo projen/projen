@@ -1,9 +1,7 @@
-import { join } from 'path';
-import { PROJEN_DIR } from '../common';
 import { TaskSpec, TaskStep } from './model';
 import { Tasks } from './tasks';
 
-export interface TaskOptions {
+export interface TaskCommonOptions {
   /**
    * The description of this build command.
    * @default - the task name
@@ -25,12 +23,14 @@ export interface TaskOptions {
   readonly env?: { [name: string]: string };
 
   /**
-   * A shell command which determines if the steps of this task should be
-   * skipped. If the program exits with a zero exit code, steps will be skipped.
-   * A non-zero code means that task should be executed.
+   * A shell command which determines if the this task should be executed. If
+   * the program exits with a zero exit code, steps will be executed. A non-zero
+   * code means that task will be skipped.
    */
-  readonly skipIf?: string;
+  readonly condition?: string;
+}
 
+export interface TaskOptions extends TaskCommonOptions {
   /**
    * Shell command to execute as the first command of the task.
    * @default - add commands using `task.add()` or `task.addSubtask()`
@@ -43,11 +43,6 @@ export interface TaskOptions {
  * commands and subtasks.
  */
 export class Task {
-  /**
-   * The manifest file where all tasks are declared.
-   */
-  public static readonly MANIFEST_FILE = join(PROJEN_DIR, 'tasks.json');
-
   /**
    * Task name.
    */
@@ -68,6 +63,12 @@ export class Task {
    */
   public readonly tasks: Tasks;
 
+  /**
+   * A command to execute which determines if the task should be skipped. If it
+   * returns a zero exit code, the task will not be executed.
+   */
+  public readonly skipIf?: string;
+
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
 
@@ -76,6 +77,7 @@ export class Task {
     this.name = name;
     this.description = props.description;
     this.category = props.category;
+    this.skipIf = props.condition;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -155,6 +157,7 @@ export class Task {
       description: this.description,
       env: this._env,
       steps: this._steps,
+      condition: this.skipIf,
     };
   }
 }

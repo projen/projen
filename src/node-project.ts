@@ -398,13 +398,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   readonly projenUpgradeSchedule?: string[];
 
   /**
-   * Defines a `yarn start` interactive experience
-   *
-   * @default true
-   */
-  readonly start?: boolean;
-
-  /**
    * Allow the project to include `peerDependencies` and `bundledDependencies`.
    * This is normally only allowed for libraries. For apps, there's no meaning
    * for specifying these.
@@ -811,12 +804,8 @@ export class NodeProject extends Project {
       this.manifest.license = 'UNLICENSED';
     }
 
-    if (options.start ?? true) {
-      this.setScript('start', `${this.runScriptCommand} projen start`);
-    }
-
-    // script to run the CLI
     this.setScript(PROJEN_SCRIPT, 'projen');
+    this.setScript('start', `${this.runScriptCommand} ${PROJEN_SCRIPT} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);

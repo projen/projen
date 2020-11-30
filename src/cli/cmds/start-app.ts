@@ -20,7 +20,7 @@ export async function showStartMenu(tasks: TaskRuntime) {
     return;
   }
 
-  tasks.run(command);
+  tasks.runTask(command);
 }
 
 export function printStartMenu(tasks: TaskRuntime, root?: string) {

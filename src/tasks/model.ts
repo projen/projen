@@ -1,9 +1,9 @@
-import { TaskCategory } from './task';
+import { TaskCommonOptions } from './task';
 
 /**
  * Schema for `tasks.json`.
  */
-export interface TaskManifest {
+export interface TasksManifest {
   /**
    * All tasks available for this project.
    */
@@ -18,31 +18,16 @@ export interface TaskManifest {
 /**
  * Specification of a single task.
  */
-export interface TaskSpec {
+export interface TaskSpec extends TaskCommonOptions {
   /**
    * Task name.
    */
   readonly name: string;
 
   /**
-   * Task description.
-   */
-  readonly description?: string;
-
-  /**
-   * Task category.
-   */
-  readonly category?: TaskCategory;
-
-  /**
    * Task steps.
    */
   readonly steps?: TaskStep[];
-
-  /**
-   * Task environment variables.
-   */
-  readonly env?: { [name: string]: string };
 }
 
 /**

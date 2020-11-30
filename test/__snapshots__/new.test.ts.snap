@@ -60,7 +60,6 @@ const project = new AwsCdkTypeScriptApp({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -185,7 +184,6 @@ const project = new AwsCdkConstructLibrary({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -275,7 +273,6 @@ const project = new ConstructLibraryCdk8s({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -361,7 +358,6 @@ const project = new JsiiProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -435,7 +431,6 @@ const project = new web.NextJsProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -522,7 +517,6 @@ const project = new web.NextJsTypeScriptProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -618,7 +612,6 @@ const project = new NodeProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -714,7 +707,6 @@ const project = new web.ReactProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -800,7 +792,6 @@ const project = new web.ReactTypeScriptProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -896,7 +887,6 @@ const project = new TypeScriptProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
@@ -992,7 +982,6 @@ const project = new TypeScriptAppProject({
   // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: \\"src\\",                                                            /* Typescript sources directory. */
-  // start: true,                                                              /* Defines a \`yarn start\` interactive experience. */
   // testdir: \\"test\\",                                                          /* Tests directory. */
   // workflowBootstrapSteps: \\"yarn install --frozen-lockfile && yarn projen\\",  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */

@@ -1,7 +1,9 @@
+import { join } from 'path';
+import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
-import { TaskManifest, TaskSpec } from './model';
+import { TasksManifest, TaskSpec } from './model';
 import { Task, TaskOptions } from './task';
 
 /**
@@ -11,22 +13,28 @@ import { Task, TaskOptions } from './task';
  * synthesized into `.projen/tasks.json`.
  */
 export class Tasks extends Component {
+  /**
+   * The project-relative path of the tasks manifest file.
+   */
+  public static readonly MANIFEST_FILE = join(PROJEN_DIR, 'tasks.json');
+
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
   constructor(project: Project) {
     super(project);
 
+    const manifestFile = Tasks.MANIFEST_FILE;
     this._tasks = {};
     this._env = {};
 
-    new JsonFile(project, Task.MANIFEST_FILE, {
+    new JsonFile(project, manifestFile, {
       marker: true,
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,
         env: (() => this.renderEnv()) as any,
-      } as TaskManifest,
+      } as TasksManifest,
     });
   }
 

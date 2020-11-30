@@ -1,26 +1,27 @@
-import { spawnSync } from 'child_process';
+import { SpawnOptions, spawnSync } from 'child_process';
 import { existsSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import * as chalk from 'chalk';
-import { TaskManifest, TaskSpec } from './model';
-import { Task } from './task';
+import * as logging from '../logging';
+import { TasksManifest, TaskSpec } from './model';
+import { Tasks } from './tasks';
 
 /**
  * The runtime component of the tasks engine.
  */
 export class TaskRuntime {
-  public readonly manifest: TaskManifest;
+  public readonly manifest: TasksManifest;
 
   /**
    * The root directory of the project and the cwd for executing tasks.
    */
-  public readonly rootdir: string;
+  public readonly workdir: string;
 
-  constructor(rootdir: string) {
-    this.rootdir = rootdir;
-    const filePath = join(rootdir, Task.MANIFEST_FILE);
-    this.manifest = existsSync(filePath)
-      ? JSON.parse(readFileSync(filePath, 'utf-8'))
+  constructor(workdir: string) {
+    this.workdir = workdir;
+    const manifestPath = join(this.workdir, Tasks.MANIFEST_FILE);
+    this.manifest = existsSync(manifestPath)
+      ? JSON.parse(readFileSync(manifestPath, 'utf-8'))
       : { tasks: { } };
   }
 
@@ -34,7 +35,7 @@ export class TaskRuntime {
   /**
    * Find a task by name, or `undefined` if not found.
    */
-  public find(name: string): TaskSpec | undefined {
+  public tryFindTask(name: string): TaskSpec | undefined {
     if (!this.manifest.tasks) { return undefined; }
     return this.manifest.tasks[name];
   }
@@ -43,45 +44,82 @@ export class TaskRuntime {
    * Runs the task.
    * @param name The task name.
    */
-  public run(name: string) {
-    const cmd = this.find(name);
-    if (!cmd) {
-      throw new Error(`cannot find command ${cmd}`);
+  public runTask(name: string, parents: string[] = []) {
+    const task = this.tryFindTask(name);
+    if (!task) {
+      throw new Error(`cannot find command ${task}`);
     }
 
-    // evaluating environment
-    const cwd = this.rootdir;
-    const env = this.renderRuntimeEnvironment({
-      ...this.manifest.env ?? {},
-      ...cmd.env ?? {},
-    }, cwd);
+    new RunTask(this, task, parents);
+  }
+}
 
-    let firstCommandInSequence = true;
+class RunTask {
+  private readonly env: { [name: string]: string | undefined } = { };
+  private readonly parents: string[];
 
-    for (const task of cmd.steps ?? []) {
-      if (task.subtask) {
-        this.run(task.subtask);
+  constructor(private readonly runtime: TaskRuntime, private readonly task: TaskSpec, parents: string[] = []) {
+    this.parents = parents;
+    this.env = { ...process.env };
+    this.env = this.resolveEnvironment();
+
+    // evaluate condition
+    if (!this.evalCondition(task)) {
+      this.log('condition exited with non-zero - skipping');
+      return;
+    }
+
+    for (const step of task.steps ?? []) {
+      if (step.subtask) {
+        this.runtime.runTask(step.subtask, [...this.parents, this.task.name]);
       }
 
-      if (task.exec) {
-        const exec = task.exec;
-
-        if (firstCommandInSequence) {
-          console.log(`${chalk.magentaBright('-'.repeat(80))}`);
-          firstCommandInSequence = false;
-        }
-
-        console.log(`${chalk.magentaBright(cmd.name + ' |')} ${exec}`);
-        const result = spawnSync(exec, { cwd, shell: true, stdio: 'inherit', env });
+      if (step.exec) {
+        const exec = step.exec;
+        this.log(exec);
+        const result = this.shell(exec);
         if (result.status !== 0) {
-          console.log(chalk.red(`${name} failed in: "${exec}" at ${resolve(cwd)}`));
-          process.exit(1);
+          throw new Error(`Task "${this.fullname}" failed when executing "${exec}" (cwd: ${resolve(this.runtime.workdir)})`);
         }
       }
     }
   }
 
-  private renderRuntimeEnvironment(env: {[k: string]: string}, cwd: string) {
+  /**
+   * Determines if a task should be executed based on "condition".
+   *
+   * @returns true if the task should be executed or false if the condition
+   * evaluates to false (exits with non-zero), indicating that the task should
+   * be skipped.
+   */
+  private evalCondition(task: TaskSpec) {
+    // no condition, carry on
+    if (!task.condition) {
+      return true;
+    }
+
+    this.log(`condition: ${task.condition}`);
+    const result = this.shell(task.condition);
+    if (result.status === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Renders the runtime environment for a task. Namely, it supports this syntax
+   * `$(xx)` for allowing environment to be evaluated by executing a shell
+   * command and obtaining its result.
+   *
+   * @param env The user-defined environment
+   */
+  private resolveEnvironment() {
+    const env = {
+      ...this.runtime.manifest.env ?? {},
+      ...this.task.env ?? {},
+    };
+
     const output: { [name: string]: string | undefined } = {
       ...process.env,
     };
@@ -89,7 +127,7 @@ export class TaskRuntime {
     for (const [key, value] of Object.entries(env ?? {})) {
       if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
-        const result = spawnSync(query, { cwd, shell: true });
+        const result = this.shellEval(query);
         if (result.status !== 0) {
           throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
         }
@@ -97,9 +135,27 @@ export class TaskRuntime {
       } else {
         output[key] = value;
       }
-
     }
+
     return output;
   }
-}
 
+  /**
+   * Returns the "full name" of the task which includes all it's parent task names concatenated by chevrons.
+   */
+  private get fullname() {
+    return [...this.parents, this.task.name].join(' » ');
+  }
+
+  private log(...args: any[]) {
+    logging.verbose(`${chalk.underline(this.fullname)} |`, ...args);
+  }
+
+  private shell(command: string, options: SpawnOptions = {}) {
+    return spawnSync(command, { cwd: this.runtime.workdir, shell: true, stdio: 'inherit', env: this.env, ...options });
+  }
+
+  private shellEval(command: string, options: SpawnOptions = {}) {
+    return this.shell(command, { stdio: ['inherit', 'pipe', 'inherit'], ...options });
+  }
+}
