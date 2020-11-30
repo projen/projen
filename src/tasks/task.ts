@@ -120,10 +120,10 @@ export class Task {
   }
 
   /**
-   * Runs a sub-task.
+   * Spawns a sub-task.
    * @param subtask The subtask to execute.
    */
-  public subtask(subtask: Task) {
+  public spawn(subtask: Task) {
     this._steps.push({ subtask: subtask.name });
   }
 

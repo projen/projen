@@ -7,10 +7,13 @@ import { TypeScriptProject } from './typescript';
 export class TypedocDocgen {
   constructor(project: TypeScriptProject) {
     project.addDevDeps('typedoc');
-    project.addTask('docgen', {
+
+    const docgen = project.addTask('docgen', {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
       category: TaskCategory.RELEASE,
       exec: 'typedoc --out ' + project.docsDirectory,
     });
+
+    project.buildTask.spawn(docgen);
   }
 }
