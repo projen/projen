@@ -9,7 +9,7 @@
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
         },
         {
-          "exec": "jsii-docgen"
+          "subtask": "docgen"
         }
       ]
     },
@@ -166,15 +166,6 @@
           "exec": "rm README.md.bak"
         }
       ]
-    },
-    "failme": {
-      "name": "failme",
-      "steps": [
-        {
-          "exec": "echo hi"
-        }
-      ],
-      "condition": "echo fail && false"
     }
   },
   "env": {

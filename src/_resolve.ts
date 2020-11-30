@@ -21,7 +21,12 @@ export function resolve(value: any, args?: any[], options: ResolveOptions = {}):
     if (omitEmpty && value.length === 0) {
       return undefined;
     }
-    return value.map(x => resolve(x, args));
+    return value.map(x => resolve(x, args, options));
+  }
+
+  // only allow data types (i.e. objects without constructors)
+  if (value.constructor?.name !== 'Object') {
+    throw new Error(`only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`);
   }
 
   const result: any = {};

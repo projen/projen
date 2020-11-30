@@ -174,7 +174,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    const compatCmd = this.addTask('compat', {
+    const compatTask = this.addTask('compat', {
       description: 'Perform API compatibility check against latest version',
       category: TaskCategory.RELEASE,
       exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
@@ -182,7 +182,7 @@ export class JsiiProject extends TypeScriptProject {
 
     const compat = options.compat ?? false;
     if (compat) {
-      this.compileTask.spawn(compatCmd);
+      this.compileTask.spawn(compatTask);
     } else {
       this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }

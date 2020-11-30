@@ -11,7 +11,7 @@
   "scripts": {
     "projen": "yarn compile && node bin/projen",
     "start": "yarn run projen start",
-    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && jsii-docgen",
+    "compile": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies && yarn run docgen",
     "test": "jest --passWithNoTests --updateSnapshot && yarn run eslint",
     "build": "yarn run compile && yarn run test && yarn run package && yarn run readme-macros",
     "bump": "standard-version",
@@ -24,8 +24,7 @@
     "eslint": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test",
     "compat": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
     "docgen": "jsii-docgen",
-    "readme-macros": "mv README.md README.md.bak && cat README.md.bak | markmac > README.md && rm README.md.bak",
-    "failme": "echo hi"
+    "readme-macros": "mv README.md README.md.bak && cat README.md.bak | markmac > README.md && rm README.md.bak"
   },
   "author": {
     "name": "Elad Ben-Israel",

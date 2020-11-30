@@ -1,5 +1,4 @@
 import { TaskSpec, TaskStep } from './model';
-import { Tasks } from './tasks';
 
 export interface TaskCommonOptions {
   /**
@@ -59,11 +58,6 @@ export class Task {
   public readonly category?: TaskCategory;
 
   /**
-   * Project task list.
-   */
-  public readonly tasks: Tasks;
-
-  /**
    * A command to execute which determines if the task should be skipped. If it
    * returns a zero exit code, the task will not be executed.
    */
@@ -72,8 +66,7 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
 
-  constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
-    this.tasks = tasks;
+  constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
     this.description = props.description;
     this.category = props.category;
