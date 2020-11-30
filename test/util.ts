@@ -25,9 +25,26 @@ export function mkdtemp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
 }
 
-export function synthSnapshot(project: Project, postSynth: boolean, ...includeFiles: string[]) {
+export function synthSnapshot(project: Project, ...includeFiles: string[]) {
+  const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
   try {
-    process.env.POST_SYNTHESIS_ENABLED = postSynth.toString();
+    process.env.PROJEN_DISABLE_POST = 'true';
+    project.synth();
+    return directorySnapshot(project.outdir, includeFiles);
+  } finally {
+    fs.removeSync(project.outdir);
+
+    // values assigned to process.env.XYZ are automatically converted to strings
+    if (ENV_PROJEN_DISABLE_POST === undefined) {
+      delete process.env.PROJEN_DISABLE_POST;
+    } else {
+      process.env.PROJEN_DISABLE_POST = ENV_PROJEN_DISABLE_POST;
+    }
+  }
+}
+
+export function synthSnapshotWithPost(project: Project, ...includeFiles: string[]) {
+  try {
     project.synth();
     return directorySnapshot(project.outdir, includeFiles);
   } finally {

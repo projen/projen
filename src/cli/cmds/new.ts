@@ -310,7 +310,7 @@ function newProject(baseDir: string, type: inventory.ProjectType, args: any, add
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
-    process.env.POST_SYNTHESIS_ENABLED = args.post.toString();
+    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
     synth();
   }
 }

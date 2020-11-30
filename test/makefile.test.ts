@@ -25,7 +25,7 @@ test('makefile synthesises correctly', () => {
     ],
   });
 
-  expect(synthSnapshot(prj, true).Makefile).toStrictEqual([
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
     '.PHONY: all',
     'all: one two three',
     '',
@@ -66,7 +66,7 @@ test('makefile synthesises correctly using imperative API', () => {
     .addAll('one')
     .addAlls('two', 'three');
 
-  expect(synthSnapshot(prj, true).Makefile).toStrictEqual([
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
     '.PHONY: all',
     'all: one two three',
     '',

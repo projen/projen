@@ -9,7 +9,7 @@ test('empty file', () => {
   new TextFile(project, 'hello/foo.txt');
 
   // THEN
-  const output = synthSnapshot(project, true)['hello/foo.txt'];
+  const output = synthSnapshot(project)['hello/foo.txt'];
   expect(output).toEqual('');
 });
 
@@ -27,7 +27,7 @@ test('initialized with some lines', () => {
   });
 
   // THEN
-  const output = synthSnapshot(project, true)['boom/boom/bam.txt'];
+  const output = synthSnapshot(project)['boom/boom/bam.txt'];
   expect(output).toEqual(['line1', 'line2', 'line3'].join('\n'));
 });
 
@@ -41,7 +41,7 @@ test('addLine() can add lines later', () => {
   tf.addLine('you too');
 
   // THEN
-  const output = synthSnapshot(project, true)['hello-world.txt'];
+  const output = synthSnapshot(project)['hello-world.txt'];
   expect(output).toEqual(['line1', 'line2', 'hey there', 'you too'].join('\n'));
 });
 

@@ -185,7 +185,7 @@ export class Project {
       comp.synthesize();
     }
 
-    if (process.env.POST_SYNTHESIS_ENABLED !== 'false') {
+    if (process.env.PROJEN_DISABLE_POST !== 'true') {
       for (const comp of this.components) {
         comp.postSynthesize();
       }
