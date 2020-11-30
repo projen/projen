@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.6 (2020-11-30)
+
+
+### Features
+
+* **cli:** add switch for post-synthesis operations ([#339](https://github.com/projen/projen/issues/339)) ([08dbee1](https://github.com/projen/projen/commit/08dbee185881ff87761c1c848b5db926d9e3be34)), closes [#322](https://github.com/projen/projen/issues/322)
+
 ### 0.5.5 (2020-11-29)
 
 
