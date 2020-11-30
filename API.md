@@ -55,6 +55,7 @@ Name|Description
 [DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)|Volume configuration.
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [EslintOptions](#projen-eslintoptions)|*No description*
+[EslintOverride](#projen-eslintoverride)|*No description*
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
@@ -1058,6 +1059,7 @@ Name | Type | Description
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the eslint configuration (escape hatch).
 **ignorePatterns**🔹 | <code>Array<string></code> | File patterns that should not be linted.
+**overrides**🔹 | <code>Array<[EslintOverride](#projen-eslintoverride)></code> | eslint overrides.
 **rules**🔹 | <code>Map<string, Array<any>></code> | eslint rules.
 
 ### Methods
@@ -1072,6 +1074,21 @@ addIgnorePattern(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addOverride(override)🔹 <a id="projen-eslint-addoverride"></a>
+
+Add an eslint override.
+
+```ts
+addOverride(override: EslintOverride): void
+```
+
+* **override** (<code>[EslintOverride](#projen-eslintoverride)</code>)  *No description*
+  * **files** (<code>Array<string></code>)  Files or file patterns on which to apply the override. 
+  * **rules** (<code>Map<string, any></code>)  The overriden rules. 
 
 
 
@@ -3406,7 +3423,7 @@ Name | Type | Description
 -----|------|-------------
 **context**🔹 | <code>string</code> | Docker build context directory.
 **args**?🔹 | <code>Map<string, string></code> | Build args.<br/>__*Default*__: none are provided
-**dockerfile**?🔹 | <code>string</code> | A dockerfile to build from.<br/>__*Default*__: 'Dockerfile'
+**dockerfile**?🔹 | <code>string</code> | A dockerfile to build from.<br/>__*Default*__: "Dockerfile"
 
 
 
@@ -3517,6 +3534,20 @@ Name | Type | Description
 **fileExtensions**🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).
 **tsconfigPath**🔹 | <code>string</code> | <span></span>
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
+
+
+
+## struct EslintOverride 🔹 <a id="projen-eslintoverride"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**files**🔹 | <code>Array<string></code> | Files or file patterns on which to apply the override.
+**rules**🔹 | <code>Map<string, any></code> | The overriden rules.
 
 
 

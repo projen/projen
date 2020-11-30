@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
@@ -215,6 +216,7 @@ export class TypeScriptProject extends NodeProject {
       const tsconfig = this.jest.generateTypescriptConfig({
         fileName: 'tsconfig.jest.json',
         include: [
+          PROJEN_RC,
           `${this.srcdir}/**/*.ts`,
           `${this.testdir}/**/*.ts`,
         ],

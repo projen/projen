@@ -49,12 +49,12 @@ project.addBuildCommand(
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {
-    "default": true,
-    "commands-show-output": false,
-    "line-length": {
-      "line_length": 200
-    }
-  }
+    'default': true,
+    'commands-show-output': false,
+    'line-length': {
+      line_length: 200,
+    },
+  },
 });
 
 

@@ -353,7 +353,7 @@ export interface DockerComposeBuild {
 
   /**
    * A dockerfile to build from.
-   * @default 'Dockerfile'
+   * @default "Dockerfile"
    */
   readonly dockerfile?: string;
 
