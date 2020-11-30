@@ -16,6 +16,7 @@ async function main() {
 
   // no command means just require .projenrc.js
   if (args._.length === 0) {
+    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
     await synth();
   }
 }

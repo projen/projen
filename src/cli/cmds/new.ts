@@ -310,6 +310,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 
   // synthesize if synth is enabled (default).
   if (args.synth) {
+    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
     await synth();
   }
 }

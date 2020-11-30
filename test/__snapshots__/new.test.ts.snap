@@ -42,7 +42,7 @@ const project = new AwsCdkTypeScriptApp({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -167,7 +167,7 @@ const project = new AwsCdkConstructLibrary({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -257,7 +257,7 @@ const project = new ConstructLibraryCdk8s({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -343,7 +343,7 @@ const project = new JsiiProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -417,7 +417,7 @@ const project = new web.NextJsProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -504,7 +504,7 @@ const project = new web.NextJsTypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -600,7 +600,7 @@ const project = new NodeProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -696,7 +696,7 @@ const project = new web.ReactProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -782,7 +782,7 @@ const project = new web.ReactTypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -878,7 +878,7 @@ const project = new TypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
@@ -974,7 +974,7 @@ const project = new TypeScriptAppProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // npmRegistry: \\"registry.npmjs.org\\",                                        /* The registry url to use when releasing packages. */
-  // npmTaskExecution: undefined,                                              /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */

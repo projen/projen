@@ -237,12 +237,14 @@ export class Project {
       comp.synthesize();
     }
 
-    for (const comp of this._components) {
-      comp.postSynthesize();
-    }
+    if (process.env.PROJEN_DISABLE_POST !== 'true') {
+      for (const comp of this._components) {
+        comp.postSynthesize();
+      }
 
-    // project-level hook
-    this.postSynthesize();
+      // project-level hook
+      this.postSynthesize();
+    }
 
     logging.info('Synthesis complete');
   }
