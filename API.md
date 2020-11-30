@@ -1912,28 +1912,6 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addTask(name, props?)🔹 <a id="projen-nodeproject-addtask"></a>
-
-Adds a task to this project.
-
-Since this is a node project, the task commands will also be rendered as an
-npm script so they can be executed without `projen` involved.
-
-```ts
-addTask(name: string, props?: TaskOptions): Task
-```
-
-* **name** (<code>string</code>)  The name of the task.
-* **props** (<code>[TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
-  * **skipIf** (<code>string</code>)  A shell command which determines if the steps of this task should be skipped. __*Optional*__
-
-__Returns__:
-* <code>[Task](#projen-tasks-task)</code>
-
 #### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
 
 

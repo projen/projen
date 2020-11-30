@@ -8,6 +8,11 @@ export interface TaskManifest {
    * All tasks available for this project.
    */
   readonly tasks?: { [name: string]: TaskSpec };
+
+  /**
+   * Environment for all tasks.
+   */
+  readonly env?: { [name: string]: string };
 }
 
 /**

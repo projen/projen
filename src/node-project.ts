@@ -12,7 +12,7 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
-import { Task, TaskCategory, TaskOptions } from './tasks';
+import { Task, TaskCategory } from './tasks';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
@@ -679,6 +679,10 @@ export class NodeProject extends Project {
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
 
+    // add PATH for all tasks which includes the project's npm .bin list
+    this.tasks.env('PATH', '$(npx -c \'echo $PATH\')');
+
+
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
       category: TaskCategory.BUILD,
@@ -1113,24 +1117,6 @@ export class NodeProject extends Project {
    */
   public hasScript(name: string) {
     return name in this.scripts;
-  }
-
-  /**
-   * Adds a task to this project.
-   *
-   * Since this is a node project, the task commands will also be rendered as an
-   * npm script so they can be executed without `projen` involved.
-   *
-   * @param name The name of the task
-   * @param props Task properties
-   */
-  public addTask(name: string, props: TaskOptions = { }) {
-    const task = super.addTask(name, props);
-
-    // add PATH which includes the project's npm .bin list
-    task.env('PATH', '$(npx -c \'echo $PATH\')');
-
-    return task;
   }
 
   /**

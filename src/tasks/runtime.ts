@@ -51,7 +51,10 @@ export class TaskRuntime {
 
     // evaluating environment
     const cwd = this.rootdir;
-    const env = this.renderRuntimeEnvironment(cmd, cwd);
+    const env = this.renderRuntimeEnvironment({
+      ...this.manifest.env ?? {},
+      ...cmd.env ?? {},
+    }, cwd);
 
     let firstCommandInSequence = true;
 
@@ -78,25 +81,25 @@ export class TaskRuntime {
     }
   }
 
-  private renderRuntimeEnvironment(cmd: TaskSpec, cwd: string) {
-    const env: { [name: string]: string | undefined } = {
+  private renderRuntimeEnvironment(env: {[k: string]: string}, cwd: string) {
+    const output: { [name: string]: string | undefined } = {
       ...process.env,
     };
 
-    for (const [key, value] of Object.entries(cmd.env ?? {})) {
+    for (const [key, value] of Object.entries(env ?? {})) {
       if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
         const result = spawnSync(query, { cwd, shell: true });
         if (result.status !== 0) {
           throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
         }
-        env[key] = result.stdout.toString('utf-8').trim();
+        output[key] = result.stdout.toString('utf-8').trim();
       } else {
-        env[key] = value;
+        output[key] = value;
       }
 
     }
-    return env;
+    return output;
   }
 }
 
