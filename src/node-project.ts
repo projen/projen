@@ -1147,8 +1147,8 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Adds commands which will be executed after compilation
-   * @param commands The commands to execute during compile
+   * DEPRECATED
+   * @deprecated use `project.compileTask.exec()`
    */
   public addCompileCommand(...commands: string[]) {
     for (const c of commands) {
@@ -1156,6 +1156,10 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * DEPRECATED
+   * @deprecated use `project.testTask.exec()`
+   */
   public addTestCommand(...commands: string[]) {
     for (const c of commands) {
       this.testTask.exec(c);
@@ -1163,8 +1167,8 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Adds commands to run as part of `yarn build`.
-   * @param commands The commands to add
+   * DEPRECATED
+   * @deprecated use `project.buildTask.exec()`
    */
   public addBuildCommand(...commands: string[]) {
     for (const c of commands) {
@@ -1172,6 +1176,10 @@ export class NodeProject extends Project {
     }
   }
 
+  /**
+   * Directly set fields in `package.json`.
+   * @param fields The fields to set
+   */
   public addFields(fields: { [name: string]: any }) {
     for (const [name, value] of Object.entries(fields)) {
       this.manifest[name] = value;

@@ -10,6 +10,9 @@ import { Tasks } from './tasks';
  * The runtime component of the tasks engine.
  */
 export class TaskRuntime {
+  /**
+   * The contents of tasks.json
+   */
   public readonly manifest: TasksManifest;
 
   /**

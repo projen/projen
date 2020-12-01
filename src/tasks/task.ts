@@ -33,7 +33,7 @@ export interface TaskCommonOptions {
 export interface TaskOptions extends TaskCommonOptions {
   /**
    * Shell command to execute as the first command of the task.
-   * @default - add commands using `task.add()` or `task.addSubtask()`
+   * @default - add steps using `task.exec(command)` or `task.spawn(subtask)`
    */
   readonly exec?: string;
 }

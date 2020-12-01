@@ -149,7 +149,7 @@ export class ReactComponent extends Component {
     }
 
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
-    project.addTask('start', {
+    project.addTask('dev', {
       description: 'Starts the react application',
       category: TaskCategory.BUILD,
       exec: 'react-scripts start',
