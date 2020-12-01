@@ -46,7 +46,7 @@ const project = new AwsCdkTypeScriptApp({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -171,7 +171,7 @@ const project = new AwsCdkConstructLibrary({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -261,7 +261,7 @@ const project = new ConstructLibraryCdk8s({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -347,7 +347,7 @@ const project = new JsiiProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -421,7 +421,7 @@ const project = new web.NextJsProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -508,7 +508,7 @@ const project = new web.NextJsTypeScriptProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -604,7 +604,7 @@ const project = new NodeProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -700,7 +700,7 @@ const project = new web.ReactProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -786,7 +786,7 @@ const project = new web.ReactTypeScriptProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -882,7 +882,7 @@ const project = new TypeScriptProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -978,7 +978,7 @@ const project = new TypeScriptAppProject({
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
   // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: \\"npx projen\\",                                              /* The shell command to use in order to run the projen CLI. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
