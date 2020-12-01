@@ -160,3 +160,40 @@ $ CI=1 projen hello
 🤖 hello | echo running in a CI environment
 running in a CI environment
 ```
+
+## Tasks as npm scripts
+
+By default, npm scripts in `NodeProject`s (or derivatives) are implemented by delegating the
+command to the projen CLI:
+
+```json
+{
+  "scripts": {
+    "compile": "npx projen compile"
+  }
+}
+```
+
+This means that when `yarn compile` or `npm run compile` are executed, the
+projen CLI will be invoked and the task will be executed.
+
+You can set `npmTaskExecution: NpmTaskExecution.SHELL` when the project is
+defined to tell projen to render the task command directly as an npm script,
+bypassing the projen CLI:
+
+```js
+const project = new NodeProject({
+  // ...
+  npmTaskExecution: NpmTaskExecution.SHELL,
+});
+```
+
+And then, this is how `package.json` will look like:
+
+```json
+{
+  "scripts": {
+    "compile": "tsc"
+  }
+}
+```

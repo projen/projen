@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile, NpmTaskExecution, TextFile } = require('./lib');
+const { JsiiProject, JsonFile, TextFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',

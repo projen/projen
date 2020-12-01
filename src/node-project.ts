@@ -1602,32 +1602,10 @@ export class NodeProject extends Project {
   private npmScriptForTask(task: Task) {
     switch (this.npmTaskExecution) {
       case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
-      case NpmTaskExecution.SHELL: return this.shellScriptForTask(task);
+      case NpmTaskExecution.SHELL: return task.toShellCommand();
       default:
         throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
     }
-  }
-
-  /**
-   * Returns a token which will resolve to a shell script that implements the specified task.
-   * @param task The task
-   */
-  private shellScriptForTask(task: Task) {
-    if (task.condition) {
-      throw new Error('conditions are not supported as shell scripts');
-    }
-
-    const lines = new Array<string>();
-    for (const step of task.steps) {
-      if (step.exec) {
-        lines.push(step.exec);
-      }
-      if (step.spawn) {
-        lines.push(`${this.runScriptCommand} ${step.spawn}`);
-      }
-    }
-
-    return lines.join(' && ');
   }
 
   /**
