@@ -796,6 +796,7 @@ export class NodeProject extends Project {
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
+      marker: true,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
