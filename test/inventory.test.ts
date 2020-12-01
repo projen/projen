@@ -43,10 +43,12 @@ test('renderable default values simulation', () => {
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year' })).toThrowError();
 });
 
-test('all default values in docstrings are renderable JS values', () => {
+describe('all default values in docstrings are renderable JS values', () => {
   result.forEach((project) => {
     project.options.forEach((option) => {
-      expect(() => throwIfNotRenderable(option)).not.toThrowError();
+      test(`${project.pjid}:${option.path.join('.')}=${option.default}`, () => {
+        expect(() => throwIfNotRenderable(option)).not.toThrowError();
+      });
     });
   });
 });

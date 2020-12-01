@@ -33,15 +33,13 @@ export interface ProjenUpgradeOptions {
  */
 export class ProjenUpgrade {
   constructor(project: NodeProject, options: ProjenUpgradeOptions = { }) {
-    const script = 'projen:upgrade';
-
-    const upgrade = project.addTask(script, {
+    const upgradeTask = project.addTask('projen:upgrade', {
       description: 'upgrades projen to the latest version',
       category: TaskCategory.MAINTAIN,
     });
 
-    upgrade.exec('yarn upgrade -L projen');
-    upgrade.exec('CI="" yarn projen');
+    upgradeTask.exec('yarn upgrade -L projen');
+    upgradeTask.exec('CI="" yarn projen');
 
     if (options.autoUpgradeSecret) {
       if (!project.github) {
@@ -76,7 +74,7 @@ export class ProjenUpgrade {
             ...project.workflowBootstrapSteps,
 
             // upgrade
-            { run: `${project.runScriptCommand} ${script}` },
+            { run: project.runTaskCommand(upgradeTask) },
 
             // submit a PR
             {

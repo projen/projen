@@ -447,11 +447,20 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * @default NpmTaskExecution.PROJEN
    */
   readonly npmTaskExecution?: NpmTaskExecution;
+
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * Can be used to customize in special environments.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
 }
 
 export enum NpmTaskExecution {
   /**
-   * `packagwe.json` scripts invoke to the projen CLI.
+   * `package.json` scripts invoke to the projen CLI.
    *
    * @example
    *
@@ -588,9 +597,26 @@ export class NodeProject extends Project {
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
 
+  /**
+   * Compiles the code. By default for node.js projects this task is empty.
+   */
   public readonly compileTask: Task;
+
+  /**
+   * Tests the code.
+   */
   public readonly testTask: Task;
+
+  /**
+   * The task resposible for a full release build. It spawns: compile + test + release + package
+   */
   public readonly buildTask: Task;
+
+  /**
+   * The task responsible for bootstrapping the repo. This is the task used to set up build/release workflows.
+   * By default it will install dependencies, run projen and perform an anti-tamper check.
+   */
+  public readonly bootstrapTask: Task;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -616,8 +642,6 @@ export class NodeProject extends Project {
 
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
-
-  private readonly bootstrapSteps: any[];
 
   private readonly nodeVersion?: string;
 
@@ -650,6 +674,16 @@ export class NodeProject extends Project {
    */
   public readonly jest?: Jest;
 
+  /**
+   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   */
+  public readonly npmTaskExecution: NpmTaskExecution;
+
+  /**
+   * The command to use in order to run the projen CLI.
+   */
+  public readonly projenCommand: string;
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
@@ -657,6 +691,7 @@ export class NodeProject extends Project {
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
         case NodePackageManager.NPM: return 'npm run';
@@ -664,6 +699,7 @@ export class NodeProject extends Project {
         default: throw new Error(`unexpected package manager ${this.packageManager}`);
       }
     })();
+    this.projenCommand = options.projenCommand ?? 'npx projen';
 
     this.processDeps(options);
 
@@ -674,8 +710,7 @@ export class NodeProject extends Project {
     this.addKeywords(...options.keywords ?? []);
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.env('PATH', '$(npx -c \'echo $PATH\')');
-
+    this.tasks.addEnvironment('PATH', '$(npx -c \'echo $PATH\')');
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
@@ -712,13 +747,8 @@ export class NodeProject extends Project {
         const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
         result[name] = cmds.join(' && ');
       }
-      const npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
       for (const task of this.tasks.all) {
-        const command = npmTaskExecution === NpmTaskExecution.PROJEN
-          ? `projen ${task.name}`
-          : this.taskAsShellScript(task);
-
-        result[task.name] = command;
+        result[task.name] = this.npmScriptForTask(task);
       }
 
       return result;
@@ -804,8 +834,8 @@ export class NodeProject extends Project {
       this.manifest.license = 'UNLICENSED';
     }
 
-    this.setScript(PROJEN_SCRIPT, 'projen');
-    this.setScript('start', `${this.runScriptCommand} ${PROJEN_SCRIPT} start`);
+    this.setScript(PROJEN_SCRIPT, this.projenCommand);
+    this.setScript('start', `${this.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -824,15 +854,22 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapSteps = options.workflowBootstrapSteps ?? [
-      { run: this.renderInstallCommand(true) },
-      { run: `${this.runScriptCommand} ${PROJEN_SCRIPT}` },
-    ];
+    this.bootstrapTask = this.addTask('bootstrap', {
+      description: 'initializes the project',
+      category: TaskCategory.BUILD,
+    });
+
+    this.bootstrapTask.exec(this.renderInstallCommand(true));
+    this.bootstrapTask.exec(this.projenCommand);
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
     this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
+
+    if (this.antitamper) {
+      this.bootstrapTask.exec('git diff --exit-code', { name: 'Anti-tamper check' });
+    }
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -1155,7 +1192,7 @@ export class NodeProject extends Project {
    * Returns a set of steps to checkout and bootstrap the project in a github
    * workflow.
    */
-  public get workflowBootstrapSteps() {
+  public get workflowBootstrapSteps(): any[] {
     const nodeVersion = !this.nodeVersion ? [] : [
       {
         uses: 'actions/setup-node@v1',
@@ -1170,12 +1207,8 @@ export class NodeProject extends Project {
       // use the correct node version
       ...nodeVersion,
 
-      // bootstrap the repo
-      ...this.bootstrapSteps,
-
-      // first anti-tamper check (right after bootstrapping)
-      // this will identify any non-committed files generated by projen
-      ...this.workflowAntitamperSteps,
+      // bootstrap the repo by converting the task to workflow commands (we can't use the projen cli at this point)
+      ...this.workflowStepsForTask(this.bootstrapTask),
     ];
   }
 
@@ -1493,10 +1526,10 @@ export class NodeProject extends Project {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: `${this.runScriptCommand} bump` }] : [],
+        ...options.bump ? [{ run: this.runTaskCommand(this._version.bumpTask) }] : [],
 
         // build (compile + test)
-        { run: `${this.runScriptCommand} build` },
+        { run: this.runTaskCommand(this.buildTask) },
 
         // run codecov if enabled or a secret token name is passed in
         // AND jest must be configured
@@ -1541,20 +1574,82 @@ export class NodeProject extends Project {
     return { workflow, buildJobId };
   }
 
-  private taskAsShellScript(task: Task) {
+  /**
+   * Returns the shell command to execute in order to run a task. If
+   * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
+   * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
+   * TASK`).
+   *
+   * @param task The task for which the command is required
+   */
+  public runTaskCommand(task: Task) {
+    switch (this.npmTaskExecution) {
+      case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
+      case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
+      default:
+        throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
+    }
+  }
+
+  private npmScriptForTask(task: Task) {
+    switch (this.npmTaskExecution) {
+      case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
+      case NpmTaskExecution.SHELL: return this.shellScriptForTask(task);
+      default:
+        throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
+    }
+  }
+
+  /**
+   * Returns a token which will resolve to a shell script that implements the specified task.
+   * @param task The task
+   */
+  private shellScriptForTask(task: Task) {
+    if (task.condition) {
+      throw new Error('conditions are not supported as shell scripts');
+    }
+
     const lines = new Array<string>();
     for (const step of task.steps) {
       if (step.exec) {
         lines.push(step.exec);
       }
-      if (step.subtask) {
-        lines.push(`${this.runScriptCommand} ${step.subtask}`);
+      if (step.spawn) {
+        lines.push(`${this.runScriptCommand} ${step.spawn}`);
       }
     }
 
     return lines.join(' && ');
   }
+
+  /**
+   * Converts a task to a set of GitHub workflow steps.
+   * @param task The task
+   */
+  private workflowStepsForTask(task: Task) {
+    if (task.condition) {
+      throw new Error('conditions are not supported as shell scripts');
+    }
+
+    const steps = new Array<{ run: string; name?: string }>();
+    for (const step of task.steps) {
+      if (step.exec) {
+        steps.push({ run: step.exec, name: step.name });
+      }
+      if (step.spawn) {
+        const subtask = this.tasks.tryFind(step.spawn);
+        if (!subtask) {
+          throw new Error(`cannot find subtask ${step.spawn}`);
+        }
+
+        steps.push(...this.workflowStepsForTask(subtask));
+      }
+    }
+
+    return steps;
+  }
 }
+
 
 interface BuildWorkflow {
   readonly workflow: GithubWorkflow;

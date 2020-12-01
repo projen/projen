@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { resolve } from './_resolve';
+import { PROJEN_MARKER, PROJEN_RC } from './common';
 import { Component } from './component';
 import { Project } from './project';
 import { writeFile } from './util';
@@ -30,6 +31,12 @@ export interface FileBaseOptions {
 
 export abstract class FileBase extends Component {
   /**
+   * The marker to embed in files in order to identify them as projen files.
+   * This marker is used to prune these files before synthesis.
+   */
+  public static readonly PROJEN_MARKER = `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
+
+  /**
    * The file path, relative to the project root.
    */
   public readonly path: string;
@@ -53,7 +60,7 @@ export abstract class FileBase extends Component {
     this.absolutePath = path.resolve(project.outdir, filePath);
 
     // verify file path is unique within project tree
-    const existing = project.root.findFile(this.absolutePath);
+    const existing = project.root.tryFindFile(this.absolutePath);
     if (existing && existing !== this) {
       throw new Error(`there is already a file under ${path.relative(project.root.outdir, this.absolutePath)}`);
     }

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toShellCommand() multiple steps 1`] = `"(  ( echo STEP I ) && ( echo step 1 ) && ( echo step 2 ) && ( echo STEP III ) && ( echo step 3 ) )"`;
+
+exports[`toShellCommand() single step 1`] = `"(  ( echo hi there ) )"`;
+
+exports[`toShellCommand() subtasks 1`] = `"(  ( echo task2-step1 ) && ( echo spawning t1 ) && ( ( (  ( echo task1-step1 ) && ( echo task1-step2 ) ) ) ) && ( echo task2-step3 ) )"`;
+
+exports[`toShellCommand() with a condition 1`] = `"(  ! ( [ \\"\${RUNME}\\" = \\"1\\" ] ) || ( ( echo STEP I ) && ( echo hello, world ) ) )"`;
+
+exports[`toShellCommand() with a name 1`] = `"(  ( echo STEP I ) && ( echo step 1 ) )"`;
+
+exports[`toShellCommand() with environment 1`] = `"( FOO=\\"hello\\"; BAR=\\"$(echo world)\\";  ( echo $FOO, $BAR ! ) )"`;

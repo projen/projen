@@ -9,7 +9,7 @@
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
         },
         {
-          "subtask": "docgen"
+          "spawn": "docgen"
         }
       ]
     },
@@ -22,7 +22,7 @@
           "exec": "jest --passWithNoTests --updateSnapshot"
         },
         {
-          "subtask": "eslint"
+          "spawn": "eslint"
         }
       ]
     },
@@ -32,16 +32,16 @@
       "description": "Full release build (test+compile)",
       "steps": [
         {
-          "subtask": "compile"
+          "spawn": "compile"
         },
         {
-          "subtask": "test"
+          "spawn": "test"
         },
         {
-          "subtask": "package"
+          "spawn": "package"
         },
         {
-          "subtask": "readme-macros"
+          "spawn": "readme-macros"
         }
       ]
     },
@@ -62,13 +62,30 @@
       "description": "Bumps version & push to master",
       "steps": [
         {
-          "subtask": "bump"
+          "spawn": "bump"
         },
         {
           "exec": "git push --follow-tags origin master"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
+    "bootstrap": {
+      "name": "bootstrap",
+      "category": "00.build",
+      "description": "initializes the project",
+      "steps": [
+        {
+          "exec": "yarn install --check-files --frozen-lockfile"
+        },
+        {
+          "exec": "/bin/sh ./projen.sh"
+        },
+        {
+          "exec": "git diff --exit-code",
+          "name": "Anti-tamper check"
+        }
+      ]
     },
     "test:watch": {
       "name": "test:watch",

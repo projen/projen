@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { TaskCategory } from './tasks';
+import { Task, TaskCategory } from './tasks';
 
 const VERSION_FILE = 'version.json';
 
@@ -14,6 +14,9 @@ export interface VersionOptions {
 }
 
 export class Version extends Component {
+
+  public readonly bumpTask: Task;
+
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
@@ -22,7 +25,7 @@ export class Version extends Component {
     // the `bump` and the `release` tasks.
     const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
 
-    const bump = project.addTask('bump', {
+    this.bumpTask = project.addTask('bump', {
       description: 'Commits a bump to the package version based on conventional commits',
       category: TaskCategory.RELEASE,
       exec: 'standard-version',
@@ -35,7 +38,7 @@ export class Version extends Component {
       condition: changesSinceLastRelease,
     });
 
-    release.spawn(bump);
+    release.spawn(this.bumpTask);
     release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
 
     project.addDevDeps(
@@ -52,7 +55,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: `${project.runScriptCommand} projen && git add .`,
+          postbump: `${project.projenCommand} && git add .`,
         },
       },
     });

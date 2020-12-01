@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile, NpmTaskExecution } = require('./lib');
+const { JsiiProject, JsonFile, NpmTaskExecution, TextFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -34,14 +34,27 @@ const project = new JsiiProject({
   minNodeVersion: '10.17.0',
   codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
-  npmTaskExecution: NpmTaskExecution.SHELL,
+
+  // since this is projen, we need to always compile before we run
+  projenCommand: '/bin/sh ./projen.sh',
+});
+
+// this script is what we use as the projen command in this project
+// it will compile the project if needed and then run the cli.
+new TextFile(project, 'projen.sh', {
+  lines: [
+    '#!/bin/bash',
+    `# ${TextFile.PROJEN_MARKER}`,
+    'set -euo pipefail',
+    'if [ ! -f lib/cli/index.js ]; then',
+    '  echo "compiling the cli..."',
+    `  ${project.compileTask.toShellCommand()}`,
+    'fi',
+    'exec bin/projen $@',
+  ]
 });
 
 project.addExcludeFromCleanup('test/**');
-
-// since this is projen, we need to be able to compile without `projen` itself
-project.setScript('projen', 'yarn compile && node bin/projen');
-
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme

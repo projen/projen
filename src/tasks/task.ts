@@ -1,4 +1,5 @@
-import { TaskSpec, TaskStep } from './model';
+import { TaskSpec, TaskStep, TaskStepOptions } from './model';
+import { Tasks } from './tasks';
 
 export interface TaskCommonOptions {
   /**
@@ -61,16 +62,18 @@ export class Task {
    * A command to execute which determines if the task should be skipped. If it
    * returns a zero exit code, the task will not be executed.
    */
-  public readonly skipIf?: string;
+  public readonly condition?: string;
 
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
+  private readonly tasks: Tasks;
 
-  constructor(name: string, props: TaskOptions = { }) {
+  constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
+    this.tasks = tasks;
     this.name = name;
     this.description = props.description;
     this.category = props.category;
-    this.skipIf = props.condition;
+    this.condition = props.condition;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -98,17 +101,18 @@ export class Task {
    * Executes a shell command
    * @param command Shell command
    */
-  public exec(command: string) {
-    this._steps.push({ exec: command });
+  public exec(command: string, options: TaskStepOptions = { }) {
+    this._steps.push({ exec: command, ...options });
   }
 
   /**
    * Adds a command at the beginning of the task.
    * @param shell The command to add.
    */
-  public prepend(shell: string) {
+  public prepend(shell: string, options: TaskStepOptions = {}) {
     this._steps.unshift({
       exec: shell,
+      ...options,
     });
   }
 
@@ -116,8 +120,8 @@ export class Task {
    * Spawns a sub-task.
    * @param subtask The subtask to execute.
    */
-  public spawn(subtask: Task) {
-    this._steps.push({ subtask: subtask.name });
+  public spawn(subtask: Task, options: TaskStepOptions = {}) {
+    this._steps.push({ spawn: subtask.name, ...options });
   }
 
   /**
@@ -139,6 +143,45 @@ export class Task {
   }
 
   /**
+   * Renders this task as a single shell command.
+   */
+  public toShellCommand(): string {
+    const cmd = new Array<string>();
+
+    for (const step of this.steps) {
+      if (step.name) {
+        cmd.push(`echo ${step.name}`);
+      }
+      if (step.exec) {
+        cmd.push(step.exec);
+      }
+      if (step.spawn) {
+        const subtask = this.tasks.tryFind(step.spawn);
+        if (!subtask) {
+          throw new Error(`unable to resolve subtask ${step.spawn}`);
+        }
+
+        cmd.push(`( ${subtask.toShellCommand()} )`);
+      }
+    }
+
+    const allCommands = cmd.map(c => `( ${c} )`).join(' && ');
+    const withCondition = this.condition ? `! ( ${this.condition} ) || ( ${allCommands} )` : allCommands;
+
+    const env = {
+      ...this.tasks.env,
+      ...this._env,
+    };
+
+    const lines = new Array<string>();
+    for (const [k, v] of Object.entries(env)) {
+      lines.push(`${k}="${v}"; `);
+    }
+
+    return `( ${lines.join('')} ${withCondition} )`;
+  }
+
+  /**
    * Renders a task spec into the manifest.
    *
    * @internal
@@ -150,7 +193,7 @@ export class Task {
       description: this.description,
       env: this._env,
       steps: this._steps,
-      condition: this.skipIf,
+      condition: this.condition,
     };
   }
 }

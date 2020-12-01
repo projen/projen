@@ -35,8 +35,8 @@ test('findFile() can be used to find a file either absolute or relative path', (
   const file = new JsonFile(p, 'your/file/me.json', { obj: {} });
 
   // WHEN
-  const result1 = p.findFile('your/file/me.json');
-  const result2 = p.findFile(path.resolve(p.outdir, 'your/file/me.json'));
+  const result1 = p.tryFindFile('your/file/me.json');
+  const result2 = p.tryFindFile(path.resolve(p.outdir, 'your/file/me.json'));
 
   // THEN
   expect(result1 === file).toBeTruthy();
@@ -50,8 +50,8 @@ test('findFile() will also look up files in subprojects', () => {
   const fchild = new TextFile(child, 'fchild.txt');
 
   // WHEN
-  const result1 = p.findFile('subproject/foo/bar/fchild.txt');
-  const result2 = child.findFile('fchild.txt');
+  const result1 = p.tryFindFile('subproject/foo/bar/fchild.txt');
+  const result2 = child.tryFindFile('fchild.txt');
 
   // THEN
   expect(result1 === fchild).toBeTruthy();

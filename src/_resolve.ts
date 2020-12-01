@@ -21,7 +21,9 @@ export function resolve(value: any, args?: any[], options: ResolveOptions = {}):
     if (omitEmpty && value.length === 0) {
       return undefined;
     }
-    return value.map(x => resolve(x, args, options));
+    return value
+      .map(x => resolve(x, args, options))
+      .filter(x => x != null); // filter undefined/null/omitted
   }
 
   // only allow data types (i.e. objects without constructors)

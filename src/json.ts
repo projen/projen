@@ -1,4 +1,3 @@
-import { GENERATION_DISCLAIMER } from './common';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
@@ -67,7 +66,7 @@ export class JsonFile extends FileBase {
     };
 
     if (this.marker) {
-      obj['//'] = GENERATION_DISCLAIMER;
+      obj['//'] = JsonFile.PROJEN_MARKER;
     }
 
     const resolved = resolver.resolve(obj, {

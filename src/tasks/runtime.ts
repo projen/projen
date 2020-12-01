@@ -70,8 +70,8 @@ class RunTask {
     }
 
     for (const step of task.steps ?? []) {
-      if (step.subtask) {
-        this.runtime.runTask(step.subtask, [...this.parents, this.task.name]);
+      if (step.spawn) {
+        this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
       }
 
       if (step.exec) {

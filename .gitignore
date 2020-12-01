@@ -60,5 +60,6 @@ tsconfig.json
 !/tsconfig.jest.json
 !/.eslintrc.json
 !/API.md
+!/projen.sh
 !templates/**
 !/.markdownlint.json

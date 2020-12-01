@@ -31,17 +31,33 @@ export interface TaskSpec extends TaskCommonOptions {
 }
 
 /**
+ * Options for task steps.
+ */
+export interface TaskStepOptions {
+  /**
+   * Step name
+   *
+   * @default - no name
+   */
+  readonly name?: string;
+}
+
+/**
  * A single step within a task. The step could either be  the execution of a
  * shell command or execution of a sub-task, by name.
  */
-export interface TaskStep {
+export interface TaskStep extends TaskStepOptions {
   /**
    * Shell command to execute
+   *
+   * @default - don't execute a shell command
    */
   readonly exec?: string;
 
   /**
    * Subtask to execute
+   *
+   * @default - don't spawn a subtask
    */
-  readonly subtask?: string;
+  readonly spawn?: string;
 }

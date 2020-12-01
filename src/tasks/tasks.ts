@@ -33,7 +33,7 @@ export class Tasks extends Component {
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,
-        env: (() => this.renderEnv()) as any,
+        env: (() => this._env) as any,
       } as TasksManifest,
     });
   }
@@ -51,7 +51,7 @@ export class Tasks extends Component {
    * @param options Task options.
    */
   public addTask(name: string, options: TaskOptions = {}) {
-    const task = new Task(name, options);
+    const task = new Task(this, name, options);
     this._tasks[name] = task;
     return task;
   }
@@ -61,8 +61,17 @@ export class Tasks extends Component {
    * @param name Environment variable name
    * @param value Value
    */
-  public env(name: string, value: string) {
+  public addEnvironment(name: string, value: string) {
     this._env[name] = value;
+  }
+
+  /**
+   * Returns a copy of the currently global environment for this project.
+   */
+  public get env(): { [key: string]: string } {
+    return {
+      ...this._env,
+    };
   }
 
   /**
@@ -71,15 +80,6 @@ export class Tasks extends Component {
    */
   public tryFind(name: string): undefined | Task {
     return this._tasks[name];
-  }
-
-  private renderEnv() {
-    const env: { [name: string]: string } = {};
-    for (const [k, v] of Object.entries(this._env)) {
-      env[k] = v;
-    }
-
-    return env;
   }
 
   private renderTasks() {

@@ -97,7 +97,7 @@ test('"undefined" values are omitted', () => {
   expect(r({ foo: undefined })).toStrictEqual({ });
   expect(r({ foo: { bar: undefined } })).toStrictEqual({ foo: {} });
   expect(r({ foo: { bar: undefined, hello: 123 } })).toStrictEqual({ foo: { hello: 123 } });
-  expect(r({ foo: [undefined] })).toStrictEqual({ foo: [undefined] });
+  expect(r({ foo: [undefined] })).toStrictEqual({ foo: [] });
 });
 
 test('omitEmpty', () => {

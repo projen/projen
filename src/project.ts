@@ -159,7 +159,7 @@ export class Project {
    * from the root of _this_ project.
    * @returns a `FileBase` or undefined if there is no file in that path
    */
-  public findFile(filePath: string): FileBase | undefined {
+  public tryFindFile(filePath: string): FileBase | undefined {
     const absolute = path.isAbsolute(filePath) ? filePath : path.resolve(this.outdir, filePath);
     for (const file of this.files) {
       if (absolute === file.absolutePath) {
@@ -168,7 +168,7 @@ export class Project {
     }
 
     for (const child of this.subprojects) {
-      const file = child.findFile(absolute);
+      const file = child.tryFindFile(absolute);
       if (file) {
         return file;
       }
@@ -181,8 +181,8 @@ export class Project {
    * Finds a json file by name.
    * @param filePath The file path.
    */
-  public findJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.findFile(filePath);
+  public tryFindJsonFile(filePath: string): JsonFile | undefined {
+    const file = this.tryFindFile(filePath);
     if (!file) {
       return undefined;
     }
