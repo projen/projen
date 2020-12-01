@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.7 (2020-12-01)
+
+
+### Features
+
+* projen tasks ([#337](https://github.com/projen/projen/issues/337)) ([9511227](https://github.com/projen/projen/commit/95112272c2b192144293c1064c77b2d8da354b8f))
+
 ### 0.5.6 (2020-11-30)
 
 
