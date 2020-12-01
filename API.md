@@ -1750,15 +1750,15 @@ addBins(bins: Map<string, string>): void
 
 
 
-#### addBuildCommand(...commands)🔹 <a id="projen-nodeproject-addbuildcommand"></a>
+#### addBuildCommand(...commands)⚠️ <a id="projen-nodeproject-addbuildcommand"></a>
 
-Adds commands to run as part of `yarn build`.
+DEPRECATED.
 
 ```ts
 addBuildCommand(...commands: string[]): void
 ```
 
-* **commands** (<code>string</code>)  The commands to add.
+* **commands** (<code>string</code>)  *No description*
 
 
 
@@ -1792,15 +1792,15 @@ addBundledDeps(...deps: string[]): void
 
 
 
-#### addCompileCommand(...commands)🔹 <a id="projen-nodeproject-addcompilecommand"></a>
+#### addCompileCommand(...commands)⚠️ <a id="projen-nodeproject-addcompilecommand"></a>
 
-Adds commands which will be executed after compilation.
+DEPRECATED.
 
 ```ts
 addCompileCommand(...commands: string[]): void
 ```
 
-* **commands** (<code>string</code>)  The commands to execute during compile.
+* **commands** (<code>string</code>)  *No description*
 
 
 
@@ -1860,13 +1860,13 @@ addDevDeps(...deps: string[]): void
 
 #### addFields(fields)🔹 <a id="projen-nodeproject-addfields"></a>
 
-
+Directly set fields in `package.json`.
 
 ```ts
 addFields(fields: Map<string, any>): void
 ```
 
-* **fields** (<code>Map<string, any></code>)  *No description*
+* **fields** (<code>Map<string, any></code>)  The fields to set.
 
 
 
@@ -1916,9 +1916,9 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addTestCommand(...commands)🔹 <a id="projen-nodeproject-addtestcommand"></a>
+#### addTestCommand(...commands)⚠️ <a id="projen-nodeproject-addtestcommand"></a>
 
-
+DEPRECATED.
 
 ```ts
 addTestCommand(...commands: string[]): void
@@ -2086,7 +2086,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add commands using `task.add()` or `task.addSubtask()`
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
 * <code>[Task](#projen-tasks-task)</code>
