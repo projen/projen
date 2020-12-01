@@ -79,7 +79,7 @@
           "exec": "yarn install --check-files --frozen-lockfile"
         },
         {
-          "exec": "/bin/sh ./projen.sh"
+          "exec": "/bin/bash ./projen.sh"
         },
         {
           "exec": "git diff --exit-code",

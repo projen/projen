@@ -36,7 +36,7 @@ const project = new JsiiProject({
   compileBeforeTest: true, // since we want to run the cli in tests
 
   // since this is projen, we need to always compile before we run
-  projenCommand: '/bin/sh ./projen.sh',
+  projenCommand: '/bin/bash ./projen.sh',
 });
 
 // this script is what we use as the projen command in this project
