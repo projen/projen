@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export enum CdkApprovalLevel {
@@ -113,25 +113,37 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addCdkDependency('@aws-cdk/core');
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    this.addScript('cdk', 'cdk');
-    this.addScript('synth', 'cdk synth', {
-      startDesc: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
-      startCategory: StartEntryCategory.BUILD,
+    const synth = this.addTask('synth', {
+      description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
+      category: TaskCategory.BUILD,
+      exec: 'cdk synth',
     });
-    this.addScript('deploy', 'cdk deploy', {
-      startDesc: 'Deploys your cdk app to the AWS cloud',
-      startCategory: StartEntryCategory.RELEASE,
-    });
-    this.addScript('diff', 'cdk diff');
 
-    this.addScript('compile', 'true');
+    this.addTask('deploy', {
+      description: 'Deploys your CDK app to the AWS cloud',
+      category: TaskCategory.RELEASE,
+      exec: 'cdk deploy',
+    });
+
+    this.addTask('destroy', {
+      description: 'Destroys your cdk app in the AWS cloud',
+      category: TaskCategory.RELEASE,
+      exec: 'cdk destroy',
+    });
+
+    this.addTask('diff', {
+      description: 'Diffs the currently deployed app against your code',
+      category: TaskCategory.MISC,
+      exec: 'cdk diff',
+    });
+
+    // no compile step because we do all of it in typescript directly
+    this.compileTask.reset();
+
     this.removeScript('watch'); // because we use ts-node
-    this.addBuildCommand(`${this.runScriptCommand} synth`);
 
-    this.addScript('destroy', 'cdk destroy', {
-      startDesc: 'Destroys your cdk app in the AWS cloud',
-      startCategory: StartEntryCategory.RELEASE,
-    });
+    // add synth to the build
+    this.buildTask.spawn(synth);
 
     this.cdkConfig = {
       app: `npx ts-node --prefer-ts-exts ${path.join(this.srcdir, this.appEntrypoint)}`,

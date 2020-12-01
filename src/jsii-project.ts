@@ -2,7 +2,7 @@ import { Eslint } from './eslint';
 import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
 import { NodeProjectCommonOptions } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 import { TypeScriptProject } from './typescript';
 
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -174,14 +174,22 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    this.addScript('compat', `npx jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`, {
-      startDesc: 'Perform API compatibility check against latest version',
-      startCategory: StartEntryCategory.RELEASE,
+    const compatTask = this.addTask('compat', {
+      description: 'Perform API compatibility check against latest version',
+      category: TaskCategory.RELEASE,
+      exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
     });
 
-    this.addScript('compile', `jsii ${jsiiFlags}`);
-    this.addScript('watch', `jsii -w ${jsiiFlags}`);
-    this.addScript('package', 'jsii-pacmak');
+    const compat = options.compat ?? false;
+    if (compat) {
+      this.compileTask.spawn(compatTask);
+    } else {
+      this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
+    }
+
+    this.compileTask.reset(`jsii ${jsiiFlags}`);
+    this.watchTask.reset(`jsii -w ${jsiiFlags}`);
+    this.packageTask?.reset('jsii-pacmak');
 
     const targets: Record<string, any> = { };
 
@@ -250,13 +258,6 @@ export class JsiiProject extends TypeScriptProject {
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
-    }
-
-    const compat = options.compat ?? false;
-    if (compat) {
-      this.addCompileCommand(`${this.runScriptCommand} compat`);
-    } else {
-      this.addTip('Set "compat" to "true" to enable automatic API breaking-change validation');
     }
 
     // jsii updates .npmignore, so we make it writable

@@ -43,6 +43,7 @@ junit.xml
 /dist
 .jsii
 tsconfig.json
+!/.projen/tasks.json
 !/package.json
 !/.npmignore
 !/LICENSE
@@ -59,5 +60,6 @@ tsconfig.json
 !/tsconfig.jest.json
 !/.eslintrc.json
 !/API.md
+!/projen.sh
 !templates/**
 !/.markdownlint.json

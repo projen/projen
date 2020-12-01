@@ -13,15 +13,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: yarn install --frozen-lockfile
-      - run: yarn projen
-      - name: Anti-tamper check
-        run: git diff --exit-code
+      - run: yarn install --check-files --frozen-lockfile
+      - run: /bin/sh ./projen.sh
+      - run: git diff --exit-code
+        name: Anti-tamper check
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
-      - run: yarn run build
+      - run: /bin/sh ./projen.sh build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: coverage
       - name: Anti-tamper check
         run: git diff --exit-code
     container:

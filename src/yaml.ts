@@ -1,5 +1,4 @@
 import * as YAML from 'yaml';
-import { GENERATION_DISCLAIMER } from './common';
 import { IResolver } from './file';
 import { JsonFile, JsonFileOptions } from './json';
 import { Project } from './project';
@@ -17,7 +16,7 @@ export class YamlFile extends JsonFile {
     // sanitize object references by serializing and deserializing to JSON
     const sanitized = JSON.parse(JSON.stringify(resolver.resolve(this.obj)));
     return [
-      `# ${GENERATION_DISCLAIMER}`,
+      `# ${YamlFile.PROJEN_MARKER}`,
       '',
       YAML.stringify(sanitized, { indent: 2 }),
     ].join('\n');

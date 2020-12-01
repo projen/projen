@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile } = require('./lib');
+const { JsiiProject, JsonFile, TextFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -32,20 +32,37 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
+  codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
+
+  // since this is projen, we need to always compile before we run
+  projenCommand: '/bin/sh ./projen.sh',
 });
 
-// since this is projen, we need to compile before running projen, dah!
-project.addScript('projen', 'yarn compile && node .projenrc.js');
+// this script is what we use as the projen command in this project
+// it will compile the project if needed and then run the cli.
+new TextFile(project, 'projen.sh', {
+  lines: [
+    '#!/bin/bash',
+    `# ${TextFile.PROJEN_MARKER}`,
+    'set -euo pipefail',
+    'if [ ! -f lib/cli/index.js ]; then',
+    '  echo "compiling the cli..."',
+    `  ${project.compileTask.toShellCommand()}`,
+    'fi',
+    'exec bin/projen $@',
+  ]
+});
 
+project.addExcludeFromCleanup('test/**');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
-project.addBuildCommand(
-  'mv README.md README.md.bak',
-  'cat README.md.bak | npx markmac > README.md',
-  'rm README.md.bak',
-);
+const macros = project.addTask('readme-macros')
+macros.exec('mv README.md README.md.bak');
+macros.exec('cat README.md.bak | markmac > README.md');
+macros.exec('rm README.md.bak');
+project.buildTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {
@@ -56,6 +73,5 @@ new JsonFile(project, '.markdownlint.json', {
     }
   }
 });
-
 
 project.synth();

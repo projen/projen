@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { Task, TaskCategory } from './tasks';
 
 const VERSION_FILE = 'version.json';
 
@@ -14,20 +14,32 @@ export interface VersionOptions {
 }
 
 export class Version extends Component {
+
+  public readonly bumpTask: Task;
+
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
-    project.addScript('no-changes', '(git log --oneline -1 | grep -q "chore(release):") && echo "No changes to release."');
+    // this command determines if there were any changes since the last release
+    // (the top-most commit is not a bump). it is used as a condition for both
+    // the `bump` and the `release` tasks.
+    const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
 
-    project.addScript('bump', `${project.runScriptCommand} --silent no-changes || standard-version`, {
-      startDesc: 'Commits a bump to the package version based on conventional commits',
-      startCategory: StartEntryCategory.RELEASE,
+    this.bumpTask = project.addTask('bump', {
+      description: 'Commits a bump to the package version based on conventional commits',
+      category: TaskCategory.RELEASE,
+      exec: 'standard-version',
+      condition: changesSinceLastRelease,
     });
 
-    project.addScript('release', `${project.runScriptCommand} --silent no-changes || (${project.runScriptCommand} bump && git push --follow-tags origin ${options.releaseBranch})`, {
-      startDesc: `Bumps version & push to ${options.releaseBranch}`,
-      startCategory: StartEntryCategory.RELEASE,
+    const release = project.addTask('release', {
+      description: `Bumps version & push to ${options.releaseBranch}`,
+      category: TaskCategory.RELEASE,
+      condition: changesSinceLastRelease,
     });
+
+    release.spawn(this.bumpTask);
+    release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
 
     project.addDevDeps(
       'standard-version@^9.0.0',
@@ -43,7 +55,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: `${project.runScriptCommand} projen && git add .`,
+          postbump: `${project.projenCommand} && git add .`,
         },
       },
     });
