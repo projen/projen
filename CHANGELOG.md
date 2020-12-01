@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.8 (2020-12-01)
+
+
+### Features
+
+* lint .projenrc.js ([#343](https://github.com/projen/projen/issues/343)) ([1f39d12](https://github.com/projen/projen/commit/1f39d12d6d31b5d63540a5b5882dc98e5411b959))
+
 ### 0.5.7 (2020-12-01)
 
 
