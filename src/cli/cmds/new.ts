@@ -147,7 +147,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, string
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      paramRender = `// ${optionName}: ${defaultValue?.replace(/"/g, '\'')},`; // single quotes
+      paramRender = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
 
       const parentModule = option.parent;
       optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
@@ -234,7 +234,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: Record<string, un
 
             // if this is a string, then single quote it
             if (val && typeof(val) === 'string') {
-              val = JSON.stringify(val).replace(/"/g, '\'');
+              val = JSON.stringify(val).replace(/"(.+)"/, '\'$1\'');
             }
 
             curr[p] = val;

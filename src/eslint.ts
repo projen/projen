@@ -26,6 +26,9 @@ export interface EslintOptions {
   readonly ignorePatterns?: string[];
 }
 
+/**
+ * eslint rules override
+ */
 export interface EslintOverride {
   /**
    * Files or file patterns on which to apply the override

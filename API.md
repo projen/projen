@@ -55,7 +55,7 @@ Name|Description
 [DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)|Volume configuration.
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [EslintOptions](#projen-eslintoptions)|*No description*
-[EslintOverride](#projen-eslintoverride)|*No description*
+[EslintOverride](#projen-eslintoverride)|eslint rules override.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
@@ -3540,7 +3540,7 @@ Name | Type | Description
 ## struct EslintOverride 🔹 <a id="projen-eslintoverride"></a>
 
 
-
+eslint rules override.
 
 
 
