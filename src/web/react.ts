@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
-import { StartEntryCategory } from '../start';
+import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
 
 export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
@@ -140,7 +140,7 @@ export class ReactComponent extends Component {
     this.typescript = options.typescript ?? false;
 
     // No compile for react app
-    project.addScript('compile', 'true');
+    project.compileTask.reset();
 
     project.addDeps('react', 'react-dom', 'react-scripts@^4.0.0', 'web-vitals');
     project.addDevDeps('@testing-library/jest-dom', '@testing-library/react', '@testing-library/user-event');
@@ -149,24 +149,28 @@ export class ReactComponent extends Component {
     }
 
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
-    project.addScript('start', 'react-scripts start', {
-      startDesc: 'Starts the react application',
-      startCategory: StartEntryCategory.BUILD,
+    project.addTask('dev', {
+      description: 'Starts the react application',
+      category: TaskCategory.BUILD,
+      exec: 'react-scripts start',
     });
 
-    project.addScript('build', 'react-scripts build', {
-      startDesc: 'Creates an optimized production build of your React application',
-      startCategory: StartEntryCategory.BUILD,
+    project.addTask('build', {
+      description: 'Creates an optimized production build of your React application',
+      category: TaskCategory.BUILD,
+      exec: 'react-scripts build',
     });
 
-    project.addScript('eject', 'react-scripts eject', {
-      startDesc: 'Ejects your React application from react-scripts',
-      startCategory: StartEntryCategory.MISC,
+    project.addTask('eject', {
+      description: 'Ejects your React application from react-scripts',
+      category: TaskCategory.MISC,
+      exec: 'react-scripts eject',
     });
 
-    project.addScript('test', 'react-scripts test', {
-      startDesc: 'Runs tests',
-      startCategory: StartEntryCategory.TEST,
+    project.addTask('test', {
+      description: 'Runs tests',
+      category: TaskCategory.TEST,
+      exec: 'react-scripts test',
     });
 
     project.npmignore?.exclude('# Build', '/build');

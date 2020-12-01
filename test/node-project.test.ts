@@ -9,7 +9,6 @@ test('license file is added by default', () => {
   const project = new NodeProject({
     outdir: mkdtemp(),
     name: 'test-node-project',
-    start: false,
     mergify: false,
     projenDevDependency: false,
   });
@@ -24,7 +23,6 @@ test('license file is not added if licensed is false', () => {
     outdir: mkdtemp(),
     name: 'test-node-project',
     licensed: false,
-    start: false,
     mergify: false,
     projenDevDependency: false,
   });

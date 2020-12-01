@@ -1,4 +1,4 @@
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 import { TypeScriptProject } from './typescript';
 
 /**
@@ -7,9 +7,13 @@ import { TypeScriptProject } from './typescript';
 export class TypedocDocgen {
   constructor(project: TypeScriptProject) {
     project.addDevDeps('typedoc');
-    project.addScript('docgen', 'typedoc --out ' + project.docsDirectory, {
-      startDesc: `Generate TypeScript API reference ${project.docsDirectory}`,
-      startCategory: StartEntryCategory.RELEASE,
+
+    const docgen = project.addTask('docgen', {
+      description: `Generate TypeScript API reference ${project.docsDirectory}`,
+      category: TaskCategory.RELEASE,
+      exec: 'typedoc --out ' + project.docsDirectory,
     });
+
+    project.buildTask.spawn(docgen);
   }
 }

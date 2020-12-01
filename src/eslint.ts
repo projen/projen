@@ -2,7 +2,7 @@ import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 export interface EslintOptions {
   readonly tsconfigPath: string;
@@ -78,11 +78,20 @@ export class Eslint extends Component {
     const dirs = options.dirs;
     const fileExtensions = options.fileExtensions;
 
-    project.addScript('eslint', `eslint --ext ${fileExtensions.join(',')} --fix --no-error-on-unmatched-pattern ${dirs.join(' ')} ${PROJEN_RC}`, {
-      startDesc: 'Runs eslint against the codebase',
-      startCategory: StartEntryCategory.TEST,
+    const eslint = project.addTask('eslint', {
+      description: 'Runs eslint against the codebase',
+      category: TaskCategory.TEST,
+      exec: [
+        'eslint',
+        `--ext ${fileExtensions.join(',')}`,
+        '--fix',
+        '--no-error-on-unmatched-pattern',
+        ...dirs,
+        PROJEN_RC,
+      ].join(' '),
     });
-    project.addTestCommand(`${project.runScriptCommand} eslint`);
+
+    project.testTask.spawn(eslint);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');

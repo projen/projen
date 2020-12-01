@@ -1,16 +1,16 @@
 import { existsSync } from 'fs';
 import * as path from 'path';
-import * as chalk from 'chalk';
 import { cleanup } from './cleanup';
-import { printStartMenu } from './cli/cmds/start-app';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
+import { JsonFile } from './json';
 import * as logging from './logging';
 import { SampleReadme } from './readme';
-import { Start } from './start';
+import { TaskOptions } from './tasks';
+import { Tasks } from './tasks/tasks';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
@@ -57,10 +57,6 @@ export class Project {
    **/
   public readonly root: Project;
 
-  private readonly components = new Array<Component>();
-  private readonly subprojects = new Array<Project>();
-  private readonly tips = new Array<string>();
-
   /**
    * Access all github components.
    *
@@ -75,8 +71,16 @@ export class Project {
    */
   public readonly vscode: VsCode | undefined;
 
+  public readonly tasks: Tasks;
+
+  private readonly _components = new Array<Component>();
+  private readonly subprojects = new Array<Project>();
+  private readonly tips = new Array<string>();
+  private readonly excludeFromCleanup: string[];
+
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
+    this.excludeFromCleanup = [];
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -110,12 +114,22 @@ export class Project {
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
 
+    // oh no: tasks depends on gitignore so it has to be initialized after
+    // smells like dep injectionn but god forbid.
+    this.tasks = new Tasks(this);
+
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
-
     new SampleReadme(this, '# my project');
+  }
+
+  /**
+   * Returns all the components within this project.
+   */
+  public get components() {
+    return [...this._components];
   }
 
   /**
@@ -123,7 +137,18 @@ export class Project {
    */
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    return this.components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+    return this._components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+  }
+
+  /**
+   * Adds a new task to this project. This will fail if the project already has
+   * a task with this name.
+   *
+   * @param name The task name to add
+   * @param props Task properties
+   */
+  public addTask(name: string, props: TaskOptions = { }) {
+    return this.tasks.addTask(name, props);
   }
 
   /**
@@ -134,7 +159,7 @@ export class Project {
    * from the root of _this_ project.
    * @returns a `FileBase` or undefined if there is no file in that path
    */
-  public findFile(filePath: string): FileBase | undefined {
+  public tryFindFile(filePath: string): FileBase | undefined {
     const absolute = path.isAbsolute(filePath) ? filePath : path.resolve(this.outdir, filePath);
     for (const file of this.files) {
       if (absolute === file.absolutePath) {
@@ -143,7 +168,7 @@ export class Project {
     }
 
     for (const child of this.subprojects) {
-      const file = child.findFile(absolute);
+      const file = child.tryFindFile(absolute);
       if (file) {
         return file;
       }
@@ -153,11 +178,38 @@ export class Project {
   }
 
   /**
+   * Finds a json file by name.
+   * @param filePath The file path.
+   */
+  public tryFindJsonFile(filePath: string): JsonFile | undefined {
+    const file = this.tryFindFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof JsonFile)) {
+      throw new Error(`found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
    * Prints a "tip" message during synthesis.
    * @param message The message
    */
   public addTip(message: string) {
     this.tips.push(message);
+  }
+
+  /**
+   * Exclude the matching files from pre-synth cleanup. Can be used when, for example, some
+   * source files include the projen marker and we don't want them to be erased during synth.
+   *
+   * @param globs The glob patterns to match
+   */
+  public addExcludeFromCleanup(...globs: string[]) {
+    this.excludeFromCleanup.push(...globs);
   }
 
   /**
@@ -175,18 +227,18 @@ export class Project {
     this.preSynthesize();
 
     // delete all generated files before we start synthesizing new ones
-    cleanup(outdir);
+    cleanup(outdir, this.excludeFromCleanup);
 
     for (const subproject of this.subprojects) {
       subproject.synth();
     }
 
-    for (const comp of this.components) {
+    for (const comp of this._components) {
       comp.synthesize();
     }
 
     if (process.env.PROJEN_DISABLE_POST !== 'true') {
-      for (const comp of this.components) {
+      for (const comp of this._components) {
         comp.postSynthesize();
       }
 
@@ -194,22 +246,7 @@ export class Project {
       this.postSynthesize();
     }
 
-
     logging.info('Synthesis complete');
-
-    const start = this.components.find(c => c instanceof Start);
-    if (start) {
-      console.error();
-      console.error('-'.repeat(100));
-      printStartMenu(outdir);
-    }
-
-    if (this.tips.length) {
-      console.error(chalk.cyanBright.underline('Tips:'));
-      for (const tip of this.tips) {
-        console.error(`💡 ${tip}`);
-      }
-    }
   }
 
   /**
@@ -227,7 +264,7 @@ export class Project {
    * @internal
    */
   public _addComponent(component: Component) {
-    this.components.push(component);
+    this._components.push(component);
   }
 
   /**
@@ -254,3 +291,4 @@ export class Project {
     this.subprojects.push(subproject);
   }
 }
+

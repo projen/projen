@@ -5,7 +5,7 @@ import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
-import { StartEntryCategory } from './start';
+import { Task, TaskCategory } from './tasks';
 import { TypedocDocgen } from './typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
@@ -104,6 +104,16 @@ export class TypeScriptProject extends NodeProject {
    */
   public readonly libdir: string;
 
+  /**
+   * The "watch" task.
+   */
+  public readonly watchTask: Task;
+
+  /**
+   * The "package" task (or undefined if `package` is set to `false`).
+   */
+  public readonly packageTask?: Task;
+
   constructor(options: TypeScriptProjectOptions) {
     super(options);
 
@@ -115,34 +125,35 @@ export class TypeScriptProject extends NodeProject {
 
     this.addCompileCommand('tsc');
 
-    this.addScript('watch', 'tsc -w', {
-      startDesc: 'Watch & compile in the background',
-      startCategory: StartEntryCategory.BUILD,
+    this.watchTask = this.addTask('watch', {
+      description: 'Watch & compile in the background',
+      category: TaskCategory.BUILD,
+      exec: 'tsc -w',
     });
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.addBuildCommand(`${this.runScriptCommand} compile`, `${this.runScriptCommand} test`);
+      this.buildTask.spawn(this.compileTask);
+      this.buildTask.spawn(this.testTask);
     } else {
-      this.addBuildCommand(`${this.runScriptCommand} test`, `${this.runScriptCommand} compile`);
+      this.buildTask.spawn(this.testTask);
+      this.buildTask.spawn(this.compileTask);
     }
 
     if (options.package ?? true) {
-      const packageCommand = [
-        'rm -fr dist',
-        'mkdir -p dist/js',
-        `${this.packageManager} pack`,
-        'mv *.tgz dist/js/',
-      ].join(' && ');
-
-      this.addScript('package', packageCommand, {
-        startDesc: 'Create an npm tarball',
-        startCategory: StartEntryCategory.RELEASE,
+      this.packageTask = this.addTask('package', {
+        description: 'Create an npm tarball',
+        category: TaskCategory.RELEASE,
       });
 
-      this.addBuildCommand(`${this.runScriptCommand} package`);
+      this.packageTask.exec('rm -fr dist');
+      this.packageTask.exec('mkdir -p dist/js');
+      this.packageTask.exec(`${this.packageManager} pack`);
+      this.packageTask.exec('mv *.tgz dist/js/');
+
+      this.buildTask.spawn(this.packageTask);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -235,10 +246,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.addScript('test', `rm -fr ${this.libdir}/`);
-
-        // Reconfigure test command because the above line replaces it
-        this.jest.configureTestCommand();
+        this.testTask.prepend(`rm -fr ${this.libdir}/`);
       }
     }
 
@@ -264,21 +272,6 @@ export class TypeScriptProject extends NodeProject {
     if (this.docgen) {
       new TypedocDocgen(this);
     }
-  }
-
-  /**
-   * Adds commands to run as part of `yarn build`.
-   * @param commands The commands to add
-   */
-  public addBuildCommand(...commands: string[]) {
-    this.addScriptCommand('build', ...commands);
-
-    this.start?.addEntry('build', {
-      desc: 'Full release build (test+compile)',
-      command: `${this.runScriptCommand} build`,
-      category: StartEntryCategory.BUILD,
-    });
-
   }
 }
 

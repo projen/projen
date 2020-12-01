@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { GENERATION_DISCLAIMER, PROJEN_RC, PROJEN_VERSION } from './common';
+import { PROJEN_RC, PROJEN_VERSION } from './common';
 import { GithubWorkflow } from './github';
 import { DependabotOptions } from './github/dependabot';
 import { Mergify, MergifyOptions } from './github/mergify';
@@ -12,7 +12,7 @@ import * as logging from './logging';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
-import { Start, StartEntryCategory, StartOptions } from './start';
+import { Task, TaskCategory } from './tasks';
 import { exec, writeFile } from './util';
 import { Version } from './version';
 
@@ -398,20 +398,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   readonly projenUpgradeSchedule?: string[];
 
   /**
-   * Defines a `yarn start` interactive experience
-   *
-   * @default true
-   */
-  readonly start?: boolean;
-
-  /**
-   * Options for `yarn start`.
-   *
-   * @default - default options
-   */
-  readonly startOptions?: StartOptions;
-
-  /**
    * Allow the project to include `peerDependencies` and `bundledDependencies`.
    * This is normally only allowed for libraries. For apps, there's no meaning
    * for specifying these.
@@ -455,6 +441,45 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * @default - default content
    */
   readonly pullRequestTemplateContents?: string;
+
+  /**
+   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   * @default NpmTaskExecution.PROJEN
+   */
+  readonly npmTaskExecution?: NpmTaskExecution;
+
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * Can be used to customize in special environments.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
+}
+
+export enum NpmTaskExecution {
+  /**
+   * `package.json` scripts invoke to the projen CLI.
+   *
+   * @example
+   *
+   * scripts: {
+   *   "compile": "projen compile"
+   * }
+   */
+  PROJEN = 'projen',
+
+  /**
+   * Task is implemented directly as a shell script within `package.json`.
+   *
+   * @example
+   *
+   * scripts: {
+   *   "compile": "tsc"
+   * }
+   */
+  SHELL = 'shell'
 }
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
@@ -566,19 +591,32 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
-  /**
-   * The default command to execute when bootstrapping projen-based workflows.
-   */
-  public static readonly DEFAULT_WORKFLOW_BOOTSTRAP: any[] = [
-    { run: 'yarn install --frozen-lockfile' },
-    { run: `yarn ${PROJEN_SCRIPT}` },
-  ];
-
   public readonly npmignore?: IgnoreFile;
   public readonly mergify?: Mergify;
   public readonly manifest: any;
   public readonly allowLibraryDependencies: boolean;
   public readonly entrypoint: string;
+
+  /**
+   * Compiles the code. By default for node.js projects this task is empty.
+   */
+  public readonly compileTask: Task;
+
+  /**
+   * Tests the code.
+   */
+  public readonly testTask: Task;
+
+  /**
+   * The task resposible for a full release build. It spawns: compile + test + release + package
+   */
+  public readonly buildTask: Task;
+
+  /**
+   * The task responsible for bootstrapping the repo. This is the task used to set up build/release workflows.
+   * By default it will install dependencies, run projen and perform an anti-tamper check.
+   */
+  public readonly bootstrapTask: Task;
 
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
@@ -605,19 +643,12 @@ export class NodeProject extends Project {
   public readonly minNodeVersion?: string;
   public readonly maxNodeVersion?: string;
 
-  private readonly bootstrapSteps: any[];
-
   private readonly nodeVersion?: string;
 
   /**
    * Indicates if workflows have anti-tamper checks.
    */
   public readonly antitamper: boolean;
-
-  /**
-   * The start menu
-   */
-  public readonly start?: Start;
 
   protected readonly npmDistTag: string;
 
@@ -643,11 +674,33 @@ export class NodeProject extends Project {
    */
   public readonly jest?: Jest;
 
+  /**
+   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   */
+  public readonly npmTaskExecution: NpmTaskExecution;
+
+  /**
+   * The command to use in order to run the projen CLI.
+   */
+  public readonly projenCommand: string;
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
+    this.scripts = {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
+    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
+    this.runScriptCommand = (() => {
+      switch (this.packageManager) {
+        case NodePackageManager.NPM: return 'npm run';
+        case NodePackageManager.YARN: return 'yarn run';
+        default: throw new Error(`unexpected package manager ${this.packageManager}`);
+      }
+    })();
+    this.projenCommand = options.projenCommand ?? 'npx projen';
+
     this.processDeps(options);
 
     this.minNodeVersion = options.minNodeVersion;
@@ -655,6 +708,24 @@ export class NodeProject extends Project {
 
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
+
+    // add PATH for all tasks which includes the project's npm .bin list
+    this.tasks.addEnvironment('PATH', '$(npx -c \'echo $PATH\')');
+
+    this.compileTask = this.addTask('compile', {
+      description: 'Only compile',
+      category: TaskCategory.BUILD,
+    });
+
+    this.testTask = this.addTask('test', {
+      description: 'Run tests',
+      category: TaskCategory.TEST,
+    });
+
+    this.buildTask = this.addTask('build', {
+      description: 'Full release build (test+compile)',
+      category: TaskCategory.BUILD,
+    });
 
     let nodeVersion = '';
 
@@ -670,24 +741,16 @@ export class NodeProject extends Project {
 
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-    this.packageManager = options.packageManager ?? NodePackageManager.YARN;
-
-    this.runScriptCommand = (() => {
-      switch (this.packageManager) {
-        case NodePackageManager.NPM: return 'npm run';
-        case NodePackageManager.YARN: return 'yarn run';
-        default: throw new Error(`unexpected package manager ${this.packageManager}`);
-      }
-    })();
-
-    this.scripts = {};
-
     const renderScripts = () => {
       const result: any = {};
       for (const [name, commands] of Object.entries(this.scripts)) {
         const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
         result[name] = cmds.join(' && ');
       }
+      for (const task of this.tasks.all) {
+        result[task.name] = this.npmScriptForTask(task);
+      }
+
       return result;
     };
 
@@ -709,24 +772,23 @@ export class NodeProject extends Project {
     this.testdir = options.testdir ?? 'test';
 
     this.manifest = {
-      '//': GENERATION_DISCLAIMER,
-      'name': options.name,
-      'description': options.description,
-      'repository': !options.repository ? undefined : {
+      name: options.name,
+      description: options.description,
+      repository: !options.repository ? undefined : {
         type: 'git',
         url: options.repository,
         directory: options.repositoryDirectory,
       },
-      'bin': this.bin,
-      'scripts': renderScripts,
-      'author': author,
-      'homepage': options.homepage,
-      'devDependencies': sorted(this.devDependencies),
-      'peerDependencies': sorted(this.peerDependencies),
-      'dependencies': sorted(this.dependencies),
-      'bundledDependencies': sorted(this.bundledDependencies),
-      'keywords': () => Array.from(this.keywords).sort(),
-      'engines': nodeVersion !== '' ? { node: nodeVersion } : undefined,
+      bin: this.bin,
+      scripts: renderScripts,
+      author: author,
+      homepage: options.homepage,
+      devDependencies: sorted(this.devDependencies),
+      peerDependencies: sorted(this.peerDependencies),
+      dependencies: sorted(this.dependencies),
+      bundledDependencies: sorted(this.bundledDependencies),
+      keywords: () => Array.from(this.keywords).sort(),
+      engines: nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
 
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
@@ -734,6 +796,7 @@ export class NodeProject extends Project {
 
     new JsonFile(this, 'package.json', {
       obj: this.manifest,
+      marker: true,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
@@ -772,13 +835,8 @@ export class NodeProject extends Project {
       this.manifest.license = 'UNLICENSED';
     }
 
-    if (options.start ?? true) {
-      this.start = new Start(this, options.startOptions ?? {});
-    }
-    this.addScript(PROJEN_SCRIPT, `node ${PROJEN_RC}`, {
-      startDesc: 'Synthesize project configuration from .projenrc.js',
-      startCategory: StartEntryCategory.MAINTAIN,
-    });
+    this.setScript(PROJEN_SCRIPT, this.projenCommand);
+    this.setScript('start', `${this.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -797,12 +855,22 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapSteps = options.workflowBootstrapSteps ?? NodeProject.DEFAULT_WORKFLOW_BOOTSTRAP;
+    this.bootstrapTask = this.addTask('bootstrap', {
+      description: 'initializes the project',
+      category: TaskCategory.BUILD,
+    });
+
+    this.bootstrapTask.exec(this.renderInstallCommand(true));
+    this.bootstrapTask.exec(this.projenCommand);
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
     this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
+
+    if (this.antitamper) {
+      this.bootstrapTask.exec('git diff --exit-code', { name: 'Anti-tamper check' });
+    }
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -976,8 +1044,8 @@ export class NodeProject extends Project {
     });
 
     // override any scripts from options (if specified)
-    for (const [n, v] of Object.entries(options.scripts ?? {})) {
-      this.addScript(n, v);
+    for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
+      this.addTask(cmdname, { exec: shell });
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -1053,33 +1121,13 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Replaces the contents of a set of npm package.json scripts.
-   *
-   * @param scripts script names and commands
-   */
-  public addScripts(scripts: { [name: string]: string }) {
-    for (const [name, command] of Object.entries(scripts)) {
-      this.addScript(name, command);
-    }
-  }
-
-  /**
    * Replaces the contents of an npm package.json script.
    *
    * @param name The script name
    * @param command The command to execute
-   * @param options Options such as start menu description and category
    */
-  public addScript(name: string, command: string, options: ScriptOptions = { }) {
+  public setScript(name: string, command: string) {
     this.scripts[name] = [command];
-
-    if (options.startDesc) {
-      this.start?.addEntry(name, {
-        desc: options.startDesc,
-        command: `${this.runScriptCommand} ${name}`,
-        category: options.startCategory,
-      });
-    }
   }
 
   /**
@@ -1100,39 +1148,39 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Appends a command to run for an npm script. Joined by "&&"
-   * @param name The name of the script
-   * @param commands The commands to append.
+   * DEPRECATED
+   * @deprecated use `project.compileTask.exec()`
    */
-  public addScriptCommand(name: string, ...commands: string[]) {
-    this.scripts[name] = this.scripts[name] ?? [];
-    this.scripts[name].push(...commands);
+  public addCompileCommand(...commands: string[]) {
+    for (const c of commands) {
+      this.compileTask.exec(c);
+    }
   }
 
   /**
-   * Adds commands which will be executed after compilation
-   * @param commands The commands to execute during compile
+   * DEPRECATED
+   * @deprecated use `project.testTask.exec()`
    */
-  public addCompileCommand(...commands: string[]) {
-    this.addScriptCommand('compile', ...commands);
-
-    this.start?.addEntry('compile', {
-      desc: 'Only compile',
-      command: `${this.runScriptCommand} compile`,
-      category: StartEntryCategory.BUILD,
-    });
-  }
-
   public addTestCommand(...commands: string[]) {
-    this.addScriptCommand('test', ...commands);
-
-    this.start?.addEntry('test', {
-      desc: 'Run tests',
-      command: `${this.runScriptCommand} test`,
-      category: StartEntryCategory.TEST,
-    });
+    for (const c of commands) {
+      this.testTask.exec(c);
+    }
   }
 
+  /**
+   * DEPRECATED
+   * @deprecated use `project.buildTask.exec()`
+   */
+  public addBuildCommand(...commands: string[]) {
+    for (const c of commands) {
+      this.buildTask.exec(c);
+    }
+  }
+
+  /**
+   * Directly set fields in `package.json`.
+   * @param fields The fields to set
+   */
   public addFields(fields: { [name: string]: any }) {
     for (const [name, value] of Object.entries(fields)) {
       this.manifest[name] = value;
@@ -1153,7 +1201,7 @@ export class NodeProject extends Project {
    * Returns a set of steps to checkout and bootstrap the project in a github
    * workflow.
    */
-  public get workflowBootstrapSteps() {
+  public get workflowBootstrapSteps(): any[] {
     const nodeVersion = !this.nodeVersion ? [] : [
       {
         uses: 'actions/setup-node@v1',
@@ -1168,12 +1216,8 @@ export class NodeProject extends Project {
       // use the correct node version
       ...nodeVersion,
 
-      // bootstrap the repo
-      ...this.bootstrapSteps,
-
-      // first anti-tamper check (right after bootstrapping)
-      // this will identify any non-committed files generated by projen
-      ...this.workflowAntitamperSteps,
+      // bootstrap the repo by converting the task to workflow commands (we can't use the projen cli at this point)
+      ...this.workflowStepsForTask(this.bootstrapTask),
     ];
   }
 
@@ -1294,22 +1338,22 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    exec(this.installDepsCommand, { cwd: outdir });
+    exec(this.renderInstallCommand(process.env.CI !== undefined), { cwd: outdir });
 
     this.resolveDependencies(outdir);
   }
 
-  private get installDepsCommand() {
+  private renderInstallCommand(frozen: boolean) {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
         return [
           'yarn install',
           '--check-files', // ensure all modules exist (especially projen which was just removed).
-          ...process.env.CI ? ['--frozen-lockfile'] : [],
+          ...frozen ? ['--frozen-lockfile'] : [],
         ].join(' ');
 
       case NodePackageManager.NPM:
-        return process.env.CI
+        return frozen
           ? 'npm ci'
           : 'npm install';
 
@@ -1491,10 +1535,10 @@ export class NodeProject extends Project {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: `${this.runScriptCommand} bump` }] : [],
+        ...options.bump ? [{ run: this.runTaskCommand(this._version.bumpTask) }] : [],
 
         // build (compile + test)
-        { run: `${this.runScriptCommand} build` },
+        { run: this.runTaskCommand(this.buildTask) },
 
         // run codecov if enabled or a secret token name is passed in
         // AND jest must be configured
@@ -1538,7 +1582,61 @@ export class NodeProject extends Project {
 
     return { workflow, buildJobId };
   }
+
+  /**
+   * Returns the shell command to execute in order to run a task. If
+   * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
+   * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
+   * TASK`).
+   *
+   * @param task The task for which the command is required
+   */
+  public runTaskCommand(task: Task) {
+    switch (this.npmTaskExecution) {
+      case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
+      case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
+      default:
+        throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
+    }
+  }
+
+  private npmScriptForTask(task: Task) {
+    switch (this.npmTaskExecution) {
+      case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
+      case NpmTaskExecution.SHELL: return task.toShellCommand();
+      default:
+        throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
+    }
+  }
+
+  /**
+   * Converts a task to a set of GitHub workflow steps.
+   * @param task The task
+   */
+  private workflowStepsForTask(task: Task) {
+    if (task.condition) {
+      throw new Error('conditions are not supported as shell scripts');
+    }
+
+    const steps = new Array<{ run: string; name?: string }>();
+    for (const step of task.steps) {
+      if (step.exec) {
+        steps.push({ run: step.exec, name: step.name });
+      }
+      if (step.spawn) {
+        const subtask = this.tasks.tryFind(step.spawn);
+        if (!subtask) {
+          throw new Error(`cannot find subtask ${step.spawn}`);
+        }
+
+        steps.push(...this.workflowStepsForTask(subtask));
+      }
+    }
+
+    return steps;
+  }
 }
+
 
 interface BuildWorkflow {
   readonly workflow: GithubWorkflow;
@@ -1597,24 +1695,6 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
-}
-
-/**
- * Options for adding scripts.
- */
-export interface ScriptOptions {
-  /**
-   * Start menu description for this script
-   * @default - no description
-   */
-  readonly startDesc?: string;
-
-  /**
-   * Category in start menu
-   *
-   * @default StartEntryCategory.MISC
-   */
-  readonly startCategory?: StartEntryCategory;
 }
 
 function parseDep(dep: string) {

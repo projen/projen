@@ -1,5 +1,5 @@
 import { JsiiProject } from './jsii-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 /**
  * Creates an API.md file based on the jsii manifest:
@@ -10,11 +10,14 @@ import { StartEntryCategory } from './start';
 export class JsiiDocgen {
   constructor(project: JsiiProject) {
     project.addDevDeps('jsii-docgen');
-    project.addScript('docgen', 'jsii-docgen', {
-      startDesc: 'Generate API.md from .jsii manifest',
-      startCategory: StartEntryCategory.RELEASE,
+
+    const docgen = project.addTask('docgen', {
+      description: 'Generate API.md from .jsii manifest',
+      category: TaskCategory.RELEASE,
+      exec: 'jsii-docgen',
     });
-    project.addCompileCommand('jsii-docgen');
+
+    project.compileTask.spawn(docgen);
     project.gitignore.include('/API.md');
 
     project.addTip('`API.md` includes the API reference for your library');

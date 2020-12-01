@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
-import { StartEntryCategory } from '../start';
+import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
 import { PostCss } from './postcss';
 
@@ -226,24 +226,28 @@ export class NextComponent extends Component {
     }
 
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
-    project.addScript('dev', 'next dev', {
-      startDesc: 'Starts the Next.js application in development mode',
-      startCategory: StartEntryCategory.BUILD,
+    project.addTask('dev', {
+      description: 'Starts the Next.js application in development mode',
+      category: TaskCategory.BUILD,
+      exec: 'next dev',
     });
 
-    project.addScript('build', 'next build', {
-      startDesc: 'Creates an optimized production build of your Next.js application',
-      startCategory: StartEntryCategory.BUILD,
+    project.addTask('build', {
+      description: 'Creates an optimized production build of your Next.js application',
+      category: TaskCategory.BUILD,
+      exec: 'next build',
     });
 
-    project.addScript('server', 'next start', {
-      startDesc: 'Starts the Next.js application in production mode',
-      startCategory: StartEntryCategory.RELEASE,
+    project.addTask('server', {
+      description: 'Starts the Next.js application in production mode',
+      category: TaskCategory.RELEASE,
+      exec: 'next start',
     });
 
-    project.addScript('telemetry', 'next telemetry', {
-      startDesc: 'Checks the status of Next.js telemetry collection',
-      startCategory: StartEntryCategory.MISC,
+    project.addTask('telemetry', {
+      description: 'Checks the status of Next.js telemetry collection',
+      category: TaskCategory.MISC,
+      exec: 'next telemetry',
     });
 
     project.npmignore?.exclude('# Next.js', '/.next/');
