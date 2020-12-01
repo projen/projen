@@ -1,4 +1,5 @@
 import { NodeProject, TypeScriptProject } from '../src';
+import { PROJEN_RC } from '../src/common';
 import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
 
@@ -89,7 +90,7 @@ test('Typescript Project Jest Defaults Configured', () => {
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(compilerOptionDefaults);
-  expect(jestTypescriptConfig.include).toEqual(['src/**/*.ts', 'test/**/*.ts']);
+  expect(jestTypescriptConfig.include).toEqual([PROJEN_RC, 'src/**/*.ts', 'test/**/*.ts']);
   expect(jestTypescriptConfig.exclude).toEqual(['node_modules']);
 });
 

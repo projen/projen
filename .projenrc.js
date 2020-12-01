@@ -51,14 +51,14 @@ new TextFile(project, 'projen.sh', {
     `  ${project.compileTask.toShellCommand()}`,
     'fi',
     'exec bin/projen $@',
-  ]
+  ],
 });
 
 project.addExcludeFromCleanup('test/**');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
-const macros = project.addTask('readme-macros')
+const macros = project.addTask('readme-macros');
 macros.exec('mv README.md README.md.bak');
 macros.exec('cat README.md.bak | markmac > README.md');
 macros.exec('rm README.md.bak');
@@ -66,12 +66,12 @@ project.buildTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {
-    "default": true,
-    "commands-show-output": false,
-    "line-length": {
-      "line_length": 200
-    }
-  }
+    'default': true,
+    'commands-show-output': false,
+    'line-length': {
+      line_length: 200,
+    },
+  },
 });
 
 project.synth();

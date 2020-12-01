@@ -23,7 +23,7 @@ export interface ReactProjectOptions extends NodeProjectOptions {
 export class ReactProject extends NodeProject {
   /**
    * The directory in which source files reside.
-   * @default 'src'
+   * @default "src"
    */
   public readonly srcdir: string;
 
@@ -202,7 +202,7 @@ interface ReactSampleCodeOptions {
   /**
    * File extension for sample javascript code to be saved as.
    *
-   * @default 'jsx'
+   * @default "jsx"
    */
   readonly fileExt?: string;
 

@@ -58,7 +58,7 @@ export interface DecamelizeRecursivelyOptions {
 
   /**
    * Separator for decamelizing.
-   * @default '_'
+   * @default "_"
    */
   separator?: string;
 
