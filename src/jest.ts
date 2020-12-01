@@ -670,7 +670,7 @@ export class Jest {
   }
 
   private configureTestCommand() {
-    const jestOpts = ['--passWithNoTests'];
+    const jestOpts = ['--passWithNoTests', '--all'];
 
     // if the project has anti-tamper configured, it should be safe to always run tests
     // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
