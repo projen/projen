@@ -54,6 +54,8 @@ const project = new AwsCdkTypeScriptApp({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -179,6 +181,8 @@ const project = new AwsCdkConstructLibrary({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -269,6 +273,8 @@ const project = new ConstructLibraryCdk8s({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -355,6 +361,8 @@ const project = new JsiiProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -429,6 +437,8 @@ const project = new web.NextJsProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -516,6 +526,8 @@ const project = new web.NextJsTypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -612,6 +624,8 @@ const project = new NodeProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -708,6 +722,8 @@ const project = new web.ReactProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -794,6 +810,8 @@ const project = new web.ReactTypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -890,6 +908,8 @@ const project = new TypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
@@ -986,6 +1006,8 @@ const project = new TypeScriptAppProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */

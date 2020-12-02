@@ -71,14 +71,24 @@ export class ProjenUpgrade {
         upgrade: {
           'runs-on': 'ubuntu-latest',
           'steps': [
-            ...project.workflowBootstrapSteps,
+            // check out sources.
+            {
+              name: 'Checkout',
+              uses: 'actions/checkout@v2',
+            },
+
+            // install dependencies (and runs projen)
+            ...project.installWorkflowSteps,
 
             // upgrade
-            { run: project.runTaskCommand(upgradeTask) },
+            {
+              name: 'Upgrade projen',
+              run: project.runTaskCommand(upgradeTask),
+            },
 
             // submit a PR
             {
-              name: 'Create Pull Request',
+              name: 'Create pull request',
               uses: 'peter-evans/create-pull-request@v3',
               with: withOptions,
             },

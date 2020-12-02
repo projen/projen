@@ -16,7 +16,6 @@
     "build": "/bin/sh ./projen.sh build",
     "bump": "/bin/sh ./projen.sh bump",
     "release": "/bin/sh ./projen.sh release",
-    "bootstrap": "/bin/sh ./projen.sh bootstrap",
     "test:watch": "/bin/sh ./projen.sh test:watch",
     "test:update": "/bin/sh ./projen.sh test:update",
     "projen:upgrade": "/bin/sh ./projen.sh projen:upgrade",
