@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.10 (2020-12-02)
+
+
+### Bug Fixes
+
+* **cli:** git setup not creating initial repo ([#346](https://github.com/projen/projen/issues/346)) ([2558c5c](https://github.com/projen/projen/commit/2558c5c84bd7361e231ffb5265968a0beda7d349))
+
 ### 0.5.9 (2020-12-02)
 
 
