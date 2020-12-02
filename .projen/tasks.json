@@ -70,23 +70,6 @@
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
-    "bootstrap": {
-      "name": "bootstrap",
-      "category": "00.build",
-      "description": "initializes the project",
-      "steps": [
-        {
-          "exec": "yarn install --check-files --frozen-lockfile"
-        },
-        {
-          "exec": "/bin/sh ./projen.sh"
-        },
-        {
-          "exec": "git diff --exit-code",
-          "name": "Anti-tamper check"
-        }
-      ]
-    },
     "test:watch": {
       "name": "test:watch",
       "category": "10.test",

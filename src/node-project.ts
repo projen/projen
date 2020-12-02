@@ -456,6 +456,25 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * @default "npx projen"
    */
   readonly projenCommand?: string;
+
+  /**
+   * Installs a GitHub workflow which is triggered when the comment "@projen
+   * rebuild" is added to a pull request. The workflow will run a full build and
+   * commit the changes to the pull request branch. This is useful for updating
+   * test snapshots and other generated files like API.md.
+   *
+   * @default true
+   */
+  readonly rebuildBot?: boolean;
+
+  /**
+   * The pull request bot command to use in order to trigger a rebuild and
+   * commit of the contents of the branch. The command must be prefixed by "@projen", e.g. "@projen rebuild"
+   *
+   * @default "rebuild"
+   */
+  readonly rebuildBotCommand?: string;
+
 }
 
 export enum NpmTaskExecution {
@@ -612,12 +631,6 @@ export class NodeProject extends Project {
    */
   public readonly buildTask: Task;
 
-  /**
-   * The task responsible for bootstrapping the repo. This is the task used to set up build/release workflows.
-   * By default it will install dependencies, run projen and perform an anti-tamper check.
-   */
-  public readonly bootstrapTask: Task;
-
   private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly devDependencies: Record<string, string> = { };
@@ -703,8 +716,12 @@ export class NodeProject extends Project {
 
     this.processDeps(options);
 
+    // node version
+
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
+    this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
+
 
     this.keywords = new Set();
     this.addKeywords(...options.keywords ?? []);
@@ -738,7 +755,6 @@ export class NodeProject extends Project {
     }
 
     this.npmDistTag = options.npmDistTag ?? 'latest';
-
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
     const renderScripts = () => {
@@ -855,22 +871,9 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.manifest.version = (outdir: string) => this._version.resolveVersion(outdir);
 
-    this.bootstrapTask = this.addTask('bootstrap', {
-      description: 'initializes the project',
-      category: TaskCategory.BUILD,
-    });
-
-    this.bootstrapTask.exec(this.renderInstallCommand(true));
-    this.bootstrapTask.exec(this.projenCommand);
-
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
     this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
-    this.nodeVersion = options.workflowNodeVersion ?? this.minNodeVersion;
-
-    if (this.antitamper) {
-      this.bootstrapTask.exec('git diff --exit-code', { name: 'Anti-tamper check' });
-    }
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -912,7 +915,8 @@ export class NodeProject extends Project {
 
       const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
-        bump: true,
+        preBuildSteps: [{ run: this.runTaskCommand(this._version.bumpTask) }],
+        pushBranch: '${{ github.ref }}',
         uploadArtifact: true,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -1051,6 +1055,11 @@ export class NodeProject extends Project {
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
+
+    if (options.rebuildBot ?? true) {
+      this.addRebuildBot(options.rebuildBotCommand ?? 'rebuild');
+    }
+
   }
 
   public addBins(bins: Record<string, string>) {
@@ -1197,37 +1206,28 @@ export class NodeProject extends Project {
     }
   }
 
-  /**
-   * Returns a set of steps to checkout and bootstrap the project in a github
-   * workflow.
-   */
-  public get workflowBootstrapSteps(): any[] {
-    const nodeVersion = !this.nodeVersion ? [] : [
-      {
+  public get installWorkflowSteps(): any[] {
+    const install = new Array();
+    if (this.nodeVersion) {
+      install.push({
+        name: 'Setup Node.js',
         uses: 'actions/setup-node@v1',
         with: { 'node-version': this.nodeVersion },
-      },
-    ];
+      });
+    }
 
-    return [
-      // check out sources.
-      { uses: 'actions/checkout@v2' },
+    install.push({
+      name: 'Install dependencies',
+      run: this.renderInstallCommand(true),
+    });
 
-      // use the correct node version
-      ...nodeVersion,
+    // run "projen"
+    install.push({
+      name: 'Synthesize project files',
+      run: this.projenCommand,
+    });
 
-      // bootstrap the repo by converting the task to workflow commands (we can't use the projen cli at this point)
-      ...this.workflowStepsForTask(this.bootstrapTask),
-    ];
-  }
-
-  /**
-   * Returns the set of steps to perform anti-tamper check in a github workflow.
-   */
-  public get workflowAntitamperSteps(): any[] {
-    return this.antitamper
-      ? [{ name: 'Anti-tamper check', run: 'git diff --exit-code' }]
-      : [];
+    return install;
   }
 
   /**
@@ -1516,14 +1516,51 @@ export class NodeProject extends Project {
       workflow_dispatch: {}, // allow manual triggering
     });
 
+    const condition = options.condition ? { if: options.condition } : {};
+    const preBuildSteps = options.preBuildSteps ?? [];
+    const preCheckoutSteps = options.preCheckoutSteps ?? [];
+    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
+    const postSteps = options.postSteps ?? [];
+
+    const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
+      name: 'Anti-tamper check',
+      run: 'git diff --exit-code',
+    }];
+
+    const commitChanges = !options.commit ? [] : [{
+      name: 'Commit changes',
+      run: `git commit -m "${options.commit}"`,
+    }];
+
+    const pushChanges = !options.pushBranch ? [] : [{
+      name: 'Push changes',
+      run: 'git push --follow-tags origin $BRANCH',
+      env: {
+        BRANCH: options.pushBranch,
+      },
+    }];
+
     const job: any = {
       'runs-on': 'ubuntu-latest',
       'env': {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
       },
+      ...condition,
       'steps': [
-        // bootstrap
-        ...this.workflowBootstrapSteps,
+        ...preCheckoutSteps,
+
+        // check out sources.
+        {
+          name: 'Checkout',
+          uses: 'actions/checkout@v2',
+          ...checkoutWith,
+        },
+
+        // install dependencies
+        ...this.installWorkflowSteps,
+
+        // perform an anti-tamper check immediately after we run projen.
+        ...antitamperSteps,
 
         // sets git identity so we can push later
         {
@@ -1535,31 +1572,39 @@ export class NodeProject extends Project {
         },
 
         // if there are changes, creates a bump commit
-        ...options.bump ? [{ run: this.runTaskCommand(this._version.bumpTask) }] : [],
+
+        ...preBuildSteps,
 
         // build (compile + test)
-        { run: this.runTaskCommand(this.buildTask) },
+        {
+          name: 'Build',
+          run: this.runTaskCommand(this.buildTask),
+        },
 
         // run codecov if enabled or a secret token name is passed in
         // AND jest must be configured
         ...(options.codeCov || options.codeCovTokenSecret) && this.jest?.config ? [{
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
-          with: options.codeCovTokenSecret
-            ? {
-              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-              directory: this.jest.config.coverageDirectory,
-            } : {
-              directory: this.jest.config.coverageDirectory,
-            },
+          with: options.codeCovTokenSecret ? {
+            token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+            directory: this.jest.config.coverageDirectory,
+          } : {
+            directory: this.jest.config.coverageDirectory,
+          },
         }] : [],
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
-        ...this.workflowAntitamperSteps,
+        ...antitamperSteps,
+
+        // if required, commit changes to the repo
+        ...commitChanges,
 
         // push bump commit
-        ...options.bump ? [{ run: 'git push --follow-tags origin $GITHUB_REF' }] : [],
+        ...pushChanges,
+
+        ...postSteps,
       ],
     };
 
@@ -1609,34 +1654,54 @@ export class NodeProject extends Project {
     }
   }
 
-  /**
-   * Converts a task to a set of GitHub workflow steps.
-   * @param task The task
-   */
-  private workflowStepsForTask(task: Task) {
-    if (task.condition) {
-      throw new Error('conditions are not supported as shell scripts');
-    }
+  private addRebuildBot(command: string) {
 
-    const steps = new Array<{ run: string; name?: string }>();
-    for (const step of task.steps) {
-      if (step.exec) {
-        steps.push({ run: step.exec, name: step.name });
-      }
-      if (step.spawn) {
-        const subtask = this.tasks.tryFind(step.spawn);
-        if (!subtask) {
-          throw new Error(`cannot find subtask ${step.spawn}`);
-        }
+    const postComment = (message: string) => ({
+      name: 'Post comment to issue',
+      uses: 'peter-evans/create-or-update-comment@v1',
+      with: {
+        'issue-number': '${{ github.event.issue.number }}',
+        'body': `_projen_: ${message}`,
+      },
+    });
 
-        steps.push(...this.workflowStepsForTask(subtask));
-      }
-    }
+    this.createBuildWorkflow('rebuild-bot', {
+      trigger: { issue_comment: { types: ['created'] } },
+      condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
+      antitamperDisabled: true, // definitely dont want that
 
-    return steps;
+      // since the "issue_comment" event is not triggered on a branch, we need to resolve
+      // the git ref of the pull request before we check out
+      preCheckoutSteps: [
+        postComment('Rebuild started'),
+        {
+          name: 'Get pull request branch',
+          id: 'query_pull_request',
+          env: { PULL_REQUEST_URL: '${{ github.event.issue.pull_request.url }}' },
+          run: [
+            'BRANCH_STR=$(curl --silent $PULL_REQUEST_URL | jq ".head.ref")',
+            'echo "::set-output name=branch::$(node -p $BRANCH_STR)"',
+          ].join('\n'),
+        },
+      ],
+
+      // tell checkout to use the branch we acquired at the previous step
+      checkoutWith: {
+        ref: '${{ steps.query_pull_request.outputs.branch }}',
+      },
+
+      // commit changes
+      commit: 'chore: update generated files',
+
+      // and push to the pull request branch
+      pushBranch: '${{ steps.query_pull_request.outputs.branch }}',
+
+      postSteps: [
+        postComment('Rebuild complete. Updates pushed to pull request branch.'),
+      ],
+    });
   }
 }
-
 
 interface BuildWorkflow {
   readonly workflow: GithubWorkflow;
@@ -1651,11 +1716,16 @@ export interface PeerDependencyOptions {
   readonly pinnedDevDependency?: boolean;
 }
 
-export interface NodeBuildWorkflowOptions {
+interface NodeBuildWorkflowOptions {
   /**
    * @default - default image
    */
   readonly image?: string;
+
+  /**
+   * Adds an "if" condition to the workflow.
+   */
+  readonly condition?: any;
 
   readonly uploadArtifact?: boolean;
 
@@ -1666,7 +1736,7 @@ export interface NodeBuildWorkflowOptions {
    * Bump a new version for this build.
    * @default false
    */
-  readonly bump?: boolean;
+  // readonly bump?: boolean;
 
   /**
    * Run codecoverage step
@@ -1679,6 +1749,31 @@ export interface NodeBuildWorkflowOptions {
    * The secret name for the https://codecov.io/ token
    */
   readonly codeCovTokenSecret?: string;
+
+  readonly preBuildSteps?: any[];
+  readonly preCheckoutSteps?: any[];
+  readonly postSteps?: any[];
+  readonly checkoutWith?: { [key: string]: string };
+
+  /**
+   * Commit any changes with the specified commit message.
+   */
+  readonly commit?: string;
+
+  /**
+   * @default - do not push the changes to a branch
+   */
+  readonly pushBranch?: string;
+
+  /**
+   * Disables anti-tamper checks in the workflow.
+   */
+  readonly antitamperDisabled?: boolean;
+}
+
+export interface NodeWorkflowSteps {
+  readonly antitamper: any[];
+  readonly install: any[];
 }
 
 function sorted<T>(toSort: T) {
