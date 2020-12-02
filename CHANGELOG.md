@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.5.9 (2020-12-02)
+
+
+### Bug Fixes
+
+* project setup fails when git config is not set ([#348](https://github.com/projen/projen/issues/348)) ([1408517](https://github.com/projen/projen/commit/1408517271ba899d31059a853470b965cdc8cd55)), closes [#344](https://github.com/projen/projen/issues/344)
+
 ### 0.5.8 (2020-12-01)
 
 
