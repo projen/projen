@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 0.6.0 (2020-12-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** `bootstrapTask` is no longer available. To obtain the bootstrapping steps for GitHub workflows, use `installWorkflowSteps`.
+* **node:** the `workflowBootstrapSteps` is no longer available. The equivalent is `[ { uses: 'actions/checkout@v2' }, project.installWorkflowSteps ]`.
+* **node:** the `NodeBuildWorkflowOptions` struct is no now internal.
+
+### Features
+
+* **node:** rebuild bot ([#349](https://github.com/projen/projen/issues/349)) ([b891fb7](https://github.com/projen/projen/commit/b891fb7cf8720b862142d5451f5c6b697aa8d50c))
+
 ### 0.5.10 (2020-12-02)
 
 
