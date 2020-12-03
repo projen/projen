@@ -16,7 +16,6 @@
     "build": "/bin/bash ./projen.sh build",
     "bump": "/bin/bash ./projen.sh bump",
     "release": "/bin/bash ./projen.sh release",
-    "bootstrap": "/bin/bash ./projen.sh bootstrap",
     "test:watch": "/bin/bash ./projen.sh test:watch",
     "test:update": "/bin/bash ./projen.sh test:update",
     "projen:upgrade": "/bin/bash ./projen.sh projen:upgrade",
@@ -88,7 +87,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.5.7",
+  "version": "0.6.0",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,
