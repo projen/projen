@@ -36,13 +36,13 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Synthesize project files
-        run: /bin/sh ./projen.sh
+        run: /bin/bash ./projen.sh
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
       - name: Build
-        run: /bin/sh ./projen.sh build
+        run: /bin/bash ./projen.sh build
       - name: Commit changes
         run: 'git commit -m "chore: update generated files"'
       - name: Push changes
