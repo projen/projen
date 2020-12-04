@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.3 (2020-12-04)
+
+
+### Features
+
+* Add VSCodeLaunchConfiguration ([#316](https://github.com/projen/projen/issues/316)) ([83b30cc](https://github.com/projen/projen/commit/83b30cc139aa7c2ee1911c61a6bf20912b460b85)), closes [#314](https://github.com/projen/projen/issues/314)
+
 ### 0.6.2 (2020-12-04)
 
 
