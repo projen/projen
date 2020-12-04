@@ -11,23 +11,35 @@ jobs:
     env:
       CI: "true"
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: yarn install --frozen-lockfile
-      - run: yarn projen
+      - name: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
+      - name: Synthesize project files
+        run: /bin/bash ./projen.sh
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
-      - run: yarn run bump
-      - run: yarn run build
+      - run: /bin/bash ./projen.sh bump
+      - name: Build
+        run: /bin/bash ./projen.sh build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: coverage
       - name: Anti-tamper check
         run: git diff --exit-code
-      - run: git push --follow-tags origin $GITHUB_REF
+      - name: Push changes
+        run: git push --follow-tags origin $BRANCH
+        env:
+          BRANCH: ${{ github.ref }}
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         with:

@@ -1,14 +1,29 @@
 import * as yargs from 'yargs';
 import { synth } from './synth';
+import { discoverTaskCommands } from './tasks';
 
-const args = yargs
-  .commandDir('cmds')
-  .recommendCommands()
-  .wrap(yargs.terminalWidth())
-  .help()
-  .argv;
+async function main() {
+  const ya = yargs;
+  ya.commandDir('cmds');
 
-// no command means just require .projenrc.js
-if (args._.length === 0) {
-  synth(); // eslint-disable-line @typescript-eslint/no-floating-promises
+  discoverTaskCommands(ya);
+
+  ya.recommendCommands();
+  ya.wrap(yargs.terminalWidth());
+  ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
+  ya.help();
+
+  const args = ya.argv;
+
+  // no command means just require .projenrc.js
+  if (args._.length === 0) {
+    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
+    await synth();
+  }
 }
+
+
+main().catch(e => {
+  console.error(e.stack);
+  process.exit(1);
+});

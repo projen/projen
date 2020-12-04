@@ -4,9 +4,9 @@ import * as glob from 'glob';
 import { PROJEN_MARKER } from './common';
 import * as logging from './logging';
 
-export function cleanup(dir: string) {
+export function cleanup(dir: string, exclude: string[]) {
   try {
-    for (const f of findGeneratedFiles(dir)) {
+    for (const f of findGeneratedFiles(dir, exclude)) {
       fs.removeSync(f);
     }
   } catch (e) {
@@ -14,8 +14,8 @@ export function cleanup(dir: string) {
   }
 }
 
-function findGeneratedFiles(dir: string) {
-  const ignore = [...readGitIgnore(dir), 'node_modules/**'];
+function findGeneratedFiles(dir: string, exclude: string[]) {
+  const ignore = [...readGitIgnore(dir), 'node_modules/**', ...exclude];
 
   const files = glob.sync('**', {
     ignore,

@@ -1,4 +1,5 @@
 import * as yargs from 'yargs';
+import { TaskRuntime } from '../../tasks';
 import { printStartMenu, showStartMenu } from './start-app';
 
 class Command implements yargs.CommandModule {
@@ -10,10 +11,11 @@ class Command implements yargs.CommandModule {
   }
 
   async handler(opts: any) {
+    const tasks = new TaskRuntime(process.cwd());
     if (opts.interactive) {
-      await showStartMenu();
+      await showStartMenu(tasks);
     } else {
-      printStartMenu();
+      printStartMenu(tasks);
     }
   }
 }

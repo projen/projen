@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.1 (2020-12-03)
+
+## 0.6.0 (2020-12-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** `bootstrapTask` is no longer available. To obtain the bootstrapping steps for GitHub workflows, use `installWorkflowSteps`.
+* **node:** the `workflowBootstrapSteps` is no longer available. The equivalent is `[ { uses: 'actions/checkout@v2' }, project.installWorkflowSteps ]`.
+* **node:** the `NodeBuildWorkflowOptions` struct is no now internal.
+
+### Features
+
+* **node:** rebuild bot ([#349](https://github.com/projen/projen/issues/349)) ([b891fb7](https://github.com/projen/projen/commit/b891fb7cf8720b862142d5451f5c6b697aa8d50c))
+
+### 0.5.10 (2020-12-02)
+
+
+### Bug Fixes
+
+* **cli:** git setup not creating initial repo ([#346](https://github.com/projen/projen/issues/346)) ([2558c5c](https://github.com/projen/projen/commit/2558c5c84bd7361e231ffb5265968a0beda7d349))
+
+### 0.5.9 (2020-12-02)
+
+
+### Bug Fixes
+
+* project setup fails when git config is not set ([#348](https://github.com/projen/projen/issues/348)) ([1408517](https://github.com/projen/projen/commit/1408517271ba899d31059a853470b965cdc8cd55)), closes [#344](https://github.com/projen/projen/issues/344)
+
+### 0.5.8 (2020-12-01)
+
+
+### Features
+
+* lint .projenrc.js ([#343](https://github.com/projen/projen/issues/343)) ([1f39d12](https://github.com/projen/projen/commit/1f39d12d6d31b5d63540a5b5882dc98e5411b959))
+
+### 0.5.7 (2020-12-01)
+
+
+### Features
+
+* projen tasks ([#337](https://github.com/projen/projen/issues/337)) ([9511227](https://github.com/projen/projen/commit/95112272c2b192144293c1064c77b2d8da354b8f))
+
+### 0.5.6 (2020-11-30)
+
+
+### Features
+
+* **cli:** add switch for post-synthesis operations ([#339](https://github.com/projen/projen/issues/339)) ([08dbee1](https://github.com/projen/projen/commit/08dbee185881ff87761c1c848b5db926d9e3be34)), closes [#322](https://github.com/projen/projen/issues/322)
+
+### 0.5.5 (2020-11-29)
+
+
+### Features
+
+* Add version pinning option to construct project ([#340](https://github.com/projen/projen/issues/340)) ([a6dc7cb](https://github.com/projen/projen/commit/a6dc7cb0b990178082acec2bb3b51857034eb79b))
+
 ### 0.5.4 (2020-11-28)
 
 

@@ -1,5 +1,5 @@
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 export interface ProjenUpgradeOptions {
   /**
@@ -33,12 +33,13 @@ export interface ProjenUpgradeOptions {
  */
 export class ProjenUpgrade {
   constructor(project: NodeProject, options: ProjenUpgradeOptions = { }) {
-    const script = 'projen:upgrade';
-
-    project.addScript(script, 'yarn upgrade -L projen && CI="" yarn projen', {
-      startDesc: 'upgrades projen to the latest version',
-      startCategory: StartEntryCategory.MAINTAIN,
+    const upgradeTask = project.addTask('projen:upgrade', {
+      description: 'upgrades projen to the latest version',
+      category: TaskCategory.MAINTAIN,
     });
+
+    upgradeTask.exec('yarn upgrade -L projen');
+    upgradeTask.exec('CI="" yarn projen');
 
     if (options.autoUpgradeSecret) {
       if (!project.github) {
@@ -70,14 +71,24 @@ export class ProjenUpgrade {
         upgrade: {
           'runs-on': 'ubuntu-latest',
           'steps': [
-            ...project.workflowBootstrapSteps,
+            // check out sources.
+            {
+              name: 'Checkout',
+              uses: 'actions/checkout@v2',
+            },
+
+            // install dependencies (and runs projen)
+            ...project.installWorkflowSteps,
 
             // upgrade
-            { run: `${project.runScriptCommand} ${script}` },
+            {
+              name: 'Upgrade projen',
+              run: project.runTaskCommand(upgradeTask),
+            },
 
             // submit a PR
             {
-              name: 'Create Pull Request',
+              name: 'Create pull request',
               uses: 'peter-evans/create-pull-request@v3',
               with: withOptions,
             },

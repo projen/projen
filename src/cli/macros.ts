@@ -16,7 +16,7 @@ export function tryProcessMacro(macro: string) {
       const slug = getFromGitConfig('github.user') ?? resolveEmail().split('@')[0];
       return `https://github.com/${slug}/${basedir}.git`;
 
-    case '$GIT_USER_NAME': return getFromGitConfig('user.name');
+    case '$GIT_USER_NAME': return getFromGitConfig('user.name') ?? 'user';
     case '$GIT_USER_EMAIL': return resolveEmail();
   }
 

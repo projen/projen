@@ -1,12 +1,52 @@
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
+/**
+ * Options for `JsonFile`.
+ */
 export interface JsonFileOptions extends FileBaseOptions {
-  readonly obj: any;
+  /**
+   * The object that will be serialized. You can modify the object's contents
+   * before synthesis.
+   *
+   * @default {} an empty object (use `file.obj` to mutate).
+   */
+  readonly obj?: any;
+
+  /**
+   * Adds the projen marker as a "JSON-comment" to the root object.
+   *
+   * @default false
+   */
+  readonly marker?: boolean;
+
+  /**
+   * Omits empty objects and arrays.
+   * @default false
+   */
+  readonly omitEmpty?: boolean;
 }
 
+/**
+ * Represents a JSON file.
+ */
 export class JsonFile extends FileBase {
-  protected readonly obj: object;
+  /**
+   * The output object. This object can be mutated until the project is
+   * synthesized.
+   */
+  public readonly obj: object;
+
+  /**
+   * Indicates if the projen marker JSON-comment will be added to the output
+   * object.
+   */
+  public readonly marker: boolean;
+
+  /**
+   * Indicates if empty objects and arrays are omitted from the output object.
+   */
+  public readonly omitEmpty: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
@@ -15,10 +55,24 @@ export class JsonFile extends FileBase {
       throw new Error('"obj" cannot be undefined');
     }
 
-    this.obj = options.obj;
+    this.marker = options.marker ?? false;
+    this.obj = options.obj ?? {};
+    this.omitEmpty = options.omitEmpty ?? false;
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    return JSON.stringify(resolver.resolve(this.obj), undefined, 2);
+    const obj: any = {
+      ...this.obj,
+    };
+
+    if (this.marker) {
+      obj['//'] = JsonFile.PROJEN_MARKER;
+    }
+
+    const resolved = resolver.resolve(obj, {
+      omitEmpty: this.omitEmpty,
+    });
+
+    return JSON.stringify(resolved, undefined, 2);
   }
 }

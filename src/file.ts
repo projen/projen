@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { resolve } from './_resolve';
+import { PROJEN_MARKER, PROJEN_RC } from './common';
 import { Component } from './component';
 import { Project } from './project';
 import { writeFile } from './util';
@@ -30,6 +31,12 @@ export interface FileBaseOptions {
 
 export abstract class FileBase extends Component {
   /**
+   * The marker to embed in files in order to identify them as projen files.
+   * This marker is used to prune these files before synthesis.
+   */
+  public static readonly PROJEN_MARKER = `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
+
+  /**
    * The file path, relative to the project root.
    */
   public readonly path: string;
@@ -53,7 +60,7 @@ export abstract class FileBase extends Component {
     this.absolutePath = path.resolve(project.outdir, filePath);
 
     // verify file path is unique within project tree
-    const existing = project.root.findFile(this.absolutePath);
+    const existing = project.root.tryFindFile(this.absolutePath);
     if (existing && existing !== this) {
       throw new Error(`there is already a file under ${path.relative(project.root.outdir, this.absolutePath)}`);
     }
@@ -88,7 +95,7 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = { resolve: obj => resolve(obj, outdir) };
+    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, [outdir], options) };
     writeFile(filePath, this.synthesizeContent(resolver), {
       readonly: this.readonly,
     });
@@ -103,8 +110,18 @@ export interface IResolver {
    * Given a value (object/string/array/whatever, looks up any functions inside
    * the object and returns an object where all functions are called.
    * @param value The value to resolve
+   * @package options Resolve options
    */
-  resolve(value: any): any;
+  resolve(value: any, options?: ResolveOptions): any;
 }
 
-
+/**
+ * Resolve options.
+ */
+export interface ResolveOptions {
+  /**
+   * Omits empty arrays and objects.
+   * @default false
+   */
+  readonly omitEmpty?: boolean;
+}

@@ -11,6 +11,10 @@ export class TestProject extends Project {
     const tmpdir = mkdtemp();
     super({ outdir: tmpdir });
   }
+
+  postSynthesize() {
+    fs.writeFileSync(path.join(this.outdir, '.postsynth'), '# postsynth');
+  }
 }
 
 export interface SynthOutput {
@@ -22,6 +26,24 @@ export function mkdtemp() {
 }
 
 export function synthSnapshot(project: Project, ...includeFiles: string[]) {
+  const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
+  try {
+    process.env.PROJEN_DISABLE_POST = 'true';
+    project.synth();
+    return directorySnapshot(project.outdir, includeFiles);
+  } finally {
+    fs.removeSync(project.outdir);
+
+    // values assigned to process.env.XYZ are automatically converted to strings
+    if (ENV_PROJEN_DISABLE_POST === undefined) {
+      delete process.env.PROJEN_DISABLE_POST;
+    } else {
+      process.env.PROJEN_DISABLE_POST = ENV_PROJEN_DISABLE_POST;
+    }
+  }
+}
+
+export function synthSnapshotWithPost(project: Project, ...includeFiles: string[]) {
   try {
     project.synth();
     return directorySnapshot(project.outdir, includeFiles);

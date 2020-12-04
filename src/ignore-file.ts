@@ -1,4 +1,3 @@
-import { GENERATION_DISCLAIMER } from './common';
 import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
@@ -20,7 +19,7 @@ export class IgnoreFile extends FileBase {
 
   protected synthesizeContent(resolver: IResolver): string {
     return resolver.resolve([
-      `# ${GENERATION_DISCLAIMER}`,
+      `# ${FileBase.PROJEN_MARKER}`,
       ...this.excludes,
 
       // includes must follow excludes

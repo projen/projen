@@ -1,7 +1,8 @@
+import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { StartEntryCategory } from './start';
+import { TaskCategory } from './tasks';
 
 export interface EslintOptions {
   readonly tsconfigPath: string;
@@ -25,11 +26,31 @@ export interface EslintOptions {
   readonly ignorePatterns?: string[];
 }
 
+/**
+ * eslint rules override
+ */
+export interface EslintOverride {
+  /**
+   * Files or file patterns on which to apply the override
+   */
+  readonly files: string[];
+
+  /**
+   * The overriden rules
+   */
+  readonly rules: { [rule: string]: any };
+}
+
 export class Eslint extends Component {
   /**
    * eslint rules.
    */
   public readonly rules: { [rule: string]: any[] };
+
+  /**
+   * eslint overrides.
+   */
+  public readonly overrides: EslintOverride[];
 
   /**
    * Direct access to the eslint configuration (escape hatch)
@@ -57,11 +78,20 @@ export class Eslint extends Component {
     const dirs = options.dirs;
     const fileExtensions = options.fileExtensions;
 
-    project.addScript('eslint', `eslint --ext ${fileExtensions.join(',')} --fix --no-error-on-unmatched-pattern ${dirs.join(' ')}`, {
-      startDesc: 'Runs eslint against the codebase',
-      startCategory: StartEntryCategory.TEST,
+    const eslint = project.addTask('eslint', {
+      description: 'Runs eslint against the codebase',
+      category: TaskCategory.TEST,
+      exec: [
+        'eslint',
+        `--ext ${fileExtensions.join(',')}`,
+        '--fix',
+        '--no-error-on-unmatched-pattern',
+        ...dirs,
+        PROJEN_RC,
+      ].join(' '),
     });
-    project.addTestCommand(`${project.runScriptCommand} eslint`);
+
+    project.testTask.spawn(eslint);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');
@@ -179,8 +209,20 @@ export class Eslint extends Component {
       }],
     };
 
+    // Overrides for .projenrc.js
+    this.overrides = [
+      {
+        files: [PROJEN_RC],
+        rules: {
+          '@typescript-eslint/no-require-imports': 'off',
+          'import/no-extraneous-dependencies': 'off',
+        },
+      },
+    ];
+
     this.ignorePatterns = options.ignorePatterns ?? [
       '*.js',
+      `!${PROJEN_RC}`,
       '*.d.ts',
       'node_modules/',
       '*.generated.ts',
@@ -221,6 +263,7 @@ export class Eslint extends Component {
       },
       ignorePatterns: this.ignorePatterns,
       rules: this.rules,
+      overrides: this.overrides,
     };
 
     new JsonFile(project, '.eslintrc.json', { obj: this.config });
@@ -233,6 +276,13 @@ export class Eslint extends Component {
     for (const [k, v] of Object.entries(rules)) {
       this.rules[k] = v;
     }
+  }
+
+  /**
+   * Add an eslint override.
+   */
+  public addOverride(override: EslintOverride) {
+    this.overrides.push(override);
   }
 
   /**
