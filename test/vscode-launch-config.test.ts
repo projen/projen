@@ -1,4 +1,5 @@
 import { synthSnapshot, TestProject } from './util';
+import { InternalConsoleOptions } from '../src/vscode/launch-config';
 
 const VSCODE_DEBUGGER_FILE = '.vscode/launch.json';
 
@@ -74,6 +75,7 @@ test('adding multiple launch configuration entries', () => {
     program: '${workspaceFolder}/lib/index.js',
     preLaunchTask: 'tsc: build - tsconfig.json',
     outFiles: ['${workspaceFolder}/lib/**/*.js'],
+    internalConsoleOptions: InternalConsoleOptions.OPEN_ON_SESSION_START,
   });
 
   launchConfig?.addConfiguration({
@@ -106,6 +108,7 @@ test('adding multiple launch configuration entries', () => {
           program: '${workspaceFolder}/lib/index.js',
           preLaunchTask: 'tsc: build - tsconfig.json',
           outFiles: ['${workspaceFolder}/lib/**/*.js'],
+          internalConsoleOptions: 'openOnSessionStart',
         },
         {
           type: 'pwa-chrome',
