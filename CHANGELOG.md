@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.2 (2020-12-04)
+
+
+### Bug Fixes
+
+* **node:** rebuild-bot did not commit files ([#350](https://github.com/projen/projen/issues/350)) ([59bfb47](https://github.com/projen/projen/commit/59bfb4755f7cb74c5345eb37cdec6827ef898aba))
+
 ### 0.6.1 (2020-12-03)
 
 ## 0.6.0 (2020-12-02)
