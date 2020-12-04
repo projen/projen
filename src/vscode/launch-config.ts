@@ -2,17 +2,23 @@ import { Component } from '../component';
 import { JsonFile } from '../json';
 import { VsCode } from './vscode';
 
-interface VsCodeLaunchConfiguration {
-  version: string;
-  configurations: VsCodeLaunchConfigurationEntry[];
-}
-
+/**
+ * VSCode launch configuration Presentation interface
+ * "using the order, group, and hidden attributes in the presentation object you can sort,
+ * group, and hide configurations and compounds in the Debug configuration dropdown
+ * and in the Debug quick pick."
+ * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+ */
 export interface Presentation {
   readonly hidden: boolean;
   readonly group: string;
   readonly order: number;
 }
-
+/**
+ * VSCode launch configuration ServerReadyAction interface
+ * "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal."
+ * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+ */
 export interface ServerReadyAction {
   readonly action: string;
   readonly pattern?: string;
@@ -29,7 +35,10 @@ export interface VsCodeLaunchConfigurationEntry {
   readonly name: string;
   readonly args?: string[];
   readonly debugServer?: number;
-  readonly internalConsoleOptions?: 'neverOpen' | 'openOnFirstSessionStart' | 'openOnSessionStart';
+  readonly internalConsoleOptions?:
+  | 'neverOpen'
+  | 'openOnFirstSessionStart'
+  | 'openOnSessionStart';
   readonly runtimeArgs?: string[];
   readonly postDebugTask?: string;
   readonly preLaunchTask?: string;
@@ -61,7 +70,18 @@ export class VsCodeLaunchConfig extends Component {
     });
   }
 
+  /**
+   * Adds a VsCodeLaunchConfigurationEntry (e.g. a node.js debugger) to `.vscode/launch.json.
+   * Each configuration entry has following mandatory fields: type, request and name.
+   * See https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes for details.
+   * @param cfg VsCodeLaunchConfigurationEntry
+   */
   public addConfiguration(cfg: VsCodeLaunchConfigurationEntry) {
     this.content.configurations.push(cfg);
   }
+}
+
+interface VsCodeLaunchConfiguration {
+  version: string;
+  configurations: VsCodeLaunchConfigurationEntry[];
 }

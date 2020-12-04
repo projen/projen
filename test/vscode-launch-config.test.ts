@@ -7,7 +7,7 @@ test('empty launch configuration', () => {
   const project = new TestProject();
 
   // WHEN
-  project.vscode?.addLaunchConfiguration();
+  project.vscode?.launchConfiguration;
 
   // THEN
   expect(synthSnapshot(project, VSCODE_DEBUGGER_FILE)).toStrictEqual({
@@ -23,7 +23,7 @@ test('adding a launch configuration entry', () => {
   const project = new TestProject();
 
   // WHEN
-  const launchConfig = project.vscode?.addLaunchConfiguration();
+  const launchConfig = project.vscode?.launchConfiguration;
   launchConfig?.addConfiguration({
     type: 'node',
     request: 'launch',
@@ -56,7 +56,7 @@ test('adding multiple launch configuration entries', () => {
   const project = new TestProject();
 
   // WHEN
-  const launchConfig = project.vscode?.addLaunchConfiguration();
+  const launchConfig = project.vscode?.launchConfiguration;
   launchConfig?.addConfiguration({
     type: 'node',
     request: 'launch',
