@@ -26,7 +26,8 @@ export interface Presentation {
 }
 /**
  * VSCode launch configuration ServerReadyAction interface
- * "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal."
+ * "if you want to open a URL in a web browser whenever the program under debugging 
+ * outputs a specific message to the debug console or integrated terminal."
  * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
  */
 export interface ServerReadyAction {
