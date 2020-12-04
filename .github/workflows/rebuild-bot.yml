@@ -44,7 +44,7 @@ jobs:
       - name: Build
         run: /bin/bash ./projen.sh build
       - name: Commit changes
-        run: 'git commit -m "chore: update generated files"'
+        run: 'git commit -am "chore: update generated files"'
       - name: Push changes
         run: git push --follow-tags origin $BRANCH
         env:

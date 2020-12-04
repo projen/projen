@@ -1529,7 +1529,7 @@ export class NodeProject extends Project {
 
     const commitChanges = !options.commit ? [] : [{
       name: 'Commit changes',
-      run: `git commit -m "${options.commit}"`,
+      run: `git commit -am "${options.commit}"`,
     }];
 
     const pushChanges = !options.pushBranch ? [] : [{
