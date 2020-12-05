@@ -13,7 +13,7 @@ import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
 import { Task, TaskCategory } from './tasks';
-import { exec, writeFile } from './util';
+import { exec, isTruthy, writeFile } from './util';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -1338,7 +1338,7 @@ export class NodeProject extends Project {
       }
     } catch (e) { }
 
-    exec(this.renderInstallCommand(process.env.CI !== undefined), { cwd: outdir });
+    exec(this.renderInstallCommand(isTruthy(process.env.CI)), { cwd: outdir });
 
     this.resolveDependencies(outdir);
   }
