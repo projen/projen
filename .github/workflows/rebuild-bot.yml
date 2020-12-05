@@ -10,18 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: "true"
-    if: ${{ github.event.issue_comment &&
-      contains(github.event.issue_comment.comment.body, '@projen rebuild') }}
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body,
+      '@projen rebuild') }}
     steps:
       - name: Post comment to issue
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.issue.number }}
           body: "_projen_: Rebuild started"
+      - name: Get pull request branch
+        id: query_pull_request
+        env:
+          PULL_REQUEST_URL: ${{ github.event.issue.pull_request.url }}
+        run: |-
+          BRANCH_STR=$(curl --silent $PULL_REQUEST_URL | jq ".head.ref")
+          echo "::set-output name=branch::$(node -p $BRANCH_STR)"
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ steps.query_pull_request.outputs.branch }}
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
