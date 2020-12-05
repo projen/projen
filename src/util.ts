@@ -111,5 +111,5 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
  * @param value an environment variable
  */
 export function isTruthy(value: string | undefined): boolean {
-  return !(value === undefined || ['null', 'undefined', '0', 'false'].includes(value.toLocaleLowerCase()));
+  return !(value === undefined || ['null', 'undefined', '0', 'false', ''].includes(value.toLocaleLowerCase()));
 }

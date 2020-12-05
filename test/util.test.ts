@@ -78,6 +78,7 @@ test('isTruthy', () => {
   expect(isTruthy('false')).toEqual(false);
   expect(isTruthy('0')).toEqual(false);
   expect(isTruthy('null')).toEqual(false);
+  expect(isTruthy('')).toEqual(false);
   expect(isTruthy('true')).toEqual(true);
   expect(isTruthy('1')).toEqual(true);
   expect(isTruthy('enabled')).toEqual(true);
