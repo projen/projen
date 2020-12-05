@@ -1667,27 +1667,18 @@ export class NodeProject extends Project {
 
     this.createBuildWorkflow('rebuild-bot', {
       trigger: { issue_comment: { types: ['created'] } },
-      condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
+      condition: `\${{ github.event.issue_comment && contains(github.event.issue_comment.comment.body, '@projen ${command}') }}`,
       antitamperDisabled: true, // definitely dont want that
 
       // since the "issue_comment" event is not triggered on a branch, we need to resolve
       // the git ref of the pull request before we check out
       preCheckoutSteps: [
         postComment('Rebuild started'),
-        {
-          name: 'Get pull request branch',
-          id: 'query_pull_request',
-          env: { PULL_REQUEST_URL: '${{ github.event.issue.pull_request.url }}' },
-          run: [
-            'BRANCH_STR=$(curl --silent $PULL_REQUEST_URL | jq ".head.ref")',
-            'echo "::set-output name=branch::$(node -p $BRANCH_STR)"',
-          ].join('\n'),
-        },
       ],
 
       // tell checkout to use the branch we acquired at the previous step
       checkoutWith: {
-        ref: '${{ steps.query_pull_request.outputs.branch }}',
+        ref: '${{ github.event.pull_request.head.sha }}',
       },
 
       // commit changes
