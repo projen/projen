@@ -3,6 +3,16 @@ import { JsonFile } from '../json';
 import { VsCode } from './vscode';
 
 /**
+ * Controls the visibility of the VSCode Debug Console panel during a debugging session
+ * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+ */
+export enum InternalConsoleOptions {
+  NEVER_OPEN = 'neverOpen',
+  OPEN_ON_FIRST_SESSION_START = 'openOnFirstSessionStart',
+  OPEN_ON_SESSION_START = 'openOnSessionStart',
+}
+
+/**
  * VSCode launch configuration Presentation interface
  * "using the order, group, and hidden attributes in the presentation object you can sort,
  * group, and hide configurations and compounds in the Debug configuration dropdown
@@ -16,7 +26,8 @@ export interface Presentation {
 }
 /**
  * VSCode launch configuration ServerReadyAction interface
- * "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal."
+ * "if you want to open a URL in a web browser whenever the program under debugging
+ * outputs a specific message to the debug console or integrated terminal."
  * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
  */
 export interface ServerReadyAction {
@@ -35,10 +46,7 @@ export interface VsCodeLaunchConfigurationEntry {
   readonly name: string;
   readonly args?: string[];
   readonly debugServer?: number;
-  readonly internalConsoleOptions?:
-  | 'neverOpen'
-  | 'openOnFirstSessionStart'
-  | 'openOnSessionStart';
+  readonly internalConsoleOptions?: InternalConsoleOptions;
   readonly runtimeArgs?: string[];
   readonly postDebugTask?: string;
   readonly preLaunchTask?: string;
