@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.6 (2020-12-06)
+
+
+### Bug Fixes
+
+* **node:** rebuild-bot does not work on forks ([edaf1c4](https://github.com/projen/projen/commit/edaf1c415503e44f1995760145996a1700b8cfcd))
+
 ### 0.6.5 (2020-12-06)
 
 
