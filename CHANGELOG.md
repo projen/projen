@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.5 (2020-12-06)
+
+
+### Bug Fixes
+
+* **node:** CI always evaluated as true ([#353](https://github.com/projen/projen/issues/353)) ([e4f0c8a](https://github.com/projen/projen/commit/e4f0c8a6c7a82d2d400766940dcea6d244a49675)), closes [#352](https://github.com/projen/projen/issues/352)
+
 ### 0.6.4 (2020-12-05)
 
 ### 0.6.3 (2020-12-04)
