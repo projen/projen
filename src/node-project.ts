@@ -1679,8 +1679,12 @@ export class NodeProject extends Project {
           id: 'query_pull_request',
           env: { PULL_REQUEST_URL: '${{ github.event.issue.pull_request.url }}' },
           run: [
-            'BRANCH_STR=$(curl --silent $PULL_REQUEST_URL | jq ".head.ref")',
+            'rm -f /tmp/pr.json',
+            'curl --silent $PULL_REQUEST_URL > /tmp/pr.json',
+            'BRANCH_STR=$(cat /tmp/pr.json | jq ".head.ref")',
+            'REPO_NAME=$(cat /tmp/pr.json | jq ".head.repo.full_name")',
             'echo "::set-output name=branch::$(node -p $BRANCH_STR)"',
+            'echo "::set-output name=repo::$(node -p $REPO_NAME)"',
           ].join('\n'),
         },
       ],
@@ -1688,6 +1692,7 @@ export class NodeProject extends Project {
       // tell checkout to use the branch we acquired at the previous step
       checkoutWith: {
         ref: '${{ steps.query_pull_request.outputs.branch }}',
+        repository: '${{ steps.query_pull_request.outputs.repo }}',
       },
 
       // commit changes
