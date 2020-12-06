@@ -105,3 +105,11 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
 
   return input;
 }
+
+/**
+ * Returns false if value is unset or a falsey value, and true otherwise.
+ * @param value an environment variable
+ */
+export function isTruthy(value: string | undefined): boolean {
+  return !(value === undefined || ['null', 'undefined', '0', 'false', ''].includes(value.toLocaleLowerCase()));
+}

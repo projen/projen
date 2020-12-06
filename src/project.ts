@@ -11,6 +11,7 @@ import * as logging from './logging';
 import { SampleReadme } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
+import { isTruthy } from './util';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
@@ -237,7 +238,7 @@ export class Project {
       comp.synthesize();
     }
 
-    if (process.env.PROJEN_DISABLE_POST !== 'true') {
+    if (!isTruthy(process.env.PROJEN_DISABLE_POST)) {
       for (const comp of this._components) {
         comp.postSynthesize();
       }
