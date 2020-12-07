@@ -53,5 +53,5 @@ projen should be able to deploy & manage cloud services related to your developm
 a service to manage secrets for me in AWS Secrets Manager, a cloud development account, CI/CD infrastructure, etc.
 
 Using the CDKs (AWS CDK, CDK for Terraform, CDK for Kubernetes), complete services can be expressed as constructs
-and shared and published as libraries. It is fairly easy (#) to simply allow AWS CDK constructs to be freely used
+and shared and published as libraries. It is fairly easy (#) to simply allow CDK constructs to be freely used
 inside projen components.
