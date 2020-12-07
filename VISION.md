@@ -5,7 +5,7 @@ This is basically a paper napkin for ideas for the roadmap for the project. Comm
 ## Ecosystem
 
 "Batteries included" is a very poweful concept. It allows users to discover the breadth of their options using a 
-single experience, and having to read the manual for 4 different plugins with horrible versioning conflicts.
+single experience, instead of having to read the manual for 4 different plugins with horrible versioning conflicts.
 
 On the other hand, one of the goals of projen is to support the ever-increasing amount of tools people use in order to build software, 
 and to allow teams to use projen internally for their needs and to do that, we must have an open ecocystem which allows anyone to 
