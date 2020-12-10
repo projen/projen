@@ -14,6 +14,7 @@ Name|Description
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
+[Gitpod](#projen-gitpod)|The Gitpod component itself.
 [IgnoreFile](#projen-ignorefile)|*No description*
 [Jest](#projen-jest)|Installs the following npm scripts:.
 [JsiiProject](#projen-jsiiproject)|Multi-language jsii library project.
@@ -56,6 +57,9 @@ Name|Description
 [EslintOptions](#projen-eslintoptions)|*No description*
 [EslintOverride](#projen-eslintoverride)|eslint rules override.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[GitpodDocker](#projen-gitpoddocker)|If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
+[GitpodOptions](#projen-gitpodoptions)|What can we configure for the GitPod component.
+[GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
@@ -102,6 +106,8 @@ Name|Description
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
 [DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
+[GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
+[GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
 [Stability](#projen-stability)|*No description*
@@ -188,6 +194,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -336,6 +343,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -529,6 +537,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -628,6 +637,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -736,6 +746,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -1181,6 +1192,67 @@ __Returns__:
 
 
 
+## class Gitpod 🔹 <a id="projen-gitpod"></a>
+
+The Gitpod component itself.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Gitpod(project: Project, options?: GitpodOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  The project.
+* **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  The component configuration options for this project.
+  * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. 
+  * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile. __*Default*__: undefined
+
+
+### Methods
+
+
+#### addTasks(...task)🔹 <a id="projen-gitpod-addtasks"></a>
+
+Adds another task to the Gitpod configuration XXX: no way to clear out the default: yet.
+
+```ts
+addTasks(...task: GitpodTask[]): void
+```
+
+* **task** (<code>[GitpodTask](#projen-gitpodtask)</code>)  The additional tasks.
+  * **command** (<code>string</code>)  Required. 
+  * **before** (<code>string</code>)  In case you need to run something even before init, that is a requirement for both init and command, you can use the before property. __*Optional*__
+  * **init** (<code>string</code>)  The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow. __*Default*__: "yarn install"
+  * **name** (<code>string</code>)  A name for this. __*Optional*__
+  * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: BOTTOM
+  * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Optional*__
+  * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
+
+
+
+
+#### customDocker(docker)🔹 <a id="projen-gitpod-customdocker"></a>
+
+Specify a custom Docker setup.
+
+```ts
+customDocker(docker: GitpodDocker): void
+```
+
+* **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  The docker configuration.
+  * **file** (<code>string</code>)  *No description* __*Optional*__
+  * **image** (<code>string</code>)  A publicly available image to use. __*Default*__: "jsii/superchain"
+
+
+
+
+
+
 ## class IgnoreFile 🔹 <a id="projen-ignorefile"></a>
 
 
@@ -1345,6 +1417,7 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -1657,6 +1730,7 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2059,6 +2133,7 @@ new Project(options?: ProjectOptions)
 ```
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
 
@@ -2075,6 +2150,7 @@ Name | Type | Description
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[Tasks](#projen-tasks-tasks)</code> | <span></span>
+**gitPod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **github**?🔹 | <code>[GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
@@ -2166,7 +2242,7 @@ Synthesize all project files into `outdir`.
 1. Call "this.preSynthesize()"
 2. Delete all generated files
 3. Synthesize all sub-projects
-4. Synthezize all components of this project
+4. Synthesize all components of this project
 5. Call "postSynthesize()" for all components of this project
 6. Call "this.postSynthesize()"
 
@@ -2180,7 +2256,7 @@ synth(): void
 
 #### tryFindFile(filePath)🔹 <a id="projen-project-tryfindfile"></a>
 
-Finds a file at the specified relateive path within this project and all its subprojects.
+Finds a file at the specified relative path within this project and all its subprojects.
 
 ```ts
 tryFindFile(filePath: string): FileBase
@@ -2497,6 +2573,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2601,6 +2678,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2705,6 +2783,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **gitPod** (<code>boolean</code>)  Whether to enable `gitPod` It can be customized later if needed. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2981,6 +3060,7 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3076,6 +3156,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
@@ -3193,6 +3274,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitPod**?⚠️ | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **java**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3285,6 +3367,7 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3376,6 +3459,7 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3592,6 +3676,61 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct GitpodDocker 🔹 <a id="projen-gitpoddocker"></a>
+
+
+If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
+
+https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**?🔹 | <code>string</code> | __*Optional*__
+**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: "jsii/superchain"
+
+
+
+## struct GitpodOptions 🔹 <a id="projen-gitpodoptions"></a>
+
+
+What can we configure for the GitPod component.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**tasks**🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.
+**docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile.<br/>__*Default*__: undefined
+
+
+
+## struct GitpodTask 🔹 <a id="projen-gitpodtask"></a>
+
+
+Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+
+Start Mode	        | Execution
+Fresh Workspace	  | before && init && command
+Restart Workspace	| before && command
+Snapshot	          | before && command
+Prebuild	          | before && init && prebuild
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**🔹 | <code>string</code> | Required.
+**before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
+**init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Default*__: "yarn install"
+**name**?🔹 | <code>string</code> | A name for this.<br/>__*Optional*__
+**openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: BOTTOM
+**openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Optional*__
+**prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
 
 
 
@@ -3867,6 +4006,7 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -4008,6 +4148,7 @@ Name | Type | Description
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -4084,6 +4225,7 @@ Name | Type | Description
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
@@ -4171,6 +4313,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 
@@ -4348,6 +4491,7 @@ Name | Type | Description
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitPod**?⚠️ | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
@@ -4444,6 +4588,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitPod**?🔹 | <code>boolean</code> | Whether to enable `gitPod` It can be customized later if needed.<br/>__*Default*__: false
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
@@ -4575,6 +4720,32 @@ Name | Description
 -----|-----
 **TCP** 🔹|TCP protocol.
 **UDP** 🔹|UDP protocol.
+
+
+## enum GitpodOpenIn 🔹 <a id="projen-gitpodopenin"></a>
+
+Configure where in the IDE the terminal should be opened.
+
+Name | Description
+-----|-----
+**BOTTOM** 🔹|the bottom panel (default).
+**LEFT** 🔹|the left panel.
+**RIGHT** 🔹|the right panel.
+**MAIN** 🔹|the main editor area.
+
+
+## enum GitpodOpenMode 🔹 <a id="projen-gitpodopenmode"></a>
+
+Configure how the terminal should be opened relative to the previous task.
+
+Name | Description
+-----|-----
+**TAB_AFTER** 🔹|Opens in the same tab group right after the previous tab.
+**TAB_BEFORE** 🔹|Opens in the same tab group left before the previous tab.
+**SPLIT_RIGHT** 🔹|Splits and adds the terminal to the right.
+**SPLIT_LEFT** 🔹|Splits and adds the terminal to the left.
+**SPLIT_TOP** 🔹|Splits and adds the terminal to the tops.
+**SPLIT_BOTTOM** 🔹|Splits and adds the terminal to the bottom.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>

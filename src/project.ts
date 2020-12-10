@@ -5,6 +5,7 @@ import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
 import { GitHub } from './github';
+import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
@@ -32,6 +33,14 @@ export interface ProjectOptions {
    * @default "."
    */
   readonly outdir?: string;
+
+  /**
+   * Whether to enable `gitPod`
+   * It can be customized later if needed
+   *
+   * @default false
+   */
+  readonly gitPod?: boolean;
 }
 
 /**
@@ -73,6 +82,13 @@ export class Project {
   public readonly vscode: VsCode | undefined;
 
   public readonly tasks: Tasks;
+
+  /**
+   * Access for Gitpod
+   *
+   * This will be `undefined` if gitpod boolean is false
+   */
+  public readonly gitPod: Gitpod | undefined;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -123,6 +139,8 @@ export class Project {
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
+    this.gitPod = options.gitPod ? new Gitpod(this) : undefined;
+
     new SampleReadme(this, '# my project');
   }
 
@@ -153,7 +171,7 @@ export class Project {
   }
 
   /**
-   * Finds a file at the specified relateive path within this project and all
+   * Finds a file at the specified relative path within this project and all
    * its subprojects.
    *
    * @param filePath The file path. If this path is relative, it will be resolved
@@ -219,7 +237,7 @@ export class Project {
    * 1. Call "this.preSynthesize()"
    * 2. Delete all generated files
    * 3. Synthesize all sub-projects
-   * 4. Synthezize all components of this project
+   * 4. Synthesize all components of this project
    * 5. Call "postSynthesize()" for all components of this project
    * 6. Call "this.postSynthesize()"
    */
