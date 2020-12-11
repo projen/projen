@@ -177,11 +177,6 @@ export class Gitpod extends Component {
   private tasks = new Array<GitpodTask>();
   private docker: GitpodDocker | undefined;
 
-  /**
-   *
-   * @param project The project
-   * @param options The component configuration options for this project
-   */
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
 
