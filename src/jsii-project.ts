@@ -357,6 +357,8 @@ export class JsiiProject extends TypeScriptProject {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-maven',
             env: {
+              MAVEN_SERVER_ID: '${{ secrets.MAVEN_SERVER_ID }}',
+              MAVEN_REPOSITORY_URL: '${{ secrets.MAVEN_REPOSITORY_URL }}',
               MAVEN_GPG_PRIVATE_KEY: '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
               MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
               MAVEN_PASSWORD: '${{ secrets.MAVEN_PASSWORD }}',
