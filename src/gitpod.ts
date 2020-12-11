@@ -116,7 +116,7 @@ export interface GitpodTask {
 
   /**
    * You can configure how the terminal should be opened relative to the previous task.
-   * @default
+   * @default GitpodOpenMode.TAB_AFTER
    */
   readonly openMode?: GitpodOpenMode;
 
