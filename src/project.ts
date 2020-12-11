@@ -40,7 +40,7 @@ export interface ProjectOptions {
    *
    * @default false
    */
-  readonly gitPod?: boolean;
+  readonly gitpod?: boolean;
 }
 
 /**
@@ -88,7 +88,7 @@ export class Project {
    *
    * This will be `undefined` if gitpod boolean is false
    */
-  public readonly gitPod: Gitpod | undefined;
+  public readonly gitpod: Gitpod | undefined;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -139,7 +139,7 @@ export class Project {
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
-    this.gitPod = options.gitPod ? new Gitpod(this) : undefined;
+    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
 
     new SampleReadme(this, '# my project');
   }
