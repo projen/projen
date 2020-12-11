@@ -95,11 +95,11 @@ export enum GitpodOpenIn {
  * Configure options for a task to be run when opening a Gitpod
  * workspace (e.g. running tests, or starting a dev server).
  *
- * Start Mode	        | Execution
- * Fresh Workspace	  | before && init && command
- * Restart Workspace	| before && command
- * Snapshot	          | before && command
- * Prebuild	          | before && init && prebuild
+ * Start Mode         | Execution
+ * Fresh Workspace    | before && init && command
+ * Restart Workspace  | before && command
+ * Snapshot           | before && command
+ * Prebuild           | before && init && prebuild
 */
 export interface GitpodTask {
 
