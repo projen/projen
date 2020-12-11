@@ -1210,7 +1210,7 @@ new Gitpod(project: Project, options?: GitpodOptions)
 * **project** (<code>[Project](#projen-project)</code>)  The project.
 * **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  The component configuration options for this project.
   * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. 
-  * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile. __*Default*__: undefined
+  * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`. __*Default*__: undefined
 
 
 ### Methods
@@ -1246,7 +1246,7 @@ customDocker(docker: GitpodDocker): void
 
 * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  The docker configuration.
   * **file** (<code>string</code>)  *No description* __*Optional*__
-  * **image** (<code>string</code>)  A publicly available image to use. __*Default*__: "jsii/superchain"
+  * **image** (<code>string</code>)  A publicly available image to use. __*Optional*__
 
 
 
@@ -3691,7 +3691,7 @@ https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
 Name | Type | Description 
 -----|------|-------------
 **file**?🔹 | <code>string</code> | __*Optional*__
-**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: "jsii/superchain"
+**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Optional*__
 
 
 
@@ -3705,7 +3705,7 @@ What can we configure for the GitPod component.
 Name | Type | Description 
 -----|------|-------------
 **tasks**🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.
-**docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile.<br/>__*Default*__: undefined
+**docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
 
 
 
@@ -3714,11 +3714,11 @@ Name | Type | Description
 
 Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 
-Start Mode	        | Execution
-Fresh Workspace	  | before && init && command
-Restart Workspace	| before && command
-Snapshot	          | before && command
-Prebuild	          | before && init && prebuild
+Start Mode         | Execution
+Fresh Workspace    | before && init && command
+Restart Workspace  | before && command
+Snapshot           | before && command
+Prebuild           | before && init && prebuild
 
 
 

@@ -23,7 +23,7 @@ export interface GitpodDocker {
    *
    * A publicly available image to use
    *
-   * @default "jsii/superchain"
+   * @default
    */
   readonly image?: string;
 
@@ -157,7 +157,8 @@ export interface GitpodTask {
 export interface GitpodOptions {
   /**
    * Optional Docker Configuration
-   * Defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile
+   * Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile
+   * if this is unset, so undefined here means `gitpod/workspace-full`
    * @default undefined
    */
   readonly docker?: GitpodDocker;
@@ -173,15 +174,8 @@ export interface GitpodOptions {
  * The Gitpod component itself
  */
 export class Gitpod extends Component {
-  /**
-   * The List of tasks. The default will be present or a customization
-   */
   private tasks = new Array<GitpodTask>();
-
-  /**
-   * We default to jsii/superchain fo the image, so this can be required
-   */
-  private docker: GitpodDocker;
+  private docker: GitpodDocker | undefined;
 
   /**
    *
@@ -191,28 +185,44 @@ export class Gitpod extends Component {
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
 
-    // Sort out docker 1st, sin
+    // Docker
     if (options?.docker?.file && options.docker.image) {
       throw new Error('Can not specific both `file` and `image` at the same time');
     }
-    this.docker = options?.docker ?? { image: 'jsii/superchain' };
+    if (options?.docker) {
+      this.docker = options?.docker;
+    }
 
-    // Add user supplied tasks or produce the default .gitpod.yml
+    let obj: any;
+    if (this.docker?.image) {
+      obj = {
+        image: this.docker.image,
+      };
+    } else if (this.docker?.file) {
+      obj = {
+        image: {
+          file: this.docker.file,
+        },
+      };
+    }
+
+    // Tasks
     if (options?.tasks) {
       this.addTasks(...options.tasks);
     } else {
+      // A future PR will move this from NodeProject to Project
       this.addTasks({
-        init: 'yarn install', // XXX: this has no answer at the project level yet, it also needs NodeProject for now
-        command: 'npx projen build', // XXX: project.projenCommand is on NodeProject for now
+        command: 'echo Initialized',
       });
     }
+    obj = {
+      ...obj,
+      tasks: this.tasks,
+    };
 
     // This is what get synthesized
     new YamlFile(project, GITPOD_FILE, {
-      obj: {
-        tasks: this.tasks,
-        docker: this.docker,
-      },
+      obj: obj,
     });
   }
 
