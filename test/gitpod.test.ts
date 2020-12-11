@@ -20,18 +20,6 @@ afterEach(() => {
   }
 });
 
-function assertGitpodYaml(dir: string) {
-
-  const filePath = path.join(dir, GITPOD_FILE);
-  expect(fs.existsSync(filePath)).toBeTruthy();
-}
-
-function assertNoGitpodYaml(dir: string) {
-
-  const filePath = path.join(dir, GITPOD_FILE);
-  expect(fs.existsSync(filePath)).toBeFalsy();
-}
-
 describe('gitpod enable/disable', () => {
   test('given gitpod is false', () => {
     const project = new Project({
@@ -40,7 +28,8 @@ describe('gitpod enable/disable', () => {
     });
 
     project.synth();
-    assertNoGitpodYaml(tempDir);
+    const filePath = path.join(tempDir, GITPOD_FILE);
+    expect(fs.existsSync(filePath)).toBeFalsy();
   });
   test('given gitpod is true', () => {
     const project = new Project({
@@ -49,7 +38,8 @@ describe('gitpod enable/disable', () => {
     });
 
     project.synth();
-    assertGitpodYaml(tempDir);
+    const filePath = path.join(tempDir, GITPOD_FILE);
+    expect(fs.existsSync(filePath)).toBeTruthy();
 
     const snapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(snapshot).toContain('tasks:');
@@ -63,38 +53,40 @@ describe('gitpod image & file', () => {
       outdir: tempDir,
       gitpod: true,
     });
-
     if (project.gitpod) {
       project.gitpod.addCustomDocker({ image: 'jsii/superchain' });
     }
 
-    const snapshot = synthSnapshot(project);
-    console.log(snapshot);
+    const snapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(snapshot).toContain('image: jsii/superchain');
   });
-  // test('given a docker file dep', () => {
-  //   const project = new Project({
-  //     outdir: tempDir,
-  //     gitpod: true,
-  //   });
+  test('given a docker file dep', () => {
+    const project = new Project({
+      outdir: tempDir,
+      gitpod: true,
+    });
+    if (project.gitpod) {
+      project.gitpod.addCustomDocker({ file: '.gitpod.Dockerfile' });
+    }
 
-  //   if (project.gitpod) {
-  //     project.gitpod.addCustomDocker({ file: '.gitpod.Dockerfile' });
-  //   }
-
-  //   const snapshot = synthSnapshot(project)[GITPOD_FILE];
-  //   expect(snapshot).toContain('image:');
-  //   expect(snapshot).toContain('file: \'.gitpod.Dockerfile\'');
-  // });
+    const snapshot = synthSnapshot(project)[GITPOD_FILE];
+    expect(snapshot).toContain('image:');
+    expect(snapshot).toContain('file: .gitpod.Dockerfile');
+  });
 });
 
-// describe('gitpod tasks', () => {
-//   test('given custom tasks', () => {
-//     const project = new Project({
-//       outdir: tempDir,
-//       gitpod: true,
-//     });
-//     const snapshot = synthSnapshot(project, GITPOD_FILE);
-//     expect(snapshot[GITPOD_FILE].tasks).toBeTruthy();
-//   });
-// });
+describe('gitpod tasks', () => {
+  test('given custom tasks', () => {
+    const project = new Project({
+      outdir: tempDir,
+      gitpod: true,
+    });
+    if (project.gitpod) {
+      project.gitpod.addTasks({ command: 'text' });
+    }
+
+    const snapshot = synthSnapshot(project)[GITPOD_FILE];
+    expect(snapshot).toContain('command');
+    expect(snapshot).toContain('text');
+  });
+});

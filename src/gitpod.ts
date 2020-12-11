@@ -180,45 +180,36 @@ export class Gitpod extends Component {
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
 
-    // Docker
-    if (options?.docker?.file && options.docker.image) {
-      throw new Error('Can not specific both `file` and `image` at the same time');
-    }
     if (options?.docker) {
-      this.docker = options?.docker;
+      this.addCustomDocker(options?.docker);
     }
-
-    let obj: any;
-    if (this.docker?.image) {
-      obj = {
-        image: this.docker.image,
-      };
-    } else if (this.docker?.file) {
-      obj = {
-        image: {
-          file: this.docker.file,
-        },
-      };
-    }
-
-    // Tasks
     if (options?.tasks) {
-      this.addTasks(...options.tasks);
+      this.addTasks(...options?.tasks);
     } else {
-      // A future PR will move this from NodeProject to Project
       this.addTasks({
         command: 'echo Initialized',
       });
     }
-    obj = {
-      ...obj,
-      tasks: this.tasks,
-    };
 
-    // This is what get synthesized
-    new YamlFile(project, GITPOD_FILE, {
-      obj: obj,
+    new YamlFile(this.project, GITPOD_FILE, {
+      obj: {
+        image: () => this.renderDockerImage(),
+        tasks: this.tasks,
+      },
     });
+  }
+
+  /**
+   *
+   * Specify a customer docker setup
+   * @param docker
+   */
+  public addCustomDocker(docker: GitpodDocker) {
+    if (docker?.file && docker?.image) {
+      throw new Error('Can not specific both `file` and `image` at the same time');
+    }
+
+    this.docker = docker;
   }
 
   /**
@@ -227,15 +218,18 @@ export class Gitpod extends Component {
    * @param tasks The additional tasks
    */
   public addTasks(...tasks: GitpodTask[]) {
-    this.tasks.push(...tasks);
+    this.tasks.unshift(...tasks);
   }
 
-  /**
-   * Specify a custom Docker setup
-   *
-   * @param docker The docker configuration
-   */
-  public addCustomDocker(docker: GitpodDocker) {
-    this.docker = docker;
+  private renderDockerImage() {
+    if (this.docker?.image) {
+      return this.docker.image;
+    } else if (this.docker?.file) {
+      return {
+        file: this.docker.file,
+      };
+    } else {
+      return undefined;
+    }
   }
 }

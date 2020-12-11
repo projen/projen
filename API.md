@@ -1218,13 +1218,13 @@ new Gitpod(project: Project, options?: GitpodOptions)
 
 #### addCustomDocker(docker)🔹 <a id="projen-gitpod-addcustomdocker"></a>
 
-Specify a custom Docker setup.
+Specify a customer docker setup.
 
 ```ts
 addCustomDocker(docker: GitpodDocker): void
 ```
 
-* **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  The docker configuration.
+* **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  *No description*
   * **file** (<code>string</code>)  *No description* __*Optional*__
   * **image** (<code>string</code>)  A publicly available image to use. __*Optional*__
 
