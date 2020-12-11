@@ -226,8 +226,8 @@ export class Gitpod extends Component {
    * XXX: no way to clear out the default: yet
    * @param task The additional tasks
    */
-  public addTasks(...task: GitpodTask[]) {
-    this.tasks.push(...task);
+  public addTasks(...tasks: GitpodTask[]) {
+    this.tasks.push(...tasks);
   }
 
   /**
