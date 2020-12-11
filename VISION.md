@@ -14,7 +14,7 @@ freely publish and consume components and projects.
 So we need to solve a few problems:
 
 - Discovery: projects/components from ecosystem libraries should feel 1st class.
-- Veloctiy: a single codebase can easily manage breaking changes in APIs, but it's much harder to do that at the 
+- Velocity: a single codebase can easily manage breaking changes in APIs, but it's much harder to do that at the 
   ecosystem level, and usually a source of a lot of frustration.
 
 ### Discovery
@@ -40,7 +40,7 @@ This means that projen will release major versions all the time. Think 232.4.34.
 
 So we need our ecosystem to continuously take updates and release new versions that were tested with the new major version. 
 In most cases, projects and component won't get broken, but sometimes they will and then the maintainer will need to resolve.
-Luckily this mechanism already exists in projen (`projenUpdateSecret`). 
+Luckily this mechanism already exists in projen (`projenUpgradeSecret`). 
 It is opt-in because it requires a the user to upload a GitHub secret, but maybe if we implement some support for secret management, 
 we could make that the default behavior.
 
