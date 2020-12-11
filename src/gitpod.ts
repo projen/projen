@@ -60,7 +60,7 @@ export enum GitpodOpenMode {
    */
   SPLIT_LEFT = 'split-left',
   /**
-   * Splits and adds the terminal to the tops
+   * Splits and adds the terminal to the top
    */
   SPLIT_TOP = 'split-top',
   /**
