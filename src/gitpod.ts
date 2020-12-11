@@ -171,7 +171,7 @@ export interface GitpodOptions {
 }
 
 /**
- * The Gitpod component itself
+ * The Gitpod component which emits .gitpod.yml
  */
 export class Gitpod extends Component {
   private tasks = new Array<GitpodTask>();
