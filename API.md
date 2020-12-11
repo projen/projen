@@ -1216,15 +1216,30 @@ new Gitpod(project: Project, options?: GitpodOptions)
 ### Methods
 
 
-#### addTasks(...task)🔹 <a id="projen-gitpod-addtasks"></a>
+#### addCustomDocker(docker)🔹 <a id="projen-gitpod-addcustomdocker"></a>
+
+Specify a custom Docker setup.
+
+```ts
+addCustomDocker(docker: GitpodDocker): void
+```
+
+* **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  The docker configuration.
+  * **file** (<code>string</code>)  *No description* __*Optional*__
+  * **image** (<code>string</code>)  A publicly available image to use. __*Optional*__
+
+
+
+
+#### addTasks(...tasks)🔹 <a id="projen-gitpod-addtasks"></a>
 
 Adds another task to the Gitpod configuration XXX: no way to clear out the default: yet.
 
 ```ts
-addTasks(...task: GitpodTask[]): void
+addTasks(...tasks: GitpodTask[]): void
 ```
 
-* **task** (<code>[GitpodTask](#projen-gitpodtask)</code>)  The additional tasks.
+* **tasks** (<code>[GitpodTask](#projen-gitpodtask)</code>)  The additional tasks.
   * **command** (<code>string</code>)  Required. 
   * **before** (<code>string</code>)  In case you need to run something even before init, that is a requirement for both init and command, you can use the before property. __*Optional*__
   * **init** (<code>string</code>)  The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow. __*Default*__: "yarn install"
@@ -1232,21 +1247,6 @@ addTasks(...task: GitpodTask[]): void
   * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: GitpodOpenIn.BOTTOM
   * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Default*__: GitpodOpenMode.TAB_AFTER
   * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
-
-
-
-
-#### customDocker(docker)🔹 <a id="projen-gitpod-customdocker"></a>
-
-Specify a custom Docker setup.
-
-```ts
-customDocker(docker: GitpodDocker): void
-```
-
-* **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  The docker configuration.
-  * **file** (<code>string</code>)  *No description* __*Optional*__
-  * **image** (<code>string</code>)  A publicly available image to use. __*Optional*__
 
 
 
