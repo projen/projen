@@ -235,7 +235,7 @@ export class Gitpod extends Component {
    *
    * @param docker The docker configuration
    */
-  public customDocker(docker: GitpodDocker) {
+  public addCustomDocker(docker: GitpodDocker) {
     this.docker = docker;
   }
 }
