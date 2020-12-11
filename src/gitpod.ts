@@ -122,7 +122,7 @@ export interface GitpodTask {
 
   /**
    * You can configure where in the IDE the terminal should be opened
-   * @default BOTTOM
+   * @default GitpodOpenIn.BOTTOM
    */
   readonly openIn?: GitpodOpenIn;
 
