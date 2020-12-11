@@ -85,7 +85,7 @@ const project = new AwsCdkTypeScriptApp({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -197,7 +197,7 @@ const project = new AwsCdkConstructLibrary({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -290,7 +290,7 @@ const project = new ConstructLibraryCdk8s({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -379,7 +379,7 @@ const project = new JsiiProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -472,7 +472,7 @@ const project = new web.NextJsProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -562,7 +562,7 @@ const project = new web.NextJsTypeScriptProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -661,7 +661,7 @@ const project = new NodeProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -675,7 +675,7 @@ exports[`projen new project 1`] = `
 
 const project = new Project({
   /* ProjectOptions */
-  // gitPod: false,      /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,      /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',        /* The root directory of the project. */
   // parent: undefined,  /* The parent project, if this project is part of a bigger project. */
 });
@@ -761,7 +761,7 @@ const project = new web.ReactProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -850,7 +850,7 @@ const project = new web.ReactTypeScriptProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -949,7 +949,7 @@ const project = new TypeScriptProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -1048,7 +1048,7 @@ const project = new TypeScriptAppProject({
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
-  // gitPod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
+  // gitpod: false,                                                            /* Whether to enable \`gitPod\` It can be customized later if needed. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
