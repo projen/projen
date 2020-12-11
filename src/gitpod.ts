@@ -139,7 +139,7 @@ export interface GitpodTask {
    * was freshly cloned and needs to be initialized somehow. Such tasks are usually builds or downloading
    * dependencies. Anything you only want to do once but not when you restart a workspace or start a snapshot.
    * XXX: NodeProject
-   * @default "yarn install"
+   * @default
    */
   readonly init?: string;
 
