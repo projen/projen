@@ -53,9 +53,7 @@ describe('gitpod image & file', () => {
       outdir: tempDir,
       gitpod: true,
     });
-    if (project.gitpod) {
-      project.gitpod.addCustomDocker({ image: 'jsii/superchain' });
-    }
+    project.gitpod?.addCustomDocker({ image: 'jsii/superchain' });
 
     const snapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(snapshot).toContain('image: jsii/superchain');
@@ -65,9 +63,7 @@ describe('gitpod image & file', () => {
       outdir: tempDir,
       gitpod: true,
     });
-    if (project.gitpod) {
-      project.gitpod.addCustomDocker({ file: '.gitpod.Dockerfile' });
-    }
+    project.gitpod?.addCustomDocker({ file: '.gitpod.Dockerfile' });
 
     const snapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(snapshot).toContain('image:');
@@ -81,9 +77,7 @@ describe('gitpod tasks', () => {
       outdir: tempDir,
       gitpod: true,
     });
-    if (project.gitpod) {
-      project.gitpod.addTasks({ command: 'text' });
-    }
+    project.gitpod?.addTasks({ command: 'text' });
 
     const snapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(snapshot).toContain('command');
