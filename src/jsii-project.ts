@@ -116,6 +116,8 @@ export interface JsiiJavaTarget {
   readonly javaPackage: string;
   readonly mavenGroupId: string;
   readonly mavenArtifactId: string;
+  readonly mavenServerId?: string;
+  readonly mavenRepositoryUrl?: string;
 }
 
 export interface JsiiPythonTarget {
@@ -214,6 +216,8 @@ export class JsiiProject extends TypeScriptProject {
         maven: {
           groupId: options.java.mavenGroupId,
           artifactId: options.java.mavenArtifactId,
+          serverId: options.java.mavenServerId,
+          repositoryUrl: options.java.mavenRepositoryUrl,
         },
       };
 
