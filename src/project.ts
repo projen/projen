@@ -35,8 +35,7 @@ export interface ProjectOptions {
   readonly outdir?: string;
 
   /**
-   * Whether to enable `gitPod`
-   * It can be customized later if needed
+   * Adds a gitpod configuration
    *
    * @default false
    */
@@ -310,4 +309,3 @@ export class Project {
     this.subprojects.push(subproject);
   }
 }
-
