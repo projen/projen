@@ -13,6 +13,6 @@
   ],
   "commitAll": true,
   "scripts": {
-    "postbump": "/bin/bash ./projen.sh && git add ."
+    "postbump": "/bin/bash ./projen.bash && git add ."
   }
 }

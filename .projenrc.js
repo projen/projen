@@ -36,12 +36,12 @@ const project = new JsiiProject({
   compileBeforeTest: true, // since we want to run the cli in tests
 
   // since this is projen, we need to always compile before we run
-  projenCommand: '/bin/bash ./projen.sh',
+  projenCommand: '/bin/bash ./projen.bash',
 });
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
-new TextFile(project, 'projen.sh', {
+new TextFile(project, 'projen.bash', {
   lines: [
     '#!/bin/bash',
     `# ${TextFile.PROJEN_MARKER}`,
