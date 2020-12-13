@@ -236,7 +236,7 @@ app.synth();`;
     if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
-    const appEntrypointName = this.appProject.appEntrypoint.split('.')[0];
+    const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
     const testCode = `import '@aws-cdk/assert/jest';
 import { App } from '@aws-cdk/core';
 import { MyStack } from '../src/${appEntrypointName}';
