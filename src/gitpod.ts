@@ -23,7 +23,7 @@ export interface GitpodDocker {
    *
    * A publicly available image to use
    *
-   * @default
+   * @default - uses the standard gitpod image (see [LINK] above)
    */
   readonly image?: string;
 
@@ -110,7 +110,7 @@ export interface GitpodTask {
 
   /**
    * A name for this
-   * @default
+   * @default - task names are omitted when blank like GH actions
    */
   readonly name?: string;
 
@@ -174,7 +174,7 @@ export interface GitpodOptions {
  */
 export class Gitpod extends Component {
   private readonly tasks = new Array<GitpodTask>();
-  private readonly docker: GitpodDocker | undefined;
+  private docker: GitpodDocker | undefined;
 
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
