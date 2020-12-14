@@ -173,7 +173,7 @@ export interface GitpodOptions {
  * The Gitpod component which emits .gitpod.yml
  */
 export class Gitpod extends Component {
-  private tasks = new Array<GitpodTask>();
+  private readonly tasks = new Array<GitpodTask>();
   private docker: GitpodDocker | undefined;
 
   constructor(project: Project, options?: GitpodOptions) {
