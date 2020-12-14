@@ -1233,7 +1233,7 @@ addCustomDocker(docker: GitpodDocker): void
 
 #### addTasks(...tasks)🔹 <a id="projen-gitpod-addtasks"></a>
 
-Adds another task to the Gitpod configuration XXX: no way to clear out the default: yet.
+Adds another task to the Gitpod configuration.
 
 ```ts
 addTasks(...tasks: GitpodTask[]): void
