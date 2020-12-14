@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>AWS CDK Construct Library - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">AWS CDK Construct Library</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../node/" class="nav-link">Node.js Projects</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tasks/" class="nav-link">Tasks</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../node/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#aws-cdk-construct-library" class="nav-link">AWS CDK Construct Library</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#table-of-contents" class="nav-link">Table of Contents</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#getting-started" class="nav-link">Getting Started</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#module-metadata" class="nav-link">Module Metadata</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dependencies" class="nav-link">Dependencies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#jsii-publishing" class="nav-link">jsii Publishing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#workflows" class="nav-link">Workflows</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#scripts" class="nav-link">Scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#construct-catalog" class="nav-link">Construct Catalog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#api-documentation" class="nav-link">API Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#project-structure" class="nav-link">Project structure</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#migrating-existing-projects" class="nav-link">Migrating existing projects</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#feedback" class="nav-link">Feedback</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="aws-cdk-construct-library">AWS CDK Construct Library</h1>
+<p>This projen type is used for building AWS CDK constructs using the jsii. The <a href="https://github.com/aws/jsii">jsii</a> allows 
+you to write code once in Typescript and it will generate the Python, .net, and Java equivalents. Use this if you'd 
+like to build and distribute CDK constructs for others to use.</p>
+<p>Class heirarchy: <code>AwsCdkConstructLibrary</code> -&gt; <code>ConstructLibrary</code> -&gt; <code>JsiiProject</code> -&gt; <code>TypeScriptProject</code> -&gt; <code>NodeProject</code> -&gt; <code>Project</code></p>
+<h1 id="table-of-contents">Table of Contents</h1>
+<ul>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#standard-node-module-fields">Standard Node Module Fields</a></li>
+<li><a href="#dependencies">Dependencies</a></li>
+<li><a href="#jsii-publishing">jsii Publishing</a></li>
+<li><a href="#workflows">Workflows</a></li>
+<li><a href="#scripts">Scripts</a></li>
+<li><a href="#construct-catalog">Construct Catalog</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#project-structure">Project structure</a></li>
+<li><a href="#migrating-existing-projects">Migrating existing projects</a></li>
+<li><a href="#feedback">Feedback</a></li>
+</ul>
+<h1 id="getting-started">Getting Started</h1>
+<p>Start like all projen projects:</p>
+<pre><code class="language-sh">npx projen new awscdk-construct
+</code></pre>
+<p>Review the resulting .projenrc.js file and make changes as needed. The following are some specific areas
+you may want to set explicitly.</p>
+<h2 id="module-metadata">Module Metadata</h2>
+<p>These fields are your basic Node module setup:</p>
+<pre><code class="language-typescript">authorAddress: 'benisrae@amazon.com',
+authorName: 'Elad Ben-Israel',
+description: 'Watching your CDK apps since 2019',
+name: 'cdk-watchful',
+license: 'MIT',
+repository: 'https://github.com/eladb/cdk-watchful.git',
+keywords: ['cloudwatch', 'monitoring']
+</code></pre>
+<p>All are pretty standard setup and nothing CDK-specific at this point. The <code>keywords</code> automatically gets 'cdk' so you don't
+need to specify it. </p>
+<h2 id="dependencies">Dependencies</h2>
+<h3 id="depending-on-aws-cdk-modules">Depending on AWS CDK modules</h3>
+<p>Next are getting CDK dependencies added:</p>
+<pre><code class="language-typescript">cdkVersion: '1.67.0',
+cdkDependencies: ['@aws-cdk/aws-ec2'],
+cdkTestDependencies: ['@aws-cdk/assert'],
+</code></pre>
+<p><code>cdkDependencies</code> will add both dependencies and peerDependencies to your package.json file with a caret semver 
+requirement (e.g. <code>^1.67.0</code>). CDK dependencies must be both direct and peer dependencies, 
+see <a href="https://github.com/aws/aws-cdk/issues/5064">this issue</a>. You can set <code>cdkVersionPinning</code> to <code>true</code> to use a fixed 
+version, but this means that any consumer of your library will have to use this exact CDK version. 
+Likewise, <code>cdkTestDependencies</code> will add dependencies to the <code>devDependencies</code>. </p>
+<p>Additionally, you can add CDK dependencies using the methods:</p>
+<pre><code class="language-typescript">project.addCdkDependencies('aws-cdk/aws-sqs', 'aws-cdk/aws-sns');
+project.addCdkTestDependencies('aws-cdk/something-else');
+</code></pre>
+<blockquote>
+<p>The <code>@aws-cdk/assert</code> library is already added to the <code>cdkTestDependencies</code> for you.</p>
+</blockquote>
+<h3 id="depending-on-other-modules">Depending on other modules</h3>
+<p>If your library consumes other jsii modules, you should declare them thorugh the <code>deps</code> or <code>peerDeps</code> options. <code>deps</code> should be used if 
+types from the consumed module is <em>not</em> part of the public API of the library (the module is used as an implementation detail), 
+while <code>peerDeps</code> <em>must</em> be used if types from the consumed module are exported as part of your library's API. You can read more 
+<a href="https://github.com/aws/jsii/blob/master/docs/configuration.md#dependency-considerations">here</a>.</p>
+<pre><code class="language-ts">deps: [ 'cdk-time-bomb' ]
+</code></pre>
+<p>A <a href="https://dependabot.com/">dependabot</a> file will be added unless <code>dependabot</code> is set to 'false'.</p>
+<h2 id="jsii-publishing">jsii Publishing</h2>
+<p>As this is a <a href="./jsii.md">jsii project</a>, it will cross-compile to other languages.  You can set up 
+any number of jsii target languages. </p>
+<pre><code class="language-typescript">  dotnet: {
+    dotNetNamespace: 'Acme.HelloNamespace',
+    packageId: 'Acme.HelloPackage'
+  },
+  java: {
+    javaPackage: 'com.acme.hello',
+    mavenArtifactId: 'hello-jsii',
+    mavenGroupId: 'com.acme.hello'
+  },
+  python: {
+    distName: 'acme.hello-jsii',
+    module: 'acme.hello_jsii'
+  },
+</code></pre>
+<p><a href="https://github.com/aws/jsii-release">jsii-release</a> is used for publishing, and requires uploading <a href="https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets">Github project secrets</a> based on the repositories you wish to publish to:</p>
+<ul>
+<li>npm - <code>NPM_TOKEN</code> (<a href="https://github.com/aws/jsii-release#npm">docs</a>)</li>
+<li>.NET - <code>NUGET_API_KEY</code> (<a href="https://github.com/aws/jsii-release#nuget">docs</a>)</li>
+<li>Java: <code>MAVEN_GPG_PRIVATE_KEY</code>, <code>MAVEN_GPG_PRIVATE_KEY_PASSPHRASE</code>, <code>MAVEN_PASSWORD</code>, <code>MAVEN_USERNAME</code>, <code>MAVEN_STAGING_PROFILE_ID</code> (<a href="https://github.com/aws/jsii-release#maven">docs</a>)</li>
+<li>Python: <code>TWINE_USERNAME</code>, <code>TWINE_PASSWORD</code> (<a href="https://github.com/aws/jsii-release#pypi">docs</a>)</li>
+</ul>
+<p>For help in getting these secrets for your project, read the <a href="https://github.com/aws/jsii-release">jsii-release</a>.</p>
+<p>If you don't want to publish a particular package, do not include the <code>dotnet</code>, <code>java</code>, or <code>python</code> field.</p>
+<h1 id="workflows">Workflows</h1>
+<p>Two workflows will be created as Github Actions:</p>
+<ul>
+<li>The Build workflow - controlled by the <code>buildWorkflow</code> field. On a 'pull_request' or 'workflow_dispatch' the library
+will be built and checked for anti-tamper (ensure no manual changes to generated files).</li>
+<li>The Release workflow - controlled by the <code>releaseWorkflow</code> field. On a push to <code>master</code> (overridden at
+ <code>props.defaultReleaseBranch</code>) the library is built, anti-tampered, version bumped with a commit, pushed back to git, 
+ and then published to the configured artifact repositories (e.g. npm, pypi).</li>
+</ul>
+<h1 id="scripts">Scripts</h1>
+<p>There are a number of package scripts that are created for you. Any of them can be overwritten using the <code>addScript*</code> 
+methods.</p>
+<table>
+<thead>
+<tr>
+<th>script</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td>starts an interactive command menu</td>
+</tr>
+<tr>
+<td>projen</td>
+<td>regenerates the projen config. Run this if you edit .projenrc.js</td>
+</tr>
+<tr>
+<td>no-changes</td>
+<td>a helper script to prevent unnecessary releases.</td>
+</tr>
+<tr>
+<td>bump</td>
+<td>bumps the package version number</td>
+</tr>
+<tr>
+<td>release</td>
+<td>bumps the library's version and pushes to origin</td>
+</tr>
+<tr>
+<td>projen:upgrade</td>
+<td>upgrades the projen cli tool</td>
+</tr>
+<tr>
+<td>compile</td>
+<td>builds the library and generates docs</td>
+</tr>
+<tr>
+<td>watch</td>
+<td>compiles and then re-compiles of further changes</td>
+</tr>
+<tr>
+<td>package</td>
+<td>runs jsii-pacmak to package your library for publishing</td>
+</tr>
+<tr>
+<td>test</td>
+<td>compiles and runs automated tests</td>
+</tr>
+<tr>
+<td>test:watch</td>
+<td>watches for file changes, re-compiles and re-tests</td>
+</tr>
+<tr>
+<td>test:update</td>
+<td>update any test snapshots</td>
+</tr>
+<tr>
+<td>eslint</td>
+<td>runs eslint against all <code>src</code> and <code>test</code> .ts files</td>
+</tr>
+<tr>
+<td>compat</td>
+<td>checks for jsii compatibility. See <a href="https://github.com/aws/jsii/tree/master/packages/jsii-diff">here</a> for more info.</td>
+</tr>
+<tr>
+<td>docgen</td>
+<td>generate documentation</td>
+</tr>
+</tbody>
+</table>
+<p>As you develop your library you'll likely be using the <code>test:watch</code> command the most.</p>
+<h1 id="construct-catalog">Construct Catalog</h1>
+<p>Finally, a field for setting up publishing to the <a href="https://awscdk.io">construct catalog</a>:</p>
+<pre><code class="language-typescript">  catalog: {
+    announce: true,
+    twitter: '@yourhandle'
+  }
+</code></pre>
+<p>These values are optional but allow the construct catalog's Twitter account to mention your handle on the tweet. Setting <code>announce</code>
+to 'false' will stop all tweets about the library. However, the library will still be indexed.</p>
+<h1 id="api-documentation">API Documentation</h1>
+<p>Docs will be generated from <a href="https://typedoc.org/guides/doccomments/">Typescript comments</a> and saved in the <code>API.md</code> file.
+Please review this file regularly and document your constructs liberally. </p>
+<h1 id="project-structure">Project structure</h1>
+<pre><code>.
+|--lib/ (generated)
+|--src/
+   |--main.ts
+|--test/
+   |--main.test.ts
+</code></pre>
+<p>Source .ts files should reside in the <code>src</code> directory. Constructs should be exported from the main.ts file. 
+Compiled files will be put in the <code>lib</code> directory. Tests are in the <code>test</code> directory. If you need additional 
+resources that are packaged with your library, add those to a <code>resources</code> directory that is besides the <code>src</code> directory
+and modify your references accordingly:</p>
+<pre><code class="language-typescript">const thing = require('../resources/some-resource.json')
+</code></pre>
+<h1 id="migrating-existing-projects">Migrating existing projects</h1>
+<p>Your existing CDK constructs likely have a different file structure than what this projen project expects. Projen projects
+are highly opinionated. There are a few expectations of this project you should modify your existing library to conform to:</p>
+<ul>
+<li>All .ts files are expected to be in the <code>src/</code> directory. Existing constructs should all be moved there. However, 
+you can override this directory by setting <code>srcdir</code>.</li>
+<li>Compiled .js and .d.ts files will go into the <code>lib/</code> directory. This directory will be removed and rebuilt each build.
+Do not store source .ts files in your <code>lib/</code> or 'libdir'.</li>
+<li>The entrypoint file for all constructs should be <code>src/main.ts</code>. If your existing library is not in the main.ts file, 
+you can add the following to export it:</li>
+</ul>
+<pre><code class="language-typescript">export * from './our-s3-bucket'
+</code></pre>
+<h1 id="feedback">Feedback</h1>
+<p>If you find there is anything we missed, please submit Issues or (better yet) Pull Requests on Github.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Tasks - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../awscdk-construct/" class="nav-link">AWS CDK Construct Library</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../node/" class="nav-link">Node.js Projects</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Tasks</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../node/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#tasks" class="nav-link">Tasks</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#steps" class="nav-link">Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#subtasks" class="nav-link">Subtasks</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#environment" class="nav-link">Environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#conditions" class="nav-link">Conditions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tasks-as-npm-scripts" class="nav-link">Tasks as npm scripts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="tasks">Tasks</h1>
+<p>Tasks are a project-level feature to define a project command system backed by
+shell scripts. Tasks are used to implement development workflows and are
+accessible through the projen CLI as subcommands.</p>
+<p>The following example defines a task named "hello" which executes the shell
+command <code>echo hello, world!</code>:</p>
+<pre><code class="language-js">const hello = project.addTask('hello');
+hello.exec('echo hello, world!');
+</code></pre>
+<p>Run <code>pj</code> and the task will be available in the CLI:</p>
+<pre><code class="language-shell">$ projen hello
+🤖 hello | echo hello, world!
+hello, world!
+</code></pre>
+<p>You can also define some metadata and the first exec step declaratively:</p>
+<pre><code class="language-js">const projen = require('projen');
+
+const hello = project.addTask('hello', {
+  description: 'say hello',
+  category: projen.tasks.TaskCategory.TEST,  
+  exec: 'echo hello, world!'
+});
+</code></pre>
+<h2 id="steps">Steps</h2>
+<p>Tasks can include any number of <em>steps</em>:</p>
+<pre><code class="language-ts">hello.exec('echo step number 2');
+
+// a name can be added to a step if desired
+hello.exec('echo foo bar', { name: 'print the text &quot;foo bar&quot;' });
+</code></pre>
+<p>The <code>--inspect</code> option can be used to display the contents of a task:</p>
+<pre><code class="language-shell">$ projen hello --inspect
+echo hello, world!
+echo step number 2
+echo foo bar
+</code></pre>
+<p>If a step fails, the task will fail and all subsequent steps will not be
+executed.</p>
+<p>You can also add steps to the beginning of a task:</p>
+<pre><code class="language-ts">const hello = project.addTask('hello');
+hello.exec('echo hello');
+hello.prepend('echo world');
+</code></pre>
+<p>Then:</p>
+<pre><code class="language-shell">$ projen hello 2&gt; /dev/null
+world
+hello
+</code></pre>
+<h2 id="subtasks">Subtasks</h2>
+<p>Tasks can also spawn sub-tasks as a step:</p>
+<pre><code class="language-ts">const world = project.addTask('world');
+world.exec('echo world!');
+
+const hello = project.addTask('hello');
+hello.exec('echo hello');
+hello.spawn(world);
+</code></pre>
+<p>The output will be:</p>
+<pre><code class="language-shell">$ projen hello
+🤖 hello | echo hello
+hello
+🤖 hello » world | echo world!
+world!
+
+$ projen hello --inspect
+echo hello
+world:
+   echo world!
+</code></pre>
+<h2 id="environment">Environment</h2>
+<p>Environment variables can be defined at the project level (for all tasks) or the task level:</p>
+<pre><code class="language-ts">project.tasks.addEnvironment('FOO', 'hello');
+
+const hello = project.addTask('hello');
+hello.env('BAR', 'world');
+hello.exec('echo $FOO, $BAR!');
+</code></pre>
+<p>Then:</p>
+<pre><code class="language-shell">$ projen hello
+🤖 hello | echo $FOO, $BAR!
+hello, world!
+</code></pre>
+<p>You can also evaluate environment variable values from a shell command:</p>
+<pre><code class="language-ts">const hello = project.addTask('hello');
+hello.env('TIME', '$(date)');
+hello.exec('echo current time is $TIME');
+</code></pre>
+<p>Then:</p>
+<pre><code class="language-shell">$ projen hello
+🤖 hello | echo current time is $TIME
+current time is Tue Dec 1 09:32:33 IST 2020
+</code></pre>
+<h2 id="conditions">Conditions</h2>
+<p>The <code>condition</code> option includes a command that determines if the task is
+executed. If the command exits successfully (with a zero exit code), steps will
+be executed. Otherwise, the task will be skipped (successfully).</p>
+<pre><code class="language-ts">const hello = project.addTask('hello', {
+  condition: '[ -n &quot;$CI&quot; ]', // only execute if the CI environment variable is defined
+  exec: 'echo running in a CI environment'
+});
+</code></pre>
+<p>Then:</p>
+<pre><code class="language-shell">$ projen hello
+🤖 hello | condition: [ -n &quot;$CI&quot; ]
+🤖 hello | condition exited with non-zero - skipping
+
+$ CI=1 projen hello
+🤖 hello | condition: [ -n &quot;$CI&quot; ]
+🤖 hello | echo running in a CI environment
+running in a CI environment
+</code></pre>
+<h2 id="tasks-as-npm-scripts">Tasks as npm scripts</h2>
+<p>By default, npm scripts in <code>NodeProject</code>s (or derivatives) are implemented by delegating the
+command to the projen CLI:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;compile&quot;: &quot;npx projen compile&quot;
+  }
+}
+</code></pre>
+<p>This means that when <code>yarn compile</code> or <code>npm run compile</code> are executed, the
+projen CLI will be invoked and the task will be executed.</p>
+<p>You can set <code>npmTaskExecution: NpmTaskExecution.SHELL</code> when the project is
+defined to tell projen to render the task command directly as an npm script,
+bypassing the projen CLI:</p>
+<pre><code class="language-js">const project = new NodeProject({
+  // ...
+  npmTaskExecution: NpmTaskExecution.SHELL,
+});
+</code></pre>
+<p>And then, this is how <code>package.json</code> will look like:</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;compile&quot;: &quot;tsc&quot;
+  }
+}
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
