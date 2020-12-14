@@ -174,7 +174,7 @@ export interface GitpodOptions {
  */
 export class Gitpod extends Component {
   private readonly tasks = new Array<GitpodTask>();
-  private docker: GitpodDocker | undefined;
+  private readonly docker: GitpodDocker | undefined;
 
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
