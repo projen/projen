@@ -5,7 +5,6 @@ exports[`projen new awscdk-app-ts 1`] = `
 
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.73.0',
-  name: 'my-project',
 
   /* AwsCdkTypeScriptAppOptions */
   // appEntrypoint: 'main.ts',                                                 /* The CDK app's entrypoint (relative to the source directory, which is \\"src\\" by default). */
@@ -23,15 +22,12 @@ const project = new AwsCdkTypeScriptApp({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -69,22 +65,25 @@ const project = new AwsCdkTypeScriptApp({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -110,10 +109,7 @@ exports[`projen new awscdk-construct 1`] = `
 "const { AwsCdkConstructLibrary } = require('projen');
 
 const project = new AwsCdkConstructLibrary({
-  authorAddress: 'my@user.email.com',
-  authorName: 'My User Name',
   cdkVersion: '1.73.0',
-  name: 'my-project',
   repository: 'git@boom.com:foo/bar.git',
 
   /* AwsCdkConstructLibraryOptions */
@@ -126,7 +122,6 @@ const project = new AwsCdkConstructLibrary({
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
   /* JsiiProjectOptions */
-  // authorOrganization: undefined,                                            /* undefined */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // description: undefined,                                                   /* Library description. */
@@ -136,7 +131,6 @@ const project = new AwsCdkConstructLibrary({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: '.',                                                             /* undefined */
   // stability: undefined,                                                     /* undefined */
@@ -150,15 +144,12 @@ const project = new AwsCdkConstructLibrary({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -196,6 +187,16 @@ const project = new AwsCdkConstructLibrary({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -208,17 +209,13 @@ exports[`projen new cdk8s-construct 1`] = `
 "const { ConstructLibraryCdk8s } = require('projen');
 
 const project = new ConstructLibraryCdk8s({
-  authorAddress: 'my@user.email.com',
-  authorName: 'My User Name',
   cdk8sVersion: '1.0.0-beta.3',
-  name: 'my-project',
   repository: 'git@boom.com:foo/bar.git',
 
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
   /* JsiiProjectOptions */
-  // authorOrganization: undefined,                                            /* undefined */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // description: undefined,                                                   /* Library description. */
@@ -228,7 +225,6 @@ const project = new ConstructLibraryCdk8s({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: '.',                                                             /* undefined */
   // stability: undefined,                                                     /* undefined */
@@ -242,15 +238,12 @@ const project = new ConstructLibraryCdk8s({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -288,6 +281,16 @@ const project = new ConstructLibraryCdk8s({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -300,13 +303,9 @@ exports[`projen new jsii 1`] = `
 "const { JsiiProject } = require('projen');
 
 const project = new JsiiProject({
-  authorAddress: 'my@user.email.com',
-  authorName: 'My User Name',
-  name: 'my-project',
   repository: 'git@boom.com:foo/bar.git',
 
   /* JsiiProjectOptions */
-  // authorOrganization: undefined,                                            /* undefined */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // description: undefined,                                                   /* Library description. */
@@ -316,7 +315,6 @@ const project = new JsiiProject({
   // java: undefined,                                                          /* undefined */
   // jest: true,                                                               /* Use jest for unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* undefined */
   // python: undefined,                                                        /* undefined */
   // rootdir: '.',                                                             /* undefined */
   // stability: undefined,                                                     /* undefined */
@@ -330,15 +328,12 @@ const project = new JsiiProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -376,6 +371,16 @@ const project = new JsiiProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -388,8 +393,6 @@ exports[`projen new nextjs 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsProject({
-  name: 'my-project',
-
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
   // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
@@ -406,15 +409,12 @@ const project = new web.NextJsProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -452,22 +452,25 @@ const project = new web.NextJsProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -480,8 +483,6 @@ exports[`projen new nextjs-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsTypeScriptProject({
-  name: 'my-project',
-
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
   // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
@@ -495,15 +496,12 @@ const project = new web.NextJsTypeScriptProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -541,22 +539,25 @@ const project = new web.NextJsTypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -582,8 +583,6 @@ exports[`projen new node 1`] = `
 "const { NodeProject } = require('projen');
 
 const project = new NodeProject({
-  name: 'my-project',
-
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
@@ -593,15 +592,12 @@ const project = new NodeProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -639,22 +635,25 @@ const project = new NodeProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -668,8 +667,18 @@ exports[`projen new project 1`] = `
 
 const project = new Project({
   /* ProjectOptions */
-  // outdir: '.',        /* The root directory of the project. */
-  // parent: undefined,  /* The parent project, if this project is part of a bigger project. */
+  // authorAddress: $GIT_USER_EMAIL,  /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,      /* The name of the library author. */
+  // authorOrganization: undefined,   /* Author's Organization. */
+  // copyrightOwner: undefined,       /* License copyright owner. */
+  // copyrightPeriod: undefined,      /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,             /* Package's Homepage / Website. */
+  // keywords: undefined,             /* Keywords. */
+  // license: undefined,              /* License's SPDX identifier. */
+  // licensed: true,                  /* Indicates if a license should be added. */
+  // name: $BASEDIR,                  /* This is the name of your package. */
+  // outdir: '.',                     /* The root directory of the project. */
+  // parent: undefined,               /* The parent project, if this project is part of a bigger project. */
 });
 
 project.synth();
@@ -680,8 +689,6 @@ exports[`projen new react 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactProject({
-  name: 'my-project',
-
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
@@ -691,15 +698,12 @@ const project = new web.ReactProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -737,22 +741,25 @@ const project = new web.ReactProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -768,8 +775,6 @@ exports[`projen new react-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactTypeScriptProject({
-  name: 'my-project',
-
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
@@ -779,15 +784,12 @@ const project = new web.ReactTypeScriptProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -825,22 +827,25 @@ const project = new web.ReactTypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -866,8 +871,6 @@ exports[`projen new typescript 1`] = `
 "const { TypeScriptProject } = require('projen');
 
 const project = new TypeScriptProject({
-  name: 'my-project',
-
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
@@ -877,15 +880,12 @@ const project = new TypeScriptProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -923,22 +923,25 @@ const project = new TypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -964,8 +967,6 @@ exports[`projen new typescript-app 1`] = `
 "const { TypeScriptAppProject } = require('projen');
 
 const project = new TypeScriptAppProject({
-  name: 'my-project',
-
   /* NodeProjectCommonOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
@@ -975,15 +976,12 @@ const project = new TypeScriptAppProject({
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
   // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // deps: [],                                                                 /* Runtime dependencies of this module. */
   // devDeps: [],                                                              /* Build dependencies for this module. */
   // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
   // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // mergify: true,                                                            /* Adds mergify configuration. */
@@ -1021,22 +1019,25 @@ const project = new TypeScriptAppProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* NodeProjectOptions */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
   // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // license: undefined,                                                       /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
   // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
   // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
   // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
+  // authorAddress: $GIT_USER_EMAIL,                                           /* Email or URL of the library author. */
+  // authorName: $GIT_USER_NAME,                                               /* The name of the library author. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords. */
+  // license: undefined,                                                       /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // name: $BASEDIR,                                                           /* This is the name of your package. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 

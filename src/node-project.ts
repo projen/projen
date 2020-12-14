@@ -142,11 +142,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   readonly autoDetectBin?: boolean;
 
   /**
-   * Keywords to include in `package.json`.
-   */
-  readonly keywords?: string[];
-
-  /**
    * Version of projen to install.
    *
    * @default Semver.latest()
@@ -285,20 +280,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * @default NodePackageManager.YARN
    */
   readonly packageManager?: NodePackageManager;
-
-  /**
-   * License copyright owner.
-   *
-   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
-   */
-  readonly copyrightOwner?: string;
-
-  /**
-   * The copyright years to put in the LICENSE file.
-   *
-   * @default - current year
-   */
-  readonly copyrightPeriod?: string;
 
   /**
    * Compiler artifacts output directory
@@ -504,15 +485,6 @@ export enum NpmTaskExecution {
 
 export interface NodeProjectOptions extends NodeProjectCommonOptions {
   /**
-   * This is the name of your package. It gets used in URLs, as an argument on the command line,
-   * and as the directory name inside node_modules.
-   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
-   *
-   * @default $BASEDIR
-   */
-  readonly name: string;
-
-  /**
    * The description is just a string that helps people understand the purpose of the package.
    * It can be used when searching for packages in a package manager as well.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-description
@@ -531,43 +503,6 @@ export interface NodeProjectOptions extends NodeProjectCommonOptions {
    */
   readonly repositoryDirectory?: string;
 
-  /**
-   * Author's name
-   */
-  readonly authorName?: string;
-
-  /**
-   * Author's e-mail
-   */
-  readonly authorEmail?: string;
-
-  /**
-   * Author's URL / Website
-   */
-  readonly authorUrl?: string;
-
-  /**
-   * Author's Organization
-   */
-  readonly authorOrganization?: boolean;
-
-  /**
-   * Package's Homepage / Website
-   */
-  readonly homepage?: string;
-
-  /**
-   * License's SPDX identifier.
-   * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
-   */
-  readonly license?: string;
-
-  /**
- * Indicates if a license should be added.
- *
- * @default true
- */
-  readonly licensed?: boolean;
 
   /**
    * Package's Stability

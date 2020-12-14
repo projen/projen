@@ -17,12 +17,6 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   readonly rootdir?: string;
 
   /**
-   * The name of the library.
-   * @default $BASEDIR
-   */
-  readonly name: string;
-
-  /**
    * Library description.
    */
   readonly description?: string;
@@ -33,30 +27,7 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
    */
   readonly repository: string;
 
-  /**
-   * The name of the library author.
-   * @default $GIT_USER_NAME
-   */
-  readonly authorName: string;
 
-  /**
-   * Email or URL of the library author.
-   * @default $GIT_USER_EMAIL
-   */
-  readonly authorAddress: string;
-
-  /**
-   * @deprecated use `authorAddress`
-   */
-  readonly authorEmail?: string;
-
-  /**
-   * @deprecated use `authorAddress`
-   */
-  readonly authorUrl?: string;
-
-  readonly authorOrganization?: boolean;
-  readonly license?: string;
   readonly stability?: string;
 
   readonly java?: JsiiJavaTarget;

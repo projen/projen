@@ -15,6 +15,80 @@ import { isTruthy } from './util';
 import { VsCode } from './vscode';
 
 export interface ProjectOptions {
+
+  /**
+   * This is the name of your package. It gets used in URLs, as an argument on the command line,
+   * and as the directory name inside node_modules.
+   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
+   *
+   * @default $BASEDIR
+   */
+  readonly name?: string;
+
+  /**
+   * The name of the library author.
+   * @default $GIT_USER_NAME
+   */
+  readonly authorName?: string;
+
+  /**
+   * @deprecated use `authorAddress`
+   */
+  readonly authorEmail?: string;
+
+  /**
+   * Email or URL of the library author.
+   * @default $GIT_USER_EMAIL
+   */
+  readonly authorAddress?: string;
+
+  /**
+   * @deprecated use `authorAddress`
+   */
+  readonly authorUrl?: string;
+
+  /**
+   * Author's Organization
+   */
+  readonly authorOrganization?: boolean;
+
+  /**
+   * Package's Homepage / Website
+   */
+  readonly homepage?: string;
+
+  /**
+   * License's SPDX identifier.
+   * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
+   */
+  readonly license?: string;
+
+  /**
+ * Indicates if a license should be added.
+ *
+ * @default true
+ */
+  readonly licensed?: boolean;
+
+  /**
+   * License copyright owner.
+   *
+   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
+   */
+  readonly copyrightOwner?: string;
+
+  /**
+   * The copyright years to put in the LICENSE file.
+   *
+   * @default - current year
+   */
+  readonly copyrightPeriod?: string;
+
+  /**
+   * Keywords
+   */
+  readonly keywords?: string[];
+
   /**
    * The parent project, if this project is part of a bigger project.
    */
