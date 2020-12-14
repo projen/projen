@@ -166,7 +166,7 @@ export interface GitpodOptions {
    * This must be defaulted per project
    * @default []
    */
-  readonly tasks: GitpodTask[];
+  readonly tasks?: GitpodTask[];
 }
 
 /**
