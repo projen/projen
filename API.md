@@ -1209,8 +1209,8 @@ new Gitpod(project: Project, options?: GitpodOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  *No description*
-  * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. 
   * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`. __*Default*__: undefined
+  * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. __*Default*__: []
 
 
 ### Methods
@@ -1226,7 +1226,7 @@ addCustomDocker(docker: GitpodDocker): void
 
 * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  *No description*
   * **file** (<code>string</code>)  *No description* __*Optional*__
-  * **image** (<code>string</code>)  A publicly available image to use. __*Optional*__
+  * **image** (<code>string</code>)  A publicly available image to use. __*Default*__: uses the standard gitpod image (see [LINK] above)
 
 
 
@@ -1243,7 +1243,7 @@ addTasks(...tasks: GitpodTask[]): void
   * **command** (<code>string</code>)  Required. 
   * **before** (<code>string</code>)  In case you need to run something even before init, that is a requirement for both init and command, you can use the before property. __*Optional*__
   * **init** (<code>string</code>)  The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow. __*Optional*__
-  * **name** (<code>string</code>)  A name for this. __*Optional*__
+  * **name** (<code>string</code>)  A name for this. __*Default*__: task names are omitted when blank like GH actions
   * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: GitpodOpenIn.BOTTOM
   * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Default*__: GitpodOpenMode.TAB_AFTER
   * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
@@ -3691,7 +3691,7 @@ https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
 Name | Type | Description 
 -----|------|-------------
 **file**?🔹 | <code>string</code> | __*Optional*__
-**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Optional*__
+**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: uses the standard gitpod image (see [LINK] above)
 
 
 
@@ -3704,8 +3704,8 @@ What can we configure for the GitPod component.
 
 Name | Type | Description 
 -----|------|-------------
-**tasks**🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.
 **docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
+**tasks**?🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.<br/>__*Default*__: []
 
 
 
@@ -3727,7 +3727,7 @@ Name | Type | Description
 **command**🔹 | <code>string</code> | Required.
 **before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
 **init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Optional*__
-**name**?🔹 | <code>string</code> | A name for this.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | A name for this.<br/>__*Default*__: task names are omitted when blank like GH actions
 **openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
 **openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
 **prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
