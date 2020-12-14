@@ -470,6 +470,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   /**
    * The pull request bot command to use in order to trigger a rebuild and
    * commit of the contents of the branch. The command must be prefixed by "@projen", e.g. "@projen rebuild"
+   * `gh pr review $pr --comment -b "@projen rebuild"`
    *
    * @default "rebuild"
    */
