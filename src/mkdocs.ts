@@ -1,8 +1,7 @@
 import { Component } from './component';
 import { Project } from './project';
+import { YamlFile } from './yaml';
 // import { SampleFile } from './sample-file';
-// import { YamlFile } from './yaml';
-
 
 /**
  * https://www.mkdocs.org/user-guide/configuration/
@@ -30,6 +29,9 @@ export interface MkDocsThemePalatteProps {
   readonly accent?: string;
 }
 
+/**
+ *
+ */
 export interface MkDocsThemeFontProps {
 
   /**
@@ -43,6 +45,9 @@ export interface MkDocsThemeFontProps {
   readonly code: string;
 }
 
+/**
+ *
+ */
 export interface MkDocsThemeIconProps {
 
   /**
@@ -331,11 +336,19 @@ export class MkDocs extends Component {
    * @param project
    * @param props
    */
-  constructor(project: Project, props: MkDocsProps) {
+  constructor(project: Project, props?: MkDocsProps) {
     super(project);
 
-    this.config = {
-      ...props,
-    };
+    if (props) {
+      this.config = props;
+    } else {
+      this.config = {
+        siteName: 'foo2', // XXX: project.name is on NodeProject et al, see other PR
+      };
+    }
+
+    new YamlFile(project, 'mkdocs.yml', {
+      obj: this.config,
+    });
   }
 }

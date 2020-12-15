@@ -34,6 +34,7 @@ const project = new JsiiProject({
   minNodeVersion: '10.17.0',
   codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
+  mkdocs: true,
 
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',

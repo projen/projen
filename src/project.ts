@@ -8,6 +8,7 @@ import { GitHub } from './github';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
+import { MkDocs, MkDocsProps } from './mkdocs';
 import { SampleReadme } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -32,6 +33,18 @@ export interface ProjectOptions {
    * @default "."
    */
   readonly outdir?: string;
+
+  /**
+   * Whether to enable MkDocs
+   * @default false
+   */
+  readonly mkdocs?: boolean;
+
+  /**
+   * If mkdocs is true, then this can be used to customize the mkdocs site
+   * @default - off
+   */
+  readonly mkdocsConfig?: MkDocsProps;
 }
 
 /**
@@ -78,6 +91,7 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
+  private readonly mkdocs: MkDocs | undefined;
 
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
@@ -123,6 +137,13 @@ export class Project {
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
+    this.mkdocs = options.mkdocs ? new MkDocs(this) : undefined;
+    if (this.mkdocs) {
+      let x = 1;
+      if (x) {
+        x=1;
+      }
+    }
     new SampleReadme(this, '# my project');
   }
 

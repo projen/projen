@@ -20,6 +20,7 @@ Name|Description
 [JsonFile](#projen-jsonfile)|Represents a JSON file.
 [License](#projen-license)|*No description*
 [Makefile](#projen-makefile)|Minimal Makefile.
+[MkDocs](#projen-mkdocs)|*No description*
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
@@ -66,6 +67,15 @@ Name|Description
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
+[MkDocsExtraProps](#projen-mkdocsextraprops)|*No description*
+[MkDocsMarkDownExtensionProps](#projen-mkdocsmarkdownextensionprops)|*No description*
+[MkDocsMarkDownPluginProps](#projen-mkdocsmarkdownpluginprops)|*No description*
+[MkDocsNavProps](#projen-mkdocsnavprops)|MkDocs Navigation (aka a map of pages) Note, siteUrl can affect the relativity of these.
+[MkDocsProps](#projen-mkdocsprops)|*No description*
+[MkDocsThemeFontProps](#projen-mkdocsthemefontprops)|*No description*
+[MkDocsThemeIconProps](#projen-mkdocsthemeiconprops)|*No description*
+[MkDocsThemePalatteProps](#projen-mkdocsthemepalatteprops)|*No description*
+[MkDocsThemeProps](#projen-mkdocsthemeprops)|An Mkdocs Theme The theme itself is optional but if you define one Some fields are required Projen will define its own theme elsewhere.
 [NodeProjectCommonOptions](#projen-nodeprojectcommonoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
@@ -188,6 +198,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -336,6 +348,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -529,6 +543,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -628,6 +644,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -736,6 +754,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -1345,6 +1365,8 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -1641,6 +1663,46 @@ __Returns__:
 
 
 
+## class MkDocs 🔹 <a id="projen-mkdocs"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new MkDocs(project: Project, props?: MkDocsProps)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **props** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  *No description*
+  * **siteName** (<code>string</code>)  The documentation site name This is the only required mkdocs.yml param. 
+  * **copyright** (<code>string</code>)  The documentation site copyright. __*Default*__: : `project.copyright`
+  * **docsDir** (<code>string</code>)  The directory to put docs in. __*Default*__: "docs-mk" docs is the default but is shared with docgen for API via typedoc mkdocs is for themes see `MkDocsThemeProps`
+  * **editUri** (<code>string</code>)  The Browser URL to edit. __*Default*__: : ""
+  * **extra** (<code>[MkDocsExtraProps](#projen-mkdocsextraprops)</code>)  Extra stuff to embed. __*Optional*__
+  * **extraCss** (<code>Array<string></code>)  List of CSS Files to embed. __*Default*__: []
+  * **extraJavaScript** (<code>json</code>)  List of JavaScript Files to embed. __*Default*__: []
+  * **googleAnalytics** (<code>Array<string></code>)  *No description* __*Default*__: []
+  * **markdownExtensions** (<code>[MkDocsMarkDownExtensionProps](#projen-mkdocsmarkdownextensionprops)</code>)  Extensions to load. __*Optional*__
+  * **nav** (<code>[MkDocsNavProps](#projen-mkdocsnavprops)</code>)  List of the pages in the `docsDir`. __*Optional*__
+  * **plugins** (<code>[MkDocsMarkDownPluginProps](#projen-mkdocsmarkdownpluginprops)</code>)  Plugins to load https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins. __*Optional*__
+  * **remoteBranch** (<code>string</code>)  What branch to use when gh-deploy. __*Default*__: "gh-pages"
+  * **remoteName** (<code>string</code>)  What remote to use when gh-deploy. __*Default*__: origin
+  * **repoName** (<code>string</code>)  The repository name. __*Default*__: : parsed from `project.repository`
+  * **repoUrl** (<code>string</code>)  The repository url. __*Default*__: : parsed from `project.repository` minus .git
+  * **siteAuthor** (<code>string</code>)  The documentation site author. __*Default*__: `project.author`
+  * **siteDescription** (<code>string</code>)  The documentation site description. __*Default*__: `project.description`
+  * **siteUrl** (<code>string</code>)  The documentation site url. __*Optional*__
+  * **theme** (<code>[MkDocsThemeProps](#projen-mkdocsthemeprops)</code>)  The `mkdocs` theme https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes. __*Optional*__
+
+
+
+
 ## class NodeProject 🔹 <a id="projen-nodeproject"></a>
 
 Node.js project.
@@ -1657,6 +1719,8 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2059,6 +2123,8 @@ new Project(options?: ProjectOptions)
 ```
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
 
@@ -2497,6 +2563,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2601,6 +2669,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2705,6 +2775,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mkdocs** (<code>boolean</code>)  Whether to enable MkDocs. __*Default*__: false
+  * **mkdocsConfig** (<code>[MkDocsProps](#projen-mkdocsprops)</code>)  If mkdocs is true, then this can be used to customize the mkdocs site. __*Default*__: off
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2992,6 +3064,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3089,6 +3163,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3204,6 +3280,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?⚠️ | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?⚠️ | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?⚠️ | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3296,6 +3374,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3387,6 +3467,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3878,6 +3960,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -3980,6 +4064,158 @@ Name | Type | Description
 
 
 
+## struct MkDocsExtraProps 🔹 <a id="projen-mkdocsextraprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**social**🔹 | <code>any</code> | <span></span>
+
+
+
+## struct MkDocsMarkDownExtensionProps 🔹 <a id="projen-mkdocsmarkdownextensionprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Name of the extension.
+**flags**?🔹 | <code>Map<string, string></code> | Extension specific settings.<br/>__*Default*__: :
+
+
+
+## struct MkDocsMarkDownPluginProps 🔹 <a id="projen-mkdocsmarkdownpluginprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Name of the plugin.
+**settings**?🔹 | <code>Map<string, string &#124; Map<string, string>></code> | Plugin specific settings.<br/>__*Default*__: :
+
+
+
+## struct MkDocsNavProps 🔹 <a id="projen-mkdocsnavprops"></a>
+
+
+MkDocs Navigation (aka a map of pages) Note, siteUrl can affect the relativity of these.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pages**?🔹 | <code>Map<string, string></code> | List of Mkdocs pages.<br/>__*Default*__: index.md
+
+
+
+## struct MkDocsProps 🔹 <a id="projen-mkdocsprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**siteName**🔹 | <code>string</code> | The documentation site name This is the only required mkdocs.yml param.
+**copyright**?🔹 | <code>string</code> | The documentation site copyright.<br/>__*Default*__: : `project.copyright`
+**docsDir**?🔹 | <code>string</code> | The directory to put docs in.<br/>__*Default*__: "docs-mk" docs is the default but is shared with docgen for API via typedoc mkdocs is for themes see `MkDocsThemeProps`
+**editUri**?🔹 | <code>string</code> | The Browser URL to edit.<br/>__*Default*__: : ""
+**extra**?🔹 | <code>[MkDocsExtraProps](#projen-mkdocsextraprops)</code> | Extra stuff to embed.<br/>__*Optional*__
+**extraCss**?🔹 | <code>Array<string></code> | List of CSS Files to embed.<br/>__*Default*__: []
+**extraJavaScript**?🔹 | <code>json</code> | List of JavaScript Files to embed.<br/>__*Default*__: []
+**googleAnalytics**?🔹 | <code>Array<string></code> | __*Default*__: []
+**markdownExtensions**?🔹 | <code>[MkDocsMarkDownExtensionProps](#projen-mkdocsmarkdownextensionprops)</code> | Extensions to load.<br/>__*Optional*__
+**nav**?🔹 | <code>[MkDocsNavProps](#projen-mkdocsnavprops)</code> | List of the pages in the `docsDir`.<br/>__*Optional*__
+**plugins**?🔹 | <code>[MkDocsMarkDownPluginProps](#projen-mkdocsmarkdownpluginprops)</code> | Plugins to load https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins.<br/>__*Optional*__
+**remoteBranch**?🔹 | <code>string</code> | What branch to use when gh-deploy.<br/>__*Default*__: "gh-pages"
+**remoteName**?🔹 | <code>string</code> | What remote to use when gh-deploy.<br/>__*Default*__: origin
+**repoName**?🔹 | <code>string</code> | The repository name.<br/>__*Default*__: : parsed from `project.repository`
+**repoUrl**?🔹 | <code>string</code> | The repository url.<br/>__*Default*__: : parsed from `project.repository` minus .git
+**siteAuthor**?🔹 | <code>string</code> | The documentation site author.<br/>__*Default*__: `project.author`
+**siteDescription**?🔹 | <code>string</code> | The documentation site description.<br/>__*Default*__: `project.description`
+**siteUrl**?🔹 | <code>string</code> | The documentation site url.<br/>__*Optional*__
+**theme**?🔹 | <code>[MkDocsThemeProps](#projen-mkdocsthemeprops)</code> | The `mkdocs` theme https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes.<br/>__*Optional*__
+
+
+
+## struct MkDocsThemeFontProps 🔹 <a id="projen-mkdocsthemefontprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**code**🔹 | <code>string</code> | <span></span>
+**text**🔹 | <code>string</code> | <span></span>
+
+
+
+## struct MkDocsThemeIconProps 🔹 <a id="projen-mkdocsthemeiconprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**logo**🔹 | <code>string</code> | The Theme Icon Logo.
+
+
+
+## struct MkDocsThemePalatteProps 🔹 <a id="projen-mkdocsthemepalatteprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**scheme**🔹 | <code>string</code> | <span></span>
+**accent**?🔹 | <code>string</code> | __*Optional*__
+**primary**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct MkDocsThemeProps 🔹 <a id="projen-mkdocsthemeprops"></a>
+
+
+An Mkdocs Theme The theme itself is optional but if you define one Some fields are required Projen will define its own theme elsewhere.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Name of the theme.
+**customDir**?🔹 | <code>string</code> | Directory containing a custom theme.<br/>__*Optional*__
+**favicon**?🔹 | <code>string</code> | __*Optional*__
+**features**?🔹 | <code>Array<string></code> | Features.<br/>__*Optional*__
+**font**?🔹 | <code>[MkDocsThemeFontProps](#projen-mkdocsthemefontprops)</code> | __*Optional*__
+**highLightJss**?🔹 | <code>boolean</code> | Whether to enable `highlightjs`.<br/>__*Default*__: false
+**hlJsLanguages**?🔹 | <code>Array<string></code> | If enabled, for what languages.<br/>__*Default*__: []
+**hlJsStyle**?🔹 | <code>string</code> | 79+ styles(colors) available.<br/>__*Default*__: github
+**icon**?🔹 | <code>[MkDocsThemeIconProps](#projen-mkdocsthemeiconprops)</code> | __*Optional*__
+**language**?🔹 | <code>string</code> | Language to target.<br/>__*Default*__: en
+**logo**?🔹 | <code>string</code> | The logo.<br/>__*Optional*__
+**palette**?🔹 | <code>[MkDocsThemePalatteProps](#projen-mkdocsthemepalatteprops)</code> | Palatte.<br/>__*Optional*__
+**staticTemplates**?🔹 | <code>Array<string></code> | List of files to add to the theme The templates must be located in either the theme's template directory or in the custom_dir defined in the theme configuration.<br/>__*Default*__: []
+
+
+
 ## struct NodeProjectCommonOptions 🔹 <a id="projen-nodeprojectcommonoptions"></a>
 
 
@@ -4015,6 +4251,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -4097,6 +4335,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -4171,6 +4411,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 
@@ -4361,6 +4603,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?⚠️ | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?⚠️ | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?⚠️ | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
@@ -4457,6 +4701,8 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mkdocs**?🔹 | <code>boolean</code> | Whether to enable MkDocs.<br/>__*Default*__: false
+**mkdocsConfig**?🔹 | <code>[MkDocsProps](#projen-mkdocsprops)</code> | If mkdocs is true, then this can be used to customize the mkdocs site.<br/>__*Default*__: off
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
