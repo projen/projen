@@ -2232,7 +2232,7 @@ Synthesize all project files into `outdir`.
 1. Call "this.preSynthesize()"
 2. Delete all generated files
 3. Synthesize all sub-projects
-4. Synthezize all components of this project
+4. Synthesize all components of this project
 5. Call "postSynthesize()" for all components of this project
 6. Call "this.postSynthesize()"
 
@@ -2246,7 +2246,7 @@ synth(): void
 
 #### tryFindFile(filePath)🔹 <a id="projen-project-tryfindfile"></a>
 
-Finds a file at the specified relateive path within this project and all its subprojects.
+Finds a file at the specified relative path within this project and all its subprojects.
 
 ```ts
 tryFindFile(filePath: string): FileBase

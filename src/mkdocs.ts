@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { Project } from './project';
+import { SampleFile } from './sample-file';
 import { YamlFile } from './yaml';
 // import { SampleFile } from './sample-file';
 
@@ -332,10 +333,10 @@ export class MkDocs extends Component {
   private config: MkDocsProps;
 
   /**
-   *
-   * @param project
-   * @param props
-   */
+    *
+    * @param project
+    * @param props
+    */
   constructor(project: Project, props?: MkDocsProps) {
     super(project);
 
@@ -349,6 +350,10 @@ export class MkDocs extends Component {
 
     new YamlFile(project, 'mkdocs.yml', {
       obj: this.config,
+    });
+
+    new SampleFile(this.project, 'docs/index.md', {
+      contents: '# Welcome to MkDocs',
     });
   }
 }
