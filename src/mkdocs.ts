@@ -1,8 +1,8 @@
 import { Component } from './component';
 import { Project } from './project';
 import { SampleFile } from './sample-file';
+import { TaskCategory } from './tasks';
 import { YamlFile } from './yaml';
-// import { SampleFile } from './sample-file';
 
 /**
  * https://www.mkdocs.org/user-guide/configuration/
@@ -355,5 +355,13 @@ export class MkDocs extends Component {
     new SampleFile(this.project, 'docs/index.md', {
       contents: '# Welcome to MkDocs',
     });
+
+    const mkdocTask = project.addTask('docgen', {
+      description: 'Generate TypeScript API reference mkdocs', // XXX: NodeProject - ${project.docsDirectory}`,
+      category: TaskCategory.RELEASE,
+      exec: 'pipenv run mkdocs build',
+    });
+
+    project.tasks.tryFind('build')?.spawn(mkdocTask); // XXX: NodeProject, will return undefined right now
   }
 }
