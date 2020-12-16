@@ -40,10 +40,6 @@ describe('gitpod enable/disable', () => {
     project.synth();
     const filePath = path.join(tempDir, GITPOD_FILE);
     expect(fs.existsSync(filePath)).toBeTruthy();
-
-    const snapshot = synthSnapshot(project)[GITPOD_FILE];
-    expect(snapshot).toContain('tasks:');
-    expect(snapshot).toContain('command: echo Initialized');
   });
 });
 
