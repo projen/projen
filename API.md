@@ -34,6 +34,26 @@ Name|Description
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 [YamlFile](#projen-yamlfile)|*No description*
+[github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
+[github.GitHub](#projen-github-github)|*No description*
+[github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
+[github.Mergify](#projen-github-mergify)|*No description*
+[github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
+[tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
+[tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
+[vscode.VsCode](#projen-vscode-vscode)|*No description*
+[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[web.NextComponent](#projen-web-nextcomponent)|*No description*
+[web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
+[web.NextJsTypeDef](#projen-web-nextjstypedef)|*No description*
+[web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
+[web.PostCss](#projen-web-postcss)|Declares a PostCSS dependency with a default config file.
+[web.ReactComponent](#projen-web-reactcomponent)|*No description*
+[web.ReactProject](#projen-web-reactproject)|React project without TypeScript.
+[web.ReactTypeDef](#projen-web-reacttypedef)|*No description*
+[web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)|React project with TypeScript.
+[web.TailwindConfig](#projen-web-tailwindconfig)|Declares a Tailwind CSS configuration file.
 
 
 **Structs**
@@ -87,6 +107,31 @@ Name|Description
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
+[github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
+[github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
+[github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
+[github.MergifyRule](#projen-github-mergifyrule)|*No description*
+[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
+[tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
+[tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
+[tasks.TaskStep](#projen-tasks-taskstep)|A single step within a task.
+[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)|Options for task steps.
+[tasks.TasksManifest](#projen-tasks-tasksmanifest)|Schema for `tasks.json`.
+[vscode.Presentation](#projen-vscode-presentation)|VSCode launch configuration Presentation interface "using the order, group, and hidden attributes in the presentation object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)|VSCode launch configuration ServerReadyAction interface "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+[vscode.VsCodeLaunchConfigurationEntry](#projen-vscode-vscodelaunchconfigurationentry)|Options for a 'VsCodeLaunchConfigurationEntry' Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+[web.NextComponentOptions](#projen-web-nextcomponentoptions)|*No description*
+[web.NextJsCommonProjectOptions](#projen-web-nextjscommonprojectoptions)|*No description*
+[web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)|*No description*
+[web.NextJsTypeDefOptions](#projen-web-nextjstypedefoptions)|*No description*
+[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)|*No description*
+[web.PostCssOptions](#projen-web-postcssoptions)|*No description*
+[web.ReactComponentOptions](#projen-web-reactcomponentoptions)|*No description*
+[web.ReactProjectOptions](#projen-web-reactprojectoptions)|*No description*
+[web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)|*No description*
+[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)|*No description*
+[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)|*No description*
 
 
 **Interfaces**
@@ -113,6 +158,10 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
+[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
+[tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
+[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
 
 
@@ -210,7 +259,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -221,7 +270,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -359,7 +408,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -370,7 +419,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -553,7 +602,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -564,7 +613,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -653,7 +702,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -664,7 +713,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -762,7 +811,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -773,7 +822,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1131,7 +1180,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [GithubWorkflow](#projen-github-githubworkflow), [PullRequestTemplate](#projen-github-pullrequesttemplate), [NextJsTypeDef](#projen-web-nextjstypedef), [ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1433,7 +1482,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1444,7 +1493,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1746,7 +1795,7 @@ new NodeProject(options: NodeProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -1757,7 +1806,7 @@ new NodeProject(options: NodeProjectOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1814,8 +1863,8 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildTask**🔹 | <code>[Task](#projen-tasks-task)</code> | The task resposible for a full release build.
-**compileTask**🔹 | <code>[Task](#projen-tasks-task)</code> | Compiles the code.
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task resposible for a full release build.
+**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **installWorkflowSteps**🔹 | <code>Array<any></code> | <span></span>
 **manifest**🔹 | <code>any</code> | <span></span>
@@ -1825,16 +1874,16 @@ Name | Type | Description
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testTask**🔹 | <code>[Task](#projen-tasks-task)</code> | Tests the code.
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
-**buildWorkflow**?🔹 | <code>[GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | __*Optional*__
-**mergify**?🔹 | <code>[Mergify](#projen-github-mergify)</code> | __*Optional*__
+**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | __*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | __*Optional*__
-**releaseWorkflow**?🔹 | <code>[GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
+**releaseWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 **releaseWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 
 ### Methods
@@ -2097,7 +2146,7 @@ TASK`).
 runTaskCommand(task: Task): string
 ```
 
-* **task** (<code>[Task](#projen-tasks-task)</code>)  The task for which the command is required.
+* **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task for which the command is required.
 
 __Returns__:
 * <code>string</code>
@@ -2153,7 +2202,7 @@ Name | Type | Description
 **github**?🔹 | <code>[GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
-**vscode**?🔹 | <code>[VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
+**vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
 
 ### Methods
 
@@ -2186,15 +2235,15 @@ addTask(name: string, props?: TaskOptions): Task
 ```
 
 * **name** (<code>string</code>)  The task name to add.
-* **props** (<code>[TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
-* <code>[Task](#projen-tasks-task)</code>
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 #### addTip(message)🔹 <a id="projen-project-addtip"></a>
 
@@ -2589,7 +2638,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2600,7 +2649,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -2694,7 +2743,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2705,7 +2754,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -2799,7 +2848,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
-  * **dependabotOptions** (<code>[DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
@@ -2810,7 +2859,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **mergifyOptions** (<code>[MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -2879,10 +2928,10 @@ Name | Type | Description
 **docsDirectory**🔹 | <code>string</code> | <span></span>
 **libdir**🔹 | <code>string</code> | The directory in which compiled .js files reside.
 **srcdir**🔹 | <code>string</code> | The directory in which the .ts sources reside.
-**watchTask**🔹 | <code>[Task](#projen-tasks-task)</code> | The "watch" task.
+**watchTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "watch" task.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**packageTask**?🔹 | <code>[Task](#projen-tasks-task)</code> | The "package" task (or undefined if `package` is set to `false`).<br/>__*Optional*__
+**packageTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 
@@ -2949,7 +2998,7 @@ new Version(project: NodeProject, options: VersionOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**bumpTask**🔹 | <code>[Task](#projen-tasks-task)</code> | <span></span>
+**bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 ### Methods
 
@@ -3013,6 +3062,1292 @@ __Returns__:
 
 
 
+## class Dependabot 🔹 <a id="projen-github-dependabot"></a>
+
+Defines dependabot configuration for node projects.
+
+Since module versions are managed in projen, the versioning strategy will be
+configured to "lockfile-only" which means that only updates that can be done
+on the lockfile itself will be proposed.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.Dependabot(github: GitHub, options?: DependabotOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
+  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>any</code> | The raw dependabot configuration.
+
+### Methods
+
+
+#### addIgnore(dependencyName, ...versions)🔹 <a id="projen-github-dependabot-addignore"></a>
+
+Ignores a dependency from automatic updates.
+
+```ts
+addIgnore(dependencyName: string, ...versions: string[]): void
+```
+
+* **dependencyName** (<code>string</code>)  Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+* **versions** (<code>string</code>)  Use to ignore specific versions or ranges of versions.
+
+
+
+
+
+
+## class GitHub 🔹 <a id="projen-github-github"></a>
+
+
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.GitHub(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+### Methods
+
+
+#### addDependabot(options?)🔹 <a id="projen-github-github-adddependabot"></a>
+
+
+
+```ts
+addDependabot(options?: DependabotOptions): Dependabot
+```
+
+* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
+  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+__Returns__:
+* <code>[github.Dependabot](#projen-github-dependabot)</code>
+
+#### addMergifyRules(...rules)🔹 <a id="projen-github-github-addmergifyrules"></a>
+
+
+
+```ts
+addMergifyRules(...rules: MergifyRule[]): void
+```
+
+* **rules** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
+  * **actions** (<code>Map<string, any></code>)  *No description* 
+  * **conditions** (<code>Array<string></code>)  *No description* 
+  * **name** (<code>string</code>)  *No description* 
+
+
+
+
+#### addPullRequestTemplate(...content)🔹 <a id="projen-github-github-addpullrequesttemplate"></a>
+
+
+
+```ts
+addPullRequestTemplate(...content: string[]): PullRequestTemplate
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.PullRequestTemplate](#projen-github-pullrequesttemplate)</code>
+
+#### addWorkflow(name)🔹 <a id="projen-github-github-addworkflow"></a>
+
+
+
+```ts
+addWorkflow(name: string): GithubWorkflow
+```
+
+* **name** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
+
+
+
+## class GithubWorkflow 🔹 <a id="projen-github-githubworkflow"></a>
+
+
+
+__Submodule__: github
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new github.GithubWorkflow(github: GitHub, name: string)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+
+
+### Methods
+
+
+#### addJobs(jobs)🔹 <a id="projen-github-githubworkflow-addjobs"></a>
+
+
+
+```ts
+addJobs(jobs: Map<string, any>): void
+```
+
+* **jobs** (<code>Map<string, any></code>)  *No description*
+
+
+
+
+#### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
+
+
+
+```ts
+on(events: Map<string, any>): void
+```
+
+* **events** (<code>Map<string, any></code>)  *No description*
+
+
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-github-githubworkflow-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Mergify 🔹 <a id="projen-github-mergify"></a>
+
+
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.Mergify(github: GitHub, options?: MergifyOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
+
+
+### Methods
+
+
+#### addRule(rule)🔹 <a id="projen-github-mergify-addrule"></a>
+
+
+
+```ts
+addRule(rule: MergifyRule): void
+```
+
+* **rule** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
+  * **actions** (<code>Map<string, any></code>)  *No description* 
+  * **conditions** (<code>Array<string></code>)  *No description* 
+  * **name** (<code>string</code>)  *No description* 
+
+
+
+
+
+
+## class PullRequestTemplate 🔹 <a id="projen-github-pullrequesttemplate"></a>
+
+Template for GitHub pull requests.
+
+__Submodule__: github
+
+__Extends__: [TextFile](#projen-textfile)
+
+### Initializer
+
+
+
+
+```ts
+new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
+  * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
+
+
+
+
+## class Task 🔹 <a id="projen-tasks-task"></a>
+
+A task that can be performed on the project.
+
+Modeled as a series of shell
+commands and subtasks.
+
+__Submodule__: tasks
+
+
+### Initializer
+
+
+
+
+```ts
+new tasks.Task(tasks: Tasks, name: string, props?: TaskOptions)
+```
+
+* **tasks** (<code>[tasks.Tasks](#projen-tasks-tasks)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  *No description*
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Task name.
+**steps**🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Returns an immutable copy of all the step specifications of the task.
+**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | The start menu category of the task.<br/>__*Optional*__
+**condition**?🔹 | <code>string</code> | A command to execute which determines if the task should be skipped.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | The description of the task.<br/>__*Optional*__
+
+### Methods
+
+
+#### env(name, value)🔹 <a id="projen-tasks-task-env"></a>
+
+Adds an environment variable to this task.
+
+```ts
+env(name: string, value: string): void
+```
+
+* **name** (<code>string</code>)  The name of the variable.
+* **value** (<code>string</code>)  The value.
+
+
+
+
+#### exec(command, options?)🔹 <a id="projen-tasks-task-exec"></a>
+
+Executes a shell command.
+
+```ts
+exec(command: string, options?: TaskStepOptions): void
+```
+
+* **command** (<code>string</code>)  Shell command.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### prepend(shell, options?)🔹 <a id="projen-tasks-task-prepend"></a>
+
+Adds a command at the beginning of the task.
+
+```ts
+prepend(shell: string, options?: TaskStepOptions): void
+```
+
+* **shell** (<code>string</code>)  The command to add.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### reset(command?)🔹 <a id="projen-tasks-task-reset"></a>
+
+Reset the task so it no longer has any commands.
+
+```ts
+reset(command?: string): void
+```
+
+* **command** (<code>string</code>)  the first command to add to the task after it was cleared.
+
+
+
+
+#### spawn(subtask, options?)🔹 <a id="projen-tasks-task-spawn"></a>
+
+Spawns a sub-task.
+
+```ts
+spawn(subtask: Task, options?: TaskStepOptions): void
+```
+
+* **subtask** (<code>[tasks.Task](#projen-tasks-task)</code>)  The subtask to execute.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### toShellCommand()🔹 <a id="projen-tasks-task-toshellcommand"></a>
+
+Renders this task as a single shell command.
+
+```ts
+toShellCommand(): string
+```
+
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class TaskRuntime 🔹 <a id="projen-tasks-taskruntime"></a>
+
+The runtime component of the tasks engine.
+
+__Submodule__: tasks
+
+
+### Initializer
+
+
+
+
+```ts
+new tasks.TaskRuntime(workdir: string)
+```
+
+* **workdir** (<code>string</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**manifest**🔹 | <code>[tasks.TasksManifest](#projen-tasks-tasksmanifest)</code> | The contents of tasks.json.
+**tasks**🔹 | <code>Array<[tasks.TaskSpec](#projen-tasks-taskspec)></code> | The tasks in this project.
+**workdir**🔹 | <code>string</code> | The root directory of the project and the cwd for executing tasks.
+
+### Methods
+
+
+#### runTask(name, parents?)🔹 <a id="projen-tasks-taskruntime-runtask"></a>
+
+Runs the task.
+
+```ts
+runTask(name: string, parents?: Array<string>): void
+```
+
+* **name** (<code>string</code>)  The task name.
+* **parents** (<code>Array<string></code>)  *No description*
+
+
+
+
+#### tryFindTask(name)🔹 <a id="projen-tasks-taskruntime-tryfindtask"></a>
+
+Find a task by name, or `undefined` if not found.
+
+```ts
+tryFindTask(name: string): TaskSpec
+```
+
+* **name** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[tasks.TaskSpec](#projen-tasks-taskspec)</code>
+
+
+
+## class Tasks 🔹 <a id="projen-tasks-tasks"></a>
+
+Defines project tasks.
+
+Tasks extend the projen CLI by adding subcommands to it. Task definitions are
+synthesized into `.projen/tasks.json`.
+
+__Submodule__: tasks
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new tasks.Tasks(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**all**🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | All tasks.
+**env**🔹 | <code>Map<string, string></code> | Returns a copy of the currently global environment for this project.
+*static* **MANIFEST_FILE**🔹 | <code>string</code> | The project-relative path of the tasks manifest file.
+
+### Methods
+
+
+#### addEnvironment(name, value)🔹 <a id="projen-tasks-tasks-addenvironment"></a>
+
+Adds global environment.
+
+```ts
+addEnvironment(name: string, value: string): void
+```
+
+* **name** (<code>string</code>)  Environment variable name.
+* **value** (<code>string</code>)  Value.
+
+
+
+
+#### addTask(name, options?)🔹 <a id="projen-tasks-tasks-addtask"></a>
+
+Adds a task to a project.
+
+```ts
+addTask(name: string, options?: TaskOptions): Task
+```
+
+* **name** (<code>string</code>)  The name of the task.
+* **options** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task options.
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
+#### tryFind(name)🔹 <a id="projen-tasks-tasks-tryfind"></a>
+
+Finds a task by name.
+
+Returns `undefined` if the task cannot be found.
+
+```ts
+tryFind(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task.
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
+
+
+## class VsCode 🔹 <a id="projen-vscode-vscode"></a>
+
+
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCode(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**launchConfiguration**🔹 | <code>[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)</code> | <span></span>
+
+
+
+## class VsCodeLaunchConfig 🔹 <a id="projen-vscode-vscodelaunchconfig"></a>
+
+VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCodeLaunchConfig(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addConfiguration(cfg)🔹 <a id="projen-vscode-vscodelaunchconfig-addconfiguration"></a>
+
+Adds a VsCodeLaunchConfigurationEntry (e.g. a node.js debugger) to `.vscode/launch.json. Each configuration entry has following mandatory fields: type, request and name. See https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes for details.
+
+```ts
+addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
+```
+
+* **cfg** (<code>[vscode.VsCodeLaunchConfigurationEntry](#projen-vscode-vscodelaunchconfigurationentry)</code>)  VsCodeLaunchConfigurationEntry.
+  * **name** (<code>string</code>)  *No description* 
+  * **request** (<code>string</code>)  *No description* 
+  * **type** (<code>string</code>)  *No description* 
+  * **args** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **debugServer** (<code>number</code>)  *No description* __*Optional*__
+  * **internalConsoleOptions** (<code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code>)  *No description* __*Optional*__
+  * **outFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **postDebugTask** (<code>string</code>)  *No description* __*Optional*__
+  * **preLaunchTask** (<code>string</code>)  *No description* __*Optional*__
+  * **presentation** (<code>[vscode.Presentation](#projen-vscode-presentation)</code>)  *No description* __*Optional*__
+  * **program** (<code>string</code>)  *No description* __*Optional*__
+  * **runtimeArgs** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **serverReadyAction** (<code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code>)  *No description* __*Optional*__
+  * **skipFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **url** (<code>string</code>)  *No description* __*Optional*__
+  * **webRoot** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+
+
+
+## class NextComponent 🔹 <a id="projen-web-nextcomponent"></a>
+
+
+
+__Submodule__: web
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new web.NextComponent(project: NodeProject, options: NextComponentOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[web.NextComponentOptions](#projen-web-nextcomponentoptions)</code>)  *No description*
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind as a PostCSS plugin. __*Default*__: true
+  * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript Next.js projects. __*Default*__: false
+
+
+
+
+## class NextJsProject 🔹 <a id="projen-web-nextjsproject"></a>
+
+Next.js project without TypeScript.
+
+__Submodule__: web
+
+__Extends__: [NodeProject](#projen-nodeproject)
+
+### Initializer
+
+
+
+
+```ts
+new web.NextJsProject(options: NextJsProjectOptions)
+```
+
+* **options** (<code>[web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)</code>)  *No description*
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
+  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: Semver.latest()
+  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
+  * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
+  * **rebuildBot** (<code>boolean</code>)  Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request. __*Default*__: true
+  * **rebuildBotCommand** (<code>string</code>)  The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. __*Default*__: "rebuild"
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+**tailwind**🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.
+
+
+
+## class NextJsTypeDef 🔹 <a id="projen-web-nextjstypedef"></a>
+
+
+
+__Submodule__: web
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new web.NextJsTypeDef(project: NextJsTypeScriptProject, filePath: string, options?: NextJsTypeDefOptions)
+```
+
+* **project** (<code>[web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[web.NextJsTypeDefOptions](#projen-web-nextjstypedefoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+
+
+### Methods
+
+
+#### protected synthesizeContent(_)🔹 <a id="projen-web-nextjstypedef-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class NextJsTypeScriptProject 🔹 <a id="projen-web-nextjstypescriptproject"></a>
+
+Next.js project with TypeScript.
+
+__Submodule__: web
+
+__Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
+
+### Initializer
+
+
+
+
+```ts
+new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
+```
+
+* **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  *No description*
+  * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
+  * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
+  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: Semver.latest()
+  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
+  * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
+  * **rebuildBot** (<code>boolean</code>)  Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request. __*Default*__: true
+  * **rebuildBotCommand** (<code>string</code>)  The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. __*Default*__: "rebuild"
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "^3.9.5"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
+**nextJsTypeDef**🔹 | <code>[web.NextJsTypeDef](#projen-web-nextjstypedef)</code> | TypeScript definition file included that ensures Next.js types are picked up by the TypeScript compiler.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+**tailwind**🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.
+
+
+
+## class PostCss 🔹 <a id="projen-web-postcss"></a>
+
+Declares a PostCSS dependency with a default config file.
+
+__Submodule__: web
+
+
+### Initializer
+
+
+
+
+```ts
+new web.PostCss(project: NodeProject, options?: PostCssOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[web.PostCssOptions](#projen-web-postcssoptions)</code>)  *No description*
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "postcss.config.json"
+  * **tailwind** (<code>boolean</code>)  Install Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **tailwindOptions** (<code>[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)</code>)  Tailwind CSS options. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+**fileName**🔹 | <code>string</code> | <span></span>
+**tailwind**?🔹 | <code>[web.TailwindConfig](#projen-web-tailwindconfig)</code> | __*Optional*__
+
+
+
+## class ReactComponent 🔹 <a id="projen-web-reactcomponent"></a>
+
+
+
+__Submodule__: web
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new web.ReactComponent(project: NodeProject, options: ReactComponentOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[web.ReactComponentOptions](#projen-web-reactcomponentoptions)</code>)  *No description*
+  * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript React projects. __*Default*__: false
+
+
+
+
+## class ReactProject 🔹 <a id="projen-web-reactproject"></a>
+
+React project without TypeScript.
+
+__Submodule__: web
+
+__Extends__: [NodeProject](#projen-nodeproject)
+
+### Initializer
+
+
+
+
+```ts
+new web.ReactProject(options: ReactProjectOptions)
+```
+
+* **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
+  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: Semver.latest()
+  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
+  * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
+  * **rebuildBot** (<code>boolean</code>)  Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request. __*Default*__: true
+  * **rebuildBotCommand** (<code>string</code>)  The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. __*Default*__: "rebuild"
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+
+
+
+## class ReactTypeDef 🔹 <a id="projen-web-reacttypedef"></a>
+
+
+
+__Submodule__: web
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?: ReactTypeDefOptions)
+```
+
+* **project** (<code>[web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+
+
+### Methods
+
+
+#### protected synthesizeContent(_)🔹 <a id="projen-web-reacttypedef-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class ReactTypeScriptProject 🔹 <a id="projen-web-reacttypescriptproject"></a>
+
+React project with TypeScript.
+
+__Submodule__: web
+
+__Extends__: [TypeScriptAppProject](#projen-typescriptappproject)
+
+### Initializer
+
+
+
+
+```ts
+new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
+```
+
+* **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true
+  * **bundledDependencies** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "master"
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **dependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **devDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **libdir** (<code>string</code>)  Compiler artifacts output directory. __*Default*__: "lib"
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
+  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmDistTag** (<code>string</code>)  The dist-tag to use when releasing to npm. __*Default*__: "latest"
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmRegistry** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: "registry.npmjs.org"
+  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **peerDependencies** (<code>Map<string, [Semver](#projen-semver)></code>)  *No description* __*Optional*__
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>[Semver](#projen-semver)</code>)  Version of projen to install. __*Default*__: Semver.latest()
+  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
+  * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
+  * **rebuildBot** (<code>boolean</code>)  Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request. __*Default*__: true
+  * **rebuildBotCommand** (<code>string</code>)  The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. __*Default*__: "rebuild"
+  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "master" ]
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "master" when new versions are bumped. __*Default*__: true
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
+  * **testdir** (<code>string</code>)  Tests directory. __*Default*__: "test"
+  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Optional*__
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
+  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
+  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
+  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
+  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
+  * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "^3.9.5"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**reactTypeDef**🔹 | <code>[web.ReactTypeDef](#projen-web-reacttypedef)</code> | TypeScript definition file included that ensures React types are picked up by the TypeScript compiler.
+**srcdir**🔹 | <code>string</code> | The directory in which source files reside.
+
+
+
+## class TailwindConfig 🔹 <a id="projen-web-tailwindconfig"></a>
+
+Declares a Tailwind CSS configuration file.
+
+There are multiple ways to add Tailwind CSS in your node project - see:
+https://tailwindcss.com/docs/installation
+
+__Submodule__: web
+
+
+### Initializer
+
+
+
+
+```ts
+new web.TailwindConfig(project: NodeProject, options?: TailwindConfigOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)</code>)  *No description*
+  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tailwind.config.json"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
+**fileName**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
 
 
@@ -3050,7 +4385,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
@@ -3060,7 +4395,6 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3070,7 +4404,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -3143,7 +4477,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
@@ -3157,7 +4491,6 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -3168,7 +4501,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -3264,7 +4597,7 @@ Name | Type | Description
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | Library description.<br/>__*Optional*__
@@ -3274,7 +4607,6 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?⚠️ | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **java**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3284,7 +4616,7 @@ Name | Type | Description
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -3357,7 +4689,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
@@ -3367,7 +4699,6 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3377,7 +4708,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -3449,7 +4780,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
@@ -3459,7 +4790,6 @@ Name | Type | Description
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -3469,7 +4799,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -3676,61 +5006,6 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
-
-
-
-## struct GitpodDocker 🔹 <a id="projen-gitpoddocker"></a>
-
-
-If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
-
-https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
-
-
-
-Name | Type | Description 
------|------|-------------
-**file**?🔹 | <code>string</code> | a Dockerfile to install deps.<br/>__*Optional*__
-**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: uses the standard gitpod image (see [LINK] above)
-
-
-
-## struct GitpodOptions 🔹 <a id="projen-gitpodoptions"></a>
-
-
-What can we configure for the GitPod component.
-
-
-
-Name | Type | Description 
------|------|-------------
-**docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
-**tasks**?🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.<br/>__*Default*__: []
-
-
-
-## struct GitpodTask 🔹 <a id="projen-gitpodtask"></a>
-
-
-Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
-
-Start Mode         | Execution
-Fresh Workspace    | before && init && command
-Restart Workspace  | before && command
-Snapshot           | before && command
-Prebuild           | before && init && prebuild
-
-
-
-Name | Type | Description 
------|------|-------------
-**command**🔹 | <code>string</code> | Required.
-**before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
-**init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Optional*__
-**name**?🔹 | <code>string</code> | A name for this.<br/>__*Default*__: task names are omitted when blank like GH actions
-**openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
-**openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
-**prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
 
 
 
@@ -3996,7 +5271,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
@@ -4016,7 +5291,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -4142,19 +5417,26 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -4218,18 +5500,18 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
-**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
-**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
-**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
@@ -4237,7 +5519,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -4313,7 +5595,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 
@@ -4478,7 +5759,7 @@ Name | Type | Description
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
@@ -4492,7 +5773,6 @@ Name | Type | Description
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?⚠️ | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -4503,7 +5783,7 @@ Name | Type | Description
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -4575,7 +5855,7 @@ Name | Type | Description
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
@@ -4585,14 +5865,11 @@ Name | Type | Description
 **docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
-**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
-**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
-**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
-**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
-**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
-**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
@@ -4600,7 +5877,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
 **npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
@@ -4660,7 +5937,62 @@ Name | Type | Description
 
 
 
-## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+## struct GitpodDocker 🔹 <a id="projen-gitpoddocker"></a>
+
+
+If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
+
+https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**?🔹 | <code>string</code> | a Dockerfile to install deps.<br/>__*Optional*__
+**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: uses the standard gitpod image (see [LINK] above)
+
+
+
+## struct GitpodOptions 🔹 <a id="projen-gitpodoptions"></a>
+
+
+What can we configure for the GitPod component.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
+**tasks**?🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.<br/>__*Default*__: []
+
+
+
+## struct GitpodTask 🔹 <a id="projen-gitpodtask"></a>
+
+
+Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+
+Start Mode         | Execution
+Fresh Workspace    | before && init && command
+Restart Workspace  | before && command
+Snapshot           | before && command
+Prebuild           | before && init && prebuild
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**🔹 | <code>string</code> | Required.
+**before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
+**init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | A name for this.<br/>__*Default*__: task names are omitted when blank like GH actions
+**openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
+**openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
+**prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
+
+
+
+## struct HasteConfig 🔹 <a id="projen-hasteconfig"></a>
 
 
 
@@ -4688,6 +6020,864 @@ Name | Type | Description
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct DependabotIgnore 🔹 <a id="projen-github-dependabotignore"></a>
+
+
+You can use the `ignore` option to customize which dependencies are updated.
+
+The ignore option supports the following options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencyName**🔹 | <code>string</code> | Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+**versions**?🔹 | <code>Array<string></code> | Use to ignore specific versions or ranges of versions.<br/>__*Optional*__
+
+
+
+## struct DependabotOptions 🔹 <a id="projen-github-dependabotoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoMerge**?🔹 | <code>boolean</code> | Automatically merge dependabot PRs if build CI build passes.<br/>__*Default*__: true
+**ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
+**ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
+**scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
+**versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+## struct MergifyOptions 🔹 <a id="projen-github-mergifyoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
+
+
+
+## struct MergifyRule 🔹 <a id="projen-github-mergifyrule"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**actions**🔹 | <code>Map<string, any></code> | <span></span>
+**conditions**🔹 | <code>Array<string></code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
+
+
+
+## struct PullRequestTemplateOptions 🔹 <a id="projen-github-pullrequesttemplateoptions"></a>
+
+
+Options for `PullRequestTemplate`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
+
+
+
+## struct TaskCommonOptions 🔹 <a id="projen-tasks-taskcommonoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**authorName**🔹 | <code>string</code> | The name of the library author.
+**name**🔹 | <code>string</code> | The name of the library.
+**repository**🔹 | <code>string</code> | Git repository URL.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**authorEmail**?⚠️ | <code>string</code> | __*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | __*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | __*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
+**compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
+**dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
+**jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | __*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
+**rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**rootdir**?🔹 | <code>string</code> | __*Default*__: "."
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | __*Optional*__
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct TaskOptions 🔹 <a id="projen-tasks-taskoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
+**exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+
+
+## struct TaskSpec 🔹 <a id="projen-tasks-taskspec"></a>
+
+__Obtainable from__: [TaskRuntime](#projen-tasks-taskruntime).[tryFindTask](#projen-tasks-taskruntime#projen-tasks-taskruntime-tryfindtask)()
+
+Specification of a single task.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Task name.
+**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
+**condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
+**env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
+**steps**?🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Task steps.<br/>__*Optional*__
+
+
+
+## struct TaskStep 🔹 <a id="projen-tasks-taskstep"></a>
+
+
+A single step within a task.
+
+The step could either be  the execution of a
+shell command or execution of a sub-task, by name.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
+**name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**spawn**?🔹 | <code>string</code> | Subtask to execute.<br/>__*Default*__: don't spawn a subtask
+
+
+
+## struct TaskStepOptions 🔹 <a id="projen-tasks-taskstepoptions"></a>
+
+
+Options for task steps.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+
+
+
+## struct TasksManifest 🔹 <a id="projen-tasks-tasksmanifest"></a>
+
+
+Schema for `tasks.json`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**env**?🔹 | <code>Map<string, string></code> | Environment for all tasks.<br/>__*Optional*__
+**tasks**?🔹 | <code>Map<string, [tasks.TaskSpec](#projen-tasks-taskspec)></code> | All tasks available for this project.<br/>__*Optional*__
+
+
+
+## struct Presentation 🔹 <a id="projen-vscode-presentation"></a>
+
+
+VSCode launch configuration Presentation interface "using the order, group, and hidden attributes in the presentation object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**group**🔹 | <code>string</code> | <span></span>
+**hidden**🔹 | <code>boolean</code> | <span></span>
+**order**🔹 | <code>number</code> | <span></span>
+
+
+
+## struct ServerReadyAction 🔹 <a id="projen-vscode-serverreadyaction"></a>
+
+
+VSCode launch configuration ServerReadyAction interface "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**action**🔹 | <code>string</code> | <span></span>
+**pattern**?🔹 | <code>string</code> | __*Optional*__
+**uriFormat**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct VsCodeLaunchConfigurationEntry 🔹 <a id="projen-vscode-vscodelaunchconfigurationentry"></a>
+
+
+Options for a 'VsCodeLaunchConfigurationEntry' Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | <span></span>
+**request**🔹 | <code>string</code> | <span></span>
+**type**🔹 | <code>string</code> | <span></span>
+**args**?🔹 | <code>Array<string></code> | __*Optional*__
+**debugServer**?🔹 | <code>number</code> | __*Optional*__
+**internalConsoleOptions**?🔹 | <code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code> | __*Optional*__
+**outFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**postDebugTask**?🔹 | <code>string</code> | __*Optional*__
+**preLaunchTask**?🔹 | <code>string</code> | __*Optional*__
+**presentation**?🔹 | <code>[vscode.Presentation](#projen-vscode-presentation)</code> | __*Optional*__
+**program**?🔹 | <code>string</code> | __*Optional*__
+**runtimeArgs**?🔹 | <code>Array<string></code> | __*Optional*__
+**serverReadyAction**?🔹 | <code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code> | __*Optional*__
+**skipFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**url**?🔹 | <code>string</code> | __*Optional*__
+**webRoot**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct NextComponentOptions 🔹 <a id="projen-web-nextcomponentoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.<br/>__*Default*__: true
+**typescript**?🔹 | <code>boolean</code> | Whether to apply options specific for TypeScript Next.js projects.<br/>__*Default*__: false
+
+
+
+## struct NextJsCommonProjectOptions 🔹 <a id="projen-web-nextjscommonprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+
+
+
+## struct NextJsProjectOptions 🔹 <a id="projen-web-nextjsprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct NextJsTypeDefOptions 🔹 <a id="projen-web-nextjstypedefoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct NextJsTypeScriptProjectOptions 🔹 <a id="projen-web-nextjstypescriptprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
+**typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "^3.9.5"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct PostCssOptions 🔹 <a id="projen-web-postcssoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**fileName**?🔹 | <code>string</code> | __*Default*__: "postcss.config.json"
+**tailwind**?🔹 | <code>boolean</code> | Install Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**tailwindOptions**?🔹 | <code>[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)</code> | Tailwind CSS options.<br/>__*Optional*__
+
+
+
+## struct ReactComponentOptions 🔹 <a id="projen-web-reactcomponentoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**⚠️ | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+**copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?⚠️ | <code>[DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**disableTsconfig**?⚠️ | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
+**docgen**?⚠️ | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
+**docsDirectory**?⚠️ | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
+**entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**gitpod**?⚠️ | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?⚠️ | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?⚠️ | <code>[MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?⚠️ | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?⚠️ | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**packageManager**?⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?⚠️ | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**rebuildBot**?⚠️ | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?⚠️ | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**testdir**?⚠️ | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
+**typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "^3.9.5"
+**workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct ReactProjectOptions 🔹 <a id="projen-web-reactprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct ReactTypeDefOptions 🔹 <a id="projen-web-reacttypedefoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct ReactTypeScriptProjectOptions 🔹 <a id="projen-web-reacttypescriptprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true
+**bundledDependencies**?⚠️ | <code>Array<string></code> | __*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: the default behavior is to delete the lib/ directory and run jest typescript tests and only if all tests pass, run the compiler.
+**copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+**copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "master"
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
+**docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
+**docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
+**eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
+**jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Optional*__
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmDistTag**?🔹 | <code>string</code> | The dist-tag to use when releasing to npm.<br/>__*Default*__: "latest"
+**npmRegistry**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: "registry.npmjs.org"
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**npmignore**?🔹 | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
+**npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**peerDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
+**projenUpgradeAutoMerge**?🔹 | <code>boolean</code> | Automatically merge projen upgrade PRs when build passes.<br/>__*Default*__: "true" if mergify auto-merge is enabled (default)
+**projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
+**projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
+**pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
+**pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
+**rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true
+**rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
+**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
+**releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "master" when new versions are bumped.<br/>__*Default*__: true
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**testdir**?🔹 | <code>string</code> | Tests directory.<br/>__*Default*__: "test"
+**tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
+**typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "^3.9.5"
+**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct TailwindConfigOptions 🔹 <a id="projen-web-tailwindconfigoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**fileName**?🔹 | <code>string</code> | __*Default*__: "tailwind.config.json"
 
 
 
@@ -4798,5 +6988,53 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum DependabotScheduleInterval 🔹 <a id="projen-github-dependabotscheduleinterval"></a>
+
+How often to check for new versions and raise pull requests for version updates.
+
+Name | Description
+-----|-----
+**DAILY** 🔹|Runs on every weekday, Monday to Friday.
+**WEEKLY** 🔹|Runs once each week.
+**MONTHLY** 🔹|Runs once each month.
+
+
+## enum VersioningStrategy 🔹 <a id="projen-github-versioningstrategy"></a>
+
+The strategy to use when edits manifest and lock files.
+
+Name | Description
+-----|-----
+**LOCKFILE_ONLY** 🔹|Only create pull requests to update lockfiles updates.
+**AUTO** 🔹|- For apps, the version requirements are increased.
+**WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
+**INCREASE** 🔹|Always increase the version requirement to match the new version.
+**INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
+
+
+## enum TaskCategory 🔹 <a id="projen-tasks-taskcategory"></a>
+
+
+
+Name | Description
+-----|-----
+**BUILD** 🔹|
+**TEST** 🔹|
+**RELEASE** 🔹|
+**MAINTAIN** 🔹|
+**MISC** 🔹|
+
+
+## enum InternalConsoleOptions 🔹 <a id="projen-vscode-internalconsoleoptions"></a>
+
+Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+Name | Description
+-----|-----
+**NEVER_OPEN** 🔹|
+**OPEN_ON_FIRST_SESSION_START** 🔹|
+**OPEN_ON_SESSION_START** 🔹|
 
 
