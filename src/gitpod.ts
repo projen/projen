@@ -184,10 +184,6 @@ export class Gitpod extends Component {
     }
     if (options?.tasks) {
       this.addTasks(...options?.tasks);
-    } else {
-      this.addTasks({
-        command: 'echo Initialized',
-      });
     }
 
     new YamlFile(this.project, GITPOD_FILE, {
@@ -216,7 +212,7 @@ export class Gitpod extends Component {
    * @param tasks The additional tasks
    */
   public addTasks(...tasks: GitpodTask[]) {
-    this.tasks.unshift(...tasks);
+    this.tasks.push(...tasks);
   }
 
   private renderDockerImage() {
