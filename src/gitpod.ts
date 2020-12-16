@@ -29,6 +29,8 @@ export interface GitpodDocker {
 
   /**
    *
+   * a Dockerfile to install deps
+   *
    * @default
    *
    * @example
@@ -186,12 +188,9 @@ export class Gitpod extends Component {
       this.addTasks(...options?.tasks);
     }
 
-    let obj: any;
-    obj['image'] = 'foo';
-
     new YamlFile(this.project, GITPOD_FILE, {
       obj: {
-        image: () => 
+        image: () => this.renderDockerImage(),
         tasks: () => this.renderTasks(),
       },
     });

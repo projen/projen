@@ -1225,7 +1225,7 @@ addCustomDocker(docker: GitpodDocker): void
 ```
 
 * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  *No description*
-  * **file** (<code>string</code>)  *No description* __*Optional*__
+  * **file** (<code>string</code>)  a Dockerfile to install deps. __*Optional*__
   * **image** (<code>string</code>)  A publicly available image to use. __*Default*__: uses the standard gitpod image (see [LINK] above)
 
 
@@ -3690,7 +3690,7 @@ https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
 
 Name | Type | Description 
 -----|------|-------------
-**file**?🔹 | <code>string</code> | __*Optional*__
+**file**?🔹 | <code>string</code> | a Dockerfile to install deps.<br/>__*Optional*__
 **image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: uses the standard gitpod image (see [LINK] above)
 
 
