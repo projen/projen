@@ -9,7 +9,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    *
    * @default "1.73.0"
    */
-  readonly cdkVersion: string;
+  readonly cdkVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK.
@@ -120,7 +120,11 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
-    this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    if (options.cdkVersionPinning) {
+      this.version = options.cdkVersion ?? '1.73.0';
+    } else {
+      this.version = options.cdkVersion ? `^${options.cdkVersion}` : '^1.73.0';
+    }
 
     this.addPeerDeps('constructs@^3.2.27');
 

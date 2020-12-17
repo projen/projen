@@ -112,7 +112,6 @@ exports[`projen new awscdk-construct 1`] = `
 const project = new AwsCdkConstructLibrary({
   authorAddress: 'my@user.email.com',
   authorName: 'My User Name',
-  cdkVersion: '1.73.0',
   name: 'my-project',
   repository: 'git@boom.com:foo/bar.git',
 
@@ -120,6 +119,7 @@ const project = new AwsCdkConstructLibrary({
   // cdkAssert: true,                                                          /* Install the @aws-cdk/assert library? */
   // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
   // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
+  // cdkVersion: '1.73.0',                                                     /* Minimum target version this library is tested against. */
   // cdkVersionPinning: false,                                                 /* Use pinned version instead of caret version for CDK. */
 
   /* ConstructLibraryOptions */

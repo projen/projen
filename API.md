@@ -316,10 +316,10 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **stability** (<code>string</code>)  *No description* __*Optional*__
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. __*Default*__: "1.73.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
 
 
@@ -756,10 +756,10 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **stability** (<code>string</code>)  *No description* __*Optional*__
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. __*Default*__: "1.73.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
 
 
@@ -4280,7 +4280,6 @@ Name | Type | Description
 -----|------|-------------
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **authorName**🔹 | <code>string</code> | The name of the library author.
-**cdkVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
 **name**🔹 | <code>string</code> | The name of the library.
 **repository**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -4297,6 +4296,7 @@ Name | Type | Description
 **cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
 **cdkTestDependencies**?🔹 | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum target version this library is tested against.<br/>__*Default*__: "1.73.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
@@ -4492,7 +4492,6 @@ Name | Type | Description
 -----|------|-------------
 **authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
 **authorName**⚠️ | <code>string</code> | The name of the library author.
-**cdkVersion**⚠️ | <code>string</code> | Minimum target version this library is tested against.
 **name**⚠️ | <code>string</code> | The name of the library.
 **repository**⚠️ | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -4509,6 +4508,7 @@ Name | Type | Description
 **cdkAssert**?⚠️ | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?⚠️ | <code>string</code> | Minimum target version this library is tested against.<br/>__*Default*__: "1.73.0"
 **cdkVersionPinning**?⚠️ | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
