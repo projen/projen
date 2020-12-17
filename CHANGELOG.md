@@ -6,24 +6,17 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### 0.6.15 (2020-12-17)
 
-### 0.6.14 (2020-12-16)
-
-### 0.6.13 (2020-12-14)
-
-
-### Bug Fixes
-
-* fix sample code for specify app entrypoint ([#365](https://github.com/projen/projen/issues/365)) ([0a0797c](https://github.com/projen/projen/commit/0a0797c81c40d3398650713937832879a0fa06b0))
-
 ### 0.6.14 (2020-12-17)
-
 
 ### Bug Fixes
 
 * tasks not executing on Windows due to invalid PATH values ([#377](https://github.com/projen/projen/issues/377)) ([5af18db](https://github.com/projen/projen/commit/5af18db8aef84c0e96832b18e6864701bee747d5)), closes [#370](https://github.com/projen/projen/issues/370)
 
-### 0.6.13 (2020-12-16)
->>>>>>> upstream/master
+### 0.6.13 (2020-12-14)
+
+### Bug Fixes
+
+* fix sample code for specify app entrypoint ([#365](https://github.com/projen/projen/issues/365)) ([0a0797c](https://github.com/projen/projen/commit/0a0797c81c40d3398650713937832879a0fa06b0))
 
 ### 0.6.12 (2020-12-14)
 
