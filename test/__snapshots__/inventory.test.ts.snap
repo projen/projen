@@ -160,6 +160,7 @@ Array [
         "default": "\\"1.73.0\\"",
         "docs": "AWS CDK version to use.",
         "name": "cdkVersion",
+        "optional": true,
         "parent": "AwsCdkTypeScriptAppOptions",
         "path": Array [
           "cdkVersion",

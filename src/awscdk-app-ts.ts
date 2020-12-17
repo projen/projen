@@ -25,7 +25,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    *
    * @default "1.73.0"
    */
-  readonly cdkVersion: string;
+  readonly cdkVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK.
@@ -104,7 +104,11 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
-    this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    if (options.cdkVersionPinning) {
+      this.cdkVersion = options.cdkVersion ?? '1.73.0';
+    } else {
+      this.cdkVersion = options.cdkVersion ? `^${options.cdkVersion}` : '^1.73.0';
+    }
 
     // CLI
     this.addDevDeps(this.formatModuleSpec('aws-cdk'));
