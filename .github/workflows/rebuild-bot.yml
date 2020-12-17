@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Synthesize project files
-        run: yarn run projen
+        run: /bin/bash ./projen.bash
       - name: Set git identity
         run: |-
           git config user.name "Auto-bump"
