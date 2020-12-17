@@ -132,7 +132,7 @@ class RunTask {
         const query = value.substring(2, value.length - 1);
         const result = this.shellEval(query);
         if (result.status !== 0) {
-          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
+          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr?.toString() ?? 'unknown error'}`);
         }
         output[key] = result.stdout.toString('utf-8').trim();
       } else {
