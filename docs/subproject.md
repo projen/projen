@@ -11,13 +11,13 @@
 const { AwsCdkTypeScriptApp, web } = require('projen');
 
 const nextProject = new web.NextJsProject({
-  name: 'my-cool-frontend'
+  name: 'my-frontend'
 });
 
 nextProject.synth();
 
 const pipelineProject = new AwsCdkTypeScriptApp({
-  name: 'my-cool-frontend-pipeline',
+  name: 'my-frontend-pipeline',
   parent: nextProject,
   outdir: 'pipeline',
 
