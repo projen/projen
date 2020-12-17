@@ -236,10 +236,10 @@ app.synth();`;
     if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
-
+    const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
     const testCode = `import '@aws-cdk/assert/jest';
 import { App } from '@aws-cdk/core';
-import { MyStack } from '../src/main';
+import { MyStack } from '../src/${appEntrypointName}';
 
 test('Snapshot', () => {
   const app = new App();
@@ -250,6 +250,6 @@ test('Snapshot', () => {
 });`;
 
     fs.mkdirpSync(testdir);
-    fs.writeFileSync(path.join(testdir, 'main.test.ts'), testCode);
+    fs.writeFileSync(path.join(testdir, `${appEntrypointName}.test.ts`), testCode);
   }
 }
