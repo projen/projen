@@ -102,6 +102,8 @@ any number of jsii target languages.
     javaPackage: 'com.acme.hello',
     mavenArtifactId: 'hello-jsii',
     mavenGroupId: 'com.acme.hello'
+    serverId: 'github',
+    repositoryUrl: 'https://maven.pkg.github.com/example/hello-jsii',
   },
   python: {
     distName: 'acme.hello-jsii',
