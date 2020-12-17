@@ -1225,7 +1225,7 @@ export class NodeProject extends Project {
     // run "projen"
     install.push({
       name: 'Synthesize project files',
-      run: this.projenCommand,
+      run: `${this.runScriptCommand} projen`,
     });
 
     return install;
