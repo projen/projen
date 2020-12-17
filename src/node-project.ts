@@ -470,6 +470,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
   /**
    * The pull request bot command to use in order to trigger a rebuild and
    * commit of the contents of the branch. The command must be prefixed by "@projen", e.g. "@projen rebuild"
+   * `gh pr review $pr --comment -b "@projen rebuild"`
    *
    * @default "rebuild"
    */
@@ -727,7 +728,7 @@ export class NodeProject extends Project {
     this.addKeywords(...options.keywords ?? []);
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment('PATH', '$(npx -c \'echo $PATH\')');
+    this.tasks.addEnvironment('PATH', '$(npx node -e "console.log(process.env.PATH)")');
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
