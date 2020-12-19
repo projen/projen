@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.17 (2020-12-19)
+
+
+### Features
+
+* **gitpod:** Support Gitpod ([#360](https://github.com/projen/projen/issues/360)) ([8be15d6](https://github.com/projen/projen/commit/8be15d60ee5a5738c3a851c87a507ce8a5de9ac6))
+
 ### 0.6.16 (2020-12-17)
 
 ### 0.6.15 (2020-12-17)
