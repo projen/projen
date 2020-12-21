@@ -169,7 +169,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
 
   /**
    * Define a GitHub workflow for building PRs.
-   * @default true
+   * @default - true if not a subproject
    */
   readonly buildWorkflow?: boolean;
 
@@ -192,7 +192,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * Define a GitHub workflow for releasing from "master" when new versions are
    * bumped. Requires that `version` will be undefined.
    *
-   * @default true
+   * @default - true if not a subproject
    */
   readonly releaseWorkflow?: boolean;
 
@@ -463,7 +463,7 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * commit the changes to the pull request branch. This is useful for updating
    * test snapshots and other generated files like API.md.
    *
-   * @default true
+   * @default - true if not a subproject
    */
   readonly rebuildBot?: boolean;
 
@@ -628,7 +628,7 @@ export class NodeProject extends Project {
   public readonly testTask: Task;
 
   /**
-   * The task resposible for a full release build. It spawns: compile + test + release + package
+   * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
 
@@ -874,7 +874,7 @@ export class NodeProject extends Project {
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
-    this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
+    this.antitamper = (options.buildWorkflow ?? (this.parent ? false : true)) && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -887,7 +887,7 @@ export class NodeProject extends Project {
       this.npmignore?.exclude(`/${this.testdir}`);
     }
 
-    if (options.buildWorkflow ?? true) {
+    if (options.buildWorkflow ?? (this.parent ? false : true)) {
       const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
         trigger: {
           pull_request: { },
@@ -901,7 +901,7 @@ export class NodeProject extends Project {
       this.buildWorkflowJobId = buildJobId;
     }
 
-    if (options.releaseWorkflow ?? true) {
+    if (options.releaseWorkflow ?? (this.parent ? false : true)) {
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = { };
@@ -1057,7 +1057,7 @@ export class NodeProject extends Project {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
 
-    if (options.rebuildBot ?? true) {
+    if (options.rebuildBot ?? (this.parent ? false : true)) {
       this.addRebuildBot(options.rebuildBotCommand ?? 'rebuild');
     }
 
@@ -1669,7 +1669,7 @@ export class NodeProject extends Project {
     this.createBuildWorkflow('rebuild-bot', {
       trigger: { issue_comment: { types: ['created'] } },
       condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
-      antitamperDisabled: true, // definitely dont want that
+      antitamperDisabled: true, // definitely do not want that
 
       // since the "issue_comment" event is not triggered on a branch, we need to resolve
       // the git ref of the pull request before we check out

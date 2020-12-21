@@ -196,7 +196,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, string
 }
 
 /**
- * Given a value from "@default", processes macros and returns a stringied
+ * Given a value from "@default", processes macros and returns a stringified
  * (quoted) result.
  *
  * @returns a javascript primitive (could be a string, number or boolean)
@@ -283,6 +283,20 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   const type = !requested ? projects[0] : projects.find(p => p.pjid === requested);
   if (!type) {
     throw new Error(`Project type ${requested} not found. Found ${types.join(',')}`);
+  }
+
+  for (const option of type.options ?? []) {
+    if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
+      continue; // we don't support non-primitive fields as command line options
+    }
+
+    if (option.default && option.default !== 'undefined') {
+      if (!option.optional) {
+        const defaultValue = renderDefault(option.default);
+        args[option.name] = defaultValue;
+        args[option.switch] = defaultValue;
+      }
+    }
   }
 
   // include a dev dependency for the external module
@@ -386,7 +400,7 @@ async function askAboutGit(): Promise<boolean> {
 
     if (!git && !gh) {
       exec('git init');
-      logging.info('Ok, we\'ve \'git init\'d for you! Have a great day.');
+      logging.info('Ok, we have run \'git init\' for you! Have a great day.');
     }
 
     if (git) {
@@ -407,7 +421,7 @@ async function askAboutGit(): Promise<boolean> {
 
       exec(`git remote add origin ${formattedGitRepoURL}`);
 
-      logging.info(`Great! We've 'git init'd for you and set the remote to ${formattedGitRepoURL}`);
+      logging.info(`Great! We have run 'git init' for you and set the remote to ${formattedGitRepoURL}`);
     }
 
     if (!git && gh) {

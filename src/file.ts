@@ -47,7 +47,7 @@ export abstract class FileBase extends Component {
   public readonly: boolean;
 
   /**
-   * The absoluate path of this file.
+   * The absolute path of this file.
    */
   public readonly absolutePath: string;
 
