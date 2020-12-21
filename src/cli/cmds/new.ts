@@ -285,6 +285,20 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     throw new Error(`Project type ${requested} not found. Found ${types.join(',')}`);
   }
 
+  for (const option of type.options ?? []) {
+    if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
+      continue; // we don't support non-primitive fields as command line options
+    }
+
+    if (option.default && option.default !== 'undefined') {
+      if (!option.optional) {
+        const defaultValue = renderDefault(option.default);
+        args[option.name] = defaultValue;
+        args[option.switch] = defaultValue;
+      }
+    }
+  }
+
   // include a dev dependency for the external module
   await newProject(baseDir, type, args, {
     devDeps: JSON.stringify([specDependencyInfo]),
