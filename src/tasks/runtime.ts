@@ -73,8 +73,8 @@ class RunTask {
     }
 
     for (const step of task.steps ?? []) {
-      if (step.spawn) {
-        this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
+      if (step.execTask) {
+        this.runtime.runTask(step.execTask, [...this.parents, this.task.name]);
       }
 
       if (step.exec) {

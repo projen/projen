@@ -39,3 +39,4 @@ export class GithubWorkflow extends FileBase {
     ].join('\n');
   }
 }
+

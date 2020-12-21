@@ -42,9 +42,9 @@ export function discoverTaskCommands(ya: yargs.Argv) {
     }
 
     for (const step of task.steps ?? []) {
-      if (step.spawn) {
-        writeln(`${step.spawn}:`);
-        inspectTask(step.spawn, indent + 3);
+      if (step.execTask) {
+        writeln(`${step.execTask}:`);
+        inspectTask(step.execTask, indent + 3);
       } else if (step.exec) {
         writeln(step.exec);
       }

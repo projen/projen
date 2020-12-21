@@ -135,11 +135,11 @@ export class TypeScriptProject extends NodeProject {
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
     if (compileBeforeTest) {
-      this.buildTask.spawn(this.compileTask);
-      this.buildTask.spawn(this.testTask);
+      this.buildTask.execTask(this.compileTask);
+      this.buildTask.execTask(this.testTask);
     } else {
-      this.buildTask.spawn(this.testTask);
-      this.buildTask.spawn(this.compileTask);
+      this.buildTask.execTask(this.testTask);
+      this.buildTask.execTask(this.compileTask);
     }
 
     if (options.package ?? true) {
@@ -153,7 +153,7 @@ export class TypeScriptProject extends NodeProject {
       this.packageTask.exec(`${this.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
 
-      this.buildTask.spawn(this.packageTask);
+      this.buildTask.execTask(this.packageTask);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {

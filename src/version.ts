@@ -38,7 +38,7 @@ export class Version extends Component {
       condition: changesSinceLastRelease,
     });
 
-    release.spawn(this.bumpTask);
+    release.execTask(this.bumpTask);
     release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
 
     project.addDevDeps(

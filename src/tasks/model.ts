@@ -40,6 +40,12 @@ export interface TaskStepOptions {
    * @default - no name
    */
   readonly name?: string;
+
+  /**
+   * Environment variables for this step.
+   * @default - inherited from the task
+   */
+  readonly env?: { [name: string]: string };
 }
 
 /**
@@ -59,5 +65,11 @@ export interface TaskStep extends TaskStepOptions {
    *
    * @default - don't spawn a subtask
    */
-  readonly spawn?: string;
+  readonly execTask?: string;
+
+  /**
+   * Environment variabbles for this step.
+   * @default - inherit
+   */
+  readonly env?: { [name: string]: string };
 }

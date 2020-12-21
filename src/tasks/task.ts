@@ -3,6 +3,12 @@ import { Tasks } from './tasks';
 
 export interface TaskCommonOptions {
   /**
+   * The docker image to use when running this task
+   * @default - TBD
+   */
+  readonly image?: string;
+
+  /**
    * The description of this build command.
    * @default - the task name
    */
@@ -120,8 +126,8 @@ export class Task {
    * Spawns a sub-task.
    * @param subtask The subtask to execute.
    */
-  public spawn(subtask: Task, options: TaskStepOptions = {}) {
-    this._steps.push({ spawn: subtask.name, ...options });
+  public execTask(subtask: Task, options: TaskStepOptions = {}) {
+    this._steps.push({ execTask: subtask.name, ...options });
   }
 
   /**
@@ -133,6 +139,45 @@ export class Task {
    */
   public env(name: string, value: string) {
     this._env[name] = value;
+  }
+
+  /**
+   * Commits pending changes to the local git repository.
+   *
+   * @param message The commit message
+   * @param options Commit options
+   */
+  public commit(message: string, options: CommitOptions) {
+    const commands = new Array<string>();
+
+    if (options.username) {
+      commands.push(`git config user.name "${options.username}"`);
+    }
+
+    if (options.email) {
+      commands.push(`git config user.email "${options.email}"`);
+    }
+
+    const add = (options.add ?? true) ? '-a' : '';
+    commands.push(`git commit ${add} -m "${message}"`);
+
+    this.exec(commands.join(' && '), options);
+  }
+
+  public push(branch: string, options: PushOptions) {
+    task.exec('git push --follow-tags origin $BRANCH', {
+      name: 'Push changes',
+      env: {
+      },
+    });
+  }
+
+  /**
+   * Defines a task output artifact.
+   * @param directory The directory with the output.
+   */
+  public artifact(directory: string): TaskArtifact {
+    return new TaskArtifact(this, directory);
   }
 
   /**
@@ -155,10 +200,10 @@ export class Task {
       if (step.exec) {
         cmd.push(step.exec);
       }
-      if (step.spawn) {
-        const subtask = this.tasks.tryFind(step.spawn);
+      if (step.execTask) {
+        const subtask = this.tasks.tryFind(step.execTask);
         if (!subtask) {
-          throw new Error(`unable to resolve subtask ${step.spawn}`);
+          throw new Error(`unable to resolve subtask ${step.execTask}`);
         }
 
         cmd.push(`( ${subtask.toShellCommand()} )`);
@@ -204,4 +249,42 @@ export enum TaskCategory {
   RELEASE = '20.release',
   MAINTAIN = '30.maintain',
   MISC = '99.misc',
+}
+
+export class TaskArtifact {
+  public readonly directory: string;
+  public readonly task: Task;
+
+  constructor(task: Task, directory: string) {
+    this.task = task;
+    this.directory = directory;
+  }
+}
+
+export interface CommitOptions extends TaskStepOptions {
+  /**
+   * The commit user name.
+   */
+  readonly username?: string;
+
+  /**
+   * The commit user email.
+   */
+  readonly email?: string;
+
+  /**
+   * Add all pending changes to the commit.
+   * @default - true
+   */
+  readonly add?: boolean;
+}
+
+export interface PushOptions extends TaskStepOptions {
+  /**
+   * Push git tags.
+   * @default true
+   */
+  readonly tags?: boolean;
+
+
 }

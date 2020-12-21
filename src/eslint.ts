@@ -91,7 +91,7 @@ export class Eslint extends Component {
       ].join(' '),
     });
 
-    project.testTask.spawn(eslint);
+    project.testTask.execTask(eslint);
 
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');

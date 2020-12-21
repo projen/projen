@@ -17,7 +17,7 @@ export class JsiiDocgen {
       exec: 'jsii-docgen',
     });
 
-    project.compileTask.spawn(docgen);
+    project.compileTask.execTask(docgen);
     project.gitignore.include('/API.md');
 
     project.addTip('`API.md` includes the API reference for your library');

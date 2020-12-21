@@ -14,6 +14,6 @@ export class TypedocDocgen {
       exec: 'typedoc --out ' + project.docsDirectory,
     });
 
-    project.buildTask.spawn(docgen);
+    project.buildTask.execTask(docgen);
   }
 }

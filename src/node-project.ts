@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import { PROJEN_RC, PROJEN_VERSION } from './common';
 import { GithubWorkflow } from './github';
 import { DependabotOptions } from './github/dependabot';
+import { JobTask } from './github/job-task';
 import { Mergify, MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
@@ -916,7 +917,7 @@ export class NodeProject extends Project {
       const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
         preBuildSteps: [{ run: this.runTaskCommand(this._version.bumpTask) }],
-        pushBranch: '${{ github.ref }}',
+        pushToBranch: '${{ github.ref }}',
         uploadArtifact: true,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -1532,11 +1533,11 @@ export class NodeProject extends Project {
       run: `git commit -m "${options.commit}"`,
     }];
 
-    const pushChanges = !options.pushBranch ? [] : [{
+    const pushChanges = !options.pushToBranch ? [] : [{
       name: 'Push changes',
       run: 'git push --follow-tags origin $BRANCH',
       env: {
-        BRANCH: options.pushBranch,
+        BRANCH: options.pushToBranch,
       },
     }];
 
@@ -1628,6 +1629,87 @@ export class NodeProject extends Project {
     return { workflow, buildJobId };
   }
 
+  private createCITask(name: string, options: NodeBuildWorkflowOptions): Task {
+
+    const addAntitamper = (task: Task) => (!options.antitamperDisabled && this.antitamper)
+      ? task.exec('git diff --exit-code', { name: 'Anti-tamper check' })
+      : undefined;
+
+    const task = new JobTask(this.tasks, 'ci', {
+      image: options.image ?? 'ubuntu-latest',
+      env: { CI: 'true' },
+    });
+
+    // TODO: preCheckoutSteps
+    // TODO: checkout
+
+    if (this.nodeVersion) {
+      task.action('actions/setup-node@v1', {
+        name: 'Setup Node.js',
+        with: { 'node-version': this.nodeVersion },
+      });
+    }
+
+    task.exec(this.renderInstallCommand(true), { name: 'Install dependencies' });
+    task.exec(this.projenCommand, { name: 'Synthesize project files' });
+
+    // anti-tamper check for projen changes: we don't want to build start build
+    // before we know that the project configuration is correct.
+    addAntitamper(task);
+
+    // TODO: prebuildSteps
+
+    task.execTask(this.buildTask, { name: 'Build' });
+
+    if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+      task.action('codecov/codecov-action@v1', {
+        name: 'Upload coverage to Codecov',
+        with: options.codeCovTokenSecret ? {
+          token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+          directory: this.jest.config.coverageDirectory,
+        } : {
+          directory: this.jest.config.coverageDirectory,
+        },
+      });
+    }
+
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    addAntitamper(task);
+
+    if (options.commit) {
+      task.commit(options.commit, {
+        name: 'Commit changes',
+        username: 'GitHub Actions',
+        email: 'github-actions@github.com',
+      });
+    }
+
+    if (options.pushToBranch) {
+      task.exec('git push --follow-tags origin $BRANCH', {
+        name: 'Push changes',
+        env: {
+          BRANCH: options.pushToBranch,
+        },
+      });
+    }
+
+    const dist = task.artifact('dist/');
+
+    // if (options.uploadArtifact) {
+    //   task.action('actions/upload-artifact@v2.1.1', {
+    //     name: 'Upload artifact',
+    //     with: {
+    //       name: 'dist',
+    //       path: 'dist',
+    //     },
+    //   });
+    // }
+
+    // TODO: post steps
+    return task;
+  }
+
   /**
    * Returns the shell command to execute in order to run a task. If
    * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
@@ -1694,7 +1776,7 @@ export class NodeProject extends Project {
       commit: 'chore: update generated files',
 
       // and push to the pull request branch
-      pushBranch: '${{ steps.query_pull_request.outputs.branch }}',
+      pushToBranch: '${{ steps.query_pull_request.outputs.branch }}',
 
       postSteps: [
         postComment('Rebuild complete. Updates pushed to pull request branch.'),
@@ -1763,7 +1845,7 @@ interface NodeBuildWorkflowOptions {
   /**
    * @default - do not push the changes to a branch
    */
-  readonly pushBranch?: string;
+  readonly pushToBranch?: string;
 
   /**
    * Disables anti-tamper checks in the workflow.
