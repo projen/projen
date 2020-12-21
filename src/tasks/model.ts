@@ -1,5 +1,3 @@
-import { TaskCommonOptions } from './task';
-
 /**
  * Schema for `tasks.json`.
  */
@@ -14,6 +12,53 @@ export interface TasksManifest {
    */
   readonly env?: { [name: string]: string };
 }
+
+export interface TaskCommonOptions {
+  /**
+   * The description of this build command.
+   * @default - the task name
+   */
+  readonly description?: string;
+
+  /**
+   * Category for start menu.
+   *
+   * @default TaskCategory.MISC
+   */
+  readonly category?: TaskCategory;
+
+  /**
+   * Defines environment variables for the execution of this task.
+   * Values in this map will be evaluated in a shell, so you can do stuff like `$(echo "foo")`.
+   * @default {}
+   */
+  readonly env?: { [name: string]: string };
+
+  /**
+   * A shell command which determines if the this task should be executed. If
+   * the program exits with a zero exit code, steps will be executed. A non-zero
+   * code means that task will be skipped.
+   */
+  readonly condition?: string;
+
+  /**
+   * The working directory for all steps in this task (unless overridden by the
+   * step).
+   *
+   * @default - process.cwd()
+   */
+  readonly cwd?: string;
+}
+
+
+export enum TaskCategory {
+  BUILD = '00.build',
+  TEST = '10.test',
+  RELEASE = '20.release',
+  MAINTAIN = '30.maintain',
+  MISC = '99.misc',
+}
+
 
 /**
  * Specification of a single task.
@@ -40,6 +85,13 @@ export interface TaskStepOptions {
    * @default - no name
    */
   readonly name?: string;
+
+  /**
+   * The working directory for this step.
+   *
+   * @default - determined by the task
+   */
+  readonly cwd?: string;
 }
 
 /**
