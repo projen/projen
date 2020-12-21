@@ -32,3 +32,6 @@ const pipelineProject = new AwsCdkTypeScriptApp({
 
 pipelineProject.synth();
 ```
+
+By default, GitHub workflows will not be created for subprojects since config
+files in `.github/` only work if they are in the root directory.

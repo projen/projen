@@ -129,6 +129,7 @@ export class Project {
     // ------------------------------------------------------------------------
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
+    this.gitignore.exclude('node_modules/'); // created by running `npx projen`
 
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.

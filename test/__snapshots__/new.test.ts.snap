@@ -19,7 +19,7 @@ const project = new AwsCdkTypeScriptApp({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -54,13 +54,13 @@ const project = new AwsCdkTypeScriptApp({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -147,7 +147,7 @@ const project = new AwsCdkConstructLibrary({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -182,13 +182,13 @@ const project = new AwsCdkConstructLibrary({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -240,7 +240,7 @@ const project = new ConstructLibraryCdk8s({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -275,13 +275,13 @@ const project = new ConstructLibraryCdk8s({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -329,7 +329,7 @@ const project = new JsiiProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -364,13 +364,13 @@ const project = new JsiiProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -406,7 +406,7 @@ const project = new web.NextJsProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -441,13 +441,13 @@ const project = new web.NextJsProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -496,7 +496,7 @@ const project = new web.NextJsTypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -531,13 +531,13 @@ const project = new web.NextJsTypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -595,7 +595,7 @@ const project = new NodeProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -630,13 +630,13 @@ const project = new NodeProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -695,7 +695,7 @@ const project = new web.ReactProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -730,13 +730,13 @@ const project = new web.ReactProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -784,7 +784,7 @@ const project = new web.ReactTypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -819,13 +819,13 @@ const project = new web.ReactTypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -883,7 +883,7 @@ const project = new TypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -918,13 +918,13 @@ const project = new TypeScriptProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
@@ -982,7 +982,7 @@ const project = new TypeScriptAppProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
   // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // buildWorkflow: true,                                                      /* Define a GitHub workflow for building PRs. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -1017,13 +1017,13 @@ const project = new TypeScriptAppProject({
   // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // rebuildBot: true,                                                         /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
+  // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
   // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: true,                                                    /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
   // scripts: {},                                                              /* npm scripts to include. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Tests directory. */
