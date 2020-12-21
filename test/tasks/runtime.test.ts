@@ -2,6 +2,7 @@ import { spawnSync } from 'child_process';
 import { basename, join } from 'path';
 import { mkdirpSync } from 'fs-extra';
 import { Project } from '../../src';
+import { TaskRuntime } from '../../src/tasks';
 import { TestProject } from '../util';
 
 test('minimal case (just a shell command)', () => {
@@ -164,6 +165,24 @@ describe('cwd', () => {
     task.exec('echo step', { cwd: join(p.outdir, 'mystep') });
     expect(() => executeTask(p, 'test')).toThrow(/must be an existing directory/);
   });
+});
+
+describe('say', () => {
+
+  test('"say" can be used to print an info log during execution', () => {
+    const p = new TestProject();
+    const task = p.addTask('say');
+    task.say('hello, world');
+
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    expect(rt.tasks).toStrictEqual([{
+      name: 'say',
+      steps: [{ say: 'hello, world' }],
+    }]);
+  });
+
 });
 
 function executeTask(p: Project, taskName: string) {

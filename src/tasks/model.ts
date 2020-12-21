@@ -112,4 +112,11 @@ export interface TaskStep extends TaskStepOptions {
    * @default - don't spawn a subtask
    */
   readonly spawn?: string;
+
+  /**
+   * Print a message.
+   * @default - don't say anything
+   */
+  readonly say?: string;
 }
+

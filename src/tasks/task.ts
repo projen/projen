@@ -81,6 +81,15 @@ export class Task {
   }
 
   /**
+   * Say something.
+   * @param message Your message
+   * @param options Options
+   */
+  public say(message: string, options: TaskStepOptions = { }) {
+    this._steps.push({ say: message, ...options });
+  }
+
+  /**
    * Adds a command at the beginning of the task.
    * @param shell The command to add.
    */

@@ -78,6 +78,10 @@ class RunTask {
     }
 
     for (const step of task.steps ?? []) {
+      if (step.say) {
+        logging.info(this.fmtLog(step.say));
+      }
+
       if (step.spawn) {
         this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
       }
