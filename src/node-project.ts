@@ -1482,7 +1482,6 @@ export class NodeProject extends Project {
       'build/Release',
 
       '# Dependency directories',
-      'node_modules/',
       'jspm_packages/',
 
       '# TypeScript cache',
