@@ -6,6 +6,7 @@ export * from './construct-lib';
 export * from './docker-compose';
 export * from './eslint';
 export * from './file';
+export * from './gitpod';
 export * from './ignore-file';
 export * from './jest';
 export * from './jsii-project';

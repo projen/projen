@@ -5,6 +5,7 @@ import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
 import { GitHub } from './github';
+import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
@@ -32,6 +33,13 @@ export interface ProjectOptions {
    * @default "."
    */
   readonly outdir?: string;
+
+  /**
+   * Adds a gitpod configuration
+   *
+   * @default false
+   */
+  readonly gitpod?: boolean;
 }
 
 /**
@@ -73,6 +81,13 @@ export class Project {
   public readonly vscode: VsCode | undefined;
 
   public readonly tasks: Tasks;
+
+  /**
+   * Access for Gitpod
+   *
+   * This will be `undefined` if gitpod boolean is false
+   */
+  public readonly gitpod: Gitpod | undefined;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -122,6 +137,8 @@ export class Project {
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
+
+    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
 
     new SampleReadme(this, '# my project');
   }
@@ -292,4 +309,3 @@ export class Project {
     this.subprojects.push(subproject);
   }
 }
-
