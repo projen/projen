@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.20 (2020-12-21)
+
+
+### Bug Fixes
+
+* **cli:** new --from leads to invalid projenrc ([#385](https://github.com/projen/projen/issues/385)) ([bddf17c](https://github.com/projen/projen/commit/bddf17c63c2ced8f3a3b91a59161f5cbbeb41e9c)), closes [#384](https://github.com/projen/projen/issues/384)
+
 ### 0.6.19 (2020-12-21)
 
 ### 0.6.18 (2020-12-21)
