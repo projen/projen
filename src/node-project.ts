@@ -874,7 +874,7 @@ export class NodeProject extends Project {
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
-    this.antitamper = (options.buildWorkflow ?? true) && (options.antitamper ?? true);
+    this.antitamper = (options.buildWorkflow ?? (this.parent ? false : true)) && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
