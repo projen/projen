@@ -628,7 +628,7 @@ export class NodeProject extends Project {
   public readonly testTask: Task;
 
   /**
-   * The task resposible for a full release build. It spawns: compile + test + release + package
+   * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
 
@@ -1669,7 +1669,7 @@ export class NodeProject extends Project {
     this.createBuildWorkflow('rebuild-bot', {
       trigger: { issue_comment: { types: ['created'] } },
       condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
-      antitamperDisabled: true, // definitely dont want that
+      antitamperDisabled: true, // definitely do not want that
 
       // since the "issue_comment" event is not triggered on a branch, we need to resolve
       // the git ref of the pull request before we check out

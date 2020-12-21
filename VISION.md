@@ -4,24 +4,24 @@ This is basically a paper napkin for ideas for the roadmap for the project. Comm
 
 ## Ecosystem
 
-"Batteries included" is a very poweful concept. It allows users to discover the breadth of their options using a 
+"Batteries included" is a very powerful concept. It allows users to discover the breadth of their options using a
 single experience, instead of having to read the manual for 4 different plugins with horrible versioning conflicts.
 
-On the other hand, one of the goals of projen is to support the ever-increasing amount of tools people use in order to build software, 
-and to allow teams to use projen internally for their needs and to do that, we must have an open ecocystem which allows anyone to 
+On the other hand, one of the goals of projen is to support the ever-increasing amount of tools people use in order to build software,
+and to allow teams to use projen internally for their needs and to do that, we must have an open ecosystem which allows anyone to
 freely publish and consume components and projects.
 
 So we need to solve a few problems:
 
 - Discovery: projects/components from ecosystem libraries should feel 1st class.
-- Velocity: a single codebase can easily manage breaking changes in APIs, but it's much harder to do that at the 
+- Velocity: a single codebase can easily manage breaking changes in APIs, but it's much harder to do that at the
   ecosystem level, and usually a source of a lot of frustration.
 
 ### Discovery
 
 The desired experience is that `projen new --help` will list all public project types, including types from ecosystem libraries.
 
-A simple solution that may go a long way is to create a "sources" file in the projen repo, and allow anyone to add their library 
+A simple solution that may go a long way is to create a "sources" file in the projen repo, and allow anyone to add their library
 to the file through a pull request. The source list will be basically names of npm modules. During _build_, we will process this
 list by downloading the package information from npm, and injest their `.jsii` manifests into the CLI.
 
