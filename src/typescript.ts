@@ -95,6 +95,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly tsconfig?: TypescriptConfig;
 
   /**
+   * The name of the tsconfig file used for testing.
+   */
+  public readonly tsconfigTest: string;
+
+  /**
    * The directory in which the .ts sources reside.
    */
   public readonly srcdir: string;
@@ -219,12 +224,12 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.projenrc.js');
 
     // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
-    let eslintTsConfig = 'tsconfig.json';
+    this.tsconfigTest = 'tsconfig.json';
 
     if ((options.jest ?? true) && this.jest) {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
-      const tsconfig = this.jest.generateTypescriptConfig({
+      const tsconfigJest = this.jest.generateTypescriptConfig({
         fileName: 'tsconfig.jest.json',
         include: [
           PROJEN_RC,
@@ -237,9 +242,7 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
-      // const tsconfig = new TypescriptConfig(this, );
-
-      eslintTsConfig = tsconfig.fileName;
+      this.tsconfigTest = tsconfigJest.fileName;
 
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
@@ -252,7 +255,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: `./${eslintTsConfig}`,
+        tsconfigPath: `./${this.tsconfigTest}`,
         dirs: [this.srcdir, this.testdir],
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,

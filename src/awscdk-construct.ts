@@ -1,3 +1,4 @@
+import { Component } from './component';
 import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 /**
@@ -7,7 +8,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.73.0"
+   * @default "1.78.0"
    */
   readonly cdkVersion: string;
 
@@ -37,6 +38,14 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * AWS CDK modules required for testing.
    */
   readonly cdkTestDependencies?: string[];
+
+  /**
+   * Adds `integ:synth`, `integ:deploy`, and `integ:diff` tasks and a sample
+   * integration test which can be used to validate this library.
+   *
+   * @default true
+   */
+  readonly cdkIntegTest?: boolean;
 }
 
 /**
@@ -110,7 +119,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * The target CDK version for this library.
    */
-  public readonly version: string;
+  public readonly cdkVersion: string;
 
   constructor(options: AwsCdkConstructLibraryOptions) {
     super({
@@ -120,7 +129,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
-    this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
 
     this.addPeerDeps('constructs@^3.2.27');
 
@@ -160,7 +169,64 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   }
 
   private formatModuleSpec(module: string): string {
-    return `${module}@${this.version}`;
+    return `${module}@${this.cdkVersion}`;
+  }
+}
+
+interface IntegrationTestOptions {
+  /**
+   * The integration test app entrypoint.
+   *
+   * @default "test/integ.ts"
+   */
+  readonly entrypoint?: string;
+}
+
+class IntegrationTest extends Component {
+  public readonly entrypoint: string;
+
+  constructor(project: AwsCdkConstructLibrary, options: IntegrationTestOptions = {}) {
+    super(project);
+
+    this.entrypoint = options.entrypoint ?? 'test/integ.ts';
+
+    // install the CLI and ts-node so we can use it to run the test
+    project.addCdkTestDependencies('aws-cdk');
+    project.addDevDeps('ts-node');
+
+    const app = `ts-node --project ${project.tsconfigTest} ${this.entrypoint}`;
+    const args = [
+      '--app',
+      `"${app}"`,
+      '--context',
+      '@aws-cdk/core:newStyleStackSynthesis=true',
+    ];
+
+    const synth = project.addTask('integ:synth', {
+      description: 'Synthesize the integration test app to cdk.out',
+    });
+
+    project.gitignore.exclude('cdk.out');
+    synth.exec('rm -fr cdk.out');
+    synth.exec(`cdk synth ${args}`);
+
+    project.addTask('integ:bootstrap', {
+      description: 'Bootstrap AWS environments used by the integration test app',
+      exec: `cdk bootstrap ${args}`,
+      env: { CDK_NEW_BOOTSTRAP: '1' },
+    });
+
+    project.addTask('integ:deploy', {
+      description: 'Deploy the integration test app',
+      exec: `cdk deploy ${args} *`,
+    });
+
+    project.addTask('integ:diff', {
+      description: 'Diff integration test app against AWS environment',
+      exec: `cdk diff ${args}`,
+    });
+
+    project.testTask.spawn(synth);
   }
 }
 
