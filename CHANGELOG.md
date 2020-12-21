@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.6.21 (2020-12-21)
+
+
+### Features
+
+* **github:** skip creating GitHub workflows by default for subprojects ([#382](https://github.com/projen/projen/issues/382)) ([a08e3d8](https://github.com/projen/projen/commit/a08e3d89fec97a813be94041d503a49a1df5b199))
+
 ### 0.6.20 (2020-12-21)
 
 
