@@ -196,7 +196,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, string
 }
 
 /**
- * Given a value from "@default", processes macros and returns a stringied
+ * Given a value from "@default", processes macros and returns a stringified
  * (quoted) result.
  *
  * @returns a javascript primitive (could be a string, number or boolean)
@@ -386,7 +386,7 @@ async function askAboutGit(): Promise<boolean> {
 
     if (!git && !gh) {
       exec('git init');
-      logging.info('Ok, we\'ve \'git init\'d for you! Have a great day.');
+      logging.info('Ok, we have run \'git init\' for you! Have a great day.');
     }
 
     if (git) {
@@ -407,7 +407,7 @@ async function askAboutGit(): Promise<boolean> {
 
       exec(`git remote add origin ${formattedGitRepoURL}`);
 
-      logging.info(`Great! We've 'git init'd for you and set the remote to ${formattedGitRepoURL}`);
+      logging.info(`Great! We have run 'git init' for you and set the remote to ${formattedGitRepoURL}`);
     }
 
     if (!git && gh) {

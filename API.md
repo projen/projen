@@ -1206,7 +1206,7 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**absolutePath**🔹 | <code>string</code> | The absoluate path of this file.
+**absolutePath**🔹 | <code>string</code> | The absolute path of this file.
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
 *static* **PROJEN_MARKER**🔹 | <code>string</code> | The marker to embed in files in order to identify them as projen files.
@@ -1863,7 +1863,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task resposible for a full release build.
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
 **compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
 **entrypoint**🔹 | <code>string</code> | <span></span>
 **installWorkflowSteps**🔹 | <code>Array<any></code> | <span></span>
