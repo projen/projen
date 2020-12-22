@@ -4,6 +4,7 @@ import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { Gitpod } from './gitpod';
@@ -47,6 +48,12 @@ export interface ProjectOptions {
    * @default true
    */
   readonly clobber?: boolean;
+
+  /**
+   * Which type of project this is (library/app).
+   * @default ProjectType.UNKNOWN
+   */
+  readonly projectType?: ProjectType;
 }
 
 /**
@@ -96,6 +103,16 @@ export class Project {
    */
   public readonly gitpod: Gitpod | undefined;
 
+  /**
+   * Which project type this is.
+   */
+  public readonly projectType: ProjectType;
+
+  /**
+   * Project dependencies.
+   */
+  public readonly deps: Dependencies;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -104,6 +121,7 @@ export class Project {
   constructor(options: ProjectOptions = { }) {
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -141,6 +159,7 @@ export class Project {
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
+    this.deps = new Dependencies(this);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
@@ -320,4 +339,27 @@ export class Project {
 
     this.subprojects.push(subproject);
   }
+}
+
+
+/**
+ * Which type of project this is.
+ */
+export enum ProjectType {
+  /**
+   * This module may be a either a library or an app.
+   */
+  UNKNOWN = 'unknown',
+
+  /**
+   * This is a library, intended to be published to a package manager and
+   * consumed by other projects.
+   */
+  LIB = 'lib',
+
+  /**
+   * This is an app (service, tool, website, etc). Its artifacts are intended to
+   * be deployed or published for end-user consumption.
+   */
+  APP = 'app'
 }

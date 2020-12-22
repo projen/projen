@@ -28,3 +28,4 @@ export * as tasks from './tasks';
 export * as web from './web';
 export * as github from './github';
 export * as vscode from './vscode';
+export * as deps from './deps';

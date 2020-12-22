@@ -89,6 +89,7 @@ const project = new AwsCdkTypeScriptApp({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -202,6 +203,7 @@ const project = new AwsCdkConstructLibrary({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -296,6 +298,7 @@ const project = new ConstructLibraryCdk8s({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -386,6 +389,7 @@ const project = new JsiiProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -480,6 +484,7 @@ const project = new web.NextJsProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -571,6 +576,7 @@ const project = new web.NextJsTypeScriptProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -671,6 +677,7 @@ const project = new NodeProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -682,10 +689,11 @@ exports[`projen new project 1`] = `
 
 const project = new Project({
   /* ProjectOptions */
-  // clobber: true,      /* Add a \`clobber\` task which resets the repo to origin. */
-  // gitpod: false,      /* Adds a gitpod configuration. */
-  // outdir: '.',        /* The root directory of the project. */
-  // parent: undefined,  /* The parent project, if this project is part of a bigger project. */
+  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
+  // gitpod: false,                     /* Adds a gitpod configuration. */
+  // outdir: '.',                       /* The root directory of the project. */
+  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
 });
 
 project.synth();
@@ -773,6 +781,7 @@ const project = new web.ReactProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* ReactProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`public/\` if there are no files there. */
@@ -863,6 +872,7 @@ const project = new web.ReactTypeScriptProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -963,6 +973,7 @@ const project = new TypeScriptProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -1063,6 +1074,7 @@ const project = new TypeScriptAppProject({
   // gitpod: false,                                                            /* Adds a gitpod configuration. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
