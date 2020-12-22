@@ -922,6 +922,9 @@ export class NodeProject extends Project {
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
+        checkoutWith: {
+          'fetch-depth': 1000, // so "standard-version" can look at history
+        },
       });
 
       this.releaseWorkflow = workflow;
@@ -1758,7 +1761,7 @@ interface NodeBuildWorkflowOptions {
   readonly preBuildSteps?: any[];
   readonly preCheckoutSteps?: any[];
   readonly postSteps?: any[];
-  readonly checkoutWith?: { [key: string]: string };
+  readonly checkoutWith?: { [key: string]: any };
 
   /**
    * Commit any changes with the specified commit message.
