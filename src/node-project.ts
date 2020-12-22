@@ -916,7 +916,10 @@ export class NodeProject extends Project {
 
       const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
-        preBuildSteps: [{ run: this.runTaskCommand(this._version.bumpTask) }],
+        preBuildSteps: [{
+          name: 'Bump to next version',
+          run: this.runTaskCommand(this._version.bumpTask),
+        }],
         pushBranch: '${{ github.ref }}',
         uploadArtifact: true,
         image: options.workflowContainerImage,

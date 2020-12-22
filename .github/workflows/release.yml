@@ -29,7 +29,8 @@ jobs:
         run: |-
           git config user.name "Auto-bump"
           git config user.email "github-actions@github.com"
-      - run: /bin/bash ./projen.bash bump
+      - name: Bump to next version
+        run: /bin/bash ./projen.bash bump
       - name: Build
         run: /bin/bash ./projen.bash build
       - name: Upload coverage to Codecov
