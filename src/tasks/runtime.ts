@@ -88,10 +88,10 @@ class RunTask {
 
       if (step.exec) {
         const command = step.exec;
-        const cwd = step.cwd ?? this.workdir;
-        const result = this.shell({ command, cwd: cwd });
+        const cwd = step.cwd;
+        const result = this.shell({ command, cwd });
         if (result.status !== 0) {
-          throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd)})`);
+          throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
         }
       }
     }
@@ -114,6 +114,7 @@ class RunTask {
     const result = this.shell({
       command: task.condition,
       logprefix: 'condition: ',
+      quiet: true,
     });
     if (result.status === 0) {
       return true;
@@ -175,26 +176,30 @@ class RunTask {
   }
 
   private shell(options: ShellOptions) {
-    const log = new Array<string>();
-    if (options.logprefix) {
-      log.push(options.logprefix);
-    }
+    if (options.quiet ?? false) {
+      const log = new Array<string>();
 
-    log.push(options.command);
-
-    if (options.cwd) {
-      if (!existsSync(options.cwd) || !statSync(options.cwd).isDirectory()) {
-        throw new Error(`invalid workdir (cwd): ${options.cwd} must be an existing directory`);
+      if (options.logprefix) {
+        log.push(options.logprefix);
       }
 
-      log.push(`(cwd: ${options.cwd})`);
+      log.push(options.command);
+
+      if (options.cwd) {
+        log.push(`(cwd: ${options.cwd})`);
+      }
+
+      this.log(log.join(' '));
     }
 
-    this.log(log.join(' '));
+    const cwd = options.cwd ?? this.workdir;
+    if (!existsSync(cwd) || !statSync(cwd).isDirectory()) {
+      throw new Error(`invalid workdir (cwd): ${cwd} must be an existing directory`);
+    }
 
     return spawnSync(options.command, {
       ...options,
-      cwd: options.cwd ?? this.workdir,
+      cwd,
       shell: true,
       stdio: 'inherit',
       env: this.env,
@@ -214,7 +219,12 @@ class RunTask {
 
 interface ShellOptions {
   readonly command: string;
+  /**
+   * @default - project dir
+   */
   readonly cwd?: string;
   readonly logprefix?: string;
   readonly spawnOptions?: SpawnOptions;
+  /** @default false */
+  readonly quiet?: boolean;
 }
