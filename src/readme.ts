@@ -22,6 +22,6 @@ export interface SampleReadmeProps {
  */
 export class SampleReadme extends SampleFile {
   constructor(project: Project, text?: string, props?: SampleReadmeProps) {
-    super(project, props?.readme ?? 'README.md', { contents: text ?? '# replace this' });
+    super(project, props?.filename ?? 'README.md', { contents: text ?? '# replace this' });
   }
 }

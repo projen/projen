@@ -161,7 +161,7 @@ export class Project {
     }
 
     new SampleReadme(this, '# my project', {
-      readme: options.readme,
+      filename: options.readme,
     });
   }
 
