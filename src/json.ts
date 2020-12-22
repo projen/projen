@@ -61,17 +61,13 @@ export class JsonFile extends FileBase {
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    const obj: any = {
-      ...this.obj,
-    };
+    const resolved = resolver.resolve(this.obj, {
+      omitEmpty: this.omitEmpty,
+    }) ?? {};
 
     if (this.marker) {
-      obj['//'] = JsonFile.PROJEN_MARKER;
+      resolved['//'] = JsonFile.PROJEN_MARKER;
     }
-
-    const resolved = resolver.resolve(obj, {
-      omitEmpty: this.omitEmpty,
-    });
 
     return JSON.stringify(resolved, undefined, 2);
   }

@@ -4,6 +4,7 @@ import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { DevContainer } from './devcontainer';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { Gitpod } from './gitpod';
@@ -41,6 +42,13 @@ export interface ProjectOptions {
    * @default false
    */
   readonly gitpod?: boolean;
+
+  /**
+   * Adds a VSCode development container config (used for GitHub Codespaces)
+   *
+   * @default false
+   */
+  readonly devContainer?: boolean;
 
   /**
    * Add a `clobber` task which resets the repo to origin.
@@ -96,6 +104,13 @@ export class Project {
    */
   public readonly gitpod: Gitpod | undefined;
 
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false
+   */
+  public readonly devContainer: DevContainer | undefined;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -147,6 +162,7 @@ export class Project {
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
+    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
 
     if (options.clobber ?? true) {
       new Clobber(this);

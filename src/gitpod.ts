@@ -1,5 +1,6 @@
-import { Component } from './component';
+import { WorkspaceConfig, WorkspaceConfigOptions, WorkspaceDockerImage } from './devcontainer';
 import { Project } from './project';
+import { Task } from './tasks';
 import { YamlFile } from './yaml';
 
 /**
@@ -11,35 +12,6 @@ const GITPOD_FILE = '.gitpod.yml';
  * https://www.gitpod.io/docs/configuration/
  * https://www.gitpod.io/docs/config-start-tasks/
  */
-
-/**
- * If the standard Docker image provided by Gitpod does not include the tools
- * you need for your project, you can provide a custom Docker image OR Dockerfile.
- * https://hub.docker.com/r/gitpod/workspace-full/ is the default Gitpod image
- */
-export interface GitpodDocker {
-
-  /**
-   *
-   * A publicly available image to use
-   *
-   * @default - uses the standard gitpod image (see [LINK] above)
-   */
-  readonly image?: string;
-
-  /**
-   *
-   * a Dockerfile to install deps
-   *
-   * @default
-   *
-   * @example
-   * {
-   *   file: '.gitpod.Docker',
-   * }
-   */
-  readonly file?: string;
-}
 
 /**
   * Configure how the terminal should be opened relative to the previous task.
@@ -94,8 +66,7 @@ export enum GitpodOpenIn {
 }
 
 /**
- * Configure options for a task to be run when opening a Gitpod
- * workspace (e.g. running tests, or starting a dev server).
+ * Additional options for specifying tasks in a Gitpod workspace.
  *
  * Start Mode         | Execution
  * Fresh Workspace    | before && init && command
@@ -103,19 +74,7 @@ export enum GitpodOpenIn {
  * Snapshot           | before && command
  * Prebuild           | before && init && prebuild
 */
-export interface GitpodTask {
-
-  /**
-   * Required. What to run
-   */
-  readonly command: string;
-
-  /**
-   * A name for this
-   * @default - task names are omitted when blank like GH actions
-   */
-  readonly name?: string;
-
+export interface GitpodTaskOptions {
   /**
    * You can configure how the terminal should be opened relative to the previous task.
    * @default GitpodOpenMode.TAB_AFTER
@@ -136,7 +95,6 @@ export interface GitpodTask {
   readonly before?: string;
 
   /**
-   *
    * The init property can be used to specify shell commands that should only be executed after a workspace
    * was freshly cloned and needs to be initialized somehow. Such tasks are usually builds or downloading
    * dependencies. Anything you only want to do once but not when you restart a workspace or start a snapshot.
@@ -153,84 +111,214 @@ export interface GitpodTask {
 }
 
 /**
- * What can we configure for the GitPod component
- */
-export interface GitpodOptions {
+ * Specifies all options for a task to be run when opening a Gitpod
+ * workspace (e.g. running tests, or starting a dev server).
+ *
+ * Start Mode         | Execution
+ * Fresh Workspace    | before && init && command
+ * Restart Workspace  | before && command
+ * Snapshot           | before && command
+ * Prebuild           | before && init && prebuild
+*/
+export interface GitpodTask extends GitpodTaskOptions {
   /**
-   * Optional Docker Configuration
-   * Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile
-   * if this is unset, so undefined here means `gitpod/workspace-full`
-   * @default undefined
+   * Required. What to run
    */
-  readonly docker?: GitpodDocker;
+  readonly command: string;
 
   /**
-   * This must be defaulted per project
-   * @default []
+   * A name for this
+   * @default - task names are omitted when blank like GH actions
    */
-  readonly tasks?: GitpodTask[];
+  readonly name?: string;
 }
+
+/**
+ * What to do when a service on a port is detected.
+ */
+export enum GitpodOnOpen {
+  /**
+   * Open a new browser tab
+   */
+  OPEN_BROWSER = 'open-browser',
+
+  /**
+   * Open a preview on the right side of the IDE
+   */
+  OPEN_PREVIEW = 'open-preview',
+
+  /**
+   * Show a notification asking the user what to do (default)
+   */
+  NOTIFY = 'notify',
+
+  /**
+   * Do nothing.
+   */
+  IGNORE = 'ignore',
+}
+
+/**
+ * Whether the port visibility should be private or public
+ */
+export enum GitpodPortVisibility {
+  /**
+   * Allows everyone with the port URL to access the port (default)
+   */
+  PUBLIC = 'public',
+
+  /**
+   * Only allows users with workspace access to access the port
+   */
+  PRIVATE = 'private'
+}
+
+/**
+ * Options for an exposed port on Gitpod
+ */
+export interface GitpodPort {
+  /**
+   * A port that should be exposed (forwarded) from the container.
+   *
+   * @example "8080"
+   */
+  readonly port?: string;
+
+  /**
+   * What to do when a service on a port is detected.
+   *
+   * @default GitpodOnOpen.NOTIFY
+   */
+  readonly onOpen?: GitpodOnOpen;
+
+  /**
+   * Whether the port visibility should be private or public.
+   *
+   * @default GitpodPortVisibility.PUBLIC
+   */
+  readonly visibility?: GitpodPortVisibility;
+}
+
+/**
+ * Configuration options for the Gitpod component.
+ *
+ * By default, Gitpod uses the 'gitpod/workspace-full' docker image.
+ * @see https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile
+ *
+ * By default, all tasks will be run in parallel. To run the tasks in sequence,
+ * create a new task and specify the other tasks as subtasks.
+ */
+export interface GitpodOptions extends WorkspaceConfigOptions {}
 
 /**
  * The Gitpod component which emits .gitpod.yml
  */
-export class Gitpod extends Component {
+export class Gitpod extends WorkspaceConfig {
+  private _dockerImage: WorkspaceDockerImage;
   private readonly tasks = new Array<GitpodTask>();
-  private docker: GitpodDocker | undefined;
-
-  constructor(project: Project, options?: GitpodOptions) {
-    super(project);
-
-    if (options?.docker) {
-      this.addCustomDocker(options?.docker);
-    }
-    if (options?.tasks) {
-      this.addTasks(...options?.tasks);
-    }
-
-    new YamlFile(this.project, GITPOD_FILE, {
-      obj: {
-        image: () => this.renderDockerImage(),
-        tasks: () => this.renderTasks(),
-      },
-    });
-  }
+  private readonly ports = new Array<GitpodPort>();
+  private readonly vscodeExtensions = new Array<string>();
 
   /**
-   *
-   * Specify a customer docker setup
-   * @param docker
+   * Direct access to the gitpod configuration (escape hatch)
    */
-  public addCustomDocker(docker: GitpodDocker) {
+  public readonly config: any;
+
+  constructor(project: Project, options: GitpodOptions = {}) {
+    super(project, options);
+
+    this._dockerImage = options?.dockerImage ?? {};
+
+    if (options?.tasks) {
+      for (const task of options.tasks) {
+        this.addTasks(task);
+      }
+    }
+
+    this.config = {
+      image: () => this.renderDockerImage(),
+      tasks: this.tasks,
+      ports: this.ports,
+      vscode: {
+        extensions: this.vscodeExtensions,
+      },
+    };
+
+    new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
+  }
+
+  public set dockerImage(docker: WorkspaceDockerImage) {
     if (docker?.file && docker?.image) {
       throw new Error('Can not specific both `file` and `image` at the same time');
     }
 
-    this.docker = docker;
+    this._dockerImage = docker;
+  }
+
+  public get dockerImage() {
+    return this._dockerImage;
   }
 
   /**
-   * Adds another task to the Gitpod configuration
-   * @param tasks The additional tasks
+   * Adds tasks to run when gitpod starts.
+   *
+   * By default, all tasks will be run in parallel. To run tasks in sequence,
+   * create a new `Task` and specify the other tasks as subtasks.
+   *
+   * @param tasks The new tasks
    */
-  public addTasks(...tasks: GitpodTask[]) {
-    this.tasks.push(...tasks);
+  public addTasks(...tasks: Task[]) {
+    this.tasks.push(...tasks.map(task => ({
+      name: task.name,
+      command: task.toShellCommand(),
+    })));
   }
 
-  private renderTasks() : GitpodTask[] | undefined {
-    if (this.tasks) {
-      return this.tasks;
-    } else {
-      return undefined;
-    }
+  /**
+   * Adds a task, with additional options to specify when the task runs.
+   *
+   * By default, all tasks will be run in parallel. To run tasks in sequence,
+   * create a new `Task` and specify the other tasks as subtasks.
+   *
+   * @param task The new task
+   */
+  public addTaskWithOptions(task: Task, options: GitpodTaskOptions = {}) {
+    this.tasks.push({
+      name: task.name,
+      command: task.toShellCommand(),
+      openMode: options.openMode,
+      openIn: options.openIn,
+      before: options.before,
+      init: options.init,
+      prebuild: options.prebuild,
+    });
+  }
+
+  /**
+   * Adds ports that should be exposed (forwarded) from the container.
+   *
+   * @param ports The new ports
+   */
+  public addPorts(...ports: string[]) {
+    this.ports.push(...ports.map(port => ({ port: port })));
+  }
+
+  /**
+   * Adds a list of VSCode extensions that should be automatically installed
+   * in the container.
+   *
+   * @param extensions The extension IDs
+   */
+  public addVscodeExtensions(...extensions: string[]) {
+    this.vscodeExtensions.push(...extensions);
   }
 
   private renderDockerImage() {
-    if (this.docker?.image) {
-      return this.docker.image;
-    } else if (this.docker?.file) {
+    if (this._dockerImage?.image) {
+      return this._dockerImage.image;
+    } else if (this._dockerImage?.file) {
       return {
-        file: this.docker.file,
+        file: this._dockerImage.file,
       };
     } else {
       return undefined;

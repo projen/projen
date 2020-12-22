@@ -3,6 +3,7 @@ export * from './awscdk-construct';
 export * from './cdk8s-construct';
 export * from './component';
 export * from './construct-lib';
+export * from './devcontainer';
 export * from './docker-compose';
 export * from './eslint';
 export * from './file';
