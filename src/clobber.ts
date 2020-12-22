@@ -10,7 +10,6 @@ export class Clobber extends Component {
       description: 'hard resets to HEAD of origin and cleans the local repo',
       category: TaskCategory.MAINTAIN,
       condition: 'git diff --exit-code > /dev/null',
-      cwd: '/tmp/clobber-test',
       env: {
         BRANCH: '$(git branch --show-current)',
       },

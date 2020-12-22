@@ -31,8 +31,7 @@
           "say": "ready to rock! (unpushed commits are under the \"scratch\" branch)"
         }
       ],
-      "condition": "git diff --exit-code > /dev/null",
-      "cwd": "/tmp/clobber-test"
+      "condition": "git diff --exit-code > /dev/null"
     },
     "compile": {
       "name": "compile",
