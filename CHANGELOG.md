@@ -2,7 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### 0.6.22 (2020-12-22)
+### [0.6.22](https://github.com/projen/projen/compare/v0.6.21...v0.6.22) (2020-12-22)
+
+
+### Features
+
+* **tasks:** clobber ([304e4a1](https://github.com/projen/projen/commit/304e4a1c82aac00f23264b3925e68ae053f01c95))
+* **tasks:** cwd ([08c08d3](https://github.com/projen/projen/commit/08c08d3ecb47c8e2ab2e0c1570ab3f1e27776e80)), closes [#358](https://github.com/projen/projen/issues/358)
+* **tasks:** say() ([90ef9fe](https://github.com/projen/projen/commit/90ef9fe4895bbc473fdf7bce5cbb245257f8f7be))
 
 ### 0.6.21 (2020-12-21)
 
