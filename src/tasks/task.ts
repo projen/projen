@@ -1,34 +1,6 @@
-import { TaskSpec, TaskStep, TaskStepOptions } from './model';
+import { TaskCategory, TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
 import { Tasks } from './tasks';
 
-export interface TaskCommonOptions {
-  /**
-   * The description of this build command.
-   * @default - the task name
-   */
-  readonly description?: string;
-
-  /**
-   * Category for start menu.
-   *
-   * @default TaskCategory.MISC
-   */
-  readonly category?: TaskCategory;
-
-  /**
-   * Defines environment variables for the execution of this task.
-   * Values in this map will be evaluated in a shell, so you can do stuff like `$(echo "foo")`.
-   * @default {}
-   */
-  readonly env?: { [name: string]: string };
-
-  /**
-   * A shell command which determines if the this task should be executed. If
-   * the program exits with a zero exit code, steps will be executed. A non-zero
-   * code means that task will be skipped.
-   */
-  readonly condition?: string;
-}
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -66,6 +38,7 @@ export class Task {
 
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
+  private readonly cwd?: string;
   private readonly tasks: Tasks;
 
   constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
@@ -74,6 +47,7 @@ export class Task {
     this.description = props.description;
     this.category = props.category;
     this.condition = props.condition;
+    this.cwd = props.cwd;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -100,9 +74,19 @@ export class Task {
   /**
    * Executes a shell command
    * @param command Shell command
+   * @param options Options
    */
   public exec(command: string, options: TaskStepOptions = { }) {
     this._steps.push({ exec: command, ...options });
+  }
+
+  /**
+   * Say something.
+   * @param message Your message
+   * @param options Options
+   */
+  public say(message: string, options: TaskStepOptions = { }) {
+    this._steps.push({ say: message, ...options });
   }
 
   /**
@@ -194,14 +178,7 @@ export class Task {
       env: this._env,
       steps: this._steps,
       condition: this.condition,
+      cwd: this.cwd,
     };
   }
-}
-
-export enum TaskCategory {
-  BUILD = '00.build',
-  TEST = '10.test',
-  RELEASE = '20.release',
-  MAINTAIN = '30.maintain',
-  MISC = '99.misc',
 }

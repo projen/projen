@@ -9,7 +9,7 @@ logging.disable(); // no logging during tests
 export class TestProject extends Project {
   constructor() {
     const tmpdir = mkdtemp();
-    super({ outdir: tmpdir });
+    super({ outdir: tmpdir, clobber: false });
   }
 
   postSynthesize() {

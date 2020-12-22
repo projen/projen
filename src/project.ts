@@ -1,6 +1,7 @@
 import { existsSync } from 'fs';
 import * as path from 'path';
 import { cleanup } from './cleanup';
+import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { FileBase } from './file';
@@ -40,6 +41,12 @@ export interface ProjectOptions {
    * @default false
    */
   readonly gitpod?: boolean;
+
+  /**
+   * Add a `clobber` task which resets the repo to origin.
+   * @default true
+   */
+  readonly clobber?: boolean;
 }
 
 /**
@@ -140,6 +147,10 @@ export class Project {
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
+
+    if (options.clobber ?? true) {
+      new Clobber(this);
+    }
 
     new SampleReadme(this, '# my project');
   }
