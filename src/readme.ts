@@ -11,7 +11,7 @@ export interface SampleReadmeProps {
    * @default "README.md"
    * @example "readme.md"
    */
-  readonly readme?: string;
+  readonly filename?: string;
 }
 
 /**
