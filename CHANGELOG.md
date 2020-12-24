@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.1](https://github.com/projen/projen/compare/v0.9.0...v0.9.1) (2020-12-24)
+
+
+### Bug Fixes
+
+* **node:** invalid bumps due to lack of tags in release workflow ([41e2ae9](https://github.com/projen/projen/commit/41e2ae92439ee959b0011a96050dd2315101280c)), closes [#397](https://github.com/projen/projen/issues/397)
+
 ## 0.9.0 (2020-12-23)
 
 
