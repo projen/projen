@@ -926,7 +926,9 @@ export class NodeProject extends Project {
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
         checkoutWith: {
-          'fetch-depth': 1000, // so "standard-version" can look at history
+          // we must use 'fetch-depth=0' in order to fetch all tags
+          // otherwise tags are not checked out
+          'fetch-depth': 0,
         },
       });
 
