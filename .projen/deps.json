@@ -2,182 +2,148 @@
   "projectType": "unknown",
   "dependencies": [
     {
-      "name": "@types/fs-extra",
-      "version": "^8",
-      "type": "build",
-      "spec": "types/fs-extra@^8"
+      "name": "@iarna/toml",
+      "type": "bundled"
     },
     {
-      "name": "@types/yargs",
-      "type": "build",
-      "spec": "types/yargs"
+      "name": "@types/fs-extra",
+      "version": "^8",
+      "type": "build"
     },
     {
       "name": "@types/glob",
-      "type": "build",
-      "spec": "types/glob"
+      "type": "build"
     },
     {
       "name": "@types/inquirer",
-      "type": "build",
-      "spec": "types/inquirer"
-    },
-    {
-      "name": "@types/semver",
-      "type": "build",
-      "spec": "types/semver"
-    },
-    {
-      "name": "markmac",
-      "type": "build",
-      "spec": "markmac"
-    },
-    {
-      "name": "yaml",
-      "type": "bundled",
-      "spec": "yaml"
-    },
-    {
-      "name": "fs-extra",
-      "type": "bundled",
-      "spec": "fs-extra"
-    },
-    {
-      "name": "yargs",
-      "type": "bundled",
-      "spec": "yargs"
-    },
-    {
-      "name": "decamelize",
-      "type": "bundled",
-      "spec": "decamelize"
-    },
-    {
-      "name": "glob",
-      "version": "^7",
-      "type": "bundled",
-      "spec": "glob@^7"
-    },
-    {
-      "name": "semver",
-      "type": "bundled",
-      "spec": "semver"
-    },
-    {
-      "name": "inquirer",
-      "type": "bundled",
-      "spec": "inquirer"
-    },
-    {
-      "name": "chalk",
-      "type": "bundled",
-      "spec": "chalk"
-    },
-    {
-      "name": "@iarna/toml",
-      "type": "bundled",
-      "spec": "iarna/toml"
-    },
-    {
-      "name": "standard-version",
-      "version": "^9.0.0",
-      "type": "build",
-      "spec": "standard-version@^9.0.0"
-    },
-    {
-      "name": "jest",
-      "type": "build",
-      "spec": "jest"
-    },
-    {
-      "name": "jest-junit",
-      "version": "^12",
-      "type": "build",
-      "spec": "jest-junit@^12"
+      "type": "build"
     },
     {
       "name": "@types/jest",
-      "type": "build",
-      "spec": "types/jest"
-    },
-    {
-      "name": "ts-jest",
-      "type": "build",
-      "spec": "ts-jest"
-    },
-    {
-      "name": "eslint",
-      "type": "build",
-      "spec": "eslint"
-    },
-    {
-      "name": "@typescript-eslint/eslint-plugin",
-      "version": "^4.3.0",
-      "type": "build",
-      "spec": "typescript-eslint/eslint-plugin@^4.3.0"
-    },
-    {
-      "name": "@typescript-eslint/parser",
-      "version": "^4.3.0",
-      "type": "build",
-      "spec": "typescript-eslint/parser@^4.3.0"
-    },
-    {
-      "name": "eslint-import-resolver-node",
-      "type": "build",
-      "spec": "eslint-import-resolver-node"
-    },
-    {
-      "name": "eslint-import-resolver-typescript",
-      "type": "build",
-      "spec": "eslint-import-resolver-typescript"
-    },
-    {
-      "name": "eslint-plugin-import",
-      "type": "build",
-      "spec": "eslint-plugin-import"
-    },
-    {
-      "name": "json-schema",
-      "type": "build",
-      "spec": "json-schema"
-    },
-    {
-      "name": "typescript",
-      "version": "^3.9.5",
-      "type": "build",
-      "spec": "typescript@^3.9.5"
+      "type": "build"
     },
     {
       "name": "@types/node",
       "version": "^10.17.0",
-      "type": "build",
-      "spec": "types/node@^10.17.0"
+      "type": "build"
+    },
+    {
+      "name": "@types/semver",
+      "type": "build"
+    },
+    {
+      "name": "@types/yargs",
+      "type": "build"
+    },
+    {
+      "name": "@typescript-eslint/eslint-plugin",
+      "version": "^4.3.0",
+      "type": "build"
+    },
+    {
+      "name": "@typescript-eslint/parser",
+      "version": "^4.3.0",
+      "type": "build"
+    },
+    {
+      "name": "chalk",
+      "type": "bundled"
+    },
+    {
+      "name": "decamelize",
+      "type": "bundled"
+    },
+    {
+      "name": "eslint",
+      "type": "build"
+    },
+    {
+      "name": "eslint-import-resolver-node",
+      "type": "build"
+    },
+    {
+      "name": "eslint-import-resolver-typescript",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-import",
+      "type": "build"
+    },
+    {
+      "name": "fs-extra",
+      "type": "bundled"
+    },
+    {
+      "name": "glob",
+      "version": "^7",
+      "type": "bundled"
+    },
+    {
+      "name": "inquirer",
+      "type": "bundled"
+    },
+    {
+      "name": "jest",
+      "type": "build"
+    },
+    {
+      "name": "jest-junit",
+      "version": "^12",
+      "type": "build"
     },
     {
       "name": "jsii",
-      "type": "build",
-      "spec": "jsii"
+      "type": "build"
     },
     {
       "name": "jsii-diff",
-      "type": "build",
-      "spec": "jsii-diff"
-    },
-    {
-      "name": "jsii-pacmak",
-      "type": "build",
-      "spec": "jsii-pacmak"
-    },
-    {
-      "name": "jsii-release",
-      "type": "build",
-      "spec": "jsii-release"
+      "type": "build"
     },
     {
       "name": "jsii-docgen",
-      "type": "build",
-      "spec": "jsii-docgen"
+      "type": "build"
+    },
+    {
+      "name": "jsii-pacmak",
+      "type": "build"
+    },
+    {
+      "name": "jsii-release",
+      "type": "build"
+    },
+    {
+      "name": "json-schema",
+      "type": "build"
+    },
+    {
+      "name": "markmac",
+      "type": "build"
+    },
+    {
+      "name": "semver",
+      "type": "bundled"
+    },
+    {
+      "name": "standard-version",
+      "version": "^9.0.0",
+      "type": "build"
+    },
+    {
+      "name": "ts-jest",
+      "type": "build"
+    },
+    {
+      "name": "typescript",
+      "version": "^3.9.5",
+      "type": "build"
+    },
+    {
+      "name": "yaml",
+      "type": "bundled"
+    },
+    {
+      "name": "yargs",
+      "type": "bundled"
     }
   ],
   "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \"npx projen\"."

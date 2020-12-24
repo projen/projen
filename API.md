@@ -34,7 +34,7 @@ Name|Description
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 [YamlFile](#projen-yamlfile)|*No description*
-[deps.Dependencies](#projen-deps-dependencies)|*No description*
+[deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
@@ -2999,7 +2999,10 @@ __Returns__:
 
 ## class Dependencies 🔹 <a id="projen-deps-dependencies"></a>
 
+The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 
+To add a dependency you can use a project-type specific API such as
+`nodeProject.addDeps()` or use the generic API of `project.deps`:
 
 __Submodule__: deps
 
@@ -3008,13 +3011,13 @@ __Extends__: [Component](#projen-component)
 ### Initializer
 
 
-
+Adds a dependencies component to the project.
 
 ```ts
 new deps.Dependencies(project: Project)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  The parent project.
 
 
 
@@ -3023,7 +3026,7 @@ new deps.Dependencies(project: Project)
 
 Name | Type | Description 
 -----|------|-------------
-**all**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | A copy of all dependencies.
+**all**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | A copy of all dependencies recorded for this project.
 *static* **MANIFEST_FILE**🔹 | <code>string</code> | The project-relative path of the deps manifest file.
 
 ### Methods
@@ -3031,14 +3034,14 @@ Name | Type | Description
 
 #### addDependency(spec, type)🔹 <a id="projen-deps-dependencies-adddependency"></a>
 
-
+Adds a dependency to this project.
 
 ```ts
 addDependency(spec: string, type: DependencyType): Dependency
 ```
 
-* **spec** (<code>string</code>)  *No description*
-* **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  *No description*
+* **spec** (<code>string</code>)  The dependency spec in the format `MODULE[@VERSION]` where `MODULE` is the package-manager-specific module name and `VERSION` is an optional semantic version requirement (e.g. `^3.4.0`).
+* **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  The type of the dependency.
 
 __Returns__:
 * <code>[deps.Dependency](#projen-deps-dependency)</code>
@@ -6019,7 +6022,6 @@ __Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | The package manager name of the dependency (e.g. `leftpad` for npm).
-**spec**🔹 | <code>string</code> | The full dependency spec as defined by the user.
 **type**🔹 | <code>[deps.DependencyType](#projen-deps-dependencytype)</code> | Which type of dependency this is (runtime, build-time, etc).
 **version**?🔹 | <code>string</code> | Semantic version version requirement.<br/>__*Default*__: requirement is managed by the package manager (e.g. npm/yarn).
 

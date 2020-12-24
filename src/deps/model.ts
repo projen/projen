@@ -34,11 +34,6 @@ export interface Dependency {
    * @default - requirement is managed by the package manager (e.g. npm/yarn).
    */
   readonly version?: string;
-
-  /**
-   * The full dependency spec as defined by the user.
-   */
-  readonly spec: string;
 }
 
 export enum DependencyType {

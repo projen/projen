@@ -1337,6 +1337,7 @@ export class NodeProject extends Project {
       }
     }
 
+    // update the manifest we are about to save into `package.json`
     this.manifest.devDependencies = sorted(devDependencies);
     this.manifest.peerDependencies = sorted(peerDependencies);
     this.manifest.dependencies = sorted(dependencies);
