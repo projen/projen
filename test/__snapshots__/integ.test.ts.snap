@@ -752,10 +752,23 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "rm -fr lib/",
           },
           Object {
+            "spawn": "test:compile",
+          },
+          Object {
             "exec": "jest --passWithNoTests --all --updateSnapshot",
           },
           Object {
             "spawn": "eslint",
+          },
+        ],
+      },
+      "test:compile": Object {
+        "category": "10.test",
+        "description": "compiles the test code",
+        "name": "test:compile",
+        "steps": Array [
+          Object {
+            "exec": "tsc --noEmit --project tsconfig.jest.json",
           },
         ],
       },
@@ -1440,6 +1453,7 @@ project.synth();
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
+      "test:compile": "npx projen test:compile",
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "watch": "npx projen watch",
