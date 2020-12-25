@@ -113,3 +113,11 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
 export function isTruthy(value: string | undefined): boolean {
   return !(value === undefined || ['null', 'undefined', '0', 'false', ''].includes(value.toLocaleLowerCase()));
 }
+
+/**
+ * Deduplicate values in a list, returning a new array.
+ * @param array list of values
+ */
+export function dedupArray<T>(array: T[]): T[] {
+  return array.filter((val, idx) => array.indexOf(val) === idx);
+}

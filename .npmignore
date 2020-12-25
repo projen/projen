@@ -10,7 +10,6 @@ dist
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
