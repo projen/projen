@@ -161,7 +161,7 @@ export class TypeScriptProject extends NodeProject {
       this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
     }
 
-    const compilerOptionDefaults = {
+    const compilerOptionDefaults: TypeScriptCompilerOptions = {
       alwaysStrict: true,
       declaration: true,
       experimentalDecorators: true,
@@ -185,7 +185,7 @@ export class TypeScriptProject extends NodeProject {
     };
 
     if (!options.disableTsconfig) {
-      const baseTsconfig = {
+      const baseTsconfig: TypescriptConfigOptions = {
         include: [`${this.srcdir}/**/*.ts`],
         exclude: [
           'node_modules',
