@@ -14,7 +14,7 @@ test('license file is added by default', () => {
   });
 
   // THEN
-  expect(synthSnapshot(project, 'LICENSE').LICENSE).toContain('Apache License');
+  expect(synthSnapshot(project).LICENSE).toContain('Apache License');
 });
 
 test('license file is not added if licensed is false', () => {
@@ -28,8 +28,8 @@ test('license file is not added if licensed is false', () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project, 'LICENSE', '.gitignore', 'package.json');
-  expect(Object.keys(snapshot).sort()).toEqual(['.gitignore', 'package.json'].sort());
+  const snapshot = synthSnapshot(project);
+  expect(snapshot.LICENSE).toBeUndefined();
   expect(snapshot['.gitignore']).not.toContain('LICENSE');
   expect(snapshot['package.json'].license).toEqual('UNLICENSED');
 });

@@ -49,6 +49,14 @@ export interface ProjectOptions {
    */
   readonly clobber?: boolean;
 
+  /*
+   * The name of the README.md file
+   *
+   * @default "README.md"
+   * @example "readme.md"
+   */
+  readonly readme?: string;
+
   /**
    * Which type of project this is (library/app).
    * @default ProjectType.UNKNOWN
@@ -171,7 +179,9 @@ export class Project {
       new Clobber(this);
     }
 
-    new SampleReadme(this, '# my project');
+    new SampleReadme(this, '# my project', {
+      filename: options.readme,
+    });
   }
 
   /**
