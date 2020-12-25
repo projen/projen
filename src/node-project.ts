@@ -1775,7 +1775,7 @@ interface NpmDependencies {
 function sorted<T>(toSort: T) {
   return () => {
     if (Array.isArray(toSort)) {
-      return (toSort as T[]).sort();
+      return (toSort as unknown[]).sort();
     } else if (toSort != null && typeof toSort === 'object') {
       const result: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(toSort).sort(([l], [r]) => l.localeCompare(r))) {
@@ -1787,4 +1787,3 @@ function sorted<T>(toSort: T) {
     }
   };
 }
-
