@@ -628,6 +628,11 @@ export class NodeProject extends Project {
   public readonly testTask: Task;
 
   /**
+   * Compiles the test code.
+   */
+  public readonly testCompileTask: Task;
+
+  /**
    * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
@@ -735,10 +740,17 @@ export class NodeProject extends Project {
       category: TaskCategory.BUILD,
     });
 
+    this.testCompileTask = this.addTask('test:compile', {
+      description: 'compiles the test code',
+      category: TaskCategory.TEST,
+    });
+
     this.testTask = this.addTask('test', {
       description: 'Run tests',
       category: TaskCategory.TEST,
     });
+
+    this.testTask.spawn(this.testCompileTask);
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
@@ -926,7 +938,9 @@ export class NodeProject extends Project {
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
         checkoutWith: {
-          'fetch-depth': 1000, // so "standard-version" can look at history
+          // we must use 'fetch-depth=0' in order to fetch all tags
+          // otherwise tags are not checked out
+          'fetch-depth': 0,
         },
       });
 

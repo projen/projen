@@ -237,8 +237,6 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
-      // const tsconfig = new TypescriptConfig(this, );
-
       eslintTsConfig = tsconfig.fileName;
 
       // if we test before compilation, remove the lib/ directory before running
@@ -248,6 +246,9 @@ export class TypeScriptProject extends NodeProject {
         // test code does not take a dependency on "lib" and instead on "src".
         this.testTask.prepend(`rm -fr ${this.libdir}/`);
       }
+
+      // compile test code
+      this.testCompileTask.exec(`tsc --noEmit --project ${tsconfig.fileName}`);
     }
 
     if (options.eslint ?? true) {

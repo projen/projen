@@ -47,6 +47,14 @@ export interface ProjectOptions {
    * @default true
    */
   readonly clobber?: boolean;
+
+  /**
+   * The name of the README.md file
+   *
+   * @default "README.md"
+   * @example "readme.md"
+   */
+  readonly readme?: string;
 }
 
 /**
@@ -152,7 +160,9 @@ export class Project {
       new Clobber(this);
     }
 
-    new SampleReadme(this, '# my project');
+    new SampleReadme(this, '# my project', {
+      filename: options.readme,
+    });
   }
 
   /**

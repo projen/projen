@@ -176,7 +176,8 @@ class RunTask {
   }
 
   private shell(options: ShellOptions) {
-    if (options.quiet ?? false) {
+    const quiet = options.quiet ?? false;
+    if (!quiet) {
       const log = new Array<string>();
 
       if (options.logprefix) {
@@ -209,6 +210,7 @@ class RunTask {
 
   private shellEval(options: ShellOptions) {
     return this.shell({
+      quiet: true,
       ...options,
       spawnOptions: {
         stdio: ['inherit', 'pipe', 'inherit'],
