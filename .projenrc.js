@@ -74,4 +74,17 @@ new JsonFile(project, '.markdownlint.json', {
   },
 });
 
+project.vscode.launchConfiguration.addConfiguration({
+  type: 'pwa-node',
+  request: 'launch',
+  name: 'projen CLI',
+  skipFiles: [
+    '<node_internals>/**',
+  ],
+  program: '${workspaceFolder}/lib/cli/index.js',
+  outFiles: [
+    '${workspaceFolder}/lib/**/*.js',
+  ],
+});
+
 project.synth();
