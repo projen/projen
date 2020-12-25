@@ -34,7 +34,7 @@ exports.fixup = project => {
   project.addTestCommand('yarn compile');
 
   // jsii-release is declared at the root level, we don't need it here.
-  project.deps.removeDependency('jsii-release');
+  delete project.devDependencies['jsii-release'];
 
   // typescript is not semantically versionned and should remain on the same minor.
   // https://github.com/microsoft/TypeScript/issues/14116

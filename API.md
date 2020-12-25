@@ -1872,6 +1872,7 @@ Name | Type | Description
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
 **testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
 **buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
