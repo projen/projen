@@ -25,6 +25,7 @@ Name|Description
 [Project](#projen-project)|Base project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
+[SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|TOML file.
@@ -99,6 +100,7 @@ Name|Description
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
+[SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -2425,6 +2427,29 @@ synthesize(): void
 
 
 
+
+
+
+
+## class SampleReadme 🔹 <a id="projen-samplereadme"></a>
+
+Represents a README.md sample file. You are expected to manage this file after creation.
+
+__Extends__: [SampleFile](#projen-samplefile)
+
+### Initializer
+
+
+
+
+```ts
+new SampleReadme(project: Project, text?: string, props?: SampleReadmeProps)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **text** (<code>string</code>)  *No description*
+* **props** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  *No description*
+  * **filename** (<code>string</code>)  The name of the README.md file. __*Default*__: "README.md"
 
 
 
@@ -5781,6 +5806,19 @@ Options for the SampleFile object.
 Name | Type | Description 
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
+
+
+
+## struct SampleReadmeProps 🔹 <a id="projen-samplereadmeprops"></a>
+
+
+SampleReadme Properties.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The name of the README.md file.<br/>__*Default*__: "README.md"
 
 
 
