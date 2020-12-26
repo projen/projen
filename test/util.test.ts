@@ -1,4 +1,4 @@
-import { decamelizeKeysRecursively, dedupArray, isTruthy } from '../src/util';
+import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy } from '../src/util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {
@@ -82,6 +82,27 @@ test('isTruthy', () => {
   expect(isTruthy('true')).toEqual(true);
   expect(isTruthy('1')).toEqual(true);
   expect(isTruthy('enabled')).toEqual(true);
+});
+
+test('deepMerge merges objects', () => {
+  const original = { a: { b: 3 } };
+  deepMerge(original, { a: { c: 4 } });
+
+  expect(original).toEqual({ a: { b: 3, c: 4 } });
+});
+
+test('deepMerge overwrites non-objects', () => {
+  const original = { a: [] };
+  deepMerge(original, { a: { b: 3 } });
+
+  expect(original).toEqual({ a: { b: 3 } });
+});
+
+test('deepMerge does not overwrite if rightmost is "undefined"', () => {
+  const original = { a: 1 };
+  deepMerge(original, { a: undefined });
+
+  expect(original).toEqual({ a: 1 });
 });
 
 test('dedupArray', () => {
