@@ -383,6 +383,13 @@ function yarnAdd(baseDir: string, spec: string): string {
   return dependencyInfo;
 }
 
+/**
+ * Returns the last path element for use as a repository name default.
+ */
+function repoName(): string {
+  return path.basename(path.basename(process.cwd()));
+}
+
 async function askAboutGit(): Promise<boolean> {
   logging.info('We notice that you do not have a local git repository.');
   const { setUpGit } = await inquirer.prompt([
@@ -437,7 +444,7 @@ async function askAboutGit(): Promise<boolean> {
             type: 'input',
             name: 'gitProjectName',
             message: 'What would you like to name it?',
-            default: path.basename(path.dirname(process.cwd())),
+            default: () => repoName(),
           },
         ]);
 
