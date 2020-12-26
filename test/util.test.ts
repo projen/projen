@@ -1,4 +1,4 @@
-import { decamelizeKeysRecursively, isTruthy } from '../src/util';
+import { decamelizeKeysRecursively, dedupArray, isTruthy } from '../src/util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {
@@ -82,4 +82,9 @@ test('isTruthy', () => {
   expect(isTruthy('true')).toEqual(true);
   expect(isTruthy('1')).toEqual(true);
   expect(isTruthy('enabled')).toEqual(true);
+});
+
+test('dedupArray', () => {
+  expect(dedupArray(['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
+  expect(dedupArray(['a', 'a', 'b', 'a'])).toEqual(['a', 'b']);
 });

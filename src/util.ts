@@ -159,3 +159,11 @@ export function deepMerge(...objects: Array<Obj<any> | undefined>) {
   others.forEach(other => mergeOne(into, other));
   return into;
 }
+
+/*
+ * Deduplicate values in a list, returning a new array.
+ * @param array list of values
+ */
+export function dedupArray<T>(array: T[]): T[] {
+  return array.filter((val, idx) => array.indexOf(val) === idx);
+}

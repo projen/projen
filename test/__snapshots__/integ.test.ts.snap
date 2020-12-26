@@ -588,7 +588,6 @@ dist
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
@@ -1601,7 +1600,6 @@ dist
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
@@ -2733,11 +2731,9 @@ junit.xml
 /tsconfig.json
 /src
 dist
-/tsconfig.json
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
