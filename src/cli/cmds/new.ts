@@ -444,7 +444,7 @@ async function askAboutGit(): Promise<boolean> {
             type: 'input',
             name: 'gitProjectName',
             message: 'What would you like to name it?',
-            default: () => repoName(),
+            default: repoName(),
           },
         ]);
 
