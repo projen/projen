@@ -1,28 +1,12 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
 import * as logging from '../src/logging';
-import { Project } from '../src/project';
-import { synthSnapshot } from './util';
+import { synthSnapshot, TestProject } from './util';
 
 logging.disable();
-
-let tempDir: string;
-beforeEach(() => {
-  tempDir = fs.mkdtempSync(path.join(__dirname, 'tmp.samplereadme'));
-});
-
-afterEach(() => {
-  if (tempDir) {
-    fs.removeSync(tempDir);
-  }
-});
 
 describe('SampleReadProps', () => {
   test('default SampleReadme', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
-    });
+    const project = new TestProject();
 
     // WHEN
     const output = synthSnapshot(project);
@@ -36,9 +20,10 @@ describe('SampleReadProps', () => {
 
   test('customized w/ default SampleReadme', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
-      readme: 'README.md',
+    const project = new TestProject({
+      readme: {
+        filename: 'README.md',
+      },
     });
 
     // WHEN
@@ -53,9 +38,10 @@ describe('SampleReadProps', () => {
 
   test('customized SampleReadme', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
-      readme: 'readme.md',
+    const project = new TestProject({
+      readme: {
+        filename: 'readme.md',
+      },
     });
 
     // WHEN
@@ -66,5 +52,46 @@ describe('SampleReadProps', () => {
     const lower = output['readme.md'];
     expect(upper).toBeFalsy();
     expect(lower).toBeTruthy();
+  });
+
+  test('SampleReadme customized contents in constructor', () => {
+    // GIVEN
+    const project = new TestProject({
+      readme: {
+        contents: 'my stuff',
+      },
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    const readme = output['README.md'];
+    expect(readme).toBeTruthy();
+    expect(readme).toStrictEqual('my stuff');
+  });
+
+  test('SampleReadme content default', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    const readme = output['README.md'];
+    expect(readme).toStrictEqual('# replace this');
+  });
+
+  test('SampleReadme content default', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    const readme = output['README.md'];
+    expect(readme).toStrictEqual('# replace this');
   });
 });
