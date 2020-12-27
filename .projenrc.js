@@ -87,4 +87,37 @@ project.vscode.launchConfiguration.addConfiguration({
   ],
 });
 
+project.github.addMergifyRules({
+  name: 'Label core contributions',
+  actions: {
+    label: {
+      add: ['contribution/core'],
+    },
+  },
+  conditions: [
+    'author~=^(eladb)$',
+    'label!=contribution/core',
+  ],
+});
+
+project.github.addMergifyRules({
+  name: 'Label auto-merge for core',
+  actions: {
+    label: {
+      add: ['auto-merge'],
+    },
+  },
+  conditions: [
+    'label=contribution/core',
+    'label!=auto-merge',
+  ],
+});
+
+project.gitpod.addTasks({
+  name: 'Setup',
+  init: 'yarn install',
+  prebuild: 'bash ./projen.bash',
+  command: 'npx projen build',
+});
+
 project.synth();
