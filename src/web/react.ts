@@ -4,6 +4,7 @@ import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
 import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
+import { deepMerge } from '../util';
 
 export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
 
@@ -67,7 +68,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
   public readonly reactTypeDef: ReactTypeDef;
 
   constructor(options: ReactTypeScriptProjectOptions) {
-    super({
+    const defaultOptions = {
       srcdir: 'src',
       eslint: false,
       jest: false,
@@ -93,18 +94,13 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
           isolatedModules: true,
           noEmit: true,
           jsx: TypeScriptJsxMode.REACT,
-
-          // user-specified overrides
-          ...options.tsconfig?.compilerOptions,
         },
-        ...options.tsconfig,
       },
-      ...options,
       typescriptVersion: options.typescriptVersion ?? '^4.0.3',
+    };
 
-      // never generate default TypeScript sample code, since this class provides its own
-      sampleCode: false,
-    });
+    // never generate default TypeScript sample code, since this class provides its own
+    super(deepMerge(defaultOptions, options, { sampleCode: false }) as TypeScriptProjectOptions);
 
     this.srcdir = options.srcdir ?? 'src';
 

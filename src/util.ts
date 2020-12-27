@@ -26,7 +26,7 @@ export function execOrUndefined(command: string): string | undefined {
   }
 }
 
-export function writeFile(filePath: string, data: any, options: { readonly?: boolean } = { }) {
+export function writeFile(filePath: string, data: any, options: { readonly?: boolean } = {}) {
   if (fs.existsSync(filePath)) {
     fs.chmodSync(filePath, '600');
   }
@@ -115,6 +115,52 @@ export function isTruthy(value: string | undefined): boolean {
 }
 
 /**
+ * Type of a map mapping strings to some arbitrary type
+ */
+export type Obj<T> = { [key: string]: T };
+
+/**
+ * Return whether the given value is an object
+ *
+ * Even though arrays technically are objects, we usually want to treat them differently,
+ * so we return false in those cases.
+ */
+export function isObject(x: any): x is Obj<any> {
+  return x !== null && typeof x === 'object' && !Array.isArray(x);
+}
+
+/**
+ * Recursively merge objects together
+ *
+ * The leftmost object is mutated and returned. Arrays are not merged
+ * but overwritten just like scalars.
+ *
+ * If an object is merged into a non-object, the non-object is lost.
+ */
+export function deepMerge(...objects: Array<Obj<any> | undefined>) {
+  function mergeOne(target: Obj<any>, source: Obj<any>) {
+    for (const key of Object.keys(source)) {
+      const value = source[key];
+
+      if (isObject(value)) {
+        if (!isObject(target[key])) { target[key] = {}; } // Overwrite on purpose
+        mergeOne(target[key], value);
+      } else if (typeof value !== 'undefined') {
+        target[key] = value;
+      }
+    }
+  }
+
+  const others = objects.filter(x => x != null) as Array<Obj<any>>;
+
+  if (others.length === 0) { return {}; }
+  const into = others.splice(0, 1)[0];
+
+  others.forEach(other => mergeOne(into, other));
+  return into;
+}
+
+/*
  * Deduplicate values in a list, returning a new array.
  * @param array list of values
  */
