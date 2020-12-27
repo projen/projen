@@ -15,6 +15,7 @@ export * from './license';
 export * from './makefile';
 export * from './node-project';
 export * from './project';
+export * from './readme';
 export * from './sample-file';
 export * from './semver';
 export * from './textfile';

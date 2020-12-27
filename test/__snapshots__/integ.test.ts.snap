@@ -589,7 +589,6 @@ dist
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
@@ -1397,7 +1396,7 @@ project.synth();
       "jsii-pacmak": "*",
       "jsii-release": "*",
       "json-schema": "*",
-      "projen": "^0.9.1",
+      "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
       "typescript": "^3.9.5",
@@ -1859,7 +1858,6 @@ dist
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
@@ -2544,7 +2542,7 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
-      "projen": "^0.9.1",
+      "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
       "typescript": "^3.9.5",
@@ -2991,11 +2989,9 @@ junit.xml
 /tsconfig.json
 /src
 dist
-/tsconfig.json
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 !/lib
@@ -3640,7 +3636,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^12",
       "json-schema": "*",
-      "projen": "^0.9.1",
+      "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
       "typescript": "^3.9.5",
