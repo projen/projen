@@ -109,6 +109,7 @@ project.github.addMergifyRules({
   },
   conditions: [
     'label=contribution/core',
+    'label!=do-not-merge',
     'label!=auto-merge',
   ],
 });
