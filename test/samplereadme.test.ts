@@ -82,16 +82,4 @@ describe('SampleReadProps', () => {
     const readme = output['README.md'];
     expect(readme).toStrictEqual('# replace this');
   });
-
-  test('SampleReadme content default', () => {
-    // GIVEN
-    const project = new TestProject();
-
-    // WHEN
-    const output = synthSnapshot(project);
-
-    // THEN
-    const readme = output['README.md'];
-    expect(readme).toStrictEqual('# replace this');
-  });
 });
