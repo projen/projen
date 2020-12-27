@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.2](https://github.com/projen/projen/compare/v0.9.1...v0.9.2) (2020-12-27)
+
+
+### Features
+
+* **gitignore:** dedup repeated IgnoreFile entries ([#395](https://github.com/projen/projen/issues/395)) ([fad18db](https://github.com/projen/projen/commit/fad18db9e7b8bc675fe9d54e5e190ec8054e55f8)), closes [#392](https://github.com/projen/projen/issues/392)
+* **jest/typescript:** `test:compile` task ([#401](https://github.com/projen/projen/issues/401)) ([bcce2f5](https://github.com/projen/projen/commit/bcce2f51a4695f552f9e9102301553e3e794c498))
+
+
+### Bug Fixes
+
+* **tasks:** logs of task execution are no longer printed ([#399](https://github.com/projen/projen/issues/399)) ([bd39607](https://github.com/projen/projen/commit/bd39607741454304984c3293b2367a6188782069))
+* can't override tsconfig.compilerOptions properly ([#406](https://github.com/projen/projen/issues/406)) ([47331af](https://github.com/projen/projen/commit/47331afdc72c53882bc9488d6ef36086a09f1464)), closes [#265](https://github.com/projen/projen/issues/265) [#265](https://github.com/projen/projen/issues/265)
+* defaults the `new` repository name to `cwd` vs `cwd`/.. ([#403](https://github.com/projen/projen/issues/403)) ([f9e32de](https://github.com/projen/projen/commit/f9e32de1707809abc6783eee3a1266064091da43))
+* export `readme` to allow use in external projects ([#404](https://github.com/projen/projen/issues/404)) ([3124b06](https://github.com/projen/projen/commit/3124b061c82662818f0754ea67c81a93627760d3))
+
 ### [0.9.1](https://github.com/projen/projen/compare/v0.9.0...v0.9.1) (2020-12-24)
 
 
