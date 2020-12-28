@@ -136,7 +136,6 @@ export class Dependencies extends Component {
 
   private toJson(): DepsManifest {
     return {
-      projectType: this.project.projectType,
       dependencies: this._deps.sort(compareDeps),
     };
   }

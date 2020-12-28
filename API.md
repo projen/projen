@@ -6133,7 +6133,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **dependencies**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | All dependencies of this module.
-**projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | The project type.
 
 
 

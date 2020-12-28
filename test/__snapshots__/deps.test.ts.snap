@@ -26,7 +26,6 @@ Object {
       "type": "runtime",
     },
   ],
-  "projectType": "unknown",
 }
 `;
 
@@ -40,6 +39,5 @@ Object {
       "version": "^7",
     },
   ],
-  "projectType": "unknown",
 }
 `;

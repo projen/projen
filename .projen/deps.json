@@ -1,10 +1,5 @@
 {
-  "projectType": "unknown",
   "dependencies": [
-    {
-      "name": "@iarna/toml",
-      "type": "bundled"
-    },
     {
       "name": "@types/fs-extra",
       "version": "^8",
@@ -46,14 +41,6 @@
       "type": "build"
     },
     {
-      "name": "chalk",
-      "type": "bundled"
-    },
-    {
-      "name": "decamelize",
-      "type": "bundled"
-    },
-    {
       "name": "eslint",
       "type": "build"
     },
@@ -68,19 +55,6 @@
     {
       "name": "eslint-plugin-import",
       "type": "build"
-    },
-    {
-      "name": "fs-extra",
-      "type": "bundled"
-    },
-    {
-      "name": "glob",
-      "version": "^7",
-      "type": "bundled"
-    },
-    {
-      "name": "inquirer",
-      "type": "bundled"
     },
     {
       "name": "jest",
@@ -120,10 +94,6 @@
       "type": "build"
     },
     {
-      "name": "semver",
-      "type": "bundled"
-    },
-    {
       "name": "standard-version",
       "version": "^9.0.0",
       "type": "build"
@@ -136,6 +106,35 @@
       "name": "typescript",
       "version": "^3.9.5",
       "type": "build"
+    },
+    {
+      "name": "@iarna/toml",
+      "type": "bundled"
+    },
+    {
+      "name": "chalk",
+      "type": "bundled"
+    },
+    {
+      "name": "decamelize",
+      "type": "bundled"
+    },
+    {
+      "name": "fs-extra",
+      "type": "bundled"
+    },
+    {
+      "name": "glob",
+      "version": "^7",
+      "type": "bundled"
+    },
+    {
+      "name": "inquirer",
+      "type": "bundled"
+    },
+    {
+      "name": "semver",
+      "type": "bundled"
     },
     {
       "name": "yaml",

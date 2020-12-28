@@ -1,11 +1,4 @@
-import { ProjectType } from '../project';
-
 export interface DepsManifest {
-  /**
-   * The project type.
-   */
-  readonly projectType: ProjectType;
-
   /**
    * All dependencies of this module.
    */
