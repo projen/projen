@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/projen/projen/compare/v0.12.1...v0.12.2) (2020-12-28)
+
+
+### Features
+
+* expose all `SampleFile` options for `SampleReadme` in the constructor ([#414](https://github.com/projen/projen/issues/414)) ([81c837b](https://github.com/projen/projen/commit/81c837bfccac963adc46293a8e837f1bda235c3c)), closes [#407](https://github.com/projen/projen/issues/407)
+
 ### [0.12.1](https://github.com/projen/projen/compare/v0.12.0...v0.12.1) (2020-12-28)
 
 
