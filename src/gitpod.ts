@@ -204,7 +204,7 @@ export interface GitpodOptions extends DevEnvironmentOptions {}
  * The Gitpod component which emits .gitpod.yml
  */
 export class Gitpod extends Component implements IDevEnvironment {
-  private _dockerImage: DevEnvironmentDockerImage | undefined;
+  private dockerImage: DevEnvironmentDockerImage | undefined;
   private readonly tasks = new Array<GitpodTask>();
   private readonly ports = new Array<GitpodPort>();
   private readonly vscodeExtensions = new Array<string>();
@@ -217,7 +217,7 @@ export class Gitpod extends Component implements IDevEnvironment {
   constructor(project: Project, options: GitpodOptions = {}) {
     super(project);
 
-    this._dockerImage = options?.dockerImage;
+    this.dockerImage = options?.dockerImage;
 
     if (options?.tasks) {
       for (const task of options.tasks) {
@@ -237,11 +237,16 @@ export class Gitpod extends Component implements IDevEnvironment {
     new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
   }
 
-  public get dockerImage() {
-    if (!this._dockerImage) {
-      throw new Error('dockerImage has not been configured.');
+  /**
+   * Add a custom Docker image or Dockerfile for the container.
+   *
+   * @param image The Docker image
+   */
+  public addDockerImage(image: DevEnvironmentDockerImage) {
+    if (this.dockerImage) {
+      throw new Error('dockerImage cannot be redefined.');
     }
-    return this._dockerImage;
+    this.dockerImage = image;
   }
 
   /**
@@ -299,11 +304,11 @@ export class Gitpod extends Component implements IDevEnvironment {
   }
 
   private renderDockerImage() {
-    if (this._dockerImage?.image) {
-      return this._dockerImage.image;
-    } else if (this._dockerImage?.dockerFile) {
+    if (this.dockerImage?.image) {
+      return this.dockerImage.image;
+    } else if (this.dockerImage?.dockerFile) {
       return {
-        file: this._dockerImage.dockerFile,
+        file: this.dockerImage.dockerFile,
       };
     } else {
       return undefined;

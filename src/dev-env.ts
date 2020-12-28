@@ -67,9 +67,11 @@ export class DevEnvironmentDockerImage {
  */
 export interface IDevEnvironment {
   /**
-   * A Docker image or Dockerfile for the container.
+   * Add a custom Docker image or Dockerfile for the container.
+   *
+   * @param image The Docker image
    */
-  readonly dockerImage: DevEnvironmentDockerImage;
+  addDockerImage(image: DevEnvironmentDockerImage): void;
 
   /**
    * Adds tasks to run when the container starts.

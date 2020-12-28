@@ -22,7 +22,7 @@ export interface DevContainerOptions extends DevEnvironmentOptions {}
  * codespaces.
  */
 export class DevContainer extends Component implements IDevEnvironment {
-  private _dockerImage: DevEnvironmentDockerImage | undefined;
+  private dockerImage: DevEnvironmentDockerImage | undefined;
   private readonly postCreateTasks: Task[];
   private readonly ports: string[];
   private readonly vscodeExtensions: string[];
@@ -39,7 +39,7 @@ export class DevContainer extends Component implements IDevEnvironment {
     this.ports = new Array<string>();
     this.vscodeExtensions = new Array<string>();
 
-    this._dockerImage = options?.dockerImage;
+    this.dockerImage = options?.dockerImage;
 
     if (options?.tasks) {
       for (const task of options.tasks) {
@@ -54,9 +54,9 @@ export class DevContainer extends Component implements IDevEnvironment {
     }
 
     this.config = {
-      image: () => this._dockerImage?.image,
+      image: () => this.dockerImage?.image,
       build: {
-        dockerfile: () => this._dockerImage?.dockerFile,
+        dockerfile: () => this.dockerImage?.dockerFile,
       },
       postCreateCommand: () => this.renderTasks(),
       forwardPorts: this.ports,
@@ -66,11 +66,11 @@ export class DevContainer extends Component implements IDevEnvironment {
     new JsonFile(this.project, DEVCONTAINER_FILE, { obj: this.config, omitEmpty: true });
   }
 
-  public get dockerImage() {
-    if (!this._dockerImage) {
-      throw new Error('dockerImage has not been configured.');
+  public addDockerImage(image: DevEnvironmentDockerImage) {
+    if (this.dockerImage) {
+      throw new Error('dockerImage cannot be redefined.');
     }
-    return this._dockerImage;
+    this.dockerImage = image;
   }
 
   /**

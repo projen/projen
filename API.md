@@ -1334,7 +1334,6 @@ new Gitpod(project: Project, options?: GitpodOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the gitpod configuration (escape hatch).
-**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
 
 ### Methods
 
@@ -1358,6 +1357,19 @@ addCustomTask(options: GitpodTask): void
   * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: GitpodOpenIn.BOTTOM
   * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Default*__: GitpodOpenMode.TAB_AFTER
   * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
+
+
+
+
+#### addDockerImage(image)🔹 <a id="projen-gitpod-adddockerimage"></a>
+
+Add a custom Docker image or Dockerfile for the container.
+
+```ts
+addDockerImage(image: DevEnvironmentDockerImage): void
+```
+
+* **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  The Docker image.
 
 
 
@@ -3788,9 +3800,21 @@ new vscode.DevContainer(project: Project, options?: DevContainerOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the devcontainer configuration (escape hatch).
-**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
 
 ### Methods
+
+
+#### addDockerImage(image)🔹 <a id="projen-vscode-devcontainer-adddockerimage"></a>
+
+Add a custom Docker image or Dockerfile for the container.
+
+```ts
+addDockerImage(image: DevEnvironmentDockerImage): void
+```
+
+* **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  *No description*
+
+
 
 
 #### addPorts(...ports)🔹 <a id="projen-vscode-devcontainer-addports"></a>
@@ -5355,15 +5379,20 @@ Name | Type | Description
 __Implemented by__: [vscode.DevContainer](#projen-vscode-devcontainer), [Gitpod](#projen-gitpod)
 
 Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
-
 ### Methods
+
+
+#### addDockerImage(image)🔹 <a id="projen-idevenvironment-adddockerimage"></a>
+
+Add a custom Docker image or Dockerfile for the container.
+
+```ts
+addDockerImage(image: DevEnvironmentDockerImage): void
+```
+
+* **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  The Docker image.
+
+
 
 
 #### addPorts(...ports)🔹 <a id="projen-idevenvironment-addports"></a>
