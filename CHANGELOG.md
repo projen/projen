@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/projen/projen/compare/v0.11.0...v0.12.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `name` option is now required for all project types.
+
+### Features
+
+* project name ([#422](https://github.com/projen/projen/issues/422)) ([e4514e8](https://github.com/projen/projen/commit/e4514e8d36c347078cb32e990f7efe9552af328e)), closes [#367](https://github.com/projen/projen/issues/367)
+
 ## [0.11.0](https://github.com/projen/projen/compare/v0.10.1...v0.11.0) (2020-12-28)
 
 
