@@ -569,7 +569,7 @@ postSynthesize(): void
 
 #### preSynthesize()🔹 <a id="projen-component-presynthesize"></a>
 
-
+Called before synthesis.
 
 ```ts
 preSynthesize(): void
@@ -2351,7 +2351,7 @@ postSynthesize(): void
 
 #### preSynthesize()🔹 <a id="projen-npmpackage-presynthesize"></a>
 
-
+Called before synthesis.
 
 ```ts
 preSynthesize(): void

@@ -310,6 +310,7 @@ export class NpmPackage extends Component {
 
     this.processDeps(options);
 
+    // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
       name: options.name,
       description: options.description,
@@ -329,6 +330,7 @@ export class NpmPackage extends Component {
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       version: '0.0.0',
+      bundledDependencies: [],
       homepage: options.homepage,
     };
 

@@ -14,6 +14,7 @@ test('minimal', () => {
   const pkg = synthSnapshot(project)['package.json'];
   expect(pkg).toStrictEqual({
     'name': 'my-project',
+    'version': '0.0.0',
     'license': 'Apache-2.0',
     'main': 'lib/index.js',
     'bundledDependencies': [],
