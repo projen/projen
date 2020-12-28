@@ -19,9 +19,7 @@ import { VsCode } from './vscode';
 
 export interface ProjectOptions {
   /**
-   * This is the name of your package. It gets used in URLs, as an argument on the command line,
-   * and as the directory name inside node_modules.
-   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
+   * This is the name of your project. 
    *
    * @default $BASEDIR
    */
