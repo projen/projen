@@ -37,6 +37,7 @@ Name|Description
 [Version](#projen-version)|*No description*
 [YamlFile](#projen-yamlfile)|*No description*
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
+[github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
@@ -113,6 +114,7 @@ Name|Description
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
 [deps.Dependency](#projen-deps-dependency)|*No description*
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
+[github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -2189,11 +2191,11 @@ Name | Type | Description
 **testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
 **testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **testdir**🔹 | <code>string</code> | The directory in which tests reside.
+**autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
-**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | Mergify behavior.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **releaseWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
@@ -3389,6 +3391,46 @@ removeDependency(name: string, type?: DependencyType): void
 
 
 
+
+
+
+## class AutoMerge 🔹 <a id="projen-github-automerge"></a>
+
+Sets up mergify to merging approved pull requests.
+
+If `buildJob` is specified, the specified GitHub workflow job ID is required
+to succeed in order for the PR to be merged.
+
+`approvedReviews` specified the number of code review approvals required for
+the PR to be merged.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.AutoMerge(project: Project, options?: AutoMergeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
+  * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
+  * **autoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
+  * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoMergeLabel**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -6423,6 +6465,21 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **dependencies**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | All dependencies of this module.
+
+
+
+## struct AutoMergeOptions 🔹 <a id="projen-github-automergeoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
+**autoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
+**buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
 
 
 

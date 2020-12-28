@@ -1,7 +1,8 @@
 import { PROJEN_RC, PROJEN_VERSION } from './common';
 import { GithubWorkflow } from './github';
+import { AutoMerge } from './github/auto-merge';
 import { DependabotOptions } from './github/dependabot';
-import { Mergify, MergifyOptions } from './github/mergify';
+import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
@@ -333,11 +334,6 @@ export class NodeProject extends Project {
   public readonly npmignore?: IgnoreFile;
 
   /**
-   * Mergify behavior.
-   */
-  public readonly mergify?: Mergify;
-
-  /**
    * @deprecated use `package.allowLibraryDependencies`
    */
   public get allowLibraryDependencies(): boolean { return this.package.allowLibraryDependencies; }
@@ -366,6 +362,11 @@ export class NodeProject extends Project {
    * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
+
+  /**
+   * Automatic PR merges.
+   */
+  public readonly autoMerge?: AutoMerge;
 
   private readonly _version: Version;
 
@@ -642,51 +643,11 @@ export class NodeProject extends Project {
       }
     }
 
-
-    let autoMergeLabel;
-
     if (options.mergify ?? true) {
-      const successfulBuild = this.buildWorkflow
-        ? [`status-success=${this.buildWorkflowJobId}`]
-        : [];
-
-      const mergeAction = {
-        merge: {
-          // squash all commits into a single commit when merging
-          method: 'squash',
-
-          // use PR title+body as the commit message
-          commit_message: 'title+body',
-
-          // update PR branch so it's up-to-date before merging
-          strict: 'smart',
-          strict_method: 'merge',
-        },
-
-        delete_head_branch: { },
-      };
-
-      this.github?.addMergifyRules({
-        name: 'Automatic merge on approval and successful build',
-        actions: mergeAction,
-        conditions: [
-          '#approved-reviews-by>=1',
-          ...successfulBuild,
-        ],
+      this.autoMerge = new AutoMerge(this, {
+        autoMergeLabel: options.mergifyAutoMergeLabel,
+        buildJob: this.buildWorkflowJobId,
       });
-
-      // empty string means disabled.
-      autoMergeLabel = options.mergifyAutoMergeLabel ?? 'auto-merge';
-      if (autoMergeLabel !== '') {
-        this.github?.addMergifyRules({
-          name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
-          actions: mergeAction,
-          conditions: [
-            `label=${autoMergeLabel}`,
-            ...successfulBuild,
-          ],
-        });
-      }
 
       this.npmignore?.exclude('/.mergify.yml');
     }
@@ -699,7 +660,9 @@ export class NodeProject extends Project {
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
       autoUpgradeSchedule: options.projenUpgradeSchedule,
-      labels: (projenAutoMerge && autoMergeLabel) ? [autoMergeLabel] : [],
+      labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
+        ? [this.autoMerge.autoMergeLabel]
+        : [],
     });
 
     if (options.pullRequestTemplate ?? true) {
