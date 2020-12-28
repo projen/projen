@@ -556,6 +556,7 @@ pull_request_rules:
       delete_head_branch: {}
     conditions:
       - \\"#approved-reviews-by>=1\\"
+      - status-success=build
   - name: Automatic merge PRs with auto-merge label upon successful build
     actions:
       merge:
@@ -566,6 +567,7 @@ pull_request_rules:
       delete_head_branch: {}
     conditions:
       - label=auto-merge
+      - status-success=build
   - name: Merge pull requests from dependabot if CI passes
     conditions:
       - author=dependabot[bot]

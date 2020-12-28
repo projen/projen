@@ -642,6 +642,7 @@ export class NodeProject extends Project {
     if (options.mergify ?? true) {
       autoMerge = new AutoMerge(this, {
         autoMergeLabel: options.mergifyAutoMergeLabel,
+        buildJob: this.buildWorkflowJobId,
       });
 
       this.npmignore?.exclude('/.mergify.yml');
