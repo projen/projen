@@ -787,7 +787,7 @@ export class NpmPackage extends Component {
       result[task.name] = this.npmScriptForTask(task);
     }
 
-    return sorted(result);
+    return result;
   }
 
 
