@@ -13,14 +13,10 @@ const UNLICENSED = 'UNLICENSED';
 
 export interface NodePackageOptions {
   /**
-   * This is the name of your package. It gets used in URLs, as an argument on the command line,
-   * and as the directory name inside node_modules.
-   * See https://classic.yarnpkg.com/en/docs/package-json/#toc-name
-   *
-   * @default $BASEDIR
+   * The "name" in package.json
+   * @default - defaults to project name
    */
-  readonly name: string;
-
+  readonly packageName?: string;
   /**
    * The description is just a string that helps people understand the purpose of the package.
    * It can be used when searching for packages in a package manager as well.
@@ -298,7 +294,7 @@ export class NodePackage extends Component {
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private _renderedDeps?: NpmDependencies;
 
-  constructor(project: Project, options: NodePackageOptions) {
+  constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
 
     this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
@@ -312,7 +308,7 @@ export class NodePackage extends Component {
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
-      name: options.name,
+      name: options.packageName ?? project.name,
       description: options.description,
       repository: !options.repository ? undefined : {
         type: 'git',
