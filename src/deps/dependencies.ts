@@ -82,7 +82,7 @@ export class Dependencies extends Component {
    * @param type The type of the dependency.
    */
   public addDependency(spec: string, type: DependencyType): Dependency {
-    logging.verbose(`${type}-dep ${spec}`);
+    logging.debug(`${type}-dep ${spec}`);
 
     const scope = spec.startsWith('@');
     if (scope) {

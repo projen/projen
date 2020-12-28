@@ -1331,7 +1331,6 @@ export class NodeProject extends Project {
     }
 
     for (const dep of this.deps.all) {
-      console.error(dep);
       const version = dep.version ?? '*';
 
       switch (dep.type) {
