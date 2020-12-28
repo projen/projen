@@ -60,7 +60,6 @@
     "ts-jest": "^26.4.4",
     "typescript": "^3.9.5"
   },
-  "peerDependencies": {},
   "dependencies": {
     "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.0",
@@ -83,7 +82,6 @@
     "yaml",
     "yargs"
   ],
-  "keywords": [],
   "engines": {
     "node": ">= 10.17.0"
   },
