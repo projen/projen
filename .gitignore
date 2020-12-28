@@ -65,3 +65,4 @@ tsconfig.json
 !/projen.bash
 !templates/**
 !/.markdownlint.json
+!/.vscode/launch.json

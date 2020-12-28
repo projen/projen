@@ -74,4 +74,50 @@ new JsonFile(project, '.markdownlint.json', {
   },
 });
 
+project.vscode.launchConfiguration.addConfiguration({
+  type: 'pwa-node',
+  request: 'launch',
+  name: 'projen CLI',
+  skipFiles: [
+    '<node_internals>/**',
+  ],
+  program: '${workspaceFolder}/lib/cli/index.js',
+  outFiles: [
+    '${workspaceFolder}/lib/**/*.js',
+  ],
+});
+
+project.github.addMergifyRules({
+  name: 'Label core contributions',
+  actions: {
+    label: {
+      add: ['contribution/core'],
+    },
+  },
+  conditions: [
+    'author~=^(eladb)$',
+    'label!=contribution/core',
+  ],
+});
+
+project.github.addMergifyRules({
+  name: 'Label auto-merge for core',
+  actions: {
+    label: {
+      add: ['auto-merge'],
+    },
+  },
+  conditions: [
+    'label=contribution/core',
+    'label!=auto-merge',
+  ],
+});
+
+project.gitpod.addTasks({
+  name: 'Setup',
+  init: 'yarn install',
+  prebuild: 'bash ./projen.bash',
+  command: 'npx projen build',
+});
+
 project.synth();

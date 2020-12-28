@@ -1,15 +1,16 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Project } from '../src';
+import { glob } from 'glob';
+import { Project, ProjectOptions } from '../src';
 import * as logging from '../src/logging';
 
 logging.disable(); // no logging during tests
 
 export class TestProject extends Project {
-  constructor() {
+  constructor(options: ProjectOptions = {}) {
     const tmpdir = mkdtemp();
-    super({ outdir: tmpdir, clobber: false });
+    super({ outdir: tmpdir, clobber: false, ...options });
   }
 
   postSynthesize() {
@@ -25,12 +26,12 @@ export function mkdtemp() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
 }
 
-export function synthSnapshot(project: Project, ...includeFiles: string[]) {
+export function synthSnapshot(project: Project): any {
   const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
   try {
     process.env.PROJEN_DISABLE_POST = 'true';
     project.synth();
-    return directorySnapshot(project.outdir, includeFiles);
+    return directorySnapshot(project.outdir);
   } finally {
     fs.removeSync(project.outdir);
 
@@ -43,45 +44,45 @@ export function synthSnapshot(project: Project, ...includeFiles: string[]) {
   }
 }
 
-export function synthSnapshotWithPost(project: Project, ...includeFiles: string[]) {
+export function synthSnapshotWithPost(project: Project) {
   try {
     project.synth();
-    return directorySnapshot(project.outdir, includeFiles);
+    return directorySnapshot(project.outdir);
   } finally {
     fs.removeSync(project.outdir);
   }
 }
 
-function directorySnapshot(root: string, includeFiles: string[]) {
+export interface DirectorySnapshotOptions {
+  /**
+   * Globs of files to exclude.
+   * @default [] include all files
+   */
+  readonly excludeGlobs?: string[];
+}
+
+export function directorySnapshot(root: string, options: DirectorySnapshotOptions = { }) {
   const output: SynthOutput = { };
 
-  const readdir = (relativeDir: string) => {
-    const dirPath = path.join(root, relativeDir);
-    for (const file of fs.readdirSync(dirPath)) {
-      const filePath = path.join(dirPath, file);
-      const relPath = path.join(relativeDir, file);
+  const files = glob.sync('**', {
+    ignore: options.excludeGlobs ?? [],
+    cwd: root,
+    nodir: true,
+    dot: true,
+  });
 
-      if (fs.statSync(filePath).isDirectory()) {
-        readdir(relPath);
-        continue;
-      }
+  for (const file of files) {
+    const filePath = path.join(root, file);
 
-      if (includeFiles.length > 0 && !includeFiles.includes(relPath)) {
-        continue;
-      }
-
-      let content;
-      if (path.extname(filePath) === '.json') {
-        content = fs.readJsonSync(filePath);
-      } else {
-        content = fs.readFileSync(filePath, 'utf-8');
-      }
-
-      output[relPath] = content;
+    let content;
+    if (path.extname(filePath) === '.json') {
+      content = fs.readJsonSync(filePath);
+    } else {
+      content = fs.readFileSync(filePath, 'utf-8');
     }
-  };
 
-  readdir('.');
+    output[file] = content;
+  }
 
   return output;
 }
