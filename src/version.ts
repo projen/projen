@@ -1,4 +1,4 @@
-import { existsSync, mkdirpSync, readJsonSync, writeJsonSync } from 'fs-extra';
+import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
@@ -67,14 +67,13 @@ export class Version extends Component {
   public get currentVersion() {
     const outdir = this.project.outdir;
     const versionFile = `${outdir}/${VERSION_FILE}`;
-    if (!existsSync(versionFile)) {
-      if (!existsSync(outdir)) {
-        mkdirpSync(outdir);
+    if (!fs.existsSync(versionFile)) {
+      if (!fs.existsSync(outdir)) {
+        fs.mkdirpSync(outdir);
       }
-
-      writeJsonSync(versionFile, { version: '0.0.0' });
+      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
     }
 
-    return readJsonSync(versionFile).version;
+    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
   }
 }
