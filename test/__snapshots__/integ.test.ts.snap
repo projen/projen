@@ -604,156 +604,6 @@ dist
         "version": "^1.75.0",
       },
       Object {
-        "name": "@aws-cdk/aws-apigateway",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-apigateway",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch-actions",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch-actions",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-dynamodb",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-dynamodb",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs-patterns",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs-patterns",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-elasticloadbalancingv2",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-elasticloadbalancingv2",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events-targets",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events-targets",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-lambda",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-lambda",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-rds",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-rds",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns-subscriptions",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns-subscriptions",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sqs",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sqs",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
         "name": "@types/jest",
         "type": "build",
       },
@@ -775,11 +625,6 @@ dist
       Object {
         "name": "aws-sdk",
         "type": "build",
-      },
-      Object {
-        "name": "constructs",
-        "type": "peer",
-        "version": "^3.2.27",
       },
       Object {
         "name": "eslint",
@@ -848,6 +693,161 @@ dist
         "name": "typescript",
         "type": "build",
         "version": "^3.9.5",
+      },
+      Object {
+        "name": "@aws-cdk/aws-apigateway",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-cloudwatch-actions",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-cloudwatch",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-dynamodb",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-ecs-patterns",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-ecs",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-elasticloadbalancingv2",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-events-targets",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-events",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-lambda",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-rds",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sns-subscriptions",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sns",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sqs",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/core",
+        "type": "peer",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "constructs",
+        "type": "peer",
+        "version": "^3.2.27",
+      },
+      Object {
+        "name": "@aws-cdk/aws-apigateway",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-cloudwatch-actions",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-cloudwatch",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-dynamodb",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-ecs-patterns",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-ecs",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-elasticloadbalancingv2",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-events-targets",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-events",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-lambda",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-rds",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sns-subscriptions",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sns",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/aws-sqs",
+        "type": "runtime",
+        "version": "^1.75.0",
+      },
+      Object {
+        "name": "@aws-cdk/core",
+        "type": "runtime",
+        "version": "^1.75.0",
       },
     ],
     "projectType": "unknown",
@@ -1904,10 +1904,6 @@ dist
         "type": "build",
       },
       Object {
-        "name": "constructs",
-        "type": "peer",
-      },
-      Object {
         "name": "eslint",
         "type": "build",
       },
@@ -1922,14 +1918,6 @@ dist
       Object {
         "name": "eslint-plugin-import",
         "type": "build",
-      },
-      Object {
-        "name": "fast-json-patch",
-        "type": "bundled",
-      },
-      Object {
-        "name": "follow-redirects",
-        "type": "bundled",
       },
       Object {
         "name": "jest",
@@ -1965,10 +1953,6 @@ dist
         "type": "build",
       },
       Object {
-        "name": "json-stable-stringify",
-        "type": "bundled",
-      },
-      Object {
         "name": "projen",
         "type": "build",
         "version": "^0.9.3",
@@ -1993,8 +1977,24 @@ dist
         "version": "~3.9.5",
       },
       Object {
+        "name": "fast-json-patch",
+        "type": "bundled",
+      },
+      Object {
+        "name": "follow-redirects",
+        "type": "bundled",
+      },
+      Object {
+        "name": "json-stable-stringify",
+        "type": "bundled",
+      },
+      Object {
         "name": "yaml",
         "type": "bundled",
+      },
+      Object {
+        "name": "constructs",
+        "type": "peer",
       },
     ],
     "projectType": "unknown",
@@ -3152,10 +3152,6 @@ dist
       },
       Object {
         "name": "@types/node",
-        "type": "runtime",
-      },
-      Object {
-        "name": "@types/node",
         "type": "build",
         "version": "^10.17.0",
       },
@@ -3168,23 +3164,6 @@ dist
         "name": "@typescript-eslint/parser",
         "type": "build",
         "version": "^4.3.0",
-      },
-      Object {
-        "name": "cdk8s",
-        "type": "runtime",
-        "version": "^0.0.0",
-      },
-      Object {
-        "name": "codemaker",
-        "type": "runtime",
-      },
-      Object {
-        "name": "colors",
-        "type": "runtime",
-      },
-      Object {
-        "name": "constructs",
-        "type": "runtime",
       },
       Object {
         "name": "eslint",
@@ -3203,10 +3182,6 @@ dist
         "type": "build",
       },
       Object {
-        "name": "fs-extra",
-        "type": "runtime",
-      },
-      Object {
         "name": "jest",
         "type": "build",
       },
@@ -3216,29 +3191,13 @@ dist
         "version": "^12",
       },
       Object {
-        "name": "jsii-pacmak",
-        "type": "runtime",
-      },
-      Object {
-        "name": "jsii-srcmak",
-        "type": "runtime",
-      },
-      Object {
         "name": "json-schema",
         "type": "build",
-      },
-      Object {
-        "name": "json2jsii",
-        "type": "runtime",
       },
       Object {
         "name": "projen",
         "type": "build",
         "version": "^0.9.3",
-      },
-      Object {
-        "name": "sscaff",
-        "type": "runtime",
       },
       Object {
         "name": "standard-version",
@@ -3258,6 +3217,47 @@ dist
         "name": "typescript",
         "type": "build",
         "version": "~3.9.5",
+      },
+      Object {
+        "name": "@types/node",
+        "type": "runtime",
+      },
+      Object {
+        "name": "cdk8s",
+        "type": "runtime",
+        "version": "^0.0.0",
+      },
+      Object {
+        "name": "codemaker",
+        "type": "runtime",
+      },
+      Object {
+        "name": "colors",
+        "type": "runtime",
+      },
+      Object {
+        "name": "constructs",
+        "type": "runtime",
+      },
+      Object {
+        "name": "fs-extra",
+        "type": "runtime",
+      },
+      Object {
+        "name": "jsii-pacmak",
+        "type": "runtime",
+      },
+      Object {
+        "name": "jsii-srcmak",
+        "type": "runtime",
+      },
+      Object {
+        "name": "json2jsii",
+        "type": "runtime",
+      },
+      Object {
+        "name": "sscaff",
+        "type": "runtime",
       },
       Object {
         "name": "yaml",

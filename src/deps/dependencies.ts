@@ -47,11 +47,6 @@ export class Dependencies extends Component {
    */
   public get all(): Dependency[] {
     return [...this._deps].sort(compareDeps);
-
-    function compareDeps(d1: Dependency, d2: Dependency) {
-      const repr = (d: Dependency) => `${d.type}:${d.name}@${d.version ?? '*'}`;
-      return repr(d1).localeCompare(repr(d2));
-    }
   }
 
   /**
@@ -142,15 +137,20 @@ export class Dependencies extends Component {
   private toJson(): DepsManifest {
     return {
       projectType: this.project.projectType,
-      dependencies: this._deps.sort((d1, d2) => specOf(d1).localeCompare(specOf(d2))),
+      dependencies: this._deps.sort(compareDeps),
     };
   }
 }
 
-function specOf(dep: Dependency) {
-  let spec = dep.name;
-  if (dep.version) {
-    spec += '@' + dep.version;
+function compareDeps(d1: Dependency, d2: Dependency) {
+  return specOf(d1).localeCompare(specOf(d2));
+
+  function specOf(dep: Dependency) {
+    let spec = dep.type + ':' + dep.name;
+    if (dep.version) {
+      spec += '@' + dep.version;
+    }
+    return spec;
   }
-  return spec;
 }
+
