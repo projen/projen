@@ -4,7 +4,6 @@ import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
-import { DevContainer } from './devcontainer';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { Gitpod } from './gitpod';
@@ -15,7 +14,7 @@ import { SampleReadme } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
-import { VsCode } from './vscode';
+import { VsCode, DevContainer } from './vscode';
 
 export interface ProjectOptions {
   /**
@@ -37,14 +36,14 @@ export interface ProjectOptions {
   readonly outdir?: string;
 
   /**
-   * Adds a gitpod configuration
+   * Add a Gitpod development environment
    *
    * @default false
    */
   readonly gitpod?: boolean;
 
   /**
-   * Adds a VSCode development container config (used for GitHub Codespaces)
+   * Add a VSCode development environment (used for GitHub Codespaces)
    *
    * @default false
    */

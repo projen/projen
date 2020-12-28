@@ -10,7 +10,7 @@ Name|Description
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
-[DevContainer](#projen-devcontainer)|Creates a configuration file for running VSCode in a container;
+[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
 [Eslint](#projen-eslint)|*No description*
@@ -34,7 +34,6 @@ Name|Description
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
-[WorkspaceConfig](#projen-workspaceconfig)|Abstract interface for container-based IDE tools, such as Gitpod and GitHub Codespaces.
 [YamlFile](#projen-yamlfile)|*No description*
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
@@ -44,6 +43,7 @@ Name|Description
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
+[vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
@@ -69,7 +69,7 @@ Name|Description
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
-[DevContainerOptions](#projen-devcontaineroptions)|Configuration options for the DevContainer component.
+[DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environemnt.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
 [DockerComposeProps](#projen-dockercomposeprops)|Props for DockerCompose.
@@ -80,10 +80,9 @@ Name|Description
 [EslintOptions](#projen-eslintoptions)|*No description*
 [EslintOverride](#projen-eslintoverride)|eslint rules override.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
-[GitpodOptions](#projen-gitpodoptions)|Configuration options for the Gitpod component.
+[GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodTask](#projen-gitpodtask)|Specifies all options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
-[GitpodTaskOptions](#projen-gitpodtaskoptions)|Additional options for specifying tasks in a Gitpod workspace.
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
@@ -110,8 +109,6 @@ Name|Description
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
-[WorkspaceConfigOptions](#projen-workspaceconfigoptions)|Base options for configuring container-based IDE tools.
-[WorkspaceDockerImage](#projen-workspacedockerimage)|Options for specifying the Docker image of a container-based IDE.
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
@@ -124,6 +121,7 @@ Name|Description
 [tasks.TaskStep](#projen-tasks-taskstep)|A single step within a task.
 [tasks.TaskStepOptions](#projen-tasks-taskstepoptions)|Options for task steps.
 [tasks.TasksManifest](#projen-tasks-tasksmanifest)|Schema for `tasks.json`.
+[vscode.DevContainerOptions](#projen-vscode-devcontaineroptions)|Constructor options for the DevContainer component.
 [vscode.Presentation](#projen-vscode-presentation)|VSCode launch configuration Presentation interface "using the order, group, and hidden attributes in the presentation object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.ServerReadyAction](#projen-vscode-serverreadyaction)|VSCode launch configuration ServerReadyAction interface "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.VsCodeLaunchConfigurationEntry](#projen-vscode-vscodelaunchconfigurationentry)|Options for a 'VsCodeLaunchConfigurationEntry' Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -144,6 +142,7 @@ Name|Description
 
 Name|Description
 ----|-----------
+[IDevEnvironment](#projen-idevenvironment)|Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
@@ -252,8 +251,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -403,8 +402,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -599,8 +598,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -701,8 +700,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -812,8 +811,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -898,30 +897,9 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 
 
-## class DevContainer 🔹 <a id="projen-devcontainer"></a>
+## class DevEnvironmentDockerImage 🔹 <a id="projen-devenvironmentdockerimage"></a>
 
-Creates a configuration file for running VSCode in a container;
-
-used by GitHub
-codespaces.
-
-__Extends__: [WorkspaceConfig](#projen-workspaceconfig)
-
-### Initializer
-
-
-
-
-```ts
-new DevContainer(project: Project, options?: DevContainerOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[DevContainerOptions](#projen-devcontaineroptions)</code>)  *No description*
-  * **dockerImage** (<code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code>)  Options to configure the underlying docker container, such as the image to use. __*Optional*__
-  * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
-  * **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
-  * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
+Options for specifying the Docker image of the container.
 
 
 
@@ -930,52 +908,37 @@ new DevContainer(project: Project, options?: DevContainerOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**config**🔹 | <code>any</code> | Direct access to the devcontainer configuration (escape hatch).
-**dockerImage**🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | <span></span>
+**dockerFile**?🔹 | <code>string</code> | The relative path of a Dockerfile that defines the container contents.<br/>__*Optional*__
+**image**?🔹 | <code>string</code> | A publicly available Docker image.<br/>__*Optional*__
 
 ### Methods
 
 
-#### addPorts(...ports)🔹 <a id="projen-devcontainer-addports"></a>
+#### *static* fromFile(dockerFile)🔹 <a id="projen-devenvironmentdockerimage-fromfile"></a>
 
-Adds ports that should be exposed (forwarded) from the container.
-
-```ts
-addPorts(...ports: string[]): void
-```
-
-* **ports** (<code>string</code>)  The new ports.
-
-
-
-
-#### addTasks(...tasks)🔹 <a id="projen-devcontainer-addtasks"></a>
-
-Adds tasks to run when the container starts.
-
-Tasks will be run in sequence.
+The relative path of a Dockerfile that defines the container contents.
 
 ```ts
-addTasks(...tasks: Task[]): void
+static fromFile(dockerFile: string): DevEnvironmentDockerImage
 ```
 
-* **tasks** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new tasks.
+* **dockerFile** (<code>string</code>)  a relative path.
 
+__Returns__:
+* <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>
 
+#### *static* fromImage(image)🔹 <a id="projen-devenvironmentdockerimage-fromimage"></a>
 
-
-#### addVscodeExtensions(...extensions)🔹 <a id="projen-devcontainer-addvscodeextensions"></a>
-
-Adds a list of VSCode extensions that should be automatically installed in the container.
+A publicly available Docker image.
 
 ```ts
-addVscodeExtensions(...extensions: string[]): void
+static fromImage(image: string): DevEnvironmentDockerImage
 ```
 
-* **extensions** (<code>string</code>)  The extension IDs.
+* **image** (<code>string</code>)  a Docker image.
 
-
-
+__Returns__:
+* <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>
 
 
 
@@ -1344,7 +1307,8 @@ __Returns__:
 
 The Gitpod component which emits .gitpod.yml.
 
-__Extends__: [WorkspaceConfig](#projen-workspaceconfig)
+__Implements__: [IDevEnvironment](#projen-idevenvironment)
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -1357,7 +1321,7 @@ new Gitpod(project: Project, options?: GitpodOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  *No description*
-  * **dockerImage** (<code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code>)  Options to configure the underlying docker container, such as the image to use. __*Optional*__
+  * **dockerImage** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  A Docker image or Dockerfile for the container. __*Optional*__
   * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
   * **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
   * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
@@ -1370,14 +1334,37 @@ new Gitpod(project: Project, options?: GitpodOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the gitpod configuration (escape hatch).
-**dockerImage**🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | <span></span>
+**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
 
 ### Methods
 
 
+#### addCustomTask(options)🔹 <a id="projen-gitpod-addcustomtask"></a>
+
+Add a task with more granular options.
+
+By default, all tasks will be run in parallel. To run tasks in sequence,
+create a new `Task` and set the other tasks as subtasks.
+
+```ts
+addCustomTask(options: GitpodTask): void
+```
+
+* **options** (<code>[GitpodTask](#projen-gitpodtask)</code>)  The task parameters.
+  * **command** (<code>string</code>)  Required. 
+  * **before** (<code>string</code>)  In case you need to run something even before init, that is a requirement for both init and command, you can use the before property. __*Optional*__
+  * **init** (<code>string</code>)  The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow. __*Optional*__
+  * **name** (<code>string</code>)  A name for this task. __*Default*__: task names are omitted when blank
+  * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: GitpodOpenIn.BOTTOM
+  * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Default*__: GitpodOpenMode.TAB_AFTER
+  * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
+
+
+
+
 #### addPorts(...ports)🔹 <a id="projen-gitpod-addports"></a>
 
-Adds ports that should be exposed (forwarded) from the container.
+Add ports that should be exposed (forwarded) from the container.
 
 ```ts
 addPorts(...ports: string[]): void
@@ -1388,31 +1375,9 @@ addPorts(...ports: string[]): void
 
 
 
-#### addTaskWithOptions(task, options?)🔹 <a id="projen-gitpod-addtaskwithoptions"></a>
-
-Adds a task, with additional options to specify when the task runs.
-
-By default, all tasks will be run in parallel. To run tasks in sequence,
-create a new `Task` and specify the other tasks as subtasks.
-
-```ts
-addTaskWithOptions(task: Task, options?: GitpodTaskOptions): void
-```
-
-* **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new task.
-* **options** (<code>[GitpodTaskOptions](#projen-gitpodtaskoptions)</code>)  *No description*
-  * **before** (<code>string</code>)  In case you need to run something even before init, that is a requirement for both init and command, you can use the before property. __*Optional*__
-  * **init** (<code>string</code>)  The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow. __*Optional*__
-  * **openIn** (<code>[GitpodOpenIn](#projen-gitpodopenin)</code>)  You can configure where in the IDE the terminal should be opened. __*Default*__: GitpodOpenIn.BOTTOM
-  * **openMode** (<code>[GitpodOpenMode](#projen-gitpodopenmode)</code>)  You can configure how the terminal should be opened relative to the previous task. __*Default*__: GitpodOpenMode.TAB_AFTER
-  * **prebuild** (<code>string</code>)  The optional prebuild command will be executed during prebuilds. __*Optional*__
-
-
-
-
 #### addTasks(...tasks)🔹 <a id="projen-gitpod-addtasks"></a>
 
-Adds tasks to run when gitpod starts.
+Add tasks to run when gitpod starts.
 
 By default, all tasks will be run in parallel. To run tasks in sequence,
 create a new `Task` and specify the other tasks as subtasks.
@@ -1428,7 +1393,7 @@ addTasks(...tasks: Task[]): void
 
 #### addVscodeExtensions(...extensions)🔹 <a id="projen-gitpod-addvscodeextensions"></a>
 
-Adds a list of VSCode extensions that should be automatically installed in the container.
+Add a list of VSCode extensions that should be automatically installed in the container.
 
 ```ts
 addVscodeExtensions(...extensions: string[]): void
@@ -1606,8 +1571,8 @@ new JsiiProject(options: JsiiProjectOptions)
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -1921,8 +1886,8 @@ new NodeProject(options: NodeProjectOptions)
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2326,8 +2291,8 @@ new Project(options?: ProjectOptions)
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
 
@@ -2344,7 +2309,7 @@ Name | Type | Description
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
-**devContainer**?🔹 | <code>[DevContainer](#projen-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
+**devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
@@ -2770,8 +2735,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2877,8 +2842,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -2984,8 +2949,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -3168,82 +3133,6 @@ resolveVersion(outdir: string): any
 
 __Returns__:
 * <code>any</code>
-
-
-
-## class WorkspaceConfig 🔹 <a id="projen-workspaceconfig"></a>
-
-Abstract interface for container-based IDE tools, such as Gitpod and GitHub Codespaces.
-
-__Extends__: [Component](#projen-component)
-__Implemented by__: [DevContainer](#projen-devcontainer), [Gitpod](#projen-gitpod)
-
-### Initializer
-
-
-
-
-```ts
-new WorkspaceConfig(project: Project, _options: WorkspaceConfigOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **_options** (<code>[WorkspaceConfigOptions](#projen-workspaceconfigoptions)</code>)  *No description*
-  * **dockerImage** (<code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code>)  Options to configure the underlying docker container, such as the image to use. __*Optional*__
-  * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
-  * **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
-  * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**dockerImage**🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | <span></span>
-
-### Methods
-
-
-#### addPorts(...ports)🔹 <a id="projen-workspaceconfig-addports"></a>
-
-Adds ports that should be exposed (forwarded) from the container.
-
-```ts
-addPorts(...ports: string[]): void
-```
-
-* **ports** (<code>string</code>)  The new ports.
-
-
-
-
-#### addTasks(...tasks)🔹 <a id="projen-workspaceconfig-addtasks"></a>
-
-Adds tasks to run when the workspace starts.
-
-```ts
-addTasks(...tasks: Task[]): void
-```
-
-* **tasks** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new tasks.
-
-
-
-
-#### addVscodeExtensions(...extensions)🔹 <a id="projen-workspaceconfig-addvscodeextensions"></a>
-
-Adds a list of VSCode extensions that should be automatically installed in the container.
-
-```ts
-addVscodeExtensions(...extensions: string[]): void
-```
-
-* **extensions** (<code>string</code>)  The extension IDs.
-
-
-
 
 
 
@@ -3863,6 +3752,90 @@ __Returns__:
 
 
 
+## class DevContainer 🔹 <a id="projen-vscode-devcontainer"></a>
+
+A development environment running VSCode in a container;
+
+used by GitHub
+codespaces.
+
+__Implements__: [IDevEnvironment](#projen-idevenvironment)
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.DevContainer(project: Project, options?: DevContainerOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[vscode.DevContainerOptions](#projen-vscode-devcontaineroptions)</code>)  *No description*
+  * **dockerImage** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  A Docker image or Dockerfile for the container. __*Optional*__
+  * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
+  * **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
+  * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>any</code> | Direct access to the devcontainer configuration (escape hatch).
+**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
+
+### Methods
+
+
+#### addPorts(...ports)🔹 <a id="projen-vscode-devcontainer-addports"></a>
+
+Adds ports that should be exposed (forwarded) from the container.
+
+```ts
+addPorts(...ports: string[]): void
+```
+
+* **ports** (<code>string</code>)  The new ports.
+
+
+
+
+#### addTasks(...tasks)🔹 <a id="projen-vscode-devcontainer-addtasks"></a>
+
+Adds tasks to run when the container starts.
+
+Tasks will be run in sequence.
+
+```ts
+addTasks(...tasks: Task[]): void
+```
+
+* **tasks** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new tasks.
+
+
+
+
+#### addVscodeExtensions(...extensions)🔹 <a id="projen-vscode-devcontainer-addvscodeextensions"></a>
+
+Adds a list of VSCode extensions that should be automatically installed in the container.
+
+```ts
+addVscodeExtensions(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+
+
 ## class VsCode 🔹 <a id="projen-vscode-vscode"></a>
 
 
@@ -3993,8 +3966,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -4147,8 +4120,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -4326,8 +4299,8 @@ new web.ReactProject(options: ReactProjectOptions)
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -4476,8 +4449,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Adds a VSCode development container config (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -4652,14 +4625,14 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -4747,7 +4720,7 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
@@ -4758,7 +4731,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -4870,14 +4843,14 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | Library description.<br/>__*Optional*__
-**devContainer**?⚠️ | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **docgen**?⚠️ | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?⚠️ | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **java**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -4965,14 +4938,14 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -5059,14 +5032,14 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -5132,18 +5105,16 @@ Name | Type | Description
 
 
 
-## struct DevContainerOptions 🔹 <a id="projen-devcontaineroptions"></a>
+## struct DevEnvironmentOptions 🔹 <a id="projen-devenvironmentoptions"></a>
 
 
-Configuration options for the DevContainer component.
-
-The default docker image used for GitHub codespaces is defined here:
+Base options for configuring a container-based development environemnt.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**dockerImage**?🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | Options to configure the underlying docker container, such as the image to use.<br/>__*Optional*__
+**dockerImage**?🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
 **tasks**?🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
 **vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
@@ -5307,7 +5278,7 @@ Name | Type | Description
 ## struct GitpodOptions 🔹 <a id="projen-gitpodoptions"></a>
 
 
-Configuration options for the Gitpod component.
+Constructor options for the Gitpod component.
 
 By default, Gitpod uses the 'gitpod/workspace-full' docker image.
 
@@ -5315,7 +5286,7 @@ By default, Gitpod uses the 'gitpod/workspace-full' docker image.
 
 Name | Type | Description 
 -----|------|-------------
-**dockerImage**?🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | Options to configure the underlying docker container, such as the image to use.<br/>__*Optional*__
+**dockerImage**?🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
 **tasks**?🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
 **vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
@@ -5355,30 +5326,7 @@ Name | Type | Description
 **command**🔹 | <code>string</code> | Required.
 **before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
 **init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Optional*__
-**name**?🔹 | <code>string</code> | A name for this.<br/>__*Default*__: task names are omitted when blank like GH actions
-**openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
-**openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
-**prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
-
-
-
-## struct GitpodTaskOptions 🔹 <a id="projen-gitpodtaskoptions"></a>
-
-
-Additional options for specifying tasks in a Gitpod workspace.
-
-Start Mode         | Execution
-Fresh Workspace    | before && init && command
-Restart Workspace  | before && command
-Snapshot           | before && command
-Prebuild           | before && init && prebuild
-
-
-
-Name | Type | Description 
------|------|-------------
-**before**?🔹 | <code>string</code> | In case you need to run something even before init, that is a requirement for both init and command, you can use the before property.<br/>__*Optional*__
-**init**?🔹 | <code>string</code> | The init property can be used to specify shell commands that should only be executed after a workspace was freshly cloned and needs to be initialized somehow.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | A name for this task.<br/>__*Default*__: task names are omitted when blank
 **openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
 **openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
 **prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
@@ -5399,6 +5347,63 @@ Name | Type | Description
 **hasteImplModulePath**?🔹 | <code>string</code> | __*Optional*__
 **platforms**?🔹 | <code>Array<string></code> | __*Optional*__
 **throwOnModuleCollision**?🔹 | <code>boolean</code> | __*Optional*__
+
+
+
+## interface IDevEnvironment 🔹 <a id="projen-idevenvironment"></a>
+
+__Implemented by__: [vscode.DevContainer](#projen-vscode-devcontainer), [Gitpod](#projen-gitpod)
+
+Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**dockerImage**🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.
+
+### Methods
+
+
+#### addPorts(...ports)🔹 <a id="projen-idevenvironment-addports"></a>
+
+Adds ports that should be exposed (forwarded) from the container.
+
+```ts
+addPorts(...ports: string[]): void
+```
+
+* **ports** (<code>string</code>)  The new ports.
+
+
+
+
+#### addTasks(...tasks)🔹 <a id="projen-idevenvironment-addtasks"></a>
+
+Adds tasks to run when the container starts.
+
+```ts
+addTasks(...tasks: Task[]): void
+```
+
+* **tasks** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new tasks.
+
+
+
+
+#### addVscodeExtensions(...extensions)🔹 <a id="projen-idevenvironment-addvscodeextensions"></a>
+
+Adds a list of VSCode extensions that should be automatically installed in the container.
+
+```ts
+addVscodeExtensions(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
 
 
 
@@ -5652,14 +5657,14 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Library description.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **docgen**?🔹 | <code>boolean</code> | Automatically generate API.md from jsii.<br/>__*Default*__: true
 **dotnet**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **java**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | __*Optional*__
 **jest**?🔹 | <code>boolean</code> | Use jest for unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: defaults
@@ -5799,11 +5804,11 @@ Name | Type | Description
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Compiler artifacts output directory.<br/>__*Default*__: "lib"
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
@@ -5878,12 +5883,12 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -5971,8 +5976,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 
@@ -6142,7 +6147,7 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?⚠️ | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **disableTsconfig**?⚠️ | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
@@ -6153,7 +6158,7 @@ Name | Type | Description
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?⚠️ | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -6241,7 +6246,7 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
@@ -6252,7 +6257,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -6333,36 +6338,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **releaseBranch**🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.
-
-
-
-## struct WorkspaceConfigOptions 🔹 <a id="projen-workspaceconfigoptions"></a>
-
-
-Base options for configuring container-based IDE tools.
-
-
-
-Name | Type | Description 
------|------|-------------
-**dockerImage**?🔹 | <code>[WorkspaceDockerImage](#projen-workspacedockerimage)</code> | Options to configure the underlying docker container, such as the image to use.<br/>__*Optional*__
-**ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
-**tasks**?🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
-**vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
-
-
-
-## struct WorkspaceDockerImage 🔹 <a id="projen-workspacedockerimage"></a>
-
-
-Options for specifying the Docker image of a container-based IDE.
-
-
-
-Name | Type | Description 
------|------|-------------
-**file**?🔹 | <code>string</code> | The relative path of a Dockerfile that defines the container contents.<br/>__*Default*__: undefined
-**image**?🔹 | <code>string</code> | A publicly available image to use.<br/>__*Default*__: uses the default workspace image
 
 
 
@@ -6561,6 +6536,24 @@ Name | Type | Description
 
 
 
+## struct DevContainerOptions 🔹 <a id="projen-vscode-devcontaineroptions"></a>
+
+
+Constructor options for the DevContainer component.
+
+The default docker image used for GitHub Codespaces is defined here:
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dockerImage**?🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.<br/>__*Optional*__
+**ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
+**tasks**?🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
+**vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
+
+
+
 ## struct Presentation 🔹 <a id="projen-vscode-presentation"></a>
 
 
@@ -6680,12 +6673,12 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -6787,7 +6780,7 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
@@ -6798,7 +6791,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -6914,12 +6907,12 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
@@ -7019,7 +7012,7 @@ Name | Type | Description
 **dependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devContainer**?🔹 | <code>boolean</code> | Adds a VSCode development container config (used for GitHub Codespaces).<br/>__*Default*__: false
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDependencies**?⚠️ | <code>Map<string, [Semver](#projen-semver)></code> | __*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
@@ -7030,7 +7023,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
-**gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options

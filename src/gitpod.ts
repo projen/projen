@@ -1,4 +1,5 @@
-import { WorkspaceConfig, WorkspaceConfigOptions, WorkspaceDockerImage } from './devcontainer';
+import { Component } from './component';
+import { IDevEnvironment, DevEnvironmentOptions, DevEnvironmentDockerImage } from './dev-env';
 import { Project } from './project';
 import { Task } from './tasks';
 import { YamlFile } from './yaml';
@@ -66,7 +67,8 @@ export enum GitpodOpenIn {
 }
 
 /**
- * Additional options for specifying tasks in a Gitpod workspace.
+ * Specifies all options for a task to be run when opening a Gitpod
+ * workspace (e.g. running tests, or starting a dev server).
  *
  * Start Mode         | Execution
  * Fresh Workspace    | before && init && command
@@ -74,7 +76,13 @@ export enum GitpodOpenIn {
  * Snapshot           | before && command
  * Prebuild           | before && init && prebuild
 */
-export interface GitpodTaskOptions {
+export interface GitpodTask {
+  /**
+   * A name for this task.
+   * @default - task names are omitted when blank
+   */
+  readonly name?: string;
+
   /**
    * You can configure how the terminal should be opened relative to the previous task.
    * @default GitpodOpenMode.TAB_AFTER
@@ -108,29 +116,11 @@ export interface GitpodTaskOptions {
    * @default
    */
   readonly prebuild?: string;
-}
 
-/**
- * Specifies all options for a task to be run when opening a Gitpod
- * workspace (e.g. running tests, or starting a dev server).
- *
- * Start Mode         | Execution
- * Fresh Workspace    | before && init && command
- * Restart Workspace  | before && command
- * Snapshot           | before && command
- * Prebuild           | before && init && prebuild
-*/
-export interface GitpodTask extends GitpodTaskOptions {
   /**
-   * Required. What to run
+   * Required. The shell command to run
    */
   readonly command: string;
-
-  /**
-   * A name for this
-   * @default - task names are omitted when blank like GH actions
-   */
-  readonly name?: string;
 }
 
 /**
@@ -200,7 +190,7 @@ export interface GitpodPort {
 }
 
 /**
- * Configuration options for the Gitpod component.
+ * Constructor options for the Gitpod component.
  *
  * By default, Gitpod uses the 'gitpod/workspace-full' docker image.
  * @see https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile
@@ -208,13 +198,13 @@ export interface GitpodPort {
  * By default, all tasks will be run in parallel. To run the tasks in sequence,
  * create a new task and specify the other tasks as subtasks.
  */
-export interface GitpodOptions extends WorkspaceConfigOptions {}
+export interface GitpodOptions extends DevEnvironmentOptions {}
 
 /**
  * The Gitpod component which emits .gitpod.yml
  */
-export class Gitpod extends WorkspaceConfig {
-  private _dockerImage: WorkspaceDockerImage;
+export class Gitpod extends Component implements IDevEnvironment {
+  private _dockerImage: DevEnvironmentDockerImage | undefined;
   private readonly tasks = new Array<GitpodTask>();
   private readonly ports = new Array<GitpodPort>();
   private readonly vscodeExtensions = new Array<string>();
@@ -225,9 +215,9 @@ export class Gitpod extends WorkspaceConfig {
   public readonly config: any;
 
   constructor(project: Project, options: GitpodOptions = {}) {
-    super(project, options);
+    super(project);
 
-    this._dockerImage = options?.dockerImage ?? {};
+    this._dockerImage = options?.dockerImage;
 
     if (options?.tasks) {
       for (const task of options.tasks) {
@@ -247,20 +237,15 @@ export class Gitpod extends WorkspaceConfig {
     new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
   }
 
-  public set dockerImage(docker: WorkspaceDockerImage) {
-    if (docker?.file && docker?.image) {
-      throw new Error('Can not specific both `file` and `image` at the same time');
-    }
-
-    this._dockerImage = docker;
-  }
-
   public get dockerImage() {
+    if (!this._dockerImage) {
+      throw new Error('dockerImage has not been configured.');
+    }
     return this._dockerImage;
   }
 
   /**
-   * Adds tasks to run when gitpod starts.
+   * Add tasks to run when gitpod starts.
    *
    * By default, all tasks will be run in parallel. To run tasks in sequence,
    * create a new `Task` and specify the other tasks as subtasks.
@@ -270,22 +255,22 @@ export class Gitpod extends WorkspaceConfig {
   public addTasks(...tasks: Task[]) {
     this.tasks.push(...tasks.map(task => ({
       name: task.name,
-      command: task.toShellCommand(),
+      command: `npx projen ${task.name}`,
     })));
   }
 
   /**
-   * Adds a task, with additional options to specify when the task runs.
+   * Add a task with more granular options.
    *
    * By default, all tasks will be run in parallel. To run tasks in sequence,
-   * create a new `Task` and specify the other tasks as subtasks.
+   * create a new `Task` and set the other tasks as subtasks.
    *
-   * @param task The new task
+   * @param options The task parameters
    */
-  public addTaskWithOptions(task: Task, options: GitpodTaskOptions = {}) {
+  public addCustomTask(options: GitpodTask) {
     this.tasks.push({
-      name: task.name,
-      command: task.toShellCommand(),
+      name: options.name,
+      command: options.command,
       openMode: options.openMode,
       openIn: options.openIn,
       before: options.before,
@@ -295,7 +280,7 @@ export class Gitpod extends WorkspaceConfig {
   }
 
   /**
-   * Adds ports that should be exposed (forwarded) from the container.
+   * Add ports that should be exposed (forwarded) from the container.
    *
    * @param ports The new ports
    */
@@ -304,7 +289,7 @@ export class Gitpod extends WorkspaceConfig {
   }
 
   /**
-   * Adds a list of VSCode extensions that should be automatically installed
+   * Add a list of VSCode extensions that should be automatically installed
    * in the container.
    *
    * @param extensions The extension IDs
@@ -316,9 +301,9 @@ export class Gitpod extends WorkspaceConfig {
   private renderDockerImage() {
     if (this._dockerImage?.image) {
       return this._dockerImage.image;
-    } else if (this._dockerImage?.file) {
+    } else if (this._dockerImage?.dockerFile) {
       return {
-        file: this._dockerImage.file,
+        file: this._dockerImage.dockerFile,
       };
     } else {
       return undefined;

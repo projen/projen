@@ -144,7 +144,7 @@ describe('workspace tasks', () => {
 
     // WHEN
     const task = project.addTask('gitpod-test', { exec: 'text' });
-    project.gitpod?.addTaskWithOptions(task, {
+    project.gitpod?.addCustomTask(task, {
       init: 'echo Initializing',
       openIn: GitpodOpenIn.LEFT,
       openMode: GitpodOpenMode.SPLIT_BOTTOM,
