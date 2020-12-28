@@ -212,6 +212,17 @@
           "exec": "rm README.md.bak"
         }
       ]
+    },
+    "devenv:setup": {
+      "name": "devenv:setup",
+      "steps": [
+        {
+          "exec": "yarn install"
+        },
+        {
+          "spawn": "build"
+        }
+      ]
     }
   },
   "env": {

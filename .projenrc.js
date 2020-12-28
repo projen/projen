@@ -35,6 +35,7 @@ const project = new JsiiProject({
   codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
   gitpod: true,
+  devContainer: true,
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',
 });
@@ -113,11 +114,16 @@ project.github.addMergifyRules({
   ],
 });
 
-project.gitpod.addTasks({
+project.gitpod.addCustomTask({
   name: 'Setup',
   init: 'yarn install',
   prebuild: 'bash ./projen.bash',
   command: 'npx projen build',
 });
+
+const setup = project.addTask('devenv:setup');
+setup.exec('yarn install');
+setup.spawn(project.buildTask);
+project.devContainer.addTasks(setup);
 
 project.synth();

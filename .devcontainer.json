@@ -1,0 +1,3 @@
+{
+  "postCreateCommand": "( npx projen devenv:setup )"
+}

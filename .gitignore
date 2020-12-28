@@ -45,6 +45,7 @@ junit.xml
 tsconfig.json
 !/.projen/tasks.json
 !/.gitpod.yml
+!/.devcontainer.json
 !/package.json
 !/.npmignore
 !/LICENSE

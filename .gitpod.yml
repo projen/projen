@@ -2,4 +2,6 @@
 
 tasks:
   - name: Setup
-    command: npx projen Setup
+    command: npx projen build
+    init: yarn install
+    prebuild: bash ./projen.bash
