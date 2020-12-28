@@ -13,6 +13,7 @@ export * from './jsii-project';
 export * from './json';
 export * from './license';
 export * from './makefile';
+export * from './npm-package';
 export * from './node-project';
 export * from './project';
 export * from './readme';

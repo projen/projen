@@ -8,6 +8,8 @@ export class Component {
     project._addComponent(this);
   }
 
+  public preSynthesize() { }
+
   /**
    * Synthesizes files to the project output directory.
    */

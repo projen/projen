@@ -172,14 +172,14 @@ export class ReactComponent extends Component {
     project.npmignore?.exclude('# Build', '/build');
     project.gitignore.exclude('# Build', '/build');
 
-    project.manifest.eslintConfig = {
+    project.npmPackage.addField('eslintConfig', {
       extends: [
         'react-app',
         'react-app/jest',
       ],
-    };
+    });
 
-    project.manifest.browserslist = {
+    project.npmPackage.addField('browserslist', {
       production: [
         '>0.2%',
         'not dead',
@@ -190,7 +190,7 @@ export class ReactComponent extends Component {
         'last 1 firefox version',
         'last 1 safari version',
       ],
-    };
+    });
   }
 }
 

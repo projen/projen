@@ -43,10 +43,10 @@ export abstract class ConstructLibrary extends JsiiProject {
 
     this.addKeywords('cdk'); // publish to the catalog
     if (options.catalog) {
-      this.manifest.awscdkio = {
+      this.npmPackage.addField('awscdkio', {
         twitter: options.catalog.twitter,
         announce: options.catalog.announce,
-      };
+      });
     }
   }
 }

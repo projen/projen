@@ -1,4 +1,4 @@
-import * as fs from 'fs-extra';
+import { existsSync, mkdirpSync, readJsonSync, writeJsonSync } from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
@@ -55,7 +55,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: `${project.projenCommand} && git add .`,
+          postbump: `${project.npmPackage.projenCommand} && git add .`,
         },
       },
     });
@@ -64,15 +64,17 @@ export class Version extends Component {
   /**
    * Returns the current version of the project.
    */
-  public resolveVersion(outdir: string) {
+  public get currentVersion() {
+    const outdir = this.project.outdir;
     const versionFile = `${outdir}/${VERSION_FILE}`;
-    if (!fs.existsSync(versionFile)) {
-      if (!fs.existsSync(outdir)) {
-        fs.mkdirpSync(outdir);
+    if (!existsSync(versionFile)) {
+      if (!existsSync(outdir)) {
+        mkdirpSync(outdir);
       }
-      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
+
+      writeJsonSync(versionFile, { version: '0.0.0' });
     }
 
-    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
+    return readJsonSync(versionFile).version;
   }
 }

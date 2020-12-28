@@ -285,6 +285,10 @@ export class Project {
     const outdir = this.outdir;
     this.preSynthesize();
 
+    for (const comp of this._components) {
+      comp.preSynthesize();
+    }
+
     // delete all generated files before we start synthesizing new ones
     cleanup(outdir, this.excludeFromCleanup);
 

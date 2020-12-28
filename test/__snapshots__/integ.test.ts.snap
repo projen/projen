@@ -526,8 +526,8 @@ example/*.d.ts
 !/.projen/tasks.json
 !/.projen/deps.json
 !/package.json
-!/.npmignore
 !/LICENSE
+!/.npmignore
 !/.projenrc.js
 !version.json
 !/.versionrc.json
@@ -1356,7 +1356,6 @@ project.synth();
     "awscdkio": Object {
       "twitter": "emeshbi",
     },
-    "bin": Object {},
     "bundledDependencies": Array [],
     "dependencies": Object {
       "@aws-cdk/aws-apigateway": "^1.75.0",
@@ -1836,8 +1835,8 @@ tsconfig.json
 !/.projen/tasks.json
 !/.projen/deps.json
 !/package.json
-!/.npmignore
 !/LICENSE
+!/.npmignore
 !/.projenrc.js
 !version.json
 !/.versionrc.json
@@ -2642,7 +2641,6 @@ project.synth();
       "organization": true,
       "url": "https://aws.amazon.com",
     },
-    "bin": Object {},
     "bundledDependencies": Array [
       "fast-json-patch",
       "follow-redirects",
@@ -3107,8 +3105,8 @@ junit.xml
 !/.projen/tasks.json
 !/.projen/deps.json
 !/package.json
-!/.npmignore
 !/LICENSE
+!/.npmignore
 !/.projenrc.js
 !version.json
 !/.versionrc.json
