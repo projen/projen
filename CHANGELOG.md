@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.3](https://github.com/projen/projen/compare/v0.9.2...v0.9.3) (2020-12-28)
+
+
+### Bug Fixes
+
+* **node:** tasks are broken for node >= 15.5.0 ([#418](https://github.com/projen/projen/issues/418)) ([17df820](https://github.com/projen/projen/commit/17df82044552564836730880223f3f2cf5daaa2a)), closes [#416](https://github.com/projen/projen/issues/416)
+
 ### [0.9.2](https://github.com/projen/projen/compare/v0.9.1...v0.9.2) (2020-12-27)
 
 
