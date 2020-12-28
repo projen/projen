@@ -8,6 +8,9 @@ export class Component {
     project._addComponent(this);
   }
 
+  /**
+   * Called before synthesis.
+   */
   public preSynthesize() { }
 
   /**
