@@ -45,10 +45,10 @@ export interface GitpodDocker {
 
 /**
  * Configure the Gitpod App for prebuilds
- * Currently the App only support GitHub.
+ * Currently only GitHub is supported.
  * See: https://www.gitpod.io/docs/prebuilds/
  */
-export interface GitpodPrebuildsConfig {
+export interface GitpodPrebuilds {
   /**
    * Enable for the master/default branch
    * @default true
@@ -232,7 +232,7 @@ export interface GitpodOptions {
    * these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app
    * @default undefined
    */
-  readonly prebuilds?: GitpodPrebuildsConfig;
+  readonly prebuilds?: GitpodPrebuilds;
 
   /**
    * Optional Include VS Code Extensions to be installed with the project
@@ -241,20 +241,13 @@ export interface GitpodOptions {
   readonly extensions?: GitpodCodeExtensionId[];
 }
 
-type GitpodCodeExtensionsRender = {
-  extensions: GitpodCodeExtensionId[];
-};
-type GitpodPrebuildsRender = {
-  prebuilds: GitpodPrebuildsConfig;
-};
-
 /**
  * The Gitpod component which emits .gitpod.yml
  */
 export class Gitpod extends Component {
   private readonly tasks = new Array<GitpodTask>();
   private docker: GitpodDocker | undefined;
-  private prebuilds: GitpodPrebuildsConfig | undefined;
+  private prebuilds: GitpodPrebuilds | undefined;
   private readonly extensions = new Array<GitpodCodeExtensionId>();
 
   constructor(project: Project, options?: GitpodOptions) {
@@ -307,7 +300,7 @@ export class Gitpod extends Component {
    * Add a prebuilds configuration for the Gitpod App
    * @param config The configuration
    */
-  public addPrebuilds(config: GitpodPrebuildsConfig) {
+  public addPrebuilds(config: GitpodPrebuilds) {
     this.prebuilds = config;
   }
 
@@ -359,3 +352,10 @@ export class Gitpod extends Component {
     }
   }
 }
+
+type GitpodCodeExtensionsRender = {
+  extensions: GitpodCodeExtensionId[];
+};
+type GitpodPrebuildsRender = {
+  prebuilds: GitpodPrebuilds;
+};
