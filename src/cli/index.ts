@@ -11,9 +11,14 @@ async function main() {
   ya.recommendCommands();
   ya.wrap(yargs.terminalWidth());
   ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
+  ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
   ya.help();
 
   const args = ya.argv;
+
+  if (args.debug) {
+    process.env.DEBUG = 'true';
+  }
 
   // no command means just require .projenrc.js
   if (args._.length === 0) {

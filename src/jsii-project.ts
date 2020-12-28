@@ -1,7 +1,6 @@
 import { Eslint } from './eslint';
-import { JestOptions } from './jest';
 import { JsiiDocgen } from './jsii-docgen';
-import { NodeProjectCommonOptions } from './node-project';
+import { NodeProjectOptions } from './node-project';
 import { TaskCategory } from './tasks';
 import { TypeScriptProject } from './typescript';
 
@@ -10,34 +9,23 @@ const DEFAULT_JSII_IMAGE = 'jsii/superchain';
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
 
-export interface JsiiProjectOptions extends NodeProjectCommonOptions {
+export interface JsiiProjectOptions extends NodeProjectOptions {
   /**
    * @default "."
    */
   readonly rootdir?: string;
 
   /**
-   * The name of the library.
-   * @default $BASEDIR
-   */
-  readonly name: string;
-
-  /**
-   * Library description.
-   */
-  readonly description?: string;
-
-  /**
    * Git repository URL.
    * @default $GIT_REMOTE
    */
-  readonly repository: string;
+  readonly repositoryUrl: string;
 
   /**
    * The name of the library author.
    * @default $GIT_USER_NAME
    */
-  readonly authorName: string;
+  readonly author: string;
 
   /**
    * Email or URL of the library author.
@@ -46,21 +34,21 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
   readonly authorAddress: string;
 
   /**
-   * @deprecated use `authorAddress`
+   * Publish to maven
+   * @default - no publishing
    */
-  readonly authorEmail?: string;
+  readonly java?: JsiiJavaTarget;
 
   /**
-   * @deprecated use `authorAddress`
+   * Publish to pypi
+   * @default - no publishing
    */
-  readonly authorUrl?: string;
-
-  readonly authorOrganization?: boolean;
-  readonly license?: string;
-  readonly stability?: string;
-
-  readonly java?: JsiiJavaTarget;
   readonly python?: JsiiPythonTarget;
+
+  /**
+   * Publish to NuGet
+   * @default - no publishing
+   */
   readonly dotnet?: JsiiDotNetTarget;
 
   /**
@@ -69,18 +57,6 @@ export interface JsiiProjectOptions extends NodeProjectCommonOptions {
    * @default true
    */
   readonly eslint?: boolean;
-
-  /**
-   * Use jest for unit tests.
-   * @default true
-   */
-  readonly jest?: boolean;
-
-  /**
-   * Jest options
-   * @default - defaults
-   */
-  readonly jestOptions?: JestOptions;
 
   /**
    * Automatically generate API.md from jsii
@@ -149,6 +125,8 @@ export class JsiiProject extends TypeScriptProject {
       ...options,
       workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
       releaseToNpm: false, // we have a jsii release workflow
+      repository: options.repositoryUrl,
+      authorName: options.author,
       ...options,
       disableTsconfig: true, // jsii generates its own tsconfig.json
       authorEmail,
