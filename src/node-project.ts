@@ -1,6 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as semver from 'semver';
 import { PROJEN_RC, PROJEN_VERSION } from './common';
+import { DependencyType } from './deps/model';
 import { GithubWorkflow } from './github';
 import { DependabotOptions } from './github/dependabot';
 import { Mergify, MergifyOptions } from './github/mergify';
@@ -98,26 +100,6 @@ export interface NodeProjectCommonOptions extends ProjectOptions {
    * this will be what you `package.json` will eventually include.
    */
   readonly bundledDeps?: string[];
-
-  /**
-   * @deprecated use `bundledDeps`
-   */
-  readonly bundledDependencies?: string[];
-
-  /**
-   * @deprecated use `deps`
-   */
-  readonly dependencies?: Record<string, Semver>;
-
-  /**
-   * @deprecated use `devDeps`
-   */
-  readonly devDependencies?: Record<string, Semver>;
-
-  /**
-   * @deprecated use `peerDeps`
-   */
-  readonly peerDependencies?: Record<string, Semver>;
 
   /**
    * Options for `peerDeps`.
@@ -637,11 +619,7 @@ export class NodeProject extends Project {
    */
   public readonly buildTask: Task;
 
-  private readonly peerDependencies: Record<string, string> = { };
   private readonly peerDependencyOptions: PeerDependencyOptions;
-  private readonly devDependencies: Record<string, string> = { };
-  private readonly dependencies: Record<string, string> = { };
-  private readonly bundledDependencies: string[] = [];
   private readonly scripts: Record<string, string[]>;
   private readonly bin: Record<string, string> = { };
   private readonly keywords: Set<string>;
@@ -702,6 +680,8 @@ export class NodeProject extends Project {
    * The command to use in order to run the projen CLI.
    */
   public readonly projenCommand: string;
+
+  private _renderedDeps?: NpmDependencies;
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -812,10 +792,10 @@ export class NodeProject extends Project {
       scripts: renderScripts,
       author: author,
       homepage: options.homepage,
-      devDependencies: sorted(this.devDependencies),
-      peerDependencies: sorted(this.peerDependencies),
-      dependencies: sorted(this.dependencies),
-      bundledDependencies: sorted(this.bundledDependencies),
+      devDependencies: {},
+      peerDependencies: {},
+      dependencies: {},
+      bundledDependencies: [],
       keywords: () => Array.from(this.keywords).sort(),
       engines: nodeVersion !== '' ? { node: nodeVersion } : undefined,
     };
@@ -1090,67 +1070,6 @@ export class NodeProject extends Project {
   }
 
   /**
-   * @deprecated use `addDeps()`
-   */
-  public addDependencies(deps: { [module: string]: Semver }, bundle = false) {
-    for (const [k, v] of Object.entries(deps)) {
-      this.dependencies[k] = typeof(v) === 'string' ? v : v.spec;
-
-      if (bundle) {
-        this.addBundledDependencies(k);
-      }
-    }
-  }
-
-  /**
-   * @deprecated use `addBundledDeps()`
-   */
-  public addBundledDependencies(...deps: string[]) {
-    if (deps.length && !this.allowLibraryDependencies) {
-      throw new Error(`cannot add bundled dependencies to an APP project: ${deps.join(',')}`);
-    }
-
-    for (const dep of deps) {
-      if (!(dep in this.dependencies)) {
-        throw new Error(`unable to bundle "${dep}". it has to also be defined as a dependency`);
-      }
-
-      if (dep in this.peerDependencies) {
-        throw new Error(`unable to bundle "${dep}". it cannot appear as a peer dependency`);
-      }
-
-      this.bundledDependencies.push(dep);
-    }
-  }
-
-  /**
-   * @deprecated use `addDevDeps()`
-   */
-  public addDevDependencies(deps: { [module: string]: Semver }) {
-    for (const [k, v] of Object.entries(deps ?? {})) {
-      this.devDependencies[k] = typeof(v) === 'string' ? v : v.spec;
-    }
-  }
-
-  /**
-   * @deprecated use `addPeerDeps()`
-   */
-  public addPeerDependencies(deps: { [module: string]: Semver }, options?: PeerDependencyOptions) {
-    if (Object.keys(deps).length && !this.allowLibraryDependencies) {
-      throw new Error(`cannot add peer dependencies to an APP project: ${Object.keys(deps).join(',')}`);
-    }
-    const opts = options ?? this.peerDependencyOptions;
-    const pinned = opts.pinnedDevDependency ?? true;
-    for (const [k, v] of Object.entries(deps)) {
-      this.peerDependencies[k] = typeof(v) === 'string' ? v : v.spec;
-
-      if (pinned && v.version) {
-        this.addDevDependencies({ [k]: Semver.pinned(v.version) });
-      }
-    }
-  }
-
-  /**
    * Replaces the contents of an npm package.json script.
    *
    * @param name The script name
@@ -1262,7 +1181,7 @@ export class NodeProject extends Project {
    */
   public addDeps(...deps: string[]) {
     for (const dep of deps) {
-      this.addDependencies(parseDep(dep));
+      this.deps.addDependency(dep, DependencyType.RUNTIME);
     }
   }
 
@@ -1277,7 +1196,8 @@ export class NodeProject extends Project {
    */
   public addDevDeps(...deps: string[]) {
     for (const dep of deps) {
-      this.addDevDependencies(parseDep(dep));
+      this.deps.addDependency(dep, DependencyType.BUILD);
+
     }
   }
 
@@ -1295,8 +1215,12 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addPeerDeps(...deps: string[]) {
+    if (Object.keys(deps).length && !this.allowLibraryDependencies) {
+      throw new Error(`cannot add peer dependencies to an APP project: ${Object.keys(deps).join(',')}`);
+    }
+
     for (const dep of deps) {
-      this.addPeerDependencies(parseDep(dep));
+      this.deps.addDependency(dep, DependencyType.PEER);
     }
   }
 
@@ -1313,16 +1237,19 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addBundledDeps(...deps: string[]) {
+    if (deps.length && !this.allowLibraryDependencies) {
+      throw new Error(`cannot add bundled dependencies to an APP project: ${deps.join(',')}`);
+    }
+
     for (const dep of deps) {
-      this.addDependencies(parseDep(dep));
-      this.addBundledDependencies(Object.keys(parseDep(dep))[0]);
+      this.deps.addDependency(dep, DependencyType.BUNDLED);
     }
   }
 
   private processDeps(options: NodeProjectCommonOptions) {
     const deprecate = (key: string, alt: string) => {
       if (Object.keys((options as any)[key] ?? {}).length) {
-        logging.warn(`The option "${key}" will soon be deprecated, use "${alt}" instead (see API docs)`);
+        throw new Error(`The option "${key}" is no longer supported, use "${alt}" instead (see API docs)`);
       }
     };
 
@@ -1331,10 +1258,6 @@ export class NodeProject extends Project {
     deprecate('devDependencies', 'devDeps');
     deprecate('bundledDependencies', 'bundledDeps');
 
-    this.addDependencies(options.dependencies ?? {});
-    this.addPeerDependencies(options.peerDependencies ?? {});
-    this.addDevDependencies(options.devDependencies ?? {});
-    this.addBundledDependencies(...options.bundledDependencies ?? []);
     this.addDeps(...options.deps ?? []);
     this.addDevDeps(...options.devDeps ?? []);
     this.addPeerDeps(...options.peerDeps ?? []);
@@ -1342,7 +1265,7 @@ export class NodeProject extends Project {
   }
 
   public preSynthesize() {
-    this.loadDependencies();
+    this._renderedDeps = this.renderDependencies();
   }
 
   public postSynthesize() {
@@ -1361,7 +1284,7 @@ export class NodeProject extends Project {
 
     exec(this.renderInstallCommand(isTruthy(process.env.CI)), { cwd: outdir });
 
-    this.resolveDependencies(outdir);
+    this.resolveDepsAndWritePackageJson(outdir);
   }
 
   private renderInstallCommand(frozen: boolean) {
@@ -1383,13 +1306,71 @@ export class NodeProject extends Project {
     }
   }
 
-  private loadDependencies() {
-    const outdir = this.outdir;
-    const root = path.join(outdir, 'package.json');
+  private renderDependencies(): NpmDependencies {
+    const devDependencies: Record<string, string> = {};
+    const peerDependencies: Record<string, string> = {};
+    const dependencies: Record<string, string> = {};
+    const bundledDependencies = new Array<string>();
 
-    // nothing to do if package.json file does not exist
+    // synthetic dependencies: add a pinned build dependency to ensure we are
+    // testing against the minimum requirement of the peer.
+    const pinned = this.peerDependencyOptions.pinnedDevDependency ?? true;
+    if (pinned) {
+      for (const dep of this.deps.all.filter(d => d.type === DependencyType.PEER)) {
+        let req = dep.name;
+        if (dep.version) {
+          const ver = semver.minVersion(dep.version)?.version;
+          if (!ver) {
+            throw new Error(`unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`);
+          }
+
+          req += '@' + ver;
+        }
+        this.addDevDeps(req);
+      }
+    }
+
+    for (const dep of this.deps.all) {
+      const version = dep.version ?? '*';
+
+      switch (dep.type) {
+        case DependencyType.BUNDLED:
+          bundledDependencies.push(dep.name);
+
+          if (this.deps.all.find(d => d.name === dep.name && d.type === DependencyType.PEER)) {
+            throw new Error(`unable to bundle "${dep.name}". it cannot appear as a peer dependency`);
+          }
+
+          // also add as a runtime dependency
+          dependencies[dep.name] = version;
+          break;
+
+        case DependencyType.PEER:
+          peerDependencies[dep.name] = version;
+          break;
+
+        case DependencyType.RUNTIME:
+          dependencies[dep.name] = version;
+          break;
+
+        case DependencyType.TEST:
+        case DependencyType.DEVENV:
+        case DependencyType.BUILD:
+          devDependencies[dep.name] = version;
+          break;
+      }
+    }
+
+    // update the manifest we are about to save into `package.json`
+    this.manifest.devDependencies = devDependencies;
+    this.manifest.peerDependencies = peerDependencies;
+    this.manifest.dependencies = dependencies;
+    this.manifest.bundledDependencies = bundledDependencies;
+
+    // nothing further to do if package.json file does not exist
+    const root = path.join(this.outdir, 'package.json');
     if (!fs.existsSync(root)) {
-      return;
+      return { devDependencies, peerDependencies, dependencies };
     }
 
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
@@ -1415,12 +1396,14 @@ export class NodeProject extends Project {
       }
     };
 
-    readDeps(this.devDependencies, pkg.devDependencies);
-    readDeps(this.dependencies, pkg.dependencies);
-    readDeps(this.peerDependencies, pkg.peerDependencies);
+    readDeps(devDependencies, pkg.devDependencies);
+    readDeps(dependencies, pkg.dependencies);
+    readDeps(peerDependencies, pkg.peerDependencies);
+
+    return { devDependencies, dependencies, peerDependencies };
   }
 
-  private resolveDependencies(outdir: string) {
+  private resolveDepsAndWritePackageJson(outdir: string) {
     const root = path.join(outdir, 'package.json');
     const pkg = JSON.parse(fs.readFileSync(root, 'utf-8'));
 
@@ -1461,9 +1444,13 @@ export class NodeProject extends Project {
       return sorted(result)();
     };
 
-    pkg.dependencies = resolveDeps(pkg.dependencies, this.dependencies);
-    pkg.devDependencies = resolveDeps(pkg.devDependencies, this.devDependencies);
-    pkg.peerDependencies = resolveDeps(pkg.peerDependencies, this.peerDependencies);
+    const rendered = this._renderedDeps;
+    if (!rendered) {
+      throw new Error('assertion failed');
+    }
+    pkg.dependencies = resolveDeps(pkg.dependencies, rendered.dependencies);
+    pkg.devDependencies = resolveDeps(pkg.devDependencies, rendered.devDependencies);
+    pkg.peerDependencies = resolveDeps(pkg.peerDependencies, rendered.peerDependencies);
 
     writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
@@ -1802,10 +1789,16 @@ export interface NodeWorkflowSteps {
   readonly install: any[];
 }
 
+interface NpmDependencies {
+  readonly dependencies: Record<string, string>;
+  readonly devDependencies: Record<string, string>;
+  readonly peerDependencies: Record<string, string>;
+}
+
 function sorted<T>(toSort: T) {
   return () => {
     if (Array.isArray(toSort)) {
-      return toSort.sort();
+      return (toSort as unknown[]).sort();
     } else if (toSort != null && typeof toSort === 'object') {
       const result: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(toSort).sort(([l], [r]) => l.localeCompare(r))) {
@@ -1816,15 +1809,4 @@ function sorted<T>(toSort: T) {
       return toSort;
     }
   };
-}
-
-function parseDep(dep: string) {
-  const scope = dep.startsWith('@');
-  if (scope) {
-    dep = dep.substr(1);
-  }
-
-  const [name, version] = dep.split('@');
-  let depname = scope ? `@${name}` : name;
-  return { [depname]: Semver.of(version ?? '*') };
 }
