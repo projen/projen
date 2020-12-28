@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { DevEnvironmentDockerImage } from '../src/dev-env';
 import { GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
 import * as logging from '../src/logging';
 import { Project } from '../src/project';
@@ -70,12 +71,9 @@ describe('workspace docker options', () => {
     });
 
     // WHEN
-    if (project.gitpod) {
-      project.gitpod.dockerImage = { image: 'jsii/superchain' };
-    }
-    if (project.devContainer) {
-      project.devContainer.dockerImage = { image: 'jsii/uberchain' };
-    }
+    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain'));
+    project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/uberchain'));
+
 
     // THEN
     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
@@ -94,12 +92,8 @@ describe('workspace docker options', () => {
     });
 
     // WHEN
-    if (project.gitpod) {
-      project.gitpod.dockerImage = ({ file: '.gitpod.Dockerfile' });
-    }
-    if (project.devContainer) {
-      project.devContainer.dockerImage = ({ file: 'Dockerfile' });
-    }
+    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromFile('.gitpod.Dockerfile'));
+    project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromFile('Dockerfile'));
 
     // THEN
     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
@@ -128,10 +122,10 @@ describe('workspace tasks', () => {
     // THEN
     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
     expect(gitpodSnapshot).toContain('command');
-    expect(gitpodSnapshot).toContain('text');
+    expect(gitpodSnapshot).toContain('gitpod-test');
 
     const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-    expect(devContainerSnapshot.postCreateCommand).toContain('text');
+    expect(devContainerSnapshot.postCreateCommand).toContain('gitpod-test');
   });
 
   test('given gitpod task options', () => {
@@ -144,10 +138,11 @@ describe('workspace tasks', () => {
 
     // WHEN
     const task = project.addTask('gitpod-test', { exec: 'text' });
-    project.gitpod?.addCustomTask(task, {
+    project.gitpod?.addCustomTask({
       init: 'echo Initializing',
       openIn: GitpodOpenIn.LEFT,
       openMode: GitpodOpenMode.SPLIT_BOTTOM,
+      command: `npx projen ${task.name}`,
     });
 
     // THEN
@@ -155,6 +150,7 @@ describe('workspace tasks', () => {
     expect(snapshot).toContain('init: echo Initializing');
     expect(snapshot).toContain('openIn: left');
     expect(snapshot).toContain('openMode: split-bottom');
+    expect(snapshot).toContain('command: npx projen gitpod-test');
   });
 });
 

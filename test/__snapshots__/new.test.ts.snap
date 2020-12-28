@@ -86,8 +86,8 @@ const project = new AwsCdkTypeScriptApp({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -200,8 +200,8 @@ const project = new AwsCdkConstructLibrary({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -295,8 +295,8 @@ const project = new ConstructLibraryCdk8s({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -386,8 +386,8 @@ const project = new JsiiProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -481,8 +481,8 @@ const project = new web.NextJsProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -573,8 +573,8 @@ const project = new web.NextJsTypeScriptProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -674,8 +674,8 @@ const project = new NodeProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 });
@@ -690,8 +690,8 @@ exports[`projen new project 1`] = `
 const project = new Project({
   /* ProjectOptions */
   // clobber: true,        /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,  /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,        /* Adds a gitpod configuration. */
+  // devContainer: false,  /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,        /* Add a Gitpod development environment. */
   // outdir: '.',          /* The root directory of the project. */
   // parent: undefined,    /* The parent project, if this project is part of a bigger project. */
 });
@@ -778,8 +778,8 @@ const project = new web.ReactProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -869,8 +869,8 @@ const project = new web.ReactTypeScriptProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -970,8 +970,8 @@ const project = new TypeScriptProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
@@ -1071,8 +1071,8 @@ const project = new TypeScriptAppProject({
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Adds a VSCode development container config (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Adds a gitpod configuration. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
 
