@@ -80,6 +80,7 @@ Name|Description
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [GitpodDocker](#projen-gitpoddocker)|If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
 [GitpodOptions](#projen-gitpodoptions)|What can we configure for the GitPod component.
+[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)|Configure the Gitpod App for prebuilds Currently the App only support GitHub.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
@@ -1271,6 +1272,8 @@ new Gitpod(project: Project, options?: GitpodOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  *No description*
   * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`. __*Default*__: undefined
+  * **extensions** (<code>Array<string></code>)  Optional Include VS Code Extensions to be installed with the project See: https://www.gitpod.io/docs/vscode-extensions/. __*Optional*__
+  * **prebuilds** (<code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code>)  Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app. __*Default*__: undefined
   * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. __*Default*__: []
 
 
@@ -1288,6 +1291,40 @@ addCustomDocker(docker: GitpodDocker): void
 * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  *No description*
   * **file** (<code>string</code>)  a Dockerfile to install deps. __*Optional*__
   * **image** (<code>string</code>)  A publicly available image to use. __*Default*__: uses the standard gitpod image (see [LINK] above)
+
+
+
+
+#### addExtensions(...extensions)🔹 <a id="projen-gitpod-addextensions"></a>
+
+Adds another VS Code extension to the Gitpod configuration.
+
+```ts
+addExtensions(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The additional tasks.
+
+
+
+
+#### addPrebuilds(config)🔹 <a id="projen-gitpod-addprebuilds"></a>
+
+Add a prebuilds configuration for the Gitpod App.
+
+```ts
+addPrebuilds(config: GitpodPrebuildsConfig): void
+```
+
+* **config** (<code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code>)  The configuration.
+  * **addBadge** (<code>boolean</code>)  Add a "Review in Gitpod" button to the pull request's description. __*Default*__: false
+  * **addCheck** (<code>boolean</code>)  Add a check to pull requests. __*Default*__: true
+  * **addComment** (<code>boolean</code>)  Add a "Review in Gitpod" button as a comment to pull requests. __*Default*__: false
+  * **addLabel** (<code>boolean</code>)  Add a label once the prebuild is ready to pull requests. __*Default*__: false
+  * **branches** (<code>boolean</code>)  Enable for all branches in this repo. __*Default*__: false
+  * **master** (<code>boolean</code>)  Enable for the master/default branch. __*Default*__: true
+  * **pullRequests** (<code>boolean</code>)  Enable for pull requests coming from this repo. __*Default*__: true
+  * **pullRequestsFromForks** (<code>boolean</code>)  Enable for pull requests coming from forks. __*Default*__: false
 
 
 
@@ -5132,7 +5169,31 @@ What can we configure for the GitPod component.
 Name | Type | Description 
 -----|------|-------------
 **docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
+**extensions**?🔹 | <code>Array<string></code> | Optional Include VS Code Extensions to be installed with the project See: https://www.gitpod.io/docs/vscode-extensions/.<br/>__*Optional*__
+**prebuilds**?🔹 | <code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code> | Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app.<br/>__*Default*__: undefined
 **tasks**?🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.<br/>__*Default*__: []
+
+
+
+## struct GitpodPrebuildsConfig 🔹 <a id="projen-gitpodprebuildsconfig"></a>
+
+
+Configure the Gitpod App for prebuilds Currently the App only support GitHub.
+
+See: https://www.gitpod.io/docs/prebuilds/
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**addBadge**?🔹 | <code>boolean</code> | Add a "Review in Gitpod" button to the pull request's description.<br/>__*Default*__: false
+**addCheck**?🔹 | <code>boolean</code> | Add a check to pull requests.<br/>__*Default*__: true
+**addComment**?🔹 | <code>boolean</code> | Add a "Review in Gitpod" button as a comment to pull requests.<br/>__*Default*__: false
+**addLabel**?🔹 | <code>boolean</code> | Add a label once the prebuild is ready to pull requests.<br/>__*Default*__: false
+**branches**?🔹 | <code>boolean</code> | Enable for all branches in this repo.<br/>__*Default*__: false
+**master**?🔹 | <code>boolean</code> | Enable for the master/default branch.<br/>__*Default*__: true
+**pullRequests**?🔹 | <code>boolean</code> | Enable for pull requests coming from this repo.<br/>__*Default*__: true
+**pullRequestsFromForks**?🔹 | <code>boolean</code> | Enable for pull requests coming from forks.<br/>__*Default*__: false
 
 
 
