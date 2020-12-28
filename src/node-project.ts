@@ -363,6 +363,11 @@ export class NodeProject extends Project {
    */
   public readonly buildTask: Task;
 
+  /**
+   * Automatic PR merges.
+   */
+  public readonly autoMerge?: AutoMerge;
+
   private readonly _version: Version;
 
   /**
@@ -638,9 +643,8 @@ export class NodeProject extends Project {
       }
     }
 
-    let autoMerge;
     if (options.mergify ?? true) {
-      autoMerge = new AutoMerge(this, {
+      this.autoMerge = new AutoMerge(this, {
         autoMergeLabel: options.mergifyAutoMergeLabel,
         buildJob: this.buildWorkflowJobId,
       });
@@ -656,7 +660,9 @@ export class NodeProject extends Project {
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
       autoUpgradeSchedule: options.projenUpgradeSchedule,
-      labels: (projenAutoMerge && autoMerge?.autoMergeLabel) ? [autoMerge.autoMergeLabel] : [],
+      labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
+        ? [this.autoMerge.autoMergeLabel]
+        : [],
     });
 
     if (options.pullRequestTemplate ?? true) {
