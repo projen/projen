@@ -678,7 +678,7 @@ dist
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^0.9.3",
+        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -1954,7 +1954,7 @@ dist
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^0.9.3",
+        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -3195,7 +3195,7 @@ dist
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^0.9.3",
+        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
