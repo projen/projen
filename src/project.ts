@@ -19,7 +19,7 @@ import { VsCode } from './vscode';
 
 export interface ProjectOptions {
   /**
-   * This is the name of your project. 
+   * This is the name of your project.
    *
    * @default $BASEDIR
    */
