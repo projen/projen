@@ -306,6 +306,7 @@ export class NpmPackage extends Component {
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
+    this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
     this.processDeps(options);
 
@@ -320,10 +321,15 @@ export class NpmPackage extends Component {
       bin: () => this.renderBin(),
       scripts: () => this.renderScripts(),
       author: this.renderAuthor(options),
-      homepage: options.homepage,
+      devDependencies: {},
+      peerDependencies: {},
+      dependencies: {},
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
+      main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
+      version: '0.0.0',
+      homepage: options.homepage,
     };
 
     // override any scripts from options (if specified)
@@ -331,8 +337,6 @@ export class NpmPackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-    this.entrypoint = options.entrypoint ?? 'lib/index.js';
-    this.manifest.main = this.entrypoint !== '' ? this.entrypoint : undefined;
 
     new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
