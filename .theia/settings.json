@@ -1,0 +1,17 @@
+{
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.locale": "en",
+  "typescript.referencesCodeLens.enabled": true,
+  "typescript.referencesCodeLens.showOnAllFunctions": true,
+  "typescript.suggest.completeFunctionCalls": false,
+  "typescript.surveys.enabled": false,
+  "npm.packageManager": "yarn",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "emmet.triggerExpansionOnTab": false,
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.packageManager": "yarn"
+}
