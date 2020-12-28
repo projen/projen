@@ -1,5 +1,5 @@
 import { join, dirname, basename } from 'path';
-import { copySync, readJsonSync, writeJsonSync } from 'fs-extra';
+import { chmodSync, copySync, readJsonSync, writeJsonSync } from 'fs-extra';
 import { glob } from 'glob';
 import { exec } from '../src/util';
 import { mkdtemp, directorySnapshot } from './util';
@@ -27,13 +27,17 @@ for (const projenrc of files) {
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
-    patchPacakgeJson(workdir);
+    sanitizeOutput(workdir);
 
     expect(directorySnapshot(workdir, { excludeGlobs: ['node_modules/**'] })).toMatchSnapshot();
   });
 }
 
-function patchPacakgeJson(dir: string) {
+/**
+ * Removes any non-determinstic aspects from the synthesized output.
+ * @param dir The output directory.
+ */
+function sanitizeOutput(dir: string) {
   const filepath = join(dir, 'package.json');
   const pkg = readJsonSync(filepath);
   const prev = pkg.devDependencies.projen;
@@ -45,4 +49,15 @@ function patchPacakgeJson(dir: string) {
   // this will preserve any semantic version requirements (e.g. "^", "~", etc).
   pkg.devDependencies.projen = prev.replace(projenVersion, '999.999.999');
   writeJsonSync(filepath, pkg);
+
+  // we will also patch deps.json so that all projen deps will be set to 999.999.999
+  const depsPath = join(dir, '.projen', 'deps.json');
+  const deps = readJsonSync(depsPath);
+  for (const dep of deps.dependencies) {
+    if (dep.name === 'projen') {
+      dep.version = dep.version.replace(projenVersion, '999.999.999');
+    }
+  }
+  chmodSync(depsPath, '777');
+  writeJsonSync(depsPath, deps);
 }
