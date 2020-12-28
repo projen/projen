@@ -101,19 +101,6 @@ project.github.addMergifyRules({
   ],
 });
 
-project.github.addMergifyRules({
-  name: 'Label auto-merge for core',
-  actions: {
-    label: {
-      add: ['auto-merge'],
-    },
-  },
-  conditions: [
-    'label=contribution/core',
-    'label!=auto-merge',
-  ],
-});
-
 project.gitpod.addCustomTask({
   name: 'Setup',
   init: 'yarn install',

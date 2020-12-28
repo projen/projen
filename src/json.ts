@@ -61,7 +61,9 @@ export class JsonFile extends FileBase {
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    const resolved = resolver.resolve(this.obj, {
+    const obj = this.obj;
+
+    const resolved = resolver.resolve(obj, {
       omitEmpty: this.omitEmpty,
     }) ?? {};
 

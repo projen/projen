@@ -3,8 +3,7 @@ import * as fs from 'fs-extra';
 import { DevEnvironmentDockerImage } from '../src/dev-env';
 import { GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
 import * as logging from '../src/logging';
-import { Project } from '../src/project';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot, TestProject } from './util';
 
 // This is duplicated vs exported
 const GITPOD_FILE = '.gitpod.yml';
@@ -12,22 +11,10 @@ const DEVCONTAINER_FILE = '.devcontainer.json';
 
 logging.disable();
 
-let tempDir: string;
-beforeEach(() => {
-  tempDir = mkdtemp();
-});
-
-afterEach(() => {
-  if (tempDir) {
-    fs.removeSync(tempDir);
-  }
-});
-
 describe('workspaces enable/disable', () => {
   test('given gitpod and devContainer are false', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: false,
       devContainer: false,
     });
@@ -36,16 +23,15 @@ describe('workspaces enable/disable', () => {
     project.synth();
 
     // THEN
-    const gitpodFilePath = path.join(tempDir, GITPOD_FILE);
-    const devContainerFilePath = path.join(tempDir, DEVCONTAINER_FILE);
+    const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
+    const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
     expect(fs.existsSync(gitpodFilePath)).toBeFalsy();
     expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
   });
 
   test('given gitpod and devContainer are true', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: true,
       devContainer: true,
     });
@@ -54,8 +40,8 @@ describe('workspaces enable/disable', () => {
     project.synth();
 
     // THEN
-    const gitpodFilePath = path.join(tempDir, GITPOD_FILE);
-    const devContainerFilePath = path.join(tempDir, DEVCONTAINER_FILE);
+    const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
+    const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
     expect(fs.existsSync(gitpodFilePath)).toBeTruthy();
     expect(fs.existsSync(devContainerFilePath)).toBeTruthy();
   });
@@ -64,8 +50,7 @@ describe('workspaces enable/disable', () => {
 describe('workspace docker options', () => {
   test('given an image', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: true,
       devContainer: true,
     });
@@ -85,8 +70,7 @@ describe('workspace docker options', () => {
 
   test('given a docker file dep', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: true,
       devContainer: true,
     });
@@ -108,8 +92,7 @@ describe('workspace docker options', () => {
 describe('workspace tasks', () => {
   test('given custom task', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: true,
       devContainer: true,
     });
@@ -130,8 +113,7 @@ describe('workspace tasks', () => {
 
   test('given gitpod task options', () => {
     // GIVEN
-    const project = new Project({
-      outdir: tempDir,
+    const project = new TestProject({
       gitpod: true,
       devContainer: true,
     });
@@ -156,8 +138,7 @@ describe('workspace tasks', () => {
 
 test('workspace ports', () => {
   // GIVEN
-  const project = new Project({
-    outdir: tempDir,
+  const project = new TestProject({
     gitpod: true,
     devContainer: true,
   });
@@ -177,8 +158,7 @@ test('workspace ports', () => {
 
 test('workspace vscode extensions', () => {
   // GIVEN
-  const project = new Project({
-    outdir: tempDir,
+  const project = new TestProject({
     gitpod: true,
     devContainer: true,
   });

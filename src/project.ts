@@ -4,19 +4,27 @@ import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
-import { SampleReadme } from './readme';
+import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
 export interface ProjectOptions {
+  /**
+   * This is the name of your project.
+   *
+   * @default $BASEDIR
+   */
+  readonly name: string;
+
   /**
    * The parent project, if this project is part of a bigger project.
    */
@@ -56,18 +64,29 @@ export interface ProjectOptions {
   readonly clobber?: boolean;
 
   /**
-   * The name of the README.md file
+   * The README setup.
    *
-   * @default "README.md"
-   * @example "readme.md"
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
    */
-  readonly readme?: string;
+  readonly readme?: SampleReadmeProps;
+
+  /**
+   * Which type of project this is (library/app).
+   * @default ProjectType.UNKNOWN
+   */
+  readonly projectType?: ProjectType;
 }
 
 /**
  * Base project
  */
 export class Project {
+  /**
+   * Project name.
+   */
+  public readonly name: string;
+
   /**
    * .gitignore
    */
@@ -118,14 +137,26 @@ export class Project {
    */
   public readonly devContainer: DevContainer | undefined;
 
+  /*
+   * Which project type this is.
+   */
+  public readonly projectType: ProjectType;
+
+  /**
+   * Project dependencies.
+   */
+  public readonly deps: Dependencies;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
 
-  constructor(options: ProjectOptions = { }) {
+  constructor(options: ProjectOptions) {
+    this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -163,6 +194,7 @@ export class Project {
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
+    this.deps = new Dependencies(this);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
@@ -175,9 +207,7 @@ export class Project {
       new Clobber(this);
     }
 
-    new SampleReadme(this, '# my project', {
-      filename: options.readme,
-    });
+    new SampleReadme(this, options.readme);
   }
 
   /**
@@ -281,6 +311,10 @@ export class Project {
     const outdir = this.outdir;
     this.preSynthesize();
 
+    for (const comp of this._components) {
+      comp.preSynthesize();
+    }
+
     // delete all generated files before we start synthesizing new ones
     cleanup(outdir, this.excludeFromCleanup);
 
@@ -345,4 +379,27 @@ export class Project {
 
     this.subprojects.push(subproject);
   }
+}
+
+
+/**
+ * Which type of project this is.
+ */
+export enum ProjectType {
+  /**
+   * This module may be a either a library or an app.
+   */
+  UNKNOWN = 'unknown',
+
+  /**
+   * This is a library, intended to be published to a package manager and
+   * consumed by other projects.
+   */
+  LIB = 'lib',
+
+  /**
+   * This is an app (service, tool, website, etc). Its artifacts are intended to
+   * be deployed or published for end-user consumption.
+   */
+  APP = 'app'
 }

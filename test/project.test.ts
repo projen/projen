@@ -46,7 +46,7 @@ test('findFile() can be used to find a file either absolute or relative path', (
 test('findFile() will also look up files in subprojects', () => {
   // GIVEN
   const p = new TestProject();
-  const child = new Project({ parent: p, outdir: 'subproject/foo/bar' });
+  const child = new Project({ name: 'foobar', parent: p, outdir: 'subproject/foo/bar' });
   const fchild = new TextFile(child, 'fchild.txt');
 
   // WHEN

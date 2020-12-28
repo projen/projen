@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/projen/projen/compare/v0.12.1...v0.12.2) (2020-12-28)
+
+
+### Features
+
+* expose all `SampleFile` options for `SampleReadme` in the constructor ([#414](https://github.com/projen/projen/issues/414)) ([81c837b](https://github.com/projen/projen/commit/81c837bfccac963adc46293a8e837f1bda235c3c)), closes [#407](https://github.com/projen/projen/issues/407)
+
+### [0.12.1](https://github.com/projen/projen/compare/v0.12.0...v0.12.1) (2020-12-28)
+
+
+### Features
+
+* auto-merge ([#423](https://github.com/projen/projen/issues/423)) ([d0d693b](https://github.com/projen/projen/commit/d0d693b50337227c4fc75df7f885ca2d6ce5a8fe))
+
+## [0.12.0](https://github.com/projen/projen/compare/v0.11.0...v0.12.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `name` option is now required for all project types.
+
+### Features
+
+* project name ([#422](https://github.com/projen/projen/issues/422)) ([e4514e8](https://github.com/projen/projen/commit/e4514e8d36c347078cb32e990f7efe9552af328e)), closes [#367](https://github.com/projen/projen/issues/367)
+
+## [0.11.0](https://github.com/projen/projen/compare/v0.10.1...v0.11.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** `Version.resolveVersion(outdir)` is now `Version.version`.
+* `NodeProjectCommonOptions` is now `NodePackageOptions`.
+
+### Features
+
+* **node:** extract `NodePackage` from `NodeProject` ([#421](https://github.com/projen/projen/issues/421)) ([b4a57e8](https://github.com/projen/projen/commit/b4a57e80580d0287838c4d6223ac91aad3267e39))
+
+### [0.10.1](https://github.com/projen/projen/compare/v0.10.0...v0.10.1) (2020-12-28)
+
+## [0.10.0](https://github.com/projen/projen/compare/v0.9.3...v0.10.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* all deprecated `dependencies` APIs have been removed.
+
+```
+warn - PROP projen.NodeProjectCommonOptions.bundledDependencies: has been removed [removed:projen.NodeProjectCommonOptions.bundledDependencies]
+warn - PROP projen.NodeProjectCommonOptions.dependencies: has been removed [removed:projen.NodeProjectCommonOptions.dependencies]
+warn - PROP projen.NodeProjectCommonOptions.devDependencies: has been removed [removed:projen.NodeProjectCommonOptions.devDependencies]
+warn - PROP projen.NodeProjectCommonOptions.peerDependencies: has been removed [removed:projen.NodeProjectCommonOptions.peerDependencies]
+warn - PROP projen.NodeProjectOptions.bundledDependencies: has been removed [removed:projen.NodeProjectOptions.bundledDependencies]
+warn - PROP projen.NodeProjectOptions.dependencies: has been removed [removed:projen.NodeProjectOptions.dependencies]
+warn - PROP projen.NodeProjectOptions.devDependencies: has been removed [removed:projen.NodeProjectOptions.devDependencies]
+warn - PROP projen.NodeProjectOptions.peerDependencies: has been removed [removed:projen.NodeProjectOptions.peerDependencies]
+```
+
+### Features
+
+* project dependencies ([#390](https://github.com/projen/projen/issues/390)) ([6463c0e](https://github.com/projen/projen/commit/6463c0edca9e538b77f5e4814d8a15154167aec2))
+
+### [0.9.3](https://github.com/projen/projen/compare/v0.9.2...v0.9.3) (2020-12-28)
+
+
+### Bug Fixes
+
+* **node:** tasks are broken for node >= 15.5.0 ([#418](https://github.com/projen/projen/issues/418)) ([17df820](https://github.com/projen/projen/commit/17df82044552564836730880223f3f2cf5daaa2a)), closes [#416](https://github.com/projen/projen/issues/416)
+
 ### [0.9.2](https://github.com/projen/projen/compare/v0.9.1...v0.9.2) (2020-12-27)
 
 

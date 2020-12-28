@@ -10,10 +10,18 @@ export class IgnoreFile extends FileBase {
     super(project, filePath, { editGitignore: filePath !== '.gitignore' });
   }
 
+  /**
+   * Do not commit the specified file patterns.
+   * @param patterns Patterns to exclude from git commits.
+   */
   public exclude(...patterns: string[]) {
     this.excludes.push(...patterns);
   }
 
+  /**
+   * Always include the specified file patterns.
+   * @param patterns Patterns to include in git commits.
+   */
   public include(...patterns: string[]) {
     this.includes.push(...patterns);
   }

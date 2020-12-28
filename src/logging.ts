@@ -7,8 +7,14 @@ function log(color: chalk.ChalkFunction, ...text: any[]) {
   console.error(`🤖 ${color(...text)}`);
 }
 
+export function debug(...text: any[]) {
+  if (process.env.DEBUG) {
+    log(chalk.gray, ...text);
+  }
+}
+
 export function verbose(...text: any[]) {
-  log(chalk.gray, ...text);
+  log(chalk.white, ...text);
 }
 
 export function info(...text: any[]) {

@@ -44,11 +44,12 @@ junit.xml
 .jsii
 tsconfig.json
 !/.projen/tasks.json
+!/.projen/deps.json
 !/.gitpod.yml
 !/.devcontainer.json
 !/package.json
-!/.npmignore
 !/LICENSE
+!/.npmignore
 !/.projenrc.js
 !version.json
 !/.versionrc.json
