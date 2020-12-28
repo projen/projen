@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as semver from 'semver';
 import { PROJEN_RC, PROJEN_VERSION } from './common';
 import { DependencyType } from './deps/model';
 import { GithubWorkflow } from './github';
@@ -1316,18 +1317,28 @@ export class NodeProject extends Project {
     const pinned = this.peerDependencyOptions.pinnedDevDependency ?? true;
     if (pinned) {
       for (const dep of this.deps.all.filter(d => d.type === DependencyType.PEER)) {
-        this.addDevDeps(dep.name);
+        let req = dep.name;
+        if (dep.version) {
+          const ver = semver.minVersion(dep.version)?.version;
+          if (!ver) {
+            throw new Error(`unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`);
+          }
+
+          req += '@' + ver;
+        }
+        this.addDevDeps(req);
       }
     }
 
     for (const dep of this.deps.all) {
+      console.error(dep);
       const version = dep.version ?? '*';
 
       switch (dep.type) {
         case DependencyType.BUNDLED:
           bundledDependencies.push(dep.name);
 
-          if (this.deps.all.find(d => d.name && d.type === DependencyType.PEER)) {
+          if (this.deps.all.find(d => d.name === dep.name && d.type === DependencyType.PEER)) {
             throw new Error(`unable to bundle "${dep.name}". it cannot appear as a peer dependency`);
           }
 

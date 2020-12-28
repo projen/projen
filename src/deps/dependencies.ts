@@ -48,6 +48,33 @@ export class Dependencies extends Component {
   }
 
   /**
+   * Returns a dependency by name.
+   *
+   * Fails if there is no dependency defined by that name or if `type` is not
+   * provided and there is more then one dependency type for this dependency.
+   *
+   * @param name The name of the dependency
+   * @param type The dependency type. If this dependency is defined only for a
+   * single type, this argument can be omitted.
+   *
+   * @returns a copy (cannot be modified)
+   */
+  public getDependency(name: string, type?: DependencyType): Dependency {
+    const idx = this.tryGetDependencyIndex(name, type);
+    if (idx === -1) {
+      const msg = type
+        ? `there is no ${type} dependency defined on "${name}"`
+        : `there is no dependency defined on "${name}"`;
+
+      throw new Error(msg);
+    }
+
+    return {
+      ...this._deps[idx],
+    };
+  }
+
+  /**
    * Adds a dependency to this project.
    * @param spec The dependency spec in the format `MODULE[@VERSION]` where
    * `MODULE` is the package-manager-specific module name and `VERSION` is an
@@ -71,6 +98,38 @@ export class Dependencies extends Component {
 
     this._deps.push(dep);
     return dep;
+  }
+
+  /**
+   * Removes a dependency.
+   * @param name The name of the module to remove (without the version)
+   * @param type The dependency type. This is only required if there the
+   * dependency is defined for multiple types.
+   */
+  public removeDependency(name: string, type?: DependencyType) {
+    const removeIndex = this.tryGetDependencyIndex(name, type);
+    if (removeIndex === -1) {
+      return;
+    }
+
+    this._deps.splice(removeIndex, 1);
+  }
+
+  private tryGetDependencyIndex(name: string, type?: DependencyType): number {
+    const deps = this._deps.filter(d => d.name === name);
+    if (deps.length === 0) {
+      return -1; // not found
+    }
+
+    if (!type) {
+      if (deps.length > 1) {
+        throw new Error(`"${name}" is defined for multiple dependency types: ${deps.map(d => d.type).join(',')}. Please specify dependency type`);
+      }
+
+      type = deps[0].type;
+    }
+
+    return this._deps.findIndex(dep => dep.name === name && dep.type === type);
   }
 
   private toJson(): DepsManifest {

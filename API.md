@@ -3083,6 +3083,37 @@ addDependency(spec: string, type: DependencyType): Dependency
 __Returns__:
 * <code>[deps.Dependency](#projen-deps-dependency)</code>
 
+#### getDependency(name, type?)🔹 <a id="projen-deps-dependencies-getdependency"></a>
+
+Returns a dependency by name.
+
+Fails if there is no dependency defined by that name or if `type` is not
+provided and there is more then one dependency type for this dependency.
+
+```ts
+getDependency(name: string, type?: DependencyType): Dependency
+```
+
+* **name** (<code>string</code>)  The name of the dependency.
+* **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  The dependency type.
+
+__Returns__:
+* <code>[deps.Dependency](#projen-deps-dependency)</code>
+
+#### removeDependency(name, type?)🔹 <a id="projen-deps-dependencies-removedependency"></a>
+
+Removes a dependency.
+
+```ts
+removeDependency(name: string, type?: DependencyType): void
+```
+
+* **name** (<code>string</code>)  The name of the module to remove (without the version).
+* **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  The dependency type.
+
+
+
+
 
 
 ## class Dependabot 🔹 <a id="projen-github-dependabot"></a>
@@ -6078,7 +6109,7 @@ Name | Type | Description
 
 ## struct Dependency 🔹 <a id="projen-deps-dependency"></a>
 
-__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)()
+__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)()
 
 
 
