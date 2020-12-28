@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/projen/projen/compare/v0.10.1...v0.11.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** `Version.resolveVersion(outdir)` is now `Version.version`.
+* `NodeProjectCommonOptions` is now `NodePackageOptions`.
+
+### Features
+
+* **node:** extract `NodePackage` from `NodeProject` ([#421](https://github.com/projen/projen/issues/421)) ([b4a57e8](https://github.com/projen/projen/commit/b4a57e80580d0287838c4d6223ac91aad3267e39))
+
 ### [0.10.1](https://github.com/projen/projen/compare/v0.10.0...v0.10.1) (2020-12-28)
 
 ## [0.10.0](https://github.com/projen/projen/compare/v0.9.3...v0.10.0) (2020-12-28)
