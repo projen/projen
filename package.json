@@ -71,12 +71,6 @@
     "yaml": "^1.10.0",
     "yargs": "^16.1.1"
   },
-  "engines": {
-    "node": ">= 10.17.0"
-  },
-  "main": "lib/index.js",
-  "license": "Apache-2.0",
-  "version": "0.10.1",
   "bundledDependencies": [
     "@iarna/toml",
     "chalk",
@@ -88,6 +82,12 @@
     "yaml",
     "yargs"
   ],
+  "engines": {
+    "node": ">= 10.17.0"
+  },
+  "main": "lib/index.js",
+  "license": "Apache-2.0",
+  "version": "0.10.1",
   "jest": {
     "clearMocks": true,
     "collectCoverage": true,

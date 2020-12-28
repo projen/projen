@@ -325,12 +325,12 @@ export class NpmPackage extends Component {
       devDependencies: {},
       peerDependencies: {},
       dependencies: {},
+      bundledDependencies: [],
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       version: '0.0.0',
-      bundledDependencies: [],
       homepage: options.homepage,
     };
 
