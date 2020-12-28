@@ -67,7 +67,7 @@ export enum GitpodOpenIn {
 }
 
 /**
- * Specifies all options for a task to be run when opening a Gitpod
+ * Configure options for a task to be run when opening a Gitpod
  * workspace (e.g. running tests, or starting a dev server).
  *
  * Start Mode         | Execution
@@ -77,6 +77,11 @@ export enum GitpodOpenIn {
  * Prebuild           | before && init && prebuild
 */
 export interface GitpodTask {
+  /**
+   * Required. The shell command to run
+   */
+  readonly command: string;
+
   /**
    * A name for this task.
    * @default - task names are omitted when blank
@@ -116,11 +121,6 @@ export interface GitpodTask {
    * @default
    */
   readonly prebuild?: string;
-
-  /**
-   * Required. The shell command to run
-   */
-  readonly command: string;
 }
 
 /**

@@ -83,7 +83,7 @@ Name|Description
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
-[GitpodTask](#projen-gitpodtask)|Specifies all options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+[GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
 [JestOptions](#projen-jestoptions)|*No description*
@@ -5381,7 +5381,7 @@ Name | Type | Description
 ## struct GitpodTask 🔹 <a id="projen-gitpodtask"></a>
 
 
-Specifies all options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 
 Start Mode         | Execution
 Fresh Workspace    | before && init && command
