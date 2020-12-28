@@ -8,9 +8,9 @@ import * as logging from '../src/logging';
 logging.disable(); // no logging during tests
 
 export class TestProject extends Project {
-  constructor(options: ProjectOptions = {}) {
+  constructor(options: Omit<ProjectOptions, 'name'> = {}) {
     const tmpdir = mkdtemp();
-    super({ outdir: tmpdir, clobber: false, ...options });
+    super({ name: 'my-project', outdir: tmpdir, clobber: false, ...options });
   }
 
   postSynthesize() {

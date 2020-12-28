@@ -19,6 +19,13 @@ import { VsCode } from './vscode';
 
 export interface ProjectOptions {
   /**
+   * This is the name of your project.
+   *
+   * @default $BASEDIR
+   */
+  readonly name: string;
+
+  /**
    * The parent project, if this project is part of a bigger project.
    */
   readonly parent?: Project;
@@ -68,6 +75,11 @@ export interface ProjectOptions {
  * Base project
  */
 export class Project {
+  /**
+   * Project name.
+   */
+  public readonly name: string;
+
   /**
    * .gitignore
    */
@@ -126,7 +138,8 @@ export class Project {
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
 
-  constructor(options: ProjectOptions = { }) {
+  constructor(options: ProjectOptions) {
+    this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;

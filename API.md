@@ -251,13 +251,13 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -278,6 +278,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -405,13 +406,13 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -432,6 +433,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -610,13 +612,13 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -637,6 +639,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -715,13 +718,13 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -742,6 +745,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -829,13 +833,13 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -856,6 +860,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -1505,13 +1510,13 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1532,6 +1537,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -1819,12 +1825,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new NodePackage(project: Project, options: NodePackageOptions)
+new NodePackage(project: Project, options?: NodePackageOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[NodePackageOptions](#projen-nodepackageoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1845,6 +1850,7 @@ new NodePackage(project: Project, options: NodePackageOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -2084,13 +2090,13 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -2111,6 +2117,7 @@ new NodeProject(options: NodeProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -2403,10 +2410,11 @@ Base project.
 
 
 ```ts
-new Project(options?: ProjectOptions)
+new Project(options: ProjectOptions)
 ```
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -2425,6 +2433,7 @@ Name | Type | Description
 **deps**🔹 | <code>[deps.Dependencies](#projen-deps-dependencies)</code> | Project dependencies.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
+**name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which project type this is.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
@@ -2876,13 +2885,13 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -2903,6 +2912,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -2980,13 +2990,13 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3007,6 +3017,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -3084,13 +3095,13 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3111,6 +3122,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -4081,13 +4093,13 @@ new web.NextJsProject(options: NextJsProjectOptions)
 * **options** (<code>[web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4108,6 +4120,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -4232,13 +4245,13 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 * **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4259,6 +4272,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -4408,13 +4422,13 @@ new web.ReactProject(options: ReactProjectOptions)
 ```
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4435,6 +4449,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -4555,13 +4570,13 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 ```
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **gitpod** (<code>boolean</code>)  Adds a gitpod configuration. __*Default*__: false
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>string</code>)  *No description* __*Optional*__
-  * **name** (<code>string</code>)  This is the name of your package. 
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4582,6 +4597,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
   * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
   * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
@@ -4699,7 +4715,7 @@ Name | Type | Description
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **cdkVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -4755,6 +4771,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -4799,7 +4816,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **cdkVersion**🔹 | <code>string</code> | AWS CDK version to use.
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **appEntrypoint**?🔹 | <code>string</code> | The CDK app's entrypoint (relative to the source directory, which is "src" by default).<br/>__*Default*__: "main.ts"
@@ -4855,6 +4872,7 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -4917,7 +4935,7 @@ Name | Type | Description
 **author**⚠️ | <code>string</code> | The name of the library author.
 **authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
 **cdkVersion**⚠️ | <code>string</code> | Minimum target version this library is tested against.
-**name**⚠️ | <code>string</code> | This is the name of your package.
+**name**⚠️ | <code>string</code> | This is the name of your project.
 **repositoryUrl**⚠️ | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -4973,6 +4991,7 @@ Name | Type | Description
 **npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?⚠️ | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -5019,7 +5038,7 @@ Name | Type | Description
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -5071,6 +5090,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -5116,7 +5136,7 @@ Name | Type | Description
 -----|------|-------------
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -5168,6 +5188,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -5669,7 +5690,7 @@ Name | Type | Description
 -----|------|-------------
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -5720,6 +5741,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -5827,7 +5849,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
@@ -5848,6 +5869,7 @@ Name | Type | Description
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
@@ -5867,7 +5889,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
@@ -5911,6 +5933,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -5979,6 +6002,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your project.
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **gitpod**?🔹 | <code>boolean</code> | Adds a gitpod configuration.<br/>__*Default*__: false
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
@@ -6141,7 +6165,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**⚠️ | <code>string</code> | This is the name of your package.
+**name**⚠️ | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
@@ -6193,6 +6217,7 @@ Name | Type | Description
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?⚠️ | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -6237,7 +6262,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
@@ -6289,6 +6314,7 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -6672,7 +6698,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
@@ -6717,6 +6743,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -6775,7 +6802,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
@@ -6828,6 +6855,7 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -6901,7 +6929,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
@@ -6945,6 +6973,7 @@ Name | Type | Description
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
@@ -7002,7 +7031,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
+**name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
@@ -7054,6 +7083,7 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
