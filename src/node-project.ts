@@ -733,7 +733,7 @@ export class NodeProject extends Project {
     this.addKeywords(...options.keywords ?? []);
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment('PATH', '$(npx node -e "console.log(process.env.PATH)")');
+    this.tasks.addEnvironment('PATH', '$(npx -c \'node -e "console.log(process.env.PATH)"\')');
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
