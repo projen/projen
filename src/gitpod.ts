@@ -10,6 +10,8 @@ const GITPOD_FILE = '.gitpod.yml';
 /**
  * https://www.gitpod.io/docs/configuration/
  * https://www.gitpod.io/docs/config-start-tasks/
+ * https://www.gitpod.io/docs/prebuilds/#configure-the-github-app
+ * https://www.gitpod.io/docs/vscode-extensions/
  */
 
 /**
@@ -39,6 +41,54 @@ export interface GitpodDocker {
    * }
    */
   readonly file?: string;
+}
+
+/**
+ * Configure the Gitpod App for prebuilds
+ * Currently the App only support GitHub.
+ * See: https://www.gitpod.io/docs/prebuilds/
+ */
+export interface GitpodPrebuildsConfig {
+  /**
+   * Enable for the master/default branch
+   * @default true
+   */
+  readonly master?: boolean;
+  /**
+   * Enable for all branches in this repo
+   * @default false
+   */
+  readonly branches?: boolean;
+  /**
+   * Enable for pull requests coming from this repo
+   * @default true
+   */
+  readonly pullRequests?: boolean;
+  /**
+   * Enable for pull requests coming from forks
+   * @default false
+   */
+  readonly pullRequestsFromForks?: boolean;
+  /**
+   * Add a check to pull requests
+   * @default true
+   */
+  readonly addCheck?: boolean;
+  /**
+   * Add a "Review in Gitpod" button as a comment to pull requests
+   * @default false
+   */
+  readonly addComment?: boolean;
+  /**
+   * Add a "Review in Gitpod" button to the pull request's description
+   * @default false
+   */
+  readonly addBadge?: boolean;
+  /**
+   * Add a label once the prebuild is ready to pull requests
+   * @default false
+   */
+  readonly addLabel?: boolean;
 }
 
 /**
@@ -153,6 +203,12 @@ export interface GitpodTask {
 }
 
 /**
+ * VS Code extensions as defined in the Open VSX registry
+ * Example: `scala-lang.scala@0.3.9:O5XmjwY5Gz+0oDZAmqneJw==`
+ */
+type GitpodCodeExtensionId = string;
+
+/**
  * What can we configure for the GitPod component
  */
 export interface GitpodOptions {
@@ -169,7 +225,28 @@ export interface GitpodOptions {
    * @default []
    */
   readonly tasks?: GitpodTask[];
+
+  /**
+   * Optional Gitpod's Github App integration for prebuilds
+   * If this is not set and Gitpod's Github App is installed, then Gitpod will apply
+   * these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app
+   * @default undefined
+   */
+  readonly prebuilds?: GitpodPrebuildsConfig;
+
+  /**
+   * Optional Include VS Code Extensions to be installed with the project
+   * See: https://www.gitpod.io/docs/vscode-extensions/
+   */
+  readonly extensions?: GitpodCodeExtensionId[];
 }
+
+type GitpodCodeExtensionsRender = {
+  extensions: GitpodCodeExtensionId[];
+};
+type GitpodPrebuildsRender = {
+  prebuilds: GitpodPrebuildsConfig;
+};
 
 /**
  * The Gitpod component which emits .gitpod.yml
@@ -177,6 +254,8 @@ export interface GitpodOptions {
 export class Gitpod extends Component {
   private readonly tasks = new Array<GitpodTask>();
   private docker: GitpodDocker | undefined;
+  private prebuilds: GitpodPrebuildsConfig | undefined;
+  private readonly extensions = new Array<GitpodCodeExtensionId>();
 
   constructor(project: Project, options?: GitpodOptions) {
     super(project);
@@ -187,17 +266,24 @@ export class Gitpod extends Component {
     if (options?.tasks) {
       this.addTasks(...options?.tasks);
     }
+    if (options?.prebuilds) {
+      this.addPrebuilds(options?.prebuilds);
+    }
+    if (options?.extensions) {
+      this.addExtensions(...options?.extensions);
+    }
 
     new YamlFile(this.project, GITPOD_FILE, {
       obj: {
         image: () => this.renderDockerImage(),
         tasks: () => this.renderTasks(),
+        github: () => this.renderPrebuilds(),
+        vscode: () => this.renderExtensions(),
       },
     });
   }
 
   /**
-   *
    * Specify a customer docker setup
    * @param docker
    */
@@ -217,8 +303,24 @@ export class Gitpod extends Component {
     this.tasks.push(...tasks);
   }
 
-  private renderTasks() : GitpodTask[] | undefined {
-    if (this.tasks) {
+  /**
+   * Add a prebuilds configuration for the Gitpod App
+   * @param config The configuration
+   */
+  public addPrebuilds(config: GitpodPrebuildsConfig) {
+    this.prebuilds = config;
+  }
+
+  /**
+   * Adds another VS Code extension to the Gitpod configuration
+   * @param extensions The additional tasks
+   */
+  public addExtensions(...extensions: GitpodCodeExtensionId[]) {
+    this.extensions.push(...extensions);
+  }
+
+  private renderTasks(): GitpodTask[] | undefined {
+    if (this.tasks && this.tasks.length > 0) {
       return this.tasks;
     } else {
       return undefined;
@@ -231,6 +333,26 @@ export class Gitpod extends Component {
     } else if (this.docker?.file) {
       return {
         file: this.docker.file,
+      };
+    } else {
+      return undefined;
+    }
+  }
+
+  private renderPrebuilds(): GitpodPrebuildsRender | undefined {
+    if (this.prebuilds) {
+      return {
+        prebuilds: this.prebuilds,
+      };
+    } else {
+      return undefined;
+    }
+  }
+
+  private renderExtensions(): GitpodCodeExtensionsRender | undefined {
+    if (this.extensions && this.extensions.length > 0) {
+      return {
+        extensions: this.extensions,
       };
     } else {
       return undefined;
