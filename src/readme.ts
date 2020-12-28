@@ -12,6 +12,12 @@ export interface SampleReadmeProps {
    * @example "readme.md"
    */
   readonly filename?: string;
+
+  /**
+   * The contents
+   * @default "# replace this"
+   */
+  readonly contents?: string;
 }
 
 /**
@@ -21,7 +27,7 @@ export interface SampleReadmeProps {
  * @param text - The initial contents of the README.md file. Defaults to '# replace this'
  */
 export class SampleReadme extends SampleFile {
-  constructor(project: Project, text?: string, props?: SampleReadmeProps) {
-    super(project, props?.filename ?? 'README.md', { contents: text ?? '# replace this' });
+  constructor(project: Project, props?: SampleReadmeProps) {
+    super(project, props?.filename ?? 'README.md', { contents: props?.contents ?? '# replace this' });
   }
 }

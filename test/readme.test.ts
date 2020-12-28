@@ -21,7 +21,9 @@ describe('SampleReadProps', () => {
   test('customized w/ default SampleReadme', () => {
     // GIVEN
     const project = new TestProject({
-      readme: 'README.md',
+      readme: {
+        filename: 'README.md',
+      },
     });
 
     // WHEN
@@ -37,7 +39,9 @@ describe('SampleReadProps', () => {
   test('customized SampleReadme', () => {
     // GIVEN
     const project = new TestProject({
-      readme: 'readme.md',
+      readme: {
+        filename: 'readme.md',
+      },
     });
 
     // WHEN
@@ -48,5 +52,22 @@ describe('SampleReadProps', () => {
     const lower = output['readme.md'];
     expect(upper).toBeFalsy();
     expect(lower).toBeTruthy();
+  });
+
+  test('SampleReadme customized contents in constructor', () => {
+    // GIVEN
+    const project = new TestProject({
+      readme: {
+        contents: 'my stuff',
+      },
+    });
+
+    // WHEN
+    const output = synthSnapshot(project);
+
+    // THEN
+    const readme = output['README.md'];
+    expect(readme).toBeTruthy();
+    expect(readme).toStrictEqual('my stuff');
   });
 });

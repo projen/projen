@@ -11,7 +11,7 @@ import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
-import { SampleReadme } from './readme';
+import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
@@ -56,13 +56,13 @@ export interface ProjectOptions {
    */
   readonly clobber?: boolean;
 
-  /*
-   * The name of the README.md file
+  /**
+   * The README setup.
    *
-   * @default "README.md"
-   * @example "readme.md"
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
    */
-  readonly readme?: string;
+  readonly readme?: SampleReadmeProps;
 
   /**
    * Which type of project this is (library/app).
@@ -192,9 +192,7 @@ export class Project {
       new Clobber(this);
     }
 
-    new SampleReadme(this, '# my project', {
-      filename: options.readme,
-    });
+    new SampleReadme(this, options.readme);
   }
 
   /**
