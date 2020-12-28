@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/projen/projen/compare/v0.9.3...v0.10.0) (2020-12-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* all deprecated `dependencies` APIs have been removed.
+
+```
+warn - PROP projen.NodeProjectCommonOptions.bundledDependencies: has been removed [removed:projen.NodeProjectCommonOptions.bundledDependencies]
+warn - PROP projen.NodeProjectCommonOptions.dependencies: has been removed [removed:projen.NodeProjectCommonOptions.dependencies]
+warn - PROP projen.NodeProjectCommonOptions.devDependencies: has been removed [removed:projen.NodeProjectCommonOptions.devDependencies]
+warn - PROP projen.NodeProjectCommonOptions.peerDependencies: has been removed [removed:projen.NodeProjectCommonOptions.peerDependencies]
+warn - PROP projen.NodeProjectOptions.bundledDependencies: has been removed [removed:projen.NodeProjectOptions.bundledDependencies]
+warn - PROP projen.NodeProjectOptions.dependencies: has been removed [removed:projen.NodeProjectOptions.dependencies]
+warn - PROP projen.NodeProjectOptions.devDependencies: has been removed [removed:projen.NodeProjectOptions.devDependencies]
+warn - PROP projen.NodeProjectOptions.peerDependencies: has been removed [removed:projen.NodeProjectOptions.peerDependencies]
+```
+
+### Features
+
+* project dependencies ([#390](https://github.com/projen/projen/issues/390)) ([6463c0e](https://github.com/projen/projen/commit/6463c0edca9e538b77f5e4814d8a15154167aec2))
+
 ### [0.9.3](https://github.com/projen/projen/compare/v0.9.2...v0.9.3) (2020-12-28)
 
 
