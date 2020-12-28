@@ -5,7 +5,7 @@ import { Mergify, MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
-import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './npm-package';
+import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
