@@ -80,7 +80,7 @@ Name|Description
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [GitpodDocker](#projen-gitpoddocker)|If the standard Docker image provided by Gitpod does not include the tools you need for your project, you can provide a custom Docker image OR Dockerfile.
 [GitpodOptions](#projen-gitpodoptions)|What can we configure for the GitPod component.
-[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)|Configure the Gitpod App for prebuilds Currently the App only support GitHub.
+[GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds Currently only GitHub is supported.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
@@ -1273,7 +1273,7 @@ new Gitpod(project: Project, options?: GitpodOptions)
 * **options** (<code>[GitpodOptions](#projen-gitpodoptions)</code>)  *No description*
   * **docker** (<code>[GitpodDocker](#projen-gitpoddocker)</code>)  Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`. __*Default*__: undefined
   * **extensions** (<code>Array<string></code>)  Optional Include VS Code Extensions to be installed with the project See: https://www.gitpod.io/docs/vscode-extensions/. __*Optional*__
-  * **prebuilds** (<code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code>)  Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app. __*Default*__: undefined
+  * **prebuilds** (<code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code>)  Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app. __*Default*__: undefined
   * **tasks** (<code>Array<[GitpodTask](#projen-gitpodtask)></code>)  This must be defaulted per project. __*Default*__: []
 
 
@@ -1313,10 +1313,10 @@ addExtensions(...extensions: string[]): void
 Add a prebuilds configuration for the Gitpod App.
 
 ```ts
-addPrebuilds(config: GitpodPrebuildsConfig): void
+addPrebuilds(config: GitpodPrebuilds): void
 ```
 
-* **config** (<code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code>)  The configuration.
+* **config** (<code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code>)  The configuration.
   * **addBadge** (<code>boolean</code>)  Add a "Review in Gitpod" button to the pull request's description. __*Default*__: false
   * **addCheck** (<code>boolean</code>)  Add a check to pull requests. __*Default*__: true
   * **addComment** (<code>boolean</code>)  Add a "Review in Gitpod" button as a comment to pull requests. __*Default*__: false
@@ -5170,15 +5170,15 @@ Name | Type | Description
 -----|------|-------------
 **docker**?🔹 | <code>[GitpodDocker](#projen-gitpoddocker)</code> | Optional Docker Configuration Gitpod defaults to https://github.com/gitpod-io/workspace-images/blob/master/full/Dockerfile if this is unset, so undefined here means `gitpod/workspace-full`.<br/>__*Default*__: undefined
 **extensions**?🔹 | <code>Array<string></code> | Optional Include VS Code Extensions to be installed with the project See: https://www.gitpod.io/docs/vscode-extensions/.<br/>__*Optional*__
-**prebuilds**?🔹 | <code>[GitpodPrebuildsConfig](#projen-gitpodprebuildsconfig)</code> | Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app.<br/>__*Default*__: undefined
+**prebuilds**?🔹 | <code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code> | Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app.<br/>__*Default*__: undefined
 **tasks**?🔹 | <code>Array<[GitpodTask](#projen-gitpodtask)></code> | This must be defaulted per project.<br/>__*Default*__: []
 
 
 
-## struct GitpodPrebuildsConfig 🔹 <a id="projen-gitpodprebuildsconfig"></a>
+## struct GitpodPrebuilds 🔹 <a id="projen-gitpodprebuilds"></a>
 
 
-Configure the Gitpod App for prebuilds Currently the App only support GitHub.
+Configure the Gitpod App for prebuilds Currently only GitHub is supported.
 
 See: https://www.gitpod.io/docs/prebuilds/
 
