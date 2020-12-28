@@ -39,11 +39,3 @@ pull_request_rules:
     conditions:
       - author~=^(eladb)$
       - label!=contribution/core
-  - name: Label auto-merge for core
-    actions:
-      label:
-        add:
-          - auto-merge
-    conditions:
-      - label=contribution/core
-      - label!=auto-merge
