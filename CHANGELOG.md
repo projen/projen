@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.1](https://github.com/projen/projen/compare/v0.12.0...v0.12.1) (2020-12-28)
+
+
+### Features
+
+* auto-merge ([#423](https://github.com/projen/projen/issues/423)) ([d0d693b](https://github.com/projen/projen/commit/d0d693b50337227c4fc75df7f885ca2d6ce5a8fe))
+
 ## [0.12.0](https://github.com/projen/projen/compare/v0.11.0...v0.12.0) (2020-12-28)
 
 
