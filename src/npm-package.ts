@@ -11,7 +11,7 @@ import { exec, sorted, isTruthy, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';
 
-export interface NpmPackageOptions {
+export interface NodePackageOptions {
   /**
    * This is the name of your package. It gets used in URLs, as an argument on the command line,
    * and as the directory name inside node_modules.
@@ -243,7 +243,7 @@ export interface NpmPackageOptions {
 /**
  * Represents the npm `package.json` file.
  */
-export class NpmPackage extends Component {
+export class NodePackage extends Component {
   /**
    * The module's entrypoint (e.g. `lib/index.js`).
    */
@@ -298,7 +298,7 @@ export class NpmPackage extends Component {
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private _renderedDeps?: NpmDependencies;
 
-  constructor(project: Project, options: NpmPackageOptions) {
+  constructor(project: Project, options: NodePackageOptions) {
     super(project);
 
     this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
@@ -580,7 +580,7 @@ export class NpmPackage extends Component {
     }
   }
 
-  private processDeps(options: NpmPackageOptions) {
+  private processDeps(options: NodePackageOptions) {
     this.addDeps(...options.deps ?? []);
     this.addDevDeps(...options.devDeps ?? []);
     this.addPeerDeps(...options.peerDeps ?? []);
@@ -762,7 +762,7 @@ export class NpmPackage extends Component {
     }
   }
 
-  private renderAuthor(options: NpmPackageOptions) {
+  private renderAuthor(options: NodePackageOptions) {
     let author;
     if (options.authorName) {
       author = {

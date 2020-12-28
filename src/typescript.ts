@@ -159,7 +159,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.entrypointTypes || this.entrypoint !== '') {
       const entrypointTypes = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
-      this.npmPackage.addField('types', entrypointTypes);
+      this.package.addField('types', entrypointTypes);
     }
 
     const compilerOptionDefaults: TypeScriptCompilerOptions = {
@@ -264,7 +264,7 @@ export class TypeScriptProject extends NodeProject {
 
     this.addDevDeps(
       `typescript@${options.typescriptVersion ?? '^3.9.5'}`,
-      `@types/node@^${this.npmPackage.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+      `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.

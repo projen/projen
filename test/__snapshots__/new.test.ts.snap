@@ -14,6 +14,35 @@ const project = new AwsCdkTypeScriptApp({
   // context: undefined,                                                       /* Additional context to include in \`cdk.json\`. */
   // requireApproval: CdkApprovalLevel.BROADENING,                             /* To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -54,35 +83,6 @@ const project = new AwsCdkTypeScriptApp({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -139,6 +139,35 @@ const project = new AwsCdkConstructLibrary({
   // python: undefined,                                                        /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -179,35 +208,6 @@ const project = new AwsCdkConstructLibrary({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -245,6 +245,35 @@ const project = new ConstructLibraryCdk8s({
   // python: undefined,                                                        /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -285,35 +314,6 @@ const project = new ConstructLibraryCdk8s({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -347,6 +347,35 @@ const project = new JsiiProject({
   // python: undefined,                                                        /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -387,35 +416,6 @@ const project = new JsiiProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -443,6 +443,35 @@ const project = new web.NextJsProject({
   /* NextJsProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`pages/\` and \`public/\` if there are no files there. */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -483,35 +512,6 @@ const project = new web.NextJsProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -536,6 +536,35 @@ const project = new web.NextJsTypeScriptProject({
   // assetsdir: 'public',                                                      /* Assets directory. */
   // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -576,35 +605,6 @@ const project = new web.NextJsTypeScriptProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -638,6 +638,35 @@ exports[`projen new node 1`] = `
 const project = new NodeProject({
   name: 'my-project',
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -678,35 +707,6 @@ const project = new NodeProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -744,6 +744,35 @@ exports[`projen new react 1`] = `
 const project = new web.ReactProject({
   name: 'my-project',
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -784,35 +813,6 @@ const project = new web.ReactProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -836,6 +836,35 @@ exports[`projen new react-ts 1`] = `
 const project = new web.ReactTypeScriptProject({
   name: 'my-project',
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -876,35 +905,6 @@ const project = new web.ReactTypeScriptProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -938,6 +938,35 @@ exports[`projen new typescript 1`] = `
 const project = new TypeScriptProject({
   name: 'my-project',
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -978,35 +1007,6 @@ const project = new TypeScriptProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
@@ -1040,6 +1040,35 @@ exports[`projen new typescript-app 1`] = `
 const project = new TypeScriptAppProject({
   name: 'my-project',
 
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
@@ -1080,35 +1109,6 @@ const project = new TypeScriptAppProject({
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* NpmPackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
 
   /* ProjectOptions */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */

@@ -5,7 +5,7 @@ import { Mergify, MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
-import { NpmPackage, NpmTaskExecution, NodePackageManager, NpmPackageOptions } from './npm-package';
+import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './npm-package';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Semver } from './semver';
@@ -14,7 +14,7 @@ import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
-export interface NodeProjectOptions extends ProjectOptions, NpmPackageOptions {
+export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * License copyright owner.
    *
@@ -322,19 +322,30 @@ export enum AutoRelease {
  * Node.js project
  */
 export class NodeProject extends Project {
-  public readonly npmPackage: NpmPackage;
+  /**
+   * API for managing the node package.
+   */
+  public readonly package: NodePackage;
+
+  /**
+   * The .npmignore file.
+   */
   public readonly npmignore?: IgnoreFile;
+
+  /**
+   * Mergify behavior.
+   */
   public readonly mergify?: Mergify;
 
   /**
-   * @deprecated use `npmPackage.allowLibraryDependencies`
+   * @deprecated use `package.allowLibraryDependencies`
    */
-  public get allowLibraryDependencies(): boolean { return this.npmPackage.allowLibraryDependencies; }
+  public get allowLibraryDependencies(): boolean { return this.package.allowLibraryDependencies; }
 
   /**
-   * @deprecated use `npmPackage.entrypoint`
+   * @deprecated use `package.entrypoint`
    */
-  public get entrypoint(): string { return this.npmPackage.entrypoint; }
+  public get entrypoint(): string { return this.package.entrypoint; }
 
   /**
    * Compiles the code. By default for node.js projects this task is empty.
@@ -370,8 +381,15 @@ export class NodeProject extends Project {
   protected readonly releaseWorkflow?: GithubWorkflow;
   protected readonly releaseWorkflowJobId?: string;
 
-  // public get minNodeVersion(): string | undefined { return this.npmPackage.minNodeVersion; }
-  // public get maxNodeVersion(): string | undefined { return this.npmPackage.maxNodeVersion; }
+  /**
+   * Minimum node.js version required by this package.
+   */
+  public get minNodeVersion(): string | undefined { return this.package.minNodeVersion; }
+
+  /**
+   * Maximum node version required by this pacakge.
+   */
+  public get maxNodeVersion(): string | undefined { return this.package.maxNodeVersion; }
 
   private readonly nodeVersion?: string;
 
@@ -387,9 +405,9 @@ export class NodeProject extends Project {
   /**
    * The package manager to use.
    *
-   * @deprecated use `npmPackage.packageManager`
+   * @deprecated use `package.packageManager`
    */
-  public get packageManager(): NodePackageManager { return this.npmPackage.packageManager; }
+  public get packageManager(): NodePackageManager { return this.package.packageManager; }
 
   /**
    * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -409,26 +427,26 @@ export class NodeProject extends Project {
   /**
    * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
    *
-   * @deprecated use `npmPackage.npmTaskExecution`
+   * @deprecated use `package.npmTaskExecution`
    */
-  public get npmTaskExecution(): NpmTaskExecution { return this.npmPackage.npmTaskExecution; }
+  public get npmTaskExecution(): NpmTaskExecution { return this.package.npmTaskExecution; }
 
   /**
    * The command to use in order to run the projen CLI.
    */
-  public get projenCommand(): string { return this.npmPackage.projenCommand; }
+  public get projenCommand(): string { return this.package.projenCommand; }
 
   /**
-   * @deprecated use `npmPackage.addField(x, y)`
+   * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
-    return this.npmPackage.manifest;
+    return this.package.manifest;
   }
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
-    this.npmPackage = new NpmPackage(this, options);
+    this.package = new NodePackage(this, options);
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -438,7 +456,7 @@ export class NodeProject extends Project {
       }
     })();
 
-    this.nodeVersion = options.workflowNodeVersion ?? this.npmPackage.minNodeVersion;
+    this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c \'node -e "console.log(process.env.PATH)"\')');
@@ -496,8 +514,8 @@ export class NodeProject extends Project {
     }
 
 
-    this.setScript(PROJEN_SCRIPT, this.npmPackage.projenCommand);
-    this.setScript('start', `${this.npmPackage.projenCommand} start`);
+    this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+    this.setScript('start', `${this.package.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.gitignore.include(`/${PROJEN_RC}`);
@@ -513,7 +531,7 @@ export class NodeProject extends Project {
 
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
-    this.npmPackage.addVersion(this._version.currentVersion);
+    this.package.addVersion(this._version.currentVersion);
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -695,7 +713,7 @@ export class NodeProject extends Project {
   }
 
   public addBins(bins: Record<string, string>) {
-    this.npmPackage.addBin(bins);
+    this.package.addBin(bins);
   }
 
   /**
@@ -705,7 +723,7 @@ export class NodeProject extends Project {
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    this.npmPackage.setScript(name, command);
+    this.package.setScript(name, command);
   }
 
   /**
@@ -713,7 +731,7 @@ export class NodeProject extends Project {
    * @param name The name of the script.
    */
   public removeScript(name: string) {
-    this.npmPackage.removeScript(name);
+    this.package.removeScript(name);
   }
 
   /**
@@ -721,7 +739,7 @@ export class NodeProject extends Project {
    * @param name The name of the script
    */
   public hasScript(name: string) {
-    return this.npmPackage.hasScript(name);
+    return this.package.hasScript(name);
   }
 
   /**
@@ -760,7 +778,7 @@ export class NodeProject extends Project {
    */
   public addFields(fields: { [name: string]: any }) {
     for (const [name, value] of Object.entries(fields)) {
-      this.npmPackage.addField(name, value);
+      this.package.addField(name, value);
     }
   }
 
@@ -769,7 +787,7 @@ export class NodeProject extends Project {
    * @param keywords The keywords to add
    */
   public addKeywords(...keywords: string[]) {
-    this.npmPackage.addKeywords(...keywords);
+    this.package.addKeywords(...keywords);
   }
 
   public get installWorkflowSteps(): any[] {
@@ -784,13 +802,13 @@ export class NodeProject extends Project {
 
     install.push({
       name: 'Install dependencies',
-      run: this.npmPackage.installCommand,
+      run: this.package.installCommand,
     });
 
     // run "projen"
     install.push({
       name: 'Synthesize project files',
-      run: this.npmPackage.projenCommand,
+      run: this.package.projenCommand,
     });
 
     return install;
@@ -806,7 +824,7 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addDeps(...deps: string[]) {
-    return this.npmPackage.addDeps(...deps);
+    return this.package.addDeps(...deps);
   }
 
   /**
@@ -819,7 +837,7 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addDevDeps(...deps: string[]) {
-    return this.npmPackage.addDevDeps(...deps);
+    return this.package.addDevDeps(...deps);
   }
 
   /**
@@ -836,7 +854,7 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addPeerDeps(...deps: string[]) {
-    return this.npmPackage.addPeerDeps(...deps);
+    return this.package.addPeerDeps(...deps);
   }
 
   /**
@@ -852,12 +870,12 @@ export class NodeProject extends Project {
    * `module@^7`.
    */
   public addBundledDeps(...deps: string[]) {
-    return this.npmPackage.addBundledDeps(...deps);
+    return this.package.addBundledDeps(...deps);
   }
 
   private addLicense(options: NodeProjectOptions) {
-    if (this.npmPackage.license) {
-      new License(this, this.npmPackage.license, {
+    if (this.package.license) {
+      new License(this, this.package.license, {
         copyrightOwner: options.copyrightOwner ?? options.authorName,
         copyrightPeriod: options.copyrightPeriod,
       });
@@ -1053,11 +1071,11 @@ export class NodeProject extends Project {
    * @param task The task for which the command is required
    */
   public runTaskCommand(task: Task) {
-    switch (this.npmPackage.npmTaskExecution) {
-      case NpmTaskExecution.PROJEN: return `${this.npmPackage.projenCommand} ${task.name}`;
+    switch (this.package.npmTaskExecution) {
+      case NpmTaskExecution.PROJEN: return `${this.package.projenCommand} ${task.name}`;
       case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
       default:
-        throw new Error(`invalid npmTaskExecution mode: ${this.npmPackage.npmTaskExecution}`);
+        throw new Error(`invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`);
     }
   }
 

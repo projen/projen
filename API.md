@@ -21,8 +21,8 @@ Name|Description
 [JsonFile](#projen-jsonfile)|Represents a JSON file.
 [License](#projen-license)|*No description*
 [Makefile](#projen-makefile)|Minimal Makefile.
+[NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
-[NpmPackage](#projen-npmpackage)|Represents the npm `package.json` file.
 [Project](#projen-project)|Base project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
@@ -93,9 +93,9 @@ Name|Description
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
+[NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
-[NpmPackageOptions](#projen-npmpackageoptions)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
@@ -1807,6 +1807,267 @@ __Returns__:
 
 
 
+## class NodePackage 🔹 <a id="projen-nodepackage"></a>
+
+Represents the npm `package.json` file.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new NodePackage(project: Project, options: NodePackageOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[NodePackageOptions](#projen-nodepackageoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your package. 
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Default*__: "Apache-2.0"
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
+  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**allowLibraryDependencies**🔹 | <code>boolean</code> | Allow project to take library dependencies.
+**entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
+**installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
+**manifest**⚠️ | <code>any</code> | <span></span>
+**npmTaskExecution**🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+**packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
+**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
+**license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
+**minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
+
+### Methods
+
+
+#### addBin(bins)🔹 <a id="projen-nodepackage-addbin"></a>
+
+
+
+```ts
+addBin(bins: Map<string, string>): void
+```
+
+* **bins** (<code>Map<string, string></code>)  *No description*
+
+
+
+
+#### addBundledDeps(...deps)🔹 <a id="projen-nodepackage-addbundleddeps"></a>
+
+Defines bundled dependencies.
+
+Bundled dependencies will be added as normal dependencies as well as to the
+`bundledDependencies` section of your `package.json`.
+
+```ts
+addBundledDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
+#### addDeps(...deps)🔹 <a id="projen-nodepackage-adddeps"></a>
+
+Defines normal dependencies.
+
+```ts
+addDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
+#### addDevDeps(...deps)🔹 <a id="projen-nodepackage-adddevdeps"></a>
+
+Defines development/test dependencies.
+
+```ts
+addDevDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
+#### addEngine(engine, version)🔹 <a id="projen-nodepackage-addengine"></a>
+
+Adds an `engines` requirement to your package.
+
+```ts
+addEngine(engine: string, version: string): void
+```
+
+* **engine** (<code>string</code>)  The engine (e.g. `node`).
+* **version** (<code>string</code>)  The semantic version requirement (e.g. `^10`).
+
+
+
+
+#### addField(name, value)🔹 <a id="projen-nodepackage-addfield"></a>
+
+Directly set fields in `package.json`.
+
+```ts
+addField(name: string, value: any): void
+```
+
+* **name** (<code>string</code>)  field name.
+* **value** (<code>any</code>)  field value.
+
+
+
+
+#### addKeywords(...keywords)🔹 <a id="projen-nodepackage-addkeywords"></a>
+
+Adds keywords to package.json (deduplicated).
+
+```ts
+addKeywords(...keywords: string[]): void
+```
+
+* **keywords** (<code>string</code>)  The keywords to add.
+
+
+
+
+#### addPeerDeps(...deps)🔹 <a id="projen-nodepackage-addpeerdeps"></a>
+
+Defines peer dependencies.
+
+When adding peer dependencies, a devDependency will also be added on the
+pinned version of the declared peer. This will ensure that you are testing
+your code against the minimum version required from your consumers.
+
+```ts
+addPeerDeps(...deps: string[]): void
+```
+
+* **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
+#### addVersion(version)🔹 <a id="projen-nodepackage-addversion"></a>
+
+Sets the package version.
+
+```ts
+addVersion(version: string): void
+```
+
+* **version** (<code>string</code>)  Package version.
+
+
+
+
+#### hasScript(name)🔹 <a id="projen-nodepackage-hasscript"></a>
+
+Indicates if a script by the name name is defined.
+
+```ts
+hasScript(name: string): boolean
+```
+
+* **name** (<code>string</code>)  The name of the script.
+
+__Returns__:
+* <code>boolean</code>
+
+#### postSynthesize()🔹 <a id="projen-nodepackage-postsynthesize"></a>
+
+Called after synthesis.
+
+Order is *not* guaranteed.
+
+```ts
+postSynthesize(): void
+```
+
+
+
+
+
+#### preSynthesize()🔹 <a id="projen-nodepackage-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
+#### removeScript(name)🔹 <a id="projen-nodepackage-removescript"></a>
+
+Removes the npm script (always successful).
+
+```ts
+removeScript(name: string): void
+```
+
+* **name** (<code>string</code>)  The name of the script.
+
+
+
+
+#### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
+
+Replaces the contents of an npm package.json script.
+
+```ts
+setScript(name: string, command: string): void
+```
+
+* **name** (<code>string</code>)  The script name.
+* **command** (<code>string</code>)  The command to execute.
+
+
+
+
+
+
 ## class NodeProject 🔹 <a id="projen-nodeproject"></a>
 
 Node.js project.
@@ -1912,9 +2173,9 @@ Name | Type | Description
 **installWorkflowSteps**🔹 | <code>Array<any></code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
 **npmDistTag**🔹 | <code>string</code> | <span></span>
-**npmPackage**🔹 | <code>[NpmPackage](#projen-npmpackage)</code> | <span></span>
 **npmRegistry**🔹 | <code>string</code> | <span></span>
 **npmTaskExecution**⚠️ | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+**package**🔹 | <code>[NodePackage](#projen-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -1924,8 +2185,10 @@ Name | Type | Description
 **buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
-**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | __*Optional*__
-**npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | __*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
+**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | Mergify behavior.<br/>__*Optional*__
+**minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
+**npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **releaseWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 **releaseWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 
@@ -2114,267 +2377,6 @@ __Returns__:
 * <code>string</code>
 
 #### setScript(name, command)🔹 <a id="projen-nodeproject-setscript"></a>
-
-Replaces the contents of an npm package.json script.
-
-```ts
-setScript(name: string, command: string): void
-```
-
-* **name** (<code>string</code>)  The script name.
-* **command** (<code>string</code>)  The command to execute.
-
-
-
-
-
-
-## class NpmPackage 🔹 <a id="projen-npmpackage"></a>
-
-Represents the npm `package.json` file.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new NpmPackage(project: Project, options: NpmPackageOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[NpmPackageOptions](#projen-npmpackageoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your package. 
-  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
-  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
-  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
-  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
-  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
-  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
-  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
-  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
-  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
-  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
-  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
-  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
-  * **license** (<code>string</code>)  License's SPDX identifier. __*Default*__: "Apache-2.0"
-  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
-  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
-  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
-  * **npmTaskExecution** (<code>[NpmTaskExecution](#projen-npmtaskexecution)</code>)  Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). __*Default*__: NpmTaskExecution.PROJEN
-  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
-  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
-  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
-  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
-  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**allowLibraryDependencies**🔹 | <code>boolean</code> | Allow project to take library dependencies.
-**entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
-**installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
-**manifest**⚠️ | <code>any</code> | <span></span>
-**npmTaskExecution**🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
-**packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
-**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
-**license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
-**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
-**minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
-
-### Methods
-
-
-#### addBin(bins)🔹 <a id="projen-npmpackage-addbin"></a>
-
-
-
-```ts
-addBin(bins: Map<string, string>): void
-```
-
-* **bins** (<code>Map<string, string></code>)  *No description*
-
-
-
-
-#### addBundledDeps(...deps)🔹 <a id="projen-npmpackage-addbundleddeps"></a>
-
-Defines bundled dependencies.
-
-Bundled dependencies will be added as normal dependencies as well as to the
-`bundledDependencies` section of your `package.json`.
-
-```ts
-addBundledDeps(...deps: string[]): void
-```
-
-* **deps** (<code>string</code>)  Names modules to install.
-
-
-
-
-#### addDeps(...deps)🔹 <a id="projen-npmpackage-adddeps"></a>
-
-Defines normal dependencies.
-
-```ts
-addDeps(...deps: string[]): void
-```
-
-* **deps** (<code>string</code>)  Names modules to install.
-
-
-
-
-#### addDevDeps(...deps)🔹 <a id="projen-npmpackage-adddevdeps"></a>
-
-Defines development/test dependencies.
-
-```ts
-addDevDeps(...deps: string[]): void
-```
-
-* **deps** (<code>string</code>)  Names modules to install.
-
-
-
-
-#### addEngine(engine, version)🔹 <a id="projen-npmpackage-addengine"></a>
-
-Adds an `engines` requirement to your package.
-
-```ts
-addEngine(engine: string, version: string): void
-```
-
-* **engine** (<code>string</code>)  The engine (e.g. `node`).
-* **version** (<code>string</code>)  The semantic version requirement (e.g. `^10`).
-
-
-
-
-#### addField(name, value)🔹 <a id="projen-npmpackage-addfield"></a>
-
-Directly set fields in `package.json`.
-
-```ts
-addField(name: string, value: any): void
-```
-
-* **name** (<code>string</code>)  field name.
-* **value** (<code>any</code>)  field value.
-
-
-
-
-#### addKeywords(...keywords)🔹 <a id="projen-npmpackage-addkeywords"></a>
-
-Adds keywords to package.json (deduplicated).
-
-```ts
-addKeywords(...keywords: string[]): void
-```
-
-* **keywords** (<code>string</code>)  The keywords to add.
-
-
-
-
-#### addPeerDeps(...deps)🔹 <a id="projen-npmpackage-addpeerdeps"></a>
-
-Defines peer dependencies.
-
-When adding peer dependencies, a devDependency will also be added on the
-pinned version of the declared peer. This will ensure that you are testing
-your code against the minimum version required from your consumers.
-
-```ts
-addPeerDeps(...deps: string[]): void
-```
-
-* **deps** (<code>string</code>)  Names modules to install.
-
-
-
-
-#### addVersion(version)🔹 <a id="projen-npmpackage-addversion"></a>
-
-Sets the package version.
-
-```ts
-addVersion(version: string): void
-```
-
-* **version** (<code>string</code>)  Package version.
-
-
-
-
-#### hasScript(name)🔹 <a id="projen-npmpackage-hasscript"></a>
-
-Indicates if a script by the name name is defined.
-
-```ts
-hasScript(name: string): boolean
-```
-
-* **name** (<code>string</code>)  The name of the script.
-
-__Returns__:
-* <code>boolean</code>
-
-#### postSynthesize()🔹 <a id="projen-npmpackage-postsynthesize"></a>
-
-Called after synthesis.
-
-Order is *not* guaranteed.
-
-```ts
-postSynthesize(): void
-```
-
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-npmpackage-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
-#### removeScript(name)🔹 <a id="projen-npmpackage-removescript"></a>
-
-Removes the npm script (always successful).
-
-```ts
-removeScript(name: string): void
-```
-
-* **name** (<code>string</code>)  The name of the script.
-
-
-
-
-#### setScript(name, command)🔹 <a id="projen-npmpackage-setscript"></a>
 
 Replaces the contents of an npm package.json script.
 
@@ -5816,6 +5818,46 @@ Name | Type | Description
 
 
 
+## struct NodePackageOptions 🔹 <a id="projen-nodepackageoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your package.
+**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
+**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
+**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
+**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
+**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
+**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
+**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
+**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
+**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
+**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
+**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
+**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+
+
+
 ## struct NodeProjectOptions 🔹 <a id="projen-nodeprojectoptions"></a>
 
 
@@ -5912,46 +5954,6 @@ Name | Type | Description
 -----|------|-------------
 **antitamper**🔹 | <code>Array<any></code> | <span></span>
 **install**🔹 | <code>Array<any></code> | <span></span>
-
-
-
-## struct NpmPackageOptions 🔹 <a id="projen-npmpackageoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your package.
-**allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
-**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
-**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
-**authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
-**bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
-**bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
-**devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
-**entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
-**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
-**license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
-**licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
-**maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
-**npmTaskExecution**?🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).<br/>__*Default*__: NpmTaskExecution.PROJEN
-**packageManager**?🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
-**peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
-**peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
-**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
-**repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
-**repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
-**scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
-**stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 
 
 

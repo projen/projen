@@ -172,14 +172,14 @@ export class ReactComponent extends Component {
     project.npmignore?.exclude('# Build', '/build');
     project.gitignore.exclude('# Build', '/build');
 
-    project.npmPackage.addField('eslintConfig', {
+    project.package.addField('eslintConfig', {
       extends: [
         'react-app',
         'react-app/jest',
       ],
     });
 
-    project.npmPackage.addField('browserslist', {
+    project.package.addField('browserslist', {
       production: [
         '>0.2%',
         'not dead',

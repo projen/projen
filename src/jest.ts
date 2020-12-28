@@ -681,7 +681,7 @@ export class Jest {
 
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
-    if (this.project.npmPackage.minNodeVersion && semver.gte(this.project.npmPackage.minNodeVersion, '14.0.0')) {
+    if (this.project.package.minNodeVersion && semver.gte(this.project.package.minNodeVersion, '14.0.0')) {
       jestOpts.push('--coverageProvider=v8');
     }
 

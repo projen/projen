@@ -1,4 +1,4 @@
-import { NpmPackage } from '../src';
+import { NodePackage } from '../src';
 import { synthSnapshot, TestProject } from './util';
 
 test('minimal', () => {
@@ -6,7 +6,7 @@ test('minimal', () => {
   const project = new TestProject();
 
   // WHEN
-  new NpmPackage(project, {
+  new NodePackage(project, {
     name: 'my-project',
   });
 
