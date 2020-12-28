@@ -42,9 +42,16 @@ export class Dependencies extends Component {
 
   /**
    * A copy of all dependencies recorded for this project.
+   *
+   * The list is sorted by type->name->version
    */
   public get all(): Dependency[] {
-    return [...this._deps];
+    return [...this._deps].sort(compareDeps);
+
+    function compareDeps(d1: Dependency, d2: Dependency) {
+      const repr = (d: Dependency) => `${d.type}:${d.name}@${d.version ?? '*'}`;
+      return repr(d1).localeCompare(repr(d2));
+    }
   }
 
   /**

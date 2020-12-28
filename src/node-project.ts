@@ -1362,10 +1362,10 @@ export class NodeProject extends Project {
     }
 
     // update the manifest we are about to save into `package.json`
-    this.manifest.devDependencies = sorted(devDependencies);
-    this.manifest.peerDependencies = sorted(peerDependencies);
-    this.manifest.dependencies = sorted(dependencies);
-    this.manifest.bundledDependencies = sorted(bundledDependencies);
+    this.manifest.devDependencies = devDependencies;
+    this.manifest.peerDependencies = peerDependencies;
+    this.manifest.dependencies = dependencies;
+    this.manifest.bundledDependencies = bundledDependencies;
 
     // nothing further to do if package.json file does not exist
     const root = path.join(this.outdir, 'package.json');

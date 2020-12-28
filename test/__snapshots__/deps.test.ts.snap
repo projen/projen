@@ -7,12 +7,12 @@ Array [
     "type": "devenv",
   },
   Object {
-    "name": "dep2",
-    "type": "runtime",
-  },
-  Object {
     "name": "dep3",
     "type": "peer",
+  },
+  Object {
+    "name": "dep2",
+    "type": "runtime",
   },
 ]
 `;
