@@ -12,6 +12,8 @@ const GITPOD_FILE = '.gitpod.yml';
 /**
  * https://www.gitpod.io/docs/configuration/
  * https://www.gitpod.io/docs/config-start-tasks/
+ * https://www.gitpod.io/docs/prebuilds/#configure-the-github-app
+ * https://www.gitpod.io/docs/vscode-extensions/
  */
 
 /**
