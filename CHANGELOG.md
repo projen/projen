@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.3](https://github.com/projen/projen/compare/v0.12.2...v0.12.3) (2020-12-29)
+
+
+### Features
+
+* DevContainer component ([#391](https://github.com/projen/projen/issues/391)) ([d482b7d](https://github.com/projen/projen/commit/d482b7d80a3b878e417f5e9dc4c15f62017fcad2)), closes [#362](https://github.com/projen/projen/issues/362)
+
 ### [0.12.2](https://github.com/projen/projen/compare/v0.12.1...v0.12.2) (2020-12-28)
 
 
