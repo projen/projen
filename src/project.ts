@@ -15,7 +15,7 @@ import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
-import { VsCode } from './vscode';
+import { VsCode, DevContainer } from './vscode';
 
 export interface ProjectOptions {
   /**
@@ -44,11 +44,18 @@ export interface ProjectOptions {
   readonly outdir?: string;
 
   /**
-   * Adds a gitpod configuration
+   * Add a Gitpod development environment
    *
    * @default false
    */
   readonly gitpod?: boolean;
+
+  /**
+   * Add a VSCode development environment (used for GitHub Codespaces)
+   *
+   * @default false
+   */
+  readonly devContainer?: boolean;
 
   /**
    * Add a `clobber` task which resets the repo to origin.
@@ -124,6 +131,13 @@ export class Project {
   public readonly gitpod: Gitpod | undefined;
 
   /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false
+   */
+  public readonly devContainer: DevContainer | undefined;
+
+  /*
    * Which project type this is.
    */
   public readonly projectType: ProjectType;
@@ -187,6 +201,7 @@ export class Project {
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
+    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
 
     if (options.clobber ?? true) {
       new Clobber(this);

@@ -14,7 +14,7 @@ export class YamlFile extends JsonFile {
 
   protected synthesizeContent(resolver: IResolver) {
     // sanitize object references by serializing and deserializing to JSON
-    const sanitized = JSON.parse(JSON.stringify(resolver.resolve(this.obj)));
+    const sanitized = JSON.parse(super.synthesizeContent(resolver));
     return [
       `# ${YamlFile.PROJEN_MARKER}`,
       '',
