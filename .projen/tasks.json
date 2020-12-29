@@ -65,7 +65,31 @@
           "spawn": "test:compile"
         },
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
+          "parallel": [
+            "test:deps.test.ts",
+            "test:docker-compose.test.ts",
+            "test:gitpod.test.ts",
+            "test:ignore-file.test.ts",
+            "test:integ.test.ts",
+            "test:inventory.test.ts",
+            "test:jest.test.ts",
+            "test:json.test.ts",
+            "test:makefile.test.ts",
+            "test:new.test.ts",
+            "test:node-package.test.ts",
+            "test:node-project.test.ts",
+            "test:pr-template.test.ts",
+            "test:project.test.ts",
+            "test:resolve.test.ts",
+            "test:samplereadme.test.ts",
+            "test:subproject.test.ts",
+            "test:runtime.test.ts",
+            "test:tasks.test.ts",
+            "test:textfile.test.ts",
+            "test:toml.test.ts",
+            "test:util.test.ts",
+            "test:vscode-launch-config.test.ts"
+          ]
         },
         {
           "spawn": "eslint"
@@ -135,6 +159,213 @@
           "exec": "jest --updateSnapshot"
         }
       ]
+    },
+    "test:deps.test.ts": {
+      "name": "test:deps.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/deps.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:docker-compose.test.ts": {
+      "name": "test:docker-compose.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/docker-compose.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:gitpod.test.ts": {
+      "name": "test:gitpod.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/gitpod.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:ignore-file.test.ts": {
+      "name": "test:ignore-file.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/ignore-file.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:integ.test.ts": {
+      "name": "test:integ.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/integ.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:inventory.test.ts": {
+      "name": "test:inventory.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/inventory.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:jest.test.ts": {
+      "name": "test:jest.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/jest.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:json.test.ts": {
+      "name": "test:json.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/json.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:makefile.test.ts": {
+      "name": "test:makefile.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/makefile.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:new.test.ts": {
+      "name": "test:new.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/new.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:node-package.test.ts": {
+      "name": "test:node-package.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/node-package.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:node-project.test.ts": {
+      "name": "test:node-project.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/node-project.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:pr-template.test.ts": {
+      "name": "test:pr-template.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/pr-template.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:project.test.ts": {
+      "name": "test:project.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/project.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:resolve.test.ts": {
+      "name": "test:resolve.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/resolve.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:samplereadme.test.ts": {
+      "name": "test:samplereadme.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/samplereadme.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:subproject.test.ts": {
+      "name": "test:subproject.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/subproject.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:runtime.test.ts": {
+      "name": "test:runtime.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/tasks/runtime.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:tasks.test.ts": {
+      "name": "test:tasks.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/tasks/tasks.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:textfile.test.ts": {
+      "name": "test:textfile.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/textfile.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:toml.test.ts": {
+      "name": "test:toml.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/toml.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:util.test.ts": {
+      "name": "test:util.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/util.test.ts"
+        }
+      ],
+      "unlisted": true
+    },
+    "test:vscode-launch-config.test.ts": {
+      "name": "test:vscode-launch-config.test.ts",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot --no-coverage test/vscode-launch-config.test.ts"
+        }
+      ],
+      "unlisted": true
     },
     "projen:upgrade": {
       "name": "projen:upgrade",

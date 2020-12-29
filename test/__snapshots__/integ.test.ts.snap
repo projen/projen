@@ -1011,9 +1011,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "spawn": "test:compile",
           },
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
-          },
-          Object {
             "spawn": "eslint",
           },
         ],
@@ -2151,9 +2148,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "spawn": "test:compile",
-          },
-          Object {
-            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -3401,9 +3395,6 @@ dist
           },
           Object {
             "spawn": "test:compile",
-          },
-          Object {
-            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",

@@ -1,6 +1,6 @@
 import * as yargs from 'yargs';
 import * as logging from '../logging';
-import { TaskRuntime } from '../tasks';
+import { TaskRuntime, TaskSpec } from '../tasks';
 
 /**
  * Reads .projen/tasks.json and adds CLI commands for all tasks.
@@ -11,25 +11,35 @@ export function discoverTaskCommands(ya: yargs.Argv) {
   const runtime = new TaskRuntime(workdir);
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
-    ya.command(task.name, task.description ?? '', taskCommandHandler(task.name));
+    const hide = task.unlisted ?? false;
+    const module = taskCommandHandler(task);
+    if (hide) {
+      ya.command(task.name, false, module);
+    } else {
+      ya.command(module);
+    }
   }
 
-  function taskCommandHandler(taskName: string) {
-    return (args: yargs.Argv) => {
-      args.option('inspect', { alias: 'i', desc: 'show all steps in this task' });
-
-      const argv = args.argv;
-
-      if (argv.inspect) {
-        return inspectTask(taskName);
-      } else {
-        try {
-          runtime.runTask(taskName);
-        } catch (e) {
-          logging.error(e.message);
-          process.exit(1);
+  function taskCommandHandler(task: TaskSpec): yargs.CommandModule {
+    return {
+      command: task.name,
+      describe: task.description,
+      builder(args: yargs.Argv) {
+        args.option('inspect', { alias: 'i', desc: 'show all steps in this task' });
+        return args;
+      },
+      handler(argv: any) {
+        if (argv.inspect) {
+          return inspectTask(task.name);
+        } else {
+          try {
+            runtime.runTask(task.name);
+          } catch (e) {
+            logging.error(e.message);
+            process.exit(1);
+          }
         }
-      }
+      },
     };
   }
 
@@ -47,6 +57,12 @@ export function discoverTaskCommands(ya: yargs.Argv) {
         inspectTask(step.spawn, indent + 3);
       } else if (step.exec) {
         writeln(step.exec);
+      } else if (step.parallel) {
+        writeln('parallel:');
+        for (const subtask of step.parallel) {
+          writeln(`   - ${subtask}:`);
+          inspectTask(subtask, indent + 8);
+        }
       }
     }
   };

@@ -36,6 +36,12 @@ export class Task {
    */
   public readonly condition?: string;
 
+  /**
+   * Don't list task in `--help`.
+   * @default false
+   */
+  public readonly unlisted: boolean;
+
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
@@ -48,6 +54,7 @@ export class Task {
     this.category = props.category;
     this.condition = props.condition;
     this.cwd = props.cwd;
+    this.unlisted = props.unlisted ?? false;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -78,6 +85,14 @@ export class Task {
    */
   public exec(command: string, options: TaskStepOptions = { }) {
     this._steps.push({ exec: command, ...options });
+  }
+
+  /**
+   * Run these tasks in parallel.
+   * @param tasks The tasks to run
+   */
+  public parallel(tasks: Task[]) {
+    this._steps.push({ parallel: (() => tasks.map(t => t.name)) as any });
   }
 
   /**
@@ -179,6 +194,7 @@ export class Task {
       steps: this._steps,
       condition: this.condition,
       cwd: this.cwd,
+      unlisted: this.unlisted || undefined,
     };
   }
 }

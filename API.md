@@ -1437,6 +1437,7 @@ new Jest(project: NodeProject, options?: JestOptions)
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
+  * **typescript** (<code>boolean</code>)  *No description* __*Optional*__
   * **typescriptConfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  *No description* __*Optional*__
 
 
@@ -2482,6 +2483,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **unlisted** (<code>boolean</code>)  Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
@@ -3735,6 +3737,7 @@ new tasks.Task(tasks: Tasks, name: string, props?: TaskOptions)
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **unlisted** (<code>boolean</code>)  Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 
@@ -3746,6 +3749,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | Task name.
 **steps**🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Returns an immutable copy of all the step specifications of the task.
+**unlisted**🔹 | <code>boolean</code> | Don't list task in `--help`.
 **category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | The start menu category of the task.<br/>__*Optional*__
 **condition**?🔹 | <code>string</code> | A command to execute which determines if the task should be skipped.<br/>__*Optional*__
 **description**?🔹 | <code>string</code> | The description of the task.<br/>__*Optional*__
@@ -3779,6 +3783,19 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### parallel(tasks)🔹 <a id="projen-tasks-task-parallel"></a>
+
+Run these tasks in parallel.
+
+```ts
+parallel(tasks: Array<Task>): void
+```
+
+* **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  The tasks to run.
 
 
 
@@ -3984,6 +4001,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **unlisted** (<code>boolean</code>)  Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
@@ -5688,6 +5706,7 @@ Name | Type | Description
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
+**typescript**?🔹 | <code>boolean</code> | __*Optional*__
 **typescriptConfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | __*Optional*__
 
 
@@ -6571,6 +6590,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
+**unlisted**?🔹 | <code>boolean</code> | Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script.<br/>__*Optional*__
 
 
 
@@ -6589,6 +6609,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+**unlisted**?🔹 | <code>boolean</code> | Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script.<br/>__*Optional*__
 
 
 
@@ -6609,6 +6630,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **steps**?🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Task steps.<br/>__*Optional*__
+**unlisted**?🔹 | <code>boolean</code> | Indicates that a task should not appear in `projen --help` or rendered into `package.json` as a script.<br/>__*Optional*__
 
 
 
@@ -6627,6 +6649,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**parallel**?🔹 | <code>Array<string></code> | Run these tasks in parallel.<br/>__*Default*__: no parallel tasks
 **say**?🔹 | <code>string</code> | Print a message.<br/>__*Default*__: don't say anything
 **spawn**?🔹 | <code>string</code> | Subtask to execute.<br/>__*Default*__: don't spawn a subtask
 

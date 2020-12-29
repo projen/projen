@@ -116,7 +116,13 @@ export class TypeScriptProject extends NodeProject {
   public readonly packageTask?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
-    super(options);
+    super({
+      ...options,
+      jestOptions: {
+        typescript: true,
+        ...options.jestOptions,
+      },
+    });
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
@@ -227,7 +233,6 @@ export class TypeScriptProject extends NodeProject {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
       const tsconfig = this.jest.generateTypescriptConfig({
-        fileName: 'tsconfig.jest.json',
         include: [
           PROJEN_RC,
           `${this.srcdir}/**/*.ts`,

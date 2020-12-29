@@ -1,7 +1,8 @@
 import * as path from 'path';
+import * as glob from 'glob';
 import * as semver from 'semver';
 import { NodeProject } from './node-project';
-import { TaskCategory } from './tasks';
+import { Task, TaskCategory } from './tasks';
 import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
@@ -503,6 +504,7 @@ export interface JestOptions {
 
   readonly jestConfig?: JestConfigOptions;
 
+  readonly typescript?: boolean;
   readonly typescriptConfig?: TypescriptConfigOptions;
 }
 
@@ -542,6 +544,7 @@ export class Jest {
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
   private readonly typescriptConfig?: TypescriptConfigOptions;
+  private readonly testMatch: string[];
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
@@ -561,6 +564,11 @@ export class Jest {
       this.reporters.unshift('default');
     }
 
+    this.testMatch = this.jestConfig?.testMatch ?? [
+      '**/__tests__/**/*.js?(x)',
+      '**/?(*.)+(spec|test).js?(x)',
+    ];
+
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
@@ -568,10 +576,7 @@ export class Jest {
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns: this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
       testPathIgnorePatterns: this.jestConfig?.testPathIgnorePatterns ?? this.ignorePatterns,
-      testMatch: this.jestConfig?.testMatch ?? [
-        '**/__tests__/**/*.js?(x)',
-        '**/?(*.)+(spec|test).js?(x)',
-      ],
+      testMatch: (() => this.testMatch) as any,
       reporters: this.reporters,
     } as JestConfigOptions;
 
@@ -602,6 +607,22 @@ export class Jest {
       this.config.coverageThreshold = {
         global: this.jestConfig?.coverageThreshold,
       };
+    }
+
+    if (options.typescript ?? false) {
+      this.config.preset = 'ts-jest';
+
+      // only process .ts files
+      this.testMatch = this.jestConfig?.testMatch ?? [
+        '**/__tests__/**/*.ts?(x)',
+        '**/?(*.)+(spec|test).ts?(x)',
+      ];
+
+      // add relevant deps
+      this.project.addDevDeps(
+        '@types/jest',
+        'ts-jest',
+      );
     }
 
     this.configureTestCommand();
@@ -646,26 +667,12 @@ export class Jest {
       },
     });
 
-    this.config.preset = 'ts-jest';
-
-    // only process .ts files
-    this.config.testMatch = this.jestConfig?.testMatch ?? [
-      '**/__tests__/**/*.ts?(x)',
-      '**/?(*.)+(spec|test).ts?(x)',
-    ];
-
     // specify tsconfig.json
     this.config.globals = {
       'ts-jest': {
         tsconfig: tsconfig.fileName,
       },
     };
-
-    // add relevant deps
-    this.project.addDevDeps(
-      '@types/jest',
-      'ts-jest',
-    );
 
     return tsconfig;
   }
@@ -685,8 +692,6 @@ export class Jest {
       jestOpts.push('--coverageProvider=v8');
     }
 
-    this.project.testTask.exec(`jest ${jestOpts.join(' ')}`);
-
     this.project.addTask('test:watch', {
       description: 'Run jest in watch mode',
       category: TaskCategory.TEST,
@@ -698,5 +703,36 @@ export class Jest {
       category: TaskCategory.TEST,
       exec: 'jest --updateSnapshot',
     });
+
+    const tests = new Array<Task>();
+    for (const pattern of this.testMatch) {
+      const files = glob.sync(pattern, { cwd: this.project.outdir });
+      for (const file of files) {
+        if (this.isIgnored(file)) {
+          continue;
+        }
+
+        const test = this.project.addTask(`test:${path.basename(file)}`, {
+          exec: `jest ${jestOpts.join(' ')} --no-coverage ${file}`,
+          unlisted: true,
+        });
+
+        tests.push(test);
+      }
+    }
+
+    this.project.testTask.parallel(tests);
+  }
+
+  private isIgnored(file: string) {
+    for (const ignore of this.ignorePatterns) {
+      if (ignore.startsWith('/') && ignore.endsWith('/')) {
+        if (new RegExp(ignore.slice(1, ignore.length - 1)).test(file)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 }

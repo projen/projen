@@ -4,7 +4,7 @@ import { join, resolve } from 'path';
 import { format } from 'util';
 import * as chalk from 'chalk';
 import * as logging from '../logging';
-import { TasksManifest, TaskSpec } from './model';
+import { TasksManifest, TaskSpec, TaskStep } from './model';
 import { Tasks } from './tasks';
 
 /**
@@ -87,14 +87,26 @@ class RunTask {
       }
 
       if (step.exec) {
-        const command = step.exec;
-        const cwd = step.cwd;
-        const result = this.shell({ command, cwd });
-        if (result.status !== 0) {
-          throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
-        }
+        this._execCommand(step, step.exec);
+      }
+
+      if (step.parallel) {
+        this._execParallel(step, step.parallel);
       }
     }
+  }
+
+  private _execCommand(step: TaskStep, command: string) {
+    const cwd = step.cwd;
+    const result = this.shell({ command, cwd });
+    if (result.status !== 0) {
+      throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
+    }
+  }
+
+  private _execParallel(step: TaskStep, tasks: string[]) {
+    const runner = require.resolve('./parallel-exec');
+    this._execCommand(step, `${process.execPath} ${runner} ${tasks.join(' ')}`);
   }
 
   /**
@@ -230,3 +242,4 @@ interface ShellOptions {
   /** @default false */
   readonly quiet?: boolean;
 }
+

@@ -48,6 +48,12 @@ export interface TaskCommonOptions {
    * @default - process.cwd()
    */
   readonly cwd?: string;
+
+  /**
+   * Indicates that a task should not appear in `projen --help` or rendered into
+   * `package.json` as a script.
+   */
+  readonly unlisted?: boolean;
 }
 
 
@@ -118,5 +124,10 @@ export interface TaskStep extends TaskStepOptions {
    * @default - don't say anything
    */
   readonly say?: string;
-}
 
+  /**
+   * Run these tasks in parallel.
+   * @default - no parallel tasks
+   */
+  readonly parallel?: string[];
+}
