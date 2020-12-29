@@ -116,7 +116,7 @@ test('reset() can be used to reset task steps', () => {
 test('prependXXX() can be used to add steps from the top', () => {
   // GIVEN
   const p = new TestProject();
-  const sub = p.addTask('my-sub-task', {exec: 'subexec'});
+  const sub = p.addTask('my-sub-task', { exec: 'subexec' });
 
   const t = p.addTask('my-task');
   t.exec('line1');

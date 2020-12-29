@@ -92,7 +92,7 @@ export class Task {
   /**
    * Adds a command at the beginning of the task.
    * @param shell The command to add.
-   * 
+   *
    * @deprecated use prependExec()
    */
   public prepend(shell: string, options: TaskStepOptions = {}) {
@@ -139,7 +139,7 @@ export class Task {
       ...options,
     });
   }
-  
+
   /**
    * Adds an environment variable to this task.
    * @param name The name of the variable
