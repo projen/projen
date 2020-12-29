@@ -190,6 +190,61 @@ export interface GitpodPort {
 }
 
 /**
+ * Configure the Gitpod App for prebuilds.
+ * Currently only GitHub is supported.
+ * @see https://www.gitpod.io/docs/prebuilds/
+ */
+export interface GitpodPrebuilds {
+  /**
+   * Enable for the master/default branch
+   * @default true
+   */
+  readonly master?: boolean;
+
+  /**
+   * Enable for all branches in this repo
+   * @default false
+   */
+  readonly branches?: boolean;
+
+  /**
+   * Enable for pull requests coming from this repo
+   * @default true
+   */
+  readonly pullRequests?: boolean;
+
+  /**
+   * Enable for pull requests coming from forks
+   * @default false
+   */
+  readonly pullRequestsFromForks?: boolean;
+
+  /**
+   * Add a check to pull requests
+   * @default true
+   */
+  readonly addCheck?: boolean;
+
+  /**
+   * Add a "Review in Gitpod" button as a comment to pull requests
+   * @default false
+   */
+  readonly addComment?: boolean;
+
+  /**
+   * Add a "Review in Gitpod" button to the pull request's description
+   * @default false
+   */
+  readonly addBadge?: boolean;
+
+  /**
+   * Add a label once the prebuild is ready to pull requests
+   * @default false
+   */
+  readonly addLabel?: boolean;
+}
+
+/**
  * Constructor options for the Gitpod component.
  *
  * By default, Gitpod uses the 'gitpod/workspace-full' docker image.
@@ -198,13 +253,22 @@ export interface GitpodPort {
  * By default, all tasks will be run in parallel. To run the tasks in sequence,
  * create a new task and specify the other tasks as subtasks.
  */
-export interface GitpodOptions extends DevEnvironmentOptions {}
+export interface GitpodOptions extends DevEnvironmentOptions {
+  /**
+   * Optional Gitpod's Github App integration for prebuilds
+   * If this is not set and Gitpod's Github App is installed, then Gitpod will apply
+   * these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app
+   * @default undefined
+   */
+  readonly prebuilds?: GitpodPrebuilds;
+}
 
 /**
  * The Gitpod component which emits .gitpod.yml
  */
 export class Gitpod extends Component implements IDevEnvironment {
   private dockerImage: DevEnvironmentDockerImage | undefined;
+  private prebuilds: GitpodPrebuilds | undefined;
   private readonly tasks = new Array<GitpodTask>();
   private readonly ports = new Array<GitpodPort>();
   private readonly vscodeExtensions = new Array<string>();
@@ -225,9 +289,14 @@ export class Gitpod extends Component implements IDevEnvironment {
       }
     }
 
+    if (options?.prebuilds) {
+      this.addPrebuilds(options?.prebuilds);
+    }
+
     this.config = {
       image: () => this.renderDockerImage(),
       tasks: this.tasks,
+      github: () => this.renderPrebuilds(),
       ports: this.ports,
       vscode: {
         extensions: this.vscodeExtensions,
@@ -265,6 +334,14 @@ export class Gitpod extends Component implements IDevEnvironment {
   }
 
   /**
+   * Add a prebuilds configuration for the Gitpod App
+   * @param config The configuration
+   */
+  public addPrebuilds(config: GitpodPrebuilds) {
+    this.prebuilds = config;
+  }
+
+  /**
    * Add a task with more granular options.
    *
    * By default, all tasks will be run in parallel. To run tasks in sequence,
@@ -297,9 +374,13 @@ export class Gitpod extends Component implements IDevEnvironment {
    * Add a list of VSCode extensions that should be automatically installed
    * in the container.
    *
+   * These must be in the format defined in the Open VSX registry.
+   * @example 'scala-lang.scala@0.3.9:O5XmjwY5Gz+0oDZAmqneJw=='
+   * @see https://www.gitpod.io/docs/vscode-extensions/
+   *
    * @param extensions The extension IDs
    */
-  public addVscodeExtensions(...extensions: string[]) {
+  public addVscodeExtensions(...extensions: GitpodCodeExtensionId[]) {
     this.vscodeExtensions.push(...extensions);
   }
 
@@ -314,4 +395,20 @@ export class Gitpod extends Component implements IDevEnvironment {
       return undefined;
     }
   }
+
+  private renderPrebuilds() {
+    if (this.prebuilds) {
+      return {
+        prebuilds: this.prebuilds,
+      };
+    } else {
+      return undefined;
+    }
+  }
 }
+
+/**
+ * VS Code extensions as defined in the Open VSX registry
+ * Example: `scala-lang.scala@0.3.9:O5XmjwY5Gz+0oDZAmqneJw==`
+ */
+type GitpodCodeExtensionId = string;

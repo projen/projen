@@ -11,7 +11,7 @@ const DEVCONTAINER_FILE = '.devcontainer.json';
 
 logging.disable();
 
-describe('workspaces enable/disable', () => {
+describe('dev environment enable/disable', () => {
   test('given gitpod and devContainer are false', () => {
     // GIVEN
     const project = new TestProject({
@@ -47,7 +47,7 @@ describe('workspaces enable/disable', () => {
   });
 });
 
-describe('workspace docker options', () => {
+describe('dev environment docker options', () => {
   test('given an image', () => {
     // GIVEN
     const project = new TestProject({
@@ -89,7 +89,7 @@ describe('workspace docker options', () => {
   });
 });
 
-describe('workspace tasks', () => {
+describe('dev environment tasks', () => {
   test('given custom task', () => {
     // GIVEN
     const project = new TestProject({
@@ -136,7 +136,7 @@ describe('workspace tasks', () => {
   });
 });
 
-test('workspace ports', () => {
+test('dev environment ports', () => {
   // GIVEN
   const project = new TestProject({
     gitpod: true,
@@ -156,7 +156,32 @@ test('workspace ports', () => {
   expect(devContainerSnapshot).toStrictEqual({ forwardPorts: ['8080', '3000'] });
 });
 
-test('workspace vscode extensions', () => {
+test('gitpod prebuilds config', () => {
+  // GIVEN
+  const project = new TestProject({
+    gitpod: true,
+    devContainer: false,
+  });
+
+  // WHEN
+  project.gitpod?.addPrebuilds({
+    master: true,
+    branches: true,
+    pullRequestsFromForks: true,
+    addBadge: false,
+  });
+
+  // THEN
+  const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+  expect(gitpodSnapshot).toContain('github');
+  expect(gitpodSnapshot).toContain('prebuilds');
+  expect(gitpodSnapshot).toContain('master');
+  expect(gitpodSnapshot).toContain('branches');
+  expect(gitpodSnapshot).toContain('pullRequestsFromForks');
+  expect(gitpodSnapshot).toContain('addBadge');
+});
+
+test('dev environment vscode extensions', () => {
   // GIVEN
   const project = new TestProject({
     gitpod: true,
@@ -164,13 +189,13 @@ test('workspace vscode extensions', () => {
   });
 
   // WHEN
-  project.gitpod?.addVscodeExtensions('dbaeumer.vscode-eslint');
+  project.gitpod?.addVscodeExtensions('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
   project.devContainer?.addVscodeExtensions('dbaeumer.vscode-eslint');
 
   // THEN
   const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
   expect(gitpodSnapshot).toContain('extensions:');
-  expect(gitpodSnapshot).toContain('dbaeumer.vscode-eslint');
+  expect(gitpodSnapshot).toContain('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
 
   const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({ extensions: ['dbaeumer.vscode-eslint'] });

@@ -86,6 +86,7 @@ Name|Description
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
 [GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
+[GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [HasteConfig](#projen-hasteconfig)|*No description*
 [JestConfigOptions](#projen-jestconfigoptions)|*No description*
@@ -1366,6 +1367,7 @@ new Gitpod(project: Project, options?: GitpodOptions)
   * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
   * **tasks** (<code>Array<[tasks.Task](#projen-tasks-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
   * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
+  * **prebuilds** (<code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code>)  Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app. __*Default*__: undefined
 
 
 
@@ -1428,6 +1430,27 @@ addPorts(...ports: string[]): void
 
 
 
+#### addPrebuilds(config)🔹 <a id="projen-gitpod-addprebuilds"></a>
+
+Add a prebuilds configuration for the Gitpod App.
+
+```ts
+addPrebuilds(config: GitpodPrebuilds): void
+```
+
+* **config** (<code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code>)  The configuration.
+  * **addBadge** (<code>boolean</code>)  Add a "Review in Gitpod" button to the pull request's description. __*Default*__: false
+  * **addCheck** (<code>boolean</code>)  Add a check to pull requests. __*Default*__: true
+  * **addComment** (<code>boolean</code>)  Add a "Review in Gitpod" button as a comment to pull requests. __*Default*__: false
+  * **addLabel** (<code>boolean</code>)  Add a label once the prebuild is ready to pull requests. __*Default*__: false
+  * **branches** (<code>boolean</code>)  Enable for all branches in this repo. __*Default*__: false
+  * **master** (<code>boolean</code>)  Enable for the master/default branch. __*Default*__: true
+  * **pullRequests** (<code>boolean</code>)  Enable for pull requests coming from this repo. __*Default*__: true
+  * **pullRequestsFromForks** (<code>boolean</code>)  Enable for pull requests coming from forks. __*Default*__: false
+
+
+
+
 #### addTasks(...tasks)🔹 <a id="projen-gitpod-addtasks"></a>
 
 Add tasks to run when gitpod starts.
@@ -1447,6 +1470,8 @@ addTasks(...tasks: Task[]): void
 #### addVscodeExtensions(...extensions)🔹 <a id="projen-gitpod-addvscodeextensions"></a>
 
 Add a list of VSCode extensions that should be automatically installed in the container.
+
+These must be in the format defined in the Open VSX registry.
 
 ```ts
 addVscodeExtensions(...extensions: string[]): void
@@ -5687,6 +5712,7 @@ Name | Type | Description
 -----|------|-------------
 **dockerImage**?🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
+**prebuilds**?🔹 | <code>[GitpodPrebuilds](#projen-gitpodprebuilds)</code> | Optional Gitpod's Github App integration for prebuilds If this is not set and Gitpod's Github App is installed, then Gitpod will apply these defaults: https://www.gitpod.io/docs/prebuilds/#configure-the-github-app.<br/>__*Default*__: undefined
 **tasks**?🔹 | <code>Array<[tasks.Task](#projen-tasks-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
 **vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
 
@@ -5704,6 +5730,28 @@ Name | Type | Description
 **onOpen**?🔹 | <code>[GitpodOnOpen](#projen-gitpodonopen)</code> | What to do when a service on a port is detected.<br/>__*Default*__: GitpodOnOpen.NOTIFY
 **port**?🔹 | <code>string</code> | A port that should be exposed (forwarded) from the container.<br/>__*Optional*__
 **visibility**?🔹 | <code>[GitpodPortVisibility](#projen-gitpodportvisibility)</code> | Whether the port visibility should be private or public.<br/>__*Default*__: GitpodPortVisibility.PUBLIC
+
+
+
+## struct GitpodPrebuilds 🔹 <a id="projen-gitpodprebuilds"></a>
+
+
+Configure the Gitpod App for prebuilds.
+
+Currently only GitHub is supported.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**addBadge**?🔹 | <code>boolean</code> | Add a "Review in Gitpod" button to the pull request's description.<br/>__*Default*__: false
+**addCheck**?🔹 | <code>boolean</code> | Add a check to pull requests.<br/>__*Default*__: true
+**addComment**?🔹 | <code>boolean</code> | Add a "Review in Gitpod" button as a comment to pull requests.<br/>__*Default*__: false
+**addLabel**?🔹 | <code>boolean</code> | Add a label once the prebuild is ready to pull requests.<br/>__*Default*__: false
+**branches**?🔹 | <code>boolean</code> | Enable for all branches in this repo.<br/>__*Default*__: false
+**master**?🔹 | <code>boolean</code> | Enable for the master/default branch.<br/>__*Default*__: true
+**pullRequests**?🔹 | <code>boolean</code> | Enable for pull requests coming from this repo.<br/>__*Default*__: true
+**pullRequestsFromForks**?🔹 | <code>boolean</code> | Enable for pull requests coming from forks.<br/>__*Default*__: false
 
 
 
