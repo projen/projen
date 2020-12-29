@@ -113,23 +113,33 @@ test('reset() can be used to reset task steps', () => {
   });
 });
 
-test('prepend() can be used to add steps from the top', () => {
+test('prependXXX() can be used to add steps from the top', () => {
   // GIVEN
   const p = new TestProject();
+  const sub = p.addTask('my-sub-task', {exec: 'subexec'});
+
   const t = p.addTask('my-task');
   t.exec('line1');
 
   // WHEN
-  t.prepend('line2');
-  t.prepend('line3');
+  t.prependExec('line2');
+  t.prependSpawn(sub);
+  t.prependSay('message');
 
   // THEN
   expectManifest(p, {
     tasks: {
+      'my-sub-task': {
+        name: 'my-sub-task',
+        steps: [
+          { exec: 'subexec' },
+        ],
+      },
       'my-task': {
         name: 'my-task',
         steps: [
-          { exec: 'line3' },
+          { say: 'message' },
+          { spawn: 'my-sub-task' },
           { exec: 'line2' },
           { exec: 'line1' },
         ],
