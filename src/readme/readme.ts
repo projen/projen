@@ -13,7 +13,6 @@ import {
 export class Readme {
   public filename: string;
 
-  public toc: boolean;
   public tagLine: string;
   public summary: SummaryOptions;
   public codeOfConduct: CodeOfConductOptions;
@@ -37,7 +36,6 @@ export class Readme {
 
     // Init & defaults
     this.filename = options?.filename ?? 'README.md';
-    this.toc = options?.toc ?? true;
     this.tagLine = options?.tagLine ?? project.name;
     this.summary = options?.summary ?? { filename: 'SUMMARY.md', link: true };
     this.codeOfConduct = options?.codeOfConduct ?? { filename: 'CODE_OF_CONDUCT.md', link: true };
@@ -50,6 +48,7 @@ export class Readme {
     this.author = options?.author ?? { filename: 'AUTHOR.md', link: true };
     this.badges = [];
 
+    // Order of Sections (those not present at resolve time will be skipped)
     this.sectionOrder = [
       ReadmeSections.TAG_LINE,
       ReadmeSections.TOC,
@@ -79,7 +78,7 @@ export class Readme {
     });
   }
 
-  private _constructReadme(_project: Project): string[] {
+  private _constructReadme(project: Project): string[] {
     const lines: string[] = [];
 
     for (const section of this.sectionOrder) {
@@ -88,7 +87,7 @@ export class Readme {
           lines.push(this._renderReadmeTagLine() + '\n');
           break;
         case ReadmeSections.TOC:
-          lines.push(this._renderReadmeToc() + '\n');
+          lines.push(this._renderReadmeToc(project) + '\n');
           break;
         case ReadmeSections.SUMMARY:
           lines.push(this._renderReadmeSummary() + '\n');
@@ -131,15 +130,24 @@ export class Readme {
    * @internal
    */
   private _renderReadmeTagLine(): string {
-    return `# ${this.tagLine}`;
+    return `${this.tagLine}`;
   }
 
   /**
    *
    * @internal
    */
-  private _renderReadmeToc(): string {
-    return '## Table of Contents';
+  private _renderReadmeToc(project: Project): string {
+    let lines: string[] = [];
+
+    lines.push(`# ${project.name}`);
+    lines.push(`- [${project.name}](#${ project.name })`);
+
+    for (const section in this.sectionOrder) {
+      lines.push(`  - [${section}](#${section})`);
+    }
+
+    return lines.join('\n');
   }
 
   /**

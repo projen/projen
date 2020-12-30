@@ -1350,11 +1350,42 @@ project.synth();
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
-  "README.md": "# cdk-watchful
+  "README.md": "cdk-watchful
 
-## Table of Contents
+# cdk-watchful
+- [cdk-watchful](#cdk-watchful)
+  - [0](#0)
+  - [1](#1)
+  - [2](#2)
+  - [3](#3)
+  - [4](#4)
+  - [5](#5)
+  - [6](#6)
+  - [7](#7)
+  - [8](#8)
+  - [9](#9)
+  - [10](#10)
+  - [11](#11)
 
 ## Summary
+
+## Usage
+
+## Code of Conduct
+
+## Contributing
+
+## Changelog
+
+## License
+
+## Roadmap
+
+## Vision
+
+## Author
+
+## Badges
 
 
 ",
@@ -2501,11 +2532,42 @@ project.synth();
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
-  "README.md": "# cdk8s
+  "README.md": "cdk8s
 
-## Table of Contents
+# cdk8s
+- [cdk8s](#cdk8s)
+  - [0](#0)
+  - [1](#1)
+  - [2](#2)
+  - [3](#3)
+  - [4](#4)
+  - [5](#5)
+  - [6](#6)
+  - [7](#7)
+  - [8](#8)
+  - [9](#9)
+  - [10](#10)
+  - [11](#11)
 
 ## Summary
+
+## Usage
+
+## Code of Conduct
+
+## Contributing
+
+## Changelog
+
+## License
+
+## Roadmap
+
+## Vision
+
+## Author
+
+## Badges
 
 
 ",
@@ -3745,11 +3807,42 @@ project.synth();
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
-  "README.md": "# cdk8s-cli
+  "README.md": "cdk8s-cli
 
-## Table of Contents
+# cdk8s-cli
+- [cdk8s-cli](#cdk8s-cli)
+  - [0](#0)
+  - [1](#1)
+  - [2](#2)
+  - [3](#3)
+  - [4](#4)
+  - [5](#5)
+  - [6](#6)
+  - [7](#7)
+  - [8](#8)
+  - [9](#9)
+  - [10](#10)
+  - [11](#11)
 
 ## Summary
+
+## Usage
+
+## Code of Conduct
+
+## Contributing
+
+## Changelog
+
+## License
+
+## Roadmap
+
+## Vision
+
+## Author
+
+## Badges
 
 
 ",
@@ -4739,11 +4832,42 @@ project.synth();
    See the License for the specific language governing permissions and
    limitations under the License.
 ",
-  "README.md": "# pnpm-project
+  "README.md": "pnpm-project
 
-## Table of Contents
+# pnpm-project
+- [pnpm-project](#pnpm-project)
+  - [0](#0)
+  - [1](#1)
+  - [2](#2)
+  - [3](#3)
+  - [4](#4)
+  - [5](#5)
+  - [6](#6)
+  - [7](#7)
+  - [8](#8)
+  - [9](#9)
+  - [10](#10)
+  - [11](#11)
 
 ## Summary
+
+## Usage
+
+## Code of Conduct
+
+## Contributing
+
+## Changelog
+
+## License
+
+## Roadmap
+
+## Vision
+
+## Author
+
+## Badges
 
 
 ",

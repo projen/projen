@@ -234,13 +234,6 @@ export interface ReadmeOptions extends TextFileOptions {
   readonly filename?: string;
 
   /**
-   * Table of Contents
-   *
-   * @default - `TocOptions`
-   */
-  readonly toc?: boolean;
-
-  /**
    * The tag line for your project
    *
    * @default "my project."
@@ -320,16 +313,16 @@ export interface ReadmeOptions extends TextFileOptions {
  *
  */
 export enum ReadmeSections {
-  TOC,
-  TAG_LINE,
-  SUMMARY,
-  CODE_OF_CONDUCT,
-  CONTRIBUTING,
-  CHANGELOG,
-  LICENSE,
-  ROADMAP,
-  VISION,
-  USAGE,
-  AUTHOR,
-  BADGES,
+  TOC = 'Table of Contents',
+  TAG_LINE = 'Tag Line',
+  SUMMARY = 'Summary',
+  CODE_OF_CONDUCT = 'Code of Conduct',
+  CONTRIBUTING = 'Contributing',
+  CHANGELOG = 'Changelog',
+  LICENSE = 'License',
+  ROADMAP = 'Roadmap',
+  VISION = 'Vision',
+  USAGE = 'Usage',
+  AUTHOR = 'Author',
+  BADGES = 'Badges',
 }
