@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.7](https://github.com/projen/projen/compare/v0.12.6...v0.12.7) (2020-12-30)
+
+
+### Features
+
+* make `projen start` interactive by default ([#431](https://github.com/projen/projen/issues/431)) ([8205707](https://github.com/projen/projen/commit/82057078c9ab5af34b0f0047ed98c3d076a0afcc)), closes [#429](https://github.com/projen/projen/issues/429)
+
 ### [0.12.6](https://github.com/projen/projen/compare/v0.12.5...v0.12.6) (2020-12-30)
 
 
