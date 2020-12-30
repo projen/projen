@@ -5,6 +5,26 @@ import { TextFile, TextFileOptions } from './textfile';
 /**
  *
  */
+export interface SummaryOptions extends TextFileOptions {
+  /**
+   * The filename.
+   *
+   * @default "SUMMARY.md"
+   * @example "summary.md"
+   */
+  readonly filename?: string;
+
+  /**
+   * Whether to link to the SUMMARY in Readme or not.
+   *
+   * @default true
+   */
+  readonly link?: boolean;
+}
+
+/**
+ *
+ */
 export interface CodeOfConductOptions extends TextFileOptions {
   /**
    * The filename.
@@ -15,7 +35,7 @@ export interface CodeOfConductOptions extends TextFileOptions {
   readonly filename?: string;
 
   /**
-   * Whether to link to the CODE_OF_CONDUCT.md in Readme or not.
+   * Whether to link to the CODE_OF_CONDUCT in Readme or not.
    *
    * @default true
    */
@@ -38,7 +58,7 @@ export interface ContributingOptions extends TextFileOptions{
   readonly filename?: string;
 
   /**
-   * Whether to link to the CONTRIBUTING.md in Readme or not.
+   * Whether to link to the CONTRIBUTING in Readme or not.
    *
    * @default true
    */
@@ -66,8 +86,7 @@ export interface RoadmapOptions extends TextFileOptions {
    * The filename.
    *
    * If `projects` is true then this will be ""
-   * If this is "" and both `link` and `project` are false
-   * Then there will be no ROADMAP
+   * If this is "" and both `link` and `project` are false then there will be no ROADMAP
    *
    * @default "ROADMAP.md"
    * @example ""
@@ -181,9 +200,9 @@ export interface ReadmeOptions extends TextFileOptions {
   /**
    * Readme file name
    *
-   * @default README.md
-   * @example readme.md
-   * @example Readme.md
+   * @default "README.md"
+   * @example "readme.md"
+   * @example "Readme.md"
    */
   readonly filename?: string;
 
@@ -194,6 +213,18 @@ export interface ReadmeOptions extends TextFileOptions {
    */
   readonly toc?: boolean;
 
+  /**
+   * The tag line for your project
+   *
+   * @default "my project."
+   * @example "Define and maintain complex project configuration through code."
+   */
+  readonly tagLine?: string;
+
+  /**
+   *
+   */
+  readonly summary?: SummaryOptions;
   /**
    * Code of Conduct
    *
@@ -258,6 +289,8 @@ export interface ReadmeOptions extends TextFileOptions {
 export class Readme extends Component {
   public filename: string;
   public toc: boolean;
+  public tagLine: string;
+  public summary: SummaryOptions;
   public codeOfConduct: CodeOfConductOptions;
   public contributing: ContributingOptions;
   public changelog: ChangelogOptions;
@@ -277,6 +310,8 @@ export class Readme extends Component {
 
     this.filename = options?.filename ?? 'README.md';
     this.toc = options?.toc ?? true;
+    this.tagLine = options?.tagLine ?? 'my project';
+    this.summary = options?.summary ?? { filename: 'SUMMARY.md', link: true };
     this.codeOfConduct = options?.codeOfConduct ?? { filename: 'CODE_OF_CONDUCT.md', link: true };
     this.contributing = options?.contributing ?? { filename: 'CONTRIBUTING.md', link: true };
     this.changelog = options?.changelog ?? { link: true };
