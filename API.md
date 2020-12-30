@@ -25,9 +25,9 @@ Name|Description
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
 [Project](#projen-project)|Base project.
+[Readme](#projen-readme)|Represents a README.md file.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
-[SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|TOML file.
@@ -66,12 +66,16 @@ Name|Description
 
 Name|Description
 ----|-----------
+[AuthorOptions](#projen-authoroptions)|*No description*
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
+[ChangelogOptions](#projen-changelogoptions)|filename is intentionally not configurable it is owned by `standard-release`.
+[CodeOfConductOptions](#projen-codeofconductoptions)|*No description*
 [ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
+[ContributingOptions](#projen-contributingoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environemnt.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
@@ -103,18 +107,22 @@ Name|Description
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
+[ReadmeLicenseOptions](#projen-readmelicenseoptions)|filename is intentionally not configurable.
+[ReadmeOptions](#projen-readmeoptions)|Readme Properties.
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
+[RoadmapOptions](#projen-roadmapoptions)|*No description*
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
-[SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[UsageOptions](#projen-usageoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
+[VisionOptions](#projen-visionoptions)|*No description*
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
 [deps.Dependency](#projen-deps-dependency)|*No description*
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -268,7 +276,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -424,7 +432,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -631,7 +639,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -738,7 +746,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -854,7 +862,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1655,7 +1663,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -2236,7 +2244,7 @@ new NodeProject(options: NodeProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -2561,7 +2569,7 @@ new Project(options: ProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
 
 
 
@@ -2577,12 +2585,14 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
+**readmeStatus**🔹 | <code>boolean</code> | Is Readme on enabled?
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
+**readme**?🔹 | <code>[Readme](#projen-readme)</code> | Access for Readme.<br/>__*Optional*__
 **vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
 
 ### Methods
@@ -2713,6 +2723,58 @@ __Returns__:
 
 
 
+## class Readme 🔹 <a id="projen-readme"></a>
+
+Represents a README.md file.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Readme(project: Project, options?: ReadmeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[ReadmeOptions](#projen-readmeoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **lines** (<code>Array<string></code>)  The contents of the text file. __*Default*__: [] empty file
+  * **author** (<code>[AuthorOptions](#projen-authoroptions)</code>)  Author. __*Default*__: `AuthorOptions`
+  * **changelog** (<code>[ChangelogOptions](#projen-changelogoptions)</code>)  Changelog. __*Default*__: `ChangelogOptions`
+  * **codeOfConduct** (<code>[CodeOfConductOptions](#projen-codeofconductoptions)</code>)  Code of Conduct. __*Default*__: `CodeOfConductOptions`
+  * **contributing** (<code>[ContributingOptions](#projen-contributingoptions)</code>)  Contributing. __*Default*__: `ContributingOptions`
+  * **filename** (<code>string</code>)  Readme file name. __*Default*__: README.md
+  * **license** (<code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code>)  License. __*Default*__: `LicenseOptions`
+  * **roadmap** (<code>[RoadmapOptions](#projen-roadmapoptions)</code>)  Roadmap. __*Default*__: `RoadmapOptions`
+  * **toc** (<code>boolean</code>)  Table of Contents. __*Default*__: `TocOptions`
+  * **usage** (<code>[UsageOptions](#projen-usageoptions)</code>)  Usage. __*Default*__: `UsageOptions`
+  * **vision** (<code>[VisionOptions](#projen-visionoptions)</code>)  Vision. __*Default*__: `VisionOptions`
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**author**🔹 | <code>[AuthorOptions](#projen-authoroptions)</code> | <span></span>
+**changelog**🔹 | <code>[ChangelogOptions](#projen-changelogoptions)</code> | <span></span>
+**codeOfConduct**🔹 | <code>[CodeOfConductOptions](#projen-codeofconductoptions)</code> | <span></span>
+**contributing**🔹 | <code>[ContributingOptions](#projen-contributingoptions)</code> | <span></span>
+**filename**🔹 | <code>string</code> | <span></span>
+**license**🔹 | <code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code> | <span></span>
+**roadmap**🔹 | <code>[RoadmapOptions](#projen-roadmapoptions)</code> | <span></span>
+**toc**🔹 | <code>boolean</code> | <span></span>
+**usage**🔹 | <code>[UsageOptions](#projen-usageoptions)</code> | <span></span>
+**vision**🔹 | <code>[VisionOptions](#projen-visionoptions)</code> | <span></span>
+
+
+
 ## class SampleDir 🔹 <a id="projen-sampledir"></a>
 
 Renders the given files into the directory if the directory does not exist.
@@ -2789,29 +2851,6 @@ synthesize(): void
 
 
 
-
-
-
-
-## class SampleReadme 🔹 <a id="projen-samplereadme"></a>
-
-Represents a README.md sample file. You are expected to manage this file after creation.
-
-__Extends__: [SampleFile](#projen-samplefile)
-
-### Initializer
-
-
-
-
-```ts
-new SampleReadme(project: Project, props?: SampleReadmeProps)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **props** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  *No description*
-  * **contents** (<code>string</code>)  The contents. __*Default*__: "# replace this"
-  * **filename** (<code>string</code>)  The name of the README.md file. __*Default*__: "README.md"
 
 
 
@@ -3034,7 +3073,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3140,7 +3179,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3246,7 +3285,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4429,7 +4468,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4582,7 +4621,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4760,7 +4799,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4909,7 +4948,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **readme** (<code>boolean</code>)  The README setup. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -5036,6 +5075,24 @@ Name | Type | Description
 
 
 
+## struct AuthorOptions 🔹 <a id="projen-authoroptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: ""
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the Usage in Readme or not.<br/>__*Default*__: false
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
 ## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
 
 
@@ -5119,7 +5176,7 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | Publish to pypi.<br/>__*Default*__: no publishing
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -5220,7 +5277,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -5255,6 +5312,37 @@ Name | Type | Description
 -----|------|-------------
 **announce**?🔹 | <code>boolean</code> | Should we announce new versions?<br/>__*Default*__: true
 **twitter**?🔹 | <code>string</code> | Twitter account to @mention in announcement tweet.<br/>__*Optional*__
+
+
+
+## struct ChangelogOptions 🔹 <a id="projen-changelogoptions"></a>
+
+
+filename is intentionally not configurable it is owned by `standard-release`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**link**?🔹 | <code>boolean</code> | Whether to link to the CHANGELOG.md in Readme or not.<br/>__*Default*__: true
+
+
+
+## struct CodeOfConductOptions 🔹 <a id="projen-codeofconductoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "CODE_OF_CONDUCT.md"
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the CODE_OF_CONDUCT.md in Readme or not.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -5341,7 +5429,7 @@ Name | Type | Description
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | Publish to pypi.<br/>__*Default*__: no publishing
-**readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?⚠️ | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?⚠️ | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?⚠️ | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -5441,7 +5529,7 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | Publish to pypi.<br/>__*Default*__: no publishing
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -5540,7 +5628,7 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | Publish to pypi.<br/>__*Default*__: no publishing
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -5558,6 +5646,24 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct ContributingOptions 🔹 <a id="projen-contributingoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "CONTRIBUTING.md"
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the CONTRIBUTING.md in Readme or not.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -6198,7 +6304,7 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?🔹 | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | Publish to pypi.<br/>__*Default*__: no publishing
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -6390,7 +6496,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -6453,7 +6559,46 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
+
+
+
+## struct ReadmeLicenseOptions 🔹 <a id="projen-readmelicenseoptions"></a>
+
+
+filename is intentionally not configurable.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**link**?🔹 | <code>boolean</code> | Whether to link to the VISION in Readme or not.<br/>__*Default*__: true
+
+
+
+## struct ReadmeOptions 🔹 <a id="projen-readmeoptions"></a>
+
+
+Readme Properties.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**author**?🔹 | <code>[AuthorOptions](#projen-authoroptions)</code> | Author.<br/>__*Default*__: `AuthorOptions`
+**changelog**?🔹 | <code>[ChangelogOptions](#projen-changelogoptions)</code> | Changelog.<br/>__*Default*__: `ChangelogOptions`
+**codeOfConduct**?🔹 | <code>[CodeOfConductOptions](#projen-codeofconductoptions)</code> | Code of Conduct.<br/>__*Default*__: `CodeOfConductOptions`
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**contributing**?🔹 | <code>[ContributingOptions](#projen-contributingoptions)</code> | Contributing.<br/>__*Default*__: `ContributingOptions`
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | Readme file name.<br/>__*Default*__: README.md
+**license**?🔹 | <code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code> | License.<br/>__*Default*__: `LicenseOptions`
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+**roadmap**?🔹 | <code>[RoadmapOptions](#projen-roadmapoptions)</code> | Roadmap.<br/>__*Default*__: `RoadmapOptions`
+**toc**?🔹 | <code>boolean</code> | Table of Contents.<br/>__*Default*__: `TocOptions`
+**usage**?🔹 | <code>[UsageOptions](#projen-usageoptions)</code> | Usage.<br/>__*Default*__: `UsageOptions`
+**vision**?🔹 | <code>[VisionOptions](#projen-visionoptions)</code> | Vision.<br/>__*Default*__: `VisionOptions`
 
 
 
@@ -6467,6 +6612,25 @@ Resolve options.
 Name | Type | Description 
 -----|------|-------------
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty arrays and objects.<br/>__*Default*__: false
+
+
+
+## struct RoadmapOptions 🔹 <a id="projen-roadmapoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "ROADMAP.md"
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the ROADMAP in Readme or not.<br/>__*Default*__: true
+**projects**?🔹 | <code>boolean</code> | Whether to link to the ROADMAP or to Projects Implies link: true.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -6509,20 +6673,6 @@ Options for the SampleFile object.
 Name | Type | Description 
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
-
-
-
-## struct SampleReadmeProps 🔹 <a id="projen-samplereadmeprops"></a>
-
-
-SampleReadme Properties.
-
-
-
-Name | Type | Description 
------|------|-------------
-**contents**?🔹 | <code>string</code> | The contents.<br/>__*Default*__: "# replace this"
-**filename**?🔹 | <code>string</code> | The name of the README.md file.<br/>__*Default*__: "README.md"
 
 
 
@@ -6677,7 +6827,7 @@ Name | Type | Description
 **projenVersion**?⚠️ | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?⚠️ | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?⚠️ | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?⚠️ | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -6775,7 +6925,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -6814,6 +6964,24 @@ Name | Type | Description
 
 
 
+## struct UsageOptions 🔹 <a id="projen-usageoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: ""
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the USAGEs in Readme or not.<br/>__*Default*__: false
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
 ## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
 
 
@@ -6824,6 +6992,20 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **releaseBranch**🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.
+
+
+
+## struct VisionOptions 🔹 <a id="projen-visionoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "VISION.md"
+**link**?🔹 | <code>boolean</code> | Whether to link to the VISION in Readme or not.<br/>__*Default*__: true
 
 
 
@@ -7238,7 +7420,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -7351,7 +7533,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -7470,7 +7652,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
@@ -7581,7 +7763,7 @@ Name | Type | Description
 **projenVersion**?🔹 | <code>[Semver](#projen-semver)</code> | Version of projen to install.<br/>__*Default*__: Semver.latest()
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**readme**?🔹 | <code>boolean</code> | The README setup.<br/>__*Default*__: true
 **rebuildBot**?🔹 | <code>boolean</code> | Installs a GitHub workflow which is triggered when the comment "@projen rebuild" is added to a pull request.<br/>__*Default*__: true if not a subproject
 **rebuildBotCommand**?🔹 | <code>string</code> | The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch.<br/>__*Default*__: "rebuild"
 **releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "master" ]
