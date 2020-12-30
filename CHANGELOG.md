@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.6](https://github.com/projen/projen/compare/v0.12.5...v0.12.6) (2020-12-30)
+
+
+### Features
+
+* add pnpm support ([#425](https://github.com/projen/projen/issues/425)) ([6b3cbb2](https://github.com/projen/projen/commit/6b3cbb279bfdd78eb6f2b404d4cf6b55f9bd8523)), closes [#420](https://github.com/projen/projen/issues/420)
+
 ### [0.12.5](https://github.com/projen/projen/compare/v0.12.4...v0.12.5) (2020-12-30)
 
 
