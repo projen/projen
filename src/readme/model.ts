@@ -1,3 +1,5 @@
+import { TextFileOptions } from '../textfile';
+
 /**
  *
  */

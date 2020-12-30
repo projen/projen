@@ -11,7 +11,7 @@ import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
-import { Readme } from './readme';
+import { Readme, ReadmeOptions } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
@@ -64,12 +64,19 @@ export interface ProjectOptions {
   readonly clobber?: boolean;
 
   /**
-   * The README setup.
+   * Whether to enable the README submodule.
    *
    * @default true
    * @example false
    */
   readonly readme?: boolean;
+
+  /**
+   * The README setup.
+   *
+   * @default {}
+   */
+  readonly readmeConfig?: ReadmeOptions;
 
   /**
    * Which type of project this is (library/app).
@@ -213,7 +220,7 @@ export class Project {
       new Clobber(this);
     }
 
-    this.readme = (options.readme ?? true) ? new Readme(this) : undefined;
+    this.readme = (options.readme ?? true) ? new Readme(this, options.readmeConfig) : undefined;
   }
 
   /**

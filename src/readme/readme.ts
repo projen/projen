@@ -3,6 +3,7 @@ import { TextFile } from '../textfile';
 import {
   SummaryOptions, CodeOfConductOptions, ContributingOptions, ChangelogOptions, ReadmeLicenseOptions,
   RoadmapOptions, VisionOptions, UsageOptions, AuthorOptions, BadgeOptions, ReadmeSections,
+  ReadmeOptions,
 } from './model';
 
 /**
@@ -73,40 +74,54 @@ export class Readme {
    * @internal
    */
   private _renderReadme(project: Project) {
-    let lines: string[];
-    lines = [];
+    new TextFile(project, this.filename, {
+      lines: this._constructReadme(project),
+    });
+  }
+
+  private _constructReadme(_project: Project): string[] {
+    const lines: string[] = [];
 
     for (const section of this.sectionOrder) {
       switch (section) {
         case ReadmeSections.TAG_LINE:
-          lines.push(this._renderReadmeTagLine());
+          lines.push(this._renderReadmeTagLine() + '\n');
           break;
         case ReadmeSections.TOC:
-          lines.push(this._renderReadmeToc());
+          lines.push(this._renderReadmeToc() + '\n');
+          break;
+        case ReadmeSections.SUMMARY:
+          lines.push(this._renderReadmeSummary() + '\n');
           break;
       }
     }
     lines.push('\n');
 
-    new TextFile(project, this.filename, {
-      lines: lines,
-    });
+    return lines;
   }
 
-   /**
+  /**
    *
    * @internal
    */
   private _renderReadmeTagLine(): string {
     return `# ${this.tagLine}`;
   }
-}
+
   /**
    *
    * @internal
    */
   private _renderReadmeToc(): string {
     return '## Table of Contents';
-
   }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeSummary(): string {
+    return '## Summary';
+  }
+
 }

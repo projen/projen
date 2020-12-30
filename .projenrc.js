@@ -58,12 +58,12 @@ new TextFile(project, 'projen.bash', {
 project.addExcludeFromCleanup('test/**');
 project.gitignore.include('templates/**');
 
-// expand markdown macros in readme
-const macros = project.addTask('readme-macros');
-macros.exec('mv README.md README.md.bak');
-macros.exec('cat README.md.bak | markmac > README.md');
-macros.exec('rm README.md.bak');
-project.buildTask.spawn(macros);
+// // expand markdown macros in readme
+// const macros = project.addTask('readme-macros');
+// macros.exec('mv README.md README.md.bak');
+// macros.exec('cat README.md.bak | markmac > README.md');
+// macros.exec('rm README.md.bak');
+// project.buildTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

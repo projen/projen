@@ -85,9 +85,6 @@
         },
         {
           "spawn": "package"
-        },
-        {
-          "spawn": "readme-macros"
         }
       ]
     },
@@ -196,20 +193,6 @@
       "steps": [
         {
           "exec": "jsii-docgen"
-        }
-      ]
-    },
-    "readme-macros": {
-      "name": "readme-macros",
-      "steps": [
-        {
-          "exec": "mv README.md README.md.bak"
-        },
-        {
-          "exec": "cat README.md.bak | markmac > README.md"
-        },
-        {
-          "exec": "rm README.md.bak"
         }
       ]
     },

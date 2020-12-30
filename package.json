@@ -26,7 +26,6 @@
     "eslint": "/bin/bash ./projen.bash eslint",
     "compat": "/bin/bash ./projen.bash compat",
     "docgen": "/bin/bash ./projen.bash docgen",
-    "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup"
   },
   "author": {

@@ -92,7 +92,8 @@ const project = new AwsCdkTypeScriptApp({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -219,7 +220,8 @@ const project = new AwsCdkConstructLibrary({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 });
 
 project.synth();
@@ -327,7 +329,8 @@ const project = new ConstructLibraryCdk8s({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 });
 
 project.synth();
@@ -431,7 +434,8 @@ const project = new JsiiProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 });
 
 project.synth();
@@ -529,7 +533,8 @@ const project = new web.NextJsProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 });
 
 project.synth();
@@ -624,7 +629,8 @@ const project = new web.NextJsTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -728,7 +734,8 @@ const project = new NodeProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 });
 
 project.synth();
@@ -748,7 +755,8 @@ const project = new Project({
   // outdir: '.',                       /* The root directory of the project. */
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // readme: true,                      /* The README setup. */
+  // readme: true,                      /* Whether to enable the README submodule. */
+  // readmeConfig: {},                  /* The README setup. */
 });
 
 project.synth();
@@ -839,7 +847,8 @@ const project = new web.ReactProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* ReactProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`public/\` if there are no files there. */
@@ -933,7 +942,8 @@ const project = new web.ReactTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -1037,7 +1047,8 @@ const project = new TypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
@@ -1141,7 +1152,8 @@ const project = new TypeScriptAppProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: true,                                                             /* The README setup. */
+  // readme: true,                                                             /* Whether to enable the README submodule. */
+  // readmeConfig: {},                                                         /* The README setup. */
 
   /* TypeScriptProjectOptions */
   // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
