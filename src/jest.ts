@@ -590,6 +590,11 @@ export class Jest {
         `/${reportsDir}/`,
         'junit.xml',
       );
+      project.npmignore?.exclude(
+        '# jest-junit artifacts',
+        `/${reportsDir}/`,
+        'junit.xml',
+      );
     }
 
     if (this.jestConfig?.reporters) {
