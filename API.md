@@ -69,6 +69,7 @@ Name|Description
 [AuthorOptions](#projen-authoroptions)|*No description*
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
+[BadgeOptions](#projen-badgeoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
 [ChangelogOptions](#projen-changelogoptions)|filename is intentionally not configurable it is owned by `standard-release`.
 [CodeOfConductOptions](#projen-codeofconductoptions)|*No description*
@@ -114,6 +115,7 @@ Name|Description
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
+[SummaryOptions](#projen-summaryoptions)|*No description*
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|*No description*
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -180,6 +182,7 @@ Name|Description
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
 [ProjectType](#projen-projecttype)|Which type of project this is.
+[ReadmeSections](#projen-readmesections)|*No description*
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
@@ -2585,7 +2588,6 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
-**readmeStatus**🔹 | <code>boolean</code> | Is Readme on enabled?
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
@@ -2745,12 +2747,15 @@ new Readme(project: Project, options?: ReadmeOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **lines** (<code>Array<string></code>)  The contents of the text file. __*Default*__: [] empty file
   * **author** (<code>[AuthorOptions](#projen-authoroptions)</code>)  Author. __*Default*__: `AuthorOptions`
+  * **badges** (<code>Array<[BadgeOptions](#projen-badgeoptions)></code>)  Badges. __*Default*__: depends on whats configured
   * **changelog** (<code>[ChangelogOptions](#projen-changelogoptions)</code>)  Changelog. __*Default*__: `ChangelogOptions`
   * **codeOfConduct** (<code>[CodeOfConductOptions](#projen-codeofconductoptions)</code>)  Code of Conduct. __*Default*__: `CodeOfConductOptions`
   * **contributing** (<code>[ContributingOptions](#projen-contributingoptions)</code>)  Contributing. __*Default*__: `ContributingOptions`
-  * **filename** (<code>string</code>)  Readme file name. __*Default*__: README.md
+  * **filename** (<code>string</code>)  Readme file name. __*Default*__: "README.md"
   * **license** (<code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code>)  License. __*Default*__: `LicenseOptions`
   * **roadmap** (<code>[RoadmapOptions](#projen-roadmapoptions)</code>)  Roadmap. __*Default*__: `RoadmapOptions`
+  * **summary** (<code>[SummaryOptions](#projen-summaryoptions)</code>)  *No description* __*Optional*__
+  * **tagLine** (<code>string</code>)  The tag line for your project. __*Default*__: "my project."
   * **toc** (<code>boolean</code>)  Table of Contents. __*Default*__: `TocOptions`
   * **usage** (<code>[UsageOptions](#projen-usageoptions)</code>)  Usage. __*Default*__: `UsageOptions`
   * **vision** (<code>[VisionOptions](#projen-visionoptions)</code>)  Vision. __*Default*__: `VisionOptions`
@@ -2763,12 +2768,16 @@ new Readme(project: Project, options?: ReadmeOptions)
 Name | Type | Description 
 -----|------|-------------
 **author**🔹 | <code>[AuthorOptions](#projen-authoroptions)</code> | <span></span>
+**badges**🔹 | <code>Array<[BadgeOptions](#projen-badgeoptions)></code> | <span></span>
 **changelog**🔹 | <code>[ChangelogOptions](#projen-changelogoptions)</code> | <span></span>
 **codeOfConduct**🔹 | <code>[CodeOfConductOptions](#projen-codeofconductoptions)</code> | <span></span>
 **contributing**🔹 | <code>[ContributingOptions](#projen-contributingoptions)</code> | <span></span>
 **filename**🔹 | <code>string</code> | <span></span>
 **license**🔹 | <code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code> | <span></span>
 **roadmap**🔹 | <code>[RoadmapOptions](#projen-roadmapoptions)</code> | <span></span>
+**sectionOrder**🔹 | <code>Array<[ReadmeSections](#projen-readmesections)></code> | <span></span>
+**summary**🔹 | <code>[SummaryOptions](#projen-summaryoptions)</code> | <span></span>
+**tagLine**🔹 | <code>string</code> | <span></span>
 **toc**🔹 | <code>boolean</code> | <span></span>
 **usage**🔹 | <code>[UsageOptions](#projen-usageoptions)</code> | <span></span>
 **vision**🔹 | <code>[VisionOptions](#projen-visionoptions)</code> | <span></span>
@@ -5301,6 +5310,22 @@ Name | Type | Description
 
 
 
+## struct BadgeOptions 🔹 <a id="projen-badgeoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**imgUrl**🔹 | <code>string</code> | Image Url.
+**name**🔹 | <code>string</code> | Name of the badge.
+**url**🔹 | <code>string</code> | The Url.
+**altText**?🔹 | <code>string</code> | Alt Text To display.<br/>__*Default*__: `name`
+
+
+
 ## struct Catalog 🔹 <a id="projen-catalog"></a>
 
 
@@ -5341,7 +5366,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "CODE_OF_CONDUCT.md"
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
-**link**?🔹 | <code>boolean</code> | Whether to link to the CODE_OF_CONDUCT.md in Readme or not.<br/>__*Default*__: true
+**link**?🔹 | <code>boolean</code> | Whether to link to the CODE_OF_CONDUCT in Readme or not.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -5662,7 +5687,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "CONTRIBUTING.md"
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
-**link**?🔹 | <code>boolean</code> | Whether to link to the CONTRIBUTING.md in Readme or not.<br/>__*Default*__: true
+**link**?🔹 | <code>boolean</code> | Whether to link to the CONTRIBUTING in Readme or not.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -6586,16 +6611,19 @@ Readme Properties.
 Name | Type | Description 
 -----|------|-------------
 **author**?🔹 | <code>[AuthorOptions](#projen-authoroptions)</code> | Author.<br/>__*Default*__: `AuthorOptions`
+**badges**?🔹 | <code>Array<[BadgeOptions](#projen-badgeoptions)></code> | Badges.<br/>__*Default*__: depends on whats configured
 **changelog**?🔹 | <code>[ChangelogOptions](#projen-changelogoptions)</code> | Changelog.<br/>__*Default*__: `ChangelogOptions`
 **codeOfConduct**?🔹 | <code>[CodeOfConductOptions](#projen-codeofconductoptions)</code> | Code of Conduct.<br/>__*Default*__: `CodeOfConductOptions`
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **contributing**?🔹 | <code>[ContributingOptions](#projen-contributingoptions)</code> | Contributing.<br/>__*Default*__: `ContributingOptions`
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**filename**?🔹 | <code>string</code> | Readme file name.<br/>__*Default*__: README.md
+**filename**?🔹 | <code>string</code> | Readme file name.<br/>__*Default*__: "README.md"
 **license**?🔹 | <code>[ReadmeLicenseOptions](#projen-readmelicenseoptions)</code> | License.<br/>__*Default*__: `LicenseOptions`
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 **roadmap**?🔹 | <code>[RoadmapOptions](#projen-roadmapoptions)</code> | Roadmap.<br/>__*Default*__: `RoadmapOptions`
+**summary**?🔹 | <code>[SummaryOptions](#projen-summaryoptions)</code> | __*Optional*__
+**tagLine**?🔹 | <code>string</code> | The tag line for your project.<br/>__*Default*__: "my project."
 **toc**?🔹 | <code>boolean</code> | Table of Contents.<br/>__*Default*__: `TocOptions`
 **usage**?🔹 | <code>[UsageOptions](#projen-usageoptions)</code> | Usage.<br/>__*Default*__: `UsageOptions`
 **vision**?🔹 | <code>[VisionOptions](#projen-visionoptions)</code> | Vision.<br/>__*Default*__: `VisionOptions`
@@ -6673,6 +6701,24 @@ Options for the SampleFile object.
 Name | Type | Description 
 -----|------|-------------
 **contents**🔹 | <code>string</code> | The contents of the file to write.
+
+
+
+## struct SummaryOptions 🔹 <a id="projen-summaryoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "SUMMARY.md"
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
+**link**?🔹 | <code>boolean</code> | Whether to link to the SUMMARY in Readme or not.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -7908,6 +7954,26 @@ Name | Description
 **UNKNOWN** 🔹|This module may be a either a library or an app.
 **LIB** 🔹|This is a library, intended to be published to a package manager and consumed by other projects.
 **APP** 🔹|This is an app (service, tool, website, etc).
+
+
+## enum ReadmeSections 🔹 <a id="projen-readmesections"></a>
+
+
+
+Name | Description
+-----|-----
+**TOC** 🔹|
+**TAG_LINE** 🔹|
+**SUMMARY** 🔹|
+**CODE_OF_CONDUCT** 🔹|
+**CONTRIBUTING** 🔹|
+**CHANGELOG** 🔹|
+**LICENSE** 🔹|
+**ROADMAP** 🔹|
+**VISION** 🔹|
+**USAGE** 🔹|
+**AUTHOR** 🔹|
+**BADGES** 🔹|
 
 
 ## enum Stability 🔹 <a id="projen-stability"></a>

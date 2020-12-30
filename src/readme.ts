@@ -1,7 +1,6 @@
 import { Component } from './component';
 import { Project } from './project';
 import { TextFile, TextFileOptions } from './textfile';
-
 /**
  *
  */
@@ -366,6 +365,7 @@ export class Readme extends Component {
   constructor(project: Project, options?: ReadmeOptions) {
     super(project);
 
+    // Init & defaults
     this.filename = options?.filename ?? 'README.md';
     this.toc = options?.toc ?? true;
     this.tagLine = options?.tagLine ?? 'my project';
@@ -392,14 +392,39 @@ export class Readme extends Component {
       ReadmeSections.ROADMAP,
       ReadmeSections.VISION,
       ReadmeSections.AUTHOR,
-      ReadmeSections.BADGES
+      ReadmeSections.BADGES,
     ];
 
-    new TextFile(project, this.filename, {
-        lines: [
-          'From Constructor',
-        ],
+    // Render content
+    this._renderReadme();
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadme() {
+    let lines: string[];
+    lines = [];
+
+    for (const section of this.sectionOrder) {
+      switch (section) {
+        case ReadmeSections.TAG_LINE:
+          lines.push(this._renderReadmeTagLine());
+          break;
+      }
+
+      new TextFile(this.project, this.filename, {
+        lines: lines,
       });
     }
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeTagLine(): string {
+    return this.tagLine;
   }
 }
