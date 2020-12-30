@@ -83,6 +83,7 @@ export class Readme {
           break;
       }
     }
+    lines.push('\n');
 
     new TextFile(project, this.filename, {
       lines: lines,
