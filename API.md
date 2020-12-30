@@ -2009,7 +2009,7 @@ Name | Type | Description
 **entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
 **installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
 **manifest**⚠️ | <code>any</code> | <span></span>
-**npmTaskExecution**🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+**npmTaskExecution**🔹 | <code>[NpmTaskExecution](#projen-npmtaskexecution)</code> | Determines how tasks are executed when invoked as npm scripts (yarn/npm/pnpm run xyz).
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
@@ -7704,6 +7704,7 @@ Name | Description
 -----|-----
 **YARN** 🔹|Use `yarn` as the package manager.
 **NPM** 🔹|Use `npm` as the package manager.
+**PNPM** 🔹|Use `pnpm` as the package manager.
 
 
 ## enum NpmTaskExecution 🔹 <a id="projen-npmtaskexecution"></a>
