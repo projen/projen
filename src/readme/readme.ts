@@ -93,6 +93,32 @@ export class Readme {
         case ReadmeSections.SUMMARY:
           lines.push(this._renderReadmeSummary() + '\n');
           break;
+        case ReadmeSections.USAGE:
+          lines.push(this._renderReadmeUsage() + '\n');
+          break;
+        case ReadmeSections.CODE_OF_CONDUCT:
+          lines.push(this._renderCodeOfConduct() + '\n');
+          break;
+        case ReadmeSections.CONTRIBUTING:
+          lines.push(this._renderReadmeContributing() + '\n');
+          break;
+        case ReadmeSections.CHANGELOG:
+          lines.push(this._renderReadmeChangelog() + '\n');
+          break;
+        case ReadmeSections.LICENSE:
+          lines.push(this._renderReadmeLicense() + '\n');
+          break;
+        case ReadmeSections.ROADMAP:
+          lines.push(this._renderReadmeRoadmap() + '\n');
+          break;
+        case ReadmeSections.VISION:
+          lines.push(this._renderReadmeVision() + '\n');
+          break;
+        case ReadmeSections.AUTHOR:
+          lines.push(this._renderReadmeAuthor() + '\n');
+          break;
+        case ReadmeSections.BADGES:
+          lines.push(this._renderReadmeBadges() + '\n');
       }
     }
     lines.push('\n');
@@ -124,4 +150,75 @@ export class Readme {
     return '## Summary';
   }
 
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeUsage(): string {
+    return '## Usage';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderCodeOfConduct(): string {
+    return '## Code of Conduct';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeContributing(): string {
+    return '## Contributing';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeChangelog(): string {
+    return '## Changelog';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeLicense(): string {
+    return '## License';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeRoadmap(): string {
+    return '## Roadmap';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeVision(): string {
+    return '## Vision';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeAuthor(): string {
+    return '## Author';
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeBadges(): string {
+    return '## Badges';
+  }
 }
