@@ -193,6 +193,35 @@ export interface AuthorOptions extends TextFileOptions {
 }
 
 /**
+ *
+ */
+export interface BadgeOptions {
+
+  /**
+   * Name of the badge.
+   */
+  readonly name: string;
+
+  /**
+   * Alt Text To display.
+   *
+   * @default - `name`
+   */
+  readonly altText?: string;
+
+  /**
+   * Image Url.
+   *
+   */
+  readonly imgUrl: string;
+
+  /**
+   * The Url.
+   */
+  readonly url: string;
+}
+
+/**
  * Readme Properties
  */
 export interface ReadmeOptions extends TextFileOptions {
@@ -280,6 +309,31 @@ export interface ReadmeOptions extends TextFileOptions {
    * @default - `AuthorOptions`
    */
   readonly author?: AuthorOptions;
+
+  /**
+   * Badges.
+   *
+   * @default - depends on whats configured
+   */
+  readonly badges?: BadgeOptions[];
+}
+
+/**
+ *
+ */
+export enum ReadmeSections {
+  TOC,
+  TAG_LINE,
+  SUMMARY,
+  CODE_OF_CONDUCT,
+  CONTRIBUTING,
+  CHANGELOG,
+  LICENSE,
+  ROADMAP,
+  VISION,
+  USAGE,
+  AUTHOR,
+  BADGES,
 }
 
 /**
@@ -288,6 +342,7 @@ export interface ReadmeOptions extends TextFileOptions {
  */
 export class Readme extends Component {
   public filename: string;
+
   public toc: boolean;
   public tagLine: string;
   public summary: SummaryOptions;
@@ -299,6 +354,9 @@ export class Readme extends Component {
   public vision: VisionOptions;
   public usage: UsageOptions;
   public author: AuthorOptions;
+  public badges: BadgeOptions[];
+
+  public sectionOrder: ReadmeSections[];
 
   /**
    *
@@ -320,11 +378,28 @@ export class Readme extends Component {
     this.vision = options?.vision ?? { filename: 'VISION.md', link: true };
     this.usage = options?.usage ?? { filename: 'USAGE.md', link: true };
     this.author = options?.author ?? { filename: 'AUTHOR.md', link: true };
+    this.badges = [];
+
+    this.sectionOrder = [
+      ReadmeSections.TAG_LINE,
+      ReadmeSections.TOC,
+      ReadmeSections.SUMMARY,
+      ReadmeSections.USAGE,
+      ReadmeSections.CODE_OF_CONDUCT,
+      ReadmeSections.CONTRIBUTING,
+      ReadmeSections.CHANGELOG,
+      ReadmeSections.LICENSE,
+      ReadmeSections.ROADMAP,
+      ReadmeSections.VISION,
+      ReadmeSections.AUTHOR,
+      ReadmeSections.BADGES
+    ];
 
     new TextFile(project, this.filename, {
-      lines: [
-        'From Constructor',
-      ],
-    });
+        lines: [
+          'From Constructor',
+        ],
+      });
+    }
   }
 }
