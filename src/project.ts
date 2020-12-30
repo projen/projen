@@ -149,11 +149,6 @@ export class Project {
   public readonly readme: Readme | undefined;
 
   /**
-   * Is Readme on enabled?
-   */
-  public readonly readmeStatus: boolean;
-
-  /**
    * Project dependencies.
    */
   public readonly deps: Dependencies;
@@ -218,8 +213,7 @@ export class Project {
       new Clobber(this);
     }
 
-    this.readmeStatus = options.readme ?? true;
-    this.readme = this.readmeStatus ? new Readme(this) : undefined;
+    this.readme = (options.readme ?? true) ? new Readme(this) : undefined;
   }
 
   /**
