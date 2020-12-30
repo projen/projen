@@ -37,7 +37,7 @@ export class Readme {
     // Init & defaults
     this.filename = options?.filename ?? 'README.md';
     this.toc = options?.toc ?? true;
-    this.tagLine = options?.tagLine ?? 'my project';
+    this.tagLine = options?.tagLine ?? project.name;
     this.summary = options?.summary ?? { filename: 'SUMMARY.md', link: true };
     this.codeOfConduct = options?.codeOfConduct ?? { filename: 'CODE_OF_CONDUCT.md', link: true };
     this.contributing = options?.contributing ?? { filename: 'CONTRIBUTING.md', link: true };
@@ -81,6 +81,9 @@ export class Readme {
         case ReadmeSections.TAG_LINE:
           lines.push(this._renderReadmeTagLine());
           break;
+        case ReadmeSections.TOC:
+          lines.push(this._renderReadmeToc());
+          break;
       }
     }
     lines.push('\n');
@@ -90,11 +93,20 @@ export class Readme {
     });
   }
 
-  /**
+   /**
    *
    * @internal
    */
   private _renderReadmeTagLine(): string {
-    return this.tagLine;
+    return `# ${this.tagLine}`;
+  }
+}
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeToc(): string {
+    return '## Table of Contents';
+
   }
 }
