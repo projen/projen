@@ -2729,7 +2729,6 @@ __Returns__:
 
 Represents a README.md file.
 
-__Extends__: [Component](#projen-component)
 
 ### Initializer
 

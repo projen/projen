@@ -1,6 +1,6 @@
-import { Component } from './component';
 import { Project } from './project';
 import { TextFile, TextFileOptions } from './textfile';
+
 /**
  *
  */
@@ -339,7 +339,7 @@ export enum ReadmeSections {
  * Represents a README.md file.
  *
  */
-export class Readme extends Component {
+export class Readme {
   public filename: string;
 
   public toc: boolean;
@@ -363,7 +363,6 @@ export class Readme extends Component {
    * @param options
    */
   constructor(project: Project, options?: ReadmeOptions) {
-    super(project);
 
     // Init & defaults
     this.filename = options?.filename ?? 'README.md';
@@ -396,14 +395,14 @@ export class Readme extends Component {
     ];
 
     // Render content
-    this._renderReadme();
+    this._renderReadme(project);
   }
 
   /**
    *
    * @internal
    */
-  private _renderReadme() {
+  private _renderReadme(project: Project) {
     let lines: string[];
     lines = [];
 
@@ -413,11 +412,11 @@ export class Readme extends Component {
           lines.push(this._renderReadmeTagLine());
           break;
       }
-
-      new TextFile(this.project, this.filename, {
-        lines: lines,
-      });
     }
+
+    new TextFile(project, this.filename, {
+      lines: lines,
+    });
   }
 
   /**
