@@ -1,4 +1,4 @@
-import { PROJEN_RC, PROJEN_VERSION } from './common';
+import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
 import { GithubWorkflow } from './github';
 import { AutoMerge } from './github/auto-merge';
 import { DependabotOptions } from './github/dependabot';
@@ -519,6 +519,7 @@ export class NodeProject extends Project {
     this.setScript('start', `${this.package.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
+    this.npmignore?.exclude(`/${PROJEN_DIR}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
 
