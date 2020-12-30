@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.5](https://github.com/projen/projen/compare/v0.12.4...v0.12.5) (2020-12-30)
+
+
+### Features
+
+* npmignore .projen and test reports ([#430](https://github.com/projen/projen/issues/430)) ([ced3d40](https://github.com/projen/projen/commit/ced3d402d13326cccc5168203355cf67ae80eda3))
+
 ### [0.12.4](https://github.com/projen/projen/compare/v0.12.3...v0.12.4) (2020-12-30)
 
 
