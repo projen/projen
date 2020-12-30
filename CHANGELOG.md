@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.4](https://github.com/projen/projen/compare/v0.12.3...v0.12.4) (2020-12-30)
+
+
+### Features
+
+* **task:** additional prepend methods ([#426](https://github.com/projen/projen/issues/426)) ([dfa2064](https://github.com/projen/projen/commit/dfa20646abee57bf16c581df496831e68dd86613))
+
 ### [0.12.3](https://github.com/projen/projen/compare/v0.12.2...v0.12.3) (2020-12-29)
 
 
