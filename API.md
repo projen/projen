@@ -3926,7 +3926,7 @@ exec(command: string, options?: TaskStepOptions): void
 
 
 
-#### prepend(shell, options?)🔹 <a id="projen-tasks-task-prepend"></a>
+#### prepend(shell, options?)⚠️ <a id="projen-tasks-task-prepend"></a>
 
 Adds a command at the beginning of the task.
 
@@ -3935,6 +3935,54 @@ prepend(shell: string, options?: TaskStepOptions): void
 ```
 
 * **shell** (<code>string</code>)  The command to add.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### prependExec(shell, options?)🔹 <a id="projen-tasks-task-prependexec"></a>
+
+Adds a command at the beginning of the task.
+
+```ts
+prependExec(shell: string, options?: TaskStepOptions): void
+```
+
+* **shell** (<code>string</code>)  The command to add.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### prependSay(message, options?)🔹 <a id="projen-tasks-task-prependsay"></a>
+
+Says something at the beginning of the task.
+
+```ts
+prependSay(message: string, options?: TaskStepOptions): void
+```
+
+* **message** (<code>string</code>)  Your message.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### prependSpawn(subtask, options?)🔹 <a id="projen-tasks-task-prependspawn"></a>
+
+Adds a spawn instruction at the beginning of the task.
+
+```ts
+prependSpawn(subtask: Task, options?: TaskStepOptions): void
+```
+
+* **subtask** (<code>[tasks.Task](#projen-tasks-task)</code>)  The subtask to execute.
 * **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name

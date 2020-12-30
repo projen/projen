@@ -92,12 +92,11 @@ export class Task {
   /**
    * Adds a command at the beginning of the task.
    * @param shell The command to add.
+   *
+   * @deprecated use `prependExec()`
    */
   public prepend(shell: string, options: TaskStepOptions = {}) {
-    this._steps.unshift({
-      exec: shell,
-      ...options,
-    });
+    this.prependExec(shell, options);
   }
 
   /**
@@ -106,6 +105,39 @@ export class Task {
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
     this._steps.push({ spawn: subtask.name, ...options });
+  }
+
+  /**
+   * Adds a command at the beginning of the task.
+   * @param shell The command to add.
+   */
+  public prependExec(shell: string, options: TaskStepOptions = {}) {
+    this._steps.unshift({
+      exec: shell,
+      ...options,
+    });
+  }
+
+  /**
+   * Adds a spawn instruction at the beginning of the task.
+   * @param subtask The subtask to execute.
+   */
+  public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
+    this._steps.unshift({
+      spawn: subtask.name,
+      ...options,
+    });
+  }
+
+  /**
+   * Says something at the beginning of the task.
+   * @param message Your message
+   */
+  public prependSay(message: string, options: TaskStepOptions = {}) {
+    this._steps.unshift({
+      say: message,
+      ...options,
+    });
   }
 
   /**
