@@ -2,9 +2,18 @@ import { Component } from '../component';
 import { Project } from '../project';
 import { TextFile } from '../textfile';
 import {
-  SummaryOptions, CodeOfConductOptions, ContributingOptions, ChangelogOptions, ReadmeLicenseOptions,
-  RoadmapOptions, VisionOptions, UsageOptions, AuthorOptions, BadgeOptions, ReadmeSection,
+  AuthorOptions,
+  BadgeOptions,
+  ChangelogOptions,
+  CodeOfConductOptions,
+  ContributingOptions,
+  ReadmeLicenseOptions,
   ReadmeOptions,
+  ReadmeSection,
+  RoadmapOptions,
+  SummaryOptions,
+  UsageOptions,
+  VisionOptions,
 } from './model';
 
 /**
@@ -16,6 +25,7 @@ export class Readme extends Component {
 
   public toc: boolean;
   public tagLine: string;
+  public badges: Array<BadgeOptions>;
   public summary: SummaryOptions;
   public codeOfConduct: CodeOfConductOptions;
   public contributing: ContributingOptions;
@@ -25,7 +35,6 @@ export class Readme extends Component {
   public vision: VisionOptions;
   public usage: UsageOptions;
   public author: AuthorOptions;
-  public badges: Array<BadgeOptions>;
 
   public sections: ReadmeSection[];
 
@@ -41,6 +50,7 @@ export class Readme extends Component {
     this.filename = options?.filename ?? 'README.md';
     this.toc = options?.toc ?? false;
     this.tagLine = options?.tagLine ?? project.name;
+    this.badges = [];
     this.summary = options?.summary ?? { filename: 'SUMMARY.md', link: true };
     this.codeOfConduct = options?.codeOfConduct ?? { filename: 'CODE_OF_CONDUCT.md', link: true };
     this.contributing = options?.contributing ?? { filename: 'CONTRIBUTING.md', link: true };
@@ -50,11 +60,11 @@ export class Readme extends Component {
     this.vision = options?.vision ?? { filename: 'VISION.md', link: true };
     this.usage = options?.usage ?? { filename: 'USAGE.md', link: true };
     this.author = options?.author ?? { filename: 'AUTHOR.md', link: true };
-    this.badges = [];
 
     // Order of Sections (those not present at resolve time will be skipped)
     this.sections = [
       ReadmeSection.TAG_LINE,
+      ReadmeSection.BADGES,
       ReadmeSection.TOC,
       ReadmeSection.SUMMARY,
       ReadmeSection.USAGE,
@@ -65,7 +75,6 @@ export class Readme extends Component {
       ReadmeSection.ROADMAP,
       ReadmeSection.VISION,
       ReadmeSection.AUTHOR,
-      ReadmeSection.BADGES,
     ];
   }
 
@@ -93,6 +102,9 @@ export class Readme extends Component {
       switch (section) {
         case ReadmeSection.TAG_LINE:
           lines.push(this._renderReadmeTagLine() + '\n');
+          break;
+        case ReadmeSection.BADGES:
+          lines.push(this._renderReadmeBadges() + '\n');
           break;
         case ReadmeSection.TOC:
           lines.push(this._renderReadmeToc() + '\n');
@@ -124,8 +136,6 @@ export class Readme extends Component {
         case ReadmeSection.AUTHOR:
           lines.push(this._renderReadmeAuthor() + '\n');
           break;
-        case ReadmeSection.BADGES:
-          lines.push(this._renderReadmeBadges() + '\n');
       }
     }
     lines.push('\n');
@@ -139,6 +149,21 @@ export class Readme extends Component {
    */
   private _renderReadmeTagLine(): string {
     return `# ${this.tagLine}`;
+  }
+
+  /**
+   *
+   * @internal
+   */
+  private _renderReadmeBadges(): string {
+    let lines: string[] = [];
+
+    lines.push('## Badges\n');
+    for (const badge of this.badges) {
+      lines.push(`![${badge.altText ?? badge.name})](${badge.imgUrl})](${badge.url})`);
+    }
+
+    return lines.join('\n');
   }
 
   /**
@@ -298,21 +323,6 @@ export class Readme extends Component {
       lines.push(`[Author](${this.author.filename})`);
     }
     lines.push((this.author.lines ?? []).join('\n'));
-
-    return lines.join('\n');
-  }
-
-  /**
-   *
-   * @internal
-   */
-  private _renderReadmeBadges(): string {
-    let lines: string[] = [];
-
-    lines.push('## Badges\n');
-    for (const badge of this.badges) {
-      lines.push(`![${badge.altText ?? badge.name})](${badge.imgUrl})](${badge.url})`);
-    }
 
     return lines.join('\n');
   }
