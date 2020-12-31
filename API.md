@@ -3857,6 +3857,7 @@ Represents a README.md file.
 
 __Submodule__: readme
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -3906,6 +3907,21 @@ Name | Type | Description
 **tagLine**🔹 | <code>string</code> | <span></span>
 **usage**🔹 | <code>[readme.UsageOptions](#projen-readme-usageoptions)</code> | <span></span>
 **vision**🔹 | <code>[readme.VisionOptions](#projen-readme-visionoptions)</code> | <span></span>
+
+### Methods
+
+
+#### synthesize()🔹 <a id="projen-readme-readme-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(): void
+```
+
+
+
+
 
 
 

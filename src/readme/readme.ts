@@ -1,3 +1,4 @@
+import { Component } from '../component';
 import { Project } from '../project';
 import { TextFile } from '../textfile';
 import {
@@ -10,7 +11,7 @@ import {
  * Represents a README.md file.
  *
  */
-export class Readme {
+export class Readme extends Component {
   public filename: string;
 
   public tagLine: string;
@@ -33,6 +34,7 @@ export class Readme {
    * @param options
    */
   constructor(project: Project, options?: ReadmeOptions) {
+    super(project);
 
     // Init & defaults
     this.filename = options?.filename ?? 'README.md';
@@ -63,22 +65,22 @@ export class Readme {
       ReadmeSections.AUTHOR,
       ReadmeSections.BADGES,
     ];
+  }
 
-    // Render content
-    this._renderReadme(project);
+  /**
+   *
+   */
+  public synthesize() {
+    new TextFile(this.project, this.filename, {
+      lines: this._renderReadme(),
+    });
   }
 
   /**
    *
    * @internal
    */
-  private _renderReadme(project: Project) {
-    new TextFile(project, this.filename, {
-      lines: this._constructReadme(project),
-    });
-  }
-
-  private _constructReadme(project: Project): string[] {
+  private _renderReadme(): string[] {
     const lines: string[] = [];
 
     for (const section of this.sectionOrder) {
@@ -87,7 +89,7 @@ export class Readme {
           lines.push(this._renderReadmeTagLine() + '\n');
           break;
         case ReadmeSections.TOC:
-          lines.push(this._renderReadmeToc(project) + '\n');
+          lines.push(this._renderReadmeToc() + '\n');
           break;
         case ReadmeSections.SUMMARY:
           lines.push(this._renderReadmeSummary() + '\n');
@@ -137,11 +139,11 @@ export class Readme {
    *
    * @internal
    */
-  private _renderReadmeToc(project: Project): string {
+  private _renderReadmeToc(): string {
     let lines: string[] = [];
 
-    lines.push(`# ${project.name}`);
-    lines.push(`- [${project.name}](#${ project.name })`);
+    lines.push(`# ${this.project.name}`);
+    lines.push(`- [${this.project.name}](#${this.project.name})`);
 
     for (const section in this.sectionOrder) {
       lines.push(`  - [${section}](#${section})`);

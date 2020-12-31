@@ -47,7 +47,6 @@ tsconfig.json
 !/.projen/deps.json
 !/.gitpod.yml
 !/.devcontainer.json
-!/README.md
 !/package.json
 !/LICENSE
 !/.npmignore
