@@ -287,7 +287,7 @@ export class Readme extends Component {
 
     lines.push('## Author\n');
     if (this.author.link) {
-      lines.push(`[VISION](${this.author.filename})`);
+      lines.push(`[Author](${this.author.filename})`);
     }
     lines.push((this.author.lines ?? []).join('\n'));
 
