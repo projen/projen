@@ -71,3 +71,11 @@ describe('Readme customization', () => {
     expect(readme).toContain('test tag line');
   });
 });
+
+// Test each section customization
+// Test section and order customization
+// Test link on/off, inline on/off
+// Test lower case code-of-conduct
+// Test each core badge
+// Test custom badge
+// Test no badges
