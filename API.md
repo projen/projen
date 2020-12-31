@@ -3884,6 +3884,7 @@ new readme.Readme(project: Project, options?: ReadmeOptions)
   * **roadmap** (<code>[readme.RoadmapOptions](#projen-readme-roadmapoptions)</code>)  Roadmap. __*Default*__: `RoadmapOptions`
   * **summary** (<code>[readme.SummaryOptions](#projen-readme-summaryoptions)</code>)  *No description* __*Optional*__
   * **tagLine** (<code>string</code>)  The tag line for your project. __*Default*__: "my project."
+  * **toc** (<code>boolean</code>)  Table of Contents? __*Default*__: false
   * **usage** (<code>[readme.UsageOptions](#projen-readme-usageoptions)</code>)  Usage. __*Default*__: `UsageOptions`
   * **vision** (<code>[readme.VisionOptions](#projen-readme-visionoptions)</code>)  Vision. __*Default*__: `VisionOptions`
 
@@ -3905,6 +3906,7 @@ Name | Type | Description
 **sectionOrder**🔹 | <code>Array<[readme.ReadmeSections](#projen-readme-readmesections)></code> | <span></span>
 **summary**🔹 | <code>[readme.SummaryOptions](#projen-readme-summaryoptions)</code> | <span></span>
 **tagLine**🔹 | <code>string</code> | <span></span>
+**toc**🔹 | <code>boolean</code> | <span></span>
 **usage**🔹 | <code>[readme.UsageOptions](#projen-readme-usageoptions)</code> | <span></span>
 **vision**🔹 | <code>[readme.VisionOptions](#projen-readme-visionoptions)</code> | <span></span>
 
@@ -7156,6 +7158,7 @@ Name | Type | Description
 **roadmap**?🔹 | <code>[readme.RoadmapOptions](#projen-readme-roadmapoptions)</code> | Roadmap.<br/>__*Default*__: `RoadmapOptions`
 **summary**?🔹 | <code>[readme.SummaryOptions](#projen-readme-summaryoptions)</code> | __*Optional*__
 **tagLine**?🔹 | <code>string</code> | The tag line for your project.<br/>__*Default*__: "my project."
+**toc**?🔹 | <code>boolean</code> | Table of Contents?<br/>__*Default*__: false
 **usage**?🔹 | <code>[readme.UsageOptions](#projen-readme-usageoptions)</code> | Usage.<br/>__*Default*__: `UsageOptions`
 **vision**?🔹 | <code>[readme.VisionOptions](#projen-readme-visionoptions)</code> | Vision.<br/>__*Default*__: `VisionOptions`
 

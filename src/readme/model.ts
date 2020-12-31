@@ -242,6 +242,13 @@ export interface ReadmeOptions extends TextFileOptions {
   readonly tagLine?: string;
 
   /**
+   * Table of Contents?
+   *
+   * @default false
+   */
+  readonly toc?: boolean;
+
+  /**
    *
    */
   readonly summary?: SummaryOptions;

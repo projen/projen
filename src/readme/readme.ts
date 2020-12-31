@@ -14,6 +14,7 @@ import {
 export class Readme extends Component {
   public filename: string;
 
+  public toc: boolean;
   public tagLine: string;
   public summary: SummaryOptions;
   public codeOfConduct: CodeOfConductOptions;
@@ -38,6 +39,7 @@ export class Readme extends Component {
 
     // Init & defaults
     this.filename = options?.filename ?? 'README.md';
+    this.toc = options?.toc ?? false;
     this.tagLine = options?.tagLine ?? project.name;
     this.summary = options?.summary ?? { filename: 'SUMMARY.md', link: true };
     this.codeOfConduct = options?.codeOfConduct ?? { filename: 'CODE_OF_CONDUCT.md', link: true };
@@ -142,11 +144,13 @@ export class Readme extends Component {
   private _renderReadmeToc(): string {
     let lines: string[] = [];
 
-    lines.push(`# ${this.project.name}`);
-    lines.push(`- [${this.project.name}](#${this.project.name})`);
+    if (this.toc) {
+      lines.push(`# ${this.project.name}`);
+      lines.push(`- [${this.project.name}](#${this.project.name})`);
 
-    for (const section in this.sectionOrder) {
-      lines.push(`  - [${section}](#${section})`);
+      for (const section in this.sectionOrder) {
+        lines.push(`  - [${section}](#${section})`);
+      }
     }
 
     return lines.join('\n');
