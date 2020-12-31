@@ -1,6 +1,7 @@
 import { SpawnOptions, spawnSync } from 'child_process';
-import { existsSync, readFileSync } from 'fs';
+import { existsSync, readFileSync, statSync } from 'fs';
 import { join, resolve } from 'path';
+import { format } from 'util';
 import * as chalk from 'chalk';
 import * as logging from '../logging';
 import { TasksManifest, TaskSpec } from './model';
@@ -21,7 +22,7 @@ export class TaskRuntime {
   public readonly workdir: string;
 
   constructor(workdir: string) {
-    this.workdir = workdir;
+    this.workdir = resolve(workdir);
     const manifestPath = join(this.workdir, Tasks.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, 'utf-8'))
@@ -61,7 +62,11 @@ class RunTask {
   private readonly env: { [name: string]: string | undefined } = { };
   private readonly parents: string[];
 
+  private readonly workdir: string;
+
   constructor(private readonly runtime: TaskRuntime, private readonly task: TaskSpec, parents: string[] = []) {
+    this.workdir = task.cwd ?? this.runtime.workdir;
+
     this.parents = parents;
     this.env = { ...process.env };
     this.env = this.resolveEnvironment();
@@ -73,16 +78,20 @@ class RunTask {
     }
 
     for (const step of task.steps ?? []) {
+      if (step.say) {
+        logging.info(this.fmtLog(step.say));
+      }
+
       if (step.spawn) {
         this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
       }
 
       if (step.exec) {
-        const exec = step.exec;
-        this.log(exec);
-        const result = this.shell(exec);
+        const command = step.exec;
+        const cwd = step.cwd;
+        const result = this.shell({ command, cwd });
         if (result.status !== 0) {
-          throw new Error(`Task "${this.fullname}" failed when executing "${exec}" (cwd: ${resolve(this.runtime.workdir)})`);
+          throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
         }
       }
     }
@@ -102,7 +111,11 @@ class RunTask {
     }
 
     this.log(`condition: ${task.condition}`);
-    const result = this.shell(task.condition);
+    const result = this.shell({
+      command: task.condition,
+      logprefix: 'condition: ',
+      quiet: true,
+    });
     if (result.status === 0) {
       return true;
     } else {
@@ -130,9 +143,13 @@ class RunTask {
     for (const [key, value] of Object.entries(env ?? {})) {
       if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
-        const result = this.shellEval(query);
+        const result = this.shellEval({ command: query });
         if (result.status !== 0) {
-          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${result.stderr.toString() ?? 'unknown error'}`);
+          const error = result.error
+            ? result.error.stack
+            : result.stderr?.toString()
+            ?? 'unknown error';
+          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${error}`);
         }
         output[key] = result.stdout.toString('utf-8').trim();
       } else {
@@ -151,14 +168,65 @@ class RunTask {
   }
 
   private log(...args: any[]) {
-    logging.verbose(`${chalk.underline(this.fullname)} |`, ...args);
+    logging.verbose(this.fmtLog(...args));
   }
 
-  private shell(command: string, options: SpawnOptions = {}) {
-    return spawnSync(command, { cwd: this.runtime.workdir, shell: true, stdio: 'inherit', env: this.env, ...options });
+  private fmtLog(...args: any[]) {
+    return format(`${chalk.underline(this.fullname)} |`, ...args);
   }
 
-  private shellEval(command: string, options: SpawnOptions = {}) {
-    return this.shell(command, { stdio: ['inherit', 'pipe', 'inherit'], ...options });
+  private shell(options: ShellOptions) {
+    const quiet = options.quiet ?? false;
+    if (!quiet) {
+      const log = new Array<string>();
+
+      if (options.logprefix) {
+        log.push(options.logprefix);
+      }
+
+      log.push(options.command);
+
+      if (options.cwd) {
+        log.push(`(cwd: ${options.cwd})`);
+      }
+
+      this.log(log.join(' '));
+    }
+
+    const cwd = options.cwd ?? this.workdir;
+    if (!existsSync(cwd) || !statSync(cwd).isDirectory()) {
+      throw new Error(`invalid workdir (cwd): ${cwd} must be an existing directory`);
+    }
+
+    return spawnSync(options.command, {
+      ...options,
+      cwd,
+      shell: true,
+      stdio: 'inherit',
+      env: this.env,
+      ...options.spawnOptions,
+    });
   }
+
+  private shellEval(options: ShellOptions) {
+    return this.shell({
+      quiet: true,
+      ...options,
+      spawnOptions: {
+        stdio: ['inherit', 'pipe', 'inherit'],
+      },
+    });
+  }
+}
+
+interface ShellOptions {
+  readonly command: string;
+  /**
+   * @default - project dir
+   */
+  readonly cwd?: string;
+  readonly logprefix?: string;
+  readonly spawnOptions?: SpawnOptions;
+  /** @default false */
+  readonly quiet?: boolean;
 }

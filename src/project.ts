@@ -1,20 +1,30 @@
 import { existsSync } from 'fs';
 import * as path from 'path';
 import { cleanup } from './cleanup';
+import { Clobber } from './clobber';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
+import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub } from './github';
+import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import * as logging from './logging';
-import { SampleReadme } from './readme';
+import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
-import { VsCode } from './vscode';
+import { VsCode, DevContainer } from './vscode';
 
 export interface ProjectOptions {
+  /**
+   * This is the name of your project.
+   *
+   * @default $BASEDIR
+   */
+  readonly name: string;
+
   /**
    * The parent project, if this project is part of a bigger project.
    */
@@ -32,12 +42,51 @@ export interface ProjectOptions {
    * @default "."
    */
   readonly outdir?: string;
+
+  /**
+   * Add a Gitpod development environment
+   *
+   * @default false
+   */
+  readonly gitpod?: boolean;
+
+  /**
+   * Add a VSCode development environment (used for GitHub Codespaces)
+   *
+   * @default false
+   */
+  readonly devContainer?: boolean;
+
+  /**
+   * Add a `clobber` task which resets the repo to origin.
+   * @default true
+   */
+  readonly clobber?: boolean;
+
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
+
+  /**
+   * Which type of project this is (library/app).
+   * @default ProjectType.UNKNOWN
+   */
+  readonly projectType?: ProjectType;
 }
 
 /**
  * Base project
  */
 export class Project {
+  /**
+   * Project name.
+   */
+  public readonly name: string;
+
   /**
    * .gitignore
    */
@@ -74,14 +123,40 @@ export class Project {
 
   public readonly tasks: Tasks;
 
+  /**
+   * Access for Gitpod
+   *
+   * This will be `undefined` if gitpod boolean is false
+   */
+  public readonly gitpod: Gitpod | undefined;
+
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false
+   */
+  public readonly devContainer: DevContainer | undefined;
+
+  /*
+   * Which project type this is.
+   */
+  public readonly projectType: ProjectType;
+
+  /**
+   * Project dependencies.
+   */
+  public readonly deps: Dependencies;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
 
-  constructor(options: ProjectOptions = { }) {
+  constructor(options: ProjectOptions) {
+    this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -114,16 +189,25 @@ export class Project {
     // ------------------------------------------------------------------------
 
     this.gitignore = new IgnoreFile(this, '.gitignore');
+    this.gitignore.exclude('node_modules/'); // created by running `npx projen`
 
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
+    this.deps = new Dependencies(this);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
-    new SampleReadme(this, '# my project');
+    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
+    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
+
+    if (options.clobber ?? true) {
+      new Clobber(this);
+    }
+
+    new SampleReadme(this, options.readme);
   }
 
   /**
@@ -153,7 +237,7 @@ export class Project {
   }
 
   /**
-   * Finds a file at the specified relateive path within this project and all
+   * Finds a file at the specified relative path within this project and all
    * its subprojects.
    *
    * @param filePath The file path. If this path is relative, it will be resolved
@@ -219,13 +303,17 @@ export class Project {
    * 1. Call "this.preSynthesize()"
    * 2. Delete all generated files
    * 3. Synthesize all sub-projects
-   * 4. Synthezize all components of this project
+   * 4. Synthesize all components of this project
    * 5. Call "postSynthesize()" for all components of this project
    * 6. Call "this.postSynthesize()"
    */
   public synth(): void {
     const outdir = this.outdir;
     this.preSynthesize();
+
+    for (const comp of this._components) {
+      comp.preSynthesize();
+    }
 
     // delete all generated files before we start synthesizing new ones
     cleanup(outdir, this.excludeFromCleanup);
@@ -293,3 +381,25 @@ export class Project {
   }
 }
 
+
+/**
+ * Which type of project this is.
+ */
+export enum ProjectType {
+  /**
+   * This module may be a either a library or an app.
+   */
+  UNKNOWN = 'unknown',
+
+  /**
+   * This is a library, intended to be published to a package manager and
+   * consumed by other projects.
+   */
+  LIB = 'lib',
+
+  /**
+   * This is an app (service, tool, website, etc). Its artifacts are intended to
+   * be deployed or published for end-user consumption.
+   */
+  APP = 'app'
+}

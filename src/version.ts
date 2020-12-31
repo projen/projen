@@ -55,7 +55,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: `${project.projenCommand} && git add .`,
+          postbump: `${project.package.projenCommand} && git add .`,
         },
       },
     });
@@ -64,7 +64,8 @@ export class Version extends Component {
   /**
    * Returns the current version of the project.
    */
-  public resolveVersion(outdir: string) {
+  public get currentVersion() {
+    const outdir = this.project.outdir;
     const versionFile = `${outdir}/${VERSION_FILE}`;
     if (!fs.existsSync(versionFile)) {
       if (!fs.existsSync(outdir)) {

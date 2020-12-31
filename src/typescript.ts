@@ -7,6 +7,7 @@ import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
 import { Task, TaskCategory } from './tasks';
 import { TypedocDocgen } from './typescript-typedoc';
+import { deepMerge } from './util';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -123,7 +124,7 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? 'docs/';
 
-    this.addCompileCommand('tsc');
+    this.compileTask.exec('tsc');
 
     this.watchTask = this.addTask('watch', {
       description: 'Watch & compile in the background',
@@ -157,10 +158,11 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
-      this.manifest.types = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
+      const entrypointTypes = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
+      this.package.addField('types', entrypointTypes);
     }
 
-    const compilerOptionDefaults = {
+    const compilerOptionDefaults: TypeScriptCompilerOptions = {
       alwaysStrict: true,
       declaration: true,
       experimentalDecorators: true,
@@ -184,20 +186,20 @@ export class TypeScriptProject extends NodeProject {
     };
 
     if (!options.disableTsconfig) {
-      this.tsconfig = new TypescriptConfig(this, {
+      const baseTsconfig: TypescriptConfigOptions = {
         include: [`${this.srcdir}/**/*.ts`],
         exclude: [
           'node_modules',
           this.libdir,
         ],
-        ...options.tsconfig,
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
           ...compilerOptionDefaults,
-          ...options.tsconfig?.compilerOptions,
         },
-      });
+      };
+      this.tsconfig = new TypescriptConfig(this,
+        deepMerge(baseTsconfig, options.tsconfig) as TypescriptConfigOptions);
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
@@ -237,8 +239,6 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
-      // const tsconfig = new TypescriptConfig(this, );
-
       eslintTsConfig = tsconfig.fileName;
 
       // if we test before compilation, remove the lib/ directory before running
@@ -248,6 +248,9 @@ export class TypeScriptProject extends NodeProject {
         // test code does not take a dependency on "lib" and instead on "src".
         this.testTask.prepend(`rm -fr ${this.libdir}/`);
       }
+
+      // compile test code
+      this.testCompileTask.exec(`tsc --noEmit --project ${tsconfig.fileName}`);
     }
 
     if (options.eslint ?? true) {
@@ -261,7 +264,7 @@ export class TypeScriptProject extends NodeProject {
 
     this.addDevDeps(
       `typescript@${options.typescriptVersion ?? '^3.9.5'}`,
-      `@types/node@^${this.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+      `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.

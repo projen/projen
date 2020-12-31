@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as semver from 'semver';
 import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
 import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
@@ -572,7 +573,7 @@ export class Jest {
         '**/?(*.)+(spec|test).js?(x)',
       ],
       reporters: this.reporters,
-    };
+    } as JestConfigOptions;
 
     if (options.junitReporting ?? true) {
       const reportsDir = DEFAULT_TEST_REPORTS_DIR;
@@ -585,6 +586,11 @@ export class Jest {
       project.addDevDeps('jest-junit@^12');
 
       project.gitignore.exclude(
+        '# jest-junit artifacts',
+        `/${reportsDir}/`,
+        'junit.xml',
+      );
+      project.npmignore?.exclude(
         '# jest-junit artifacts',
         `/${reportsDir}/`,
         'junit.xml',
@@ -676,6 +682,12 @@ export class Jest {
     // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
     if (this.project.antitamper) {
       jestOpts.push('--updateSnapshot');
+    }
+
+    // as recommended in the jest docs, node > 14 may use native v8 coverage collection
+    // https://jestjs.io/docs/en/cli#--coverageproviderprovider
+    if (this.project.package.minNodeVersion && semver.gte(this.project.package.minNodeVersion, '14.0.0')) {
+      jestOpts.push('--coverageProvider=v8');
     }
 
     this.project.testTask.exec(`jest ${jestOpts.join(' ')}`);

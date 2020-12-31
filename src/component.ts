@@ -9,6 +9,11 @@ export class Component {
   }
 
   /**
+   * Called before synthesis.
+   */
+  public preSynthesize() { }
+
+  /**
    * Synthesizes files to the project output directory.
    */
   public synthesize() {}
