@@ -12,7 +12,7 @@ test('ignorefile synthesises correctly', () => {
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([]);
 });
 
-test('ignorefile puts includes after excludes', () => {
+test('ignorefile does not sort entries', () => {
   // GIVEN
   const prj = new TestProject();
 
@@ -26,10 +26,10 @@ test('ignorefile puts includes after excludes', () => {
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
     'a.txt',
     'b.txt',
-    'e.txt',
-    'f.txt',
     '!c.txt',
     '!d.txt',
+    'e.txt',
+    'f.txt',
   ]);
 });
 
@@ -48,9 +48,9 @@ test('ignorefile omits duplicated includes and excludes', () => {
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
     'a.txt',
     'b.txt',
-    'x.txt',
     '!c.txt',
     '!d.txt',
+    'x.txt',
     '!y.txt',
   ]);
 });
