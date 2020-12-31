@@ -59,6 +59,15 @@ const project = new JsiiProject({
         'files.',
       ],
     },
+    contributing: {
+      lines: [
+        'To check out a development environment:',
+        '',
+        '$ git clone git@github.com:projen/projen',
+        '$ cd projen',
+        '$ yarn',
+      ],
+    },
   },
 });
 

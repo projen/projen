@@ -161,7 +161,7 @@ export class Readme extends Component {
 
     lines.push('## Summary\n');
     if (this.summary.link) {
-      lines.push(`[SUMMARY](${this.summary.filename}`);
+      lines.push(`[SUMMARY](${this.summary.filename})`);
     }
     lines.push((this.summary.lines ?? []).join('\n'));
 
@@ -175,10 +175,9 @@ export class Readme extends Component {
   private _renderReadmeUsage(): string {
     let lines: string[] = [];
 
-    lines.push('## Usage');
-    lines.push();
+    lines.push('## Usage\n');
     if (this.usage.link) {
-      lines.push(`[USAGE](${this.summary.filename}`);
+      lines.push(`[USAGE](${this.summary.filename})`);
     }
     lines.push((this.usage.lines ?? []).join('\n'));
 
@@ -192,10 +191,9 @@ export class Readme extends Component {
   private _renderCodeOfConduct(): string {
     let lines: string[] = [];
 
-    lines.push('## Code of Conduct');
-    lines.push();
+    lines.push('## Code of Conduct\n');
     if (this.codeOfConduct.link) {
-      lines.push(`[Code of Conduct](${this.codeOfConduct.filename}`);
+      lines.push(`[Code of Conduct](${this.codeOfConduct.filename})`);
     }
     lines.push((this.codeOfConduct.lines ?? []).join('\n'));
 
@@ -209,10 +207,9 @@ export class Readme extends Component {
   private _renderReadmeContributing(): string {
     let lines: string[] = [];
 
-    lines.push('## Contributing');
-    lines.push();
+    lines.push('## Contributing\n');
     if (this.contributing.link) {
-      lines.push(`[Contributing](${this.contributing.filename}`);
+      lines.push(`[Contributing](${this.contributing.filename})`);
     }
     lines.push((this.contributing.lines ?? []).join('\n'));
 
@@ -256,8 +253,7 @@ export class Readme extends Component {
   private _renderReadmeRoadmap(): string {
     let lines: string[] = [];
 
-    lines.push('## Roadmap');
-    lines.push();
+    lines.push('## Roadmap\n');
     if (this.roadmap.link) {
       lines.push(`[ROADMAP](${this.roadmap.filename})`);
     }
@@ -273,8 +269,7 @@ export class Readme extends Component {
   private _renderReadmeVision(): string {
     let lines: string[] = [];
 
-    lines.push('## Vision');
-    lines.push();
+    lines.push('## Vision\n');
     if (this.vision.link) {
       lines.push(`[VISION](${this.vision.filename})`);
     }
@@ -290,8 +285,7 @@ export class Readme extends Component {
   private _renderReadmeAuthor(): string {
     let lines: string[] = [];
 
-    lines.push('## Author');
-    lines.push();
+    lines.push('## Author\n');
     if (this.author.link) {
       lines.push(`[VISION](${this.author.filename})`);
     }
@@ -307,8 +301,7 @@ export class Readme extends Component {
   private _renderReadmeBadges(): string {
     let lines: string[] = [];
 
-    lines.push('## Badges');
-    lines.push();
+    lines.push('## Badges\n');
 
     return lines.join('\n');
   }

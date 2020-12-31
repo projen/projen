@@ -16,6 +16,7 @@ projen
   - [11](#11)
 
 ## Summary
+
 Define and maintain complex project configuration through code.
 
 > JOIN THE [#TemplatesAreEvil] MOVEMENT!
@@ -33,16 +34,22 @@ strongly-typed class and execute projen to update their project configuration
 files.
 
 ## Usage
-[USAGE](undefined
+
+[USAGE](undefined)
 
 
 ## Code of Conduct
-[Code of Conduct](CODE_OF_CONDUCT.md
+
+[Code of Conduct](CODE_OF_CONDUCT.md)
 
 
 ## Contributing
-[Contributing](CONTRIBUTING.md
 
+To check out a development environment:
+
+$ git clone git@github.com:projen/projen
+$ cd projen
+$ yarn
 
 ## Changelog
 
@@ -53,17 +60,21 @@ files.
 [LICENSE](LICENSE.md)
 
 ## Roadmap
+
 [ROADMAP](ROADMAP.md)
 
 
 ## Vision
+
 [VISION](VISION.md)
 
 
 ## Author
+
 [VISION](AUTHOR.md)
 
 
 ## Badges
+
 
 
