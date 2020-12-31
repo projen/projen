@@ -175,9 +175,9 @@ export class Readme extends Component {
   private _renderReadmeUsage(): string {
     let lines: string[] = [];
 
-    lines.push('## Usage\n');
+    lines.push('## Getting Started\n');
     if (this.usage.link) {
-      lines.push(`[USAGE](${this.summary.filename})`);
+      lines.push('[Documentation Site](./doc/index.md)');
     }
     lines.push((this.usage.lines ?? []).join('\n'));
 
