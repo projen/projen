@@ -69,6 +69,10 @@ export class Readme extends Component {
     ];
   }
 
+  public addBadge(badge: BadgeOptions) {
+    this.badges.push(badge);
+  }
+
   /**
    *
    */
@@ -306,6 +310,9 @@ export class Readme extends Component {
     let lines: string[] = [];
 
     lines.push('## Badges\n');
+    for (const badge of this.badges) {
+      lines.push(`![${badge.altText ?? badge.name})](${badge.imgUrl})](${badge.url})`);
+    }
 
     return lines.join('\n');
   }

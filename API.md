@@ -3913,6 +3913,23 @@ Name | Type | Description
 ### Methods
 
 
+#### addBadge(badge)🔹 <a id="projen-readme-readme-addbadge"></a>
+
+
+
+```ts
+addBadge(badge: BadgeOptions): void
+```
+
+* **badge** (<code>[readme.BadgeOptions](#projen-readme-badgeoptions)</code>)  *No description*
+  * **imgUrl** (<code>string</code>)  Image Url. 
+  * **name** (<code>string</code>)  Name of the badge. 
+  * **url** (<code>string</code>)  The Url. 
+  * **altText** (<code>string</code>)  Alt Text To display. __*Default*__: `name`
+
+
+
+
 #### synthesize()🔹 <a id="projen-readme-readme-synthesize"></a>
 
 Synthesizes files to the project output directory.

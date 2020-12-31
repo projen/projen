@@ -35,6 +35,13 @@ export class License extends FileBase {
     this.text = fs.readFileSync(textFile, 'utf-8')
       .replace('[yyyy]', years)
       .replace('[name of copyright owner]', owner);
+
+    // XXX: need to map SPDX to opensource.org url paths
+    this.project.readme?.addBadge({
+      name: 'License',
+      imgUrl: 'https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg',
+      url: 'https://opensource.org/licenses/Apache-2.0',
+    });
   }
 
   protected synthesizeContent(_: IResolver) {

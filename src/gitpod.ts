@@ -306,6 +306,13 @@ export class Gitpod extends Component implements IDevEnvironment {
     };
 
     new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
+
+    this.project.readme?.addBadge({
+      name: 'Gitpod',
+      altText: 'Gitpod ready-to-code',
+      imgUrl: 'https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod',
+      url: 'https://gitpod.io/#https://github.com/projen/projen', // XXX: repository is on NodeProject
+    });
   }
 
   /**
