@@ -3823,8 +3823,6 @@ Name | Type | Description
 **javaPackage**🔹 | <code>string</code> | <span></span>
 **mavenArtifactId**🔹 | <code>string</code> | <span></span>
 **mavenGroupId**🔹 | <code>string</code> | <span></span>
-**mavenRepositoryUrl**?🔹 | <code>string</code> | __*Optional*__
-**mavenServerId**?🔹 | <code>string</code> | __*Optional*__
 
 
 
