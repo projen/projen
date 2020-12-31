@@ -115,7 +115,7 @@ any number of jsii target languages.
 
 * npm - `NPM_TOKEN` ([docs](https://github.com/aws/jsii-release#npm))
 * .NET - `NUGET_API_KEY` ([docs](https://github.com/aws/jsii-release#nuget))
-* Java: `MAVEN_GPG_PRIVATE_KEY`, `MAVEN_GPG_PRIVATE_KEY_PASSPHRASE`, `MAVEN_PASSWORD`, `MAVEN_USERNAME`, `MAVEN_STAGING_PROFILE_ID`, `MAVEN_SERVER_ID`, `MAVEN_REPOSITORY_URL` ([docs](https://github.com/aws/jsii-release#maven))
+* Java: `MAVEN_GPG_PRIVATE_KEY`, `MAVEN_GPG_PRIVATE_KEY_PASSPHRASE`, `MAVEN_PASSWORD`, `MAVEN_USERNAME`, `MAVEN_STAGING_PROFILE_ID` ([docs](https://github.com/aws/jsii-release#maven))
 * Python: `TWINE_USERNAME`, `TWINE_PASSWORD` ([docs](https://github.com/aws/jsii-release#pypi))
   
 For help in getting these secrets for your project, read the [jsii-release](https://github.com/aws/jsii-release).
