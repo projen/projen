@@ -31,3 +31,11 @@ pull_request_rules:
       merge:
         method: merge
         commit_message: title+body
+  - name: Label core contributions
+    actions:
+      label:
+        add:
+          - contribution/core
+    conditions:
+      - author~=^(eladb)$
+      - label!=contribution/core

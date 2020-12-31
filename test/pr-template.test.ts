@@ -10,9 +10,7 @@ test('default', () => {
   project.github?.addPullRequestTemplate();
 
   // THEN
-  expect(synthSnapshot(project, PULL_REQUEST_TEMPLATE_FILE)).toStrictEqual({
-    '.github/pull_request_template.md': 'Fixes #',
-  });
+  expect(synthSnapshot(project)[PULL_REQUEST_TEMPLATE_FILE]).toStrictEqual('Fixes #');
 });
 
 test('custom content', () => {
@@ -28,12 +26,10 @@ test('custom content', () => {
   );
 
   // THEN
-  expect(synthSnapshot(project, PULL_REQUEST_TEMPLATE_FILE)).toStrictEqual({
-    '.github/pull_request_template.md': [
-      'hello',
-      'world',
-      '',
-      'foobar',
-    ].join('\n'),
-  });
+  expect(synthSnapshot(project)[PULL_REQUEST_TEMPLATE_FILE]).toStrictEqual([
+    'hello',
+    'world',
+    '',
+    'foobar',
+  ].join('\n'));
 });

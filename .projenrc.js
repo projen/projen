@@ -8,6 +8,11 @@ const project = new JsiiProject({
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
 
+  pullRequestTemplateContents: [
+    '---',
+    'By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.',
+  ],
+
   bundledDeps: [
     'yaml',
     'fs-extra',
@@ -34,14 +39,15 @@ const project = new JsiiProject({
   minNodeVersion: '10.17.0',
   codeCov: true,
   compileBeforeTest: true, // since we want to run the cli in tests
-
+  gitpod: true,
+  devContainer: true,
   // since this is projen, we need to always compile before we run
-  projenCommand: '/bin/bash ./projen.sh',
+  projenCommand: '/bin/bash ./projen.bash',
 });
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
-new TextFile(project, 'projen.sh', {
+new TextFile(project, 'projen.bash', {
   lines: [
     '#!/bin/bash',
     `# ${TextFile.PROJEN_MARKER}`,
@@ -73,5 +79,43 @@ new JsonFile(project, '.markdownlint.json', {
     },
   },
 });
+
+project.vscode.launchConfiguration.addConfiguration({
+  type: 'pwa-node',
+  request: 'launch',
+  name: 'projen CLI',
+  skipFiles: [
+    '<node_internals>/**',
+  ],
+  program: '${workspaceFolder}/lib/cli/index.js',
+  outFiles: [
+    '${workspaceFolder}/lib/**/*.js',
+  ],
+});
+
+project.github.addMergifyRules({
+  name: 'Label core contributions',
+  actions: {
+    label: {
+      add: ['contribution/core'],
+    },
+  },
+  conditions: [
+    'author~=^(eladb)$',
+    'label!=contribution/core',
+  ],
+});
+
+project.gitpod.addCustomTask({
+  name: 'Setup',
+  init: 'yarn install',
+  prebuild: 'bash ./projen.bash',
+  command: 'npx projen build',
+});
+
+const setup = project.addTask('devenv:setup');
+setup.exec('yarn install');
+setup.spawn(project.buildTask);
+project.devContainer.addTasks(setup);
 
 project.synth();

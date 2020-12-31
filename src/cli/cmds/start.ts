@@ -7,7 +7,7 @@ class Command implements yargs.CommandModule {
   describe = 'Prints all project commands';
 
   public builder(args: yargs.Argv) {
-    return args.option('interactive', { alias: 'i', desc: 'Interactive menu' });
+    return args.option('interactive', { alias: 'i', desc: 'Interactive menu', default: true });
   }
 
   async handler(opts: any) {

@@ -1,5 +1,8 @@
 import { spawnSync } from 'child_process';
+import { basename, join } from 'path';
+import { mkdirpSync } from 'fs-extra';
 import { Project } from '../../src';
+import { TaskRuntime } from '../../src/tasks';
 import { TestProject } from '../util';
 
 test('minimal case (just a shell command)', () => {
@@ -100,6 +103,86 @@ describe('condition', () =>{
       'failing condition',
     ]);
   });
+});
+
+describe('cwd', () => {
+  test('default cwd is project root', () => {
+    const p = new TestProject();
+    p.addTask('test', { exec: 'echo cwd is $PWD' });
+    expect(executeTask(p, 'test')[0].includes(basename(p.outdir))).toBeTruthy();
+  });
+
+  test('if a step changes cwd, it will not affect next steps', () => {
+    const p = new TestProject();
+    const task = p.addTask('test');
+    task.exec('cd /tmp');
+    task.exec('echo $PWD');
+    expect(executeTask(p, 'test')[0].includes(basename(p.outdir))).toBeTruthy();
+  });
+
+
+  test('cwd can be set at the task level', () => {
+    const p = new TestProject();
+    const cwd = join(p.outdir, 'mypwd');
+    mkdirpSync(cwd);
+    const task = p.addTask('test', {
+      cwd,
+    });
+    task.exec('echo step1=$PWD');
+    task.exec('echo step2=$PWD');
+    for (const line of executeTask(p, 'test')) {
+      expect(line.includes('mypwd')).toBeTruthy();
+    }
+  });
+
+  test('cwd can be set at step level', () => {
+    const p = new TestProject();
+    const taskcwd = join(p.outdir, 'mypwd');
+    const stepcwd = join(p.outdir, 'yourpwd');
+    mkdirpSync(taskcwd);
+    mkdirpSync(stepcwd);
+    const task = p.addTask('test', { cwd: taskcwd });
+    task.exec('echo step1=$PWD');
+    task.exec('echo step2=$PWD', { cwd: stepcwd });
+
+    const lines = executeTask(p, 'test');
+    expect(lines[0].includes('mypwd')).toBeTruthy();
+    expect(lines[1].includes('yourpwd')).toBeTruthy();
+  });
+
+  test('fails gracefully if cwd does not exist (task level)', () => {
+    const p = new TestProject();
+    p.addTask('test', {
+      cwd: join(p.outdir, 'not-found'),
+      exec: 'echo hi',
+    });
+    expect(() => executeTask(p, 'test')).toThrow(/invalid workdir/);
+  });
+
+  test('fails gracefully if cwd does not exist (step level)', () => {
+    const p = new TestProject();
+    const task = p.addTask('test');
+    task.exec('echo step', { cwd: join(p.outdir, 'mystep') });
+    expect(() => executeTask(p, 'test')).toThrow(/must be an existing directory/);
+  });
+});
+
+describe('say', () => {
+
+  test('"say" can be used to print an info log during execution', () => {
+    const p = new TestProject();
+    const task = p.addTask('say');
+    task.say('hello, world');
+
+    p.synth();
+
+    const rt = new TaskRuntime(p.outdir);
+    expect(rt.tasks).toStrictEqual([{
+      name: 'say',
+      steps: [{ say: 'hello, world' }],
+    }]);
+  });
+
 });
 
 function executeTask(p: Project, taskName: string) {

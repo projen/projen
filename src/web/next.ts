@@ -4,6 +4,7 @@ import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
 import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
+import { deepMerge } from '../util';
 import { PostCss } from './postcss';
 
 export interface NextJsCommonProjectOptions {
@@ -24,7 +25,7 @@ export interface NextJsCommonProjectOptions {
   readonly tailwind?: boolean;
 }
 
-export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions {}
+export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptions, TypeScriptProjectOptions { }
 
 export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {
   /**
@@ -114,7 +115,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
   public readonly nextJsTypeDef: NextJsTypeDef;
 
   constructor(options: NextJsTypeScriptProjectOptions) {
-    super({
+    const defaultOptions = {
       srcdir: 'pages',
       eslint: false,
       jest: false,
@@ -137,17 +138,12 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           lib: ['dom', 'dom.iterable', 'esnext'],
           strict: false,
           target: 'es5',
-
-          // user-specified overrides
-          ...options.tsconfig?.compilerOptions,
         },
-        ...options.tsconfig,
       },
-      ...options,
+    };
 
-      // never generate default TypeScript sample code, since this class provides its own
-      sampleCode: false,
-    });
+    // never generate default TypeScript sample code, since this class provides its own
+    super(deepMerge(defaultOptions, options, { sampleCode: false }) as TypeScriptProjectOptions);
 
     this.srcdir = options.srcdir ?? 'pages';
     this.assetsdir = options.assetsdir ?? 'public';
@@ -174,7 +170,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
   }
 }
 
-export interface NextJsTypeDefOptions extends FileBaseOptions {}
+export interface NextJsTypeDefOptions extends FileBaseOptions { }
 
 export class NextJsTypeDef extends FileBase {
   constructor(project: NextJsTypeScriptProject, filePath: string, options: NextJsTypeDefOptions = {}) {
