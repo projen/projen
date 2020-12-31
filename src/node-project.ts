@@ -563,6 +563,11 @@ export class NodeProject extends Project {
 
       this.buildWorkflow = workflow;
       this.buildWorkflowJobId = buildJobId;
+
+      //   this.project.readme?.addBadge({
+      //     name: 'Build',
+      //     imgUrl: 'https://github.com/ORG/REPO/workflows/Build/badge.svg
+      //   });
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
@@ -594,6 +599,11 @@ export class NodeProject extends Project {
           // otherwise tags are not checked out
           'fetch-depth': 0,
         },
+
+        //   this.project.readme?.addBadge({
+        //     name: 'Build',
+        //     imgUrl: 'https://github.com/ORG/REPO/workflows/Release/badge.svg
+        //   });
       });
 
       this.releaseWorkflow = workflow;
@@ -625,6 +635,11 @@ export class NodeProject extends Project {
             ],
           },
         });
+        //   this.project.readme?.addBadge({
+        //     name: 'npm version',
+        //     imgUrl: 'https://badge.fury.io/js/REPO.svg',
+        //     url: 'https://badge.fury.io/js/REPO',
+        //   });
       }
     } else {
       // validate that no release options are selected if the release workflow is disabled.
@@ -675,6 +690,13 @@ export class NodeProject extends Project {
       this.addRebuildBot(options.rebuildBotCommand ?? 'rebuild');
     }
 
+    if (options.codeCov) {
+      //   this.project.readme?.addBadge({
+      //     name: 'CodeCov',
+      //     imgUrl: 'https://codecov.io/gh/ORG/REPO/branch/BRANCH/graph/badge.svg?token=TOKEN',
+      //     url: 'https://codecov.io/gh/ORG/REPO',
+      //   });
+    }
   }
 
   public addBins(bins: Record<string, string>) {

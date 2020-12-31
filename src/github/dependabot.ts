@@ -179,6 +179,12 @@ export class Dependabot extends Component {
           },
         },
       });
+
+      // this.project.readme?.addBadge({
+      //   name: 'Dependabot',
+      //   imgUrl: '',
+      //   url: '',
+      // });
     }
 
     for (const i of options.ignore ?? []) {

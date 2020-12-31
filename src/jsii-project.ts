@@ -197,6 +197,12 @@ export class JsiiProject extends TypeScriptProject {
 
       this.publishToMaven();
       publishing = true;
+
+      //   this.project.readme?.addBadge({
+      //     name: 'Maven Central',
+      //     imgUrl: 'https://maven-badges.herokuapp.com/maven-central/JAVAPACKAGE/badge.svg',
+      //     url: 'https://badge.fury.io/js/MAVENARTIFACTID',
+      //   });
     }
 
     if (options.python) {
@@ -208,6 +214,12 @@ export class JsiiProject extends TypeScriptProject {
 
       this.publishToPyPi();
       publishing = true;
+
+      //   this.project.readme?.addBadge({
+      //     name: 'PyPI version',
+      //     imgUrl: 'https://badge.fury.io/py/DISTNAME.svg',
+      //     url: 'https://badge.fury.io/py/DISTNAME,
+      //   });
     }
 
     if (options.dotnet) {
@@ -218,6 +230,12 @@ export class JsiiProject extends TypeScriptProject {
 
       this.publishToNuget();
       publishing = true;
+
+      //   this.project.readme?.addBadge({
+      //     name: 'Nuget version',
+      //     imgUrl: 'https://badge.fury.io/nu/NAMEPSACE.svg',
+      //     url: 'https://badge.fury.io/nu/NAMESPACE.svg',
+      //   });
     }
 
     if (!publishing) {

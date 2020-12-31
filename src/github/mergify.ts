@@ -27,6 +27,12 @@ export class Mergify extends Component {
     (options.rules ?? []).forEach(rule => this.addRule(rule));
 
     this.project.addTip('Install Mergify in your GitHub repository to enable automatic merges of approved PRs');
+
+  //   this.project.readme?.addBadge({
+  //     name: 'Mergify',
+  //     imgUrl: 'https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/ORG/REPO/&style=flat',
+  //     url: 'https://mergify.io',
+  //   });
   }
 
   public addRule(rule: MergifyRule) {
