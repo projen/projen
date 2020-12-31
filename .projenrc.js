@@ -9,23 +9,23 @@ const project = new JsiiProject({
   stability: 'experimental',
 
   bundledDeps: [
-    'yaml',
-    'fs-extra',
-    'yargs',
-    'decamelize',
-    'glob@^7',
-    'semver',
-    'inquirer',
-    'chalk',
     '@iarna/toml',
+    'chalk',
+    'decamelize',
+    'fs-extra',
+    'glob@^7',
+    'inquirer',
+    'semver',
+    'yaml',
+    'yargs',
   ],
 
   devDeps: [
     '@types/fs-extra@^8',
-    '@types/yargs',
     '@types/glob',
     '@types/inquirer',
     '@types/semver',
+    '@types/yargs',
     'markmac',
   ],
 
@@ -283,12 +283,16 @@ new TextFile(project, 'projen.bash', {
 project.addExcludeFromCleanup('test/**');
 project.gitignore.include('templates/**');
 
-// // expand markdown macros in readme
-// const macros = project.addTask('readme-macros');
-// macros.exec('mv README.md README.md.bak');
-// macros.exec('cat README.md.bak | markmac > README.md');
-// macros.exec('rm README.md.bak');
-// project.buildTask.spawn(macros);
+// expand markdown macros in readme
+const macros = project.addTask('readme-macros', {
+  condition: 'grep -q "<macro exec=" README.md',
+});
+macros.exec('chmod 600 README.md');
+macros.exec('mv README.md README.md.bak');
+macros.exec('cat README.md.bak | markmac > README.md');
+macros.exec('rm README.md.bak');
+macros.exec('chmod 400 README.md');
+project.buildTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

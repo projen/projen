@@ -14,6 +14,7 @@
     "clobber": "/bin/bash ./projen.bash clobber",
     "compile": "/bin/bash ./projen.bash compile",
     "test:compile": "/bin/bash ./projen.bash test:compile",
+    "readme:markmac": "/bin/bash ./projen.bash readme:markmac",
     "test": "/bin/bash ./projen.bash test",
     "build": "/bin/bash ./projen.bash build",
     "bump": "/bin/bash ./projen.bash bump",
@@ -26,6 +27,7 @@
     "eslint": "/bin/bash ./projen.bash eslint",
     "compat": "/bin/bash ./projen.bash compat",
     "docgen": "/bin/bash ./projen.bash docgen",
+    "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup"
   },
   "author": {

@@ -2351,7 +2351,7 @@ Name | Type | Description
 **buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
-**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this package.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **releaseWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__

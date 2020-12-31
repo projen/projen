@@ -680,6 +680,10 @@ dist
         "type": "build",
       },
       Object {
+        "name": "markmac",
+        "type": "build",
+      },
+      Object {
         "name": "projen",
         "type": "build",
         "version": "^999.999.999",
@@ -989,6 +993,27 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "readme:markmac": Object {
+        "condition": "grep -q \\"<macro exec=\\" README.md",
+        "name": "readme:markmac",
+        "steps": Array [
+          Object {
+            "exec": "chmod 600 README.md",
+          },
+          Object {
+            "exec": "mv README.md README.md.bak",
+          },
+          Object {
+            "exec": "cat README.md.bak | markmac > README.md",
+          },
+          Object {
+            "exec": "rm README.md.bak",
+          },
+          Object {
+            "exec": "chmod 400 README.md",
+          },
+        ],
+      },
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
@@ -1027,6 +1052,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
+          Object {
+            "spawn": "readme:markmac",
+          },
           Object {
             "exec": "tsc --noEmit --project tsconfig.jest.json",
           },
@@ -1335,7 +1363,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Elad Ben-Israel
+   Copyright 2021 Elad Ben-Israel
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -1450,6 +1478,7 @@ Distributed under the XXXNodeProjectXXX license
       "jsii-pacmak": "*",
       "jsii-release": "*",
       "json-schema": "*",
+      "markmac": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
@@ -1549,6 +1578,7 @@ Distributed under the XXXNodeProjectXXX license
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
+      "readme:markmac": "npx projen readme:markmac",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
@@ -2011,6 +2041,10 @@ dist
         "type": "build",
       },
       Object {
+        "name": "markmac",
+        "type": "build",
+      },
+      Object {
         "name": "projen",
         "type": "build",
         "version": "^999.999.999",
@@ -2187,6 +2221,27 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "readme:markmac": Object {
+        "condition": "grep -q \\"<macro exec=\\" README.md",
+        "name": "readme:markmac",
+        "steps": Array [
+          Object {
+            "exec": "chmod 600 README.md",
+          },
+          Object {
+            "exec": "mv README.md README.md.bak",
+          },
+          Object {
+            "exec": "cat README.md.bak | markmac > README.md",
+          },
+          Object {
+            "exec": "rm README.md.bak",
+          },
+          Object {
+            "exec": "chmod 400 README.md",
+          },
+        ],
+      },
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
@@ -2228,6 +2283,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
+          Object {
+            "spawn": "readme:markmac",
+          },
           Object {
             "exec": "tsc --noEmit --project tsconfig.jest.json",
           },
@@ -2530,7 +2588,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Amazon Web Services
+   Copyright 2021 Amazon Web Services
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -2787,6 +2845,7 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
+      "markmac": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
@@ -2876,6 +2935,7 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
+      "readme:markmac": "npx projen readme:markmac",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
@@ -3307,6 +3367,10 @@ dist
         "type": "build",
       },
       Object {
+        "name": "markmac",
+        "type": "build",
+      },
+      Object {
         "name": "projen",
         "type": "build",
         "version": "^999.999.999",
@@ -3493,6 +3557,27 @@ dist
           },
         ],
       },
+      "readme:markmac": Object {
+        "condition": "grep -q \\"<macro exec=\\" README.md",
+        "name": "readme:markmac",
+        "steps": Array [
+          Object {
+            "exec": "chmod 600 README.md",
+          },
+          Object {
+            "exec": "mv README.md README.md.bak",
+          },
+          Object {
+            "exec": "cat README.md.bak | markmac > README.md",
+          },
+          Object {
+            "exec": "rm README.md.bak",
+          },
+          Object {
+            "exec": "chmod 400 README.md",
+          },
+        ],
+      },
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
@@ -3534,6 +3619,9 @@ dist
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
+          Object {
+            "spawn": "readme:markmac",
+          },
           Object {
             "exec": "tsc --noEmit --project tsconfig.jest.json",
           },
@@ -3818,7 +3906,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Amazon Web Services
+   Copyright 2021 Amazon Web Services
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -4074,6 +4162,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^12",
       "json-schema": "*",
+      "markmac": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",
       "ts-jest": "*",
@@ -4137,6 +4226,7 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
+      "readme:markmac": "npx projen readme:markmac",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
@@ -4494,6 +4584,10 @@ junit.xml
         "version": "^12",
       },
       Object {
+        "name": "markmac",
+        "type": "build",
+      },
+      Object {
         "name": "projen",
         "type": "build",
         "version": "^999.999.999",
@@ -4582,6 +4676,27 @@ junit.xml
           },
         ],
       },
+      "readme:markmac": Object {
+        "condition": "grep -q \\"<macro exec=\\" README.md",
+        "name": "readme:markmac",
+        "steps": Array [
+          Object {
+            "exec": "chmod 600 README.md",
+          },
+          Object {
+            "exec": "mv README.md README.md.bak",
+          },
+          Object {
+            "exec": "cat README.md.bak | markmac > README.md",
+          },
+          Object {
+            "exec": "rm README.md.bak",
+          },
+          Object {
+            "exec": "chmod 400 README.md",
+          },
+        ],
+      },
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
@@ -4613,6 +4728,11 @@ junit.xml
         "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
+        "steps": Array [
+          Object {
+            "spawn": "readme:markmac",
+          },
+        ],
       },
       "test:update": Object {
         "category": "10.test",
@@ -4856,7 +4976,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 
+   Copyright 2021 
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -4933,6 +5053,7 @@ Distributed under the XXXNodeProjectXXX license
       "aws-sdk": "*",
       "jest": "*",
       "jest-junit": "^12",
+      "markmac": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",
     },
@@ -4971,6 +5092,7 @@ Distributed under the XXXNodeProjectXXX license
       "compile": "npx projen compile",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
+      "readme:markmac": "npx projen readme:markmac",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
