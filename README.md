@@ -220,10 +220,11 @@ project.synth();
 ## Contributing
 
 To check out a development environment:
-
+```console
 $ git clone git@github.com:projen/projen
 $ cd projen
 $ yarn
+```
 
 ## Changelog
 
