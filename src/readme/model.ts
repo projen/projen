@@ -110,7 +110,7 @@ export interface RoadmapOptions extends TextFileOptions {
 /**
  *
  */
-export interface VisionOptions {
+export interface VisionOptions extends TextFileOptions {
   /**
    * The filename.
    *

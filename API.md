@@ -7209,8 +7209,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "VISION.md"
+**lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
 **link**?🔹 | <code>boolean</code> | Whether to link to the VISION in Readme or not.<br/>__*Default*__: true
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

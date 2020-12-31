@@ -23,7 +23,7 @@ export class Readme {
   public vision: VisionOptions;
   public usage: UsageOptions;
   public author: AuthorOptions;
-  public badges: BadgeOptions[];
+  public badges: Array<BadgeOptions>;
 
   public sectionOrder: ReadmeSections[];
 
@@ -155,7 +155,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeSummary(): string {
-    return '## Summary';
+    let lines: string[] = [];
+
+    lines.push('## Summary');
+    lines.push();
+    lines.push((this.summary.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -163,7 +169,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeUsage(): string {
-    return '## Usage';
+    let lines: string[] = [];
+
+    lines.push('## Usage');
+    lines.push();
+    lines.push((this.usage.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -171,7 +183,13 @@ export class Readme {
    * @internal
    */
   private _renderCodeOfConduct(): string {
-    return '## Code of Conduct';
+    let lines: string[] = [];
+
+    lines.push('## Code of Conduct');
+    lines.push();
+    lines.push((this.codeOfConduct.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -179,7 +197,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeContributing(): string {
-    return '## Contributing';
+    let lines: string[] = [];
+
+    lines.push('## Contributing');
+    lines.push();
+    lines.push((this.contributing.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -187,7 +211,14 @@ export class Readme {
    * @internal
    */
   private _renderReadmeChangelog(): string {
-    return '## Changelog';
+    let lines: string[] = [];
+
+    lines.push('## Changelog\n');
+    if (this.changelog.link) {
+      lines.push('[CHANGELOG](CHANGELOG.md)');
+    }
+
+    return lines.join('\n');
   }
 
   /**
@@ -195,7 +226,14 @@ export class Readme {
    * @internal
    */
   private _renderReadmeLicense(): string {
-    return '## License';
+    let lines: string[] = [];
+
+    lines.push('## License\n');
+    if (this.license.link) {
+      lines.push('[LICENSE](LICENSE.md)');
+    }
+
+    return lines.join('\n');
   }
 
   /**
@@ -203,7 +241,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeRoadmap(): string {
-    return '## Roadmap';
+    let lines: string[] = [];
+
+    lines.push('## Roadmap');
+    lines.push();
+    lines.push((this.roadmap.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -211,7 +255,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeVision(): string {
-    return '## Vision';
+    let lines: string[] = [];
+
+    lines.push('## Vision');
+    lines.push();
+    lines.push((this.vision.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -219,7 +269,13 @@ export class Readme {
    * @internal
    */
   private _renderReadmeAuthor(): string {
-    return '## Author';
+    let lines: string[] = [];
+
+    lines.push('## Author');
+    lines.push();
+    lines.push((this.author.lines ?? []).join('\n'));
+
+    return lines.join('\n');
   }
 
   /**
@@ -227,6 +283,11 @@ export class Readme {
    * @internal
    */
   private _renderReadmeBadges(): string {
-    return '## Badges';
+    let lines: string[] = [];
+
+    lines.push('## Badges');
+    lines.push();
+
+    return lines.join('\n');
   }
 }
