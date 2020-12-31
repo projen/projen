@@ -16,15 +16,19 @@ projen
   - [11](#11)
 
 ## Summary
+[SUMMARY](SUMMARY.md
 
 
 ## Usage
+[USAGE](SUMMARY.md
 
 
 ## Code of Conduct
+[Code of Conduct](CODE_OF_CONDUCT.md
 
 
 ## Contributing
+[Contributing](CONTRIBUTING.md
 
 
 ## Changelog
@@ -36,12 +40,15 @@ projen
 [LICENSE](LICENSE.md)
 
 ## Roadmap
+[ROADMAP](ROADMAP.md)
 
 
 ## Vision
+[VISION](VISION.md)
 
 
 ## Author
+[VISION](AUTHOR.md)
 
 
 ## Badges

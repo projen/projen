@@ -44,7 +44,7 @@ export class Readme extends Component {
     this.contributing = options?.contributing ?? { filename: 'CONTRIBUTING.md', link: true };
     this.changelog = options?.changelog ?? { link: true };
     this.license = options?.license ?? { link: true };
-    this.roadmap = options?.roadmap ?? { filename: 'ROADMAP.md', link: true };
+    this.roadmap = options?.roadmap ?? { filename: 'ROADMAP.md', link: true }; // , projects: true };
     this.vision = options?.vision ?? { filename: 'VISION.md', link: true };
     this.usage = options?.usage ?? { filename: 'USAGE.md', link: true };
     this.author = options?.author ?? { filename: 'AUTHOR.md', link: true };
@@ -161,6 +161,9 @@ export class Readme extends Component {
 
     lines.push('## Summary');
     lines.push();
+    if (this.summary.link) {
+      lines.push(`[SUMMARY](${this.summary.filename}`);
+    }
     lines.push((this.summary.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -175,6 +178,9 @@ export class Readme extends Component {
 
     lines.push('## Usage');
     lines.push();
+    if (this.usage.link) {
+      lines.push(`[USAGE](${this.summary.filename}`);
+    }
     lines.push((this.usage.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -189,6 +195,9 @@ export class Readme extends Component {
 
     lines.push('## Code of Conduct');
     lines.push();
+    if (this.codeOfConduct.link) {
+      lines.push(`[Code of Conduct](${this.codeOfConduct.filename}`);
+    }
     lines.push((this.codeOfConduct.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -203,6 +212,9 @@ export class Readme extends Component {
 
     lines.push('## Contributing');
     lines.push();
+    if (this.contributing.link) {
+      lines.push(`[Contributing](${this.contributing.filename}`);
+    }
     lines.push((this.contributing.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -247,6 +259,9 @@ export class Readme extends Component {
 
     lines.push('## Roadmap');
     lines.push();
+    if (this.roadmap.link) {
+      lines.push(`[ROADMAP](${this.roadmap.filename})`);
+    }
     lines.push((this.roadmap.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -261,6 +276,9 @@ export class Readme extends Component {
 
     lines.push('## Vision');
     lines.push();
+    if (this.vision.link) {
+      lines.push(`[VISION](${this.vision.filename})`);
+    }
     lines.push((this.vision.lines ?? []).join('\n'));
 
     return lines.join('\n');
@@ -275,6 +293,9 @@ export class Readme extends Component {
 
     lines.push('## Author');
     lines.push();
+    if (this.author.link) {
+      lines.push(`[VISION](${this.author.filename})`);
+    }
     lines.push((this.author.lines ?? []).join('\n'));
 
     return lines.join('\n');

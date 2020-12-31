@@ -7175,7 +7175,6 @@ Name | Type | Description
 **filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "ROADMAP.md"
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
 **link**?🔹 | <code>boolean</code> | Whether to link to the ROADMAP in Readme or not.<br/>__*Default*__: true
-**projects**?🔹 | <code>boolean</code> | Whether to link to the ROADMAP or to Projects Implies link: true.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 

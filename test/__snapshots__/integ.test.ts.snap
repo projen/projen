@@ -525,7 +525,6 @@ example/*.js
 example/*.d.ts
 !/.projen/tasks.json
 !/.projen/deps.json
-!/README.md
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -1368,22 +1367,40 @@ project.synth();
   - [11](#11)
 
 ## Summary
+[SUMMARY](SUMMARY.md
+
 
 ## Usage
+[USAGE](SUMMARY.md
+
 
 ## Code of Conduct
+[Code of Conduct](CODE_OF_CONDUCT.md
+
 
 ## Contributing
+[Contributing](CONTRIBUTING.md
+
 
 ## Changelog
 
+[CHANGELOG](CHANGELOG.md)
+
 ## License
 
+[LICENSE](LICENSE.md)
+
 ## Roadmap
+[ROADMAP](ROADMAP.md)
+
 
 ## Vision
+[VISION](VISION.md)
+
 
 ## Author
+[VISION](AUTHOR.md)
+
 
 ## Badges
 
@@ -1877,7 +1894,6 @@ junit.xml
 tsconfig.json
 !/.projen/tasks.json
 !/.projen/deps.json
-!/README.md
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -2550,22 +2566,40 @@ project.synth();
   - [11](#11)
 
 ## Summary
+[SUMMARY](SUMMARY.md
+
 
 ## Usage
+[USAGE](SUMMARY.md
+
 
 ## Code of Conduct
+[Code of Conduct](CODE_OF_CONDUCT.md
+
 
 ## Contributing
+[Contributing](CONTRIBUTING.md
+
 
 ## Changelog
 
+[CHANGELOG](CHANGELOG.md)
+
 ## License
 
+[LICENSE](LICENSE.md)
+
 ## Roadmap
+[ROADMAP](ROADMAP.md)
+
 
 ## Vision
+[VISION](VISION.md)
+
 
 ## Author
+[VISION](AUTHOR.md)
+
 
 ## Badges
 
@@ -3190,7 +3224,6 @@ junit.xml
 /dist
 !/.projen/tasks.json
 !/.projen/deps.json
-!/README.md
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -3825,22 +3858,40 @@ project.synth();
   - [11](#11)
 
 ## Summary
+[SUMMARY](SUMMARY.md
+
 
 ## Usage
+[USAGE](SUMMARY.md
+
 
 ## Code of Conduct
+[Code of Conduct](CODE_OF_CONDUCT.md
+
 
 ## Contributing
+[Contributing](CONTRIBUTING.md
+
 
 ## Changelog
 
+[CHANGELOG](CHANGELOG.md)
+
 ## License
 
+[LICENSE](LICENSE.md)
+
 ## Roadmap
+[ROADMAP](ROADMAP.md)
+
 
 ## Vision
+[VISION](VISION.md)
+
 
 ## Author
+[VISION](AUTHOR.md)
+
 
 ## Badges
 
@@ -4381,7 +4432,6 @@ junit.xml
 /coverage
 !/.projen/tasks.json
 !/.projen/deps.json
-!/README.md
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -4850,22 +4900,40 @@ project.synth();
   - [11](#11)
 
 ## Summary
+[SUMMARY](SUMMARY.md
+
 
 ## Usage
+[USAGE](SUMMARY.md
+
 
 ## Code of Conduct
+[Code of Conduct](CODE_OF_CONDUCT.md
+
 
 ## Contributing
+[Contributing](CONTRIBUTING.md
+
 
 ## Changelog
 
+[CHANGELOG](CHANGELOG.md)
+
 ## License
 
+[LICENSE](LICENSE.md)
+
 ## Roadmap
+[ROADMAP](ROADMAP.md)
+
 
 ## Vision
+[VISION](VISION.md)
+
 
 ## Author
+[VISION](AUTHOR.md)
+
 
 ## Badges
 

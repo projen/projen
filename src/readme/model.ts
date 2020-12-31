@@ -98,13 +98,13 @@ export interface RoadmapOptions extends TextFileOptions {
    */
   readonly link?: boolean;
 
-  /**
-   * Whether to link to the ROADMAP or to Projects
-   * Implies link: true
-   *
-   * @default true
-   */
-  readonly projects?: boolean;
+  // /**
+  //  * Whether to link to the ROADMAP or to Projects
+  //  * Implies link: true
+  //  *
+  //  * @default true
+  //  */
+  // readonly projects?: boolean;
 }
 
 /**
