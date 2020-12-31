@@ -1,5 +1,9 @@
 # projen
 
+## Badges
+
+![License)](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 
 ## Summary
@@ -242,9 +246,5 @@ Distributed under the XXXNodeProjectXXX license
 
 [Author](AUTHOR.md)
 
-
-## Badges
-
-![License)](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
