@@ -15,7 +15,7 @@ export interface SummaryOptions extends TextFileOptions {
   /**
    * Whether to link to the SUMMARY in Readme or not.
    *
-   * @default true
+   * @default false
    */
   readonly link?: boolean;
 }
@@ -245,6 +245,7 @@ export interface ReadmeOptions extends TextFileOptions {
    *
    */
   readonly summary?: SummaryOptions;
+
   /**
    * Code of Conduct
    *

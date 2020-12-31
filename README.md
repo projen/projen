@@ -16,11 +16,24 @@ projen
   - [11](#11)
 
 ## Summary
-[SUMMARY](SUMMARY.md
+Define and maintain complex project configuration through code.
 
+> JOIN THE [#TemplatesAreEvil] MOVEMENT!
+
+projen synthesizes project configuration files such as `package.json`,
+`tsconfig.json`, `.gitignore`, GitHub Workflows, `eslint`, `jest`, etc from a
+well-typed definition written in `JavaScript`.
+
+Check out this talk about projen.
+
+As opposed to existing templating/scaffolding tools, projen is not a one-off
+generator. Synthesized files should never be manually edited (in fact, projen
+enforces that). To modify your project setup, users interact with rich
+strongly-typed class and execute projen to update their project configuration
+files.
 
 ## Usage
-[USAGE](SUMMARY.md
+[USAGE](undefined
 
 
 ## Code of Conduct

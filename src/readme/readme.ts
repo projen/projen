@@ -159,8 +159,7 @@ export class Readme extends Component {
   private _renderReadmeSummary(): string {
     let lines: string[] = [];
 
-    lines.push('## Summary');
-    lines.push();
+    lines.push('## Summary\n');
     if (this.summary.link) {
       lines.push(`[SUMMARY](${this.summary.filename}`);
     }

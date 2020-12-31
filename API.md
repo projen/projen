@@ -7192,7 +7192,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The filename.<br/>__*Default*__: "SUMMARY.md"
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
-**link**?🔹 | <code>boolean</code> | Whether to link to the SUMMARY in Readme or not.<br/>__*Default*__: true
+**link**?🔹 | <code>boolean</code> | Whether to link to the SUMMARY in Readme or not.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
