@@ -138,7 +138,7 @@ export class Readme extends Component {
    * @internal
    */
   private _renderReadmeTagLine(): string {
-    return `${this.tagLine}`;
+    return `# ${this.tagLine}`;
   }
 
   /**
