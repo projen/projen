@@ -57,7 +57,7 @@ $ yarn
 
 ## License
 
-[LICENSE](LICENSE.md)
+Distributed under the XXXNodeProjectXXX license
 
 ## Roadmap
 

@@ -240,7 +240,7 @@ export class Readme extends Component {
 
     lines.push('## License\n');
     if (this.license.link) {
-      lines.push('[LICENSE](LICENSE.md)');
+      lines.push('Distributed under the XXXNodeProjectXXX license');
     }
 
     return lines.join('\n');
