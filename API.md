@@ -188,7 +188,7 @@ Name|Description
 [deps.DependencyType](#projen-deps-dependencytype)|*No description*
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[readme.ReadmeSections](#projen-readme-readmesections)|*No description*
+[readme.ReadmeSection](#projen-readme-readmesection)|*No description*
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
@@ -3903,7 +3903,7 @@ Name | Type | Description
 **filename**🔹 | <code>string</code> | <span></span>
 **license**🔹 | <code>[readme.ReadmeLicenseOptions](#projen-readme-readmelicenseoptions)</code> | <span></span>
 **roadmap**🔹 | <code>[readme.RoadmapOptions](#projen-readme-roadmapoptions)</code> | <span></span>
-**sectionOrder**🔹 | <code>Array<[readme.ReadmeSections](#projen-readme-readmesections)></code> | <span></span>
+**sections**🔹 | <code>Array<[readme.ReadmeSection](#projen-readme-readmesection)></code> | <span></span>
 **summary**🔹 | <code>[readme.SummaryOptions](#projen-readme-summaryoptions)</code> | <span></span>
 **tagLine**🔹 | <code>string</code> | <span></span>
 **toc**🔹 | <code>boolean</code> | <span></span>
@@ -8075,7 +8075,7 @@ Name | Description
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
 
 
-## enum ReadmeSections 🔹 <a id="projen-readme-readmesections"></a>
+## enum ReadmeSection 🔹 <a id="projen-readme-readmesection"></a>
 
 
 

@@ -3,7 +3,7 @@ import { Project } from '../project';
 import { TextFile } from '../textfile';
 import {
   SummaryOptions, CodeOfConductOptions, ContributingOptions, ChangelogOptions, ReadmeLicenseOptions,
-  RoadmapOptions, VisionOptions, UsageOptions, AuthorOptions, BadgeOptions, ReadmeSections,
+  RoadmapOptions, VisionOptions, UsageOptions, AuthorOptions, BadgeOptions, ReadmeSection,
   ReadmeOptions,
 } from './model';
 
@@ -27,7 +27,7 @@ export class Readme extends Component {
   public author: AuthorOptions;
   public badges: Array<BadgeOptions>;
 
-  public sectionOrder: ReadmeSections[];
+  public sections: ReadmeSection[];
 
   /**
    *
@@ -53,19 +53,19 @@ export class Readme extends Component {
     this.badges = [];
 
     // Order of Sections (those not present at resolve time will be skipped)
-    this.sectionOrder = [
-      ReadmeSections.TAG_LINE,
-      ReadmeSections.TOC,
-      ReadmeSections.SUMMARY,
-      ReadmeSections.USAGE,
-      ReadmeSections.CODE_OF_CONDUCT,
-      ReadmeSections.CONTRIBUTING,
-      ReadmeSections.CHANGELOG,
-      ReadmeSections.LICENSE,
-      ReadmeSections.ROADMAP,
-      ReadmeSections.VISION,
-      ReadmeSections.AUTHOR,
-      ReadmeSections.BADGES,
+    this.sections = [
+      ReadmeSection.TAG_LINE,
+      ReadmeSection.TOC,
+      ReadmeSection.SUMMARY,
+      ReadmeSection.USAGE,
+      ReadmeSection.CODE_OF_CONDUCT,
+      ReadmeSection.CONTRIBUTING,
+      ReadmeSection.CHANGELOG,
+      ReadmeSection.LICENSE,
+      ReadmeSection.ROADMAP,
+      ReadmeSection.VISION,
+      ReadmeSection.AUTHOR,
+      ReadmeSection.BADGES,
     ];
   }
 
@@ -85,42 +85,42 @@ export class Readme extends Component {
   private _renderReadme(): string[] {
     const lines: string[] = [];
 
-    for (const section of this.sectionOrder) {
+    for (const section of this.sections) {
       switch (section) {
-        case ReadmeSections.TAG_LINE:
+        case ReadmeSection.TAG_LINE:
           lines.push(this._renderReadmeTagLine() + '\n');
           break;
-        case ReadmeSections.TOC:
+        case ReadmeSection.TOC:
           lines.push(this._renderReadmeToc() + '\n');
           break;
-        case ReadmeSections.SUMMARY:
+        case ReadmeSection.SUMMARY:
           lines.push(this._renderReadmeSummary() + '\n');
           break;
-        case ReadmeSections.USAGE:
+        case ReadmeSection.USAGE:
           lines.push(this._renderReadmeUsage() + '\n');
           break;
-        case ReadmeSections.CODE_OF_CONDUCT:
+        case ReadmeSection.CODE_OF_CONDUCT:
           lines.push(this._renderCodeOfConduct() + '\n');
           break;
-        case ReadmeSections.CONTRIBUTING:
+        case ReadmeSection.CONTRIBUTING:
           lines.push(this._renderReadmeContributing() + '\n');
           break;
-        case ReadmeSections.CHANGELOG:
+        case ReadmeSection.CHANGELOG:
           lines.push(this._renderReadmeChangelog() + '\n');
           break;
-        case ReadmeSections.LICENSE:
+        case ReadmeSection.LICENSE:
           lines.push(this._renderReadmeLicense() + '\n');
           break;
-        case ReadmeSections.ROADMAP:
+        case ReadmeSection.ROADMAP:
           lines.push(this._renderReadmeRoadmap() + '\n');
           break;
-        case ReadmeSections.VISION:
+        case ReadmeSection.VISION:
           lines.push(this._renderReadmeVision() + '\n');
           break;
-        case ReadmeSections.AUTHOR:
+        case ReadmeSection.AUTHOR:
           lines.push(this._renderReadmeAuthor() + '\n');
           break;
-        case ReadmeSections.BADGES:
+        case ReadmeSection.BADGES:
           lines.push(this._renderReadmeBadges() + '\n');
       }
     }
@@ -148,7 +148,7 @@ export class Readme extends Component {
       lines.push(`# ${this.project.name}`);
       lines.push(`- [${this.project.name}](#${this.project.name})`);
 
-      for (const section in this.sectionOrder) {
+      for (const section in this.sections) {
         lines.push(`  - [${section}](#${section})`);
       }
     }

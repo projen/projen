@@ -320,7 +320,7 @@ export interface ReadmeOptions extends TextFileOptions {
 /**
  *
  */
-export enum ReadmeSections {
+export enum ReadmeSection {
   TOC = 'Table of Contents',
   TAG_LINE = 'Tag Line',
   SUMMARY = 'Summary',
