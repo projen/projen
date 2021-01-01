@@ -6122,6 +6122,7 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | __*Optional*__
 
 
+
 ## struct JsiiProjectOptions 🔹 <a id="projen-jsiiprojectoptions"></a>
 
 
