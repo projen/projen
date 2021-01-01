@@ -1,7 +1,7 @@
 import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
-export enum IgnorePatternType {
+enum IgnorePatternType {
     INCLUDE,
     EXCLUDE
 }
