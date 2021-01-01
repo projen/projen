@@ -1,9 +1,9 @@
 import * as YAML from 'yaml';
 import { IResolver } from './file';
-import { ObjectBaseFile, ObjectBaseFileOptions } from './object-file';
+import { ObjectFile, ObjectFileOptions } from './object-file';
 import { Project } from './project';
 
-export interface YamlFileOptions extends ObjectBaseFileOptions {
+export interface YamlFileOptions extends ObjectFileOptions {
   /**
    * Adds the projen marker as a "YAML-comment" at the top of the file.
    *
@@ -12,7 +12,7 @@ export interface YamlFileOptions extends ObjectBaseFileOptions {
   readonly marker?: boolean;
 }
 
-export class YamlFile extends ObjectBaseFile {
+export class YamlFile extends ObjectFile {
 
   /**
    * Indicates if the projen marker YAML-comment will be added to the output.

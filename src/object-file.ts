@@ -2,9 +2,9 @@ import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
 /**
- * Options for `ObjectBaseFile`.
+ * Options for `ObjectFile`.
  */
-export interface ObjectBaseFileOptions extends FileBaseOptions {
+export interface ObjectFileOptions extends FileBaseOptions {
   /**
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
@@ -23,7 +23,7 @@ export interface ObjectBaseFileOptions extends FileBaseOptions {
 /**
  * Represents an Object file.
  */
-export class ObjectBaseFile extends FileBase {
+export class ObjectFile extends FileBase {
   /**
    * The output object. This object can be mutated until the project is
    * synthesized.
@@ -35,7 +35,7 @@ export class ObjectBaseFile extends FileBase {
    */
   public readonly omitEmpty: boolean;
 
-  constructor(project: Project, filePath: string, options: ObjectBaseFileOptions) {
+  constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
 
     if (!options.obj) {

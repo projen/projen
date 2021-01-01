@@ -24,7 +24,7 @@ Name|Description
 [Makefile](#projen-makefile)|Minimal Makefile.
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
-[ObjectBaseFile](#projen-objectbasefile)|Represents an Object file.
+[ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
@@ -102,7 +102,7 @@ Name|Description
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
-[ObjectBaseFileOptions](#projen-objectbasefileoptions)|Options for `ObjectBaseFile`.
+[ObjectFileOptions](#projen-objectfileoptions)|Options for `ObjectFile`.
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
@@ -1286,7 +1286,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [ObjectBaseFile](#projen-objectbasefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [ObjectFile](#projen-objectfile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1753,7 +1753,7 @@ Name | Type | Description
 
 Represents a JSON file.
 
-__Extends__: [ObjectBaseFile](#projen-objectbasefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -2539,7 +2539,7 @@ setScript(name: string, command: string): void
 
 
 
-## class ObjectBaseFile 🔹 <a id="projen-objectbasefile"></a>
+## class ObjectFile 🔹 <a id="projen-objectfile"></a>
 
 Represents an Object file.
 
@@ -2551,12 +2551,12 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new ObjectBaseFile(project: Project, filePath: string, options: ObjectBaseFileOptions)
+new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[ObjectBaseFileOptions](#projen-objectbasefileoptions)</code>)  *No description*
+* **options** (<code>[ObjectFileOptions](#projen-objectfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
@@ -2576,7 +2576,7 @@ Name | Type | Description
 ### Methods
 
 
-#### protected synthesizeContent(resolver)🔹 <a id="projen-objectbasefile-synthesizecontent"></a>
+#### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
 
@@ -3467,7 +3467,7 @@ Name | Type | Description
 
 
 
-__Extends__: [ObjectBaseFile](#projen-objectbasefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -6484,10 +6484,10 @@ Name | Type | Description
 
 
 
-## struct ObjectBaseFileOptions 🔹 <a id="projen-objectbasefileoptions"></a>
+## struct ObjectFileOptions 🔹 <a id="projen-objectfileoptions"></a>
 
 
-Options for `ObjectBaseFile`.
+Options for `ObjectFile`.
 
 
 

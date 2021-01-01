@@ -1,11 +1,11 @@
 import { IResolver } from './file';
-import { ObjectBaseFile, ObjectBaseFileOptions } from './object-file';
+import { ObjectFile, ObjectFileOptions } from './object-file';
 import { Project } from './project';
 
 /**
  * Options for `JsonFile`.
  */
-export interface JsonFileOptions extends ObjectBaseFileOptions {
+export interface JsonFileOptions extends ObjectFileOptions {
   /**
    * Adds the projen marker as a "JSON-comment" to the root object.
    *
@@ -17,7 +17,7 @@ export interface JsonFileOptions extends ObjectBaseFileOptions {
 /**
  * Represents a JSON file.
  */
-export class JsonFile extends ObjectBaseFile {
+export class JsonFile extends ObjectFile {
 
   /**
    * Indicates if the projen marker JSON-comment will be added to the output
