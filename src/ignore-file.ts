@@ -2,8 +2,8 @@ import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
 enum IgnorePatternType {
-    INCLUDE,
-    EXCLUDE
+  INCLUDE,
+  EXCLUDE
 }
 
 export class IgnoreFile extends FileBase {
@@ -19,7 +19,7 @@ export class IgnoreFile extends FileBase {
    * @param patterns Patterns to exclude from git commits.
    */
   public exclude(...patterns: string[]) {
-    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.EXCLUDE)
+    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.EXCLUDE);
   }
 
   /**
@@ -27,13 +27,13 @@ export class IgnoreFile extends FileBase {
    * @param patterns Patterns to include in git commits.
    */
   public include(...patterns: string[]) {
-    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.INCLUDE)
+    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.INCLUDE);
   }
 
   protected synthesizeContent(resolver: IResolver): string {
     return resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
-      ...Object.entries(this.patterns).map(([pattern, type]) => type === IgnorePatternType.INCLUDE ? `!${pattern}`: pattern)
+      ...Object.entries(this.patterns).map(([pattern, type]) => type === IgnorePatternType.INCLUDE ? `!${pattern}`: pattern),
     ]).join('\n');
   }
 }
