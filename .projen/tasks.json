@@ -52,33 +52,9 @@
       "description": "compiles the test code",
       "steps": [
         {
-          "spawn": "readme:markmac"
-        },
-        {
           "exec": "tsc --noEmit --project tsconfig.jest.json"
         }
       ]
-    },
-    "readme:markmac": {
-      "name": "readme:markmac",
-      "steps": [
-        {
-          "exec": "chmod 600 README.md"
-        },
-        {
-          "exec": "mv README.md README.md.bak"
-        },
-        {
-          "exec": "cat README.md.bak | markmac > README.md"
-        },
-        {
-          "exec": "rm README.md.bak"
-        },
-        {
-          "exec": "chmod 400 README.md"
-        }
-      ],
-      "condition": "grep -q \"<macro exec=\" README.md"
     },
     "test": {
       "name": "test",

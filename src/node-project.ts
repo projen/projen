@@ -1,5 +1,4 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { DependencyType } from './deps';
 import { GithubWorkflow } from './github';
 import { AutoMerge } from './github/auto-merge';
 import { DependabotOptions } from './github/dependabot';
@@ -473,20 +472,6 @@ export class NodeProject extends Project {
       description: 'compiles the test code',
       category: TaskCategory.TEST,
     });
-
-    this.deps.addDependency('markmac', DependencyType.BUILD);
-    const markmac = this.addTask('readme:markmac', {
-      condition: 'grep -q "<macro exec=" README.md',
-    });
-    markmac.exec('chmod 600 README.md');
-
-    markmac.exec('mv README.md README.md.bak');
-    markmac.exec('cat README.md.bak | markmac > README.md');
-    markmac.exec('rm README.md.bak');
-
-    markmac.exec('chmod 400 README.md');
-
-    this.testCompileTask.spawn(markmac);
 
     this.testTask = this.addTask('test', {
       description: 'Run tests',

@@ -94,10 +94,6 @@
       "type": "build"
     },
     {
-      "name": "markmac",
-      "type": "build"
-    },
-    {
       "name": "standard-version",
       "version": "^9.0.0",
       "type": "build"

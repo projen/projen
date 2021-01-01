@@ -14,7 +14,6 @@
     "clobber": "/bin/bash ./projen.bash clobber",
     "compile": "/bin/bash ./projen.bash compile",
     "test:compile": "/bin/bash ./projen.bash test:compile",
-    "readme:markmac": "/bin/bash ./projen.bash readme:markmac",
     "test": "/bin/bash ./projen.bash test",
     "build": "/bin/bash ./projen.bash build",
     "bump": "/bin/bash ./projen.bash bump",

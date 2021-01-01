@@ -146,7 +146,7 @@ describe('deps', () => {
     // sanitize
     ['jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
 
-    expect(pkgjson.devDependencies).toStrictEqual({ markmac: '*' });
+    expect(pkgjson.devDependencies).toStrictEqual({});
     expect(pkgjson.dependencieds).toBeUndefined();
   });
 
