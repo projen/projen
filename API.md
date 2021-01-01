@@ -169,7 +169,6 @@ Name|Description
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
-[IgnorePatternType](#projen-ignorepatterntype)|*No description*
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
 [ProjectType](#projen-projecttype)|Which type of project this is.
@@ -7695,16 +7694,6 @@ Name | Description
 -----|-----
 **PUBLIC** 🔹|Allows everyone with the port URL to access the port (default).
 **PRIVATE** 🔹|Only allows users with workspace access to access the port.
-
-
-## enum IgnorePatternType 🔹 <a id="projen-ignorepatterntype"></a>
-
-
-
-Name | Description
------|-----
-**INCLUDE** 🔹|
-**EXCLUDE** 🔹|
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>
