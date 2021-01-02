@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.9](https://github.com/projen/projen/compare/v0.12.8...v0.12.9) (2021-01-02)
+
+
+### Features
+
+* Make IgnoreFile stateful to allow for overrides ([#435](https://github.com/projen/projen/issues/435)) ([6667980](https://github.com/projen/projen/commit/666798058e42cba5f4662462c03271347f3c33d4))
+
 ### [0.12.8](https://github.com/projen/projen/compare/v0.12.7...v0.12.8) (2020-12-31)
 
 ### [0.12.7](https://github.com/projen/projen/compare/v0.12.6...v0.12.7) (2020-12-30)
