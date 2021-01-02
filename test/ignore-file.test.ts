@@ -12,24 +12,54 @@ test('ignorefile synthesises correctly', () => {
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([]);
 });
 
-test('ignorefile puts includes after excludes', () => {
+test('ignorefile does not sort entries', () => {
   // GIVEN
   const prj = new TestProject();
 
   // WHEN
   const file = new IgnoreFile(prj, '.dockerignore');
-  file.exclude('a.txt', 'b.txt');
   file.include('c.txt', 'd.txt');
+  file.exclude('a.txt', 'b.txt');
   file.exclude('e.txt', 'f.txt');
 
   // THEN
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
+    '!c.txt',
+    '!d.txt',
     'a.txt',
     'b.txt',
     'e.txt',
     'f.txt',
-    '!c.txt',
-    '!d.txt',
+  ]);
+});
+
+test('ignorefile includes file after exclusion and inclusion', () => {
+  // GIVEN
+  const prj = new TestProject();
+
+  // WHEN
+  const file = new IgnoreFile(prj, '.dockerignore');
+  file.exclude('a.txt');
+  file.include('a.txt');
+
+  // THEN
+  expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
+    '!a.txt',
+  ]);
+});
+
+test('ignorefile excludes file after inclusion and exclusion', () => {
+  // GIVEN
+  const prj = new TestProject();
+
+  // WHEN
+  const file = new IgnoreFile(prj, '.dockerignore');
+  file.include('a.txt');
+  file.exclude('a.txt');
+
+  // THEN
+  expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
+    'a.txt',
   ]);
 });
 
@@ -41,17 +71,15 @@ test('ignorefile omits duplicated includes and excludes', () => {
   const file = new IgnoreFile(prj, '.dockerignore');
   file.exclude('a.txt', 'b.txt');
   file.include('c.txt', 'd.txt');
-  file.exclude('a.txt', 'x.txt');
-  file.include('c.txt', 'y.txt');
+  file.exclude('a.txt', 'b.txt');
+  file.include('c.txt', 'd.txt');
 
   // THEN
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
     'a.txt',
     'b.txt',
-    'x.txt',
     '!c.txt',
     '!d.txt',
-    '!y.txt',
   ]);
 });
 
