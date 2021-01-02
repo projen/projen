@@ -1,10 +1,9 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-// import { DevEnvironmentDockerImage } from '../src/dev-env';
+// import * as path from 'path';
+// import * as fs from 'fs-extra';
+import { DevEnvironmentDockerImage } from '../src/dev-env';
 // import { GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
 import * as logging from '../src/logging';
-import { TestProject } from './util';
-// import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from './util';
 
 // This is duplicated vs exported
 const GITPOD_FILE = '.gitpod.yml';
@@ -12,83 +11,84 @@ const DEVCONTAINER_FILE = '.devcontainer.json';
 
 logging.disable();
 
-describe('dev environment enable/disable', () => {
-  test('given gitpod and devContainer are false', () => {
-    // GIVEN
-    const project = new TestProject({
-      gitpod: false,
-      devContainer: false,
-    });
+// describe('dev environment enable/disable', () => {
+//   test('given gitpod and devContainer are false', () => {
+//     // GIVEN
+//     const project = new TestProject({
+//       gitpod: false,
+//       devContainer: false,
+//     });
 
-    // WHEN
-    project.synth();
+//     // WHEN
+//     project.synth();
 
-    // THEN
-    const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
-    const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
-    expect(fs.existsSync(gitpodFilePath)).toBeFalsy();
-    expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
-  });
+//     // THEN
+//     const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
+//     const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
+//     expect(fs.existsSync(gitpodFilePath)).toBeFalsy();
+//     expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
+//   });
 
-  test('given gitpod and devContainer are true', () => {
+//   test('given gitpod and devContainer are true', () => {
+//     // GIVEN
+//     const project = new TestProject({
+//       gitpod: true,
+//       devContainer: true,
+//     });
+
+//     // WHEN
+//     project.synth();
+
+//     // THEN
+//     const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
+//     const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
+//     expect(fs.existsSync(gitpodFilePath)).toBeTruthy();
+//     expect(fs.existsSync(devContainerFilePath)).toBeTruthy();
+//   });
+// });
+
+describe('dev environment docker options', () => {
+  test('given an image', () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
       devContainer: true,
+      readmeConfig: {},
     });
-
+    console.log(project);
     // WHEN
-    project.synth();
+    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain'));
+    project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/uberchain'));
+
 
     // THEN
-    const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
-    const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
-    expect(fs.existsSync(gitpodFilePath)).toBeTruthy();
-    expect(fs.existsSync(devContainerFilePath)).toBeTruthy();
+    const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+    expect(gitpodSnapshot).toContain('image: jsii/superchain');
+
+    const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+    expect(devContainerSnapshot).toStrictEqual({ image: 'jsii/uberchain' });
   });
-});
 
-// describe('dev environment docker options', () => {
-//   test('given an image', () => {
-//     // GIVEN
-//     const project = new TestProject({
-//       gitpod: true,
-//       devContainer: true,
-//     });
+  //   test('given a docker file dep', () => {
+  //     // GIVEN
+  //     const project = new TestProject({
+  //       gitpod: true,
+  //       devContainer: true,
+  //     });
 
-//     // WHEN
-//     project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain'));
-//     project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/uberchain'));
+  //     // WHEN
+  //     project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromFile('.gitpod.Dockerfile'));
+  //     project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromFile('Dockerfile'));
 
-
-//     // THEN
-//     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
-//     expect(gitpodSnapshot).toContain('image: jsii/superchain');
-
-//     const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-//     expect(devContainerSnapshot).toStrictEqual({ image: 'jsii/uberchain' });
-//   });
-
-//   test('given a docker file dep', () => {
-//     // GIVEN
-//     const project = new TestProject({
-//       gitpod: true,
-//       devContainer: true,
-//     });
-
-//     // WHEN
-//     project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromFile('.gitpod.Dockerfile'));
-//     project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromFile('Dockerfile'));
-
-//     // THEN
-//     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
-//     expect(gitpodSnapshot).toContain('image:');
-//     expect(gitpodSnapshot).toContain('file: .gitpod.Dockerfile');
+  //     // THEN
+  //     const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+  //     expect(gitpodSnapshot).toContain('image:');
+  //     expect(gitpodSnapshot).toContain('file: .gitpod.Dockerfile');
 
 //     const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
 //     expect(devContainerSnapshot).toStrictEqual({ build: { dockerfile: 'Dockerfile' } });
 //   });
-// });
+});
 
 // describe('dev environment tasks', () => {
 //   test('given custom task', () => {

@@ -26,7 +26,7 @@ describe('Readme Enablement', () => {
 
     // WHEN
     const output = synthSnapshot(project);
-    console.log(output);
+
     // THEN
     const upper = output['README.md'];
     const lower = output['readme.md'];
