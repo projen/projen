@@ -1,9 +1,9 @@
 import { Component } from '../component';
 import { Project } from '../project';
 import { TextFile } from '../textfile';
+import { Badge, BadgeOptions } from './badge';
 import {
   AuthorOptions,
-  BadgeOptions,
   ChangelogOptions,
   CodeOfConductOptions,
   ContributingOptions,
@@ -25,7 +25,7 @@ export class Readme extends Component {
 
   public toc: boolean;
   public tagLine: string;
-  public badges: Array<BadgeOptions>;
+  public badges: Array<Badge>;
   public summary: SummaryOptions;
   public codeOfConduct: CodeOfConductOptions;
   public contributing: ContributingOptions;
@@ -78,7 +78,12 @@ export class Readme extends Component {
     ];
   }
 
-  public addBadge(badge: BadgeOptions) {
+  /**
+   *
+   * @param options
+   */
+  public addBadge(options: BadgeOptions) {
+    const badge = new Badge(this.project, options);
     this.badges.push(badge);
   }
 
@@ -160,7 +165,7 @@ export class Readme extends Component {
 
     lines.push('## Badges\n');
     for (const badge of this.badges) {
-      lines.push(`![${badge.altText ?? badge.name})](${badge.imgUrl})](${badge.url})`);
+      lines.push(badge.toMarkDown());
     }
 
     return lines.join('\n');

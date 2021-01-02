@@ -1,4 +1,5 @@
 import { TextFileOptions } from '../textfile';
+import { Badge } from './badge';
 
 /**
  *
@@ -191,35 +192,6 @@ export interface AuthorOptions extends TextFileOptions {
 }
 
 /**
- *
- */
-export interface BadgeOptions {
-
-  /**
-   * Name of the badge.
-   */
-  readonly name: string;
-
-  /**
-   * Alt Text To display.
-   *
-   * @default - `name`
-   */
-  readonly altText?: string;
-
-  /**
-   * Image Url.
-   *
-   */
-  readonly imgUrl: string;
-
-  /**
-   * The Url.
-   */
-  readonly url: string;
-}
-
-/**
  * Readme Properties
  */
 export interface ReadmeOptions extends TextFileOptions {
@@ -314,7 +286,7 @@ export interface ReadmeOptions extends TextFileOptions {
    *
    * @default - depends on whats configured
    */
-  readonly badges?: BadgeOptions[];
+  readonly badges?: Badge[];
 }
 
 /**

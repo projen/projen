@@ -43,6 +43,7 @@ Name|Description
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[readme.Badge](#projen-readme-badge)|*No description*
 [readme.Readme](#projen-readme-readme)|Represents a README.md file.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
@@ -3851,6 +3852,48 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 
 
 
+## class Badge 🔹 <a id="projen-readme-badge"></a>
+
+
+
+__Submodule__: readme
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new readme.Badge(project: Project, options: BadgeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[readme.BadgeOptions](#projen-readme-badgeoptions)</code>)  *No description*
+  * **imgUrl** (<code>string</code>)  Image Url. 
+  * **name** (<code>string</code>)  Name of the badge. 
+  * **url** (<code>string</code>)  The Url. 
+  * **altText** (<code>string</code>)  Alt Text To display. __*Default*__: `name`
+
+
+### Methods
+
+
+#### toMarkDown()🔹 <a id="projen-readme-badge-tomarkdown"></a>
+
+
+
+```ts
+toMarkDown(): string
+```
+
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class Readme 🔹 <a id="projen-readme-readme"></a>
 
 Represents a README.md file.
@@ -3875,7 +3918,7 @@ new readme.Readme(project: Project, options?: ReadmeOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **lines** (<code>Array<string></code>)  The contents of the text file. __*Default*__: [] empty file
   * **author** (<code>[readme.AuthorOptions](#projen-readme-authoroptions)</code>)  Author. __*Default*__: `AuthorOptions`
-  * **badges** (<code>Array<[readme.BadgeOptions](#projen-readme-badgeoptions)></code>)  Badges. __*Default*__: depends on whats configured
+  * **badges** (<code>Array<[readme.Badge](#projen-readme-badge)></code>)  Badges. __*Default*__: depends on whats configured
   * **changelog** (<code>[readme.ChangelogOptions](#projen-readme-changelogoptions)</code>)  Changelog. __*Default*__: `ChangelogOptions`
   * **codeOfConduct** (<code>[readme.CodeOfConductOptions](#projen-readme-codeofconductoptions)</code>)  Code of Conduct. __*Default*__: `CodeOfConductOptions`
   * **contributing** (<code>[readme.ContributingOptions](#projen-readme-contributingoptions)</code>)  Contributing. __*Default*__: `ContributingOptions`
@@ -3896,7 +3939,7 @@ new readme.Readme(project: Project, options?: ReadmeOptions)
 Name | Type | Description 
 -----|------|-------------
 **author**🔹 | <code>[readme.AuthorOptions](#projen-readme-authoroptions)</code> | <span></span>
-**badges**🔹 | <code>Array<[readme.BadgeOptions](#projen-readme-badgeoptions)></code> | <span></span>
+**badges**🔹 | <code>Array<[readme.Badge](#projen-readme-badge)></code> | <span></span>
 **changelog**🔹 | <code>[readme.ChangelogOptions](#projen-readme-changelogoptions)</code> | <span></span>
 **codeOfConduct**🔹 | <code>[readme.CodeOfConductOptions](#projen-readme-codeofconductoptions)</code> | <span></span>
 **contributing**🔹 | <code>[readme.ContributingOptions](#projen-readme-contributingoptions)</code> | <span></span>
@@ -3913,15 +3956,15 @@ Name | Type | Description
 ### Methods
 
 
-#### addBadge(badge)🔹 <a id="projen-readme-readme-addbadge"></a>
+#### addBadge(options)🔹 <a id="projen-readme-readme-addbadge"></a>
 
 
 
 ```ts
-addBadge(badge: BadgeOptions): void
+addBadge(options: BadgeOptions): void
 ```
 
-* **badge** (<code>[readme.BadgeOptions](#projen-readme-badgeoptions)</code>)  *No description*
+* **options** (<code>[readme.BadgeOptions](#projen-readme-badgeoptions)</code>)  *No description*
   * **imgUrl** (<code>string</code>)  Image Url. 
   * **name** (<code>string</code>)  Name of the badge. 
   * **url** (<code>string</code>)  The Url. 
@@ -7162,7 +7205,7 @@ Readme Properties.
 Name | Type | Description 
 -----|------|-------------
 **author**?🔹 | <code>[readme.AuthorOptions](#projen-readme-authoroptions)</code> | Author.<br/>__*Default*__: `AuthorOptions`
-**badges**?🔹 | <code>Array<[readme.BadgeOptions](#projen-readme-badgeoptions)></code> | Badges.<br/>__*Default*__: depends on whats configured
+**badges**?🔹 | <code>Array<[readme.Badge](#projen-readme-badge)></code> | Badges.<br/>__*Default*__: depends on whats configured
 **changelog**?🔹 | <code>[readme.ChangelogOptions](#projen-readme-changelogoptions)</code> | Changelog.<br/>__*Default*__: `ChangelogOptions`
 **codeOfConduct**?🔹 | <code>[readme.CodeOfConductOptions](#projen-readme-codeofconductoptions)</code> | Code of Conduct.<br/>__*Default*__: `CodeOfConductOptions`
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
