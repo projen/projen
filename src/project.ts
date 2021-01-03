@@ -10,7 +10,7 @@ import { GitHub } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
-import * as logging from './logging';
+import { Logger } from './logger';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -147,6 +147,11 @@ export class Project {
    */
   public readonly deps: Dependencies;
 
+  /**
+   * Logging utilities.
+   */
+  public readonly logger: Logger;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -195,6 +200,8 @@ export class Project {
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
     this.deps = new Dependencies(this);
+
+    this.logger = new Logger(this);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
@@ -309,6 +316,8 @@ export class Project {
    */
   public synth(): void {
     const outdir = this.outdir;
+    this.logger.info('Synthesizing project...');
+
     this.preSynthesize();
 
     for (const comp of this._components) {
@@ -335,7 +344,7 @@ export class Project {
       this.postSynthesize();
     }
 
-    logging.info('Synthesis complete');
+    this.logger.info('Synthesis complete');
   }
 
   /**

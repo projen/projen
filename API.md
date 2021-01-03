@@ -21,6 +21,7 @@ Name|Description
 [JsiiProject](#projen-jsiiproject)|Multi-language jsii library project.
 [JsonFile](#projen-jsonfile)|Represents a JSON file.
 [License](#projen-license)|*No description*
+[Logger](#projen-logger)|*No description*
 [Makefile](#projen-makefile)|Minimal Makefile.
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
@@ -169,6 +170,7 @@ Name|Description
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
+[LogLevel](#projen-loglevel)|*No description*
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
 [ProjectType](#projen-projecttype)|Which type of project this is.
@@ -1841,6 +1843,116 @@ __Returns__:
 
 
 
+## class Logger 🔹 <a id="projen-logger"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Logger(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**level**🔹 | <code>[LogLevel](#projen-loglevel)</code> | <span></span>
+
+### Methods
+
+
+#### debug(...text)🔹 <a id="projen-logger-debug"></a>
+
+
+
+```ts
+debug(...text: any[]): void
+```
+
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+#### error(...text)🔹 <a id="projen-logger-error"></a>
+
+
+
+```ts
+error(...text: any[]): void
+```
+
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+#### info(...text)🔹 <a id="projen-logger-info"></a>
+
+
+
+```ts
+info(...text: any[]): void
+```
+
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+#### log(level, ...text)🔹 <a id="projen-logger-log"></a>
+
+
+
+```ts
+log(level: LogLevel, ...text: any[]): void
+```
+
+* **level** (<code>[LogLevel](#projen-loglevel)</code>)  *No description*
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+#### verbose(...text)🔹 <a id="projen-logger-verbose"></a>
+
+
+
+```ts
+verbose(...text: any[]): void
+```
+
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+#### warn(...text)🔹 <a id="projen-logger-warn"></a>
+
+
+
+```ts
+warn(...text: any[]): void
+```
+
+* **text** (<code>any</code>)  *No description*
+
+
+
+
+
+
 ## class Makefile 🔹 <a id="projen-makefile"></a>
 
 Minimal Makefile.
@@ -2574,6 +2686,7 @@ Name | Type | Description
 **deps**🔹 | <code>[deps.Dependencies](#projen-deps-dependencies)</code> | Project dependencies.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
+**logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
@@ -7694,6 +7807,20 @@ Name | Description
 -----|-----
 **PUBLIC** 🔹|Allows everyone with the port URL to access the port (default).
 **PRIVATE** 🔹|Only allows users with workspace access to access the port.
+
+
+## enum LogLevel 🔹 <a id="projen-loglevel"></a>
+
+
+
+Name | Description
+-----|-----
+**OFF** 🔹|
+**ERROR** 🔹|
+**WARN** 🔹|
+**INFO** 🔹|
+**DEBUG** 🔹|
+**VERBOSE** 🔹|
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>

@@ -2,7 +2,6 @@ import * as path from 'path';
 import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
-import * as logging from '../logging';
 import { Project } from '../project';
 import { Dependency, DependencyType, DepsManifest } from './model';
 
@@ -84,7 +83,7 @@ export class Dependencies extends Component {
    * @param type The type of the dependency.
    */
   public addDependency(spec: string, type: DependencyType): Dependency {
-    logging.debug(`${type}-dep ${spec}`);
+    this.project.logger.debug(`${type}-dep ${spec}`);
 
     const scope = spec.startsWith('@');
     if (scope) {
