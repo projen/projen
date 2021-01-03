@@ -75,3 +75,14 @@ test('omitEmpty', () => {
   });
 });
 
+test('json file can contain projen marker', () => {
+  const prj = new TestProject();
+
+  const obj: any = {};
+
+  new JsonFile(prj, 'my/json/file-marker.json', { obj, marker: true });
+
+  const output = synthSnapshot(prj)['my/json/file-marker.json'];
+
+  expect(output['//']).toBe(JsonFile.PROJEN_MARKER);
+});

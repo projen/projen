@@ -28,8 +28,10 @@ export class TomlFile extends ObjectFile implements IMarkableFile {
   }
 
   protected synthesizeContent(resolver: IResolver) {
-    return `# ${TomlFile.PROJEN_MARKER}
-    
-    ${TOML.stringify(resolver.resolve(this.obj))}`;
+    return [
+      ... (this.marker ? [`# ${TomlFile.PROJEN_MARKER}`] : []),
+      '',
+      TOML.stringify(resolver.resolve(this.obj)),
+    ].join('\n');
   }
 }
