@@ -1,23 +1,17 @@
 import { IResolver } from './file';
+import { MarkableFileOptions, IMarkableFile } from './markable-file';
 import { ObjectFile, ObjectFileOptions } from './object-file';
 import { Project } from './project';
 
 /**
  * Options for `JsonFile`.
  */
-export interface JsonFileOptions extends ObjectFileOptions {
-  /**
-   * Adds the projen marker as a "JSON-comment" to the root object.
-   *
-   * @default false
-   */
-  readonly marker?: boolean;
-}
+export interface JsonFileOptions extends ObjectFileOptions, MarkableFileOptions {}
 
 /**
  * Represents a JSON file.
  */
-export class JsonFile extends ObjectFile {
+export class JsonFile extends ObjectFile implements IMarkableFile {
 
   /**
    * Indicates if the projen marker JSON-comment will be added to the output

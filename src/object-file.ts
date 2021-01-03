@@ -23,7 +23,7 @@ export interface ObjectFileOptions extends FileBaseOptions {
 /**
  * Represents an Object file.
  */
-export class ObjectFile extends FileBase {
+export abstract class ObjectFile extends FileBase {
   /**
    * The output object. This object can be mutated until the project is
    * synthesized.
