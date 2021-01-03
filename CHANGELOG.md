@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.10](https://github.com/projen/projen/compare/v0.12.9...v0.12.10) (2021-01-03)
+
+
+### Bug Fixes
+
+* subproject generated files are deleted too early ([#437](https://github.com/projen/projen/issues/437)) ([20b9537](https://github.com/projen/projen/commit/20b953778fbb8ab75d5830d6b4ca39976d3cf028)), closes [#383](https://github.com/projen/projen/issues/383)
+
+### [0.12.9](https://github.com/projen/projen/compare/v0.12.8...v0.12.9) (2021-01-02)
+
+
+### Features
+
+* Make IgnoreFile stateful to allow for overrides ([#435](https://github.com/projen/projen/issues/435)) ([6667980](https://github.com/projen/projen/commit/666798058e42cba5f4662462c03271347f3c33d4))
+
+### [0.12.8](https://github.com/projen/projen/compare/v0.12.7...v0.12.8) (2020-12-31)
+
+### [0.12.7](https://github.com/projen/projen/compare/v0.12.6...v0.12.7) (2020-12-30)
+
+
+### Features
+
+* make `projen start` interactive by default ([#431](https://github.com/projen/projen/issues/431)) ([8205707](https://github.com/projen/projen/commit/82057078c9ab5af34b0f0047ed98c3d076a0afcc)), closes [#429](https://github.com/projen/projen/issues/429)
+
+### [0.12.6](https://github.com/projen/projen/compare/v0.12.5...v0.12.6) (2020-12-30)
+
+
+### Features
+
+* add pnpm support ([#425](https://github.com/projen/projen/issues/425)) ([6b3cbb2](https://github.com/projen/projen/commit/6b3cbb279bfdd78eb6f2b404d4cf6b55f9bd8523)), closes [#420](https://github.com/projen/projen/issues/420)
+
 ### [0.12.5](https://github.com/projen/projen/compare/v0.12.4...v0.12.5) (2020-12-30)
 
 

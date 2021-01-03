@@ -1,7 +1,8 @@
 import * as path from 'path';
 import { chdir, cwd } from 'process';
 import * as fs from 'fs-extra';
-import { Project, TextFile } from '../src';
+import { Project, ProjectOptions, TextFile } from '../src';
+import { PROJEN_MARKER } from '../src/common';
 import { mkdtemp, TestProject } from './util';
 
 test('composing projects declaratively', () => {
@@ -70,3 +71,37 @@ test('"outdir" for subprojects must be relative', () => {
   const root = new TestProject();
   expect(() => new Project({ name: 'foobar', parent: root, outdir: '/foo/bar' })).toThrow(/"outdir" must be a relative path/);
 });
+
+test('subproject generated files do not get cleaned up by parent project', () => {
+  const root = new TestProject();
+  const child = new PreSynthProject({ parent: root, outdir: 'sub-project' });
+
+  // no files have been generated yet
+  expect(fs.existsSync(child.file.absolutePath)).toEqual(false);
+
+  // generate all project files at least once
+  root.synth();
+  expect(child.fileExistedDuringPresynth).toEqual(false);
+  expect(fs.existsSync(child.file.absolutePath)).toEqual(true);
+
+  // resynthesize projects with all generated files already existing
+  root.synth();
+  expect(child.fileExistedDuringPresynth).toEqual(true);
+  expect(fs.existsSync(child.file.absolutePath)).toEqual(true);
+});
+
+// a project that depends on generated files during preSynthesize()
+class PreSynthProject extends Project {
+  public file: TextFile;
+  public fileExistedDuringPresynth: boolean;
+  constructor(options: Omit<ProjectOptions, 'name'> = {}) {
+    super({ name: 'presynth-project', clobber: false, ...options });
+
+    this.file = new TextFile(this, 'presynth.txt', { lines: [PROJEN_MARKER] });
+    this.fileExistedDuringPresynth = false;
+  }
+
+  preSynthesize() {
+    this.fileExistedDuringPresynth = fs.existsSync(this.file.absolutePath);
+  }
+}

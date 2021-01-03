@@ -246,7 +246,7 @@ export class NodePackage extends Component {
   public readonly entrypoint: string;
 
   /**
-   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
+   * Determines how tasks are executed when invoked as npm scripts (yarn/npm/pnpm run xyz).
    */
   public readonly npmTaskExecution: NpmTaskExecution;
 
@@ -571,6 +571,12 @@ export class NodePackage extends Component {
           ? 'npm ci'
           : 'npm install';
 
+      case NodePackageManager.PNPM:
+        return [
+          'pnpm i',
+          ...frozen ? ['--frozen-lockfile'] : [],
+        ].join(' ');
+
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
     }
@@ -847,7 +853,12 @@ export enum NodePackageManager {
   /**
    * Use `npm` as the package manager.
    */
-  NPM = 'npm'
+  NPM = 'npm',
+
+  /**
+   * Use `pnpm` as the package manager.
+   */
+  PNPM = 'pnpm'
 }
 
 interface NpmDependencies {
