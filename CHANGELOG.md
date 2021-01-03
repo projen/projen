@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.11](https://github.com/projen/projen/compare/v0.12.10...v0.12.11) (2021-01-03)
+
+
+### Bug Fixes
+
+* **jsii:** allow `authorUrl` and `authorAddress` to be the same value ([#442](https://github.com/projen/projen/issues/442)) ([4a8e24e](https://github.com/projen/projen/commit/4a8e24e25c3b22500866296deae4f5e41188ac7c))
+
 ### [0.12.10](https://github.com/projen/projen/compare/v0.12.9...v0.12.10) (2021-01-03)
 
 
