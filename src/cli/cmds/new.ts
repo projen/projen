@@ -114,6 +114,8 @@ function generateProjenConfig(baseDir: string, type: inventory.ProjectType, para
 
   fs.writeFileSync(configPath, lines.join('\n'));
   logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
+
+  return configPath;
 }
 
 function makePadding(paddingLength: number): string {
@@ -321,7 +323,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
   }
 
   // generate .projenrc.js
-  generateProjenConfig(baseDir, type, props, args.comments);
+  const rcfile = generateProjenConfig(baseDir, type, props, args.comments);
 
   // interactive git and github setup
   const gitFolder = path.resolve('.git');
@@ -334,7 +336,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
   // synthesize if synth is enabled (default).
   if (args.synth) {
     process.env.PROJEN_DISABLE_POST = (!args.post).toString();
-    await synth();
+    await synth(rcfile);
   }
 
   if (pushInitialToGithub) {

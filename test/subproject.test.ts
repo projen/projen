@@ -47,17 +47,6 @@ test('multiple levels', () => {
   expect(child2.outdir).toEqual(path.join(root.outdir, 'child1', 'child2'));
 });
 
-test('outdir="." can only be used if projenrc.js is present in the same directory (to protect against override)', () => {
-  const workdir = mkdtemp();
-  const restore = cwd();
-  chdir(workdir);
-  try {
-    expect(() => new Project({ name: 'bam', outdir: '.' })).toThrow(/cannot use outdir="\." because projenrc\.js does not exist in the current directory/);
-  } finally {
-    chdir(restore);
-  }
-});
-
 test('subprojects cannot introduce files that override each other', () => {
   const root = new TestProject();
   const child = new Project({ name: 'sub-project', parent: root, outdir: 'sub-project' });

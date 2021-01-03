@@ -1,8 +1,6 @@
-import { existsSync } from 'fs';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -171,12 +169,6 @@ export class Project {
       outdir = path.join(options.parent.outdir, options.outdir);
     } else {
       outdir = options.outdir ?? '.';
-    }
-
-    if (outdir === '.') {
-      if (!existsSync(path.join(outdir, PROJEN_RC))) {
-        throw new Error('cannot use outdir="." because projenrc.js does not exist in the current directory');
-      }
     }
 
     this.outdir = path.resolve(outdir);

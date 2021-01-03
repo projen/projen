@@ -1,13 +1,11 @@
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { PROJEN_RC } from '../common';
 import * as logging from '../logging';
 
-const projenfile = path.resolve(PROJEN_RC);
 const projen = path.join(__dirname, '..');
 
-export async function synth() {
+export async function synth(projenfile: string) {
   if (!fs.existsSync(projenfile)) {
     logging.error(`Unable to find ${projenfile}. Use "projen new" to create a new project.`);
     process.exit(1);

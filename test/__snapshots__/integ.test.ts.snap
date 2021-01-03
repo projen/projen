@@ -114,8 +114,8 @@ Object {
         "error",
         Object {
           "devDependencies": Array [
-            "**/build-tools/**",
             "**/test/**",
+            "**/build-tools/**",
           ],
           "optionalDependencies": false,
           "peerDependencies": true,
@@ -531,7 +531,6 @@ example/*.d.ts
 !/.projenrc.js
 !version.json
 !/.versionrc.json
-!/test
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
 !/.mergify.yml
@@ -539,6 +538,7 @@ example/*.d.ts
 !/.github/workflows/projenupgrade.yml
 !/.github/pull_request_template.md
 !/.github/workflows/rebuild-bot.yml
+!/test
 !/src
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -585,8 +585,8 @@ pull_request_rules:
 /test-reports/
 junit.xml
 /coverage
-/test
 /.mergify.yml
+/test
 /src
 dist
 /tsconfig.json
@@ -962,7 +962,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "eslint",
         "steps": Array [
           Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
@@ -1335,7 +1335,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Elad Ben-Israel
+   Copyright 2021 Elad Ben-Israel
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -1673,8 +1673,8 @@ Object {
         "error",
         Object {
           "devDependencies": Array [
-            "**/build-tools/**",
             "**/test/**",
+            "**/build-tools/**",
           ],
           "optionalDependencies": false,
           "peerDependencies": true,
@@ -2108,7 +2108,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "eslint",
         "steps": Array [
           Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
@@ -2478,7 +2478,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Amazon Web Services
+   Copyright 2021 Amazon Web Services
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
@@ -2949,8 +2949,8 @@ Object {
         "error",
         Object {
           "devDependencies": Array [
-            "**/build-tools/**",
             "**/test/**",
+            "**/build-tools/**",
           ],
           "optionalDependencies": false,
           "peerDependencies": true,
@@ -3353,7 +3353,7 @@ dist
         "name": "eslint",
         "steps": Array [
           Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test .projenrc.js",
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
           },
         ],
       },
@@ -3714,7 +3714,7 @@ project.synth();
       same \\"printed page\\" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2020 Amazon Web Services
+   Copyright 2021 Amazon Web Services
 
    Licensed under the Apache License, Version 2.0 (the \\"License\\");
    you may not use this file except in compliance with the License.
