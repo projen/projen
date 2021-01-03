@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.12](https://github.com/projen/projen/compare/v0.12.11...v0.12.12) (2021-01-03)
+
+
+### Features
+
+* projen logo ([#441](https://github.com/projen/projen/issues/441)) ([7be2d61](https://github.com/projen/projen/commit/7be2d61017be89d43cda6ffea242e0d59e25289f))
+
 ### [0.12.11](https://github.com/projen/projen/compare/v0.12.10...v0.12.11) (2021-01-03)
 
 
