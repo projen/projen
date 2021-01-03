@@ -99,7 +99,7 @@ Name|Description
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
-[MarkableFileOptions](#projen-markablefileoptions)|Options for files that include the Projen marker.
+[MarkableFileOptions](#projen-markablefileoptions)|Options for files that may include the Projen marker.
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
@@ -158,7 +158,7 @@ Name|Description
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
-[IMarkableFile](#projen-imarkablefile)|*No description*
+[IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 
 
@@ -6045,7 +6045,7 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 __Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
 
-
+Files that may include the Projen marker.
 
 ### Properties
 
@@ -6369,7 +6369,7 @@ Name | Type | Description
 ## struct MarkableFileOptions 🔹 <a id="projen-markablefileoptions"></a>
 
 
-Options for files that include the Projen marker.
+Options for files that may include the Projen marker.
 
 
 
