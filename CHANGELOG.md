@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.10](https://github.com/projen/projen/compare/v0.12.9...v0.12.10) (2021-01-03)
+
+
+### Bug Fixes
+
+* subproject generated files are deleted too early ([#437](https://github.com/projen/projen/issues/437)) ([20b9537](https://github.com/projen/projen/commit/20b953778fbb8ab75d5830d6b4ca39976d3cf028)), closes [#383](https://github.com/projen/projen/issues/383)
+
 ### [0.12.9](https://github.com/projen/projen/compare/v0.12.8...v0.12.9) (2021-01-02)
 
 
