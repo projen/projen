@@ -1628,6 +1628,19 @@ addReporter(reporter: string &#124; json): void
 
 
 
+#### addSnapshotResolver(file)🔹 <a id="projen-jest-addsnapshotresolver"></a>
+
+
+
+```ts
+addSnapshotResolver(file: string): void
+```
+
+* **file** (<code>string</code>)  *No description*
+
+
+
+
 #### addTestMatch(pattern)🔹 <a id="projen-jest-addtestmatch"></a>
 
 Adds a test match pattern.
@@ -6145,7 +6158,7 @@ Name | Type | Description
 **collectCoverage**?🔹 | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test.<br/>__*Default*__: true
 **collectCoverageFrom**?🔹 | <code>boolean</code> | An array of glob patterns indicating a set of files for which coverage information should be collected.<br/>__*Default*__: undefined
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
-**coveragePathIgnorePatterns**?🔹 | <code>string</code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
+**coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
 **coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
 **coverageThreshold**?🔹 | <code>[CoverageThreshold](#projen-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
