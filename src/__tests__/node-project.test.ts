@@ -1,6 +1,6 @@
-import { NodeProject, NodeProjectOptions, LogLevel } from '../src';
-import { DependencyType } from '../src/deps';
-import * as logging from '../src/logging';
+import { NodeProject, NodeProjectOptions, LogLevel } from '..';
+import { DependencyType } from '../deps';
+import * as logging from '../logging';
 import { mkdtemp, synthSnapshot } from './util';
 
 logging.disable();

@@ -55,11 +55,10 @@ junit.xml
 !/.github/dependabot.yml
 !/.github/pull_request_template.md
 !/.github/workflows/rebuild-bot.yml
-!/test
+!/src/__tests__
 /lib
 !/src
 /dist
-!/tsconfig.jest.json
 !/.eslintrc.json
 .jsii
 tsconfig.json

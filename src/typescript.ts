@@ -315,6 +315,7 @@ export class TypeScriptProject extends NodeProject {
         tsconfigPath: `./${eslintTsConfig}`,
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
+        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });

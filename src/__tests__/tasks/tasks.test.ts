@@ -1,6 +1,6 @@
 import { spawnSync } from 'child_process';
-import { Project } from '../../src';
-import { Task, Tasks, TasksManifest, TaskStep } from '../../src/tasks';
+import { Project } from '../..';
+import { Task, Tasks, TasksManifest, TaskStep } from '../../tasks';
 import { TestProject, synthSnapshot } from '../util';
 
 test('empty task', () => {

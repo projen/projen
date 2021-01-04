@@ -1,4 +1,4 @@
-import * as logging from '../src/logging';
+import * as logging from '../logging';
 import { synthSnapshot, TestProject } from './util';
 
 logging.disable();

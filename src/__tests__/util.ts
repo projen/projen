@@ -2,11 +2,11 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { LogLevel, Project, ProjectOptions } from '../src';
-import * as logging from '../src/logging';
-import { exec } from '../src/util';
+import { LogLevel, Project, ProjectOptions } from '..';
+import * as logging from '../logging';
+import { exec } from '../util';
 
-const PROJEN_CLI = require.resolve('../bin/projen');
+const PROJEN_CLI = require.resolve('../../bin/projen');
 
 logging.disable(); // no logging during tests
 

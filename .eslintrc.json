@@ -12,7 +12,7 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
-    "project": "./tsconfig.jest.json"
+    "project": "./tsconfig.json"
   },
   "extends": [
     "plugin:import/typescript"
@@ -27,7 +27,7 @@
     "import/resolver": {
       "node": {},
       "typescript": {
-        "project": "./tsconfig.jest.json"
+        "project": "./tsconfig.json"
       }
     }
   },
@@ -124,7 +124,7 @@
       "error",
       {
         "devDependencies": [
-          "**/test/**",
+          "**/src/__tests__/**",
           "**/build-tools/**"
         ],
         "optionalDependencies": false,

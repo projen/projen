@@ -1,4 +1,4 @@
-import { IgnoreFile } from '../src';
+import { IgnoreFile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('ignorefile synthesises correctly', () => {

@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { DevEnvironmentDockerImage } from '../src/dev-env';
-import { GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
-import * as logging from '../src/logging';
+import { DevEnvironmentDockerImage } from '../dev-env';
+import { GitpodOpenIn, GitpodOpenMode } from '../gitpod';
+import * as logging from '../logging';
 import { synthSnapshot, TestProject } from './util';
 
 // This is duplicated vs exported

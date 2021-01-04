@@ -1,8 +1,8 @@
 import { spawnSync } from 'child_process';
 import { basename, join } from 'path';
 import { mkdirpSync } from 'fs-extra';
-import { Project } from '../../src';
-import { TaskRuntime } from '../../src/tasks';
+import { Project } from '../..';
+import { TaskRuntime } from '../../tasks';
 import { TestProject } from '../util';
 
 test('minimal case (just a shell command)', () => {
@@ -189,7 +189,7 @@ function executeTask(p: Project, taskName: string) {
   p.synth();
 
   const args = [
-    require.resolve('../../lib/cli'),
+    require.resolve('../../cli'),
     taskName,
   ];
 
