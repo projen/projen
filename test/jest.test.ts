@@ -138,6 +138,21 @@ test('Typescript Project Jest With Compiler Options', () => {
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(mergedCompilerOptions);
 });
 
+test('testdir is under src', () => {
+  // WHEN
+  const project = new TypeScriptProject({
+    outdir: mkdtemp(),
+    name: 'test-typescript-project',
+    srcdir: 'mysrc',
+    testdir: 'mysrc/boom/bam/__tests',
+  });
+
+  // THEN
+  const files = synthSnapshot(project);
+  expect(files['tsconfig.jest.json']).toBeUndefined(); // no special tsconfig for jest in this case
+  expect(files['package.json'].jest.testMatch).toStrictEqual(['**/lib/boom/bam/__tests/**/?(*.)+(spec|test).js?(x)']);
+});
+
 test('addTestMatch() can be used to add patterns', () => {
   // GIVEN
   const project = new NodeProject({
