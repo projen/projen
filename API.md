@@ -25,6 +25,7 @@ Name|Description
 [Makefile](#projen-makefile)|Minimal Makefile.
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
+[ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
@@ -100,9 +101,11 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
+[MarkableFileOptions](#projen-markablefileoptions)|Options for files that may include the Projen marker.
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
+[ObjectFileOptions](#projen-objectfileoptions)|Options for `ObjectFile`.
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
@@ -157,6 +160,7 @@ Name|Description
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
+[IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 
 
@@ -1760,7 +1764,8 @@ Name | Type | Description
 
 Represents a JSON file.
 
-__Extends__: [FileBase](#projen-filebase)
+__Implements__: [IMarkableFile](#projen-imarkablefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -1777,9 +1782,9 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
 
 
@@ -1789,8 +1794,6 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 Name | Type | Description 
 -----|------|-------------
 **marker**🔹 | <code>boolean</code> | Indicates if the projen marker JSON-comment will be added to the output object.
-**obj**🔹 | <code>json</code> | The output object.
-**omitEmpty**🔹 | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object.
 
 ### Methods
 
@@ -2653,6 +2656,59 @@ setScript(name: string, command: string): void
 
 
 
+## class ObjectFile 🔹 <a id="projen-objectfile"></a>
+
+Represents an Object file.
+
+__Extends__: [FileBase](#projen-filebase)
+__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+
+### Initializer
+
+
+
+
+```ts
+new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[ObjectFileOptions](#projen-objectfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>json</code> | The output object.
+**omitEmpty**🔹 | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object.
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class Project 🔹 <a id="projen-project"></a>
 
 Base project.
@@ -3081,7 +3137,8 @@ __Returns__:
 
 TOML file.
 
-__Extends__: [FileBase](#projen-filebase)
+__Implements__: [IMarkableFile](#projen-imarkablefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -3098,7 +3155,9 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  Object to render in the TOML file. 
+  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
 
 
@@ -3107,7 +3166,7 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>json</code> | <span></span>
+**marker**🔹 | <code>boolean</code> | Indicates if the projen marker TOML-comment will be added to the output.
 
 ### Methods
 
@@ -3535,7 +3594,8 @@ Name | Type | Description
 
 
 
-__Extends__: [JsonFile](#projen-jsonfile)
+__Implements__: [IMarkableFile](#projen-imarkablefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -3552,10 +3612,18 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker as a "JSON-comment" to the root object. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**marker**🔹 | <code>boolean</code> | Indicates if the projen marker YAML-comment will be added to the output.
 
 ### Methods
 
@@ -6088,6 +6156,21 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 
 
+## interface IMarkableFile 🔹 <a id="projen-imarkablefile"></a>
+
+__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+
+Files that may include the Projen marker.
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**marker**🔹 | <code>boolean</code> | Adds the projen marker to the file.
+
+
+
 ## interface IResolver 🔹 <a id="projen-iresolver"></a>
 
 
@@ -6358,7 +6441,7 @@ Name | Type | Description
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -6407,6 +6490,19 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 **rules**?🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.<br/>__*Default*__: []
+
+
+
+## struct MarkableFileOptions 🔹 <a id="projen-markablefileoptions"></a>
+
+
+Options for files that may include the Projen marker.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
 
 
 
@@ -6549,6 +6645,23 @@ Name | Type | Description
 
 
 
+## struct ObjectFileOptions 🔹 <a id="projen-objectfileoptions"></a>
+
+
+Options for `ObjectFile`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
 ## struct PeerDependencyOptions 🔹 <a id="projen-peerdependencyoptions"></a>
 
 
@@ -6677,9 +6790,11 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>any</code> | Object to render in the TOML file.
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -6966,7 +7081,7 @@ Name | Type | Description
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker as a "JSON-comment" to the root object.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
