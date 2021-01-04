@@ -1551,6 +1551,21 @@ include(...patterns: string[]): void
 
 
 
+#### removePatterns(...patterns)🔹 <a id="projen-ignorefile-removepatterns"></a>
+
+Removes patterns previously added from the ignore file.
+
+If `addPattern()` is called after this, the pattern will be added again.
+
+```ts
+removePatterns(...patterns: string[]): void
+```
+
+* **patterns** (<code>string</code>)  patters to remove.
+
+
+
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-ignorefile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
