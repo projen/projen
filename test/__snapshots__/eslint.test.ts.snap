@@ -226,7 +226,7 @@ Object {
     "import/resolver": Object {
       "node": Object {},
       "typescript": Object {
-        "directory": "./tsconfig.json",
+        "project": "./tsconfig.json",
       },
     },
   },

@@ -227,7 +227,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
-          "directory": "./tsconfig.jest.json",
+          "project": "./tsconfig.jest.json",
         },
       },
     },
@@ -1786,7 +1786,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
-          "directory": "./tsconfig.jest.json",
+          "project": "./tsconfig.jest.json",
         },
       },
     },
@@ -3062,7 +3062,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
-          "directory": "./tsconfig.jest.json",
+          "project": "./tsconfig.jest.json",
         },
       },
     },
