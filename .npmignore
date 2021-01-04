@@ -7,7 +7,7 @@
 junit.xml
 /coverage
 /.mergify.yml
-/test
+/src/__tests__
 !/lib
 /src
 !/lib/**/*.js
@@ -17,6 +17,5 @@ dist
 /.github
 /.vscode
 /.idea
-/tsconfig.jest.json
 /.eslintrc.json
 !.jsii

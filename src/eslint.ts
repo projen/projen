@@ -36,6 +36,12 @@ export interface EslintOptions {
    * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
    */
   readonly ignorePatterns?: string[];
+
+  /**
+   * Should we lint .projenrc.js
+   * @default true
+   */
+  readonly lintProjenRc?: boolean;
 }
 
 /**
@@ -90,6 +96,8 @@ export class Eslint extends Component {
     const dirs = [...options.dirs, ...options.devdirs ?? []];
     const fileExtensions = options.fileExtensions ?? ['.ts'];
 
+    const lintProjenRc = options.lintProjenRc ?? true;
+
     const eslint = project.addTask('eslint', {
       description: 'Runs eslint against the codebase',
       category: TaskCategory.TEST,
@@ -99,7 +107,7 @@ export class Eslint extends Component {
         '--fix',
         '--no-error-on-unmatched-pattern',
         ...dirs,
-        PROJEN_RC,
+        ...lintProjenRc ? [PROJEN_RC] : [],
       ].join(' '),
     });
 

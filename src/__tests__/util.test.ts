@@ -1,4 +1,4 @@
-import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy } from '../src/util';
+import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy } from '../util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {

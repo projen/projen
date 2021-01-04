@@ -1,4 +1,4 @@
-import { Makefile } from '../src';
+import { Makefile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('makefile synthesises correctly', () => {

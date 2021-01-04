@@ -231,6 +231,15 @@ $ cd projen
 $ yarn
 ```
 
+Run `yarn watch` to compile in the background:
+
+```bash
+$ yarn watch
+```
+
+Tests are located under `src/__tests__` and executed from javascript code, so
+make sure to compile first or use `yarn watch`.
+
 ## Roadmap
 
 > A non-exhaustive list of ideas/directions for projen
@@ -242,7 +251,6 @@ $ yarn
 - [ ] Support projenrc in YAML (fully declarative, if one desires)
 - [ ] `projen SCRIPT`: make the CLI extensible so it can become _the_ project entrypoint (instead of e.g. `yarn`/`npm`, etc).
 - [ ] CLI bash completion
-
 
 ## License
 

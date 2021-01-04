@@ -1,4 +1,4 @@
-import { JsonFile } from '../src';
+import { JsonFile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('json object can be mutated before synthesis', () => {
