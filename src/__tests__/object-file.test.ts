@@ -1,4 +1,4 @@
-import { ObjectFile } from '../src';
+import { ObjectFile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 class ChildObjectFile extends ObjectFile {}
