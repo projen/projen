@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Project, TextFile, LogLevel, ProjectOptions } from '../src';
-import { PROJEN_MARKER } from '../src/common';
+import { Project, TextFile, LogLevel, ProjectOptions } from '..';
+import { PROJEN_MARKER } from '../common';
 import { TestProject } from './util';
 
 test('composing projects declaratively', () => {

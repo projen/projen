@@ -1,6 +1,6 @@
-import { Jest, NodeProject, TypeScriptProject, LogLevel } from '../src';
-import { PROJEN_RC } from '../src/common';
-import * as logging from '../src/logging';
+import { Jest, NodeProject, TypeScriptProject, LogLevel } from '..';
+import { PROJEN_RC } from '../common';
+import * as logging from '../logging';
 import { mkdtemp, synthSnapshot } from './util';
 
 logging.disable();
@@ -142,6 +142,7 @@ test('testdir is under src', () => {
   // WHEN
   const project = new TypeScriptProject({
     outdir: mkdtemp(),
+    logging: { level: LogLevel.OFF },
     name: 'test-typescript-project',
     srcdir: 'mysrc',
     testdir: 'mysrc/boom/bam/__tests',

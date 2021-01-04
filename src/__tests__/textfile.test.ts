@@ -1,4 +1,4 @@
-import { TextFile } from '../src';
+import { TextFile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('empty file', () => {

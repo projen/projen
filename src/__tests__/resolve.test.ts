@@ -1,4 +1,4 @@
-import { resolve } from '../src/_resolve';
+import { resolve } from '../_resolve';
 
 test('null', () => {
   expect(resolve(null)).toStrictEqual(null);

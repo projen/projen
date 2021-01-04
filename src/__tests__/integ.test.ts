@@ -4,8 +4,8 @@ import { glob } from 'glob';
 import { mkdtemp, directorySnapshot, execProjenCLI } from './util';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const projenVersion = require('../package.json').version;
-const samples = join(__dirname, 'integration');
+const projenVersion = require('../../package.json').version;
+const samples = join(__dirname, '..', '..', 'src', '__tests__', 'integration');
 const files = glob.sync('**/*.projenrc.js', { cwd: samples });
 
 for (const projenrc of files) {

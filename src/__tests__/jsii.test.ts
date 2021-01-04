@@ -1,4 +1,4 @@
-import { JsiiProject, LogLevel } from '../src';
+import { JsiiProject, LogLevel } from '..';
 import { mkdtemp, synthSnapshot } from './util';
 
 describe('author', () => {
