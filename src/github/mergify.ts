@@ -22,6 +22,7 @@ export class Mergify extends Component {
       obj: {
         pull_request_rules: this.rules,
       },
+      marker: true,
     });
 
     (options.rules ?? []).forEach(rule => this.addRule(rule));

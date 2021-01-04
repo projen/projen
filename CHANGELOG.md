@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.4](https://github.com/projen/projen/compare/v0.13.3...v0.13.4) (2021-01-04)
+
+
+### Bug Fixes
+
+* YamlFile marker bug ([#436](https://github.com/projen/projen/issues/436)) ([afcc71c](https://github.com/projen/projen/commit/afcc71c326f0199ce14e9d764b9eb9001e7ae274))
+
 ### [0.13.3](https://github.com/projen/projen/compare/v0.13.2...v0.13.3) (2021-01-04)
 
 

@@ -22,3 +22,17 @@ test('toml object can be mutated before synthesis', () => {
     anotherField: { foo: 1234 },
   });
 });
+
+test('toml file can contain projen marker', () => {
+  const prj = new TestProject();
+
+  const obj: any = {};
+
+  new TomlFile(prj, 'my/toml/file-marker.toml', { obj, marker: true });
+
+  const output = synthSnapshot(prj)['my/toml/file-marker.toml'];
+
+  const firstLine = output.split('\n')[0];
+
+  expect(firstLine).toBe(`# ${TomlFile.PROJEN_MARKER}`);
+});
