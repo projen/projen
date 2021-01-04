@@ -27,7 +27,7 @@
     "import/resolver": {
       "node": {},
       "typescript": {
-        "directory": "./tsconfig.json"
+        "project": "./tsconfig.jest.json"
       }
     }
   },
@@ -124,8 +124,8 @@
       "error",
       {
         "devDependencies": [
-          "**/build-tools/**",
-          "**/test/**"
+          "**/test/**",
+          "**/build-tools/**"
         ],
         "optionalDependencies": false,
         "peerDependencies": true
