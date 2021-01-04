@@ -453,6 +453,7 @@ export class NodeProject extends Project {
       switch (this.packageManager) {
         case NodePackageManager.NPM: return 'npm run';
         case NodePackageManager.YARN: return 'yarn run';
+        case NodePackageManager.PNPM: return 'pnpm run';
         default: throw new Error(`unexpected package manager ${this.packageManager}`);
       }
     })();

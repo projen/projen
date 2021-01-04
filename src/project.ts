@@ -307,6 +307,12 @@ export class Project {
       comp.preSynthesize();
     }
 
+    // we exclude all subproject directories to ensure that when subproject.synth()
+    // gets called below after cleanup(), subproject generated files are left intact
+    for (const subproject of this.subprojects) {
+      this.addExcludeFromCleanup(subproject.outdir + '/**');
+    }
+
     // delete all generated files before we start synthesizing new ones
     cleanup(outdir, this.excludeFromCleanup);
 

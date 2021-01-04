@@ -15,10 +15,11 @@ export async function synth(projenfile: string) {
   // temporary symlink to the projen that we are currently running in order to
   // allow .projenrc.js to `require()` it.
   logging.info('Synthesizing project...');
-  const projenModulePath = path.resolve('node_modules', 'projen');
+  const nodeModules = path.join(path.dirname(projenfile), 'node_modules');
+  const projenModulePath = path.resolve(nodeModules, 'projen');
   if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
     fs.removeSync(projenModulePath);
-    fs.mkdirpSync('node_modules');
+    fs.mkdirpSync(nodeModules);
     fs.symlinkSync(projen, projenModulePath, (os.platform() === 'win32') ? 'junction' : null);
   }
 
