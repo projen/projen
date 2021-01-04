@@ -4745,8 +4745,8 @@ project.synth();
         ],
       ],
       "testMatch": Array [
-        "**/__tests__/**/*.js?(x)",
-        "**/?(*.)+(spec|test).js?(x)",
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",

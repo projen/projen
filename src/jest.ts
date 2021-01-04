@@ -537,6 +537,7 @@ export class Jest {
    */
   public readonly config: any;
 
+  private readonly testMatch: string[]
   private readonly ignorePatterns: string[];
   private readonly project: NodeProject;
   private readonly reporters: JestReporter[];
@@ -549,9 +550,11 @@ export class Jest {
     const jestDep = options.jestVersion ? `jest@${options.jestVersion}` : 'jest';
     project.addDevDeps(jestDep);
 
-    this.ignorePatterns = options.ignorePatterns ?? ['/node_modules/'];
     this.jestConfig = options.jestConfig;
     this.typescriptConfig = options.typescriptConfig;
+
+    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? options.ignorePatterns ?? ['/node_modules/'];
+    this.testMatch = this.jestConfig?.testMatch ?? ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)'];
 
     const coverageDirectory = this.jestConfig?.coverageDirectory ?? 'coverage';
 
@@ -567,11 +570,8 @@ export class Jest {
       collectCoverage: options.coverage ?? this.jestConfig?.collectCoverage ?? true,
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns: this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
-      testPathIgnorePatterns: this.jestConfig?.testPathIgnorePatterns ?? this.ignorePatterns,
-      testMatch: this.jestConfig?.testMatch ?? [
-        '**/__tests__/**/*.js?(x)',
-        '**/?(*.)+(spec|test).js?(x)',
-      ],
+      testPathIgnorePatterns: this.ignorePatterns,
+      testMatch: this.testMatch,
       reporters: this.reporters,
     } as JestConfigOptions;
 
@@ -618,6 +618,14 @@ export class Jest {
     project.gitignore.exclude(coverageDirectoryPath);
 
     project.addTip('The VSCode jest extension watches in the background and shows inline test results');
+  }
+
+  /**
+   * Adds a test match pattern.
+   * @param pattern glob pattern to match for tests
+   */
+  public addTestMatch(pattern: string) {
+    this.testMatch.push(pattern);
   }
 
   public addIgnorePattern(pattern: string) {
