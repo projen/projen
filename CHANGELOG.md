@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.5](https://github.com/projen/projen/compare/v0.13.4...v0.13.5) (2021-01-04)
+
+
+### Bug Fixes
+
+* **typescript:** snapshots saved under lib ([#455](https://github.com/projen/projen/issues/455)) ([e88c14c](https://github.com/projen/projen/commit/e88c14cb75ee80243976fffa59f49190c42a5a71))
+
 ### [0.13.4](https://github.com/projen/projen/compare/v0.13.3...v0.13.4) (2021-01-04)
 
 
