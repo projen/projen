@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.13](https://github.com/projen/projen/compare/v0.12.12...v0.12.13) (2021-01-04)
+
+
+### Features
+
+* **cli:** allow specifying the location of `.projenrc.js` using `--rc` ([#440](https://github.com/projen/projen/issues/440)) ([738575a](https://github.com/projen/projen/commit/738575acc0a92ae924c3216fdc9ff1220edf4a06))
+
 ### [0.12.12](https://github.com/projen/projen/compare/v0.12.11...v0.12.12) (2021-01-03)
 
 
