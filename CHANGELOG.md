@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.13.0](https://github.com/projen/projen/compare/v0.12.15...v0.13.0) (2021-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** The `libdir`, `srcdir` and `testdir` options are no longer available in `NodeProject`. Instead they are available in specific project types like typescript, nextjs and react.
+
+### Features
+
+* logging options in Project ([#439](https://github.com/projen/projen/issues/439)) ([a1b3d93](https://github.com/projen/projen/commit/a1b3d936d947a9fa9baf9933c60d505f5f36e033)), closes [#375](https://github.com/projen/projen/issues/375)
+* **eslint:** devdirs ([#445](https://github.com/projen/projen/issues/445)) ([7f30aae](https://github.com/projen/projen/commit/7f30aae0709e589a0918b5d07cb11f9cd2ddb82a))
+
+
+### Bug Fixes
+
+* **node:** move typescript options from node project ([#446](https://github.com/projen/projen/issues/446)) ([32f13e9](https://github.com/projen/projen/commit/32f13e9bcc102cd1215c496f39c31304beb14f02))
+
 ### [0.12.15](https://github.com/projen/projen/compare/v0.12.14...v0.12.15) (2021-01-04)
 
 
