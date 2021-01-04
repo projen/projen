@@ -1,12 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Project, ProjectOptions, TextFile } from '../src';
+import { Project, TextFile, LogLevel, ProjectOptions } from '../src';
 import { PROJEN_MARKER } from '../src/common';
 import { TestProject } from './util';
 
 test('composing projects declaratively', () => {
   const comp = new TestProject();
-  new Project({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
+  new TestSubproject({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
   comp.synth();
 
   // THEN
@@ -18,8 +18,8 @@ test('composing projects synthesizes to subdirs', () => {
   const comp = new TestProject();
 
   // WHEN
-  new Project({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
-  new Project({ name: 'bar', parent: comp, outdir: path.join('packages', 'bar') });
+  new TestSubproject({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
+  new TestSubproject({ name: 'bar', parent: comp, outdir: path.join('packages', 'bar') });
 
   comp.synth();
 
@@ -32,16 +32,16 @@ test('composing projects synthesizes to subdirs', () => {
 test('errors when paths overlap', () => {
   // GIVEN
   const comp = new TestProject();
-  new Project({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
+  new TestSubproject({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') });
 
   // WHEN/THEN
-  expect(() => new Project({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') })).toThrowError(/there is already a sub-project with/i);
+  expect(() => new TestSubproject({ name: 'foo', parent: comp, outdir: path.join('packages', 'foo') })).toThrowError(/there is already a sub-project with/i);
 });
 
 test('multiple levels', () => {
   const root = new TestProject();
-  const child1 = new Project({ name: 'child1', parent: root, outdir: 'child1' });
-  const child2 = new Project({ name: 'child2', parent: child1, outdir: 'child2' });
+  const child1 = new TestSubproject({ name: 'child1', parent: root, outdir: 'child1' });
+  const child2 = new TestSubproject({ name: 'child2', parent: child1, outdir: 'child2' });
 
   expect(child1.outdir).toEqual(path.join(root.outdir, 'child1'));
   expect(child2.outdir).toEqual(path.join(root.outdir, 'child1', 'child2'));
@@ -49,7 +49,7 @@ test('multiple levels', () => {
 
 test('subprojects cannot introduce files that override each other', () => {
   const root = new TestProject();
-  const child = new Project({ name: 'sub-project', parent: root, outdir: 'sub-project' });
+  const child = new TestSubproject({ name: 'sub-project', parent: root, outdir: 'sub-project' });
 
   new TextFile(root, 'sub-project/file.txt');
   expect(() => new TextFile(child, 'file.txt')).toThrow(/there is already a file under sub-project\/file\.txt/);
@@ -57,7 +57,7 @@ test('subprojects cannot introduce files that override each other', () => {
 
 test('"outdir" for subprojects must be relative', () => {
   const root = new TestProject();
-  expect(() => new Project({ name: 'foobar', parent: root, outdir: '/foo/bar' })).toThrow(/"outdir" must be a relative path/);
+  expect(() => new TestSubproject({ name: 'foobar', parent: root, outdir: '/foo/bar' })).toThrow(/"outdir" must be a relative path/);
 });
 
 test('subproject generated files do not get cleaned up by parent project', () => {
@@ -83,7 +83,7 @@ class PreSynthProject extends Project {
   public file: TextFile;
   public fileExistedDuringPresynth: boolean;
   constructor(options: Omit<ProjectOptions, 'name'> = {}) {
-    super({ name: 'presynth-project', clobber: false, ...options });
+    super({ name: 'presynth-project', clobber: false, logging: { level: LogLevel.OFF }, ...options });
 
     this.file = new TextFile(this, 'presynth.txt', { lines: [PROJEN_MARKER] });
     this.fileExistedDuringPresynth = false;
@@ -91,5 +91,11 @@ class PreSynthProject extends Project {
 
   preSynthesize() {
     this.fileExistedDuringPresynth = fs.existsSync(this.file.absolutePath);
+  }
+}
+
+class TestSubproject extends Project {
+  constructor(options: ProjectOptions) {
+    super({ logging: { level: LogLevel.OFF }, ...options });
   }
 }

@@ -1,4 +1,4 @@
-import { Jest, NodeProject, TypeScriptProject } from '../src';
+import { Jest, NodeProject, TypeScriptProject, LogLevel } from '../src';
 import { PROJEN_RC } from '../src/common';
 import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
@@ -35,6 +35,9 @@ test('Node Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   expect(project.jest?.config).toBeTruthy();
@@ -64,6 +67,9 @@ test('Node Project Jest With Options Configured', () => {
         notify: false,
       },
     },
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -83,6 +89,9 @@ test('Typescript Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -112,6 +121,9 @@ test('Typescript Project Jest With Compiler Options', () => {
         compilerOptions,
       },
     },
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const mergedCompilerOptions = {
@@ -131,6 +143,9 @@ test('addTestMatch() can be used to add patterns', () => {
   const project = new NodeProject({
     outdir: mkdtemp(),
     name: 'test',
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
   const jest = new Jest(project, { jestConfig: { testMatch: [] } });
 

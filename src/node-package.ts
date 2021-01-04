@@ -4,7 +4,6 @@ import * as semver from 'semver';
 import { Component } from './component';
 import { DependencyType } from './deps';
 import { JsonFile } from './json';
-import * as logging from './logging';
 import { Project } from './project';
 import { Task } from './tasks';
 import { exec, sorted, isTruthy, writeFile } from './util';
@@ -674,7 +673,7 @@ export class NodePackage extends Component {
       // report removals
       for (const name of Object.keys(current ?? {})) {
         if (!user[name]) {
-          logging.verbose(`${name}: removed`);
+          this.project.logger.verbose(`${name}: removed`);
         }
       }
     };
@@ -707,13 +706,13 @@ export class NodePackage extends Component {
           } catch (e) { }
 
           if (!desiredVersion) {
-            logging.warn(`unable to resolve version for ${name} from installed modules`);
+            this.project.logger.warn(`unable to resolve version for ${name} from installed modules`);
             continue;
           }
         }
 
         if (currentDefinition !== desiredVersion) {
-          logging.verbose(`${name}: ${currentDefinition} => ${desiredVersion}`);
+          this.project.logger.verbose(`${name}: ${currentDefinition} => ${desiredVersion}`);
         }
 
         result[name] = desiredVersion;
@@ -722,7 +721,7 @@ export class NodePackage extends Component {
       // print removed packages
       for (const name of Object.keys(current)) {
         if (!result[name]) {
-          logging.verbose(`${name} removed`);
+          this.project.logger.verbose(`${name} removed`);
         }
       }
 

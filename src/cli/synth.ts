@@ -14,7 +14,6 @@ export async function synth(projenfile: string) {
   // if node_modules/projen is not a directory or does not exist, create a
   // temporary symlink to the projen that we are currently running in order to
   // allow .projenrc.js to `require()` it.
-  logging.info('Synthesizing project...');
   const nodeModules = path.join(path.dirname(projenfile), 'node_modules');
   const projenModulePath = path.resolve(nodeModules, 'projen');
   if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
