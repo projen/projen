@@ -1613,6 +1613,19 @@ addReporter(reporter: string &#124; json): void
 
 
 
+#### addTestMatch(pattern)🔹 <a id="projen-jest-addtestmatch"></a>
+
+Adds a test match pattern.
+
+```ts
+addTestMatch(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  glob pattern to match for tests.
+
+
+
+
 #### generateTypescriptConfig(options)🔹 <a id="projen-jest-generatetypescriptconfig"></a>
 
 Merges passed in typescript config options with jest configured typescript options from .projenrc Add Jest config settings for typescript options.
