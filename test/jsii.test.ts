@@ -1,4 +1,4 @@
-import { JsiiProject } from '../src';
+import { JsiiProject, LogLevel } from '../src';
 import { mkdtemp, synthSnapshot } from './util';
 
 describe('author', () => {
@@ -10,6 +10,9 @@ describe('author', () => {
       author: 'My Name',
       name: 'project',
       outdir: mkdtemp(),
+      logging: {
+        level: LogLevel.OFF,
+      },
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];
@@ -28,6 +31,9 @@ describe('author', () => {
       author: 'My Name',
       name: 'project',
       outdir: mkdtemp(),
+      logging: {
+        level: LogLevel.OFF,
+      },
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];

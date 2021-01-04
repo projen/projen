@@ -143,6 +143,9 @@ test('addTestMatch() can be used to add patterns', () => {
   const project = new NodeProject({
     outdir: mkdtemp(),
     name: 'test',
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
   const jest = new Jest(project, { jestConfig: { testMatch: [] } });
 
