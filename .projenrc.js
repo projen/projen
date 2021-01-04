@@ -62,7 +62,7 @@ new TextFile(project, 'projen.bash', {
   ],
 });
 
-project.addExcludeFromCleanup('test/**');
+project.addExcludeFromCleanup('src/__tests__/**');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme

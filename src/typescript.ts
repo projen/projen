@@ -1,11 +1,12 @@
 import * as path from 'path';
-import { PROJEN_RC } from './common';
+import { PROJEN_DIR, PROJEN_RC } from './common';
 import { Component } from './component';
 import { Eslint, EslintOptions } from './eslint';
 import { JsonFile } from './json';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
 import { Task, TaskCategory } from './tasks';
+import { TextFile } from './textfile';
 import { TypedocDocgen } from './typescript-typedoc';
 import { deepMerge } from './util';
 
@@ -275,7 +276,33 @@ export class TypeScriptProject extends NodeProject {
     if (this.jest && compiledTests) {
       this.addDevDeps('@types/jest');
       const testout = path.relative(this.srcdir, this.testdir);
-      this.jest.addTestMatch(`**/${this.libdir}/${testout}/**/?(*.)+(spec|test).js?(x)`);
+      const libtest = path.join(this.libdir, testout);
+      const srctest = this.testdir;
+
+      this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
+
+      const resolveSnapshotPath = (test: string, ext: string) => {
+        const fullpath = test.replace(libtest, srctest);
+        return path.join(path.dirname(fullpath), '__snapshots__', path.basename(fullpath, '.js') + '.ts' + ext);
+      };
+
+      const resolveTestPath = (snap: string, ext: string) => {
+        const filename = path.basename(snap, '.ts' + ext) + '.js';
+        const dir = path.dirname(path.dirname(snap)).replace(srctest, libtest);
+        return path.join(dir, filename);
+      };
+
+      const resolver = new TextFile(this, path.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
+      resolver.addLine('const path = require("path");');
+      resolver.addLine(`const libtest = "${libtest}";`);
+      resolver.addLine(`const srctest= "${srctest}";`);
+      resolver.addLine('module.exports = {');
+      resolver.addLine(`  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`);
+      resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
+      resolver.addLine('  testPathForConsistencyCheck: "some/__tests__/example.test.js"');
+      resolver.addLine('};');
+
+      this.jest.addSnapshotResolver(`./${resolver.path}`);
     }
 
     if (this.jest && !compiledTests) {

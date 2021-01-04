@@ -59,6 +59,7 @@ junit.xml
 /lib
 !/src
 /dist
+!/.projen/jest-snapshot-resolver.js
 !/.eslintrc.json
 .jsii
 tsconfig.json
