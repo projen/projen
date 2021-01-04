@@ -435,7 +435,7 @@ export class NodeProject extends Project {
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment('PATH', '$(npx -c \'node -e "console.log(process.env.PATH)"\')');
+    this.tasks.addEnvironment('PATH', '$(npx -c "node -e \"console.log(process.env.PATH)\"")');
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
