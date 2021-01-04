@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.15](https://github.com/projen/projen/compare/v0.12.14...v0.12.15) (2021-01-04)
+
+
+### Features
+
+* **jest:** addTestMatch() ([#444](https://github.com/projen/projen/issues/444)) ([a85dae2](https://github.com/projen/projen/commit/a85dae2212d7fd7f387f8552128a137610fc7a09))
+
 ### [0.12.14](https://github.com/projen/projen/compare/v0.12.13...v0.12.14) (2021-01-04)
 
 
