@@ -2,7 +2,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { Project, ProjectOptions } from '../src';
+import { LogLevel, Project, ProjectOptions } from '../src';
 import * as logging from '../src/logging';
 
 logging.disable(); // no logging during tests
@@ -10,7 +10,15 @@ logging.disable(); // no logging during tests
 export class TestProject extends Project {
   constructor(options: Omit<ProjectOptions, 'name'> = {}) {
     const tmpdir = mkdtemp();
-    super({ name: 'my-project', outdir: tmpdir, clobber: false, ...options });
+    super({
+      name: 'my-project',
+      outdir: tmpdir,
+      clobber: false,
+      logging: {
+        level: LogLevel.OFF,
+      },
+      ...options,
+    });
   }
 
   postSynthesize() {

@@ -10,7 +10,7 @@ import { GitHub } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
-import { Logger } from './logger';
+import { Logger, LoggerOptions } from './logger';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -76,6 +76,12 @@ export interface ProjectOptions {
    * @default ProjectType.UNKNOWN
    */
   readonly projectType?: ProjectType;
+
+  /**
+   * Configure logging options such as verbosity.
+   * @default {}
+   */
+  readonly logging?: LoggerOptions;
 }
 
 /**
@@ -201,7 +207,7 @@ export class Project {
     this.tasks = new Tasks(this);
     this.deps = new Dependencies(this);
 
-    this.logger = new Logger(this);
+    this.logger = new Logger(this, options.logging);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;

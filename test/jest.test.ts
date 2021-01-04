@@ -1,4 +1,4 @@
-import { NodeProject, TypeScriptProject } from '../src';
+import { NodeProject, TypeScriptProject, LogLevel } from '../src';
 import { PROJEN_RC } from '../src/common';
 import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
@@ -35,6 +35,9 @@ test('Node Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   expect(project.jest?.config).toBeTruthy();
@@ -64,6 +67,9 @@ test('Node Project Jest With Options Configured', () => {
         notify: false,
       },
     },
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -83,6 +89,9 @@ test('Typescript Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -111,6 +120,9 @@ test('Typescript Project Jest With Compiler Options', () => {
       typescriptConfig: {
         compilerOptions,
       },
+    },
+    logging: {
+      level: LogLevel.OFF,
     },
   });
 
