@@ -5,6 +5,8 @@
 
 # projen
 
+![projen logo](/logo/projen.svg)
+
 Define and maintain complex project configuration through code.
 
 > JOIN THE [#TemplatesAreEvil] MOVEMENT!

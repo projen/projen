@@ -1,4 +1,4 @@
-import { NodeProject, TypeScriptProject, LogLevel } from '../src';
+import { Jest, NodeProject, TypeScriptProject, LogLevel } from '../src';
 import { PROJEN_RC } from '../src/common';
 import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
@@ -136,4 +136,23 @@ test('Typescript Project Jest With Compiler Options', () => {
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(mergedCompilerOptions);
+});
+
+test('addTestMatch() can be used to add patterns', () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    name: 'test',
+  });
+  const jest = new Jest(project, { jestConfig: { testMatch: [] } });
+
+  // WHEN
+  jest.addTestMatch('foo/**');
+  jest.addTestMatch('bar/baz/**');
+
+  // THEN
+  expect(synthSnapshot(project)['package.json'].jest.testMatch).toStrictEqual([
+    'foo/**',
+    'bar/baz/**',
+  ]);
 });

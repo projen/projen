@@ -1,8 +1,6 @@
-import { existsSync } from 'fs';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -184,12 +182,6 @@ export class Project {
       outdir = options.outdir ?? '.';
     }
 
-    if (outdir === '.') {
-      if (!existsSync(path.join(outdir, PROJEN_RC))) {
-        throw new Error('cannot use outdir="." because projenrc.js does not exist in the current directory');
-      }
-    }
-
     this.outdir = path.resolve(outdir);
 
     this.root = this.parent ? this.parent.root : this;
@@ -328,6 +320,12 @@ export class Project {
 
     for (const comp of this._components) {
       comp.preSynthesize();
+    }
+
+    // we exclude all subproject directories to ensure that when subproject.synth()
+    // gets called below after cleanup(), subproject generated files are left intact
+    for (const subproject of this.subprojects) {
+      this.addExcludeFromCleanup(subproject.outdir + '/**');
     }
 
     // delete all generated files before we start synthesizing new ones
