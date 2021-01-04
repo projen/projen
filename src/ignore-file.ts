@@ -1,10 +1,14 @@
 import { FileBase, IResolver } from './file';
 import { Project } from './project';
-import { dedupArray } from './util';
+
+enum IgnorePatternType {
+  INCLUDE,
+  EXCLUDE
+}
 
 export class IgnoreFile extends FileBase {
-  private readonly excludes = new Array<string>();
-  private readonly includes = new Array<string>();
+
+  private readonly patterns: { [index: string]: IgnorePatternType } = {};
 
   constructor(project: Project, filePath: string) {
     super(project, filePath, { editGitignore: filePath !== '.gitignore' });
@@ -15,7 +19,7 @@ export class IgnoreFile extends FileBase {
    * @param patterns Patterns to exclude from git commits.
    */
   public exclude(...patterns: string[]) {
-    this.excludes.push(...patterns);
+    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.EXCLUDE);
   }
 
   /**
@@ -23,16 +27,13 @@ export class IgnoreFile extends FileBase {
    * @param patterns Patterns to include in git commits.
    */
   public include(...patterns: string[]) {
-    this.includes.push(...patterns);
+    patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.INCLUDE);
   }
 
   protected synthesizeContent(resolver: IResolver): string {
     return resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
-      ...dedupArray(this.excludes),
-
-      // includes must follow excludes
-      ...dedupArray(this.includes).map(x => `!${x}`),
+      ...Object.entries(this.patterns).map(([pattern, type]) => type === IgnorePatternType.INCLUDE ? `!${pattern}`: pattern),
     ]).join('\n');
   }
 }

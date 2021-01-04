@@ -1,6 +1,6 @@
-import { NodeProject, NodeProjectOptions } from '../src';
-import { DependencyType } from '../src/deps';
-import * as logging from '../src/logging';
+import { NodeProject, NodeProjectOptions, LogLevel } from '..';
+import { DependencyType } from '../deps';
+import * as logging from '../logging';
 import { mkdtemp, synthSnapshot } from './util';
 
 logging.disable();
@@ -12,6 +12,9 @@ test('license file is added by default', () => {
     name: 'test-node-project',
     mergify: false,
     projenDevDependency: false,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   // THEN
@@ -26,6 +29,9 @@ test('license file is not added if licensed is false', () => {
     licensed: false,
     mergify: false,
     projenDevDependency: false,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   // THEN
@@ -184,6 +190,9 @@ class TestNodeProject extends NodeProject {
     super({
       outdir: mkdtemp(),
       name: 'test-node-project',
+      logging: {
+        level: LogLevel.OFF,
+      },
       ...options,
     });
   }

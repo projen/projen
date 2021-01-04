@@ -11,6 +11,32 @@ import { deepMerge } from './util';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
+   * Typescript  artifacts output directory
+   *
+   * @default "lib"
+   */
+  readonly libdir?: string;
+
+  /**
+   * Typescript sources directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+
+  /**
+   * Jest tests directory. Tests files should be named `xxx.test.ts`.
+   *
+   * If this directory is under `srcdir` (e.g. `src/test`, `src/__tests__`),
+   * then tests are going to be compiled into `lib/` and executed as javascript.
+   * If the test directory is outside of `src`, then we configure jest to
+   * compile the code in-memory.
+   *
+   * @default "test"
+   */
+  readonly testdir?: string;
+
+  /**
    *
    * Setup eslint.
    * @default true
@@ -59,8 +85,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Compile the code before running tests.
    *
-   * @default - the default behavior is to delete the lib/ directory and run
-   * jest typescript tests and only if all tests pass, run the compiler.
+   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
    */
   readonly compileBeforeTest?: boolean;
 
@@ -106,6 +131,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly libdir: string;
 
   /**
+   * The directory in which tests reside.
+   */
+  public readonly testdir: string;
+
+  /**
    * The "watch" task.
    */
   public readonly watchTask: Task;
@@ -116,7 +146,16 @@ export class TypeScriptProject extends NodeProject {
   public readonly packageTask?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
-    super(options);
+    super({
+      ...options,
+      jestOptions: {
+        ...options.jestOptions,
+        jestConfig: {
+          ...options.jestOptions?.jestConfig,
+          testMatch: [],
+        },
+      },
+    });
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
@@ -132,8 +171,16 @@ export class TypeScriptProject extends NodeProject {
       exec: 'tsc -w',
     });
 
+    this.testdir = options.testdir ?? 'test';
+    this.gitignore.include(`/${this.testdir}`);
+    this.npmignore?.exclude(`/${this.testdir}`);
+
+    // if the test directory is under `src/`, then we will run our tests against
+    // the javascript files and not let jest compile it for us.
+    const compiledTests = this.testdir.startsWith(this.srcdir + path.sep);
+
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
-    const compileBeforeTest = options.compileBeforeTest ?? false;
+    const compileBeforeTest = options.compileBeforeTest ?? compiledTests;
 
     if (compileBeforeTest) {
       this.buildTask.spawn(this.compileTask);
@@ -151,7 +198,7 @@ export class TypeScriptProject extends NodeProject {
 
       this.packageTask.exec('rm -fr dist');
       this.packageTask.exec('mkdir -p dist/js');
-      this.packageTask.exec(`${this.packageManager} pack`);
+      this.packageTask.exec(`${this.package.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
 
       this.buildTask.spawn(this.packageTask);
@@ -223,7 +270,17 @@ export class TypeScriptProject extends NodeProject {
     // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
     let eslintTsConfig = 'tsconfig.json';
 
-    if ((options.jest ?? true) && this.jest) {
+    // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
+    // just run them directly from javascript.
+    if (this.jest && compiledTests) {
+      this.addDevDeps('@types/jest');
+      const testout = path.relative(this.srcdir, this.testdir);
+      this.jest.addTestMatch(`**/${this.libdir}/${testout}/**/?(*.)+(spec|test).js?(x)`);
+    }
+
+    if (this.jest && !compiledTests) {
+      this.jest.addTestMatch('**\/__tests__/**\/*.ts?(x)');
+      this.jest.addTestMatch('**\/?(*.)+(spec|test).ts?(x)');
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
       const tsconfig = this.jest.generateTypescriptConfig({
@@ -246,7 +303,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.testTask.prepend(`rm -fr ${this.libdir}/`);
+        this.testTask.prependExec(`rm -fr ${this.libdir}/`);
       }
 
       // compile test code
@@ -256,7 +313,9 @@ export class TypeScriptProject extends NodeProject {
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${eslintTsConfig}`,
-        dirs: [this.srcdir, this.testdir],
+        dirs: [this.srcdir],
+        devdirs: [this.testdir, 'build-tools'],
+        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });

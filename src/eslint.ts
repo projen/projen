@@ -5,17 +5,29 @@ import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
 
 export interface EslintOptions {
-  readonly tsconfigPath: string;
+  /**
+   * Path to `tsconfig.json` which should be used by eslint.
+   * @default "./tsconfig.json"
+   */
+  readonly tsconfigPath?: string;
 
   /**
-   * Directories with source files to lint (e.g. [ "src", "test" ])
+   * Directories with source files to lint (e.g. [ "src" ])
    */
   readonly dirs: string[];
 
   /**
-   * File types that should be linted (e.g. [ ".js", ".ts" ])
+   * Directories with source files that include tests and build tools. These
+   * sources are linted but may also import packages from `devDependencies`.
+   * @default []
    */
-  readonly fileExtensions: string[];
+  readonly devdirs?: string[];
+
+  /**
+   * File types that should be linted (e.g. [ ".js", ".ts" ])
+   * @default [".ts"]
+   */
+  readonly fileExtensions?: string[];
 
   /**
    * List of file patterns that should not be linted, using the same syntax
@@ -24,6 +36,12 @@ export interface EslintOptions {
    * @default [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
    */
   readonly ignorePatterns?: string[];
+
+  /**
+   * Should we lint .projenrc.js
+   * @default true
+   */
+  readonly lintProjenRc?: boolean;
 }
 
 /**
@@ -75,8 +93,10 @@ export class Eslint extends Component {
       'json-schema',
     );
 
-    const dirs = options.dirs;
-    const fileExtensions = options.fileExtensions;
+    const dirs = [...options.dirs, ...options.devdirs ?? []];
+    const fileExtensions = options.fileExtensions ?? ['.ts'];
+
+    const lintProjenRc = options.lintProjenRc ?? true;
 
     const eslint = project.addTask('eslint', {
       description: 'Runs eslint against the codebase',
@@ -87,7 +107,7 @@ export class Eslint extends Component {
         '--fix',
         '--no-error-on-unmatched-pattern',
         ...dirs,
-        PROJEN_RC,
+        ...lintProjenRc ? [PROJEN_RC] : [],
       ].join(' '),
     });
 
@@ -124,10 +144,8 @@ export class Eslint extends Component {
       'import/no-extraneous-dependencies': [
         'error',
         {
-          devDependencies: [ // Only allow importing devDependencies from:
-            '**/build-tools/**', // --> Build tools
-            '**/test/**', // --> Unit tests
-          ],
+          // Only allow importing devDependencies from "devdirs".
+          devDependencies: (options.devdirs ?? []).map(dir => `**/${dir}/**`),
           optionalDependencies: false, // Disallow importing optional dependencies (those shouldn't be in use in the project)
           peerDependencies: true, // Allow importing peer dependencies (that aren't also direct dependencies)
         },
@@ -229,7 +247,7 @@ export class Eslint extends Component {
       'coverage',
     ];
 
-    const tsconfig = './tsconfig.json';
+    const tsconfig = options.tsconfigPath ?? './tsconfig.json';
 
     this.config = {
       env: {
@@ -245,7 +263,7 @@ export class Eslint extends Component {
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
-        project: options.tsconfigPath,
+        project: tsconfig,
       },
       extends: [
         'plugin:import/typescript',
@@ -257,7 +275,7 @@ export class Eslint extends Component {
         'import/resolver': {
           node: {},
           typescript: {
-            directory: tsconfig,
+            project: tsconfig,
           },
         },
       },

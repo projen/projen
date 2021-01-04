@@ -1,8 +1,6 @@
-import { existsSync } from 'fs';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -10,7 +8,7 @@ import { GitHub } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
-import * as logging from './logging';
+import { Logger, LoggerOptions } from './logger';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -76,6 +74,12 @@ export interface ProjectOptions {
    * @default ProjectType.UNKNOWN
    */
   readonly projectType?: ProjectType;
+
+  /**
+   * Configure logging options such as verbosity.
+   * @default {}
+   */
+  readonly logging?: LoggerOptions;
 }
 
 /**
@@ -147,6 +151,11 @@ export class Project {
    */
   public readonly deps: Dependencies;
 
+  /**
+   * Logging utilities.
+   */
+  public readonly logger: Logger;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -173,12 +182,6 @@ export class Project {
       outdir = options.outdir ?? '.';
     }
 
-    if (outdir === '.') {
-      if (!existsSync(path.join(outdir, PROJEN_RC))) {
-        throw new Error('cannot use outdir="." because projenrc.js does not exist in the current directory');
-      }
-    }
-
     this.outdir = path.resolve(outdir);
 
     this.root = this.parent ? this.parent.root : this;
@@ -195,6 +198,8 @@ export class Project {
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
     this.deps = new Dependencies(this);
+
+    this.logger = new Logger(this, options.logging);
 
     // we only allow these global services to be used in root projects
     this.github = !this.parent ? new GitHub(this) : undefined;
@@ -309,10 +314,18 @@ export class Project {
    */
   public synth(): void {
     const outdir = this.outdir;
+    this.logger.info('Synthesizing project...');
+
     this.preSynthesize();
 
     for (const comp of this._components) {
       comp.preSynthesize();
+    }
+
+    // we exclude all subproject directories to ensure that when subproject.synth()
+    // gets called below after cleanup(), subproject generated files are left intact
+    for (const subproject of this.subprojects) {
+      this.addExcludeFromCleanup(subproject.outdir + '/**');
     }
 
     // delete all generated files before we start synthesizing new ones
@@ -335,7 +348,7 @@ export class Project {
       this.postSynthesize();
     }
 
-    logging.info('Synthesis complete');
+    this.logger.info('Synthesis complete');
   }
 
   /**

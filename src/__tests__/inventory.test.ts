@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as inventory from '../src/inventory';
+import * as inventory from '../inventory';
 
 const result = inventory.discover();
 

@@ -29,6 +29,13 @@ export interface NextJsTypeScriptProjectOptions extends NextJsCommonProjectOptio
 
 export interface NextJsProjectOptions extends NextJsCommonProjectOptions, NodeProjectOptions {
   /**
+   * Typescript sources directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+
+  /**
    * Generate one-time sample in `pages/` and `public/` if there are no files there.
    * @default true
    */
@@ -61,7 +68,6 @@ export class NextJsProject extends NodeProject {
   constructor(options: NextJsProjectOptions) {
     super({
       jest: false,
-      srcdir: 'pages',
       ...options,
     });
 

@@ -1,13 +1,11 @@
 import { join, dirname, basename } from 'path';
 import { chmodSync, copySync, readJsonSync, writeJsonSync } from 'fs-extra';
 import { glob } from 'glob';
-import { exec } from '../src/util';
-import { mkdtemp, directorySnapshot } from './util';
+import { mkdtemp, directorySnapshot, execProjenCLI } from './util';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const projenVersion = require('../package.json').version;
-const cli = require.resolve('../lib/cli');
-const samples = join(__dirname, 'integration');
+const projenVersion = require('../../package.json').version;
+const samples = join(__dirname, '..', '..', 'src', '__tests__', 'integration');
 const files = glob.sync('**/*.projenrc.js', { cwd: samples });
 
 for (const projenrc of files) {
@@ -18,12 +16,7 @@ for (const projenrc of files) {
       copySync(base, workdir, { recursive: true });
     }
     copySync(join(samples, projenrc), join(workdir, '.projenrc.js'));
-    const command = [
-      process.execPath,
-      cli,
-      '--no-post',
-    ];
-    exec(command.join(' '), { cwd: workdir });
+    execProjenCLI(workdir, ['--no-post']);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.

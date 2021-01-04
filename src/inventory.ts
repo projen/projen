@@ -157,7 +157,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       // protect against double-booking
       if (prop.name in options) {
-        throw new Error(`duplicate option "${prop.name}" in ${fqn}`);
+        throw new Error(`duplicate option "${prop.name}" in ${fqn} (already declared in ${options[prop.name].parent})`);
       }
 
       let typeName;

@@ -16,9 +16,9 @@ export function exec(command: string, options?: child_process.ExecSyncOptions) {
 /**
  * Executes `command` and returns its value or undefined if the command failed.
  */
-export function execOrUndefined(command: string): string | undefined {
+export function execOrUndefined(command: string, options?: child_process.ExecSyncOptions): string | undefined {
   try {
-    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'] }).toString('utf-8').trim();
+    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'], ...options }).toString('utf-8').trim();
     if (!value) { return undefined; } // an empty string is the same as undefined
     return value;
   } catch {

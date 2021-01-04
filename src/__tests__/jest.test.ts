@@ -1,6 +1,6 @@
-import { NodeProject, TypeScriptProject } from '../src';
-import { PROJEN_RC } from '../src/common';
-import * as logging from '../src/logging';
+import { Jest, NodeProject, TypeScriptProject, LogLevel } from '..';
+import { PROJEN_RC } from '../common';
+import * as logging from '../logging';
 import { mkdtemp, synthSnapshot } from './util';
 
 logging.disable();
@@ -35,6 +35,9 @@ test('Node Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   expect(project.jest?.config).toBeTruthy();
@@ -64,6 +67,9 @@ test('Node Project Jest With Options Configured', () => {
         notify: false,
       },
     },
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -83,6 +89,9 @@ test('Typescript Project Jest Defaults Configured', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -112,6 +121,9 @@ test('Typescript Project Jest With Compiler Options', () => {
         compilerOptions,
       },
     },
+    logging: {
+      level: LogLevel.OFF,
+    },
   });
 
   const mergedCompilerOptions = {
@@ -124,4 +136,42 @@ test('Typescript Project Jest With Compiler Options', () => {
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(mergedCompilerOptions);
+});
+
+test('testdir is under src', () => {
+  // WHEN
+  const project = new TypeScriptProject({
+    outdir: mkdtemp(),
+    logging: { level: LogLevel.OFF },
+    name: 'test-typescript-project',
+    srcdir: 'mysrc',
+    testdir: 'mysrc/boom/bam/__tests',
+  });
+
+  // THEN
+  const files = synthSnapshot(project);
+  expect(files['tsconfig.jest.json']).toBeUndefined(); // no special tsconfig for jest in this case
+  expect(files['package.json'].jest.testMatch).toStrictEqual(['**/lib/boom/bam/__tests/**/?(*.)+(spec|test).js?(x)']);
+});
+
+test('addTestMatch() can be used to add patterns', () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    name: 'test',
+    logging: {
+      level: LogLevel.OFF,
+    },
+  });
+  const jest = new Jest(project, { jestConfig: { testMatch: [] } });
+
+  // WHEN
+  jest.addTestMatch('foo/**');
+  jest.addTestMatch('bar/baz/**');
+
+  // THEN
+  expect(synthSnapshot(project)['package.json'].jest.testMatch).toStrictEqual([
+    'foo/**',
+    'bar/baz/**',
+  ]);
 });
