@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.14](https://github.com/projen/projen/compare/v0.12.13...v0.12.14) (2021-01-04)
+
+
+### Bug Fixes
+
+* **cli:** git commands not executed in project dir ([#443](https://github.com/projen/projen/issues/443)) ([befabfc](https://github.com/projen/projen/commit/befabfcfbc458c735f88ac3eca58332b44923809))
+
 ### [0.12.13](https://github.com/projen/projen/compare/v0.12.12...v0.12.13) (2021-01-04)
 
 
