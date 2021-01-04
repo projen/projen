@@ -62,7 +62,7 @@ export interface JestConfigOptions {
    * If the file path matches any of the patterns, coverage information will be skipped
    * @default "/node_modules/"
    */
-  readonly coveragePathIgnorePatterns?: string;
+  readonly coveragePathIgnorePatterns?: string[];
 
   /**
    * Indicates which provider should be used to instrument code for coverage.
@@ -543,6 +543,7 @@ export class Jest {
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
   private readonly typescriptConfig?: TypescriptConfigOptions;
+  private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
@@ -573,6 +574,7 @@ export class Jest {
       testPathIgnorePatterns: this.ignorePatterns,
       testMatch: this.testMatch,
       reporters: this.reporters,
+      snapshotResolver: (() => this._snapshotResolver) as any,
     } as JestConfigOptions;
 
     if (options.junitReporting ?? true) {
@@ -632,9 +634,12 @@ export class Jest {
     this.ignorePatterns.push(pattern);
   }
 
-
   public addReporter(reporter: JestReporter) {
     this.reporters.push(reporter);
+  }
+
+  public addSnapshotResolver(file: string) {
+    this._snapshotResolver = file;
   }
 
   /**

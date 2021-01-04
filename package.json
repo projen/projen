@@ -109,7 +109,8 @@
           "outputDirectory": "test-reports"
         }
       ]
-    ]
+    ],
+    "snapshotResolver": "./.projen/jest-snapshot-resolver.js"
   },
   "types": "lib/index.d.ts",
   "stability": "experimental",
