@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.1](https://github.com/projen/projen/compare/v0.13.0...v0.13.1) (2021-01-04)
+
+
+### Features
+
+* **typescript:** jest tests under `src` run from compiled javascript ([#447](https://github.com/projen/projen/issues/447)) ([9c32ffb](https://github.com/projen/projen/commit/9c32ffbd4be60796a37127413d6d38f061f54bc4))
+
 ## [0.13.0](https://github.com/projen/projen/compare/v0.12.15...v0.13.0) (2021-01-04)
 
 
