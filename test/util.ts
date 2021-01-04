@@ -4,6 +4,9 @@ import * as fs from 'fs-extra';
 import { glob } from 'glob';
 import { Project, ProjectOptions } from '../src';
 import * as logging from '../src/logging';
+import { exec } from '../src/util';
+
+const PROJEN_CLI = require.resolve('../bin/projen');
 
 logging.disable(); // no logging during tests
 
@@ -16,6 +19,15 @@ export class TestProject extends Project {
   postSynthesize() {
     fs.writeFileSync(path.join(this.outdir, '.postsynth'), '# postsynth');
   }
+}
+
+export function execProjenCLI(workdir: string, args: string[]) {
+  const command = [
+    process.execPath,
+    PROJEN_CLI,
+    ...args,
+  ];
+  return exec(command.join(' '), { cwd: workdir });
 }
 
 export interface SynthOutput {
