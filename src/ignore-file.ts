@@ -28,6 +28,20 @@ export class IgnoreFile extends FileBase {
   }
 
   /**
+   * Removes patterns previously added from the ignore file.
+   *
+   * If `addPattern()` is called after this, the pattern will be added again.
+   *
+   * @param patterns patters to remove.
+   */
+  public removePatterns(...patterns: string[]) {
+    for (const p of patterns) {
+      this._excludes.delete(p);
+      this._includes.delete(p);
+    }
+  }
+
+  /**
    * Ignore the files that match these patterns.
    * @param patterns The patterns to match.
    */
