@@ -205,7 +205,8 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- if \`testdir\` is under \`src/**\`, the default is \`true\`, otherwise the default is \`false.",
+        "default": "- the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
         "name": "compileBeforeTest",
         "optional": true,
@@ -5276,7 +5277,8 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- if \`testdir\` is under \`src/**\`, the default is \`true\`, otherwise the default is \`false.",
+        "default": "- the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
         "name": "compileBeforeTest",
         "optional": true,
@@ -8202,7 +8204,8 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- if \`testdir\` is under \`src/**\`, the default is \`true\`, otherwise the default is \`false.",
+        "default": "- the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
         "name": "compileBeforeTest",
         "optional": true,
@@ -9238,7 +9241,8 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- if \`testdir\` is under \`src/**\`, the default is \`true\`, otherwise the default is \`false.",
+        "default": "- the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
         "name": "compileBeforeTest",
         "optional": true,
@@ -10274,7 +10278,8 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- if \`testdir\` is under \`src/**\`, the default is \`true\`, otherwise the default is \`false.",
+        "default": "- the default behavior is to delete the lib/ directory and run
+jest typescript tests and only if all tests pass, run the compiler.",
         "docs": "Compile the code before running tests.",
         "name": "compileBeforeTest",
         "optional": true,

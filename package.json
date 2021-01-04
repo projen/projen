@@ -90,6 +90,10 @@
   "license": "Apache-2.0",
   "version": "0.12.15",
   "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)"
+    ],
     "clearMocks": true,
     "collectCoverage": true,
     "coverageDirectory": "coverage",
@@ -98,10 +102,6 @@
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
     ],
     "reporters": [
       "default",
