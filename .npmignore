@@ -6,8 +6,8 @@
 /test-reports/
 junit.xml
 /coverage
-/test
 /.mergify.yml
+/test
 !/lib
 /src
 !/lib/**/*.js
