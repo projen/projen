@@ -10,6 +10,12 @@ export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions 
 
 export interface ReactProjectOptions extends NodeProjectOptions {
   /**
+   * Source directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+  /**
    * Generate one-time sample in `src/` and `public/` if there are no files there.
    * @default true
    */
@@ -31,7 +37,6 @@ export class ReactProject extends NodeProject {
   constructor(options: ReactProjectOptions) {
     super({
       jest: false,
-      srcdir: options.srcdir ?? 'src',
       ...options,
     });
 

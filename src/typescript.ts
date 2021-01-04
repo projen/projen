@@ -11,6 +11,27 @@ import { deepMerge } from './util';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
+   * Typescript  artifacts output directory
+   *
+   * @default "lib"
+   */
+  readonly libdir?: string;
+
+  /**
+   * Typescript sources directory.
+   *
+   * @default "src"
+   */
+  readonly srcdir?: string;
+
+  /**
+   * Tests directory.
+   *
+   * @default "test"
+   */
+  readonly testdir?: string;
+
+  /**
    *
    * Setup eslint.
    * @default true
@@ -106,6 +127,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly libdir: string;
 
   /**
+   * The directory in which tests reside.
+   */
+  public readonly testdir: string;
+
+  /**
    * The "watch" task.
    */
   public readonly watchTask: Task;
@@ -116,7 +142,16 @@ export class TypeScriptProject extends NodeProject {
   public readonly packageTask?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
-    super(options);
+    super({
+      ...options,
+      jestOptions: {
+        ...options.jestOptions,
+        jestConfig: {
+          ...options.jestOptions?.jestConfig,
+          testMatch: [],
+        },
+      },
+    });
 
     this.srcdir = options.srcdir ?? 'src';
     this.libdir = options.libdir ?? 'lib';
@@ -132,6 +167,9 @@ export class TypeScriptProject extends NodeProject {
       exec: 'tsc -w',
     });
 
+    this.testdir = options.testdir ?? 'test';
+    this.gitignore.include(`/${this.testdir}`);
+    this.npmignore?.exclude(`/${this.testdir}`);
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? false;
 
@@ -151,7 +189,7 @@ export class TypeScriptProject extends NodeProject {
 
       this.packageTask.exec('rm -fr dist');
       this.packageTask.exec('mkdir -p dist/js');
-      this.packageTask.exec(`${this.packageManager} pack`);
+      this.packageTask.exec(`${this.package.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
 
       this.buildTask.spawn(this.packageTask);
@@ -224,6 +262,8 @@ export class TypeScriptProject extends NodeProject {
     let eslintTsConfig = 'tsconfig.json';
 
     if ((options.jest ?? true) && this.jest) {
+      this.jest.addTestMatch('**\/__tests__/**\/*.ts?(x)');
+      this.jest.addTestMatch('**\/?(*.)+(spec|test).ts?(x)');
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
       const tsconfig = this.jest.generateTypescriptConfig({
@@ -246,7 +286,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.testTask.prepend(`rm -fr ${this.libdir}/`);
+        this.testTask.prependExec(`rm -fr ${this.libdir}/`);
       }
 
       // compile test code

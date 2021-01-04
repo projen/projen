@@ -151,27 +151,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly npmRegistry?: string;
 
   /**
-   * Compiler artifacts output directory
-   *
-   * @default "lib"
-   */
-  readonly libdir?: string;
-
-  /**
-   * Typescript sources directory.
-   *
-   * @default "src"
-   */
-  readonly srcdir?: string;
-
-  /**
-   * Tests directory.
-   *
-   * @default "test"
-   */
-  readonly testdir?: string;
-
-  /**
    * Include dependabot configuration.
    *
    * @default true
@@ -416,11 +395,6 @@ export class NodeProject extends Project {
   public readonly runScriptCommand: string;
 
   /**
-   * The directory in which tests reside.
-   */
-  public readonly testdir: string;
-
-  /**
    * The Jest configuration (if enabled)
    */
   public readonly jest?: Jest;
@@ -490,9 +464,6 @@ export class NodeProject extends Project {
     this.npmDistTag = options.npmDistTag ?? 'latest';
     this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
 
-    this.testdir = options.testdir ?? 'test';
-
-
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
     }
@@ -543,12 +514,7 @@ export class NodeProject extends Project {
     // configure jest if enabled
     // must be before the build/release workflows
     if (options.jest ?? true) {
-      this.jest = new Jest(this, {
-        ...options.jestOptions,
-      });
-
-      this.gitignore.include(`/${this.testdir}`);
-      this.npmignore?.exclude(`/${this.testdir}`);
+      this.jest = new Jest(this, options.jestOptions);
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {

@@ -57,7 +57,6 @@ const project = new AwsCdkTypeScriptApp({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -79,8 +78,6 @@ const project = new AwsCdkTypeScriptApp({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -103,8 +100,11 @@ const project = new AwsCdkTypeScriptApp({
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Tests directory. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -185,7 +185,6 @@ const project = new AwsCdkConstructLibrary({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -207,8 +206,6 @@ const project = new AwsCdkConstructLibrary({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -294,7 +291,6 @@ const project = new ConstructLibraryCdk8s({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -316,8 +312,6 @@ const project = new ConstructLibraryCdk8s({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -399,7 +393,6 @@ const project = new JsiiProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -421,8 +414,6 @@ const project = new JsiiProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -454,6 +445,7 @@ const project = new web.NextJsProject({
 
   /* NextJsProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`pages/\` and \`public/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -498,7 +490,6 @@ const project = new web.NextJsProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -520,8 +511,6 @@ const project = new web.NextJsProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -594,7 +583,6 @@ const project = new web.NextJsTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -616,8 +604,6 @@ const project = new web.NextJsTypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -640,8 +626,11 @@ const project = new web.NextJsTypeScriptProject({
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Tests directory. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -699,7 +688,6 @@ const project = new NodeProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -721,8 +709,6 @@ const project = new NodeProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -812,7 +798,6 @@ const project = new web.ReactProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -834,8 +819,6 @@ const project = new web.ReactProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -852,6 +835,7 @@ const project = new web.ReactProject({
 
   /* ReactProjectOptions */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`public/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Source directory. */
 });
 
 project.synth();
@@ -907,7 +891,6 @@ const project = new web.ReactTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -929,8 +912,6 @@ const project = new web.ReactTypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -953,8 +934,11 @@ const project = new web.ReactTypeScriptProject({
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Tests directory. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -1012,7 +996,6 @@ const project = new TypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -1034,8 +1017,6 @@ const project = new TypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1058,8 +1039,11 @@ const project = new TypeScriptProject({
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Tests directory. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -1117,7 +1101,6 @@ const project = new TypeScriptAppProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
-  // libdir: 'lib',                                                            /* Compiler artifacts output directory. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -1139,8 +1122,6 @@ const project = new TypeScriptAppProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
-  // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1163,8 +1144,11 @@ const project = new TypeScriptAppProject({
   // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
   // eslint: true,                                                             /* Setup eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Tests directory. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
