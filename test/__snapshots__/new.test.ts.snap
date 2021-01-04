@@ -104,7 +104,7 @@ const project = new AwsCdkTypeScriptApp({
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -630,7 +630,7 @@ const project = new web.NextJsTypeScriptProject({
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -938,7 +938,7 @@ const project = new web.ReactTypeScriptProject({
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -1043,7 +1043,7 @@ const project = new TypeScriptProject({
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
@@ -1148,7 +1148,7 @@ const project = new TypeScriptAppProject({
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
-  // testdir: 'test',                                                          /* Tests directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
