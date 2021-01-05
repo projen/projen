@@ -52,8 +52,7 @@ Name|Description
 [java.MavenJar](#projen-java-mavenjar)|Configures a maven project to produce a .jar archive with sources and javadocs.
 [java.MavenProject](#projen-java-mavenproject)|*No description*
 [java.MavenSample](#projen-java-mavensample)|*No description*
-[java.MavenVersions](#projen-java-mavenversions)|*No description*
-[java.Pom](#projen-java-pom)|*No description*
+[java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -144,10 +143,9 @@ Name|Description
 [java.MavenJarOptions](#projen-java-mavenjaroptions)|Options for `MavenJar`.
 [java.MavenProjectOptions](#projen-java-mavenprojectoptions)|*No description*
 [java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
-[java.MavenVersionsOptions](#projen-java-mavenversionsoptions)|*No description*
 [java.PluginExecution](#projen-java-pluginexecution)|*No description*
 [java.PluginOptions](#projen-java-pluginoptions)|*No description*
-[java.PomOptions](#projen-java-pomoptions)|*No description*
+[java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -4282,10 +4280,9 @@ Name | Type | Description
 **compile**🔹 | <code>[java.MavenCompile](#projen-java-mavencompile)</code> | <span></span>
 **dist**🔹 | <code>string</code> | <span></span>
 **jar**🔹 | <code>[java.MavenJar](#projen-java-mavenjar)</code> | <span></span>
-**junit**🔹 | <code>[java.Junit](#projen-java-junit)</code> | <span></span>
 **package**🔹 | <code>string</code> | <span></span>
 **pom**🔹 | <code>[java.Pom](#projen-java-pom)</code> | <span></span>
-**versions**🔹 | <code>[java.MavenVersions](#projen-java-mavenversions)</code> | <span></span>
+**junit**?🔹 | <code>[java.Junit](#projen-java-junit)</code> | __*Optional*__
 
 
 
@@ -4313,33 +4310,13 @@ new java.MavenSample(project: Project, options: MavenSampleOptions)
 
 
 
-## class MavenVersions 🔹 <a id="projen-java-mavenversions"></a>
-
-
-
-__Submodule__: java
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new java.MavenVersions(project: Project, pom: Pom, _options?: MavenVersionsOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
-* **_options** (<code>[java.MavenVersionsOptions](#projen-java-mavenversionsoptions)</code>)  *No description*
-
-
-
-
 ## class Pom 🔹 <a id="projen-java-pom"></a>
 
+A Project Object Model or POM is the fundamental unit of work in Maven.
 
+It is
+an XML file that contains information about the project and configuration
+details used by Maven to build the project.
 
 __Submodule__: java
 
@@ -4372,16 +4349,29 @@ new java.Pom(project: Project, options: PomOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**artifactId**🔹 | <code>string</code> | <span></span>
-**fileName**🔹 | <code>string</code> | <span></span>
-**groupId**🔹 | <code>string</code> | <span></span>
-**packaging**🔹 | <code>string</code> | <span></span>
-**version**🔹 | <code>string</code> | <span></span>
-**description**?🔹 | <code>string</code> | __*Optional*__
-**name**?🔹 | <code>string</code> | __*Optional*__
-**url**?🔹 | <code>string</code> | __*Optional*__
+**artifactId**🔹 | <code>string</code> | Maven artifact ID.
+**fileName**🔹 | <code>string</code> | The name of the pom file.
+**groupId**🔹 | <code>string</code> | Maven group ID.
+**packaging**🔹 | <code>string</code> | Maven packaging format.
+**version**🔹 | <code>string</code> | Project version.
+**description**?🔹 | <code>string</code> | Project description.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Project display name.<br/>__*Optional*__
+**url**?🔹 | <code>string</code> | Project URL.<br/>__*Optional*__
 
 ### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-java-pom-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
 
 
 #### addPlugin(spec, options)🔹 <a id="projen-java-pom-addplugin"></a>
@@ -4416,25 +4406,12 @@ addProperty(key: string, value: string): void
 
 
 
-#### addRuntimeDep(spec)🔹 <a id="projen-java-pom-addruntimedep"></a>
-
-Adds a runtime dependency.
-
-```ts
-addRuntimeDep(spec: string): void
-```
-
-* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
-
-
-
-
-#### addTestDep(spec)🔹 <a id="projen-java-pom-addtestdep"></a>
+#### addTestDependency(spec)🔹 <a id="projen-java-pom-addtestdependency"></a>
 
 Adds a test dependency.
 
 ```ts
-addTestDep(spec: string): void
+addTestDependency(spec: string): void
 ```
 
 * **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
@@ -6593,6 +6570,7 @@ resolve(value: any, options?: ResolveOptions): any
 
 * **value** (<code>any</code>)  The value to resolve.
 * **options** (<code>[ResolveOptions](#projen-resolveoptions)</code>)  *No description*
+  * **args** (<code>Array<any></code>)  Context arguments. __*Default*__: []
   * **omitEmpty** (<code>boolean</code>)  Omits empty arrays and objects. __*Default*__: false
 
 __Returns__:
@@ -7111,6 +7089,7 @@ Resolve options.
 
 Name | Type | Description 
 -----|------|-------------
+**args**?🔹 | <code>Array<any></code> | Context arguments.<br/>__*Default*__: []
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty arrays and objects.<br/>__*Default*__: false
 
 
@@ -7724,12 +7703,6 @@ Name | Type | Description
 
 
 
-## struct MavenVersionsOptions 🔹 <a id="projen-java-mavenversionsoptions"></a>
-
-
-
-
-
 ## struct PluginExecution 🔹 <a id="projen-java-pluginexecution"></a>
 
 
@@ -7761,7 +7734,7 @@ Name | Type | Description
 ## struct PomOptions 🔹 <a id="projen-java-pomoptions"></a>
 
 
-
+Options for `Pom`.
 
 
 

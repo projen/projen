@@ -5,6 +5,12 @@ import { Project } from '../project';
 import { toMavenVersionRange } from '../util/semver';
 import { XmlFile } from '../xmlfile';
 
+const POM_XML_ATTRS = {
+  '@xsi:schemaLocation': 'http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd',
+  '@xmlns': 'http://maven.apache.org/POM/4.0.0',
+  '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+};
+
 /**
  * Options for `Pom`.
  */
@@ -191,25 +197,21 @@ export class Pom extends Component {
   }
 
   private synthPom() {
-    const pom = {
+    return resolve({
       project: {
-        '@xsi:schemaLocation': 'http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd',
-        '@xmlns': 'http://maven.apache.org/POM/4.0.0',
-        '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-        'modelVersion': '4.0.0',
-        'groupId': this.groupId,
-        'artifactId': this.artifactId,
-        'version': this.version,
-        'packaging': this.packaging,
-        'name': this.name,
-        'description': this.description,
-        'url': this.url,
-        'properties': this.properties,
+        ...POM_XML_ATTRS,
+        modelVersion: '4.0.0',
+        groupId: this.groupId,
+        artifactId: this.artifactId,
+        version: this.version,
+        packaging: this.packaging,
+        name: this.name,
+        description: this.description,
+        url: this.url,
+        properties: this.properties,
         ...this.synthDependencies(),
       },
-    };
-
-    return resolve(pom, [], { omitEmpty: true });
+    }, { omitEmpty: true });
   }
 
   private synthDependencies() {
