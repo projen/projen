@@ -38,6 +38,7 @@ Name|Description
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
+[XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|*No description*
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
@@ -46,6 +47,10 @@ Name|Description
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[java.Junit](#projen-java-junit)|*No description*
+[java.MavenProject](#projen-java-mavenproject)|*No description*
+[java.MavenSample](#projen-java-mavensample)|*No description*
+[java.Pom](#projen-java-pom)|*No description*
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -120,6 +125,7 @@ Name|Description
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
+[XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
 [deps.Dependency](#projen-deps-dependency)|*No description*
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -129,6 +135,11 @@ Name|Description
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[java.JunitCommonOptions](#projen-java-junitcommonoptions)|*No description*
+[java.JunitOptions](#projen-java-junitoptions)|*No description*
+[java.MavenProjectOptions](#projen-java-mavenprojectoptions)|*No description*
+[java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
+[java.PomOptions](#projen-java-pomoptions)|*No description*
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -1286,7 +1297,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1570,6 +1581,7 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
+  * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
   * **jestConfig** (<code>[JestConfigOptions](#projen-jestconfigoptions)</code>)  *No description* __*Optional*__
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
@@ -1637,6 +1649,19 @@ addTestMatch(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  glob pattern to match for tests.
+
+
+
+
+#### addWatchIgnorePattern(pattern)🔹 <a id="projen-jest-addwatchignorepattern"></a>
+
+Adds a watch ignore pattern.
+
+```ts
+addWatchIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  The pattern (regular expression).
 
 
 
@@ -3603,6 +3628,56 @@ Name | Type | Description
 
 
 
+## class XmlFile 🔹 <a id="projen-xmlfile"></a>
+
+Represents an XML file.
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[XmlFileOptions](#projen-xmlfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  The object that represents the XML contents (see https://www.npmjs.com/package/xml) for details. __*Default*__: {}
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>any</code> | The object represents the XML file.
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-xmlfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class YamlFile 🔹 <a id="projen-yamlfile"></a>
 
 
@@ -3691,16 +3766,17 @@ Name | Type | Description
 ### Methods
 
 
-#### addDependency(spec, type)🔹 <a id="projen-deps-dependencies-adddependency"></a>
+#### addDependency(spec, type, metadata?)🔹 <a id="projen-deps-dependencies-adddependency"></a>
 
 Adds a dependency to this project.
 
 ```ts
-addDependency(spec: string, type: DependencyType): Dependency
+addDependency(spec: string, type: DependencyType, metadata?: Map<string, any>): Dependency
 ```
 
 * **spec** (<code>string</code>)  The dependency spec in the format `MODULE[@VERSION]` where `MODULE` is the package-manager-specific module name and `VERSION` is an optional semantic version requirement (e.g. `^3.4.0`).
 * **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  The type of the dependency.
+* **metadata** (<code>Map<string, any></code>)  *No description*
 
 __Returns__:
 * <code>[deps.Dependency](#projen-deps-dependency)</code>
@@ -4048,6 +4124,201 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
   * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
+
+
+
+
+## class Junit 🔹 <a id="projen-java-junit"></a>
+
+
+
+__Submodule__: java
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new java.Junit(project: Project, options: JunitOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  *No description*
+  * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  Java pom. 
+  * **package** (<code>string</code>)  Java package. __*Optional*__
+  * **version** (<code>string</code>)  Junit version. __*Default*__: "5.7.0"
+
+
+
+
+## class MavenProject 🔹 <a id="projen-java-mavenproject"></a>
+
+
+
+__Submodule__: java
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new java.MavenProject(options: MavenProjectOptions)
+```
+
+* **options** (<code>[java.MavenProjectOptions](#projen-java-mavenprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **artifactId** (<code>string</code>)  *No description* __*Optional*__
+  * **fileName** (<code>string</code>)  File name. __*Default*__: "pom.xml"
+  * **groupId** (<code>string</code>)  *No description* __*Optional*__
+  * **version** (<code>string</code>)  *No description* __*Optional*__
+  * **junit** (<code>boolean</code>)  Include junit tests. __*Default*__: true
+  * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
+  * **package** (<code>string</code>)  Maven package. __*Default*__: ""
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**junit**🔹 | <code>[java.Junit](#projen-java-junit)</code> | <span></span>
+**pom**🔹 | <code>[java.Pom](#projen-java-pom)</code> | <span></span>
+
+
+
+## class MavenSample 🔹 <a id="projen-java-mavensample"></a>
+
+
+
+__Submodule__: java
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new java.MavenSample(project: Project, options?: MavenSampleOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[java.MavenSampleOptions](#projen-java-mavensampleoptions)</code>)  *No description*
+  * **package** (<code>string</code>)  Project root java package. __*Default*__: ""
+
+
+
+
+## class Pom 🔹 <a id="projen-java-pom"></a>
+
+
+
+__Submodule__: java
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new java.Pom(project: Project, options?: PomOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[java.PomOptions](#projen-java-pomoptions)</code>)  *No description*
+  * **artifactId** (<code>string</code>)  *No description* __*Optional*__
+  * **fileName** (<code>string</code>)  File name. __*Default*__: "pom.xml"
+  * **groupId** (<code>string</code>)  *No description* __*Optional*__
+  * **version** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**fileName**🔹 | <code>string</code> | <span></span>
+**artifactId**?🔹 | <code>string</code> | __*Optional*__
+**groupId**?🔹 | <code>string</code> | __*Optional*__
+**version**?🔹 | <code>string</code> | __*Optional*__
+
+### Methods
+
+
+#### addPlugin(spec, configuration?)🔹 <a id="projen-java-pom-addplugin"></a>
+
+Adds a build plugin to the pom.
+
+The plug in is also added as a BUILD dep to the project.
+
+```ts
+addPlugin(spec: string, configuration?: Map<string, string>): Dependency
+```
+
+* **spec** (<code>string</code>)  dependency spec (`group/artifact@version`).
+* **configuration** (<code>Map<string, string></code>)  optional plugin key/value configuration.
+
+__Returns__:
+* <code>[deps.Dependency](#projen-deps-dependency)</code>
+
+#### addProperty(key, value)🔹 <a id="projen-java-pom-addproperty"></a>
+
+Adds a key/value property to the pom.
+
+```ts
+addProperty(key: string, value: string): void
+```
+
+* **key** (<code>string</code>)  the key.
+* **value** (<code>string</code>)  the value.
+
+
+
+
+#### addRuntimeDep(spec)🔹 <a id="projen-java-pom-addruntimedep"></a>
+
+Adds a runtime dependency.
+
+```ts
+addRuntimeDep(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
+
+
+#### addTestDep(spec)🔹 <a id="projen-java-pom-addtestdep"></a>
+
+Adds a test dependency.
+
+```ts
+addTestDep(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
 
 
 
@@ -6294,6 +6565,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
+**coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
 **jestConfig**?🔹 | <code>[JestConfigOptions](#projen-jestconfigoptions)</code> | __*Optional*__
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
@@ -7083,6 +7355,22 @@ Name | Type | Description
 
 
 
+## struct XmlFileOptions 🔹 <a id="projen-xmlfileoptions"></a>
+
+
+Options for `XmlFile`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**obj**?🔹 | <code>any</code> | The object that represents the XML contents (see https://www.npmjs.com/package/xml) for details.<br/>__*Default*__: {}
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
 ## struct YamlFileOptions 🔹 <a id="projen-yamlfileoptions"></a>
 
 
@@ -7103,7 +7391,7 @@ Name | Type | Description
 
 ## struct Dependency 🔹 <a id="projen-deps-dependency"></a>
 
-__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)()
+__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
 
 
 
@@ -7113,6 +7401,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | The package manager name of the dependency (e.g. `leftpad` for npm).
 **type**🔹 | <code>[deps.DependencyType](#projen-deps-dependencytype)</code> | Which type of dependency this is (runtime, build-time, etc).
+**metadata**?🔹 | <code>Map<string, any></code> | Additional JSON metadata associated with the dependency (package manager specific).<br/>__*Default*__: {}
 **version**?🔹 | <code>string</code> | Semantic version version requirement.<br/>__*Default*__: requirement is managed by the package manager (e.g. npm/yarn).
 
 
@@ -7216,6 +7505,85 @@ Options for `PullRequestTemplate`.
 Name | Type | Description 
 -----|------|-------------
 **lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
+
+
+
+## struct JunitCommonOptions 🔹 <a id="projen-java-junitcommonoptions"></a>
+
+
+
+
+
+## struct JunitOptions 🔹 <a id="projen-java-junitoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pom**🔹 | <code>[java.Pom](#projen-java-pom)</code> | Java pom.
+**package**?🔹 | <code>string</code> | Java package.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | Junit version.<br/>__*Default*__: "5.7.0"
+
+
+
+## struct MavenProjectOptions 🔹 <a id="projen-java-mavenprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your project.
+**artifactId**?🔹 | <code>string</code> | __*Optional*__
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**fileName**?🔹 | <code>string</code> | File name.<br/>__*Default*__: "pom.xml"
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**groupId**?🔹 | <code>string</code> | __*Optional*__
+**junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
+**junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>string</code> | Maven package.<br/>__*Default*__: ""
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct MavenSampleOptions 🔹 <a id="projen-java-mavensampleoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**package**?🔹 | <code>string</code> | Project root java package.<br/>__*Default*__: ""
+
+
+
+## struct PomOptions 🔹 <a id="projen-java-pomoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactId**?🔹 | <code>string</code> | __*Optional*__
+**fileName**?🔹 | <code>string</code> | File name.<br/>__*Default*__: "pom.xml"
+**groupId**?🔹 | <code>string</code> | __*Optional*__
+**version**?🔹 | <code>string</code> | __*Optional*__
 
 
 

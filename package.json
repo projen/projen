@@ -41,6 +41,7 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^10.17.0",
     "@types/semver": "^7.3.4",
+    "@types/xml": "^1.0.5",
     "@types/yargs": "^15.0.10",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
@@ -64,10 +65,12 @@
     "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.0",
     "decamelize": "^4.0.0",
+    "deindent": "^0.1.0",
     "fs-extra": "^9.0.1",
     "glob": "^7",
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
+    "xml": "^1.0.1",
     "yaml": "^1.10.0",
     "yargs": "^16.1.1"
   },
@@ -75,10 +78,12 @@
     "@iarna/toml",
     "chalk",
     "decamelize",
+    "deindent",
     "fs-extra",
     "glob",
     "inquirer",
     "semver",
+    "xml",
     "yaml",
     "yargs"
   ],
@@ -94,12 +99,21 @@
     ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
     ],
     "reporters": [
       "default",

@@ -433,6 +433,35 @@ project.synth();
 "
 `;
 
+exports[`projen new maven 1`] = `
+"const { java } = require('projen');
+
+const project = new java.MavenProject({
+  artifactId: 'my-app',
+  groupId: 'org.acme',
+  name: 'my-project',
+
+  /* MavenProjectOptions */
+  // junit: true,                       /* Include junit tests. */
+  // junitOptions: undefined,           /* junit options. */
+  // package: undefined,                /* Maven package. */
+  // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
+
+  /* ProjectOptions */
+  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
+  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                     /* Add a Gitpod development environment. */
+  // logging: {},                       /* Configure logging options such as verbosity. */
+  // outdir: '.',                       /* The root directory of the project. */
+  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // readme: undefined,                 /* The README setup. */
+});
+
+project.synth();
+"
+`;
+
 exports[`projen new nextjs 1`] = `
 "const { web } = require('projen');
 

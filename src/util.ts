@@ -188,3 +188,12 @@ export function sorted<T>(x: T) {
   }
 }
 
+export function undefinedIfEmpty<T>(value: T[] | { [k: string]: T }) {
+  if (value == null) { return undefined; }
+
+  return () => {
+    if (Array.isArray(value) && value.length === 0) { return undefined; }
+    if (typeof(value) === 'object' && Object.keys(value).length === 0) { return undefined; }
+    return value;
+  };
+}
