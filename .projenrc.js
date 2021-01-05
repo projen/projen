@@ -45,6 +45,11 @@ const project = new JsiiProject({
   devContainer: true,
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',
+
+  // makes it very hard to iterate with jest --watch
+  jestOptions: {
+    coverageText: false
+  }
 });
 
 // this script is what we use as the projen command in this project

@@ -280,6 +280,7 @@ export class TypeScriptProject extends NodeProject {
       const srctest = this.testdir;
 
       this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
+      this.jest.addWatchIgnorePattern(`/${this.srcdir}/`);
 
       const resolveSnapshotPath = (test: string, ext: string) => {
         const fullpath = test.replace(libtest, srctest);

@@ -1413,6 +1413,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -1433,6 +1439,9 @@ project.synth();
         "**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },
@@ -2698,6 +2707,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -2718,6 +2733,9 @@ project.synth();
         "**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },
@@ -3934,6 +3952,12 @@ project.synth();
         "/node_modules/",
         "/templates/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -3956,6 +3980,9 @@ project.synth();
       "testPathIgnorePatterns": Array [
         "/node_modules/",
         "/templates/",
+      ],
+      "watchPathIgnorePatterns": Array [
+        "/node_modules/",
       ],
     },
     "keywords": Array [
@@ -4733,6 +4760,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "reporters": Array [
         "default",
         Array [
@@ -4747,6 +4780,9 @@ project.synth();
         "**/?(*.)+(spec|test).[tj]s?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },

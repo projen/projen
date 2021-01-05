@@ -472,6 +472,14 @@ export interface JestOptions {
   readonly coverage?: boolean;
 
   /**
+   * Include the `text` coverage reporter, which means that coverage summary is printed
+   * at the end of the jest execution.
+   *
+   * @default true
+   */
+  readonly coverageText?: boolean;
+
+  /**
    * Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`
    * @default ["/node_modules/"]
    * @deprecated use jestConfig.coveragePathIgnorePatterns or jestConfig.testPathIgnorePatterns respectively
@@ -539,6 +547,8 @@ export class Jest {
 
   private readonly testMatch: string[]
   private readonly ignorePatterns: string[];
+  private readonly watchIgnorePatterns: string[];
+  private readonly coverageReporters: string[];
   private readonly project: NodeProject;
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
@@ -555,6 +565,8 @@ export class Jest {
     this.typescriptConfig = options.typescriptConfig;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? options.ignorePatterns ?? ['/node_modules/'];
+    this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? ['/node_modules/'];
+    this.coverageReporters = this.jestConfig?.coverageReporters ?? ['json', 'lcov', 'clover'];
     this.testMatch = this.jestConfig?.testMatch ?? ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)'];
 
     const coverageDirectory = this.jestConfig?.coverageDirectory ?? 'coverage';
@@ -569,9 +581,11 @@ export class Jest {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
       collectCoverage: options.coverage ?? this.jestConfig?.collectCoverage ?? true,
+      coverageReporters: this.coverageReporters,
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns: this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
+      watchPathIgnorePatterns: this.watchIgnorePatterns,
       testMatch: this.testMatch,
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
@@ -620,6 +634,10 @@ export class Jest {
     project.gitignore.exclude(coverageDirectoryPath);
 
     project.addTip('The VSCode jest extension watches in the background and shows inline test results');
+
+    if (options.coverageText ?? true) {
+      this.coverageReporters.push('text');
+    }
   }
 
   /**
@@ -628,6 +646,14 @@ export class Jest {
    */
   public addTestMatch(pattern: string) {
     this.testMatch.push(pattern);
+  }
+
+  /**
+   * Adds a watch ignore pattern.
+   * @param pattern The pattern (regular expression).
+   */
+  public addWatchIgnorePattern(pattern: string) {
+    this.watchIgnorePatterns.push(pattern);
   }
 
   public addIgnorePattern(pattern: string) {

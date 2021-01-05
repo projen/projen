@@ -1570,6 +1570,7 @@ new Jest(project: NodeProject, options?: JestOptions)
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
+  * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
   * **jestConfig** (<code>[JestConfigOptions](#projen-jestconfigoptions)</code>)  *No description* __*Optional*__
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
@@ -1637,6 +1638,19 @@ addTestMatch(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  glob pattern to match for tests.
+
+
+
+
+#### addWatchIgnorePattern(pattern)🔹 <a id="projen-jest-addwatchignorepattern"></a>
+
+Adds a watch ignore pattern.
+
+```ts
+addWatchIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  The pattern (regular expression).
 
 
 
@@ -6294,6 +6308,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
+**coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
 **jestConfig**?🔹 | <code>[JestConfigOptions](#projen-jestconfigoptions)</code> | __*Optional*__
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
