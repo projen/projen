@@ -3,7 +3,6 @@ import { Junit, JunitOptions } from './junit';
 import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenJar, MavenJarOptions } from './maven-jar';
 import { MavenSample } from './maven-sample';
-import { MavenVersions } from './maven-versions';
 import { Pom } from './pom';
 
 export interface MavenProjectOptions extends ProjectOptions {
@@ -72,10 +71,9 @@ export interface MavenProjectOptions extends ProjectOptions {
  */
 export class MavenProject extends Project {
   public readonly pom: Pom;
-  public readonly junit: Junit;
+  public readonly junit?: Junit;
   public readonly jar: MavenJar;
   public readonly compile: MavenCompile;
-  public readonly versions: MavenVersions;
 
   public readonly package: string;
   public readonly dist: string;
@@ -92,11 +90,13 @@ export class MavenProject extends Project {
       version: '0.1.0',
     });
 
-    this.junit = new Junit(this, {
-      pom: this.pom,
-      package: this.package,
-      ...options.junitOptions,
-    });
+    if (options.junit ?? true) {
+      this.junit = new Junit(this, {
+        pom: this.pom,
+        package: this.package,
+        ...options.junitOptions,
+      });
+    }
 
     if (options.sample ?? true) {
       new MavenSample(this, {
@@ -113,7 +113,6 @@ export class MavenProject extends Project {
 
     this.compile = new MavenCompile(this, this.pom, options.compileOptions);
     this.jar = new MavenJar(this, this.pom, options.jarOptions);
-    this.versions = new MavenVersions(this, this.pom);
 
     this.pom.addPlugin('org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3', {
       executions: [{ id: 'enforce-maven', goals: ['enforce'] }],

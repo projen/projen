@@ -17,7 +17,7 @@ test('pom options', () => {
   snapPom(p);
 });
 
-test('depedencies', () => {
+test('dependencies', () => {
   const p = new TestMavenProject();
   p.pom.addRuntimeDep('software.amazon.awscdk/core@1.2.3');
   p.pom.addTestDep('org.assertj/assertj-core@3.18.1');
@@ -28,6 +28,14 @@ test('depedencies', () => {
     },
   });
   snapPom(p);
+});
+
+test('no junit', () => {
+  const p = new TestMavenProject({
+    junit: false,
+  });
+
+  expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
 function snapPom(p: MavenProject) {
