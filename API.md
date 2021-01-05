@@ -38,6 +38,7 @@ Name|Description
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
+[XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|*No description*
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
@@ -120,6 +121,7 @@ Name|Description
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
+[XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
 [deps.Dependency](#projen-deps-dependency)|*No description*
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -3614,6 +3616,56 @@ Name | Type | Description
 -----|------|-------------
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **currentVersion**🔹 | <code>any</code> | Returns the current version of the project.
+
+
+
+## class XmlFile 🔹 <a id="projen-xmlfile"></a>
+
+Represents an XML file.
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[XmlFileOptions](#projen-xmlfileoptions)</code>)  *No description*
+  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **obj** (<code>any</code>)  The object that represents the XML contents (see https://www.npmjs.com/package/xml) for details. __*Default*__: {}
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**obj**🔹 | <code>any</code> | The object represents the XML file.
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-xmlfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 
 

@@ -28,6 +28,7 @@ export * from './toml';
 export * from './typescript';
 export * from './version';
 export * from './yaml';
+export * from './xmlfile';
 
 // export submobules
 export * as tasks from './tasks';
