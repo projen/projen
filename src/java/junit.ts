@@ -35,8 +35,8 @@ export class Junit extends Component {
     const pom = options.pom;
     const version = options.version ?? '5.7.0';
 
-    pom.addTestDep(`org.junit.jupiter/junit-jupiter-api@${version}`);
-    pom.addTestDep(`org.junit.jupiter/junit-jupiter-engine@${version}`);
+    pom.addTestDependency(`org.junit.jupiter/junit-jupiter-api@${version}`);
+    pom.addTestDependency(`org.junit.jupiter/junit-jupiter-engine@${version}`);
 
     project.addTask('test', {
       description: 'Runs tests',

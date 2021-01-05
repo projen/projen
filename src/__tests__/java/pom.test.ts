@@ -22,7 +22,7 @@ test('addProperty()', () => {
 
 test('addDependency()', () => {
   const pom = new TestPom();
-  pom.addRuntimeDep('software.amazon.awscdk/core');
+  pom.addDependency('software.amazon.awscdk/core');
 
   // dependencies are managed at the project level
   pom.project.deps.addDependency('org.assertj/assertj-core@^3.18.1', DependencyType.TEST);

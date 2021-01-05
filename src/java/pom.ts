@@ -2,8 +2,12 @@ import { resolve } from '../_resolve';
 import { Component } from '../component';
 import { Dependency, DependencyType } from '../deps';
 import { Project } from '../project';
+import { toMavenVersionRange } from '../util/semver';
 import { XmlFile } from '../xmlfile';
 
+/**
+ * Options for `Pom`.
+ */
 export interface PomOptions {
   /**
    * File name.
@@ -84,16 +88,52 @@ export interface PomOptions {
   readonly url?: string;
 }
 
+/**
+ * A Project Object Model or POM is the fundamental unit of work in Maven. It is
+ * an XML file that contains information about the project and configuration
+ * details used by Maven to build the project.
+ */
 export class Pom extends Component {
   private readonly properties: Record<string, any> = {};
 
+  /**
+   * The name of the pom file.
+   */
   public readonly fileName: string;
+
+  /**
+   * Maven group ID.
+   */
   public readonly groupId: string;
+
+  /**
+   * Maven artifact ID.
+   */
   public readonly artifactId: string;
+
+  /**
+   * Project version.
+   */
   public readonly version: string;
+
+  /**
+   * Maven packaging format.
+   */
   public readonly packaging: string;
+
+  /**
+   * Project display name.
+   */
   public readonly name?: string;
+
+  /**
+   * Project description.
+   */
   public readonly description?: string;
+
+  /**
+   * Project URL.
+   */
   public readonly url?: string;
 
   constructor(project: Project, options: PomOptions) {
@@ -125,7 +165,7 @@ export class Pom extends Component {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addRuntimeDep(spec: string) {
+  public addDependency(spec: string) {
     this.project.deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
@@ -134,7 +174,7 @@ export class Pom extends Component {
    *
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
-  public addTestDep(spec: string) {
+  public addTestDependency(spec: string) {
     this.project.deps.addDependency(spec, DependencyType.TEST);
   }
 
@@ -230,7 +270,7 @@ export interface PluginExecution {
 }
 
 function mavenVersion(version: string) {
-  return version; // TODO
+  return toMavenVersionRange(version);
 }
 
 /**
