@@ -133,7 +133,8 @@ export class Dependencies extends Component {
     return this._deps.findIndex(dep => dep.name === name && dep.type === type);
   }
 
-  private toJson(): DepsManifest {
+  private toJson(): DepsManifest | undefined {
+    if (this._deps.length === 0) { return undefined; }
     return {
       dependencies: this._deps.sort(compareDeps),
     };

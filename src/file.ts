@@ -86,8 +86,9 @@ export abstract class FileBase extends Component {
    * emit.
    * @param resolver Call `resolver.resolve(obj)` on any objects in order to
    * resolve token functions.
+   * @returns the content to synthesize or undefined to skip the file
    */
-  protected abstract synthesizeContent(resolver: IResolver): string;
+  protected abstract synthesizeContent(resolver: IResolver): string | undefined;
 
   /**
    * Writes the file to the project's output directory
@@ -95,8 +96,12 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, [outdir], options) };
-    writeFile(filePath, this.synthesizeContent(resolver), {
+    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, options) };
+    const content = this.synthesizeContent(resolver);
+    if (content === undefined) {
+      return; // skip
+    }
+    writeFile(filePath, content, {
       readonly: this.readonly,
     });
   }
@@ -124,4 +129,10 @@ export interface ResolveOptions {
    * @default false
    */
   readonly omitEmpty?: boolean;
+
+  /**
+   * Context arguments.
+   * @default []
+   */
+  readonly args?: any[];
 }

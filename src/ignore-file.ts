@@ -30,7 +30,7 @@ export class IgnoreFile extends FileBase {
     patterns.forEach(pattern => this.patterns[pattern.replace(/^\!/, '')] = IgnorePatternType.INCLUDE);
   }
 
-  protected synthesizeContent(resolver: IResolver): string {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     return resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
       ...Object.entries(this.patterns).map(([pattern, type]) => type === IgnorePatternType.INCLUDE ? `!${pattern}`: pattern),

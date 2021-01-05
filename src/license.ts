@@ -37,7 +37,7 @@ export class License extends FileBase {
       .replace('[name of copyright owner]', owner);
   }
 
-  protected synthesizeContent(_: IResolver) {
+  protected synthesizeContent(_: IResolver): string | undefined {
     return this.text;
   }
 }

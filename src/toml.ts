@@ -27,7 +27,7 @@ export class TomlFile extends ObjectFile implements IMarkableFile {
     this.marker = options.marker ?? false;
   }
 
-  protected synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     return [
       ... (this.marker ? [`# ${TomlFile.PROJEN_MARKER}`] : []),
       '',
