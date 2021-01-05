@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.8](https://github.com/projen/projen/compare/v0.13.7...v0.13.8) (2021-01-05)
+
+
+### Features
+
+* allow text file to be marked as executable ([#458](https://github.com/projen/projen/issues/458)) ([5a9ba5e](https://github.com/projen/projen/commit/5a9ba5eacc44ddfb6c624db3a69e0369946b003b)), closes [#454](https://github.com/projen/projen/issues/454)
+
 ### [0.13.7](https://github.com/projen/projen/compare/v0.13.6...v0.13.7) (2021-01-05)
 
 
