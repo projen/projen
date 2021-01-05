@@ -87,19 +87,28 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.13.5",
+  "version": "0.13.7",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
     ],
     "reporters": [
       "default",
