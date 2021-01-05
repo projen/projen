@@ -1,3 +1,4 @@
+import { resolve } from '../_resolve';
 import { Component } from '../component';
 import { Dependency, DependencyType } from '../deps';
 import { Project } from '../project';
@@ -84,7 +85,7 @@ export interface PomOptions {
 }
 
 export class Pom extends Component {
-  private readonly properties: any[] = [];
+  private readonly properties: Record<string, any> = {};
 
   public readonly fileName: string;
   public readonly groupId: string;
@@ -116,7 +117,7 @@ export class Pom extends Component {
    * @param value the value
    */
   public addProperty(key: string, value: string) {
-    this.properties.push({ [key]: value });
+    this.properties[key] = value;
   }
 
   /**
@@ -150,75 +151,50 @@ export class Pom extends Component {
   }
 
   private synthPom() {
-    const pom: any[] = [];
-
-    pom.push({
-      _attr: {
-        'xsi:schemaLocation': 'http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd',
-        'xmlns': 'http://maven.apache.org/POM/4.0.0',
-        'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+    const pom = {
+      project: {
+        '@xsi:schemaLocation': 'http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd',
+        '@xmlns': 'http://maven.apache.org/POM/4.0.0',
+        '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        'modelVersion': '4.0.0',
+        'groupId': this.groupId,
+        'artifactId': this.artifactId,
+        'version': this.version,
+        'packaging': this.packaging,
+        'name': this.name,
+        'description': this.description,
+        'url': this.url,
+        'properties': this.properties,
+        ...this.synthDependencies(),
       },
-    });
-
-    pom.push({ modelVersion: '4.0.0' });
-    pom.push({ groupId: this.groupId });
-    pom.push({ artifactId: this.artifactId });
-    pom.push({ version: this.version });
-    pom.push({ packaging: this.packaging });
-
-    if (this.name) {
-      pom.push({ name: this.name });
-    }
-
-    if (this.description) {
-      pom.push({ description: this.description });
-    }
-
-    if (this.url) {
-      pom.push({ url: this.url });
-    }
-
-    if (this.properties.length > 0) {
-      pom.push({ properties: this.properties });
-    }
-
-    this.synthDependencies(pom);
-
-    return {
-      project: pom,
     };
+
+    return resolve(pom, [], { omitEmpty: true });
   }
 
-  private synthDependencies(pom: any[]) {
+  private synthDependencies() {
     const deps = this.project.deps.all;
     if (deps.length === 0) { return; }
 
     const dependencies: any[] = [];
-
     const plugins: any[] = [];
+
     for (const dep of deps) {
       switch (dep.type) {
         case DependencyType.PEER:
         case DependencyType.RUNTIME:
-          dependencies.push({ dependency: mavenCoords(dep) });
+          dependencies.push(mavenCoords(dep));
           break;
 
         case DependencyType.TEST:
-          dependencies.push({
-            dependency: [
-              ...mavenCoords(dep),
-              { scope: 'test' },
-            ],
-          });
+          dependencies.push({ ...mavenCoords(dep), scope: 'test' });
           break;
 
         // build maps to plugins
         case DependencyType.BUILD:
           plugins.push({
-            plugin: [
-              ...mavenCoords(dep),
-              ...pluginConfig(dep.metadata as PluginOptions),
-            ],
+            ...mavenCoords(dep),
+            ...pluginConfig(dep.metadata as PluginOptions),
           });
           break;
 
@@ -227,17 +203,10 @@ export class Pom extends Component {
       }
     }
 
-    if (plugins.length > 0) {
-      pom.push({
-        build: [
-          { plugins },
-        ],
-      });
-    }
-
-    if (dependencies.length > 0) {
-      pom.push({ dependencies });
-    }
+    return {
+      build: { plugins: { plugin: plugins } },
+      dependencies: { dependency: dependencies },
+    };
   }
 }
 
@@ -277,37 +246,21 @@ function mavenCoords(dep: Dependency) {
     throw new Error(`invalid maven coordinates in dependency named "${name}". format is "<groupId>/<artifactId>". For example "org.junit.jupiter/junit-jupiter-engine"`);
   }
 
-  return [
-    { groupId: parts[0] },
-    { artifactId: parts[1] },
-    { version: dep.version ? mavenVersion(dep.version) : undefined },
-  ];
+  return {
+    groupId: parts[0],
+    artifactId: parts[1],
+    version: dep.version ? mavenVersion(dep.version) : undefined,
+  };
 }
 
 function pluginConfig(options: PluginOptions = {}) {
-  const ret = new Array<any>();
-
-  if (options.configuration) {
-    ret.push({ configuration: toXml(options.configuration) });
-  }
-
-  const executions = new Array();
-  for (const e of options.executions ?? []) {
-    executions.push({
-      execution: [
-        { id: e.id },
-        { goals: e.goals.map(goal => ({ goal })) },
-      ],
-    });
-  }
-
-  if (executions.length > 0) {
-    ret.push({ executions });
-  }
-
-  return ret;
-}
-
-function toXml(x: { [key: string]: any }) {
-  return Object.entries(x).map(([k, v]) => ({ [k]: v }));
+  return {
+    configuration: options.configuration,
+    executions: options.executions?.map(e => ({
+      execution: {
+        id: e.id,
+        goals: e.goals.map(goal => ({ goal })),
+      },
+    })),
+  };
 }

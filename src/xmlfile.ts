@@ -1,4 +1,4 @@
-import * as xml from 'xml';
+import { create as createxml } from 'xmlbuilder2';
 import { FileBase, FileBaseOptions, IResolver } from './file';
 import { Project } from './project';
 
@@ -34,9 +34,10 @@ export class XmlFile extends FileBase {
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    return xml(resolver.resolve(this.obj), {
-      declaration: true,
-      indent: '    ',
+    const obj = resolver.resolve(this.obj);
+    return createxml({ encoding: 'UTF-8' }, obj).end({
+      prettyPrint: true,
+      indent: ' '.repeat(4),
     });
   }
 }

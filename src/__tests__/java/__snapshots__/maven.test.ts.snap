@@ -55,21 +55,13 @@ dist/java",
       Object {
         "metadata": Object {
           "configuration": Object {
-            "archive": Array [
-              Object {
-                "index": true,
+            "archive": Object {
+              "index": true,
+              "manifest": Object {
+                "addDefaultImplementationEntries": true,
+                "addDefaultSpecificationEntries": true,
               },
-              Object {
-                "manifest": Array [
-                  Object {
-                    "addDefaultImplementationEntries": true,
-                  },
-                  Object {
-                    "addDefaultSpecificationEntries": true,
-                  },
-                ],
-              },
-            ],
+            },
           },
         },
         "name": "org.apache.maven.plugins/maven-jar-plugin",
@@ -79,14 +71,12 @@ dist/java",
       Object {
         "metadata": Object {
           "configuration": Object {
-            "additionalJOptions": Array [
-              Object {
-                "additionalJOption": "-J-XX:+TieredCompilation",
-              },
-              Object {
-                "additionalJOption": "-J-XX:TieredStopAtLevel=1",
-              },
-            ],
+            "additionalJOptions": Object {
+              "additionalJOption": Array [
+                "-J-XX:+TieredCompilation",
+                "-J-XX:TieredStopAtLevel=1",
+              ],
+            },
             "detectJavaApiLink": false,
             "failOnError": false,
             "show": "protected",
@@ -306,7 +296,6 @@ dist/java",
                 <configuration>
                     <failOnError>false</failOnError>
                     <show>protected</show>
-                    
                     <detectJavaApiLink>false</detectJavaApiLink>
                     <additionalJOptions>
                         <additionalJOption>-J-XX:+TieredCompilation</additionalJOption>
@@ -452,7 +441,6 @@ exports[`depedencies 1`] = `
                 <configuration>
                     <failOnError>false</failOnError>
                     <show>protected</show>
-                    
                     <detectJavaApiLink>false</detectJavaApiLink>
                     <additionalJOptions>
                         <additionalJOption>-J-XX:+TieredCompilation</additionalJOption>
@@ -582,7 +570,6 @@ exports[`pom options 1`] = `
                 <configuration>
                     <failOnError>false</failOnError>
                     <show>protected</show>
-                    
                     <detectJavaApiLink>false</detectJavaApiLink>
                     <additionalJOptions>
                         <additionalJOption>-J-XX:+TieredCompilation</additionalJOption>

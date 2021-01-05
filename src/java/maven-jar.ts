@@ -38,15 +38,13 @@ export class MavenJar extends Component {
 
     pom.addPlugin('org.apache.maven.plugins/maven-jar-plugin@3.2.0', {
       configuration: {
-        archive: [
-          { index: true },
-          {
-            manifest: [
-              { addDefaultImplementationEntries: true },
-              { addDefaultSpecificationEntries: true },
-            ],
+        archive: {
+          index: true,
+          manifest: {
+            addDefaultImplementationEntries: true,
+            addDefaultSpecificationEntries: true,
           },
-        ],
+        },
       },
     });
 
@@ -62,12 +60,14 @@ export class MavenJar extends Component {
         configuration: {
           failOnError: false,
           show: 'protected',
-          sourceFileExcludes: options.javadocsExclude?.map(exclude => ({ exclude })),
+          sourceFileExcludes: { exclude: options.javadocsExclude },
           detectJavaApiLink: false, // https://stackoverflow.com/a/61884267
-          additionalJOptions: [
-            { additionalJOption: '-J-XX:+TieredCompilation' },
-            { additionalJOption: '-J-XX:TieredStopAtLevel=1' },
-          ],
+          additionalJOptions: {
+            additionalJOption: [
+              '-J-XX:+TieredCompilation',
+              '-J-XX:TieredStopAtLevel=1',
+            ],
+          },
         },
       });
     }

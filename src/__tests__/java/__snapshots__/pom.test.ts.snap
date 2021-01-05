@@ -12,7 +12,6 @@ exports[`addDependency() 1`] = `
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>core</artifactId>
-            
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>

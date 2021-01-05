@@ -25,8 +25,7 @@ const project = new JsiiProject({
     'inquirer',
     'chalk',
     '@iarna/toml',
-    'xml',
-    'deindent'
+    'xmlbuilder2',
   ],
 
   devDeps: [

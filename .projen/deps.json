@@ -120,10 +120,6 @@
       "type": "bundled"
     },
     {
-      "name": "deindent",
-      "type": "bundled"
-    },
-    {
       "name": "fs-extra",
       "type": "bundled"
     },
@@ -141,7 +137,7 @@
       "type": "bundled"
     },
     {
-      "name": "xml",
+      "name": "xmlbuilder2",
       "type": "bundled"
     },
     {

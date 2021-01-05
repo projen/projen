@@ -7,20 +7,18 @@ test('simple use', () => {
 
   const file = new XmlFile(project, 'pom.xml', {
     obj: {
-      project: [
-        { modelVersion: '4.0.0' },
-        { groupId: 'com.myorg' },
-        { artifactId: 'play-202101050157' },
-        { version: '0.1' },
-      ],
+      project: {
+        modelVersion: '4.0.0',
+        groupId: 'com.myorg',
+        artifactId: 'play-202101050157',
+        version: '0.1',
+      },
     },
   });
 
-  file.obj.project.push({
-    properties: [
-      { 'project.build.sourceEncoding': 'UTF-8' },
-    ],
-  });
+  file.obj.project.properties = {
+    'project.build.sourceEncoding': 'UTF-8',
+  };
 
   // THEN
   expect(synthSnapshot(project)['pom.xml']).toMatchSnapshot();
