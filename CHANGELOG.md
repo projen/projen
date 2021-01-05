@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.6](https://github.com/projen/projen/compare/v0.13.5...v0.13.6) (2021-01-05)
+
+
+### Features
+
+* **cli:** improved bootstrapping ([#459](https://github.com/projen/projen/issues/459)) ([d641f1c](https://github.com/projen/projen/commit/d641f1cbc387e9bbed160319851e00317d8d1360))
+
 ### [0.13.5](https://github.com/projen/projen/compare/v0.13.4...v0.13.5) (2021-01-04)
 
 
