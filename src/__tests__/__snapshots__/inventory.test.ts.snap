@@ -4219,6 +4219,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- defaults",
+        "docs": "Compile options.",
+        "name": "compileOptions",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "compileOptions",
+        ],
+        "switch": "compile-options",
+        "type": "MavenCompileOptions",
+      },
+      Object {
         "default": "false",
         "docs": "Add a VSCode development environment (used for GitHub Codespaces).",
         "name": "devContainer",
@@ -4229,6 +4241,18 @@ Array [
         ],
         "switch": "dev-container",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist/java\\"",
+        "docs": "Final artifact output directory.",
+        "name": "dist",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "dist",
+        ],
+        "switch": "dist",
+        "type": "string",
       },
       Object {
         "default": "false",
@@ -4251,6 +4275,30 @@ Array [
         ],
         "switch": "group-id",
         "type": "string",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Javadocs options.",
+        "name": "jarOptions",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "jarOptions",
+        ],
+        "switch": "jar-options",
+        "type": "MavenJarOptions",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include javadocs in package.",
+        "name": "javadocs",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "javadocs",
+        ],
+        "switch": "javadocs",
+        "type": "boolean",
       },
       Object {
         "default": "true",

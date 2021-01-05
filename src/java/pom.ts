@@ -11,9 +11,76 @@ export interface PomOptions {
    */
   readonly fileName?: string;
 
+  /**
+   * This is generally unique amongst an organization or a project. For example,
+   * all core Maven artifacts do (well, should) live under the groupId
+   * org.apache.maven. Group ID's do not necessarily use the dot notation, for
+   * example, the junit project. Note that the dot-notated groupId does not have
+   * to correspond to the package structure that the project contains. It is,
+   * however, a good practice to follow. When stored within a repository, the
+   * group acts much like the Java packaging structure does in an operating
+   * system. The dots are replaced by OS specific directory separators (such as
+   * '/' in Unix) which becomes a relative directory structure from the base
+   * repository. In the example given, the org.codehaus.mojo group lives within
+   * the directory $M2_REPO/org/codehaus/mojo.
+   */
   readonly groupId: string;
+
+  /**
+   * The artifactId is generally the name that the project is known by. Although
+   * the groupId is important, people within the group will rarely mention the
+   * groupId in discussion (they are often all be the same ID, such as the
+   * MojoHaus project groupId: org.codehaus.mojo). It, along with the groupId,
+   * creates a key that separates this project from every other project in the
+   * world (at least, it should :) ). Along with the groupId, the artifactId
+   * fully defines the artifact's living quarters within the repository. In the
+   * case of the above project, my-project lives in
+   * $M2_REPO/org/codehaus/mojo/my-project.
+   */
   readonly artifactId: string;
+
+  /**
+   * This is the last piece of the naming puzzle. groupId:artifactId denotes a
+   * single project but they cannot delineate which incarnation of that project
+   * we are talking about. Do we want the junit:junit of 2018 (version 4.12), or
+   * of 2007 (version 3.8.2)? In short: code changes, those changes should be
+   * versioned, and this element keeps those versions in line. It is also used
+   * within an artifact's repository to separate versions from each other.
+   * my-project version 1.0 files live in the directory structure
+   * $M2_REPO/org/codehaus/mojo/my-project/1.0.
+   */
   readonly version: string;
+
+  /**
+   * Project packaging format.
+   *
+   * @default "jar"
+   */
+  readonly packaging?: string;
+
+  /**
+   * Projects tend to have conversational names, beyond the artifactId.
+   *
+   * @default undefined
+   */
+  readonly name?: string;
+
+  /**
+   * Description of a project is always good. Although this should not replace
+   * formal documentation, a quick comment to any readers of the POM is always
+   * helpful.
+   *
+   * @default undefined
+   */
+  readonly description?: string;
+
+  /**
+   * The URL, like the name, is not required. This is a nice gesture for
+   * projects users, however, so that they know where the project lives.
+   *
+   * @default undefined
+   */
+  readonly url?: string;
 }
 
 export class Pom extends Component {
@@ -23,6 +90,10 @@ export class Pom extends Component {
   public readonly groupId: string;
   public readonly artifactId: string;
   public readonly version: string;
+  public readonly packaging: string;
+  public readonly name?: string;
+  public readonly description?: string;
+  public readonly url?: string;
 
   constructor(project: Project, options: PomOptions) {
     super(project);
@@ -31,6 +102,10 @@ export class Pom extends Component {
     this.groupId = options.groupId;
     this.artifactId = options.artifactId;
     this.version = options.version;
+    this.packaging = options.packaging ?? 'jar';
+    this.name = options.name;
+    this.description = options.description;
+    this.url = options.url;
 
     new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
   }
@@ -68,12 +143,10 @@ export class Pom extends Component {
    * The plug in is also added as a BUILD dep to the project.
    *
    * @param spec dependency spec (`group/artifact@version`)
-   * @param configuration optional plugin key/value configuration
+   * @param options plugin options
    */
-  public addPlugin(spec: string, configuration: {[key: string]: string} = {}) {
-    return this.project.deps.addDependency(spec, DependencyType.BUILD, {
-      configuration,
-    });
+  public addPlugin(spec: string, options: PluginOptions) {
+    return this.project.deps.addDependency(spec, DependencyType.BUILD, options);
   }
 
   private synthPom() {
@@ -91,6 +164,19 @@ export class Pom extends Component {
     pom.push({ groupId: this.groupId });
     pom.push({ artifactId: this.artifactId });
     pom.push({ version: this.version });
+    pom.push({ packaging: this.packaging });
+
+    if (this.name) {
+      pom.push({ name: this.name });
+    }
+
+    if (this.description) {
+      pom.push({ description: this.description });
+    }
+
+    if (this.url) {
+      pom.push({ url: this.url });
+    }
 
     if (this.properties.length > 0) {
       pom.push({ properties: this.properties });
@@ -131,7 +217,7 @@ export class Pom extends Component {
           plugins.push({
             plugin: [
               ...mavenCoords(dep),
-              ...pluginConfiguration(dep.metadata?.configuration),
+              ...pluginConfig(dep.metadata as PluginOptions),
             ],
           });
           break;
@@ -153,6 +239,25 @@ export class Pom extends Component {
       pom.push({ dependencies });
     }
   }
+}
+
+export interface PluginOptions {
+  /**
+   * Plugin key/value configuration
+   * @default {}
+   */
+  readonly configuration?: { [key: string]: any };
+
+  /**
+   * Plugin executions
+   * @default []
+   */
+  readonly executions?: PluginExecution[];
+}
+
+export interface PluginExecution {
+  readonly id: string;
+  readonly goals: string[];
 }
 
 function mavenVersion(version: string) {
@@ -179,11 +284,30 @@ function mavenCoords(dep: Dependency) {
   ];
 }
 
-function pluginConfiguration(config: {[key: string]: any} = {}) {
-  if (Object.keys(config).length === 0) { return []; }
-  return [{ configuration: toXml(config) }];
+function pluginConfig(options: PluginOptions = {}) {
+  const ret = new Array<any>();
+
+  if (options.configuration) {
+    ret.push({ configuration: toXml(options.configuration) });
+  }
+
+  const executions = new Array();
+  for (const e of options.executions ?? []) {
+    executions.push({
+      execution: [
+        { id: e.id },
+        { goals: e.goals.map(goal => ({ goal })) },
+      ],
+    });
+  }
+
+  if (executions.length > 0) {
+    ret.push({ executions });
+  }
+
+  return ret;
 }
 
-function toXml(map: {[key: string]: string }) {
-  return Object.entries(map).map(([k, v]) => ({ [k]: v }));
+function toXml(x: { [key: string]: any }) {
+  return Object.entries(x).map(([k, v]) => ({ [k]: v }));
 }

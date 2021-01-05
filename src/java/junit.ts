@@ -2,6 +2,7 @@ import { join } from 'path';
 import { Component } from '../component';
 import { Project } from '../project';
 import { SampleDir } from '../sample-file';
+import { TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
 export interface JunitCommonOptions {
@@ -36,6 +37,12 @@ export class Junit extends Component {
 
     pom.addTestDep(`org.junit.jupiter/junit-jupiter-api@${version}`);
     pom.addTestDep(`org.junit.jupiter/junit-jupiter-engine@${version}`);
+
+    project.addTask('test', {
+      description: 'Runs tests',
+      category: TaskCategory.TEST,
+      exec: 'mvn test',
+    });
 
     const pkg = options.package.split('.');
     new SampleDir(project, join('src', 'test', 'java', ...pkg), {

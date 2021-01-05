@@ -22,8 +22,10 @@ test('depedencies', () => {
   p.pom.addRuntimeDep('software.amazon.awscdk/core@1.2.3');
   p.pom.addTestDep('org.assertj/assertj-core@3.18.1');
   p.pom.addPlugin('org.apache.maven.plugins/maven-compiler-plugin@3.8.1', {
-    source: '1.8',
-    target: '1.8',
+    configuration: {
+      source: '1.8',
+      target: '1.8',
+    },
   });
   snapPom(p);
 });

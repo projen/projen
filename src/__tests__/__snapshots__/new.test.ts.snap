@@ -442,6 +442,10 @@ const project = new java.MavenProject({
   name: 'my-project',
 
   /* MavenProjectOptions */
+  // compileOptions: undefined,         /* Compile options. */
+  // dist: 'dist/java',                 /* Final artifact output directory. */
+  // jarOptions: undefined,             /* Javadocs options. */
+  // javadocs: true,                    /* Include javadocs in package. */
   // junit: true,                       /* Include junit tests. */
   // junitOptions: undefined,           /* junit options. */
   // package: undefined,                /* Maven package. */

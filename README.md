@@ -46,6 +46,7 @@ list):
 * [awscdk-construct](https://github.com/projen/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
 * [jsii](https://github.com/projen/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
+* [maven](https://github.com/projen/projen/blob/master/API.md#projen-java.mavenproject) - undefined
 * [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjsproject) - Next.js project without TypeScript.
 * [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/projen/projen/blob/master/API.md#projen-nodeproject) - Node.js project.

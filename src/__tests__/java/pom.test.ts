@@ -40,8 +40,10 @@ test('addPlugin()', () => {
   const pom = new TestPom();
 
   pom.addPlugin('org.apache.maven.plugins/maven-compiler-plugin@3.8.1', {
-    source: '1.8',
-    target: '1.8',
+    configuration: {
+      source: '1.8',
+      target: '1.8',
+    },
   });
 
   // alteratively

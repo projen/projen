@@ -7,6 +7,7 @@ exports[`addDependency() 1`] = `
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
@@ -30,6 +31,7 @@ exports[`addPlugin() 1`] = `
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
+    <packaging>jar</packaging>
     <build>
         <plugins>
             <plugin>
@@ -61,6 +63,7 @@ exports[`addProperty() 1`] = `
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
+    <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.7.0</junit.version>
@@ -75,5 +78,6 @@ exports[`group/artifact/version 1`] = `
     <groupId>my.group.id</groupId>
     <artifactId>mfoo-bar</artifactId>
     <version>1.2.3</version>
+    <packaging>jar</packaging>
 </project>"
 `;
