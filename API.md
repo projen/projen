@@ -49,7 +49,7 @@ Name|Description
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [java.Junit](#projen-java-junit)|*No description*
 [java.MavenCompile](#projen-java-mavencompile)|*No description*
-[java.MavenJar](#projen-java-mavenjar)|*No description*
+[java.MavenJar](#projen-java-mavenjar)|Configures a maven project to produce a .jar archive with sources and javadocs.
 [java.MavenProject](#projen-java-mavenproject)|*No description*
 [java.MavenSample](#projen-java-mavensample)|*No description*
 [java.MavenVersions](#projen-java-mavenversions)|*No description*
@@ -141,7 +141,7 @@ Name|Description
 [java.JunitCommonOptions](#projen-java-junitcommonoptions)|*No description*
 [java.JunitOptions](#projen-java-junitoptions)|*No description*
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|*No description*
-[java.MavenJarOptions](#projen-java-mavenjaroptions)|*No description*
+[java.MavenJarOptions](#projen-java-mavenjaroptions)|Options for `MavenJar`.
 [java.MavenProjectOptions](#projen-java-mavenprojectoptions)|*No description*
 [java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
 [java.MavenVersionsOptions](#projen-java-mavenversionsoptions)|*No description*
@@ -4199,7 +4199,7 @@ Name | Type | Description
 
 ## class MavenJar 🔹 <a id="projen-java-mavenjar"></a>
 
-
+Configures a maven project to produce a .jar archive with sources and javadocs.
 
 __Submodule__: java
 
@@ -4229,7 +4229,8 @@ new java.MavenJar(project: Project, pom: Pom, options?: MavenJarOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**deployTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task which deploys the package to `outdir` as a local maven repository.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Creates jars in the `target/` directory.
 
 
 
@@ -7666,7 +7667,7 @@ Name | Type | Description
 ## struct MavenJarOptions 🔹 <a id="projen-java-mavenjaroptions"></a>
 
 
-
+Options for `MavenJar`.
 
 
 

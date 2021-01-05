@@ -3,6 +3,9 @@ import { Project } from '../project';
 import { Task, TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
+/**
+ * Options for `MavenJar`.
+ */
 export interface MavenJarOptions {
   /**
    * Include sources in jar.
@@ -29,8 +32,19 @@ export interface MavenJarOptions {
   readonly javadocsExclude?: string[];
 }
 
+/**
+ * Configures a maven project to produce a .jar archive with sources and javadocs.
+ */
 export class MavenJar extends Component {
 
+  /**
+   * A task which deploys the package to `outdir` as a local maven repository.
+   */
+  public readonly deployTask: Task;
+
+  /**
+   * Creates jars in the `target/` directory.
+   */
   public readonly packageTask: Task;
 
   constructor(project: Project, pom: Pom, options: MavenJarOptions = {}) {
@@ -50,13 +64,17 @@ export class MavenJar extends Component {
 
     if (options.sources ?? true) {
       pom.addPlugin('org.apache.maven.plugins/maven-source-plugin@3.2.1', {
-        executions: [{ id: 'attach-sources', goals: ['jar'] }],
+        executions: [
+          { id: 'attach-sources', goals: ['jar'] },
+        ],
       });
     }
 
     if (options.javadocs ?? true) {
       pom.addPlugin('org.apache.maven.plugins/maven-javadoc-plugin@3.2.0', {
-        executions: [{ id: 'attach-javadocs', goals: ['jar'] }],
+        executions: [
+          { id: 'attach-javadocs', goals: ['jar'] },
+        ],
         configuration: {
           failOnError: false,
           show: 'protected',
@@ -72,16 +90,26 @@ export class MavenJar extends Component {
       });
     }
 
+    const env = {
+      MAVEN_OPTS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1',
+    };
+
     const outdir = options.outdir ?? 'dist/java';
-    this.packageTask = project.addTask('package', {
+    this.deployTask = project.addTask('deploy', {
       category: TaskCategory.RELEASE,
       description: `Creates a java deployment package under ${outdir}`,
-      env: {
-        MAVEN_OPTS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1',
-      },
+      env,
     });
-    this.packageTask.exec(`mkdir -p ${outdir}`);
-    this.packageTask.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${outdir}`);
+    this.deployTask.exec(`mkdir -p ${outdir}`);
+    this.deployTask.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${outdir}`);
+
+    this.packageTask = project.addTask('package', {
+      description: 'Produces jar files under target/',
+      category: TaskCategory.RELEASE,
+      exec: 'mvn package',
+      env,
+    });
+
     project.gitignore.exclude(outdir);
   }
 }

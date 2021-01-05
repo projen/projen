@@ -125,6 +125,6 @@ export class MavenProject extends Project {
     });
 
     const buildTask = this.addTask('build', { description: 'Full CI build' });
-    buildTask.spawn(this.jar.packageTask);
+    buildTask.spawn(this.jar.deployTask);
   }
 }

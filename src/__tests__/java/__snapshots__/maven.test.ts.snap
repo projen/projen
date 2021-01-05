@@ -139,7 +139,7 @@ dist/java",
         "name": "build",
         "steps": Array [
           Object {
-            "spawn": "package",
+            "spawn": "deploy",
           },
         ],
       },
@@ -186,19 +186,32 @@ dist/java",
           },
         ],
       },
-      "package": Object {
+      "deploy": Object {
         "category": "20.release",
         "description": "Creates a java deployment package under dist/java",
         "env": Object {
           "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
         },
-        "name": "package",
+        "name": "deploy",
         "steps": Array [
           Object {
             "exec": "mkdir -p dist/java",
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
+          },
+        ],
+      },
+      "package": Object {
+        "category": "20.release",
+        "description": "Produces jar files under target/",
+        "env": Object {
+          "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
+        },
+        "name": "package",
+        "steps": Array [
+          Object {
+            "exec": "mvn package",
           },
         ],
       },
