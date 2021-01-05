@@ -27,10 +27,6 @@
       "type": "build"
     },
     {
-      "name": "@types/xml",
-      "type": "build"
-    },
-    {
       "name": "@types/yargs",
       "type": "build"
     },

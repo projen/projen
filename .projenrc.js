@@ -34,7 +34,6 @@ const project = new JsiiProject({
     '@types/glob',
     '@types/inquirer',
     '@types/semver',
-    '@types/xml',
     'markmac',
   ],
 
