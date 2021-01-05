@@ -40,7 +40,7 @@ export class TextFile extends FileBase {
     this.lines.push(line);
   }
 
-  protected synthesizeContent(_: IResolver): string {
+  protected synthesizeContent(_: IResolver): string | undefined {
     return this.lines.join('\n');
   }
 }

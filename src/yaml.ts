@@ -19,9 +19,14 @@ export class YamlFile extends ObjectFile implements IMarkableFile {
     this.marker = options.marker ?? false;
   }
 
-  protected synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
+    const json = super.synthesizeContent(resolver);
+    if (!json) {
+      return undefined;
+    }
+
     // sanitize object references by serializing and deserializing to JSON
-    const sanitized = JSON.parse(super.synthesizeContent(resolver));
+    const sanitized = JSON.parse(json);
     return [
       ... (this.marker ? [`# ${YamlFile.PROJEN_MARKER}`] : []),
       '',

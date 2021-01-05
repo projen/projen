@@ -33,7 +33,7 @@ export class XmlFile extends FileBase {
     this.obj = options.obj ?? { };
   }
 
-  protected synthesizeContent(resolver: IResolver): string {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     return xml(resolver.resolve(this.obj), {
       declaration: true,
       indent: '    ',
