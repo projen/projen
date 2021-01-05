@@ -94,12 +94,21 @@
     ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
     ],
     "reporters": [
       "default",
