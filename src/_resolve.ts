@@ -1,6 +1,7 @@
 import { ResolveOptions } from './file';
 
-export function resolve(value: any, args?: any[], options: ResolveOptions = {}): any {
+export function resolve(value: any, options: ResolveOptions = {}): any {
+  const args = options.args ?? [];
   const omitEmpty = options.omitEmpty ?? false;
 
   if (value == null) {
@@ -10,7 +11,7 @@ export function resolve(value: any, args?: any[], options: ResolveOptions = {}):
   // if value is a function, call it and resolve the result.
   if (typeof(value) === 'function') {
     const resolved = value.apply(undefined, args);
-    return resolve(resolved, args, options);
+    return resolve(resolved, options);
   }
 
   if (typeof(value) !== 'object') {
@@ -22,7 +23,7 @@ export function resolve(value: any, args?: any[], options: ResolveOptions = {}):
       return undefined;
     }
     return value
-      .map(x => resolve(x, args, options))
+      .map(x => resolve(x, options))
       .filter(x => x != null); // filter undefined/null/omitted
   }
 
@@ -34,7 +35,7 @@ export function resolve(value: any, args?: any[], options: ResolveOptions = {}):
   const result: any = {};
 
   for (const [k, v] of Object.entries(value)) {
-    const resolved = resolve(v, args, options);
+    const resolved = resolve(v, options);
 
     // skip undefined values
     if (resolved === undefined) {

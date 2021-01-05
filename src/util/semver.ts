@@ -169,7 +169,12 @@ function toBracketNotation(
   if (semverRange === '*') {
     semverRange = '>=0.0.0';
   }
+
   const range = new Range(semverRange);
+  if (semverRange === range.range) {
+    return semverRange;
+  }
+
   return range.set
     .map((set) => {
       if (set.length === 1) {
