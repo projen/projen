@@ -16,9 +16,9 @@ export function exec(command: string, options?: child_process.ExecSyncOptions) {
 /**
  * Executes `command` and returns its value or undefined if the command failed.
  */
-export function execOrUndefined(command: string): string | undefined {
+export function execOrUndefined(command: string, options?: child_process.ExecSyncOptions): string | undefined {
   try {
-    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'] }).toString('utf-8').trim();
+    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'], ...options }).toString('utf-8').trim();
     if (!value) { return undefined; } // an empty string is the same as undefined
     return value;
   } catch {
@@ -26,7 +26,37 @@ export function execOrUndefined(command: string): string | undefined {
   }
 }
 
-export function writeFile(filePath: string, data: any, options: { readonly?: boolean } = {}) {
+export interface WriteFileOptions {
+  /**
+   * Whether the generated file should be marked as executable.
+   *
+   * @default false
+   */
+  executable?: boolean;
+
+  /**
+   * Whether the generated file should be readonly.
+   *
+   * @default false
+   */
+  readonly?: boolean;
+}
+
+export function getFilePermissions(options: WriteFileOptions): string {
+  const readonly = options.readonly ?? false;
+  const executable = options.executable ?? false;
+  if (readonly && executable) {
+    return '500';
+  } else if (readonly) {
+    return '400';
+  } else if (executable) {
+    return '755';
+  } else {
+    return '644';
+  }
+}
+
+export function writeFile(filePath: string, data: any, options: WriteFileOptions = {}) {
   if (fs.existsSync(filePath)) {
     fs.chmodSync(filePath, '600');
   }
@@ -34,9 +64,7 @@ export function writeFile(filePath: string, data: any, options: { readonly?: boo
   fs.mkdirpSync(path.dirname(filePath));
   fs.writeFileSync(filePath, data);
 
-  if (options.readonly) {
-    fs.chmodSync(filePath, '400');
-  }
+  fs.chmodSync(filePath, getFilePermissions(options));
 }
 
 /**

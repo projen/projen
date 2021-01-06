@@ -58,7 +58,6 @@
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
     "standard-version": "^9.0.0",
-    "ts-jest": "^26.4.4",
     "typescript": "^3.9.5"
   },
   "dependencies": {
@@ -88,10 +87,18 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.12.8",
+  "version": "0.13.8",
   "jest": {
+    "testMatch": [
+      "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
+    ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
@@ -99,9 +106,9 @@
     "testPathIgnorePatterns": [
       "/node_modules/"
     ],
-    "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
     ],
     "reporters": [
       "default",
@@ -112,12 +119,7 @@
         }
       ]
     ],
-    "preset": "ts-jest",
-    "globals": {
-      "ts-jest": {
-        "tsconfig": "tsconfig.jest.json"
-      }
-    }
+    "snapshotResolver": "./.projen/jest-snapshot-resolver.js"
   },
   "types": "lib/index.d.ts",
   "stability": "experimental",

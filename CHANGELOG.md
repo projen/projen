@@ -2,6 +2,123 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.8](https://github.com/projen/projen/compare/v0.13.7...v0.13.8) (2021-01-05)
+
+
+### Features
+
+* allow text file to be marked as executable ([#458](https://github.com/projen/projen/issues/458)) ([5a9ba5e](https://github.com/projen/projen/commit/5a9ba5eacc44ddfb6c624db3a69e0369946b003b)), closes [#454](https://github.com/projen/projen/issues/454)
+
+### [0.13.7](https://github.com/projen/projen/compare/v0.13.6...v0.13.7) (2021-01-05)
+
+
+### Features
+
+* **jest:** coverage text output and watch ignore patterns ([#461](https://github.com/projen/projen/issues/461)) ([3004750](https://github.com/projen/projen/commit/30047506f5fd1a60bccc507a64acc03fd82fbb14))
+
+### [0.13.6](https://github.com/projen/projen/compare/v0.13.5...v0.13.6) (2021-01-05)
+
+
+### Features
+
+* **cli:** improved bootstrapping ([#459](https://github.com/projen/projen/issues/459)) ([d641f1c](https://github.com/projen/projen/commit/d641f1cbc387e9bbed160319851e00317d8d1360))
+
+### [0.13.5](https://github.com/projen/projen/compare/v0.13.4...v0.13.5) (2021-01-04)
+
+
+### Bug Fixes
+
+* **typescript:** snapshots saved under lib ([#455](https://github.com/projen/projen/issues/455)) ([e88c14c](https://github.com/projen/projen/commit/e88c14cb75ee80243976fffa59f49190c42a5a71))
+
+### [0.13.4](https://github.com/projen/projen/compare/v0.13.3...v0.13.4) (2021-01-04)
+
+
+### Bug Fixes
+
+* YamlFile marker bug ([#436](https://github.com/projen/projen/issues/436)) ([afcc71c](https://github.com/projen/projen/commit/afcc71c326f0199ce14e9d764b9eb9001e7ae274))
+
+### [0.13.3](https://github.com/projen/projen/compare/v0.13.2...v0.13.3) (2021-01-04)
+
+
+### Bug Fixes
+
+* **cli:** broken on Windows ([#451](https://github.com/projen/projen/issues/451)) ([eb61b31](https://github.com/projen/projen/commit/eb61b315532821924b5c1b30eba9f6d2a47607b6)), closes [#448](https://github.com/projen/projen/issues/448)
+
+### [0.13.2](https://github.com/projen/projen/compare/v0.13.1...v0.13.2) (2021-01-04)
+
+### [0.13.1](https://github.com/projen/projen/compare/v0.13.0...v0.13.1) (2021-01-04)
+
+
+### Features
+
+* **typescript:** jest tests under `src` run from compiled javascript ([#447](https://github.com/projen/projen/issues/447)) ([9c32ffb](https://github.com/projen/projen/commit/9c32ffbd4be60796a37127413d6d38f061f54bc4))
+
+## [0.13.0](https://github.com/projen/projen/compare/v0.12.15...v0.13.0) (2021-01-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **node:** The `libdir`, `srcdir` and `testdir` options are no longer available in `NodeProject`. Instead they are available in specific project types like typescript, nextjs and react.
+
+### Features
+
+* logging options in Project ([#439](https://github.com/projen/projen/issues/439)) ([a1b3d93](https://github.com/projen/projen/commit/a1b3d936d947a9fa9baf9933c60d505f5f36e033)), closes [#375](https://github.com/projen/projen/issues/375)
+* **eslint:** devdirs ([#445](https://github.com/projen/projen/issues/445)) ([7f30aae](https://github.com/projen/projen/commit/7f30aae0709e589a0918b5d07cb11f9cd2ddb82a))
+
+
+### Bug Fixes
+
+* **node:** move typescript options from node project ([#446](https://github.com/projen/projen/issues/446)) ([32f13e9](https://github.com/projen/projen/commit/32f13e9bcc102cd1215c496f39c31304beb14f02))
+
+### [0.12.15](https://github.com/projen/projen/compare/v0.12.14...v0.12.15) (2021-01-04)
+
+
+### Features
+
+* **jest:** addTestMatch() ([#444](https://github.com/projen/projen/issues/444)) ([a85dae2](https://github.com/projen/projen/commit/a85dae2212d7fd7f387f8552128a137610fc7a09))
+
+### [0.12.14](https://github.com/projen/projen/compare/v0.12.13...v0.12.14) (2021-01-04)
+
+
+### Bug Fixes
+
+* **cli:** git commands not executed in project dir ([#443](https://github.com/projen/projen/issues/443)) ([befabfc](https://github.com/projen/projen/commit/befabfcfbc458c735f88ac3eca58332b44923809))
+
+### [0.12.13](https://github.com/projen/projen/compare/v0.12.12...v0.12.13) (2021-01-04)
+
+
+### Features
+
+* **cli:** allow specifying the location of `.projenrc.js` using `--rc` ([#440](https://github.com/projen/projen/issues/440)) ([738575a](https://github.com/projen/projen/commit/738575acc0a92ae924c3216fdc9ff1220edf4a06))
+
+### [0.12.12](https://github.com/projen/projen/compare/v0.12.11...v0.12.12) (2021-01-03)
+
+
+### Features
+
+* projen logo ([#441](https://github.com/projen/projen/issues/441)) ([7be2d61](https://github.com/projen/projen/commit/7be2d61017be89d43cda6ffea242e0d59e25289f))
+
+### [0.12.11](https://github.com/projen/projen/compare/v0.12.10...v0.12.11) (2021-01-03)
+
+
+### Bug Fixes
+
+* **jsii:** allow `authorUrl` and `authorAddress` to be the same value ([#442](https://github.com/projen/projen/issues/442)) ([4a8e24e](https://github.com/projen/projen/commit/4a8e24e25c3b22500866296deae4f5e41188ac7c))
+
+### [0.12.10](https://github.com/projen/projen/compare/v0.12.9...v0.12.10) (2021-01-03)
+
+
+### Bug Fixes
+
+* subproject generated files are deleted too early ([#437](https://github.com/projen/projen/issues/437)) ([20b9537](https://github.com/projen/projen/commit/20b953778fbb8ab75d5830d6b4ca39976d3cf028)), closes [#383](https://github.com/projen/projen/issues/383)
+
+### [0.12.9](https://github.com/projen/projen/compare/v0.12.8...v0.12.9) (2021-01-02)
+
+
+### Features
+
+* Make IgnoreFile stateful to allow for overrides ([#435](https://github.com/projen/projen/issues/435)) ([6667980](https://github.com/projen/projen/commit/666798058e42cba5f4662462c03271347f3c33d4))
+
 ### [0.12.8](https://github.com/projen/projen/compare/v0.12.7...v0.12.8) (2020-12-31)
 
 ### [0.12.7](https://github.com/projen/projen/compare/v0.12.6...v0.12.7) (2020-12-30)

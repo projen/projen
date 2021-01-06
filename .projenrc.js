@@ -13,6 +13,8 @@ const project = new JsiiProject({
     'By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.',
   ],
 
+  testdir: 'src/__tests__',
+
   bundledDeps: [
     'yaml',
     'fs-extra',
@@ -43,6 +45,11 @@ const project = new JsiiProject({
   devContainer: true,
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',
+
+  // makes it very hard to iterate with jest --watch
+  jestOptions: {
+    coverageText: false
+  }
 });
 
 // this script is what we use as the projen command in this project
@@ -60,7 +67,7 @@ new TextFile(project, 'projen.bash', {
   ],
 });
 
-project.addExcludeFromCleanup('test/**');
+project.addExcludeFromCleanup('src/__tests__/**');
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme

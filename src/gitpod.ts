@@ -305,7 +305,7 @@ export class Gitpod extends Component implements IDevEnvironment {
       },
     };
 
-    new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
+    new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true, marker: true });
   }
 
   /**

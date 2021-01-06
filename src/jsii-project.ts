@@ -391,11 +391,11 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
   let authorEmail = options.authorEmail;
   let authorUrl = options.authorUrl;
   if (options.authorAddress) {
-    if (options.authorEmail) {
+    if (options.authorEmail && options.authorEmail !== options.authorAddress) {
       throw new Error('authorEmail is deprecated and cannot be used in conjunction with authorAddress');
     }
 
-    if (options.authorUrl) {
+    if (options.authorUrl && options.authorUrl !== options.authorAddress) {
       throw new Error('authorUrl is deprecated and cannot be used in conjunction with authorAddress.');
     }
 
