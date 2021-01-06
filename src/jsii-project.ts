@@ -92,7 +92,13 @@ export interface JsiiJavaTarget {
   readonly javaPackage: string;
   readonly mavenGroupId: string;
   readonly mavenArtifactId: string;
+  /**
+   * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub). Defaults to ossrh for Maven Central.
+   */
   readonly mavenServerId?: string;
+  /**
+   * Deployment repository when not deploying to Maven Central
+   */
   readonly mavenRepositoryUrl?: string;
 }
 
