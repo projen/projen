@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.9](https://github.com/projen/projen/compare/v0.13.8...v0.13.9) (2021-01-06)
+
+
+### Features
+
+* do not produce empty `deps.json` and `tasks.json` files ([#462](https://github.com/projen/projen/issues/462)) ([7a079ea](https://github.com/projen/projen/commit/7a079ea897a78a0771325cf7ade49c83cc49e5ad))
+
 ### [0.13.8](https://github.com/projen/projen/compare/v0.13.7...v0.13.8) (2021-01-05)
 
 

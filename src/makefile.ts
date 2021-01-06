@@ -127,7 +127,7 @@ export class Makefile extends FileBase {
     }
   }
 
-  protected synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     const rules = resolver.resolve(this.rules);
 
     const lines = [

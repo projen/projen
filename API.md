@@ -6278,6 +6278,7 @@ resolve(value: any, options?: ResolveOptions): any
 
 * **value** (<code>any</code>)  The value to resolve.
 * **options** (<code>[ResolveOptions](#projen-resolveoptions)</code>)  *No description*
+  * **args** (<code>Array<any></code>)  Context arguments. __*Default*__: []
   * **omitEmpty** (<code>boolean</code>)  Omits empty arrays and objects. __*Default*__: false
 
 __Returns__:
@@ -6799,6 +6800,7 @@ Resolve options.
 
 Name | Type | Description 
 -----|------|-------------
+**args**?🔹 | <code>Array<any></code> | Context arguments.<br/>__*Default*__: []
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty arrays and objects.<br/>__*Default*__: false
 
 
