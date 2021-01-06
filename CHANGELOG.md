@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.12](https://github.com/projen/projen/compare/v0.13.11...v0.13.12) (2021-01-06)
+
+
+### Features
+
+* **java:** rename `MavenProject` to `JavaProject` (pjid `java`) ([#464](https://github.com/projen/projen/issues/464)) ([a6cf0e3](https://github.com/projen/projen/commit/a6cf0e37910a62ded51ed8d6dccbc5210990b1fa))
+
 ### [0.13.11](https://github.com/projen/projen/compare/v0.13.10...v0.13.11) (2021-01-06)
 
 
