@@ -127,7 +127,19 @@
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "java": {
+        "package": "org.projen",
+        "maven": {
+          "groupId": "com.github.eladb",
+          "artifactId": "projen"
+        }
+      },
+      "python": {
+        "distName": "projen",
+        "module": "projen"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"

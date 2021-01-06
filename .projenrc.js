@@ -50,7 +50,20 @@ const project = new JsiiProject({
   // makes it very hard to iterate with jest --watch
   jestOptions: {
     coverageText: false
-  }
+  },
+
+  // publish to maven central
+  java: {
+    javaPackage: 'org.projen',
+    mavenGroupId: 'com.github.eladb',
+    mavenArtifactId: 'projen'
+  },
+
+  // python to pypi
+  python: {
+    distName: 'projen',
+    module: 'projen'
+  },
 });
 
 // this script is what we use as the projen command in this project
