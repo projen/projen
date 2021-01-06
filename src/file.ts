@@ -96,7 +96,7 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, options) };
+    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, [outdir], options) };
     const content = this.synthesizeContent(resolver);
     if (content === undefined) {
       return; // skip
