@@ -202,16 +202,6 @@ dist/java",
           },
         ],
       },
-      "test:compile": Object {
-        "category": "10.test",
-        "description": "Compile the test source files",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "mvn compiler:testCompile",
-          },
-        ],
-      },
     },
   },
   "README.md": "# replace this",
@@ -780,16 +770,6 @@ dist/java",
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "category": "10.test",
-        "description": "Compile the test source files",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "mvn compiler:testCompile",
           },
         ],
       },

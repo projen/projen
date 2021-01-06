@@ -5,13 +5,16 @@ import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
 import { MavenSample } from './maven-sample';
 import { PluginOptions, Pom, PomOptions } from './pom';
 
-export interface MavenProjectOptions extends ProjectOptions, PomOptions {
+/**
+ * Options for `JavaProject`.
+ */
+export interface JavaProjectOptions extends ProjectOptions, PomOptions {
   /**
    * Final artifact output directory.
    *
    * @default "dist/java"
    */
-  readonly dist?: string;
+  readonly distdir?: string;
 
   // -- dependencies --
 
@@ -76,19 +79,40 @@ export interface MavenProjectOptions extends ProjectOptions, PomOptions {
 }
 
 /**
- * @pjid maven
+ * Java project.
+ *
+ * @pjid java
  */
-export class MavenProject extends Project {
+export class JavaProject extends Project {
+  /**
+   * API for managing `pom.xml`.
+   */
   public readonly pom: Pom;
-  public readonly junit?: Junit;
-  public readonly jar: MavenPackaging;
-  public readonly compile: MavenCompile;
-  public readonly dist: string;
 
-  constructor(options: MavenProjectOptions) {
+  /**
+   * JUnit component.
+   */
+  public readonly junit?: Junit;
+
+  /**
+   * Packaging component.
+   */
+  public readonly packaging: MavenPackaging;
+
+  /**
+   * Compile component.
+   */
+  public readonly compile: MavenCompile;
+
+  /**
+   * Maven artifact output directory.
+   */
+  public readonly distdir: string;
+
+  constructor(options: JavaProjectOptions) {
     super(options);
 
-    this.dist = options.dist ?? 'dist/java';
+    this.distdir = options.distdir ?? 'dist/java';
     this.pom = new Pom(this, options);
 
     const sampleJavaPackage = options.sampleJavaPackage ?? 'org.acme';
@@ -113,7 +137,7 @@ export class MavenProject extends Project {
     this.gitignore.exclude('.settings');
 
     this.compile = new MavenCompile(this, this.pom, options.compileOptions);
-    this.jar = new MavenPackaging(this, this.pom, options.packagingOptions);
+    this.packaging = new MavenPackaging(this, this.pom, options.packagingOptions);
 
     this.pom.addPlugin('org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3', {
       executions: [{ id: 'enforce-maven', goals: ['enforce'] }],
@@ -125,7 +149,7 @@ export class MavenProject extends Project {
     });
 
     const buildTask = this.addTask('build', { description: 'Full CI build' });
-    buildTask.spawn(this.jar.task);
+    buildTask.spawn(this.packaging.task);
 
     for (const dep of options.deps ?? []) {
       this.addDependency(dep);

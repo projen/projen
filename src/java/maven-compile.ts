@@ -3,6 +3,9 @@ import { Project } from '../project';
 import { Task, TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
+/**
+ * Options for `MavenCompile`.
+ */
 export interface MavenCompileOptions {
   /**
    * Source language version.
@@ -19,9 +22,11 @@ export interface MavenCompileOptions {
   readonly target?: string;
 }
 
+/**
+ * Adds the maven-compiler plugin to a POM file and the `compile` task.
+ */
 export class MavenCompile extends Component {
   public readonly compileTask: Task;
-  public readonly testCompileTask: Task;
 
   constructor(project: Project, pom: Pom, options: MavenCompileOptions = {}) {
     super(project);
@@ -39,12 +44,6 @@ export class MavenCompile extends Component {
       description: 'Compile the main source files',
       category: TaskCategory.BUILD,
       exec: 'mvn compiler:compile',
-    });
-
-    this.testCompileTask = project.addTask('test:compile', {
-      description: 'Compile the test source files',
-      category: TaskCategory.TEST,
-      exec: 'mvn compiler:testCompile',
     });
   }
 }

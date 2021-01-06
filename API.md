@@ -47,11 +47,11 @@ Name|Description
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
-[java.Junit](#projen-java-junit)|*No description*
-[java.MavenCompile](#projen-java-mavencompile)|*No description*
+[java.JavaProject](#projen-java-javaproject)|Java project.
+[java.Junit](#projen-java-junit)|Implements JUnit-based testing.
+[java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
 [java.MavenPackaging](#projen-java-mavenpackaging)|Configures a maven project to produce a .jar archive with sources and javadocs.
-[java.MavenProject](#projen-java-mavenproject)|*No description*
-[java.MavenSample](#projen-java-mavensample)|*No description*
+[java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
@@ -137,14 +137,13 @@ Name|Description
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
-[java.JunitCommonOptions](#projen-java-junitcommonoptions)|*No description*
-[java.JunitOptions](#projen-java-junitoptions)|*No description*
-[java.MavenCompileOptions](#projen-java-mavencompileoptions)|*No description*
+[java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
+[java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
+[java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
 [java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)|Options for `MavenPackage`.
-[java.MavenProjectOptions](#projen-java-mavenprojectoptions)|*No description*
 [java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
-[java.PluginExecution](#projen-java-pluginexecution)|*No description*
-[java.PluginOptions](#projen-java-pluginoptions)|*No description*
+[java.PluginExecution](#projen-java-pluginexecution)|Plugin execution definition.
+[java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
@@ -4143,9 +4142,114 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 
 
 
+## class JavaProject 🔹 <a id="projen-java-javaproject"></a>
+
+Java project.
+
+__Submodule__: java
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new java.JavaProject(options: JavaProjectOptions)
+```
+
+* **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
+  * **groupId** (<code>string</code>)  This is generally unique amongst an organization or a project. 
+  * **version** (<code>string</code>)  This is the last piece of the naming puzzle. 
+  * **description** (<code>string</code>)  Description of a project is always good. __*Default*__: undefined
+  * **packaging** (<code>string</code>)  Project packaging format. __*Default*__: "jar"
+  * **url** (<code>string</code>)  The URL, like the name, is not required. __*Default*__: undefined
+  * **compileOptions** (<code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code>)  Compile options. __*Default*__: defaults
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **distdir** (<code>string</code>)  Final artifact output directory. __*Default*__: "dist/java"
+  * **junit** (<code>boolean</code>)  Include junit tests. __*Default*__: true
+  * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
+  * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+  * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
+  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**compile**🔹 | <code>[java.MavenCompile](#projen-java-mavencompile)</code> | Compile component.
+**distdir**🔹 | <code>string</code> | Maven artifact output directory.
+**packaging**🔹 | <code>[java.MavenPackaging](#projen-java-mavenpackaging)</code> | Packaging component.
+**pom**🔹 | <code>[java.Pom](#projen-java-pom)</code> | API for managing `pom.xml`.
+**junit**?🔹 | <code>[java.Junit](#projen-java-junit)</code> | JUnit component.<br/>__*Optional*__
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-java-javaproject-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
+
+
+#### addPlugin(spec, options)🔹 <a id="projen-java-javaproject-addplugin"></a>
+
+Adds a build plugin to the pom.
+
+The plug in is also added as a BUILD dep to the project.
+
+```ts
+addPlugin(spec: string, options: PluginOptions): Dependency
+```
+
+* **spec** (<code>string</code>)  dependency spec (`group/artifact@version`).
+* **options** (<code>[java.PluginOptions](#projen-java-pluginoptions)</code>)  plugin options.
+  * **configuration** (<code>Map<string, any></code>)  Plugin key/value configuration. __*Default*__: {}
+  * **executions** (<code>Array<[java.PluginExecution](#projen-java-pluginexecution)></code>)  Plugin executions. __*Default*__: []
+
+__Returns__:
+* <code>[deps.Dependency](#projen-deps-dependency)</code>
+
+#### addTestDependency(spec)🔹 <a id="projen-java-javaproject-addtestdependency"></a>
+
+Adds a test dependency.
+
+```ts
+addTestDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
+
+
+
+
 ## class Junit 🔹 <a id="projen-java-junit"></a>
 
-
+Implements JUnit-based testing.
 
 __Submodule__: java
 
@@ -4171,7 +4275,7 @@ new java.Junit(project: Project, options: JunitOptions)
 
 ## class MavenCompile 🔹 <a id="projen-java-mavencompile"></a>
 
-
+Adds the maven-compiler plugin to a POM file and the `compile` task.
 
 __Submodule__: java
 
@@ -4200,7 +4304,6 @@ new java.MavenCompile(project: Project, pom: Pom, options?: MavenCompileOptions)
 Name | Type | Description 
 -----|------|-------------
 **compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 
 
@@ -4224,9 +4327,9 @@ new java.MavenPackaging(project: Project, pom: Pom, options?: MavenPackagingOpti
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
 * **options** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  *No description*
+  * **distdir** (<code>string</code>)  Where to place the package output? __*Default*__: "dist/java"
   * **javadocs** (<code>boolean</code>)  Include javadocs jar in package. __*Default*__: true
   * **javadocsExclude** (<code>Array<string></code>)  Exclude source files from docs. __*Default*__: []
-  * **outdir** (<code>string</code>)  Where to place the package output? __*Default*__: "dist/java"
   * **sources** (<code>boolean</code>)  Include sources jar in package. __*Default*__: true
 
 
@@ -4240,114 +4343,9 @@ Name | Type | Description
 
 
 
-## class MavenProject 🔹 <a id="projen-java-mavenproject"></a>
-
-
-
-__Submodule__: java
-
-__Extends__: [Project](#projen-project)
-
-### Initializer
-
-
-
-
-```ts
-new java.MavenProject(options: MavenProjectOptions)
-```
-
-* **options** (<code>[java.MavenProjectOptions](#projen-java-mavenprojectoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your project. 
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
-  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
-  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
-  * **groupId** (<code>string</code>)  This is generally unique amongst an organization or a project. 
-  * **version** (<code>string</code>)  This is the last piece of the naming puzzle. 
-  * **description** (<code>string</code>)  Description of a project is always good. __*Default*__: undefined
-  * **packaging** (<code>string</code>)  Project packaging format. __*Default*__: "jar"
-  * **url** (<code>string</code>)  The URL, like the name, is not required. __*Default*__: undefined
-  * **compileOptions** (<code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code>)  Compile options. __*Default*__: defaults
-  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
-  * **dist** (<code>string</code>)  Final artifact output directory. __*Default*__: "dist/java"
-  * **junit** (<code>boolean</code>)  Include junit tests. __*Default*__: true
-  * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
-  * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
-  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
-  * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
-  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**compile**🔹 | <code>[java.MavenCompile](#projen-java-mavencompile)</code> | <span></span>
-**dist**🔹 | <code>string</code> | <span></span>
-**jar**🔹 | <code>[java.MavenPackaging](#projen-java-mavenpackaging)</code> | <span></span>
-**pom**🔹 | <code>[java.Pom](#projen-java-pom)</code> | <span></span>
-**junit**?🔹 | <code>[java.Junit](#projen-java-junit)</code> | __*Optional*__
-
-### Methods
-
-
-#### addDependency(spec)🔹 <a id="projen-java-mavenproject-adddependency"></a>
-
-Adds a runtime dependency.
-
-```ts
-addDependency(spec: string): void
-```
-
-* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
-
-
-
-
-#### addPlugin(spec, options)🔹 <a id="projen-java-mavenproject-addplugin"></a>
-
-Adds a build plugin to the pom.
-
-The plug in is also added as a BUILD dep to the project.
-
-```ts
-addPlugin(spec: string, options: PluginOptions): Dependency
-```
-
-* **spec** (<code>string</code>)  dependency spec (`group/artifact@version`).
-* **options** (<code>[java.PluginOptions](#projen-java-pluginoptions)</code>)  plugin options.
-  * **configuration** (<code>Map<string, any></code>)  Plugin key/value configuration. __*Default*__: {}
-  * **executions** (<code>Array<[java.PluginExecution](#projen-java-pluginexecution)></code>)  Plugin executions. __*Default*__: []
-
-__Returns__:
-* <code>[deps.Dependency](#projen-deps-dependency)</code>
-
-#### addTestDependency(spec)🔹 <a id="projen-java-mavenproject-addtestdependency"></a>
-
-Adds a test dependency.
-
-```ts
-addTestDependency(spec: string): void
-```
-
-* **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
-
-
-
-
-
-
 ## class MavenSample 🔹 <a id="projen-java-mavensample"></a>
 
-
+Java code sample.
 
 __Submodule__: java
 
@@ -7558,7 +7556,7 @@ Name | Type | Description
 
 ## struct Dependency 🔹 <a id="projen-deps-dependency"></a>
 
-__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [MavenProject](#projen-java-mavenproject).[addPlugin](#projen-java-mavenproject#projen-java-mavenproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
+__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
 
 
 
@@ -7675,16 +7673,46 @@ Name | Type | Description
 
 
 
-## struct JunitCommonOptions 🔹 <a id="projen-java-junitcommonoptions"></a>
+## struct JavaProjectOptions 🔹 <a id="projen-java-javaprojectoptions"></a>
 
 
+Options for `JavaProject`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactId**🔹 | <code>string</code> | The artifactId is generally the name that the project is known by.
+**groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
+**junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
+**packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
+**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
+**url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
 
 
 
 ## struct JunitOptions 🔹 <a id="projen-java-junitoptions"></a>
 
 
-
+Options for `Junit`.
 
 
 
@@ -7699,7 +7727,7 @@ Name | Type | Description
 ## struct MavenCompileOptions 🔹 <a id="projen-java-mavencompileoptions"></a>
 
 
-
+Options for `MavenCompile`.
 
 
 
@@ -7719,46 +7747,10 @@ Options for `MavenPackage`.
 
 Name | Type | Description 
 -----|------|-------------
+**distdir**?🔹 | <code>string</code> | Where to place the package output?<br/>__*Default*__: "dist/java"
 **javadocs**?🔹 | <code>boolean</code> | Include javadocs jar in package.<br/>__*Default*__: true
 **javadocsExclude**?🔹 | <code>Array<string></code> | Exclude source files from docs.<br/>__*Default*__: []
-**outdir**?🔹 | <code>string</code> | Where to place the package output?<br/>__*Default*__: "dist/java"
 **sources**?🔹 | <code>boolean</code> | Include sources jar in package.<br/>__*Default*__: true
-
-
-
-## struct MavenProjectOptions 🔹 <a id="projen-java-mavenprojectoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**artifactId**🔹 | <code>string</code> | The artifactId is generally the name that the project is known by.
-**groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
-**name**🔹 | <code>string</code> | This is the name of your project.
-**version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
-**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
-**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
-**description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
-**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
-**dist**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
-**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
-**junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
-**junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
-**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
-**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
-**packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
-**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
-**sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
-**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
-**url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
 
 
 
@@ -7778,21 +7770,21 @@ Name | Type | Description
 ## struct PluginExecution 🔹 <a id="projen-java-pluginexecution"></a>
 
 
-
+Plugin execution definition.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**goals**🔹 | <code>Array<string></code> | <span></span>
-**id**🔹 | <code>string</code> | <span></span>
+**goals**🔹 | <code>Array<string></code> | Which Maven goals this plugin should be associated with.
+**id**🔹 | <code>string</code> | The ID.
 
 
 
 ## struct PluginOptions 🔹 <a id="projen-java-pluginoptions"></a>
 
 
-
+Options for Maven plugins.
 
 
 
