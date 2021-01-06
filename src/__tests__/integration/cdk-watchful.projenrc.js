@@ -50,7 +50,7 @@ const project = new ConstructLibraryAws({
     mavenArtifactId: 'cdk-watchful',
   },
 
-  publishToPython: {
+  publishToPypi: {
     distName: 'cdk-watchful',
     module: 'cdk_watchful',
   },
