@@ -17,6 +17,7 @@ async function main() {
   ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
   ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
   ya.options('rc', { desc: 'path to .projenrc.js file', default: DEFAULT_RC, type: 'string' });
+  ya.version(false);
   ya.help();
 
   const args = ya.argv;

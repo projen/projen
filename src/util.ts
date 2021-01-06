@@ -215,4 +215,3 @@ export function sorted<T>(x: T) {
     return x;
   }
 }
-

@@ -275,6 +275,7 @@ export class TypeScriptProject extends NodeProject {
     // just run them directly from javascript.
     if (this.jest && compiledTests) {
       this.addDevDeps('@types/jest');
+
       const testout = path.relative(this.srcdir, this.testdir);
       const libtest = path.join(this.libdir, testout);
       const srctest = this.testdir;

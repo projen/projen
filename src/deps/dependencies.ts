@@ -45,7 +45,7 @@ export class Dependencies extends Component {
    * The list is sorted by type->name->version
    */
   public get all(): Dependency[] {
-    return [...this._deps].sort(compareDeps);
+    return [...this._deps].sort(compareDeps).map(normalizeDep);
   }
 
   /**
@@ -71,7 +71,7 @@ export class Dependencies extends Component {
     }
 
     return {
-      ...this._deps[idx],
+      ...normalizeDep(this._deps[idx]),
     };
   }
 
@@ -82,7 +82,7 @@ export class Dependencies extends Component {
    * optional semantic version requirement (e.g. `^3.4.0`).
    * @param type The type of the dependency.
    */
-  public addDependency(spec: string, type: DependencyType): Dependency {
+  public addDependency(spec: string, type: DependencyType, metadata: { [key: string]: any } = { }): Dependency {
     this.project.logger.debug(`${type}-dep ${spec}`);
 
     const scope = spec.startsWith('@');
@@ -94,8 +94,8 @@ export class Dependencies extends Component {
     const name = scope ? `@${module}` : module;
 
     const dep: Dependency = version
-      ? { name, version, type }
-      : { name, type };
+      ? { name, version, type, metadata }
+      : { name, type, metadata };
 
     this._deps.push(dep);
     return dep;
@@ -136,9 +136,21 @@ export class Dependencies extends Component {
   private toJson(): DepsManifest | undefined {
     if (this._deps.length === 0) { return undefined; }
     return {
-      dependencies: this._deps.sort(compareDeps),
+      dependencies: this._deps.sort(compareDeps).map(normalizeDep),
     };
   }
+}
+
+function normalizeDep(d: Dependency) {
+  const obj: any = { };
+  for (const [k, v] of Object.entries(d)) {
+    if (v == undefined) {continue;}
+    if (typeof(v) === 'object' && Object.keys(v).length === 0) {continue;}
+    if (Array.isArray(v) && v.length === 0) {continue;}
+    obj[k] = v;
+  }
+
+  return obj;
 }
 
 function compareDeps(d1: Dependency, d2: Dependency) {

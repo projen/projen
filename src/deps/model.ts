@@ -27,6 +27,13 @@ export interface Dependency {
    * @default - requirement is managed by the package manager (e.g. npm/yarn).
    */
   readonly version?: string;
+
+  /**
+   * Additional JSON metadata associated with the dependency (package manager
+   * specific).
+   * @default {}
+   */
+  readonly metadata?: { [key: string]: any };
 }
 
 export enum DependencyType {

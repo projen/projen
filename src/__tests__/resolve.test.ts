@@ -56,7 +56,7 @@ test('recursive resolve', () => {
 });
 
 test('context is passed to functions', () => {
-  expect(resolve((x: number) => x + 1, [10])).toStrictEqual(11);
+  expect(resolve((x: number) => x + 1, { args: [10] })).toStrictEqual(11);
 
   type Calculator = { [op: string]: (lhs: number, rhs: number, text?: string) => any };
 
@@ -78,7 +78,7 @@ test('context is passed to functions', () => {
     ],
   };
 
-  expect(resolve(calculator, [10, 2, 'fun'])).toStrictEqual({
+  expect(resolve(calculator, { args: [10, 2, 'fun'] })).toStrictEqual({
     add: 12,
     sub: 8,
     mul: 20,
@@ -93,7 +93,7 @@ test('context is passed to functions', () => {
 });
 
 test('"undefined" values are omitted', () => {
-  const r = (o: any) => resolve(o, []);
+  const r = (o: any) => resolve(o);
   expect(r({ foo: undefined })).toStrictEqual({ });
   expect(r({ foo: { bar: undefined } })).toStrictEqual({ foo: {} });
   expect(r({ foo: { bar: undefined, hello: 123 } })).toStrictEqual({ foo: { hello: 123 } });
@@ -101,7 +101,7 @@ test('"undefined" values are omitted', () => {
 });
 
 test('omitEmpty', () => {
-  const r = (o: any) => resolve(o, [], { omitEmpty: true });
+  const r = (o: any) => resolve(o, { omitEmpty: true });
   expect(r({ foo: {} })).toStrictEqual(undefined);
   expect(r({ foo: { bar: { } } })).toStrictEqual(undefined);
   expect(r({ foo: [] })).toStrictEqual(undefined);

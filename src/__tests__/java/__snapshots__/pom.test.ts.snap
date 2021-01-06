@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`addDependency() 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme</groupId>
+    <artifactId>my-artifact</artifactId>
+    <version>1.2.3</version>
+    <packaging>jar</packaging>
+    <name>my-project</name>
+    <dependencies>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>[3.18.1,4.0.0)</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>"
+`;
+
+exports[`addPlugin() 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme</groupId>
+    <artifactId>my-artifact</artifactId>
+    <version>1.2.3</version>
+    <packaging>jar</packaging>
+    <name>my-project</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>com.myorg.Play202101050157App</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>"
+`;
+
+exports[`addProperty() 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme</groupId>
+    <artifactId>my-artifact</artifactId>
+    <version>1.2.3</version>
+    <packaging>jar</packaging>
+    <name>my-project</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.7.0</junit.version>
+    </properties>
+</project>"
+`;
+
+exports[`group/artifact/version 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>my.group.id</groupId>
+    <artifactId>mfoo-bar</artifactId>
+    <version>1.2.3</version>
+    <packaging>jar</packaging>
+    <name>my-project</name>
+</project>"
+`;
+
+exports[`optional metadata 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>my.group.id</groupId>
+    <artifactId>mfoo-bar</artifactId>
+    <version>1.2.3</version>
+    <packaging>not_jar</packaging>
+    <name>my-project</name>
+    <description>hello, world!</description>
+    <url>https://foo/bar</url>
+</project>"
+`;
