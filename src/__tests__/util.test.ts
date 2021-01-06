@@ -1,4 +1,4 @@
-import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy } from '../util';
+import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions } from '../util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {
@@ -108,4 +108,14 @@ test('deepMerge does not overwrite if rightmost is "undefined"', () => {
 test('dedupArray', () => {
   expect(dedupArray(['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
   expect(dedupArray(['a', 'a', 'b', 'a'])).toEqual(['a', 'b']);
+});
+
+test('getFilePermissions', () => {
+  expect(getFilePermissions({})).toEqual('644');
+  expect(getFilePermissions({ readonly: true, executable: true })).toEqual('500');
+  expect(getFilePermissions({ readonly: true, executable: false })).toEqual('400');
+  expect(getFilePermissions({ readonly: false, executable: true })).toEqual('755');
+  expect(getFilePermissions({ readonly: false, executable: false })).toEqual('644');
+  expect(getFilePermissions({ readonly: false })).toEqual('644');
+  expect(getFilePermissions({ executable: true })).toEqual('755');
 });

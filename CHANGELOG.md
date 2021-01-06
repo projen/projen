@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.10](https://github.com/projen/projen/compare/v0.13.9...v0.13.10) (2021-01-06)
+
+
+### Features
+
+* xml file ([#463](https://github.com/projen/projen/issues/463)) ([de8a688](https://github.com/projen/projen/commit/de8a688137d5dde9cfe084c3e997472c9001fde1))
+
+### [0.13.9](https://github.com/projen/projen/compare/v0.13.8...v0.13.9) (2021-01-06)
+
+
+### Features
+
+* do not produce empty `deps.json` and `tasks.json` files ([#462](https://github.com/projen/projen/issues/462)) ([7a079ea](https://github.com/projen/projen/commit/7a079ea897a78a0771325cf7ade49c83cc49e5ad))
+
+### [0.13.8](https://github.com/projen/projen/compare/v0.13.7...v0.13.8) (2021-01-05)
+
+
+### Features
+
+* allow text file to be marked as executable ([#458](https://github.com/projen/projen/issues/458)) ([5a9ba5e](https://github.com/projen/projen/commit/5a9ba5eacc44ddfb6c624db3a69e0369946b003b)), closes [#454](https://github.com/projen/projen/issues/454)
+
+### [0.13.7](https://github.com/projen/projen/compare/v0.13.6...v0.13.7) (2021-01-05)
+
+
+### Features
+
+* **jest:** coverage text output and watch ignore patterns ([#461](https://github.com/projen/projen/issues/461)) ([3004750](https://github.com/projen/projen/commit/30047506f5fd1a60bccc507a64acc03fd82fbb14))
+
 ### [0.13.6](https://github.com/projen/projen/compare/v0.13.5...v0.13.6) (2021-01-05)
 
 

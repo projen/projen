@@ -51,8 +51,8 @@ export abstract class ObjectFile extends FileBase {
 
     const resolved = resolver.resolve(obj, {
       omitEmpty: this.omitEmpty,
-    }) ?? {};
+    }) ?? undefined;
 
-    return JSON.stringify(resolved, undefined, 2);
+    return resolved ? JSON.stringify(resolved, undefined, 2) : undefined;
   }
 }
