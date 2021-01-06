@@ -27,6 +27,13 @@ export interface FileBaseOptions {
    * @default true
    */
   readonly readonly?: boolean;
+
+  /**
+   * Whether the generated file should be marked as executable.
+   *
+   * @default false
+   */
+  readonly executable?: boolean;
 }
 
 export abstract class FileBase extends Component {
@@ -47,6 +54,11 @@ export abstract class FileBase extends Component {
   public readonly: boolean;
 
   /**
+   * Indicates if the file should be marked as executable
+   */
+  public executable: boolean;
+
+  /**
    * The absolute path of this file.
    */
   public readonly absolutePath: string;
@@ -55,6 +67,7 @@ export abstract class FileBase extends Component {
     super(project);
 
     this.readonly = options.readonly ?? true;
+    this.executable = options.executable ?? false;
     this.path = filePath;
 
     this.absolutePath = path.resolve(project.outdir, filePath);
@@ -103,6 +116,7 @@ export abstract class FileBase extends Component {
     }
     writeFile(filePath, content, {
       readonly: this.readonly,
+      executable: this.executable,
     });
   }
 }
