@@ -30,6 +30,19 @@ test('dependencies', () => {
   snapPom(p);
 });
 
+test('dependencies via ctor', () => {
+  const p = new TestMavenProject({
+    deps: [
+      'software.amazon.awscdk/core@^1.2.3',
+      'software.amazon.awscdk/aws-s3@^1',
+    ],
+    testDeps: [
+      'org.assertj/assertj-core@^3',
+    ],
+  });
+  snapPom(p);
+});
+
 test('no junit', () => {
   const p = new TestMavenProject({
     junit: false,
@@ -49,6 +62,7 @@ class TestMavenProject extends MavenProject {
       groupId: 'org.acme',
       artifactId: 'my-artifact',
       name: 'test-project',
+      version: '1.0.0',
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
     });

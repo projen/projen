@@ -16,13 +16,6 @@ const POM_XML_ATTRS = {
  */
 export interface PomOptions {
   /**
-   * File name.
-   *
-   * @default "pom.xml"
-   */
-  readonly fileName?: string;
-
-  /**
    * This is generally unique amongst an organization or a project. For example,
    * all core Maven artifacts do (well, should) live under the groupId
    * org.apache.maven. Group ID's do not necessarily use the dot notation, for
@@ -34,6 +27,7 @@ export interface PomOptions {
    * '/' in Unix) which becomes a relative directory structure from the base
    * repository. In the example given, the org.codehaus.mojo group lives within
    * the directory $M2_REPO/org/codehaus/mojo.
+   * @default "org.acme"
    */
   readonly groupId: string;
 
@@ -47,6 +41,7 @@ export interface PomOptions {
    * fully defines the artifact's living quarters within the repository. In the
    * case of the above project, my-project lives in
    * $M2_REPO/org/codehaus/mojo/my-project.
+   * @default "my-app"
    */
   readonly artifactId: string;
 
@@ -59,6 +54,7 @@ export interface PomOptions {
    * within an artifact's repository to separate versions from each other.
    * my-project version 1.0 files live in the directory structure
    * $M2_REPO/org/codehaus/mojo/my-project/1.0.
+   * @default "0.1.0"
    */
   readonly version: string;
 
@@ -68,13 +64,6 @@ export interface PomOptions {
    * @default "jar"
    */
   readonly packaging?: string;
-
-  /**
-   * Projects tend to have conversational names, beyond the artifactId.
-   *
-   * @default undefined
-   */
-  readonly name?: string;
 
   /**
    * Description of a project is always good. Although this should not replace
@@ -145,12 +134,12 @@ export class Pom extends Component {
   constructor(project: Project, options: PomOptions) {
     super(project);
 
-    this.fileName = options.fileName ?? 'pom.xml';
+    this.fileName = 'pom.xml';
     this.groupId = options.groupId;
     this.artifactId = options.artifactId;
     this.version = options.version;
     this.packaging = options.packaging ?? 'jar';
-    this.name = options.name;
+    this.name = project.name;
     this.description = options.description;
     this.url = options.url;
 

@@ -4198,8 +4198,9 @@ Array [
     "options": Array [
       Object {
         "default": "\\"my-app\\"",
+        "docs": "The artifactId is generally the name that the project is known by.",
         "name": "artifactId",
-        "parent": "MavenProjectOptions",
+        "parent": "PomOptions",
         "path": Array [
           "artifactId",
         ],
@@ -4229,6 +4230,29 @@ Array [
         ],
         "switch": "compile-options",
         "type": "MavenCompileOptions",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of runtime dependencies for this project.",
+        "name": "deps",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
+        "docs": "Description of a project is always good.",
+        "name": "description",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": Array [
+          "description",
+        ],
+        "switch": "description",
+        "type": "string",
       },
       Object {
         "default": "false",
@@ -4268,37 +4292,14 @@ Array [
       },
       Object {
         "default": "\\"org.acme\\"",
+        "docs": "This is generally unique amongst an organization or a project.",
         "name": "groupId",
-        "parent": "MavenProjectOptions",
+        "parent": "PomOptions",
         "path": Array [
           "groupId",
         ],
         "switch": "group-id",
         "type": "string",
-      },
-      Object {
-        "default": "- defaults",
-        "docs": "Javadocs options.",
-        "name": "jarOptions",
-        "optional": true,
-        "parent": "MavenProjectOptions",
-        "path": Array [
-          "jarOptions",
-        ],
-        "switch": "jar-options",
-        "type": "MavenJarOptions",
-      },
-      Object {
-        "default": "true",
-        "docs": "Include javadocs in package.",
-        "name": "javadocs",
-        "optional": true,
-        "parent": "MavenProjectOptions",
-        "path": Array [
-          "javadocs",
-        ],
-        "switch": "javadocs",
-        "type": "boolean",
       },
       Object {
         "default": "true",
@@ -4360,16 +4361,28 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- same as \`groupId\`",
-        "docs": "Maven package.",
-        "name": "package",
+        "default": "\\"jar\\"",
+        "docs": "Project packaging format.",
+        "name": "packaging",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": Array [
+          "packaging",
+        ],
+        "switch": "packaging",
+        "type": "string",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Packaging options.",
+        "name": "packagingOptions",
         "optional": true,
         "parent": "MavenProjectOptions",
         "path": Array [
-          "package",
+          "packagingOptions",
         ],
-        "switch": "package",
-        "type": "string",
+        "switch": "packaging-options",
+        "type": "MavenPackagingOptions",
       },
       Object {
         "docs": "The parent project, if this project is part of a bigger project.",
@@ -4416,6 +4429,52 @@ Array [
         ],
         "switch": "sample",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"org.acme\\"",
+        "docs": "The java package to use for the code sample.",
+        "name": "sampleJavaPackage",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "sampleJavaPackage",
+        ],
+        "switch": "sample-java-package",
+        "type": "string",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of test dependencies for this project.",
+        "name": "testDeps",
+        "optional": true,
+        "parent": "MavenProjectOptions",
+        "path": Array [
+          "testDeps",
+        ],
+        "switch": "test-deps",
+        "type": "unknown",
+      },
+      Object {
+        "docs": "The URL, like the name, is not required.",
+        "name": "url",
+        "optional": true,
+        "parent": "PomOptions",
+        "path": Array [
+          "url",
+        ],
+        "switch": "url",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"0.1.0\\"",
+        "docs": "This is the last piece of the naming puzzle.",
+        "name": "version",
+        "parent": "PomOptions",
+        "path": Array [
+          "version",
+        ],
+        "switch": "version",
+        "type": "string",
       },
     ],
     "pjid": "maven",

@@ -4,11 +4,11 @@ import { Task, TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
 /**
- * Options for `MavenJar`.
+ * Options for `MavenPackage`.
  */
-export interface MavenJarOptions {
+export interface MavenPackagingOptions {
   /**
-   * Include sources in jar.
+   * Include sources jar in package.
    * @default true
    */
   readonly sources?: boolean;
@@ -20,7 +20,7 @@ export interface MavenJarOptions {
   readonly outdir?: string;
 
   /**
-   * Include javadocs in jar.
+   * Include javadocs jar in package.
    * @default true
    */
   readonly javadocs?: boolean;
@@ -35,19 +35,13 @@ export interface MavenJarOptions {
 /**
  * Configures a maven project to produce a .jar archive with sources and javadocs.
  */
-export class MavenJar extends Component {
-
+export class MavenPackaging extends Component {
   /**
-   * A task which deploys the package to `outdir` as a local maven repository.
+   * The "package" task.
    */
-  public readonly deployTask: Task;
+  public readonly task: Task;
 
-  /**
-   * Creates jars in the `target/` directory.
-   */
-  public readonly packageTask: Task;
-
-  constructor(project: Project, pom: Pom, options: MavenJarOptions = {}) {
+  constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
     super(project);
 
     pom.addPlugin('org.apache.maven.plugins/maven-jar-plugin@3.2.0', {
@@ -95,20 +89,13 @@ export class MavenJar extends Component {
     };
 
     const outdir = options.outdir ?? 'dist/java';
-    this.deployTask = project.addTask('deploy', {
+    this.task = project.addTask('package', {
       category: TaskCategory.RELEASE,
       description: `Creates a java deployment package under ${outdir}`,
       env,
     });
-    this.deployTask.exec(`mkdir -p ${outdir}`);
-    this.deployTask.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${outdir}`);
-
-    this.packageTask = project.addTask('package', {
-      description: 'Produces jar files under target/',
-      category: TaskCategory.RELEASE,
-      exec: 'mvn package',
-      env,
-    });
+    this.task.exec(`mkdir -p ${outdir}`);
+    this.task.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${outdir}`);
 
     project.gitignore.exclude(outdir);
   }

@@ -5,16 +5,13 @@ import { SampleDir } from '../sample-file';
 import { TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
+const TESTDIR = join('src', 'test', 'java');
+
 export interface JunitCommonOptions {
 
 }
 
 export interface JunitOptions extends JunitCommonOptions {
-  /**
-   * Java package.
-   */
-  readonly package: string;
-
   /**
    * Java pom.
    */
@@ -26,6 +23,12 @@ export interface JunitOptions extends JunitCommonOptions {
    * @default "5.7.0"
    */
   readonly version?: string;
+
+  /**
+   * Java package for test sample.
+   * @default "org.acme"
+   */
+  readonly sampleJavaPackage?: string;
 }
 
 export class Junit extends Component {
@@ -44,11 +47,11 @@ export class Junit extends Component {
       exec: 'mvn test',
     });
 
-    const pkg = options.package.split('.');
-    new SampleDir(project, join('src', 'test', 'java', ...pkg), {
+    const javaPackage = options.sampleJavaPackage ?? 'org.acme';
+    new SampleDir(project, join(TESTDIR, ...javaPackage), {
       files: {
         'MyTest.java': [
-          ...options.package ? [`package ${options.package};`] : [],
+          `package ${javaPackage};`,
           '',
           'import org.junit.jupiter.api.Test;',
           '',

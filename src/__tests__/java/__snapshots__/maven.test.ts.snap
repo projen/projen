@@ -129,7 +129,7 @@ dist/java",
         "name": "build",
         "steps": Array [
           Object {
-            "spawn": "deploy",
+            "spawn": "package",
           },
         ],
       },
@@ -176,32 +176,19 @@ dist/java",
           },
         ],
       },
-      "deploy": Object {
-        "category": "20.release",
-        "description": "Creates a java deployment package under dist/java",
-        "env": Object {
-          "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
-        },
-        "name": "deploy",
-        "steps": Array [
-          Object {
-            "exec": "mkdir -p dist/java",
-          },
-          Object {
-            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
-          },
-        ],
-      },
       "package": Object {
         "category": "20.release",
-        "description": "Produces jar files under target/",
+        "description": "Creates a java deployment package under dist/java",
         "env": Object {
           "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
         },
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mvn package",
+            "exec": "mkdir -p dist/java",
+          },
+          Object {
+            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
           },
         ],
       },
@@ -233,8 +220,9 @@ dist/java",
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <name>test-project</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -342,7 +330,7 @@ public class Main {
     System.out.println(\\"Hello, world!\\");
   }
 }",
-  "src/test/java/org/acme/MyTest.java": "package org.acme;
+  "src/test/java/o/r/g/a/c/m/e/MyTest.java": "package org.acme;
 
 import org.junit.jupiter.api.Test;
 
@@ -361,8 +349,9 @@ exports[`dependencies 1`] = `
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <name>test-project</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -467,6 +456,133 @@ exports[`dependencies 1`] = `
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.18.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>"
+`;
+
+exports[`dependencies via ctor 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme</groupId>
+    <artifactId>my-artifact</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>test-project</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <rules>
+                        <requireMavenVersion>
+                            <version>3.6</version>
+                        </requireMavenVersion>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <show>protected</show>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                    <additionalJOptions>
+                        <additionalJOption>-J-XX:+TieredCompilation</additionalJOption>
+                        <additionalJOption>-J-XX:TieredStopAtLevel=1</additionalJOption>
+                    </additionalJOptions>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>aws-s3</artifactId>
+            <version>[1.0.0,2.0.0)</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>core</artifactId>
+            <version>[1.2.3,2.0.0)</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>[3.0.0,4.0.0)</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -604,7 +720,7 @@ dist/java",
         "name": "build",
         "steps": Array [
           Object {
-            "spawn": "deploy",
+            "spawn": "package",
           },
         ],
       },
@@ -651,32 +767,19 @@ dist/java",
           },
         ],
       },
-      "deploy": Object {
-        "category": "20.release",
-        "description": "Creates a java deployment package under dist/java",
-        "env": Object {
-          "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
-        },
-        "name": "deploy",
-        "steps": Array [
-          Object {
-            "exec": "mkdir -p dist/java",
-          },
-          Object {
-            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
-          },
-        ],
-      },
       "package": Object {
         "category": "20.release",
-        "description": "Produces jar files under target/",
+        "description": "Creates a java deployment package under dist/java",
         "env": Object {
           "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
         },
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mvn package",
+            "exec": "mkdir -p dist/java",
+          },
+          Object {
+            "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
           },
         ],
       },
@@ -698,8 +801,9 @@ dist/java",
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <name>test-project</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -802,8 +906,9 @@ exports[`pom options 1`] = `
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.acme</groupId>
     <artifactId>my-artifact</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <name>test-project</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

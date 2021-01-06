@@ -440,16 +440,23 @@ const project = new java.MavenProject({
   artifactId: 'my-app',
   groupId: 'org.acme',
   name: 'my-project',
+  version: '0.1.0',
 
   /* MavenProjectOptions */
   // compileOptions: undefined,         /* Compile options. */
+  // deps: [],                          /* List of runtime dependencies for this project. */
   // dist: 'dist/java',                 /* Final artifact output directory. */
-  // jarOptions: undefined,             /* Javadocs options. */
-  // javadocs: true,                    /* Include javadocs in package. */
   // junit: true,                       /* Include junit tests. */
   // junitOptions: undefined,           /* junit options. */
-  // package: undefined,                /* Maven package. */
+  // packagingOptions: undefined,       /* Packaging options. */
   // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
+  // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
+  // testDeps: [],                      /* List of test dependencies for this project. */
+
+  /* PomOptions */
+  // description: undefined,            /* Description of a project is always good. */
+  // packaging: 'jar',                  /* Project packaging format. */
+  // url: undefined,                    /* The URL, like the name, is not required. */
 
   /* ProjectOptions */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */

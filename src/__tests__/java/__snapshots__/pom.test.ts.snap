@@ -8,6 +8,7 @@ exports[`addDependency() 1`] = `
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
     <packaging>jar</packaging>
+    <name>my-project</name>
     <dependencies>
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
@@ -31,6 +32,7 @@ exports[`addPlugin() 1`] = `
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
     <packaging>jar</packaging>
+    <name>my-project</name>
     <build>
         <plugins>
             <plugin>
@@ -63,6 +65,7 @@ exports[`addProperty() 1`] = `
     <artifactId>my-artifact</artifactId>
     <version>1.2.3</version>
     <packaging>jar</packaging>
+    <name>my-project</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.7.0</junit.version>
@@ -78,5 +81,20 @@ exports[`group/artifact/version 1`] = `
     <artifactId>mfoo-bar</artifactId>
     <version>1.2.3</version>
     <packaging>jar</packaging>
+    <name>my-project</name>
+</project>"
+`;
+
+exports[`optional metadata 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>my.group.id</groupId>
+    <artifactId>mfoo-bar</artifactId>
+    <version>1.2.3</version>
+    <packaging>not_jar</packaging>
+    <name>my-project</name>
+    <description>hello, world!</description>
+    <url>https://foo/bar</url>
 </project>"
 `;

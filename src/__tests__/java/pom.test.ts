@@ -12,6 +12,20 @@ test('group/artifact/version', () => {
   expect(actualPom(pom)).toMatchSnapshot();
 });
 
+test('optional metadata', () => {
+  const pom = new TestPom({
+    groupId: 'my.group.id',
+    artifactId: 'mfoo-bar',
+    version: '1.2.3',
+
+    description: 'hello, world!',
+    url: 'https://foo/bar',
+    packaging: 'not_jar',
+  });
+
+  expect(actualPom(pom)).toMatchSnapshot();
+});
+
 test('addProperty()', () => {
   const pom = new TestPom();
   pom.addProperty('project.build.sourceEncoding', 'UTF-8');
