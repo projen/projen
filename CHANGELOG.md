@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.1](https://github.com/projen/projen/compare/v0.14.0...v0.14.1) (2021-01-06)
+
+
+### Bug Fixes
+
+* output to STDOUT crashes jsii languages ([#468](https://github.com/projen/projen/issues/468)) ([b2226b0](https://github.com/projen/projen/commit/b2226b07a7e1258080637a4d556e5db8c3f38ef2))
+
 ## [0.14.0](https://github.com/projen/projen/compare/v0.13.13...v0.14.0) (2021-01-06)
 
 
