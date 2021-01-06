@@ -1110,13 +1110,13 @@ const project = new ConstructLibraryAws({
 
   // jsii publishing
 
-  java: {
+  publishToMaven: {
     javaPackage: 'com.github.eladb.watchful',
     mavenGroupId: 'com.github.eladb',
     mavenArtifactId: 'cdk-watchful',
   },
 
-  python: {
+  publishToPypi: {
     distName: 'cdk-watchful',
     module: 'cdk_watchful',
   },
@@ -2257,16 +2257,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
@@ -2627,16 +2627,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
@@ -3872,16 +3872,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
