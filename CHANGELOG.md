@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.14](https://github.com/projen/projen/compare/v0.13.13...v0.13.14) (2021-01-06)
+
+
+### Bug Fixes
+
+* **java:** corrupted java directory name ([#465](https://github.com/projen/projen/issues/465)) ([7cc4b5b](https://github.com/projen/projen/commit/7cc4b5b1eb106a65e8492359f86657829f27125b))
+
 ### [0.13.13](https://github.com/projen/projen/compare/v0.13.12...v0.13.13) (2021-01-06)
 
 ### [0.13.12](https://github.com/projen/projen/compare/v0.13.11...v0.13.12) (2021-01-06)
