@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.10](https://github.com/projen/projen/compare/v0.13.9...v0.13.10) (2021-01-06)
+
+
+### Features
+
+* xml file ([#463](https://github.com/projen/projen/issues/463)) ([de8a688](https://github.com/projen/projen/commit/de8a688137d5dde9cfe084c3e997472c9001fde1))
+
 ### [0.13.9](https://github.com/projen/projen/compare/v0.13.8...v0.13.9) (2021-01-06)
 
 
