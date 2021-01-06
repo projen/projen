@@ -1,9 +1,9 @@
 # Java Projects
 
-To create a new Java project, use `projen new maven`:
+To create a new Java project, use `projen new java`:
 
 ```shell
-$ projen new maven --group-id org.acme --artifact-id hello-maven
+$ projen new java --group-id org.acme --artifact-id hello-maven
 ```
 
 This will synthesize a standard Maven project directory structure with a
@@ -36,7 +36,7 @@ line:
 ```js
 const { java } = require('projen');
 
-const project = new java.MavenProject({
+const project = new java.JavaProject({
   artifactId: 'hello-maven',
   groupId: 'org.acme',
   name: 'hello-maven',
@@ -72,7 +72,7 @@ constructor of `MavenProject`. For example, let's add a description and a URL
 for your project:
 
 ```ts
-const project = new java.MavenProject({
+const project = new java.JavaProject({
   // ...
 
   description: 'My first java projen project',
@@ -94,7 +94,7 @@ Java projects have three types of supported dependencies:
 You can define dependencies when defining the project itself:
 
 ```ts
-const project = new MavenProject({
+const project = new JavaProject({
   deps: [
     'software.amazon.awscdk/core@^1.2.3',
     'software.amazon.awscdk/aws-s3@^1',
@@ -162,7 +162,7 @@ through `packagingOptions`.
 TBD.
 
 > Publishing to Maven is still not supported output of the box. Since the
-> package output of `MavenProject` is compatible with
+> package output of `JavaProject` is compatible with
 > [jsii-release](https://www.npmjs.com/package/jsii-release), and we already
 > release to Maven from jsii projects, it should be possible to reuse quite a
 > lot.
