@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.13.11](https://github.com/projen/projen/compare/v0.13.10...v0.13.11) (2021-01-06)
+
+
+### Features
+
+* java maven project ([#460](https://github.com/projen/projen/issues/460)) ([9f94054](https://github.com/projen/projen/commit/9f940549863aa9076f63aceefe46953d8360ef0e))
+
 ### [0.13.10](https://github.com/projen/projen/compare/v0.13.9...v0.13.10) (2021-01-06)
 
 
