@@ -17,7 +17,7 @@ export interface MavenPackagingOptions {
    * Where to place the package output?
    * @default "dist/java"
    */
-  readonly outdir?: string;
+  readonly distdir?: string;
 
   /**
    * Include javadocs jar in package.
@@ -88,15 +88,15 @@ export class MavenPackaging extends Component {
       MAVEN_OPTS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1',
     };
 
-    const outdir = options.outdir ?? 'dist/java';
+    const distdir = options.distdir ?? 'dist/java';
     this.task = project.addTask('package', {
       category: TaskCategory.RELEASE,
-      description: `Creates a java deployment package under ${outdir}`,
+      description: `Creates a java deployment package under ${distdir}`,
       env,
     });
-    this.task.exec(`mkdir -p ${outdir}`);
-    this.task.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${outdir}`);
+    this.task.exec(`mkdir -p ${distdir}`);
+    this.task.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`);
 
-    project.gitignore.exclude(outdir);
+    project.gitignore.exclude(distdir);
   }
 }

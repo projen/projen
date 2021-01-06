@@ -10,6 +10,9 @@ export interface MavenSampleOptions {
   readonly package: string;
 }
 
+/**
+ * Java code sample.
+ */
 export class MavenSample extends Component {
   constructor(project: Project, options: MavenSampleOptions) {
     super(project);

@@ -89,8 +89,6 @@ export interface PomOptions {
  * details used by Maven to build the project.
  */
 export class Pom extends Component {
-  private readonly properties: Record<string, any> = {};
-
   /**
    * The name of the pom file.
    */
@@ -130,6 +128,8 @@ export class Pom extends Component {
    * Project URL.
    */
   public readonly url?: string;
+
+  private readonly properties: Record<string, any> = {};
 
   constructor(project: Project, options: PomOptions) {
     super(project);
@@ -241,6 +241,9 @@ export class Pom extends Component {
   }
 }
 
+/**
+ * Options for Maven plugins.
+ */
 export interface PluginOptions {
   /**
    * Plugin key/value configuration
@@ -255,8 +258,18 @@ export interface PluginOptions {
   readonly executions?: PluginExecution[];
 }
 
+/**
+ * Plugin execution definition.
+ */
 export interface PluginExecution {
+  /**
+   * The ID.
+   */
   readonly id: string;
+
+  /**
+   * Which Maven goals this plugin should be associated with.
+   */
   readonly goals: string[];
 }
 

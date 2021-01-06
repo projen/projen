@@ -7,11 +7,10 @@ import { Pom } from './pom';
 
 const TESTDIR = join('src', 'test', 'java');
 
-export interface JunitCommonOptions {
-
-}
-
-export interface JunitOptions extends JunitCommonOptions {
+/**
+ * Options for `Junit`.
+ */
+export interface JunitOptions {
   /**
    * Java pom.
    */
@@ -31,6 +30,9 @@ export interface JunitOptions extends JunitCommonOptions {
   readonly sampleJavaPackage?: string;
 }
 
+/**
+ * Implements JUnit-based testing.
+ */
 export class Junit extends Component {
   constructor(project: Project, options: JunitOptions) {
     super(project);

@@ -1,5 +1,5 @@
 
-import { MavenProject, MavenProjectOptions } from '../../java/maven-project';
+import { JavaProject, JavaProjectOptions } from '../../java/java-project';
 import { LogLevel } from '../../logger';
 import { mkdtemp, synthSnapshot } from '../util';
 
@@ -51,12 +51,12 @@ test('no junit', () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
-function snapPom(p: MavenProject) {
+function snapPom(p: JavaProject) {
   expect(synthSnapshot(p)['pom.xml']).toMatchSnapshot();
 }
 
-class TestMavenProject extends MavenProject {
-  constructor(options: Partial<MavenProjectOptions> = { }) {
+class TestMavenProject extends JavaProject {
+  constructor(options: Partial<JavaProjectOptions> = { }) {
     super({
       ...options,
       groupId: 'org.acme',
