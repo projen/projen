@@ -8,7 +8,7 @@ const decamelize = require('decamelize');
 export function exec(command: string, options?: child_process.ExecSyncOptions) {
   logging.verbose(command);
   return child_process.execSync(command, {
-    stdio: ['inherit', 'inherit', 'pipe'],
+    stdio: ['inherit', process.stderr, 'pipe'],
     ...options,
   });
 }

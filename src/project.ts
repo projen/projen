@@ -162,6 +162,9 @@ export class Project {
   private readonly excludeFromCleanup: string[];
 
   constructor(options: ProjectOptions) {
+    // https://github.com/aws/jsii/issues/2406
+    process.stdout.write = (...args: any) => process.stderr.write.apply(process.stderr, args);
+
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
