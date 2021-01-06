@@ -50,7 +50,8 @@ export class Junit extends Component {
     });
 
     const javaPackage = options.sampleJavaPackage ?? 'org.acme';
-    new SampleDir(project, join(TESTDIR, ...javaPackage.split('.')), {
+    const javaPackagePath = javaPackage.split('.');
+    new SampleDir(project, join(TESTDIR, ...javaPackagePath), {
       files: {
         'MyTest.java': [
           `package ${javaPackage};`,
