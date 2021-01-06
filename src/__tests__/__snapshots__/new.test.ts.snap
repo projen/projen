@@ -136,10 +136,10 @@ const project = new AwsCdkConstructLibrary({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */
@@ -242,10 +242,10 @@ const project = new ConstructLibraryCdk8s({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */
@@ -384,10 +384,10 @@ const project = new JsiiProject({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */

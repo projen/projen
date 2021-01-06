@@ -52,15 +52,13 @@ const project = new JsiiProject({
     coverageText: false
   },
 
-  // publish to maven central
-  java: {
+  publishToMaven: {
     javaPackage: 'org.projen',
     mavenGroupId: 'com.github.eladb',
     mavenArtifactId: 'projen'
   },
 
-  // python to pypi
-  python: {
+  publishToPypi: {
     distName: 'projen',
     module: 'projen'
   },
