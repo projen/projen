@@ -48,6 +48,8 @@ const project = new ConstructLibraryAws({
     javaPackage: 'com.github.eladb.watchful',
     mavenGroupId: 'com.github.eladb',
     mavenArtifactId: 'cdk-watchful',
+    mavenServerId: 'github',
+    mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
   },
 
   python: {
