@@ -29,6 +29,21 @@ describe('dev environment enable/disable', () => {
     expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
   });
 
+  test('no gitpod/devcontainer files if they are empty', () => {
+    // WHEN
+    const project = new TestProject({
+      gitpod: true,
+      devContainer: true,
+    });
+
+    // THEN
+    project.synth();
+    const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
+    const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
+    expect(fs.existsSync(gitpodFilePath)).toBeFalsy();
+    expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
+  });
+
   test('given gitpod and devContainer are true', () => {
     // GIVEN
     const project = new TestProject({
@@ -37,9 +52,11 @@ describe('dev environment enable/disable', () => {
     });
 
     // WHEN
-    project.synth();
+    project.gitpod?.addDockerImage({ image: 'foo' });
+    project.devContainer?.addPorts('1234');
 
     // THEN
+    project.synth();
     const gitpodFilePath = path.join(project.outdir, GITPOD_FILE);
     const devContainerFilePath = path.join(project.outdir, DEVCONTAINER_FILE);
     expect(fs.existsSync(gitpodFilePath)).toBeTruthy();
