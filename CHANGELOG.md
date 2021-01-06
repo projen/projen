@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.14.0](https://github.com/projen/projen/compare/v0.13.13...v0.14.0) (2021-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `java` option in jsii projects is now called `publishToMaven`.
+
+### Features
+
+* publish projen to maven and pypi ([#466](https://github.com/projen/projen/issues/466)) ([5bdb9dc](https://github.com/projen/projen/commit/5bdb9dce8589a356e088cd746629ed2724ea55c7))
+
+
+### Bug Fixes
+
+* **java:** corrupted java directory name ([#465](https://github.com/projen/projen/issues/465)) ([7cc4b5b](https://github.com/projen/projen/commit/7cc4b5b1eb106a65e8492359f86657829f27125b))
+
 ### [0.13.13](https://github.com/projen/projen/compare/v0.13.12...v0.13.13) (2021-01-06)
 
 ### [0.13.12](https://github.com/projen/projen/compare/v0.13.11...v0.13.12) (2021-01-06)
