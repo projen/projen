@@ -6355,8 +6355,8 @@ Name | Type | Description
 **javaPackage**🔹 | <code>string</code> | <span></span>
 **mavenArtifactId**🔹 | <code>string</code> | <span></span>
 **mavenGroupId**🔹 | <code>string</code> | <span></span>
-**mavenRepositoryUrl**?🔹 | <code>string</code> | __*Optional*__
-**mavenServerId**?🔹 | <code>string</code> | __*Optional*__
+**mavenRepositoryUrl**?🔹 | <code>string</code> | Deployment repository when not deploying to Maven Central.<br/>__*Optional*__
+**mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub). Defaults to ossrh for Maven Central.<br/>__*Optional*__
 
 
 
