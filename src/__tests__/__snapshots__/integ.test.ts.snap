@@ -1437,8 +1437,6 @@ project.synth();
           "maven": Object {
             "artifactId": "cdk-watchful",
             "groupId": "com.github.eladb",
-            "repositoryUrl": "https://maven.pkg.github.com/eladb",
-            "serverId": "github",
           },
           "package": "com.github.eladb.watchful",
         },
