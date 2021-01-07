@@ -136,10 +136,10 @@ const project = new AwsCdkConstructLibrary({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */
@@ -242,10 +242,10 @@ const project = new ConstructLibraryCdk8s({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */
@@ -331,6 +331,48 @@ project.synth();
 "
 `;
 
+exports[`projen new java 1`] = `
+"const { java } = require('projen');
+
+const project = new java.JavaProject({
+  artifactId: 'my-app',
+  groupId: 'org.acme',
+  name: 'my-project',
+  version: '0.1.0',
+
+  /* JavaProjectOptions */
+  // compileOptions: undefined,         /* Compile options. */
+  // deps: [],                          /* List of runtime dependencies for this project. */
+  // distdir: 'dist/java',              /* Final artifact output directory. */
+  // junit: true,                       /* Include junit tests. */
+  // junitOptions: undefined,           /* junit options. */
+  // packagingOptions: undefined,       /* Packaging options. */
+  // projenrcJava: false,               /* Use projenrc in java. */
+  // projenrcJavaOptions: undefined,    /* Options related to projenrc in java. */
+  // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
+  // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
+  // testDeps: [],                      /* List of test dependencies for this project. */
+
+  /* PomOptions */
+  // description: undefined,            /* Description of a project is always good. */
+  // packaging: 'jar',                  /* Project packaging format. */
+  // url: undefined,                    /* The URL, like the name, is not required. */
+
+  /* ProjectOptions */
+  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
+  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                     /* Add a Gitpod development environment. */
+  // logging: {},                       /* Configure logging options such as verbosity. */
+  // outdir: '.',                       /* The root directory of the project. */
+  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // readme: undefined,                 /* The README setup. */
+});
+
+project.synth();
+"
+`;
+
 exports[`projen new jsii 1`] = `
 "const { JsiiProject } = require('projen');
 
@@ -344,10 +386,10 @@ const project = new JsiiProject({
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // dotnet: undefined,                                                        /* Publish to NuGet. */
   // eslint: true,                                                             /* Install eslint. */
-  // java: undefined,                                                          /* Publish to maven. */
-  // python: undefined,                                                        /* Publish to pypi. */
+  // publishToMaven: undefined,                                                /* Publish to maven. */
+  // publishToNuget: undefined,                                                /* Publish to NuGet. */
+  // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
 
   /* NodePackageOptions */

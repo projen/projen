@@ -26,7 +26,7 @@ export class GithubWorkflow extends FileBase {
     };
   }
 
-  protected synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     const workflow = resolver.resolve({
       name: this.name,
       on: this.events,

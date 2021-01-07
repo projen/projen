@@ -474,7 +474,7 @@ export class ReactTypeDef extends FileBase {
     super(project, filePath, options);
   }
 
-  protected synthesizeContent(_: IResolver) {
+  protected synthesizeContent(_: IResolver): string | undefined {
     return [
       '/// <reference types="react-scripts" />',
     ].join('\n');

@@ -2,6 +2,94 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.2](https://github.com/projen/projen/compare/v0.14.1...v0.14.2) (2021-01-07)
+
+
+### Features
+
+* **java:** sub-dependencies for maven plugins ([#469](https://github.com/projen/projen/issues/469)) ([e1dc5b8](https://github.com/projen/projen/commit/e1dc5b89f3f8a2687ea00e043c2aac2d5e05b252))
+
+### [0.14.1](https://github.com/projen/projen/compare/v0.14.0...v0.14.1) (2021-01-06)
+
+
+### Bug Fixes
+
+* output to STDOUT crashes jsii languages ([#468](https://github.com/projen/projen/issues/468)) ([b2226b0](https://github.com/projen/projen/commit/b2226b07a7e1258080637a4d556e5db8c3f38ef2))
+
+## [0.14.0](https://github.com/projen/projen/compare/v0.13.13...v0.14.0) (2021-01-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* the `java` option in jsii projects is now called `publishToMaven`.
+
+### Features
+
+* publish projen to maven and pypi ([#466](https://github.com/projen/projen/issues/466)) ([5bdb9dc](https://github.com/projen/projen/commit/5bdb9dce8589a356e088cd746629ed2724ea55c7))
+
+
+### Bug Fixes
+
+* **java:** corrupted java directory name ([#465](https://github.com/projen/projen/issues/465)) ([7cc4b5b](https://github.com/projen/projen/commit/7cc4b5b1eb106a65e8492359f86657829f27125b))
+
+### [0.13.13](https://github.com/projen/projen/compare/v0.13.12...v0.13.13) (2021-01-06)
+
+### [0.13.12](https://github.com/projen/projen/compare/v0.13.11...v0.13.12) (2021-01-06)
+
+
+### Features
+
+* **java:** rename `MavenProject` to `JavaProject` (pjid `java`) ([#464](https://github.com/projen/projen/issues/464)) ([a6cf0e3](https://github.com/projen/projen/commit/a6cf0e37910a62ded51ed8d6dccbc5210990b1fa))
+
+### [0.13.11](https://github.com/projen/projen/compare/v0.13.10...v0.13.11) (2021-01-06)
+
+
+### Features
+
+* java maven project ([#460](https://github.com/projen/projen/issues/460)) ([9f94054](https://github.com/projen/projen/commit/9f940549863aa9076f63aceefe46953d8360ef0e))
+
+### [0.13.10](https://github.com/projen/projen/compare/v0.13.9...v0.13.10) (2021-01-06)
+
+
+### Features
+
+* xml file ([#463](https://github.com/projen/projen/issues/463)) ([de8a688](https://github.com/projen/projen/commit/de8a688137d5dde9cfe084c3e997472c9001fde1))
+
+### [0.13.9](https://github.com/projen/projen/compare/v0.13.8...v0.13.9) (2021-01-06)
+
+
+### Features
+
+* do not produce empty `deps.json` and `tasks.json` files ([#462](https://github.com/projen/projen/issues/462)) ([7a079ea](https://github.com/projen/projen/commit/7a079ea897a78a0771325cf7ade49c83cc49e5ad))
+
+### [0.13.8](https://github.com/projen/projen/compare/v0.13.7...v0.13.8) (2021-01-05)
+
+
+### Features
+
+* allow text file to be marked as executable ([#458](https://github.com/projen/projen/issues/458)) ([5a9ba5e](https://github.com/projen/projen/commit/5a9ba5eacc44ddfb6c624db3a69e0369946b003b)), closes [#454](https://github.com/projen/projen/issues/454)
+
+### [0.13.7](https://github.com/projen/projen/compare/v0.13.6...v0.13.7) (2021-01-05)
+
+
+### Features
+
+* **jest:** coverage text output and watch ignore patterns ([#461](https://github.com/projen/projen/issues/461)) ([3004750](https://github.com/projen/projen/commit/30047506f5fd1a60bccc507a64acc03fd82fbb14))
+
+### [0.13.6](https://github.com/projen/projen/compare/v0.13.5...v0.13.6) (2021-01-05)
+
+
+### Features
+
+* **cli:** improved bootstrapping ([#459](https://github.com/projen/projen/issues/459)) ([d641f1c](https://github.com/projen/projen/commit/d641f1cbc387e9bbed160319851e00317d8d1360))
+
+### [0.13.5](https://github.com/projen/projen/compare/v0.13.4...v0.13.5) (2021-01-04)
+
+
+### Bug Fixes
+
+* **typescript:** snapshots saved under lib ([#455](https://github.com/projen/projen/issues/455)) ([e88c14c](https://github.com/projen/projen/commit/e88c14cb75ee80243976fffa59f49190c42a5a71))
+
 ### [0.13.4](https://github.com/projen/projen/compare/v0.13.3...v0.13.4) (2021-01-04)
 
 

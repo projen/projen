@@ -3,6 +3,11 @@ import { Project } from '../..';
 import { Task, Tasks, TasksManifest, TaskStep } from '../../tasks';
 import { TestProject, synthSnapshot } from '../util';
 
+test('no tasks, no tasks file', () => {
+  const p = new TestProject();
+  expect(synthTasksManifest(p)).toBeUndefined();
+});
+
 test('empty task', () => {
   const p = new TestProject();
 
@@ -349,8 +354,11 @@ function shell(t: Task, env: { [k: string]: string } = {}) {
 }
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
-  const manifest = synthSnapshot(p)[Tasks.MANIFEST_FILE];
+  const manifest = synthTasksManifest(p);
   delete manifest['//'];
-
   expect(manifest).toStrictEqual(toStrictEqual);
+}
+
+function synthTasksManifest(p: Project) {
+  return synthSnapshot(p)[Tasks.MANIFEST_FILE];;
 }

@@ -50,10 +50,10 @@
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
     "jest-junit": "^12",
-    "jsii": "^1.15.0",
-    "jsii-diff": "^1.15.0",
+    "jsii": "^1.16.0",
+    "jsii-diff": "^1.16.0",
     "jsii-docgen": "^1.5.2",
-    "jsii-pacmak": "^1.15.0",
+    "jsii-pacmak": "^1.16.0",
     "jsii-release": "^0.2.3",
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
@@ -68,6 +68,7 @@
     "glob": "^7",
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
+    "xmlbuilder2": "^2.4.0",
     "yaml": "^1.10.0",
     "yargs": "^16.1.1"
   },
@@ -79,6 +80,7 @@
     "glob",
     "inquirer",
     "semver",
+    "xmlbuilder2",
     "yaml",
     "yargs"
   ],
@@ -87,19 +89,28 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.13.4",
+  "version": "0.14.2",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "clover"
+    ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "/src/"
     ],
     "reporters": [
       "default",
@@ -116,7 +127,19 @@
   "stability": "experimental",
   "jsii": {
     "outdir": "dist",
-    "targets": {},
+    "targets": {
+      "java": {
+        "package": "org.projen",
+        "maven": {
+          "groupId": "com.github.eladb",
+          "artifactId": "projen"
+        }
+      },
+      "python": {
+        "distName": "projen",
+        "module": "projen"
+      }
+    },
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"

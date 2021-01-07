@@ -5,7 +5,10 @@ export interface DepsManifest {
   readonly dependencies: Dependency[];
 }
 
-export interface Dependency {
+/**
+ * Coordinates of the dependency (name and version).
+ */
+export interface DependencyCoordinates {
   /**
    * The package manager name of the dependency (e.g. `leftpad` for npm).
    *
@@ -15,20 +18,34 @@ export interface Dependency {
   readonly name: string;
 
   /**
-   * Which type of dependency this is (runtime, build-time, etc).
-   */
-  readonly type: DependencyType;
-
-  /**
    * Semantic version version requirement.
-   *
-   * If the dependency is part of a mono-repo, use `monorepo`.
    *
    * @default - requirement is managed by the package manager (e.g. npm/yarn).
    */
   readonly version?: string;
 }
 
+/**
+ * Represents a project dependency.
+ */
+export interface Dependency extends DependencyCoordinates {
+
+  /**
+   * Which type of dependency this is (runtime, build-time, etc).
+   */
+  readonly type: DependencyType;
+
+  /**
+   * Additional JSON metadata associated with the dependency (package manager
+   * specific).
+   * @default {}
+   */
+  readonly metadata?: { [key: string]: any };
+}
+
+/**
+ * Type of dependency.
+ */
 export enum DependencyType {
   /**
    * The dependency is required for the program/library during runtime.

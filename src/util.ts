@@ -8,7 +8,7 @@ const decamelize = require('decamelize');
 export function exec(command: string, options?: child_process.ExecSyncOptions) {
   logging.verbose(command);
   return child_process.execSync(command, {
-    stdio: ['inherit', 'inherit', 'pipe'],
+    stdio: ['inherit', process.stderr, 'pipe'],
     ...options,
   });
 }
@@ -26,7 +26,37 @@ export function execOrUndefined(command: string, options?: child_process.ExecSyn
   }
 }
 
-export function writeFile(filePath: string, data: any, options: { readonly?: boolean } = {}) {
+export interface WriteFileOptions {
+  /**
+   * Whether the generated file should be marked as executable.
+   *
+   * @default false
+   */
+  executable?: boolean;
+
+  /**
+   * Whether the generated file should be readonly.
+   *
+   * @default false
+   */
+  readonly?: boolean;
+}
+
+export function getFilePermissions(options: WriteFileOptions): string {
+  const readonly = options.readonly ?? false;
+  const executable = options.executable ?? false;
+  if (readonly && executable) {
+    return '500';
+  } else if (readonly) {
+    return '400';
+  } else if (executable) {
+    return '755';
+  } else {
+    return '644';
+  }
+}
+
+export function writeFile(filePath: string, data: any, options: WriteFileOptions = {}) {
   if (fs.existsSync(filePath)) {
     fs.chmodSync(filePath, '600');
   }
@@ -34,9 +64,7 @@ export function writeFile(filePath: string, data: any, options: { readonly?: boo
   fs.mkdirpSync(path.dirname(filePath));
   fs.writeFileSync(filePath, data);
 
-  if (options.readonly) {
-    fs.chmodSync(filePath, '400');
-  }
+  fs.chmodSync(filePath, getFilePermissions(options));
 }
 
 /**
@@ -187,4 +215,3 @@ export function sorted<T>(x: T) {
     return x;
   }
 }
-

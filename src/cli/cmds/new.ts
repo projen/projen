@@ -1,5 +1,6 @@
 import * as os from 'os';
 import * as path from 'path';
+import * as vm from 'vm';
 import * as fs from 'fs-extra';
 import * as inquirer from 'inquirer';
 import * as yargs from 'yargs';
@@ -8,7 +9,6 @@ import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { exec, execOrUndefined } from '../../util';
 import { tryProcessMacro } from '../macros';
-import { synth } from '../synth';
 
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
@@ -87,35 +87,82 @@ class Command implements yargs.CommandModule {
   }
 }
 
+interface CreateProjectOptions {
+  /**
+   * Project directory.
+   */
+  dir: string;
+
+  /**
+   * Project type from the inventory.
+   */
+  type: inventory.ProjectType;
+
+  /**
+   * Option values.
+   */
+  params: Record<string, string>;
+
+  /**
+   * Should we render commented-out default options in .projerc.js file?
+   */
+  comments: boolean;
+
+  /**
+   * Should we call `project.synth()` or instantiate the project (could still
+   * have side-effects) and render the .projenrc file.
+   */
+  synth: boolean;
+
+  /**
+   * Should we execuite post synthesis hooks? (usually package manager install).
+   */
+  post: boolean;
+}
+
 /**
+ * Creates a new project with defaults.
  *
- * @param baseDir Base directory for reading and writing files
- * @param type Project type
- * @param params Object with parameter default values. Values should be strings
- * @param comments Whether to include optional parameters in commented out form
+ * This function creates the project type in-process (with in VM) and calls
+ * `.synth()` on it (if `options.synth` is not `false`).
+ *
+ * At the moment, it also generates a `.projenrc.js` file with the same code
+ * that was just executed. In the future, this will also be done by the project
+ * type, so we can easily support multiple languages of projenrc.
  */
-function generateProjenConfig(baseDir: string, type: inventory.ProjectType, params: Record<string, string>, comments: boolean) {
-  const configPath = path.join(baseDir, PROJEN_RC);
+function createProject(opts: CreateProjectOptions) {
+  const mod = opts.type.moduleName !== 'projen' ? opts.type.moduleName : '../../index';
+  const newProjectCode = `const project = new ${opts.type.typename}(${renderParams(opts)});`;
+
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const module = require(mod);
+  const ctx = vm.createContext(module);
+
+  process.env.PROJEN_DISABLE_POST = (!opts.post).toString();
+  vm.runInContext([
+    newProjectCode,
+    opts.synth ? 'project.synth();' : '',
+  ].join('\n'), ctx);
+
+  const configPath = path.join(opts.dir, PROJEN_RC);
   if (fs.existsSync(configPath)) {
-    logging.error(`Directory ${baseDir} already contains ${PROJEN_RC}`);
+    logging.error(`Directory ${opts.dir} already contains ${PROJEN_RC}`);
     process.exit(1);
   }
 
-  const [importName] = type.typename.split('.');
+  const [importName] = opts.type.typename.split('.');
 
   const lines = [
-    `const { ${importName} } = require('${type.moduleName}');`,
+    `const { ${importName} } = require('${opts.type.moduleName}');`,
     '',
-    `const project = new ${type.typename}(${renderParams(type, params, comments)});`,
+    newProjectCode,
     '',
     'project.synth();',
     '',
   ];
 
   fs.writeFileSync(configPath, lines.join('\n'));
-  logging.info(`Created ${PROJEN_RC} for ${type.typename}`);
-
-  return configPath;
+  logging.info(`Created ${PROJEN_RC} for ${opts.type.typename}`);
 }
 
 function makePadding(paddingLength: number): string {
@@ -132,21 +179,21 @@ function makePadding(paddingLength: number): string {
  * @param params Object with parameter default values
  * @param comments Whether to include optional parameters in commented out form
  */
-function renderParams(type: inventory.ProjectType, params: Record<string, string>, comments: boolean) {
+function renderParams(opts: CreateProjectOptions) {
   // preprocessing
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
   const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
 
-  for (const option of type.options) {
+  for (const option of opts.type.options) {
     if (option.deprecated) {
       continue;
     }
 
     const optionName = option.name;
     let paramRender;
-    if (params[optionName] !== undefined) {
-      paramRender = `${optionName}: ${params[optionName]},`;
+    if (opts.params[optionName] !== undefined) {
+      paramRender = `${optionName}: ${opts.params[optionName]},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
@@ -180,7 +227,7 @@ function renderParams(type: inventory.ProjectType, params: Record<string, string
   }
 
   // render options without defaults
-  if (comments) {
+  if (opts.comments) {
     for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
       result.push(`${tab}/* ${moduleName} */`);
       for (const option of options) {
@@ -322,8 +369,14 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     props[k] = v;
   }
 
-  // generate .projenrc.js
-  const rcfile = generateProjenConfig(baseDir, type, props, args.comments);
+  createProject({
+    dir: baseDir,
+    type,
+    params: props,
+    comments: args.comments,
+    synth: args.synth,
+    post: args.post,
+  });
 
   // interactive git and github setup
   const gitFolder = path.resolve(baseDir, '.git');
@@ -331,12 +384,6 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 
   if (!fs.existsSync(gitFolder)) {
     pushInitialToGithub = await askAboutGit(baseDir);
-  }
-
-  // synthesize if synth is enabled (default).
-  if (args.synth) {
-    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
-    await synth(rcfile);
   }
 
   if (pushInitialToGithub) {

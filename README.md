@@ -45,6 +45,7 @@ list):
 * [awscdk-app-ts](https://github.com/projen/projen/blob/master/API.md#projen-awscdktypescriptapp) - AWS CDK app in TypeScript.
 * [awscdk-construct](https://github.com/projen/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
+* [java](https://github.com/projen/projen/blob/master/API.md#projen-java.javaproject) - Java project.
 * [jsii](https://github.com/projen/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
 * [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjsproject) - Next.js project without TypeScript.
 * [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject) - Next.js project with TypeScript.

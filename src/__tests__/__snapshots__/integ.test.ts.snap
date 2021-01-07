@@ -1095,13 +1095,13 @@ const project = new ConstructLibraryAws({
 
   // jsii publishing
 
-  java: {
+  publishToMaven: {
     javaPackage: 'com.github.eladb.watchful',
     mavenGroupId: 'com.github.eladb',
     mavenArtifactId: 'cdk-watchful',
   },
 
-  python: {
+  publishToPypi: {
     distName: 'cdk-watchful',
     module: 'cdk_watchful',
   },
@@ -1398,6 +1398,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -1418,6 +1424,9 @@ project.synth();
         "**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },
@@ -2218,16 +2227,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
@@ -2588,16 +2597,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
@@ -2668,6 +2677,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -2688,6 +2703,9 @@ project.synth();
         "**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },
@@ -3809,16 +3827,16 @@ const project = new JsiiProject({
   ],
 
   // jsii configuration
-  java: {
+  publishToMaven: {
     javaPackage: 'org.cdk8s',
     mavenGroupId: 'org.cdk8s',
     mavenArtifactId: 'cdk8s',
   },
-  python: {
+  publishToPypi: {
     distName: 'cdk8s',
     module: 'cdk8s',
   },
-  dotnet: {
+  publishToNuget: {
     dotNetNamespace: 'Org.Cdk8s',
     packageId: 'Org.Cdk8s',
   },
@@ -3889,6 +3907,12 @@ project.synth();
         "/node_modules/",
         "/templates/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "globals": Object {
         "ts-jest": Object {
           "tsconfig": "tsconfig.jest.json",
@@ -3911,6 +3935,9 @@ project.synth();
       "testPathIgnorePatterns": Array [
         "/node_modules/",
         "/templates/",
+      ],
+      "watchPathIgnorePatterns": Array [
+        "/node_modules/",
       ],
     },
     "keywords": Array [
@@ -4673,6 +4700,12 @@ project.synth();
       "coveragePathIgnorePatterns": Array [
         "/node_modules/",
       ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
       "reporters": Array [
         "default",
         Array [
@@ -4687,6 +4720,9 @@ project.synth();
         "**/?(*.)+(spec|test).[tj]s?(x)",
       ],
       "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
         "/node_modules/",
       ],
     },

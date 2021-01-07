@@ -44,13 +44,13 @@ const project = new ConstructLibraryAws({
 
   // jsii publishing
 
-  java: {
+  publishToMaven: {
     javaPackage: 'com.github.eladb.watchful',
     mavenGroupId: 'com.github.eladb',
     mavenArtifactId: 'cdk-watchful',
   },
 
-  python: {
+  publishToPypi: {
     distName: 'cdk-watchful',
     module: 'cdk_watchful',
   },

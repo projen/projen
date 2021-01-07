@@ -183,7 +183,7 @@ export class NextJsTypeDef extends FileBase {
     super(project, filePath, options);
   }
 
-  protected synthesizeContent(_: IResolver) {
+  protected synthesizeContent(_: IResolver): string | undefined {
     return [
       '/// <reference types="next" />',
       '/// <reference types="next/types/global" />',
