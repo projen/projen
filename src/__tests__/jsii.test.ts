@@ -43,5 +43,28 @@ describe('author', () => {
       url: 'https://foo.bar',
     });
   });
+
+  test('maven repository options', () => {
+    const project = new JsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      // outdir: mkdtemp(),
+      name: 'testproject',
+      publishToMaven: {
+        javaPackage: 'com.github.eladb.watchful',
+        mavenGroupId: 'com.github.eladb',
+        mavenArtifactId: 'cdk-watchful',
+        mavenServerId: 'github',
+        mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
+      },
+    });
+
+    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    expect(workflow).toContain('MAVEN_SERVER_ID: "github"');
+    expect(workflow).toContain('MAVEN_REPOSITORY_URL: "https://maven.pkg.github.com/eladb"');
+    // now assertions on the workflow
+  });
 });
 
