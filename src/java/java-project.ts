@@ -4,7 +4,7 @@ import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
 import { MavenSample } from './maven-sample';
 import { PluginOptions, Pom, PomOptions } from './pom';
-import { Projenrc, ProjenrcOptions } from './projenrc';
+import { Projenrc as ProjenrcJava, ProjenrcOptions as ProjenrcJavaOptions } from './projenrc';
 
 /**
  * Options for `JavaProject`.
@@ -86,13 +86,13 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    *
    * @default false
    */
-  readonly projenrc?: boolean;
+  readonly projenrcJava?: boolean;
 
   /**
    * Options related to projenrc in java.
    * @default - default options
    */
-  readonly projenrcOptions?: ProjenrcOptions;
+  readonly projenrcJavaOptions?: ProjenrcJavaOptions;
 }
 
 /**
@@ -124,7 +124,7 @@ export class JavaProject extends Project {
   /**
    * Projenrc component.
    */
-  public readonly projenrc?: Projenrc;
+  public readonly projenrc?: ProjenrcJava;
 
   /**
    * Maven artifact output directory.
@@ -137,8 +137,8 @@ export class JavaProject extends Project {
     this.distdir = options.distdir ?? 'dist/java';
     this.pom = new Pom(this, options);
 
-    if (options.projenrc ?? false) {
-      this.projenrc = new Projenrc(this, this.pom, options.projenrcOptions);
+    if (options.projenrcJava ?? false) {
+      this.projenrc = new ProjenrcJava(this, this.pom, options.projenrcJavaOptions);
     }
 
     const sampleJavaPackage = options.sampleJavaPackage ?? 'org.acme';

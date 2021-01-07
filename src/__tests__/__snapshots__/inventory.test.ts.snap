@@ -3457,25 +3457,25 @@ Array [
       Object {
         "default": "false",
         "docs": "Use projenrc in java.",
-        "name": "projenrc",
+        "name": "projenrcJava",
         "optional": true,
         "parent": "JavaProjectOptions",
         "path": Array [
-          "projenrc",
+          "projenrcJava",
         ],
-        "switch": "projenrc",
+        "switch": "projenrc-java",
         "type": "boolean",
       },
       Object {
         "default": "- default options",
         "docs": "Options related to projenrc in java.",
-        "name": "projenrcOptions",
+        "name": "projenrcJavaOptions",
         "optional": true,
         "parent": "JavaProjectOptions",
         "path": Array [
-          "projenrcOptions",
+          "projenrcJavaOptions",
         ],
-        "switch": "projenrc-options",
+        "switch": "projenrc-java-options",
         "type": "ProjenrcOptions",
       },
       Object {

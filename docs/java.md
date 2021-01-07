@@ -126,7 +126,7 @@ the default for Java projects, but at the moment this needs to be enabled when
 the project is created:
 
 ```shell
-$ projen new java --projenrc
+$ projen new java --projenrc-java
 ```
 
 Or set through:
@@ -134,7 +134,7 @@ Or set through:
 ```ts
 new java.JavaProject({
   // ...
-  projenrc: true
+  projenrcJava: true
 });
 ```
 

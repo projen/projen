@@ -4209,8 +4209,8 @@ new java.JavaProject(options: JavaProjectOptions)
   * **junit** (<code>boolean</code>)  Include junit tests. __*Default*__: true
   * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
   * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
-  * **projenrc** (<code>boolean</code>)  Use projenrc in java. __*Default*__: false
-  * **projenrcOptions** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
+  * **projenrcJava** (<code>boolean</code>)  Use projenrc in java. __*Default*__: false
+  * **projenrcJavaOptions** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
   * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
   * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
@@ -7790,8 +7790,8 @@ Name | Type | Description
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
-**projenrc**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: false
-**projenrcOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
+**projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: false
+**projenrcJavaOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"

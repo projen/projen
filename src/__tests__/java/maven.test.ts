@@ -53,7 +53,7 @@ test('no junit', () => {
 
 test('projenrc in java', () => {
   const p = new TestMavenProject({
-    projenrc: true,
+    projenrcJava: true,
   });
 
   expect(synthSnapshot(p)).toMatchSnapshot();
