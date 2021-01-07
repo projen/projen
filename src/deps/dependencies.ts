@@ -3,7 +3,7 @@ import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Project } from '../project';
-import { Dependency, DependencyType, DepsManifest } from './model';
+import { Dependency, DependencyCoordinates, DependencyType, DepsManifest } from './model';
 
 /**
  * The `Dependencies` component is responsible to track the list of dependencies
@@ -19,6 +19,22 @@ export class Dependencies extends Component {
    * The project-relative path of the deps manifest file.
    */
   public static readonly MANIFEST_FILE = path.join(PROJEN_DIR, 'deps.json');
+
+  /**
+   * Returns the coordinates of a dependency spec.
+   *
+   * Given `foo@^3.4.0` returns `{ name: "foo", version: "^3.4.0" }`.
+   */
+  public static parseDependency(spec: string): DependencyCoordinates {
+    const scope = spec.startsWith('@');
+    if (scope) {
+      spec = spec.substr(1);
+    }
+
+    const [module, version] = spec.split('@');
+    const name = scope ? `@${module}` : module;
+    return { name, version };
+  }
 
   private readonly _deps = new Array<Dependency>();
 
@@ -85,19 +101,14 @@ export class Dependencies extends Component {
   public addDependency(spec: string, type: DependencyType, metadata: { [key: string]: any } = { }): Dependency {
     this.project.logger.debug(`${type}-dep ${spec}`);
 
-    const scope = spec.startsWith('@');
-    if (scope) {
-      spec = spec.substr(1);
-    }
-
-    const [module, version] = spec.split('@');
-    const name = scope ? `@${module}` : module;
-
-    const dep: Dependency = version
-      ? { name, version, type, metadata }
-      : { name, type, metadata };
+    const dep: Dependency = {
+      ...Dependencies.parseDependency(spec),
+      type,
+      metadata,
+    };
 
     this._deps.push(dep);
+
     return dep;
   }
 

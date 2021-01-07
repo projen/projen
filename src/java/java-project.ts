@@ -139,7 +139,7 @@ export class JavaProject extends Project {
     this.compile = new MavenCompile(this, this.pom, options.compileOptions);
     this.packaging = new MavenPackaging(this, this.pom, options.packagingOptions);
 
-    this.pom.addPlugin('org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3', {
+    this.addPlugin('org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3', {
       executions: [{ id: 'enforce-maven', goals: ['enforce'] }],
       configuration: {
         rules: [
@@ -186,7 +186,7 @@ export class JavaProject extends Project {
    * @param spec dependency spec (`group/artifact@version`)
    * @param options plugin options
    */
-  public addPlugin(spec: string, options: PluginOptions) {
+  public addPlugin(spec: string, options: PluginOptions = {}) {
     return this.pom.addPlugin(spec, options);
   }
 }

@@ -1,6 +1,6 @@
 import { resolve } from '../_resolve';
 import { Component } from '../component';
-import { Dependency, DependencyType } from '../deps';
+import { Dependencies, DependencyCoordinates, DependencyType } from '../deps';
 import { Project } from '../project';
 import { toMavenVersionRange } from '../util/semver';
 import { XmlFile } from '../xmlfile';
@@ -181,7 +181,10 @@ export class Pom extends Component {
    * @param spec dependency spec (`group/artifact@version`)
    * @param options plugin options
    */
-  public addPlugin(spec: string, options: PluginOptions) {
+  public addPlugin(spec: string, options: PluginOptions = {}) {
+    for (const dep of options.dependencies ?? []) {
+      this.project.deps.addDependency(dep, DependencyType.BUILD);
+    }
     return this.project.deps.addDependency(spec, DependencyType.BUILD, options);
   }
 
@@ -218,7 +221,10 @@ export class Pom extends Component {
           break;
 
         case DependencyType.TEST:
-          dependencies.push({ ...mavenCoords(dep), scope: 'test' });
+          dependencies.push({
+            ...mavenCoords(dep),
+            scope: 'test',
+          });
           break;
 
         // build maps to plugins
@@ -256,6 +262,15 @@ export interface PluginOptions {
    * @default []
    */
   readonly executions?: PluginExecution[];
+
+  /**
+   * You could configure the dependencies for the plugin.
+   *
+   * Dependencies are in `<groupId>/<artifactId>@<semver>` format.
+   *
+   * @default []
+   */
+  readonly dependencies?: string[];
 }
 
 /**
@@ -273,17 +288,13 @@ export interface PluginExecution {
   readonly goals: string[];
 }
 
-function mavenVersion(version: string) {
-  return toMavenVersionRange(version);
-}
-
 /**
  * Parses maven groupId and artifactId from a dependency name.
  *
  *     name    <=> <groupId>/<artifactId>
  *     version <=> <version>
  */
-function mavenCoords(dep: Dependency) {
+function mavenCoords(dep: DependencyCoordinates) {
   const name = dep.name;
   const parts = name.split('/');
   if (parts.length !== 2) {
@@ -293,13 +304,16 @@ function mavenCoords(dep: Dependency) {
   return {
     groupId: parts[0],
     artifactId: parts[1],
-    version: dep.version ? mavenVersion(dep.version) : undefined,
+    version: dep.version ? toMavenVersionRange(dep.version) : undefined,
   };
 }
 
 function pluginConfig(options: PluginOptions = {}) {
   return {
     configuration: options.configuration,
+    dependencies: (options.dependencies && options.dependencies.length > 0)
+      ? { dependency: options.dependencies?.map(d => mavenCoords(Dependencies.parseDependency(d))) }
+      : undefined,
     executions: options.executions?.map(e => ({
       execution: {
         id: e.id,

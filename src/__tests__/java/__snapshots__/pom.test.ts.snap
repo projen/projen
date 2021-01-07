@@ -43,6 +43,13 @@ exports[`addPlugin() 1`] = `
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.projen</groupId>
+                        <artifactId>projen</artifactId>
+                        <version>[0.14.0,0.15.0)</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -51,6 +58,11 @@ exports[`addPlugin() 1`] = `
                 <configuration>
                     <mainClass>com.myorg.Play202101050157App</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.projen</groupId>
+                <artifactId>projen</artifactId>
+                <version>[0.14.0,0.15.0)</version>
             </plugin>
         </plugins>
     </build>
