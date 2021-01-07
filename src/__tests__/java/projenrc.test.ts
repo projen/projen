@@ -51,6 +51,7 @@ test('set the class name', () => {
   // WHEN
   new Projenrc(project, pom, {
     className: 'boom.bam.projenrc',
+    projenVersion: '7.7.7',
   });
 
   // THEN
