@@ -3455,6 +3455,30 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "false",
+        "docs": "Use projenrc in java.",
+        "name": "projenrc",
+        "optional": true,
+        "parent": "JavaProjectOptions",
+        "path": Array [
+          "projenrc",
+        ],
+        "switch": "projenrc",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in java.",
+        "name": "projenrcOptions",
+        "optional": true,
+        "parent": "JavaProjectOptions",
+        "path": Array [
+          "projenrcOptions",
+        ],
+        "switch": "projenrc-options",
+        "type": "ProjenrcOptions",
+      },
+      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "name": "readme",

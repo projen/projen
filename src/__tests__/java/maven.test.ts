@@ -51,6 +51,14 @@ test('no junit', () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
+test('projenrc in java', () => {
+  const p = new TestMavenProject({
+    projenrc: true,
+  });
+
+  expect(synthSnapshot(p)).toMatchSnapshot();
+});
+
 function snapPom(p: JavaProject) {
   expect(synthSnapshot(p)['pom.xml']).toMatchSnapshot();
 }
