@@ -70,7 +70,7 @@ export class IgnoreFile extends FileBase {
     }
   }
 
-  protected synthesizeContent(resolver: IResolver): string {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     const lines = [`# ${FileBase.PROJEN_MARKER}`];
 
     for (const line of Array.from(this._excludes).sort()) {

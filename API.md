@@ -1545,6 +1545,8 @@ Files that match this pattern will be ignored. If the
 pattern starts with a negation mark `!`, files that match will _not_ be
 ignored.
 
+Comment lines (start with `#`) are ignored.
+
 ```ts
 addPatterns(...patterns: string[]): void
 ```
