@@ -347,6 +347,8 @@ const project = new java.JavaProject({
   // junit: true,                       /* Include junit tests. */
   // junitOptions: undefined,           /* junit options. */
   // packagingOptions: undefined,       /* Packaging options. */
+  // projenrcJava: false,               /* Use projenrc in java. */
+  // projenrcJavaOptions: undefined,    /* Options related to projenrc in java. */
   // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
   // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
   // testDeps: [],                      /* List of test dependencies for this project. */

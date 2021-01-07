@@ -119,6 +119,53 @@ Where `groupID` and `artifactId` are the Maven coordinates and `version` is the
 semver syntax will be converted to POM syntax. For example, `^3.1.0` will be
 converted to `[3.1.0,4.0.0)`.
 
+## `projenrc.java`
+
+It is possible to write your projenrc file in Java. In the future this will be
+the default for Java projects, but at the moment this needs to be enabled when
+the project is created:
+
+```shell
+$ projen new java --projenrc-java
+```
+
+Or set through:
+
+```ts
+new java.JavaProject({
+  // ...
+  projenrcJava: true
+});
+```
+
+Then, create a file `src/test/java/projenrc.java` that looks like this:
+
+```java
+import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
+
+public class projenrc {
+    public static void main(String[] args) {
+        JavaProject project = new JavaProject(JavaProjectOptions.builder()
+            .name("my-app")
+            .groupId("org.acme")
+            .artifactId("my-app")
+            .version("1.0.0")
+            .build());
+    
+        project.synth();
+    }
+}
+```
+
+In order to synthesize, run: `pj synth`, which will compile your test code and
+execute this program.
+
+By default, `projenrc.java` is placed under the `test` scope (and
+`com.github.eladb/projen` test dependency is added). This ensures that
+application code does not take a dependency on projen code. You can change this
+behavior by setting the `testScope` option to `false`.
+
 ## Maven Plugins
 
 You can add Maven build plugins to your project using `project.addPlugin()`:
