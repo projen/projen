@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.2](https://github.com/projen/projen/compare/v0.14.1...v0.14.2) (2021-01-07)
+
+
+### Features
+
+* **java:** sub-dependencies for maven plugins ([#469](https://github.com/projen/projen/issues/469)) ([e1dc5b8](https://github.com/projen/projen/commit/e1dc5b89f3f8a2687ea00e043c2aac2d5e05b252))
+
 ### [0.14.1](https://github.com/projen/projen/compare/v0.14.0...v0.14.1) (2021-01-06)
 
 
