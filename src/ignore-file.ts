@@ -15,10 +15,17 @@ export class IgnoreFile extends FileBase {
    * pattern starts with a negation mark `!`, files that match will _not_ be
    * ignored.
    *
+   * Comment lines (start with `#`) are ignored.
+   *
    * @param patterns Ignore patterns.
    */
   public addPatterns(...patterns: string[]) {
     for (const pattern of patterns) {
+      // skip comments
+      if (pattern.startsWith('#')) {
+        continue;
+      }
+
       if (pattern.startsWith('!')) {
         this._includes.add(pattern);
       } else {
