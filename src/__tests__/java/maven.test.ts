@@ -54,6 +54,9 @@ test('no junit', () => {
 test('projenrc in java', () => {
   const p = new TestMavenProject({
     projenrcJava: true,
+    projenrcJavaOptions: {
+      projenVersion: '^1.2.3', // otherwise every bump will invalidate the snapshot
+    },
   });
 
   expect(synthSnapshot(p)).toMatchSnapshot();

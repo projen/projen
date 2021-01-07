@@ -1108,7 +1108,7 @@ target
       Object {
         "name": "com.github.eladb/projen",
         "type": "test",
-        "version": "0.14.2",
+        "version": "^1.2.3",
       },
       Object {
         "name": "org.junit.jupiter/junit-jupiter-api",
@@ -1320,7 +1320,7 @@ target
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.14.2</version>
+            <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
         </dependency>
         <dependency>

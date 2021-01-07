@@ -12,7 +12,9 @@ test('projenrc.java support', () => {
   });
 
   // WHEN
-  new Projenrc(project, pom);
+  new Projenrc(project, pom, {
+    projenVersion: '1.0.0',
+  });
 
   // THEN
   expect(synthSnapshot(project)).toMatchSnapshot();
@@ -30,6 +32,7 @@ test('use a non-test scope', () => {
   // WHEN
   new Projenrc(project, pom, {
     testScope: false,
+    projenVersion: '7.7.7',
   });
 
   // THEN
