@@ -54,6 +54,9 @@ test('addPlugin()', () => {
   const pom = new TestPom();
 
   pom.addPlugin('org.apache.maven.plugins/maven-compiler-plugin@3.8.1', {
+    dependencies: [
+      'org.projen/projen@^0.14',
+    ],
     configuration: {
       source: '1.8',
       target: '1.8',

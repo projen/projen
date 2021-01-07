@@ -129,7 +129,8 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|*No description*
-[deps.Dependency](#projen-deps-dependency)|*No description*
+[deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
+[deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -198,7 +199,7 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
-[deps.DependencyType](#projen-deps-dependencytype)|*No description*
+[deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
@@ -3836,6 +3837,21 @@ removeDependency(name: string, type?: DependencyType): void
 
 
 
+#### *static* parseDependency(spec)🔹 <a id="projen-deps-dependencies-parsedependency"></a>
+
+Returns the coordinates of a dependency spec.
+
+Given `foo@^3.4.0` returns `{ name: "foo", version: "^3.4.0" }`.
+
+```ts
+static parseDependency(spec: string): DependencyCoordinates
+```
+
+* **spec** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[deps.DependencyCoordinates](#projen-deps-dependencycoordinates)</code>
+
 
 
 ## class AutoMerge 🔹 <a id="projen-github-automerge"></a>
@@ -4224,19 +4240,20 @@ addDependency(spec: string): void
 
 
 
-#### addPlugin(spec, options)🔹 <a id="projen-java-javaproject-addplugin"></a>
+#### addPlugin(spec, options?)🔹 <a id="projen-java-javaproject-addplugin"></a>
 
 Adds a build plugin to the pom.
 
 The plug in is also added as a BUILD dep to the project.
 
 ```ts
-addPlugin(spec: string, options: PluginOptions): Dependency
+addPlugin(spec: string, options?: PluginOptions): Dependency
 ```
 
 * **spec** (<code>string</code>)  dependency spec (`group/artifact@version`).
 * **options** (<code>[java.PluginOptions](#projen-java-pluginoptions)</code>)  plugin options.
   * **configuration** (<code>Map<string, any></code>)  Plugin key/value configuration. __*Default*__: {}
+  * **dependencies** (<code>Array<string></code>)  You could configure the dependencies for the plugin. __*Default*__: []
   * **executions** (<code>Array<[java.PluginExecution](#projen-java-pluginexecution)></code>)  Plugin executions. __*Default*__: []
 
 __Returns__:
@@ -4439,19 +4456,20 @@ addDependency(spec: string): void
 
 
 
-#### addPlugin(spec, options)🔹 <a id="projen-java-pom-addplugin"></a>
+#### addPlugin(spec, options?)🔹 <a id="projen-java-pom-addplugin"></a>
 
 Adds a build plugin to the pom.
 
 The plug in is also added as a BUILD dep to the project.
 
 ```ts
-addPlugin(spec: string, options: PluginOptions): Dependency
+addPlugin(spec: string, options?: PluginOptions): Dependency
 ```
 
 * **spec** (<code>string</code>)  dependency spec (`group/artifact@version`).
 * **options** (<code>[java.PluginOptions](#projen-java-pluginoptions)</code>)  plugin options.
   * **configuration** (<code>Map<string, any></code>)  Plugin key/value configuration. __*Default*__: {}
+  * **dependencies** (<code>Array<string></code>)  You could configure the dependencies for the plugin. __*Default*__: []
   * **executions** (<code>Array<[java.PluginExecution](#projen-java-pluginexecution)></code>)  Plugin executions. __*Default*__: []
 
 __Returns__:
@@ -7578,7 +7596,7 @@ Name | Type | Description
 
 __Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
 
-
+Represents a project dependency.
 
 
 
@@ -7587,6 +7605,21 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | The package manager name of the dependency (e.g. `leftpad` for npm).
 **type**🔹 | <code>[deps.DependencyType](#projen-deps-dependencytype)</code> | Which type of dependency this is (runtime, build-time, etc).
 **metadata**?🔹 | <code>Map<string, any></code> | Additional JSON metadata associated with the dependency (package manager specific).<br/>__*Default*__: {}
+**version**?🔹 | <code>string</code> | Semantic version version requirement.<br/>__*Default*__: requirement is managed by the package manager (e.g. npm/yarn).
+
+
+
+## struct DependencyCoordinates 🔹 <a id="projen-deps-dependencycoordinates"></a>
+
+__Obtainable from__: [Dependencies](#projen-deps-dependencies).[parseDependency](#projen-deps-dependencies#projen-deps-dependencies-parsedependency)()
+
+Coordinates of the dependency (name and version).
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The package manager name of the dependency (e.g. `leftpad` for npm).
 **version**?🔹 | <code>string</code> | Semantic version version requirement.<br/>__*Default*__: requirement is managed by the package manager (e.g. npm/yarn).
 
 
@@ -7811,6 +7844,7 @@ Options for Maven plugins.
 Name | Type | Description 
 -----|------|-------------
 **configuration**?🔹 | <code>Map<string, any></code> | Plugin key/value configuration.<br/>__*Default*__: {}
+**dependencies**?🔹 | <code>Array<string></code> | You could configure the dependencies for the plugin.<br/>__*Default*__: []
 **executions**?🔹 | <code>Array<[java.PluginExecution](#projen-java-pluginexecution)></code> | Plugin executions.<br/>__*Default*__: []
 
 
@@ -8648,7 +8682,7 @@ Name | Description
 
 ## enum DependencyType 🔹 <a id="projen-deps-dependencytype"></a>
 
-
+Type of dependency.
 
 Name | Description
 -----|-----
