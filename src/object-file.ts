@@ -46,13 +46,13 @@ export abstract class ObjectFile extends FileBase {
     this.omitEmpty = options.omitEmpty ?? false;
   }
 
-  protected synthesizeContent(resolver: IResolver) {
+  protected synthesizeContent(resolver: IResolver): string | undefined {
     const obj = this.obj;
 
     const resolved = resolver.resolve(obj, {
       omitEmpty: this.omitEmpty,
-    }) ?? {};
+    }) ?? undefined;
 
-    return JSON.stringify(resolved, undefined, 2);
+    return resolved ? JSON.stringify(resolved, undefined, 2) : undefined;
   }
 }

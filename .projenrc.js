@@ -25,6 +25,7 @@ const project = new JsiiProject({
     'inquirer',
     'chalk',
     '@iarna/toml',
+    'xmlbuilder2',
   ],
 
   devDeps: [
@@ -49,7 +50,18 @@ const project = new JsiiProject({
   // makes it very hard to iterate with jest --watch
   jestOptions: {
     coverageText: false
-  }
+  },
+
+  publishToMaven: {
+    javaPackage: 'org.projen',
+    mavenGroupId: 'com.github.eladb',
+    mavenArtifactId: 'projen'
+  },
+
+  publishToPypi: {
+    distName: 'projen',
+    module: 'projen'
+  },
 });
 
 // this script is what we use as the projen command in this project
