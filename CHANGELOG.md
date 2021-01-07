@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.3](https://github.com/projen/projen/compare/v0.14.2...v0.14.3) (2021-01-07)
+
+
+### Features
+
+* **java:** projenrc.java ([#470](https://github.com/projen/projen/issues/470)) ([9d099f6](https://github.com/projen/projen/commit/9d099f6fe5d30f8d107189f4fa6c97f85711e3cb))
+
+
+### Bug Fixes
+
+* **ignore:** "include" entries should always follow "exclude" entries ([#456](https://github.com/projen/projen/issues/456)) ([e10b776](https://github.com/projen/projen/commit/e10b776d3c6e0a7746650dfe8a7f86d994cbb36d)), closes [#453](https://github.com/projen/projen/issues/453) [#435](https://github.com/projen/projen/issues/435)
+
 ### [0.14.2](https://github.com/projen/projen/compare/v0.14.1...v0.14.2) (2021-01-07)
 
 
