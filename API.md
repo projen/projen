@@ -1537,15 +1537,34 @@ new IgnoreFile(project: Project, filePath: string)
 ### Methods
 
 
+#### addPatterns(...patterns)🔹 <a id="projen-ignorefile-addpatterns"></a>
+
+Add ignore patterns.
+
+Files that match this pattern will be ignored. If the
+pattern starts with a negation mark `!`, files that match will _not_ be
+ignored.
+
+Comment lines (start with `#`) are ignored.
+
+```ts
+addPatterns(...patterns: string[]): void
+```
+
+* **patterns** (<code>string</code>)  Ignore patterns.
+
+
+
+
 #### exclude(...patterns)🔹 <a id="projen-ignorefile-exclude"></a>
 
-Do not commit the specified file patterns.
+Ignore the files that match these patterns.
 
 ```ts
 exclude(...patterns: string[]): void
 ```
 
-* **patterns** (<code>string</code>)  Patterns to exclude from git commits.
+* **patterns** (<code>string</code>)  The patterns to match.
 
 
 
@@ -1559,6 +1578,21 @@ include(...patterns: string[]): void
 ```
 
 * **patterns** (<code>string</code>)  Patterns to include in git commits.
+
+
+
+
+#### removePatterns(...patterns)🔹 <a id="projen-ignorefile-removepatterns"></a>
+
+Removes patterns previously added from the ignore file.
+
+If `addPattern()` is called after this, the pattern will be added again.
+
+```ts
+removePatterns(...patterns: string[]): void
+```
+
+* **patterns** (<code>string</code>)  patters to remove.
 
 
 
