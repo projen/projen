@@ -52,5 +52,6 @@ yarn-error.log*
 !/projen.bash
 !/src
 !/src/__tests__
+!/tsconfig.eslint.json
 !templates/**
 !version.json

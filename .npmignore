@@ -11,6 +11,7 @@
 /src
 /src/__tests__
 /test-reports/
+/tsconfig.eslint.json
 /tsconfig.json
 dist
 junit.xml
