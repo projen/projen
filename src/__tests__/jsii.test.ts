@@ -62,8 +62,8 @@ describe('author', () => {
     });
 
     const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
-    expect(workflow).toContain('MAVEN_SERVER_ID: "github"');
-    expect(workflow).toContain('MAVEN_REPOSITORY_URL: "https://maven.pkg.github.com/eladb"');
+    expect(workflow).toContain('MAVEN_SERVER_ID: github');
+    expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
   });
 });
 
