@@ -43,8 +43,31 @@ describe('author', () => {
       url: 'https://foo.bar',
     });
   });
+});
 
-  test('maven repository options', () => {
+describe('maven repository options', () => {
+  test('use maven central as repository', () => {
+    const project = new JsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      outdir: mkdtemp(),
+      name: 'testproject',
+      publishToMaven: {
+        javaPackage: 'com.github.eladb.watchful',
+        mavenGroupId: 'com.github.eladb',
+        mavenArtifactId: 'cdk-watchful',
+      },
+    });
+
+    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    expect(workflow).toContain('run: npx -p jsii-release jsii-release-maven');
+    expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
+    expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
+  });
+
+  test('use github as repository', () => {
     const project = new JsiiProject({
       authorAddress: 'https://foo.bar',
       authorUrl: 'https://foo.bar',
