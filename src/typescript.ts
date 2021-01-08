@@ -335,13 +335,11 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (options.eslint ?? true) {
-      const lintProjenRc = options.eslintOptions?.lintProjenRc ?? (compiledTests ? false : true);
-
       this.eslint = new Eslint(this, {
         tsconfigPath: options.disableTsconfig ? './tsconfig.eslint.json' : './tsconfig.json',
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
-        lintProjenRc: lintProjenRc,
+        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });
