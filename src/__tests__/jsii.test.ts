@@ -50,7 +50,7 @@ describe('author', () => {
       authorUrl: 'https://foo.bar',
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
-      // outdir: mkdtemp(),
+      outdir: mkdtemp(),
       name: 'testproject',
       publishToMaven: {
         javaPackage: 'com.github.eladb.watchful',
