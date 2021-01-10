@@ -1310,26 +1310,6 @@ addRules(rules: Map<string, any>): void
 
 
 
-#### generateTypescriptConfig(options)🔹 <a id="projen-eslint-generatetypescriptconfig"></a>
-
-Generates a custom tsconfig for eslint using passed in tsconfig options.
-
-Files must satisfy an include pattern (and not satisfy any exclude patterns)
-in order for them to be linted.
-
-```ts
-generateTypescriptConfig(options: TypescriptConfigOptions): TypescriptConfig
-```
-
-* **options** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  TypescriptConfigOptions.
-  * **compilerOptions** (<code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code>)  Compiler options to use. 
-  * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
-  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tsconfig.json"
-  * **include** (<code>Array<string></code>)  Specifies a list of glob patterns that match TypeScript files to be included in compilation. __*Default*__: all .ts files recursively
-
-__Returns__:
-* <code>[TypescriptConfig](#projen-typescriptconfig)</code>
-
 
 
 ## class FileBase 🔹 <a id="projen-filebase"></a>

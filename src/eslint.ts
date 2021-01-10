@@ -3,7 +3,6 @@ import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
-import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
 
 export interface EslintOptions {
   /**
@@ -309,32 +308,5 @@ export class Eslint extends Component {
    */
   public addIgnorePattern(pattern: string) {
     this.ignorePatterns.push(pattern);
-  }
-
-  /**
-   * Generates a custom tsconfig for eslint using passed in tsconfig options.
-   * Files must satisfy an include pattern (and not satisfy any exclude patterns)
-   * in order for them to be linted.
-   * @param options TypescriptConfigOptions
-   */
-  public generateTypescriptConfig(options: TypescriptConfigOptions) {
-    if (!(this.project instanceof NodeProject)) {
-      throw new Error('Cannot generate typescript config since project is not a NodeProject');
-    }
-
-    const tsconfig = new TypescriptConfig(this.project, {
-      fileName: options.fileName ?? 'tsconfig.eslint.json',
-      include: [
-        ...options.include ? options.include : [],
-      ],
-      exclude: [
-        ...options.exclude ? options.exclude : [],
-      ],
-      compilerOptions: {
-        ...options.compilerOptions,
-      },
-    });
-
-    return tsconfig;
   }
 }
