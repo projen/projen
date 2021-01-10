@@ -49,7 +49,7 @@ export interface JestConfigOptions {
    * An array of glob patterns indicating a set of files for which coverage information should be collected.
    * @default - undefined
    */
-  readonly collectCoverageFrom?: boolean;
+  readonly collectCoverageFrom?: string[];
 
   /**
    * The directory where Jest should output its coverage files.
