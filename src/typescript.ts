@@ -339,7 +339,6 @@ export class TypeScriptProject extends NodeProject {
         tsconfigPath: options.disableTsconfig ? './tsconfig.eslint.json' : './tsconfig.json',
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
-        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });

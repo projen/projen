@@ -52,10 +52,6 @@ const project = new JsiiProject({
     coverageText: false,
   },
 
-  eslintOptions: {
-    lintProjenRc: true,
-  },
-
   publishToMaven: {
     javaPackage: 'org.projen',
     mavenGroupId: 'com.github.eladb',
