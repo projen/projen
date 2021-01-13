@@ -9,7 +9,7 @@ test('ignorefile synthesises correctly', () => {
   new IgnoreFile(prj, '.dockerignore');
 
   // THEN
-  expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([]);
+  expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual(['']);
 });
 
 test('ignorefile puts includes (!) after excludes and sorts the entries', () => {
@@ -30,6 +30,7 @@ test('ignorefile puts includes (!) after excludes and sorts the entries', () => 
     'f.txt',
     '!c.txt',
     '!d.txt',
+    '',
   ]);
 });
 
@@ -45,6 +46,7 @@ test('ignorefile includes file after exclusion and inclusion', () => {
   // THEN
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
     '!a.txt',
+    '',
   ]);
 });
 
@@ -60,6 +62,7 @@ test('ignorefile excludes file after inclusion and exclusion', () => {
   // THEN
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.dockerignore'])).toEqual([
     '!a.txt',
+    '',
   ]);
 });
 
@@ -80,6 +83,7 @@ test('ignorefile omits duplicated includes and excludes', () => {
     'b.txt',
     '!c.txt',
     '!d.txt',
+    '',
   ]);
 });
 
@@ -104,6 +108,7 @@ test('includes (!) are always at the end', () => {
     '!hello.foo',
     '!negated.txt',
     '!zoo.foo',
+    '',
   ]);
 });
 
@@ -118,6 +123,7 @@ test('if include() is called with "!", then strip it', () => {
   // THEN
   expect(splitAndIgnoreMarker(synthSnapshot(prj)['.myignorefile'])).toStrictEqual([
     '!*.js',
+    '',
   ]);
 });
 
@@ -139,6 +145,7 @@ test('removePatters() can be used to remove previously added patters', () => {
     '*.zz',
     'boom/bam',
     'my_file',
+    '',
   ]);
 });
 
@@ -158,6 +165,7 @@ test('comments are filtered out', () => {
     '*.js',
     'bar',
     '!foo',
+    '',
   ]);
 });
 
