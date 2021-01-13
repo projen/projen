@@ -6756,7 +6756,7 @@ Name | Type | Description
 **cacheDirectory**?🔹 | <code>string</code> | The directory where Jest should store its cached dependency information.<br/>__*Default*__: "/tmp/<path>"
 **clearMocks**?🔹 | <code>boolean</code> | Automatically clear mock calls and instances before every test.<br/>__*Default*__: true
 **collectCoverage**?🔹 | <code>boolean</code> | Indicates whether the coverage information should be collected while executing the test.<br/>__*Default*__: true
-**collectCoverageFrom**?🔹 | <code>boolean</code> | An array of glob patterns indicating a set of files for which coverage information should be collected.<br/>__*Default*__: undefined
+**collectCoverageFrom**?🔹 | <code>Array<string></code> | An array of glob patterns indicating a set of files for which coverage information should be collected.<br/>__*Default*__: undefined
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
 **coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"

@@ -41,7 +41,7 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^10.17.0",
     "@types/semver": "^7.3.4",
-    "@types/yargs": "^15.0.10",
+    "@types/yargs": "^15.0.12",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.14.0",
@@ -70,7 +70,7 @@
     "semver": "^7.3.2",
     "xmlbuilder2": "^2.4.0",
     "yaml": "^1.10.0",
-    "yargs": "^16.1.1"
+    "yargs": "^16.2.0"
   },
   "bundledDependencies": [
     "@iarna/toml",
@@ -89,7 +89,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.14.3",
+  "version": "0.14.6",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
