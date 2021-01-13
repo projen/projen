@@ -18,7 +18,7 @@ export class Dependencies extends Component {
   /**
    * The project-relative path of the deps manifest file.
    */
-  public static readonly MANIFEST_FILE = path.join(PROJEN_DIR, 'deps.json');
+  public static readonly MANIFEST_FILE = path.posix.join(PROJEN_DIR, 'deps.json');
 
   /**
    * Returns the coordinates of a dependency spec.

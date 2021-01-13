@@ -1,4 +1,5 @@
 import { spawnSync } from 'child_process';
+import { EOL } from 'os';
 import { Project } from '../..';
 import { Task, Tasks, TasksManifest, TaskStep } from '../../tasks';
 import { TestProject, synthSnapshot } from '../util';
@@ -350,7 +351,7 @@ function shell(t: Task, env: { [k: string]: string } = {}) {
     throw new Error(`non-zero exit code ${result.status}: ${result.stderr.toString('utf-8')}`);
   }
 
-  return result.stdout.toString('utf-8').trim().split('\n').filter(x => x);
+  return result.stdout.toString('utf-8').trim().split(EOL).map(x => x.trim());
 }
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {

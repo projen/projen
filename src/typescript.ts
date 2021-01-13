@@ -178,7 +178,7 @@ export class TypeScriptProject extends NodeProject {
 
     // if the test directory is under `src/`, then we will run our tests against
     // the javascript files and not let jest compile it for us.
-    const compiledTests = this.testdir.startsWith(this.srcdir + path.sep);
+    const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? compiledTests;
@@ -276,8 +276,8 @@ export class TypeScriptProject extends NodeProject {
     if (this.jest && compiledTests) {
       this.addDevDeps('@types/jest');
 
-      const testout = path.relative(this.srcdir, this.testdir);
-      const libtest = path.join(this.libdir, testout);
+      const testout = path.posix.relative(this.srcdir, this.testdir);
+      const libtest = path.posix.join(this.libdir, testout);
       const srctest = this.testdir;
 
       this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
@@ -294,14 +294,14 @@ export class TypeScriptProject extends NodeProject {
         return path.join(dir, filename);
       };
 
-      const resolver = new TextFile(this, path.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
+      const resolver = new TextFile(this, path.posix.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
       resolver.addLine('const path = require("path");');
       resolver.addLine(`const libtest = "${libtest}";`);
       resolver.addLine(`const srctest= "${srctest}";`);
       resolver.addLine('module.exports = {');
       resolver.addLine(`  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`);
       resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
-      resolver.addLine('  testPathForConsistencyCheck: "some/__tests__/example.test.js"');
+      resolver.addLine('  testPathForConsistencyCheck: path.join(\'some\', \'__tests__\', \'example.test.js\')');
       resolver.addLine('};');
 
       this.jest.addSnapshotResolver(`./${resolver.path}`);
