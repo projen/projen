@@ -351,7 +351,7 @@ function shell(t: Task, env: { [k: string]: string } = {}) {
     throw new Error(`non-zero exit code ${result.status}: ${result.stderr.toString('utf-8')}`);
   }
 
-  return result.stdout.toString('utf-8').trim().split(EOL).map(x => x.trim());
+  return result.stdout.toString('utf-8').trim().split(EOL).filter(x => x).map(x => x.trim());
 }
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
