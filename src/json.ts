@@ -43,6 +43,6 @@ export class JsonFile extends ObjectFile implements IMarkableFile {
       sanitized['//'] = JsonFile.PROJEN_MARKER;
     }
 
-    return JSON.stringify(sanitized, undefined, 2);
+    return `${JSON.stringify(sanitized, undefined, 2)}\n'`;
   }
 }
