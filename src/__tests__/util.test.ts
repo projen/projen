@@ -1,4 +1,6 @@
+import { JsonFile } from '../json';
 import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions } from '../util';
+import { TestProject } from './util';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {
@@ -85,24 +87,93 @@ test('isTruthy', () => {
 });
 
 test('deepMerge merges objects', () => {
+  // GIVEN
   const original = { a: { b: 3 } };
+
+  // WHEN
   deepMerge(original, { a: { c: 4 } });
 
+  // THEN
   expect(original).toEqual({ a: { b: 3, c: 4 } });
 });
 
 test('deepMerge overwrites non-objects', () => {
+  // GIVEN
   const original = { a: [] };
+
+  // WHEN
   deepMerge(original, { a: { b: 3 } });
 
+  // THEN
   expect(original).toEqual({ a: { b: 3 } });
 });
 
 test('deepMerge does not overwrite if rightmost is "undefined"', () => {
+  // GIVEN
   const original = { a: 1 };
+
+  // WHEN
   deepMerge(original, { a: undefined });
 
+  // THEN
   expect(original).toEqual({ a: 1 });
+});
+
+test('deepMerge does not recurse indefinitely if rightmost is circular', () => {
+  // GIVEN
+  const simple: Record<string, any> = { a: 1, b: 2 };
+  const circular: Record<string, any> = { a: { b: { c: 3 } } };
+  circular.a.b.c = circular.a;
+
+  // WHEN
+  deepMerge(simple, circular);
+
+  // THEN
+  expect(simple.a.b.c).toEqual(simple.a);
+  expect(simple.b).toEqual(2);
+});
+
+test('deepMerge does not recurse indefinitely if leftmost is circular', () => {
+  // GIVEN
+  const simple: Record<string, any> = { a: 1, b: 2 };
+  const circular: Record<string, any> = { a: { b: { c: 3 } } };
+  circular.a.b.c = circular.a;
+
+  // WHEN
+  deepMerge(circular, simple);
+
+  // THEN
+  expect(circular.a).toEqual(1);
+  expect(circular.b).toEqual(2);
+});
+
+test('deepMerge should not recurse on projects', () => {
+  // GIVEN
+  const proj1 = new TestProject();
+  const proj2 = new TestProject();
+  const objA = { a: proj1 };
+  const objB = { a: proj2 };
+
+  // WHEN
+  deepMerge(objA, objB);
+
+  // THEN
+  expect(objA).toEqual(objB);
+});
+
+test('deepMerge should not recurse on components', () => {
+  // GIVEN
+  const proj = new TestProject();
+  const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
+  const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
+  const objA = { a: comp1 };
+  const objB = { a: comp2 };
+
+  // WHEN
+  deepMerge(objA, objB);
+
+  // THEN
+  expect(objA).toEqual(objB);
 });
 
 test('dedupArray', () => {

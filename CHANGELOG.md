@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.7](https://github.com/projen/projen/compare/v0.14.6...v0.14.7) (2021-01-13)
+
+
+### Features
+
+* add line endings to files ([#486](https://github.com/projen/projen/issues/486)) ([bbb7518](https://github.com/projen/projen/commit/bbb7518f204c99a38957c9a1dd876c627054a469))
+
+### [0.14.6](https://github.com/projen/projen/compare/v0.14.5...v0.14.6) (2021-01-11)
+
+
+### Bug Fixes
+
+* synthesizing react subproject fails due to stack overflow ([#481](https://github.com/projen/projen/issues/481)) ([39b2dbe](https://github.com/projen/projen/commit/39b2dbe648dcf43d059c0a25e5a4cc8884cc4693)), closes [#480](https://github.com/projen/projen/issues/480)
+
+### [0.14.5](https://github.com/projen/projen/compare/v0.14.4...v0.14.5) (2021-01-10)
+
+### [0.14.4](https://github.com/projen/projen/compare/v0.14.3...v0.14.4) (2021-01-08)
+
 ### [0.14.3](https://github.com/projen/projen/compare/v0.14.2...v0.14.3) (2021-01-07)
 
 

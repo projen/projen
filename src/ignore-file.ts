@@ -86,6 +86,6 @@ export class IgnoreFile extends FileBase {
       lines.push(line);
     }
 
-    return resolver.resolve(lines).join('\n');
+    return `${resolver.resolve(lines).join('\n')}\n`;
   }
 }

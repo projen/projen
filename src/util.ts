@@ -150,11 +150,12 @@ export type Obj<T> = { [key: string]: T };
 /**
  * Return whether the given value is an object
  *
- * Even though arrays technically are objects, we usually want to treat them differently,
- * so we return false in those cases.
+ * Even though arrays and instances of classes technically are objects, we
+ * usually want to treat them differently, so we return false in those cases.
  */
 export function isObject(x: any): x is Obj<any> {
-  return x !== null && typeof x === 'object' && !Array.isArray(x);
+  return x !== null && typeof x === 'object' && !Array.isArray(x)
+    && x.constructor.name === 'Object';
 }
 
 /**
@@ -171,8 +172,11 @@ export function deepMerge(...objects: Array<Obj<any> | undefined>) {
       const value = source[key];
 
       if (isObject(value)) {
-        if (!isObject(target[key])) { target[key] = {}; } // Overwrite on purpose
-        mergeOne(target[key], value);
+        if (!isObject(target[key])) {
+          target[key] = value;
+        } else {
+          mergeOne(target[key], value);
+        }
       } else if (typeof value !== 'undefined') {
         target[key] = value;
       }
