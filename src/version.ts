@@ -50,7 +50,7 @@ export class Version extends Component {
     project.gitignore.include(VERSION_FILE);
 
     let projenCommand = project.package.projenCommand;
-    if (project.parent != null) {
+    if (project.parent) {
       projenCommand = `cd ${path.relative(project.outdir, project.root.outdir)} && ${project.package.projenCommand}`;
     }
     new JsonFile(project, '.versionrc.json', {
