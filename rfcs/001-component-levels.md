@@ -44,7 +44,7 @@ Our high-level goals are to:
   jest for typescript) into L2/L3 components
 - establish a uniform way of accessing escape hatches for most components
 - make it easy to hotswap between different components that are serving a
-  similar name
+  similar purpose
 - make the processing order of options and escape hatches simpler and more
   transparent (this should come for free by moving component-related logic out
   of project constructors and into components)
@@ -141,15 +141,14 @@ in a later RFC / issue.
   difference clear to users? Via a naming scheme, or something more?
 - To achieve the "hot swappability" of components (from the [Future
   Changes](#Future-changes) section), how do we get around the type
-  restrictions/limitations of TypeScript/JSII? For example, if I had a generic
-  slot in the `Project` class for
+  restrictions/limitations of TypeScript/JSII? For example, if the `Project`
+  class had a generic slot for
   [DevEnvironment](https://github.com/projen/projen/blob/c665e0a5378cddbf9ef0f51274b627a444336ee3/src/dev-env.ts#L68)
-  components, then as a user I could easily choose between (or choose both of)
-  the implementations of DevEnvironment, such as the `Gitpod` and `DevContainer`
-  components (as well as any that are provided by external modules that I've
-  imported). But with naive typing, the user would only be able to access
-  methods provided by the shared interface - and not any gitpod-specific or
-  devcontainer-specific methods. How do we get around that?
+  components, then as a user I could easily choose to insert any implementing
+  component such as `Gitpod` or `DevContainer` (or both). But because of how
+  types work in TypeScript, I would only be able to access methods defined by
+  the interface - and not any gitpod-specific or devcontainer-specific methods.
+  How do we get around that?
 - Are there any fundamental differences in the constraints between what AWS CDK
   escape hatches need to do, and what projen escape hatches need to do if we end
   up following a similar design strategy? Are there any issues with the way
