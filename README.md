@@ -164,6 +164,8 @@ Some examples for features built-in to project types:
 
 See [API Reference](./API.md) for API details.
 
+In addition, several projen components and project types are explained with examples in [/docs](./docs) (currently a work in progress!).
+
 ## Ecosystem
 
 _projen_ takes a "batteries included" approach and aims to offer dozens of different project types out of
@@ -232,14 +234,7 @@ $ cd projen
 $ yarn
 ```
 
-Run `yarn watch` to compile in the background:
-
-```bash
-$ yarn watch
-```
-
-Tests are located under `src/__tests__` and executed from javascript code, so
-make sure to compile first or use `yarn watch`.
+For more information, check out our [contributor's guide](./CONTRIBUTING.md).
 
 ## Roadmap
 
