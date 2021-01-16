@@ -12,8 +12,10 @@ import { Logger, LoggerOptions } from './logger';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
+import { TomlFile } from './toml';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
+import { YamlFile } from './yaml';
 
 export interface ProjectOptions {
   /**
@@ -282,6 +284,40 @@ export class Project {
 
     if (!(file instanceof JsonFile)) {
       throw new Error(`found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
+   * Finds a yaml file by name.
+   * @param filePath The file path.
+   */
+  public tryFindYamlFile(filePath: string): YamlFile | undefined {
+    const file = this.tryFindFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof YamlFile)) {
+      throw new Error(`found file ${filePath} but it is not a YamlFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
+   * Finds a toml file by name.
+   * @param filePath The file path.
+   */
+  public tryFindTomlFile(filePath: string): TomlFile | undefined {
+    const file = this.tryFindFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof TomlFile)) {
+      throw new Error(`found file ${filePath} but it is not a TomlFile. got: ${file.constructor.name}`);
     }
 
     return file;

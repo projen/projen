@@ -20,18 +20,19 @@ export class TomlFile extends ObjectFile implements IMarkableFile {
   constructor(project: Project, filePath: string, options: TomlFileOptions) {
     super(project, filePath, options);
 
-    if (!options.obj) {
-      throw new Error('"obj" cannot be undefined');
-    }
-
     this.marker = options.marker ?? false;
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
+    const json = super.synthesizeContent(resolver);
+    if (!json) {
+      return undefined;
+    }
+
     return [
       ... (this.marker ? [`# ${TomlFile.PROJEN_MARKER}`] : []),
       '',
-      TOML.stringify(resolver.resolve(this.obj)),
+      TOML.stringify(JSON.parse(json)),
     ].join('\n');
   }
 }

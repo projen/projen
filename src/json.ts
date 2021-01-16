@@ -31,12 +31,10 @@ export class JsonFile extends ObjectFile implements IMarkableFile {
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const json = super.synthesizeContent(resolver);
-
     if (!json) {
       return undefined;
     }
 
-    // sanitize object references by serializing and deserializing to JSON
     const sanitized = JSON.parse(json);
 
     if (this.marker) {

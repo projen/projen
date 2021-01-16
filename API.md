@@ -1313,7 +1313,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -2789,6 +2789,61 @@ Name | Type | Description
 ### Methods
 
 
+#### addDeletionOverride(path)🔹 <a id="projen-objectfile-adddeletionoverride"></a>
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+```ts
+addDeletionOverride(path: string): void
+```
+
+* **path** (<code>string</code>)  The path of the value to delete.
+
+
+
+
+#### addOverride(path, value)🔹 <a id="projen-objectfile-addoverride"></a>
+
+Adds an override to the synthesized CloudFormation resource.
+
+To add a property override, either use `addPropertyOverride` or prefix
+`path` with "Properties." (i.e. `Properties.TopicName`).
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.package.manifest.addOverride('jest.clearMocks', true);
+project.package.manifest.addOverride('jest.coverageReporters', ["json", "lcov", "clover"]);
+```
+would add the overrides
+```json
+"jest": {
+   "clearMocks": true,
+   "coverageReporters": [
+     "json",
+     "lcov",
+     "clover"
+   ]
+   ...
+}
+...
+
+```ts
+addOverride(path: string, value: any): void
+```
+
+* **path** (<code>string</code>)  - The path of the property, you can use dot notation to override values in complex types.
+* **value** (<code>any</code>)  - The value.
+
+
+
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -2977,6 +3032,19 @@ tryFindJsonFile(filePath: string): JsonFile
 
 __Returns__:
 * <code>[JsonFile](#projen-jsonfile)</code>
+
+#### tryFindYamlFile(filePath)🔹 <a id="projen-project-tryfindyamlfile"></a>
+
+Finds a yaml file by name.
+
+```ts
+tryFindYamlFile(filePath: string): YamlFile
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[YamlFile](#projen-yamlfile)</code>
 
 
 
@@ -4078,7 +4146,7 @@ __Returns__:
 
 __Submodule__: github
 
-__Extends__: [FileBase](#projen-filebase)
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -4092,6 +4160,14 @@ new github.GithubWorkflow(github: GitHub, name: string)
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
 
 ### Methods
 
@@ -4121,19 +4197,6 @@ on(events: Map<string, any>): void
 
 
 
-
-#### protected synthesizeContent(resolver)🔹 <a id="projen-github-githubworkflow-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(resolver: IResolver): string
-```
-
-* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
 
 
 
