@@ -111,7 +111,7 @@ export interface JsiiJavaTarget {
   /**
    * Deployment repository when not deploying to Maven Central
    *
-   * @default not set
+   * @default - not set
    */
   readonly mavenRepositoryUrl?: string;
 }
@@ -220,12 +220,10 @@ export class JsiiProject extends TypeScriptProject {
         maven: {
           groupId: options.publishToMaven.mavenGroupId,
           artifactId: options.publishToMaven.mavenArtifactId,
-          serverId: options.publishToMaven.mavenServerId,
-          repositoryUrl: options.publishToMaven.mavenRepositoryUrl,
         },
       };
 
-      this.publishToMaven(targets.java);
+      this.publishToMaven(options.publishToMaven.mavenServerId, options.publishToMaven.mavenRepositoryUrl);
       publishing = true;
     }
 
@@ -343,7 +341,7 @@ export class JsiiProject extends TypeScriptProject {
     });
   }
 
-  private publishToMaven(java: any) {
+  private publishToMaven(serverId: string | undefined, repositoryUrl: string | undefined) {
     if (!this.releaseWorkflow) {
       return;
     }
@@ -367,8 +365,8 @@ export class JsiiProject extends TypeScriptProject {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-maven',
             env: {
-              MAVEN_SERVER_ID: java.maven ? java.maven.serverId : undefined,
-              MAVEN_REPOSITORY_URL: java.maven ? java.maven.repositoryUrl : undefined,
+              MAVEN_SERVER_ID: serverId,
+              MAVEN_REPOSITORY_URL: repositoryUrl,
               MAVEN_GPG_PRIVATE_KEY: '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
               MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
               MAVEN_PASSWORD: '${{ secrets.MAVEN_PASSWORD }}',
