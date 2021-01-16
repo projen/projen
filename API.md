@@ -3033,6 +3033,19 @@ tryFindJsonFile(filePath: string): JsonFile
 __Returns__:
 * <code>[JsonFile](#projen-jsonfile)</code>
 
+#### tryFindTomlFile(filePath)🔹 <a id="projen-project-tryfindtomlfile"></a>
+
+Finds a toml file by name.
+
+```ts
+tryFindTomlFile(filePath: string): TomlFile
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[TomlFile](#projen-tomlfile)</code>
+
 #### tryFindYamlFile(filePath)🔹 <a id="projen-project-tryfindyamlfile"></a>
 
 Finds a yaml file by name.
