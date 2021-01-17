@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.9](https://github.com/projen/projen/compare/v0.14.8...v0.14.9) (2021-01-14)
+
+
+### Bug Fixes
+
+* bump task fails on subprojects ([#477](https://github.com/projen/projen/issues/477)) ([c531b80](https://github.com/projen/projen/commit/c531b80334e70743702097c77926af7e6e917df7))
+
+### [0.14.8](https://github.com/projen/projen/compare/v0.14.7...v0.14.8) (2021-01-14)
+
+### [0.14.7](https://github.com/projen/projen/compare/v0.14.6...v0.14.7) (2021-01-13)
+
+
+### Features
+
+* add line endings to files ([#486](https://github.com/projen/projen/issues/486)) ([bbb7518](https://github.com/projen/projen/commit/bbb7518f204c99a38957c9a1dd876c627054a469))
+
 ### [0.14.6](https://github.com/projen/projen/compare/v0.14.5...v0.14.6) (2021-01-11)
 
 
