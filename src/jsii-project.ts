@@ -102,6 +102,18 @@ export interface JsiiJavaTarget {
   readonly javaPackage: string;
   readonly mavenGroupId: string;
   readonly mavenArtifactId: string;
+  /**
+   * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
+   *
+   * @default "ossrh" Defaults to Maven Central.
+   */
+  readonly mavenServerId?: string;
+  /**
+   * Deployment repository when not deploying to Maven Central
+   *
+   * @default - not set
+   */
+  readonly mavenRepositoryUrl?: string;
 }
 
 export interface JsiiPythonTarget {
@@ -211,7 +223,7 @@ export class JsiiProject extends TypeScriptProject {
         },
       };
 
-      this.publishToMaven();
+      this.publishToMaven(options.publishToMaven.mavenServerId, options.publishToMaven.mavenRepositoryUrl);
       publishing = true;
     }
 
@@ -329,7 +341,7 @@ export class JsiiProject extends TypeScriptProject {
     });
   }
 
-  private publishToMaven() {
+  private publishToMaven(serverId: string | undefined, repositoryUrl: string | undefined) {
     if (!this.releaseWorkflow) {
       return;
     }
@@ -353,6 +365,8 @@ export class JsiiProject extends TypeScriptProject {
             name: 'Release',
             run: 'npx -p jsii-release jsii-release-maven',
             env: {
+              MAVEN_SERVER_ID: serverId,
+              MAVEN_REPOSITORY_URL: repositoryUrl,
               MAVEN_GPG_PRIVATE_KEY: '${{ secrets.MAVEN_GPG_PRIVATE_KEY }}',
               MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: '${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}',
               MAVEN_PASSWORD: '${{ secrets.MAVEN_PASSWORD }}',
