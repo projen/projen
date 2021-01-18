@@ -23,7 +23,7 @@ The following tools need to be installed to develop on projen locally.
 The basic commands to get the repository cloned and built locally follow:
 
 ```console
-$ git clone https://github.com/projen/projen.git
+$ git clone git@github.com:projen/projen
 $ cd projen
 $ yarn # install dependencies
 $ yarn build # build projen
@@ -41,7 +41,10 @@ The projen package has the following scripts:
 - `package` - emits publishable artifacts to `dist`.
 - `eslint` - run linter against source code
 
-Each one of these scripts can be executed using `yarn <script>`.
+Each of these scripts can be executed using `yarn <script>` or `npx projen <script>`.
+
+Tests are located under `src/__tests__` and executed from javascript code, so
+make sure to compile once before running any tests.
 
 One trick for quickly iterating is to run `yarn watch` in one terminal, and
 `yarn test:watch` in another. Then, when you change your unit tests the code
