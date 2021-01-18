@@ -150,6 +150,70 @@ describe('deepMerge (destructive: false)', () => {
   });
 });
 
+describe('deepMerge (destructive: true)', () => {
+  test('merges objects', () => {
+    // GIVEN
+    const original = { a: { b: 3 } };
+
+    // WHEN
+    deepMerge(true, original, { a: { c: 4 } });
+
+    // THEN
+    expect(original).toEqual({ a: { b: 3, c: 4 } });
+  });
+
+  test('overwrites non-objects', () => {
+    // GIVEN
+    const original = { a: [] };
+
+    // WHEN
+    deepMerge(true, original, { a: { b: 3 } });
+
+    // THEN
+    expect(original).toEqual({ a: { b: 3 } });
+  });
+
+  test('does overwrite if rightmost is "undefined"', () => {
+    // GIVEN
+    const original = { a: 1 };
+
+    // WHEN
+    deepMerge(true, original, { a: undefined });
+
+    // THEN
+    expect(original).toEqual({});
+  });
+
+  test('does not recurse on projects', () => {
+    // GIVEN
+    const proj1 = new TestProject();
+    const proj2 = new TestProject();
+    const objA = { a: proj1 };
+    const objB = { a: proj2 };
+
+    // WHEN
+    deepMerge(false, objA, objB);
+
+    // THEN
+    expect(objA).toEqual(objB);
+  });
+
+  test('does not recurse on components', () => {
+    // GIVEN
+    const proj = new TestProject();
+    const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
+    const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
+    const objA = { a: comp1 };
+    const objB = { a: comp2 };
+
+    // WHEN
+    deepMerge(false, objA, objB);
+
+    // THEN
+    expect(objA).toEqual(objB);
+  });
+});
+
 test('dedupArray', () => {
   expect(dedupArray(['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
   expect(dedupArray(['a', 'a', 'b', 'a'])).toEqual(['a', 'b']);
