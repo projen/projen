@@ -86,66 +86,68 @@ test('isTruthy', () => {
   expect(isTruthy('enabled')).toEqual(true);
 });
 
-test('deepMerge merges objects', () => {
-  // GIVEN
-  const original = { a: { b: 3 } };
+describe('deepMerge (destructive: false)', () => {
+  test('merges objects', () => {
+    // GIVEN
+    const original = { a: { b: 3 } };
 
-  // WHEN
-  deepMerge(false, original, { a: { c: 4 } });
+    // WHEN
+    deepMerge(false, original, { a: { c: 4 } });
 
-  // THEN
-  expect(original).toEqual({ a: { b: 3, c: 4 } });
-});
+    // THEN
+    expect(original).toEqual({ a: { b: 3, c: 4 } });
+  });
 
-test('deepMerge overwrites non-objects', () => {
-  // GIVEN
-  const original = { a: [] };
+  test('overwrites non-objects', () => {
+    // GIVEN
+    const original = { a: [] };
 
-  // WHEN
-  deepMerge(false, original, { a: { b: 3 } });
+    // WHEN
+    deepMerge(false, original, { a: { b: 3 } });
 
-  // THEN
-  expect(original).toEqual({ a: { b: 3 } });
-});
+    // THEN
+    expect(original).toEqual({ a: { b: 3 } });
+  });
 
-test('deepMerge does not overwrite if rightmost is "undefined"', () => {
-  // GIVEN
-  const original = { a: 1 };
+  test('does not overwrite if rightmost is "undefined"', () => {
+    // GIVEN
+    const original = { a: 1 };
 
-  // WHEN
-  deepMerge(false, original, { a: undefined });
+    // WHEN
+    deepMerge(false, original, { a: undefined });
 
-  // THEN
-  expect(original).toEqual({ a: 1 });
-});
+    // THEN
+    expect(original).toEqual({ a: 1 });
+  });
 
-test('deepMerge should not recurse on projects', () => {
-  // GIVEN
-  const proj1 = new TestProject();
-  const proj2 = new TestProject();
-  const objA = { a: proj1 };
-  const objB = { a: proj2 };
+  test('does not recurse on projects', () => {
+    // GIVEN
+    const proj1 = new TestProject();
+    const proj2 = new TestProject();
+    const objA = { a: proj1 };
+    const objB = { a: proj2 };
 
-  // WHEN
-  deepMerge(false, objA, objB);
+    // WHEN
+    deepMerge(false, objA, objB);
 
-  // THEN
-  expect(objA).toEqual(objB);
-});
+    // THEN
+    expect(objA).toEqual(objB);
+  });
 
-test('deepMerge should not recurse on components', () => {
-  // GIVEN
-  const proj = new TestProject();
-  const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
-  const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
-  const objA = { a: comp1 };
-  const objB = { a: comp2 };
+  test('does not recurse on components', () => {
+    // GIVEN
+    const proj = new TestProject();
+    const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
+    const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
+    const objA = { a: comp1 };
+    const objB = { a: comp2 };
 
-  // WHEN
-  deepMerge(false, objA, objB);
+    // WHEN
+    deepMerge(false, objA, objB);
 
-  // THEN
-  expect(objA).toEqual(objB);
+    // THEN
+    expect(objA).toEqual(objB);
+  });
 });
 
 test('dedupArray', () => {
