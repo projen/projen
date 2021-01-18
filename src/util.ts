@@ -168,7 +168,7 @@ export function isObject(x: any): x is Obj<any> {
  *
  * `undefined`s will cause a value to be deleted if destructive is enabled.
  */
-export function deepMerge(destructive: boolean, ...objects: Array<Obj<any> | undefined>) {
+export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boolean = false) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
       const value = source[key];

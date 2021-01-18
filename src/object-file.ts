@@ -132,7 +132,7 @@ export abstract class ObjectFile extends FileBase implements IMarkableFile {
     }) ?? undefined;
 
     if (resolved) {
-      deepMerge(true, resolved, this.rawOverrides);
+      deepMerge([resolved, this.rawOverrides], true);
     }
 
     return resolved ? JSON.stringify(resolved, undefined, 2) : undefined;

@@ -92,7 +92,7 @@ describe('deepMerge (destructive: false)', () => {
     const original = { a: { b: 3 } };
 
     // WHEN
-    deepMerge(false, original, { a: { c: 4 } });
+    deepMerge([original, { a: { c: 4 } }]);
 
     // THEN
     expect(original).toEqual({ a: { b: 3, c: 4 } });
@@ -103,7 +103,7 @@ describe('deepMerge (destructive: false)', () => {
     const original = { a: [] };
 
     // WHEN
-    deepMerge(false, original, { a: { b: 3 } });
+    deepMerge([original, { a: { b: 3 } }]);
 
     // THEN
     expect(original).toEqual({ a: { b: 3 } });
@@ -114,7 +114,7 @@ describe('deepMerge (destructive: false)', () => {
     const original = { a: 1 };
 
     // WHEN
-    deepMerge(false, original, { a: undefined });
+    deepMerge([original, { a: undefined }]);
 
     // THEN
     expect(original).toEqual({ a: 1 });
@@ -128,7 +128,7 @@ describe('deepMerge (destructive: false)', () => {
     const objB = { a: proj2 };
 
     // WHEN
-    deepMerge(false, objA, objB);
+    deepMerge([objA, objB]);
 
     // THEN
     expect(objA).toEqual(objB);
@@ -143,7 +143,7 @@ describe('deepMerge (destructive: false)', () => {
     const objB = { a: comp2 };
 
     // WHEN
-    deepMerge(false, objA, objB);
+    deepMerge([objA, objB]);
 
     // THEN
     expect(objA).toEqual(objB);
@@ -156,7 +156,7 @@ describe('deepMerge (destructive: true)', () => {
     const original = { a: { b: 3 } };
 
     // WHEN
-    deepMerge(true, original, { a: { c: 4 } });
+    deepMerge([original, { a: { c: 4 } }], true);
 
     // THEN
     expect(original).toEqual({ a: { b: 3, c: 4 } });
@@ -167,7 +167,7 @@ describe('deepMerge (destructive: true)', () => {
     const original = { a: [] };
 
     // WHEN
-    deepMerge(true, original, { a: { b: 3 } });
+    deepMerge([original, { a: { b: 3 } }], true);
 
     // THEN
     expect(original).toEqual({ a: { b: 3 } });
@@ -178,10 +178,10 @@ describe('deepMerge (destructive: true)', () => {
     const original = { a: 1 };
 
     // WHEN
-    deepMerge(true, original, { a: undefined });
+    deepMerge([original, { a: undefined }], true);
 
     // THEN
-    expect(original).toEqual({});
+    expect(original).toEqual({}); // ! different from the non-destructive case
   });
 
   test('does not recurse on projects', () => {
@@ -192,7 +192,7 @@ describe('deepMerge (destructive: true)', () => {
     const objB = { a: proj2 };
 
     // WHEN
-    deepMerge(false, objA, objB);
+    deepMerge([objA, objB], true);
 
     // THEN
     expect(objA).toEqual(objB);
@@ -207,7 +207,7 @@ describe('deepMerge (destructive: true)', () => {
     const objB = { a: comp2 };
 
     // WHEN
-    deepMerge(false, objA, objB);
+    deepMerge([objA, objB], true);
 
     // THEN
     expect(objA).toEqual(objB);

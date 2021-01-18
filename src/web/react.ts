@@ -105,7 +105,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
     };
 
     // never generate default TypeScript sample code, since this class provides its own
-    super(deepMerge(false, defaultOptions, options, { sampleCode: false }) as TypeScriptProjectOptions);
+    super(deepMerge([defaultOptions, options, { sampleCode: false }]) as TypeScriptProjectOptions);
 
     this.srcdir = options.srcdir ?? 'src';
 
