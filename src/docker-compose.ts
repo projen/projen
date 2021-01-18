@@ -13,6 +13,12 @@ export interface DockerComposeProps {
    * @default - no name is added
    */
   readonly nameSuffix?: string;
+  
+  /**
+   * Docker version do be used
+   * @default 3.3
+   */
+  readonly version?: string;
 
   /**
    * Service descriptions.
