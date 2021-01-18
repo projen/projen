@@ -1,10 +1,10 @@
 # Escape hatches
 
-It's possible projen doesn't have the right high-level or low=level APIs that
+It's possible projen doesn't have the right high-level or low-level APIs that
 you need for managing your project configuration. If you think there's an API
 that would be useful, first consider checking on GitHub to see if anyone else
 has the same problem, or consider opening an issue! But in the meantime, there
-are ways you can bypass projen's to add special configuration code.
+are ways you can bypass projen's regular APIs to add special configuration code.
 
 ## Overrides
 
