@@ -31,8 +31,8 @@ export class XmlFile extends ObjectFile {
     });
 
     return [
-      ... (this.marker ? [`<!-- ${XmlFile.PROJEN_MARKER} -->`] : []),
       xmlString,
+      ... (this.marker ? [`<!-- ${XmlFile.PROJEN_MARKER} -->`] : []),
     ].join('\n');
   }
 }
