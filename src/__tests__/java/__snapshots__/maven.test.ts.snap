@@ -111,6 +111,16 @@ target
         "version": "3.2.1",
       },
       Object {
+        "name": "org.codehaus.mojo/exec-maven-plugin",
+        "type": "build",
+        "version": "3.0.0",
+      },
+      Object {
+        "name": "com.github.eladb/projen",
+        "type": "test",
+        "version": "0.15.0",
+      },
+      Object {
         "name": "org.junit.jupiter/junit-jupiter-api",
         "type": "test",
         "version": "5.7.0",
@@ -190,6 +200,18 @@ target
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
+          },
+        ],
+      },
+      "synth": Object {
+        "description": "Synthesize the project",
+        "name": "synth",
+        "steps": Array [
+          Object {
+            "exec": "mvn compiler:testCompile --quiet",
+          },
+          Object {
+            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
           },
         ],
       },
@@ -297,9 +319,20 @@ target
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.github.eladb</groupId>
+            <artifactId>projen</artifactId>
+            <version>0.15.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -436,6 +469,11 @@ exports[`dependencies 1`] = `
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -443,6 +481,12 @@ exports[`dependencies 1`] = `
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>core</artifactId>
             <version>[1.2.3,2.0.0)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.eladb</groupId>
+            <artifactId>projen</artifactId>
+            <version>0.15.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -559,6 +603,11 @@ exports[`dependencies via ctor 1`] = `
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -571,6 +620,12 @@ exports[`dependencies via ctor 1`] = `
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>core</artifactId>
             <version>[1.2.3,2.0.0)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.eladb</groupId>
+            <artifactId>projen</artifactId>
+            <version>0.15.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -705,6 +760,16 @@ target
         "type": "build",
         "version": "3.2.1",
       },
+      Object {
+        "name": "org.codehaus.mojo/exec-maven-plugin",
+        "type": "build",
+        "version": "3.0.0",
+      },
+      Object {
+        "name": "com.github.eladb/projen",
+        "type": "test",
+        "version": "0.15.0",
+      },
     ],
   },
   ".projen/tasks.json": Object {
@@ -775,6 +840,18 @@ target
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
+          },
+        ],
+      },
+      "synth": Object {
+        "description": "Synthesize the project",
+        "name": "synth",
+        "steps": Array [
+          Object {
+            "exec": "mvn compiler:testCompile --quiet",
+          },
+          Object {
+            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
           },
         ],
       },
@@ -872,8 +949,21 @@ target
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.eladb</groupId>
+            <artifactId>projen</artifactId>
+            <version>0.15.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
 <!-- ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\". -->",
   "src/main/java/org/acme/Main.java": "package org.acme;
@@ -978,9 +1068,20 @@ exports[`pom options 1`] = `
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.github.eladb</groupId>
+            <artifactId>projen</artifactId>
+            <version>0.15.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

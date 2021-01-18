@@ -132,6 +132,10 @@ interface CreateProjectOptions {
  */
 function createProject(opts: CreateProjectOptions) {
   const mod = opts.type.moduleName !== 'projen' ? opts.type.moduleName : '../../index';
+
+  // pass the FQN of the project type to the project initializer so it can
+  // generate the projenrc file.
+  opts.params.jsiiFqn = JSON.stringify(opts.type.fqn);
   const newProjectCode = `const project = new ${opts.type.typename}(${renderParams(opts)});`;
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports

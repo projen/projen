@@ -6,9 +6,7 @@ import { TaskRuntime } from '../tasks';
  * Reads .projen/tasks.json and adds CLI commands for all tasks.
  * @param ya yargs
  */
-export function discoverTaskCommands(ya: yargs.Argv) {
-  const workdir = '.';
-  const runtime = new TaskRuntime(workdir);
+export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
     ya.command(task.name, task.description ?? '', taskCommandHandler(task.name));
