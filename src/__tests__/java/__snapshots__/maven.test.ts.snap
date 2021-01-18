@@ -118,7 +118,7 @@ target
       Object {
         "name": "com.github.eladb/projen",
         "type": "test",
-        "version": "0.15.0",
+        "version": "0.15.1",
       },
       Object {
         "name": "org.junit.jupiter/junit-jupiter-api",
@@ -330,7 +330,7 @@ target
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.15.0</version>
+            <version>0.15.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -485,7 +485,7 @@ exports[`dependencies 1`] = `
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.15.0</version>
+            <version>0.15.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -624,7 +624,7 @@ exports[`dependencies via ctor 1`] = `
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.15.0</version>
+            <version>0.15.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -768,7 +768,7 @@ target
       Object {
         "name": "com.github.eladb/projen",
         "type": "test",
-        "version": "0.15.0",
+        "version": "0.15.1",
       },
     ],
   },
@@ -960,7 +960,7 @@ target
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.15.0</version>
+            <version>0.15.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -1079,7 +1079,7 @@ exports[`pom options 1`] = `
         <dependency>
             <groupId>com.github.eladb</groupId>
             <artifactId>projen</artifactId>
-            <version>0.15.0</version>
+            <version>0.15.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
