@@ -165,18 +165,31 @@ export function isObject(x: any): x is Obj<any> {
  * but overwritten just like scalars.
  *
  * If an object is merged into a non-object, the non-object is lost.
+ *
+ * `undefined`s will cause a value to be deleted if destructive is enabled.
  */
-export function deepMerge(...objects: Array<Obj<any> | undefined>) {
+export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boolean = false) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
       const value = source[key];
 
       if (isObject(value)) {
+        // if the value at the target is not an object, override it with an
+        // object so we can continue the recursion
         if (!isObject(target[key])) {
           target[key] = value;
-        } else {
-          mergeOne(target[key], value);
         }
+        mergeOne(target[key], value);
+
+        // if the result of the merge is an empty object, it's because the
+        // eventual value we assigned is `undefined`, and there are no
+        // sibling concrete values alongside, so we can delete this tree.
+        const output = target[key];
+        if (isObject(output) && Object.keys(output).length === 0 && destructive) {
+          delete target[key];
+        }
+      } else if (value === undefined && destructive) {
+        delete target[key];
       } else if (typeof value !== 'undefined') {
         target[key] = value;
       }

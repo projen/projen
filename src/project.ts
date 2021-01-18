@@ -9,6 +9,7 @@ import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
+import { ObjectFile } from './object-file';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -273,15 +274,33 @@ export class Project {
   /**
    * Finds a json file by name.
    * @param filePath The file path.
+   * @deprecated use `tryFindObjectFile`
    */
   public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindFile(filePath);
+    const file = this.tryFindObjectFile(filePath);
     if (!file) {
       return undefined;
     }
 
     if (!(file instanceof JsonFile)) {
       throw new Error(`found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
+   * Finds an object file (like JsonFile, YamlFile, etc.) by name.
+   * @param filePath The file path.
+   */
+  public tryFindObjectFile(filePath: string): ObjectFile | undefined {
+    const file = this.tryFindFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof ObjectFile)) {
+      throw new Error(`found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`);
     }
 
     return file;
