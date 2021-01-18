@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.14.10](https://github.com/projen/projen/compare/v0.14.9...v0.14.10) (2021-01-17)
+
+
+### Features
+
+* **jsii:** support publishing maven artifacts to github ([#363](https://github.com/projen/projen/issues/363)) ([e11996c](https://github.com/projen/projen/commit/e11996c4cbf7ec00f7a2ce7ba88bb97098fad9fa)), closes [#355](https://github.com/projen/projen/issues/355)
+
 ### [0.14.9](https://github.com/projen/projen/compare/v0.14.8...v0.14.9) (2021-01-14)
 
 
