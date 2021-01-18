@@ -16,9 +16,9 @@ test('simple use', () => {
     },
   });
 
-  file.obj.project.properties = {
+  file.addOverride('project.properties', {
     'project.build.sourceEncoding': 'UTF-8',
-  };
+  });
 
   // THEN
   expect(synthSnapshot(project)['pom.xml']).toMatchSnapshot();

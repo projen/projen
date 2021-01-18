@@ -1,10 +1,11 @@
 import { FileBase, FileBaseOptions, IResolver } from './file';
+import { IMarkableFile, MarkableFileOptions } from './markable-file';
 import { Project } from './project';
 
 /**
  * Options for `ObjectFile`.
  */
-export interface ObjectFileOptions extends FileBaseOptions {
+export interface ObjectFileOptions extends FileBaseOptions, MarkableFileOptions {
   /**
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
@@ -23,12 +24,18 @@ export interface ObjectFileOptions extends FileBaseOptions {
 /**
  * Represents an Object file.
  */
-export abstract class ObjectFile extends FileBase {
+export abstract class ObjectFile extends FileBase implements IMarkableFile {
   /**
    * The output object. This object can be mutated until the project is
    * synthesized.
    */
-  public readonly obj: object;
+  private readonly obj: object;
+
+  /**
+   * Indicates if the projen marker JSON-comment will be added to the output
+   * object.
+   */
+  public readonly marker: boolean;
 
   /**
    * An object to be merged on top of `obj` after the resolver is called
@@ -48,15 +55,13 @@ export abstract class ObjectFile extends FileBase {
     }
 
     this.obj = options.obj ?? {};
+    this.marker = options.marker ?? false;
     this.omitEmpty = options.omitEmpty ?? false;
     this.rawOverrides = {};
   }
 
   /**
-   * Adds an override to the synthesized CloudFormation resource.
-   *
-   * To add a property override, either use `addPropertyOverride` or prefix
-   * `path` with "Properties." (i.e. `Properties.TopicName`).
+   * Adds an override to the synthesized object file.
    *
    * If the override is nested, separate each nested level using a dot (.) in the path parameter.
    * If there is an array as part of the nesting, specify the index in the path.
@@ -67,21 +72,22 @@ export abstract class ObjectFile extends FileBase {
    *
    * For example,
    * ```typescript
-   * project.package.manifest.addOverride('jest.clearMocks', true);
-   * project.package.manifest.addOverride('jest.coverageReporters', ["json", "lcov", "clover"]);
+   * project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+   * project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
    * ```
    * would add the overrides
    * ```json
-   * "jest": {
-   *   "clearMocks": true,
-   *   "coverageReporters": [
-   *     "json",
-   *     "lcov",
-   *     "clover"
+   * "compilerOptions": {
+   *   "alwaysStrict": true,
+   *   "lib": [
+   *     "dom",
+   *     "dom.iterable",
+   *     "esnext"
    *   ]
    *   ...
    * }
    * ...
+   * ```
    *
    * @param path - The path of the property, you can use dot notation to
    *        override values in complex types. Any intermediate keys

@@ -9,13 +9,12 @@ import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
+import { ObjectFile } from './object-file';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
-import { TomlFile } from './toml';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
-import { YamlFile } from './yaml';
 
 export interface ProjectOptions {
   /**
@@ -275,9 +274,10 @@ export class Project {
   /**
    * Finds a json file by name.
    * @param filePath The file path.
+   * @deprecated use `tryFindObjectFile`
    */
   public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindFile(filePath);
+    const file = this.tryFindObjectFile(filePath);
     if (!file) {
       return undefined;
     }
@@ -290,34 +290,17 @@ export class Project {
   }
 
   /**
-   * Finds a yaml file by name.
+   * Finds an object file (like JsonFile, YamlFile, etc.) by name.
    * @param filePath The file path.
    */
-  public tryFindYamlFile(filePath: string): YamlFile | undefined {
+  public tryFindObjectFile(filePath: string): ObjectFile | undefined {
     const file = this.tryFindFile(filePath);
     if (!file) {
       return undefined;
     }
 
-    if (!(file instanceof YamlFile)) {
-      throw new Error(`found file ${filePath} but it is not a YamlFile. got: ${file.constructor.name}`);
-    }
-
-    return file;
-  }
-
-  /**
-   * Finds a toml file by name.
-   * @param filePath The file path.
-   */
-  public tryFindTomlFile(filePath: string): TomlFile | undefined {
-    const file = this.tryFindFile(filePath);
-    if (!file) {
-      return undefined;
-    }
-
-    if (!(file instanceof TomlFile)) {
-      throw new Error(`found file ${filePath} but it is not a TomlFile. got: ${file.constructor.name}`);
+    if (!(file instanceof ObjectFile)) {
+      throw new Error(`found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`);
     }
 
     return file;
