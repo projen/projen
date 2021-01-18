@@ -91,7 +91,7 @@ test('deepMerge merges objects', () => {
   const original = { a: { b: 3 } };
 
   // WHEN
-  deepMerge(original, { a: { c: 4 } });
+  deepMerge(false, original, { a: { c: 4 } });
 
   // THEN
   expect(original).toEqual({ a: { b: 3, c: 4 } });
@@ -102,7 +102,7 @@ test('deepMerge overwrites non-objects', () => {
   const original = { a: [] };
 
   // WHEN
-  deepMerge(original, { a: { b: 3 } });
+  deepMerge(false, original, { a: { b: 3 } });
 
   // THEN
   expect(original).toEqual({ a: { b: 3 } });
@@ -113,38 +113,10 @@ test('deepMerge does not overwrite if rightmost is "undefined"', () => {
   const original = { a: 1 };
 
   // WHEN
-  deepMerge(original, { a: undefined });
+  deepMerge(false, original, { a: undefined });
 
   // THEN
   expect(original).toEqual({ a: 1 });
-});
-
-test('deepMerge does not recurse indefinitely if rightmost is circular', () => {
-  // GIVEN
-  const simple: Record<string, any> = { a: 1, b: 2 };
-  const circular: Record<string, any> = { a: { b: { c: 3 } } };
-  circular.a.b.c = circular.a;
-
-  // WHEN
-  deepMerge(simple, circular);
-
-  // THEN
-  expect(simple.a.b.c).toEqual(simple.a);
-  expect(simple.b).toEqual(2);
-});
-
-test('deepMerge does not recurse indefinitely if leftmost is circular', () => {
-  // GIVEN
-  const simple: Record<string, any> = { a: 1, b: 2 };
-  const circular: Record<string, any> = { a: { b: { c: 3 } } };
-  circular.a.b.c = circular.a;
-
-  // WHEN
-  deepMerge(circular, simple);
-
-  // THEN
-  expect(circular.a).toEqual(1);
-  expect(circular.b).toEqual(2);
 });
 
 test('deepMerge should not recurse on projects', () => {
@@ -155,7 +127,7 @@ test('deepMerge should not recurse on projects', () => {
   const objB = { a: proj2 };
 
   // WHEN
-  deepMerge(objA, objB);
+  deepMerge(false, objA, objB);
 
   // THEN
   expect(objA).toEqual(objB);
@@ -170,7 +142,7 @@ test('deepMerge should not recurse on components', () => {
   const objB = { a: comp2 };
 
   // WHEN
-  deepMerge(objA, objB);
+  deepMerge(false, objA, objB);
 
   // THEN
   expect(objA).toEqual(objB);

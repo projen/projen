@@ -247,7 +247,7 @@ export class TypeScriptProject extends NodeProject {
         },
       };
       this.tsconfig = new TypescriptConfig(this,
-        deepMerge(baseTsconfig, options.tsconfig) as TypescriptConfigOptions);
+        deepMerge(false, baseTsconfig, options.tsconfig) as TypescriptConfigOptions);
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
