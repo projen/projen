@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.3](https://github.com/projen/projen/compare/v0.15.2...v0.15.3) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** lintProjenRc not working with compiled jest tests ([#473](https://github.com/projen/projen/issues/473)) ([42f8116](https://github.com/projen/projen/commit/42f81166d6c6185449f931bad77e908ae55f99d3)), closes [#472](https://github.com/projen/projen/issues/472)
+
 ### [0.15.2](https://github.com/projen/projen/compare/v0.15.1...v0.15.2) (2021-01-19)
 
 
