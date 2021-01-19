@@ -81,8 +81,8 @@ class TestJavaProject extends JavaProject {
       logging: { level: LogLevel.OFF },
       jsiiFqn: 'projen.java.JavaProject',
       projenrcJavaOptions: {
-        projenVersion: '^1.2.3'
-      }
+        projenVersion: '^1.2.3',
+      },
     });
   }
 }
