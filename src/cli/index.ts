@@ -11,8 +11,7 @@ async function main() {
   const ya = yargs;
   ya.commandDir('cmds');
 
-  const workdir = '.';
-  const runtime = new TaskRuntime(workdir);
+  const runtime = new TaskRuntime('.');
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
