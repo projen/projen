@@ -3,13 +3,15 @@ import { JavaProject, JavaProjectOptions } from '../../java/java-project';
 import { LogLevel } from '../../logger';
 import { mkdtemp, synthSnapshot } from '../util';
 
+beforeEach(() => process.chdir(mkdtemp()));
+
 test('defaults', () => {
-  const p = new TestMavenProject();
+  const p = new TestJavaProject();
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
 test('pom options', () => {
-  const p = new TestMavenProject({
+  const p = new TestJavaProject({
     groupId: 'com.myorg',
     artifactId: 'play-202101050157',
   });
@@ -18,7 +20,7 @@ test('pom options', () => {
 });
 
 test('dependencies', () => {
-  const p = new TestMavenProject();
+  const p = new TestJavaProject();
   p.pom.addDependency('software.amazon.awscdk/core@^1.2.3');
   p.pom.addTestDependency('org.assertj/assertj-core@3.18.1');
   p.pom.addPlugin('org.apache.maven.plugins/maven-compiler-plugin@3.8.1', {
@@ -31,7 +33,7 @@ test('dependencies', () => {
 });
 
 test('dependencies via ctor', () => {
-  const p = new TestMavenProject({
+  const p = new TestJavaProject({
     deps: [
       'software.amazon.awscdk/core@^1.2.3',
       'software.amazon.awscdk/aws-s3@^1',
@@ -44,7 +46,7 @@ test('dependencies via ctor', () => {
 });
 
 test('no junit', () => {
-  const p = new TestMavenProject({
+  const p = new TestJavaProject({
     junit: false,
   });
 
@@ -52,21 +54,23 @@ test('no junit', () => {
 });
 
 test('projenrc in java', () => {
-  const p = new TestMavenProject({
-    projenrcJava: true,
-    projenrcJavaOptions: {
-      projenVersion: '^1.2.3', // otherwise every bump will invalidate the snapshot
-    },
+  const p = new TestJavaProject();
+  expect(synthSnapshot(p)['src/test/java/projenrc.java']).toMatchSnapshot();
+});
+
+test('disable projenrc in java', () => {
+  const p = new TestJavaProject({
+    projenrcJava: false,
   });
 
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(synthSnapshot(p)['src/test/java/projenrc.java']).toBeUndefined();
 });
 
 function snapPom(p: JavaProject) {
   expect(synthSnapshot(p)['pom.xml']).toMatchSnapshot();
 }
 
-class TestMavenProject extends JavaProject {
+class TestJavaProject extends JavaProject {
   constructor(options: Partial<JavaProjectOptions> = { }) {
     super({
       ...options,
@@ -74,8 +78,11 @@ class TestMavenProject extends JavaProject {
       artifactId: 'my-artifact',
       name: 'test-project',
       version: '1.0.0',
-      outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
+      jsiiFqn: 'projen.java.JavaProject',
+      projenrcJavaOptions: {
+        projenVersion: '^1.2.3'
+      }
     });
   }
 }
