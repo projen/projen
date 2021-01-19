@@ -94,6 +94,12 @@ export interface ProjectOptions {
  */
 export class Project {
   /**
+   * The name of the default task (the task executed when `projen` is run without arguments). Normally
+   * this task should synthesize the project files.
+   */
+  public static readonly DEFAULT_TASK = 'default';
+
+  /**
    * Project name.
    */
   public readonly name: string;

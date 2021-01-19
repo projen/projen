@@ -187,6 +187,18 @@ target
           },
         ],
       },
+      "default": Object {
+        "description": "Synthesize the project",
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "mvn compiler:testCompile --quiet",
+          },
+          Object {
+            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
+          },
+        ],
+      },
       "package": Object {
         "category": "20.release",
         "description": "Creates a java deployment package under dist/java",
@@ -200,18 +212,6 @@ target
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
-          },
-        ],
-      },
-      "synth": Object {
-        "description": "Synthesize the project",
-        "name": "synth",
-        "steps": Array [
-          Object {
-            "exec": "mvn compiler:testCompile --quiet",
-          },
-          Object {
-            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
           },
         ],
       },
@@ -843,6 +843,18 @@ target
           },
         ],
       },
+      "default": Object {
+        "description": "Synthesize the project",
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "mvn compiler:testCompile --quiet",
+          },
+          Object {
+            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
+          },
+        ],
+      },
       "package": Object {
         "category": "20.release",
         "description": "Creates a java deployment package under dist/java",
@@ -856,18 +868,6 @@ target
           },
           Object {
             "exec": "mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/dist/java",
-          },
-        ],
-      },
-      "synth": Object {
-        "description": "Synthesize the project",
-        "name": "synth",
-        "steps": Array [
-          Object {
-            "exec": "mvn compiler:testCompile --quiet",
-          },
-          Object {
-            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
           },
         ],
       },

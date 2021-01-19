@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../common';
+import { Project } from '../project';
 import { TaskRuntime } from '../tasks';
 import { synth } from './synth';
 import { discoverTaskCommands } from './tasks';
@@ -32,10 +33,11 @@ async function main() {
   if (args._.length === 0) {
     process.env.PROJEN_DISABLE_POST = (!args.post).toString();
 
-    // if there is a "synth" task, execute it, otherwise, defer to the javascript synth
-    const synthTask = runtime.tasks.find(t => t.name === 'synth');
-    if (synthTask) {
-      runtime.runTask('synth');
+    // if there is a "default" task, execute it, otherwise, defer to the javascript synth
+    // TODO: move javascript synth to `NodeProject`.
+    const defaultTask = runtime.tasks.find(t => t.name === Project.DEFAULT_TASK);
+    if (defaultTask) {
+      runtime.runTask(defaultTask.name);
     } else {
       await synth((args.rc as string) ?? DEFAULT_RC);
     }
