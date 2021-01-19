@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.2](https://github.com/projen/projen/compare/v0.15.1...v0.15.2) (2021-01-19)
+
+
+### Bug Fixes
+
+* **react-ts:** unused `import` line in `app.jsx` fails TS compilation ([#502](https://github.com/projen/projen/issues/502)) ([0079b82](https://github.com/projen/projen/commit/0079b8250b6c7b54034f619ccede02b36c93b6a1)), closes [#501](https://github.com/projen/projen/issues/501)
+
+### [0.15.1](https://github.com/projen/projen/compare/v0.15.0...v0.15.1) (2021-01-18)
+
 ## [0.15.0](https://github.com/projen/projen/compare/v0.14.10...v0.15.0) (2021-01-18)
 
 

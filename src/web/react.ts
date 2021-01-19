@@ -235,7 +235,6 @@ class ReactSampleCode extends Component {
     ];
 
     const appJsx = [
-      "import React from 'react'",
       "import logo from './logo.svg';",
       "import './App.css'",
       '',
