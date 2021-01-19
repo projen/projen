@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../common';
+import { TaskRuntime } from '../tasks';
 import { synth } from './synth';
 import { discoverTaskCommands } from './tasks';
 
@@ -10,7 +11,8 @@ async function main() {
   const ya = yargs;
   ya.commandDir('cmds');
 
-  discoverTaskCommands(ya);
+  const runtime = new TaskRuntime('.');
+  discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
   ya.wrap(yargs.terminalWidth());
@@ -29,10 +31,16 @@ async function main() {
   // no command means just require .projenrc.js
   if (args._.length === 0) {
     process.env.PROJEN_DISABLE_POST = (!args.post).toString();
-    await synth((args.rc as string) ?? DEFAULT_RC);
+
+    // if there is a "synth" task, execute it, otherwise, defer to the javascript synth
+    const synthTask = runtime.tasks.find(t => t.name === 'synth');
+    if (synthTask) {
+      runtime.runTask('synth');
+    } else {
+      await synth((args.rc as string) ?? DEFAULT_RC);
+    }
   }
 }
-
 
 main().catch(e => {
   console.error(e.stack);

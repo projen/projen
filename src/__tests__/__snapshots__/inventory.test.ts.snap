@@ -477,6 +477,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -1603,6 +1614,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -2657,6 +2679,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -3373,6 +3406,17 @@ Array [
         "type": "string",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "default": "true",
         "docs": "Include junit tests.",
         "name": "junit",
@@ -3479,7 +3523,7 @@ Array [
         "type": "ProjectType",
       },
       Object {
-        "default": "false",
+        "default": "true",
         "docs": "Use projenrc in java.",
         "name": "projenrcJava",
         "optional": true,
@@ -3500,7 +3544,7 @@ Array [
           "projenrcJavaOptions",
         ],
         "switch": "projenrc-java-options",
-        "type": "ProjenrcOptions",
+        "type": "ProjenrcCommonOptions",
       },
       Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -4000,6 +4044,17 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -4950,6 +5005,17 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -5953,6 +6019,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -6917,6 +6994,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -7495,6 +7583,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "default": "{}",
         "docs": "Configure logging options such as verbosity.",
         "name": "logging",
@@ -7900,6 +7999,17 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -8877,6 +8987,17 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -9915,6 +10036,17 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -10949,6 +11081,17 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",

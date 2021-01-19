@@ -5,6 +5,7 @@ exports[`projen new awscdk-app-ts 1`] = `
 
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.73.0',
+  jsiiFqn: \\"projen.AwsCdkTypeScriptApp\\",
   name: 'my-project',
 
   /* AwsCdkTypeScriptAppOptions */
@@ -120,6 +121,7 @@ const project = new AwsCdkConstructLibrary({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdkVersion: '1.73.0',
+  jsiiFqn: \\"projen.AwsCdkConstructLibrary\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -233,6 +235,7 @@ const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdk8sVersion: '1.0.0-beta.3',
+  jsiiFqn: \\"projen.ConstructLibraryCdk8s\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -339,6 +342,7 @@ exports[`projen new java 1`] = `
 const project = new java.JavaProject({
   artifactId: 'my-app',
   groupId: 'org.acme',
+  jsiiFqn: \\"projen.java.JavaProject\\",
   name: 'my-project',
   version: '0.1.0',
 
@@ -349,7 +353,7 @@ const project = new java.JavaProject({
   // junit: true,                       /* Include junit tests. */
   // junitOptions: undefined,           /* junit options. */
   // packagingOptions: undefined,       /* Packaging options. */
-  // projenrcJava: false,               /* Use projenrc in java. */
+  // projenrcJava: true,                /* Use projenrc in java. */
   // projenrcJavaOptions: undefined,    /* Options related to projenrc in java. */
   // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
   // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
@@ -381,6 +385,7 @@ exports[`projen new jsii 1`] = `
 const project = new JsiiProject({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
+  jsiiFqn: \\"projen.JsiiProject\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -482,6 +487,7 @@ exports[`projen new nextjs 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsProject({
+  jsiiFqn: \\"projen.web.NextJsProject\\",
   name: 'my-project',
 
   /* NextJsCommonProjectOptions */
@@ -579,6 +585,7 @@ exports[`projen new nextjs-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsTypeScriptProject({
+  jsiiFqn: \\"projen.web.NextJsTypeScriptProject\\",
   name: 'my-project',
 
   /* NextJsCommonProjectOptions */
@@ -688,6 +695,7 @@ exports[`projen new node 1`] = `
 "const { NodeProject } = require('projen');
 
 const project = new NodeProject({
+  jsiiFqn: \\"projen.NodeProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -777,6 +785,7 @@ exports[`projen new project 1`] = `
 "const { Project } = require('projen');
 
 const project = new Project({
+  jsiiFqn: \\"projen.Project\\",
   name: 'my-project',
 
   /* ProjectOptions */
@@ -798,6 +807,7 @@ exports[`projen new react 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactProject({
+  jsiiFqn: \\"projen.web.ReactProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -891,6 +901,7 @@ exports[`projen new react-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactTypeScriptProject({
+  jsiiFqn: \\"projen.web.ReactTypeScriptProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -996,6 +1007,7 @@ exports[`projen new typescript 1`] = `
 "const { TypeScriptProject } = require('projen');
 
 const project = new TypeScriptProject({
+  jsiiFqn: \\"projen.TypeScriptProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -1101,6 +1113,7 @@ exports[`projen new typescript-app 1`] = `
 "const { TypeScriptAppProject } = require('projen');
 
 const project = new TypeScriptAppProject({
+  jsiiFqn: \\"projen.TypeScriptAppProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */

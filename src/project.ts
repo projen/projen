@@ -81,6 +81,12 @@ export interface ProjectOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
+
+  /**
+   * The JSII FQN (fully qualified name) of the project class.
+   * @default undefined
+   */
+  readonly jsiiFqn?: string;
 }
 
 /**
@@ -157,6 +163,11 @@ export class Project {
    */
   public readonly logger: Logger;
 
+  /**
+   * The JSII FQN of the project type (if known).
+   */
+  public readonly jsiiFqn?: string;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -165,6 +176,9 @@ export class Project {
   constructor(options: ProjectOptions) {
     // https://github.com/aws/jsii/issues/2406
     process.stdout.write = (...args: any) => process.stderr.write.apply(process.stderr, args);
+
+    this.jsiiFqn = options.jsiiFqn;
+    delete (options as any).jsiiFqn; // remove so it's not included in projenrc
 
     this.name = options.name;
     this.parent = options.parent;
