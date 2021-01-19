@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.7](https://github.com/projen/projen/compare/v0.15.6...v0.15.7) (2021-01-19)
+
+
+### Bug Fixes
+
+* **cli:** `projen` does not work for projects with a “synth” task ([#509](https://github.com/projen/projen/issues/509)) ([f492e21](https://github.com/projen/projen/commit/f492e2184efd5e587a04c588cc3db3db6dcdcdfa)), closes [#505](https://github.com/projen/projen/issues/505) [#507](https://github.com/projen/projen/issues/507)
+
 ### [0.15.6](https://github.com/projen/projen/compare/v0.15.5...v0.15.6) (2021-01-19)
 
 
