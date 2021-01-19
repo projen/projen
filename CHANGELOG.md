@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.5](https://github.com/projen/projen/compare/v0.15.4...v0.15.5) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** task fails due to test directory missing from config ([#506](https://github.com/projen/projen/issues/506)) ([f1901cf](https://github.com/projen/projen/commit/f1901cf3cc269aff2fbc0c395f90644124fbb0c0))
+
 ### [0.15.4](https://github.com/projen/projen/compare/v0.15.3...v0.15.4) (2021-01-19)
 
 
