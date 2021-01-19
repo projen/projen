@@ -182,15 +182,9 @@ describe('deps', () => {
 });
 
 test('extend github release workflow', () => {
-  // WHEN
   const project = new NodeProject({
     outdir: mkdtemp(),
     name: 'test-node-project',
-    mergify: false,
-    projenDevDependency: false,
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
 
   project.releaseWorkflow?.addJobs({
