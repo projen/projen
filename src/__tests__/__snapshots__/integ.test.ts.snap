@@ -2935,7 +2935,7 @@ Object {
     "parser": "@typescript-eslint/parser",
     "parserOptions": Object {
       "ecmaVersion": 2018,
-      "project": "./tsconfig.json",
+      "project": "./tsconfig.eslint.json",
       "sourceType": "module",
     },
     "plugins": Array [
@@ -3130,7 +3130,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
-          "project": "./tsconfig.json",
+          "project": "./tsconfig.eslint.json",
         },
       },
     },
@@ -3174,6 +3174,7 @@ yarn-error.log*
 !/package.json
 !/src
 !/test
+!/tsconfig.eslint.json
 !/tsconfig.jest.json
 !/tsconfig.json
 !version.json
@@ -3190,6 +3191,7 @@ yarn-error.log*
 /src
 /test
 /test-reports/
+/tsconfig.eslint.json
 /tsconfig.jest.json
 /tsconfig.json
 dist
@@ -4066,6 +4068,40 @@ project.synth();
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
+  "tsconfig.eslint.json": Object {
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "resolveJsonModule": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [
+      "node_modules",
+    ],
+    "include": Array [
+      ".projenrc.js",
+      "src/**/*.ts",
+      "test/**/*.ts",
+    ],
+  },
   "tsconfig.jest.json": Object {
     "compilerOptions": Object {
       "alwaysStrict": true,
