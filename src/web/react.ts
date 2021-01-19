@@ -111,11 +111,6 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
 
     new ReactComponent(this, { typescript: true });
 
-    // 'react-scripts build' command fails if tsconfig.json is immutable
-    if (this.tsconfig) {
-      this.tsconfig.file.readonly = false;
-    }
-
     this.reactTypeDef = new ReactTypeDef(this, 'react-app-env.d.ts');
 
     // generate sample code in `src` and `public` if these directories are empty or non-existent.
