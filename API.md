@@ -1033,6 +1033,7 @@ new DockerCompose(project: Project, props?: DockerComposeProps)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **props** (<code>[DockerComposeProps](#projen-dockercomposeprops)</code>)  *No description*
   * **nameSuffix** (<code>string</code>)  A name to add to the docker-compose.yml filename. __*Default*__: no name is added
+  * **schemaVersion** (<code>string</code>)  Docker Compose schema version do be used. __*Default*__: 3.3
   * **services** (<code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code>)  Service descriptions. __*Optional*__
 
 
@@ -6403,6 +6404,7 @@ Props for DockerCompose.
 Name | Type | Description 
 -----|------|-------------
 **nameSuffix**?🔹 | <code>string</code> | A name to add to the docker-compose.yml filename.<br/>__*Default*__: no name is added
+**schemaVersion**?🔹 | <code>string</code> | Docker Compose schema version do be used.<br/>__*Default*__: 3.3
 **services**?🔹 | <code>Map<string, [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)></code> | Service descriptions.<br/>__*Optional*__
 
 
