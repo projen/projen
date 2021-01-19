@@ -13,7 +13,7 @@ export interface DockerComposeProps {
    * @default - no name is added
    */
   readonly nameSuffix?: string;
-  
+
   /**
    * Docker Compose schema version do be used
    * @default 3.3
@@ -120,8 +120,8 @@ export class DockerCompose extends Component {
       obj: () => this._synthesizeDockerCompose(),
     });
 
-    if(props?.version && !parseFloat(props.version)){
-      throw Error("Version tag needs to be a number");
+    if (props?.version && !parseFloat(props.version)) {
+      throw Error('Version tag needs to be a number');
     }
     this.version = props?.version ? props.version : '3.3';
     this.services = {};
