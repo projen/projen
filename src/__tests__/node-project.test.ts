@@ -181,6 +181,48 @@ describe('deps', () => {
   });
 });
 
+test('extend github release workflow', () => {
+  // WHEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    name: 'test-node-project',
+    mergify: false,
+    projenDevDependency: false,
+    logging: {
+      level: LogLevel.OFF,
+    },
+  });
+
+  project.releaseWorkflow?.addJobs({
+    publish_docker_hub: {
+      'runs-on': 'ubuntu-latest',
+      'env': {
+        CI: 'true',
+      },
+      'steps': [
+        {
+          name: 'Check out the repo',
+          uses: 'actions/checkout@v2',
+        },
+        {
+          name: 'Push to Docker Hub',
+          uses: 'docker/build-push-action@v1',
+          with: {
+            username: '${{ secrets.DOCKER_USERNAME }}',
+            password: '${{ secrets.DOCKER_PASSWORD }}',
+            repository: 'projen/projen-docker',
+            tag_with_ref: true,
+          },
+        },
+      ],
+    },
+  });
+
+  const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+  expect(workflow).toContain('publish_docker_hub:\n    runs-on: ubuntu-latest\n');
+  expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
+});
+
 function packageJson(project: NodeProject) {
   return synthSnapshot(project)['package.json'];
 }
