@@ -48,6 +48,80 @@ describe('docker-compose', () => {
     })).toThrow(/Version tag needs to be a number/i);
   });
 
+  test('version tag explicit set and created as float', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      version: '3.1',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.1',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
+  test('version tag explicit set and created as int', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      version: '3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
+  test('version tag defaults to 3.3 when not set', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
   test('can build an image', () => {
     const project = new TestProject();
 

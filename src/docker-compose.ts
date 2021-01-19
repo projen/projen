@@ -15,7 +15,7 @@ export interface DockerComposeProps {
   readonly nameSuffix?: string;
   
   /**
-   * Docker version do be used
+   * Docker Compose schema version do be used
    * @default 3.3
    */
   readonly version?: string;
@@ -123,7 +123,7 @@ export class DockerCompose extends Component {
     if(props?.version && !parseFloat(props.version)){
       throw Error("Version tag needs to be a number");
     }
-    this.version = props?.version ? props.version : '3.9';
+    this.version = props?.version ? props.version : '3.3';
     this.services = {};
 
     // Add the services provided via the constructor argument.
@@ -152,7 +152,7 @@ export class DockerCompose extends Component {
       throw new Error('DockerCompose requires at least one service');
     }
 
-    return renderDockerComposeFile(this.services);
+    return renderDockerComposeFile(this.services, this.version);
   }
 }
 
@@ -453,6 +453,7 @@ export interface DockerComposeVolumeMount {
  * @internal
  */
 interface DockerComposeFileSchema {
+  version: string;
   services: Record<string, DockerComposeFileServiceSchema>;
   volumes?: Record<string, DockerComposeVolumeConfig>;
 }
@@ -471,7 +472,7 @@ interface DockerComposeFileServiceSchema {
   readonly environment?: Record<string, string>;
 }
 
-function renderDockerComposeFile(serviceDescriptions: Record<string, DockerComposeService>): object {
+function renderDockerComposeFile(serviceDescriptions: Record<string, DockerComposeService>, version: string): object {
   // Record volume configuration
   const volumeConfig: Record<string, DockerComposeVolumeConfig> = {};
   const volumeInfo: IDockerComposeVolumeConfig = {
@@ -526,6 +527,7 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
   // Explicit with the type here because the decamelize step after this wipes
   // out types.
   const input: DockerComposeFileSchema = {
+    version,
     services,
     ...(Object.keys(volumeConfig).length > 0 ? { volumes: volumeConfig } : {}),
   };
