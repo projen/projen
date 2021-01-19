@@ -36,6 +36,19 @@ describe('docker-compose', () => {
     })).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
+  test('errors when version tag is not a number, () => {
+    const project = new TestProject();
+    const dc = new DockerCompose(project);
+
+    expect(() => dc.addService('service', {
+      version: 'bla',
+      image: 'nginx',
+      imageBuild: {
+        context: '.',
+      },
+    })).toThrow(/requires exactly one of.*imageBuild.*image/i);
+  });
+
   test('can build an image', () => {
     const project = new TestProject();
 

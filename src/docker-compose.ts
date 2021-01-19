@@ -108,6 +108,7 @@ export class DockerCompose extends Component {
   }
 
   private readonly services: Record<string, DockerComposeService>;
+  private readonly version: string;
 
   constructor(project: Project, props?: DockerComposeProps) {
     super(project);
@@ -119,6 +120,10 @@ export class DockerCompose extends Component {
       obj: () => this._synthesizeDockerCompose(),
     });
 
+    if(props?.version && !parseFloat(props.version)){
+      throw Error("Version tag needs to be a number");
+    }
+    this.version = props?.version ? props.version : '3.9';
     this.services = {};
 
     // Add the services provided via the constructor argument.
