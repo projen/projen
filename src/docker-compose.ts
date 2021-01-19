@@ -18,7 +18,7 @@ export interface DockerComposeProps {
    * Docker Compose schema version do be used
    * @default 3.3
    */
-  readonly version?: string;
+  readonly schemaVersion?: string;
 
   /**
    * Service descriptions.
@@ -120,10 +120,10 @@ export class DockerCompose extends Component {
       obj: () => this._synthesizeDockerCompose(),
     });
 
-    if (props?.version && !parseFloat(props.version)) {
+    if (props?.schemaVersion && !parseFloat(props.schemaVersion)) {
       throw Error('Version tag needs to be a number');
     }
-    this.version = props?.version ? props.version : '3.3';
+    this.version = props?.schemaVersion ? props.schemaVersion : '3.3';
     this.services = {};
 
     // Add the services provided via the constructor argument.

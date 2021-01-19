@@ -39,7 +39,7 @@ describe('docker-compose', () => {
   test('errors when version tag is not a number', () => {
     const project = new TestProject();
     expect(() => new DockerCompose(project, {
-      version: 'blub',
+      schemaVersion: 'blub',
       services: {
         myservice: {
           image: 'nginx',
@@ -52,7 +52,7 @@ describe('docker-compose', () => {
     const project = new TestProject();
 
     const dc = new DockerCompose(project, {
-      version: '3.1',
+      schemaVersion: '3.1',
       services: {
         myservice: {
           image: 'nginx',
@@ -77,7 +77,7 @@ describe('docker-compose', () => {
     const project = new TestProject();
 
     const dc = new DockerCompose(project, {
-      version: '3',
+      schemaVersion: '3',
       services: {
         myservice: {
           image: 'nginx',
