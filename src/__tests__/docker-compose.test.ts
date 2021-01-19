@@ -141,6 +141,7 @@ describe('docker-compose', () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
       services: {
         custom: {
           build: {
@@ -186,6 +187,7 @@ describe('docker-compose', () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
       services: {
         alpine: {
           image: 'alpine',
@@ -213,6 +215,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -245,6 +248,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -286,6 +290,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           web: {
             image: 'nginx',
@@ -323,6 +328,7 @@ describe('docker-compose', () => {
       service.addVolume(DockerCompose.namedVolume('html', '/var/www/html'));
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -347,6 +353,7 @@ describe('docker-compose', () => {
 
   describe('can map a port', () => {
     const expected = {
+      version: '3.3',
       services: {
         port: {
           image: 'nginx',
@@ -412,6 +419,7 @@ describe('docker-compose', () => {
 
   describe('can add depends_on', () => {
     const expected = {
+      version: '3.3',
       services: {
         first: { image: 'alpine' },
         second: {
@@ -456,6 +464,7 @@ describe('docker-compose', () => {
 
   describe('can add environment variables', () => {
     const expected = {
+      version: '3.3',
       services: {
         www: {
           image: 'nginx',
@@ -539,6 +548,7 @@ describe('docker-compose', () => {
 
   describe('can create a wordpress dev env', () => {
     const expected = {
+      version: '3.3',
       services: {
         setup: {
           image: 'alpine',
