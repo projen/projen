@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.6](https://github.com/projen/projen/compare/v0.15.5...v0.15.6) (2021-01-19)
+
+
+### Features
+
+* **java:** generate projenrc in java ([#505](https://github.com/projen/projen/issues/505)) ([8c0931d](https://github.com/projen/projen/commit/8c0931dd04a3c109be079cfe80d1be87f1dcddd9))
+
 ### [0.15.5](https://github.com/projen/projen/compare/v0.15.4...v0.15.5) (2021-01-19)
 
 
