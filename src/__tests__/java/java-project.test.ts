@@ -3,7 +3,10 @@ import { JavaProject, JavaProjectOptions } from '../../java/java-project';
 import { LogLevel } from '../../logger';
 import { mkdtemp, synthSnapshot } from '../util';
 
+let cwd = process.cwd();
+
 beforeEach(() => process.chdir(mkdtemp()));
+afterEach(() => process.chdir(cwd));
 
 test('defaults', () => {
   const p = new TestJavaProject();
