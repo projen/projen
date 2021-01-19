@@ -1,8 +1,8 @@
 import { join } from 'path';
 import { writeFileSync } from 'fs-extra';
-import { directorySnapshot, execProjenCLI, mkdtemp } from './util';
-import { Project } from '../project';
 import { LogLevel } from '../logger';
+import { Project } from '../project';
+import { directorySnapshot, execProjenCLI, mkdtemp } from './util';
 
 const MOCK_PROJENRC = "new (require('projen').Project)({ name: 'foo' }).synth()";
 
