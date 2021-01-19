@@ -32,14 +32,14 @@ Name|Description
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
 [TextFile](#projen-textfile)|A text file.
-[TomlFile](#projen-tomlfile)|TOML file.
+[TomlFile](#projen-tomlfile)|Represents a TOML file.
 [TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
-[YamlFile](#projen-yamlfile)|*No description*
+[YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -122,14 +122,14 @@ Name|Description
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
-[TomlFileOptions](#projen-tomlfileoptions)|*No description*
+[TomlFileOptions](#projen-tomlfileoptions)|Options for `TomlFile`.
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
 [VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
-[YamlFileOptions](#projen-yamlfileoptions)|*No description*
+[YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -368,6 +368,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
   * **publishToPypi** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  Publish to pypi. __*Default*__: no publishing
@@ -732,6 +733,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
   * **publishToPypi** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  Publish to pypi. __*Default*__: no publishing
@@ -839,6 +841,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
   * **publishToPypi** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  Publish to pypi. __*Default*__: no publishing
@@ -955,6 +958,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
   * **publishToPypi** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  Publish to pypi. __*Default*__: no publishing
@@ -1314,7 +1318,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.GithubWorkflow](#projen-github-githubworkflow), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1835,6 +1839,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **docgen** (<code>boolean</code>)  Automatically generate API.md from jsii. __*Default*__: true
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
+  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
   * **publishToPypi** (<code>[JsiiPythonTarget](#projen-jsiipythontarget)</code>)  Publish to pypi. __*Default*__: no publishing
@@ -1876,18 +1881,10 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**marker**🔹 | <code>boolean</code> | Indicates if the projen marker JSON-comment will be added to the output object.
 
 ### Methods
 
@@ -2755,8 +2752,10 @@ setScript(name: string, command: string): void
 
 Represents an Object file.
 
+__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [FileBase](#projen-filebase)
-__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Obtainable from__: [Project](#projen-project).[tryFindObjectFile](#projen-project#projen-project-tryfindobjectfile)()
 
 ### Initializer
 
@@ -2774,6 +2773,7 @@ new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -2784,10 +2784,63 @@ new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**obj**🔹 | <code>json</code> | The output object.
+**marker**🔹 | <code>boolean</code> | Indicates if the projen marker JSON-comment will be added to the output object.
 **omitEmpty**🔹 | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object.
 
 ### Methods
+
+
+#### addDeletionOverride(path)🔹 <a id="projen-objectfile-adddeletionoverride"></a>
+
+Syntactic sugar for `addOverride(path, undefined)`.
+
+```ts
+addDeletionOverride(path: string): void
+```
+
+* **path** (<code>string</code>)  The path of the value to delete.
+
+
+
+
+#### addOverride(path, value)🔹 <a id="projen-objectfile-addoverride"></a>
+
+Adds an override to the synthesized object file.
+
+If the override is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example,
+```typescript
+project.tsconfig.file.addOverride('compilerOptions.alwaysStrict', true);
+project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable', 'esnext']);
+```
+would add the overrides
+```json
+"compilerOptions": {
+   "alwaysStrict": true,
+   "lib": [
+     "dom",
+     "dom.iterable",
+     "esnext"
+   ]
+   ...
+}
+...
+```
+
+```ts
+addOverride(path: string, value: any): void
+```
+
+* **path** (<code>string</code>)  - The path of the property, you can use dot notation to override values in complex types.
+* **value** (<code>any</code>)  - The value.
+
+
 
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
@@ -2966,7 +3019,7 @@ tryFindFile(filePath: string): FileBase
 __Returns__:
 * <code>[FileBase](#projen-filebase)</code>
 
-#### tryFindJsonFile(filePath)🔹 <a id="projen-project-tryfindjsonfile"></a>
+#### tryFindJsonFile(filePath)⚠️ <a id="projen-project-tryfindjsonfile"></a>
 
 Finds a json file by name.
 
@@ -2978,6 +3031,19 @@ tryFindJsonFile(filePath: string): JsonFile
 
 __Returns__:
 * <code>[JsonFile](#projen-jsonfile)</code>
+
+#### tryFindObjectFile(filePath)🔹 <a id="projen-project-tryfindobjectfile"></a>
+
+Finds an object file (like JsonFile, YamlFile, etc.) by name.
+
+```ts
+tryFindObjectFile(filePath: string): ObjectFile
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[ObjectFile](#projen-objectfile)</code>
 
 
 
@@ -3232,7 +3298,7 @@ __Returns__:
 
 ## class TomlFile 🔹 <a id="projen-tomlfile"></a>
 
-TOML file.
+Represents a TOML file.
 
 __Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
@@ -3253,18 +3319,10 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**marker**🔹 | <code>boolean</code> | Indicates if the projen marker TOML-comment will be added to the output.
 
 ### Methods
 
@@ -3692,7 +3750,10 @@ Name | Type | Description
 
 Represents an XML file.
 
-__Extends__: [FileBase](#projen-filebase)
+Objects passed in will be synthesized using the npm "xml" library.
+
+__Implements__: [IMarkableFile](#projen-imarkablefile)
+__Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
 
@@ -3710,16 +3771,10 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **obj** (<code>any</code>)  The object that represents the XML contents (see https://www.npmjs.com/package/xml) for details. __*Default*__: {}
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
+  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**obj**🔹 | <code>any</code> | The object represents the XML file.
 
 ### Methods
 
@@ -3741,7 +3796,7 @@ __Returns__:
 
 ## class YamlFile 🔹 <a id="projen-yamlfile"></a>
 
-
+Represents a YAML file.
 
 __Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
@@ -3762,18 +3817,10 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**marker**🔹 | <code>boolean</code> | Indicates if the projen marker YAML-comment will be added to the output.
 
 ### Methods
 
@@ -4079,7 +4126,7 @@ __Returns__:
 
 __Submodule__: github
 
-__Extends__: [FileBase](#projen-filebase)
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -4093,6 +4140,14 @@ new github.GithubWorkflow(github: GitHub, name: string)
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
 
 ### Methods
 
@@ -4122,19 +4177,6 @@ on(events: Map<string, any>): void
 
 
 
-
-#### protected synthesizeContent(resolver)🔹 <a id="projen-github-githubworkflow-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(resolver: IResolver): string
-```
-
-* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
 
 
 
@@ -5809,6 +5851,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -6032,6 +6075,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -6132,6 +6176,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -6231,6 +6276,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -6706,7 +6752,7 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 ## interface IMarkableFile 🔹 <a id="projen-imarkablefile"></a>
 
-__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 
 Files that may include the Projen marker.
 
@@ -6912,6 +6958,7 @@ Name | Type | Description
 **dotnet**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | __*Optional*__
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
+**eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -7213,6 +7260,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -7343,7 +7391,7 @@ Name | Type | Description
 ## struct TomlFileOptions 🔹 <a id="projen-tomlfileoptions"></a>
 
 
-
+Options for `TomlFile`.
 
 
 
@@ -7642,7 +7690,9 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**obj**?🔹 | <code>any</code> | The object that represents the XML contents (see https://www.npmjs.com/package/xml) for details.<br/>__*Default*__: {}
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
+**omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
@@ -7650,7 +7700,7 @@ Name | Type | Description
 ## struct YamlFileOptions 🔹 <a id="projen-yamlfileoptions"></a>
 
 
-
+Options for `JsonFile`.
 
 
 

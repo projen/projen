@@ -1533,6 +1533,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -2573,6 +2585,18 @@ Array [
         ],
         "switch": "eslint",
         "type": "boolean",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
       },
       Object {
         "docs": "Additional entries to .gitignore.",
@@ -3906,6 +3930,18 @@ Array [
         ],
         "switch": "eslint",
         "type": "boolean",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
       },
       Object {
         "docs": "Additional entries to .gitignore.",

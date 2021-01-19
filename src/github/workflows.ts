@@ -1,15 +1,21 @@
-import * as YAML from 'yaml';
-import { FileBase, IResolver } from '../file';
+import { Component } from '../component';
+import { YamlFile } from '../yaml';
 import { GitHub } from './github';
 
-export class GithubWorkflow extends FileBase {
+export class GithubWorkflow extends Component {
   private readonly name: string;
   private events: { [event: string]: any } = { };
   private jobs: { [jobid: string]: any } = { };
+  public readonly file: YamlFile;
 
   constructor(github: GitHub, name: string) {
-    super(github.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`);
+    super(github.project);
+
     this.name = name;
+    this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
+      obj: () => this.renderWorkflow(),
+      marker: true,
+    });
   }
 
   public on(events: { [event: string]: any }) {
@@ -26,16 +32,11 @@ export class GithubWorkflow extends FileBase {
     };
   }
 
-  protected synthesizeContent(resolver: IResolver): string | undefined {
-    const workflow = resolver.resolve({
+  private renderWorkflow() {
+    return {
       name: this.name,
       on: this.events,
       jobs: this.jobs,
-    });
-
-    return [
-      `# ${FileBase.PROJEN_MARKER}`,
-      YAML.stringify(workflow),
-    ].join('\n');
+    };
   }
 }
