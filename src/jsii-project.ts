@@ -1,4 +1,4 @@
-import { Eslint } from './eslint';
+import { Eslint, EslintOptions } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
 import { NodeProjectOptions } from './node-project';
 import { TaskCategory } from './tasks';
@@ -67,6 +67,12 @@ export interface JsiiProjectOptions extends NodeProjectOptions {
    * @default true
    */
   readonly eslint?: boolean;
+
+  /**
+   * Eslint options
+   * @default - opinionated default options
+   */
+  readonly eslintOptions?: EslintOptions;
 
   /**
    * Automatically generate API.md from jsii
