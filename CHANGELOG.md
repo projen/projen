@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.4](https://github.com/projen/projen/compare/v0.15.3...v0.15.4) (2021-01-19)
+
+
+### Bug Fixes
+
+* [#503](https://github.com/projen/projen/issues/503) implement docker compose version tag ([#504](https://github.com/projen/projen/issues/504)) ([6830692](https://github.com/projen/projen/commit/68306924b75c839dca884b9a0b774d6153924e50))
+
 ### [0.15.3](https://github.com/projen/projen/compare/v0.15.2...v0.15.3) (2021-01-19)
 
 
