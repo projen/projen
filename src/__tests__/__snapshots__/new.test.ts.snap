@@ -139,6 +139,7 @@ const project = new AwsCdkConstructLibrary({
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -246,6 +247,7 @@ const project = new ConstructLibraryCdk8s({
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -392,6 +394,7 @@ const project = new JsiiProject({
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */

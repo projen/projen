@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.5](https://github.com/projen/projen/compare/v0.15.4...v0.15.5) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** task fails due to test directory missing from config ([#506](https://github.com/projen/projen/issues/506)) ([f1901cf](https://github.com/projen/projen/commit/f1901cf3cc269aff2fbc0c395f90644124fbb0c0))
+
+### [0.15.4](https://github.com/projen/projen/compare/v0.15.3...v0.15.4) (2021-01-19)
+
+
+### Bug Fixes
+
+* [#503](https://github.com/projen/projen/issues/503) implement docker compose version tag ([#504](https://github.com/projen/projen/issues/504)) ([6830692](https://github.com/projen/projen/commit/68306924b75c839dca884b9a0b774d6153924e50))
+
+### [0.15.3](https://github.com/projen/projen/compare/v0.15.2...v0.15.3) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** lintProjenRc not working with compiled jest tests ([#473](https://github.com/projen/projen/issues/473)) ([42f8116](https://github.com/projen/projen/commit/42f81166d6c6185449f931bad77e908ae55f99d3)), closes [#472](https://github.com/projen/projen/issues/472)
+
+### [0.15.2](https://github.com/projen/projen/compare/v0.15.1...v0.15.2) (2021-01-19)
+
+
+### Bug Fixes
+
+* **react-ts:** unused `import` line in `app.jsx` fails TS compilation ([#502](https://github.com/projen/projen/issues/502)) ([0079b82](https://github.com/projen/projen/commit/0079b8250b6c7b54034f619ccede02b36c93b6a1)), closes [#501](https://github.com/projen/projen/issues/501)
+
 ### [0.15.1](https://github.com/projen/projen/compare/v0.15.0...v0.15.1) (2021-01-18)
 
 ## [0.15.0](https://github.com/projen/projen/compare/v0.14.10...v0.15.0) (2021-01-18)

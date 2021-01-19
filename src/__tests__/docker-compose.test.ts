@@ -36,6 +36,92 @@ describe('docker-compose', () => {
     })).toThrow(/requires exactly one of.*imageBuild.*image/i);
   });
 
+  test('errors when version tag is not a number', () => {
+    const project = new TestProject();
+    expect(() => new DockerCompose(project, {
+      schemaVersion: 'blub',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    })).toThrow(/Version tag needs to be a number/i);
+  });
+
+  test('version tag explicit set and created as float', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      schemaVersion: '3.1',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.1',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
+  test('version tag explicit set and created as int', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      schemaVersion: '3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
+  test('version tag defaults to 3.3 when not set', () => {
+    const project = new TestProject();
+
+    const dc = new DockerCompose(project, {
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
+      services: {
+        myservice: {
+          image: 'nginx',
+        },
+      },
+    });
+
+    project.synth();
+    assertDockerComposeFileValidates(project.outdir);
+  });
+
   test('can build an image', () => {
     const project = new TestProject();
 
@@ -55,6 +141,7 @@ describe('docker-compose', () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
       services: {
         custom: {
           build: {
@@ -100,6 +187,7 @@ describe('docker-compose', () => {
     });
 
     expect(dc._synthesizeDockerCompose()).toEqual({
+      version: '3.3',
       services: {
         alpine: {
           image: 'alpine',
@@ -127,6 +215,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -159,6 +248,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -200,6 +290,7 @@ describe('docker-compose', () => {
       });
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           web: {
             image: 'nginx',
@@ -237,6 +328,7 @@ describe('docker-compose', () => {
       service.addVolume(DockerCompose.namedVolume('html', '/var/www/html'));
 
       expect(dc._synthesizeDockerCompose()).toEqual({
+        version: '3.3',
         services: {
           myservice: {
             image: 'nginx',
@@ -261,6 +353,7 @@ describe('docker-compose', () => {
 
   describe('can map a port', () => {
     const expected = {
+      version: '3.3',
       services: {
         port: {
           image: 'nginx',
@@ -326,6 +419,7 @@ describe('docker-compose', () => {
 
   describe('can add depends_on', () => {
     const expected = {
+      version: '3.3',
       services: {
         first: { image: 'alpine' },
         second: {
@@ -370,6 +464,7 @@ describe('docker-compose', () => {
 
   describe('can add environment variables', () => {
     const expected = {
+      version: '3.3',
       services: {
         www: {
           image: 'nginx',
@@ -453,6 +548,7 @@ describe('docker-compose', () => {
 
   describe('can create a wordpress dev env', () => {
     const expected = {
+      version: '3.3',
       services: {
         setup: {
           image: 'alpine',

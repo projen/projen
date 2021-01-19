@@ -268,9 +268,6 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.idea');
     this.npmignore?.exclude('/.projenrc.js');
 
-    // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
-    let eslintTsConfig = 'tsconfig.json';
-
     // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
     // just run them directly from javascript.
     if (this.jest && compiledTests) {
@@ -325,8 +322,6 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
-      eslintTsConfig = tsconfig.fileName;
-
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
       if (!compileBeforeTest) {
@@ -341,12 +336,24 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: `./${eslintTsConfig}`,
+        tsconfigPath: './tsconfig.eslint.json',
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
-        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
+      });
+
+      new TypescriptConfig(this, {
+        fileName: 'tsconfig.eslint.json',
+        include: [
+          PROJEN_RC,
+          `${this.srcdir}/**/*.ts`,
+          `${this.testdir}/**/*.ts`,
+        ],
+        exclude: [
+          'node_modules',
+        ],
+        compilerOptions: compilerOptionDefaults,
       });
     }
 
