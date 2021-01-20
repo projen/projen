@@ -618,11 +618,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -653,15 +667,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -1743,11 +1769,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -1778,15 +1818,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -2808,11 +2860,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -2843,15 +2909,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -4175,11 +4253,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -4210,15 +4302,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -5136,11 +5240,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -5171,15 +5289,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -6160,11 +6290,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -6195,15 +6339,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -7123,11 +7279,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -7158,15 +7328,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -8130,11 +8312,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -8165,15 +8361,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -9130,11 +9338,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -9165,15 +9387,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -10177,11 +10411,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -10212,15 +10460,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -11224,11 +11484,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -11259,15 +11533,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
