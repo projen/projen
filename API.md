@@ -2915,6 +2915,7 @@ Name | Type | Description
 **jsiiFqn**?🔹 | <code>string</code> | The JSII FQN of the project type (if known).<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
+*static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
 ### Methods
 

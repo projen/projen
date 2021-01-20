@@ -35,6 +35,7 @@ const project = new JsiiProject({
     '@types/inquirer',
     '@types/semver',
     'markmac',
+    'all-contributors-cli',
   ],
 
   projenDevDependency: false, // because I am projen
@@ -136,5 +137,9 @@ const setup = project.addTask('devenv:setup');
 setup.exec('yarn install');
 setup.spawn(project.buildTask);
 project.devContainer.addTasks(setup);
+
+project.addTask('contributors:update', {
+  exec: 'all-contributors check | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
+});
 
 project.synth();

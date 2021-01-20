@@ -76,9 +76,10 @@ export class Projenrc extends Component {
     project.deps.addDependency(`com.github.eladb/projen@${projenVersion}`, depType);
     pom.addPlugin('org.codehaus.mojo/exec-maven-plugin@3.0.0');
 
-    const synth = project.addTask('synth', { description: 'Synthesize the project' });
-    synth.exec(`mvn ${compileGoal} --quiet`);
-    synth.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
+    // set up the "default" task which is the task executed when `projen` is executed for this project.
+    const defaultTask = project.addTask(Project.DEFAULT_TASK, { description: 'Synthesize the project' });
+    defaultTask.exec(`mvn ${compileGoal} --quiet`);
+    defaultTask.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
 
     // if this is a new project, generate a skelaton for projenrc.java
     this.generateProjenrc(options.initializationOptions);

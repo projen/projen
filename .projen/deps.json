@@ -41,6 +41,10 @@
       "type": "build"
     },
     {
+      "name": "all-contributors-cli",
+      "type": "build"
+    },
+    {
       "name": "eslint",
       "type": "build"
     },
