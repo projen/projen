@@ -137,20 +137,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowNodeVersion?: string;
 
   /**
-   * The dist-tag to use when releasing to npm.
-   *
-   * @default "latest"
-   */
-  readonly npmDistTag?: string;
-
-  /**
-   * The registry url to use when releasing packages.
-   *
-   * @default "registry.npmjs.org"
-   */
-  readonly npmRegistry?: string;
-
-  /**
    * Include dependabot configuration.
    *
    * @default true
@@ -378,8 +364,14 @@ export class NodeProject extends Project {
    */
   public readonly antitamper: boolean;
 
+  /**
+   * @deprecated use `package.npmDistTag`
+   */
   protected readonly npmDistTag: string;
 
+  /**
+   * @deprecated use `package.npmRegistry`
+   */
   protected readonly npmRegistry: string;
 
   /**
@@ -461,8 +453,8 @@ export class NodeProject extends Project {
 
     this.addLicense(options);
 
-    this.npmDistTag = options.npmDistTag ?? 'latest';
-    this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
+    this.npmDistTag = this.package.npmDistTag;
+    this.npmRegistry = this.package.npmRegistry;
 
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
@@ -584,8 +576,8 @@ export class NodeProject extends Project {
                 run: 'npx -p jsii-release jsii-release-npm',
                 env: {
                   NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-                  NPM_DIST_TAG: this.npmDistTag,
-                  NPM_REGISTRY: this.npmRegistry,
+                  NPM_DIST_TAG: this.package.npmDistTag,
+                  NPM_REGISTRY: this.package.npmRegistry,
                 },
               },
             ],

@@ -306,8 +306,8 @@ export class JsiiProject extends TypeScriptProject {
             run: 'npx -p jsii-release jsii-release-npm',
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-              NPM_DIST_TAG: this.npmDistTag,
-              NPM_REGISTRY: this.npmRegistry,
+              NPM_DIST_TAG: this.package.npmDistTag,
+              NPM_REGISTRY: this.package.npmRegistry,
             },
           },
         ],

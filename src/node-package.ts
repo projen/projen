@@ -1,6 +1,8 @@
 import { join, resolve } from 'path';
+import { parse as urlparse } from 'url';
 import { accessSync, constants, existsSync, lstatSync, readdirSync, readJsonSync, unlinkSync } from 'fs-extra';
 import * as semver from 'semver';
+import { resolve as resolveJson } from './_resolve';
 import { Component } from './component';
 import { DependencyType } from './deps';
 import { JsonFile } from './json';
@@ -9,6 +11,8 @@ import { Task } from './tasks';
 import { exec, sorted, isTruthy, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';
+const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
+const DEFAULT_NPM_TAG = 'latest';
 
 export interface NodePackageOptions {
   /**
@@ -233,12 +237,61 @@ export interface NodePackageOptions {
    * @default true
    */
   readonly licensed?: boolean;
+
+  /**
+   * Tags can be used to provide an alias instead of version numbers.
+   *
+   * For example, a project might choose to have multiple streams of development
+   * and use a different tag for each stream, e.g., stable, beta, dev, canary.
+   *
+   * By default, the `latest` tag is used by npm to identify the current version
+   * of a package, and `npm install <pkg>` (without any `@<version>` or `@<tag>`
+   * specifier) installs the latest tag. Typically, projects only use the
+   * `latest` tag for stable release versions, and use other tags for unstable
+   * versions such as prereleases.
+   *
+   * The `next` tag is used by some projects to identify the upcoming version.
+   *
+   * @default "latest"
+   */
+  readonly npmDistTag?: string;
+
+  /**
+   * The base URL of the npm package registry.
+   *
+   * Must be a URL (e.g. start with "https://" or "http://")
+   *
+   * @default "https://registry.npmjs.org"
+   */
+  readonly npmRegistryUrl?: string;
+
+  /**
+   * The host name of the npm registry to publish to. Cannot be set together with `npmRegistryUrl`.
+   *
+   * @deprecated use `npmRegistryUrl` instead
+   */
+  readonly npmRegistry?: string;
+
+  /**
+   * Access level of the npm package.
+   *
+   * @default - for scoped packages (e.g. `foo@bar`), the default is
+   * `NpmAccess.RESTRICTED`, for non-scoped packages, the default is
+   * `NpmAccess.PUBLIC`.
+   */
+  readonly npmAccess?: NpmAccess;
 }
 
 /**
  * Represents the npm `package.json` file.
  */
 export class NodePackage extends Component {
+
+  /**
+   * The name of the npm package.
+   */
+  public readonly packageName: string;
+
   /**
    * The module's entrypoint (e.g. `lib/index.js`).
    */
@@ -286,16 +339,37 @@ export class NodePackage extends Component {
    */
   public readonly license?: string;
 
+  /**
+   * npm distribution tag
+   */
+  public readonly npmDistTag: string;
+
+  /**
+   * npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name.
+   */
+  public readonly npmRegistryUrl: string;
+
+  /**
+   * The npm registry host (e.g. `registry.npmjs.org`).
+   */
+  public readonly npmRegistry: string;
+
+  /**
+   * npm package access level.
+   */
+  public readonly npmAccess: NpmAccess;
+
   private readonly keywords: Set<string> = new Set();
-  private readonly bin: Record<string, string> = { };
-  private readonly scripts: Record<string, string[]> = { };
-  private readonly engines: Record<string, string> = { };
+  private readonly bin: Record<string, string> = {};
+  private readonly scripts: Record<string, string[]> = {};
+  private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
 
+    this.packageName = options.packageName ?? project.name;
     this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
     this.projenCommand = options.projenCommand ?? 'npx projen';
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
@@ -303,11 +377,17 @@ export class NodePackage extends Component {
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
+    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl } = this.parseNpmOptions(options);
+    this.npmDistTag = npmDistTag;
+    this.npmAccess = npmAccess;
+    this.npmRegistry = npmRegistry;
+    this.npmRegistryUrl = npmRegistryUrl;
+
     this.processDeps(options);
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
-      name: options.packageName ?? project.name,
+      name: this.packageName,
       description: options.description,
       repository: !options.repository ? undefined : {
         type: 'git',
@@ -327,6 +407,7 @@ export class NodePackage extends Component {
       license: () => this.license ?? UNLICENSED,
       version: '0.0.0',
       homepage: options.homepage,
+      publishConfig: () => this.renderPublishConfig(),
     };
 
     // override any scripts from options (if specified)
@@ -342,7 +423,7 @@ export class NodePackage extends Component {
     });
 
     this.addKeywords(...options.keywords ?? []);
-    this.addBin(options.bin ?? { });
+    this.addBin(options.bin ?? {});
 
     // automatically add all executable files under "bin"
     if (options.autoDetectBin ?? true) {
@@ -540,6 +621,34 @@ export class NodePackage extends Component {
   }
 
   // -------------------------------------------------------------------------------------------
+
+  private parseNpmOptions(options: NodePackageOptions) {
+    let npmRegistryUrl = options.npmRegistryUrl;
+    if (options.npmRegistry) {
+      if (npmRegistryUrl) {
+        throw new Error('cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.');
+      }
+
+      npmRegistryUrl = `https://${options.npmRegistry}`;
+    }
+
+    const npmr = urlparse(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
+    if (!npmr || !npmr.hostname || !npmr.href) {
+      throw new Error(`unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`);
+    }
+
+    const npmAccess = options.npmAccess ?? defaultNpmAccess(this.packageName);
+    if (!isScoped(this.packageName) && npmAccess === NpmAccess.RESTRICTED) {
+      throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
+    }
+
+    return {
+      npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
+      npmAccess,
+      npmRegistry: npmr.hostname,
+      npmRegistryUrl: npmr.href,
+    };
+  }
 
   private addNodeEngine() {
     if (!this.minNodeVersion && !this.maxNodeVersion) {
@@ -739,6 +848,15 @@ export class NodePackage extends Component {
     writeFile(root, JSON.stringify(pkg, undefined, 2));
   }
 
+  private renderPublishConfig() {
+    // omit values if they are the same as the npm defaults
+    return resolveJson({
+      registry: this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL ? this.npmRegistryUrl : undefined,
+      tag: this.npmDistTag !== DEFAULT_NPM_TAG ? this.npmDistTag : undefined,
+      access: this.npmAccess !== defaultNpmAccess(this.packageName) ? this.npmAccess : undefined,
+    }, { omitEmpty: true });
+  }
+
   private renderKeywords() {
     const kwds = Array.from(this.keywords);
     return sorted(kwds.sort());
@@ -860,8 +978,34 @@ export enum NodePackageManager {
   PNPM = 'pnpm'
 }
 
+/**
+ * Npm package access level
+ */
+export enum NpmAccess {
+  /**
+   * Package is public.
+   */
+  PUBLIC = 'public',
+
+  /**
+   * Package can only be accessed with credentials.
+   */
+  RESTRICTED = 'restricted'
+}
+
 interface NpmDependencies {
   readonly dependencies: Record<string, string>;
   readonly devDependencies: Record<string, string>;
   readonly peerDependencies: Record<string, string>;
+}
+
+/**
+ * Determines if an npm package is "scoped" (i.e. it starts with "xxx@").
+ */
+function isScoped(packageName: string) {
+  return packageName.includes('@');
+}
+
+function defaultNpmAccess(packageName: string) {
+  return isScoped(packageName) ? NpmAccess.RESTRICTED : NpmAccess.PUBLIC;
 }
