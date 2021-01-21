@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.10](https://github.com/projen/projen/compare/v0.15.9...v0.15.10) (2021-01-21)
+
+
+### Features
+
+* **node:** npm publish configuration ([#510](https://github.com/projen/projen/issues/510)) ([6c98f54](https://github.com/projen/projen/commit/6c98f54adca7548947a4c2e348dd7146b195deff)), closes [#317](https://github.com/projen/projen/issues/317) [#192](https://github.com/projen/projen/issues/192)
+
 ### [0.15.9](https://github.com/projen/projen/compare/v0.15.8...v0.15.9) (2021-01-20)
 
 
