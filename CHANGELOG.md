@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.11](https://github.com/projen/projen/compare/v0.15.10...v0.15.11) (2021-01-21)
+
+
+### Features
+
+* **jsii:** Golang support (without publishing yet) ([#513](https://github.com/projen/projen/issues/513)) ([5794594](https://github.com/projen/projen/commit/5794594bc9d6fedf292bf20201822d8b2f61cc1d))
+
 ### [0.15.10](https://github.com/projen/projen/compare/v0.15.9...v0.15.10) (2021-01-21)
 
 
