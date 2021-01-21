@@ -141,6 +141,7 @@ const project = new AwsCdkConstructLibrary({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -250,6 +251,7 @@ const project = new ConstructLibraryCdk8s({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -398,6 +400,7 @@ const project = new JsiiProject({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
