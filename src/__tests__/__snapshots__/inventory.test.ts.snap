@@ -2009,6 +2009,18 @@ Array [
       },
       Object {
         "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
+      },
+      Object {
+        "default": "- no publishing",
         "docs": "Publish to maven.",
         "name": "publishToMaven",
         "optional": true,
@@ -3097,6 +3109,18 @@ Array [
         ],
         "switch": "projen-version",
         "type": "Semver",
+      },
+      Object {
+        "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
       },
       Object {
         "default": "- no publishing",
@@ -4490,6 +4514,18 @@ Array [
         ],
         "switch": "projen-version",
         "type": "Semver",
+      },
+      Object {
+        "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
       },
       Object {
         "default": "- no publishing",

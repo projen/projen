@@ -90,3 +90,24 @@ describe('maven repository options', () => {
   });
 });
 
+test('publish to go', () => {
+  const project = new JsiiProject({
+    authorAddress: 'https://foo.bar',
+    authorUrl: 'https://foo.bar',
+    repositoryUrl: 'https://github.com/foo/bar.git',
+    author: 'My Name',
+    outdir: mkdtemp(),
+    name: 'testproject',
+    publishToGo: {
+      moduleName: 'github.com/foo/bar',
+    },
+  });
+
+  const targets = synthSnapshot(project)['package.json'].jsii.targets;
+  expect(targets).toStrictEqual({
+    go: {
+      moduleName: 'github.com/foo/bar',
+    },
+  });
+});
+
