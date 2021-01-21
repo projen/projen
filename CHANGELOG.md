@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.9](https://github.com/projen/projen/compare/v0.15.8...v0.15.9) (2021-01-20)
+
+
+### Features
+
+* **node:** make "releaseWorkflow" public ([#508](https://github.com/projen/projen/issues/508)) ([951bab1](https://github.com/projen/projen/commit/951bab16804bf407ade145f2b83971bc77dd636e)), closes [#494](https://github.com/projen/projen/issues/494) [#494](https://github.com/projen/projen/issues/494)
+
+### [0.15.8](https://github.com/projen/projen/compare/v0.15.7...v0.15.8) (2021-01-20)
+
 ### [0.15.7](https://github.com/projen/projen/compare/v0.15.6...v0.15.7) (2021-01-19)
 
 

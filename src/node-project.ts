@@ -344,7 +344,7 @@ export class NodeProject extends Project {
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
    */
-  protected readonly releaseWorkflow?: GithubWorkflow;
+  public readonly releaseWorkflow?: GithubWorkflow;
   protected readonly releaseWorkflowJobId?: string;
 
   /**
