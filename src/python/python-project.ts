@@ -11,6 +11,11 @@ import { Venv } from './venv';
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions extends ProjectOptions {
+  /**
+   * Absolute path to the user's python installation.
+   */
+  readonly pythonPath: string;
+
   // -- dependencies --
 
   /**
@@ -101,11 +106,13 @@ export class PythonProject extends Project {
     super(options);
 
     if (options.pip ?? true) {
-      this.depsManager = new Pip(this, options); // ?
+      this.depsManager = new Pip(this, {});
     }
 
     if (options.venv ?? true) {
-      this.envManager = new Venv(this, options); // ?
+      this.envManager = new Venv(this, {
+        pythonPath: options.pythonPath,
+      });
     }
 
     // if (options.setuptools ?? true) {

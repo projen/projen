@@ -17,7 +17,7 @@ export class Pytest extends Component {
 
     const version = options.version ?? '6.2.1';
 
-    project.depsManager?.addTestDependency(`pytest@${version}`);
+    project.addTestDependency(`pytest@${version}`);
 
     project.addTask('test', {
       description: 'Runs tests',
