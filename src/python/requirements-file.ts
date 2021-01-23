@@ -51,7 +51,7 @@ export class RequirementsFile extends FileBase {
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const additionalPackages = resolver.resolve(this.lazyPackages);
-    this.addPackages(additionalPackages);
+    this.addPackages(...additionalPackages);
 
     return `${resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
