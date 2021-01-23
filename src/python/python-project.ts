@@ -1,4 +1,5 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
+import { TaskOptions } from '../tasks';
 import { Pip } from './pip';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
@@ -85,17 +86,17 @@ export class PythonProject extends Project {
   /**
    * API for managing dependencies.
    */
-  public readonly depsManager?: IPythonDeps;
+  public readonly depsManager!: IPythonDeps;
 
   /**
    * API for mangaging the Python runtime environment.
    */
-  public readonly envManager?: IPythonEnv;
+  public readonly envManager!: IPythonEnv;
 
   /**
    * API for managing packaging the project as a library. Only applies when the `projectType` is LIB.
    */
-  public readonly packagingManager?: IPythonPackaging;
+  public readonly packagingManager!: IPythonPackaging;
 
   /**
    * Pytest component.
@@ -143,8 +144,12 @@ export class PythonProject extends Project {
       throw new Error('At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry).');
     }
 
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
+    if (!this.packagingManager) {
+      if (this.projectType === ProjectType.LIB) {
+        throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
+      } else {
+        this.packagingManager = {}; // no-op packaging manager
+      }
     }
 
     if (options.pytest ?? true) {
@@ -164,6 +169,19 @@ export class PythonProject extends Project {
     for (const dep of options.testDeps ?? []) {
       this.addTestDependency(dep);
     }
+  }
+
+  /**
+   * Adds a task that runs in the project's virtual environment.
+   *
+   * @param name The task name to add
+   * @param props Task properties
+   */
+  public addEnvTask(name: string, props: TaskOptions = { }) {
+    const task = this.tasks.addTask(name, props);
+    task.prependSpawn(this.envManager?.activateTask);
+    task.spawn(this.envManager?.deactivateTask);
+    return task;
   }
 
   /**

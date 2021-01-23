@@ -58,7 +58,13 @@ node_modules/
         "name": "test",
         "steps": Array [
           Object {
+            "spawn": "env:activate",
+          },
+          Object {
             "exec": "pytest",
+          },
+          Object {
+            "spawn": "env:deactivate",
           },
         ],
       },
@@ -146,7 +152,13 @@ node_modules/
         "name": "test",
         "steps": Array [
           Object {
+            "spawn": "env:activate",
+          },
+          Object {
             "exec": "pytest",
+          },
+          Object {
+            "spawn": "env:deactivate",
           },
         ],
       },
@@ -237,7 +249,13 @@ node_modules/
         "name": "test",
         "steps": Array [
           Object {
+            "spawn": "env:activate",
+          },
+          Object {
             "exec": "pytest",
+          },
+          Object {
+            "spawn": "env:deactivate",
           },
         ],
       },

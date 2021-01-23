@@ -10,8 +10,8 @@ export class Pip extends Component implements IPythonDeps {
   constructor(project: Project, _options: PipOptions) {
     super(project);
 
-    new RequirementsFile(project, 'requirements.txt', { lazyPackages: () => this.synthDependencies() });
-    new RequirementsFile(project, 'requirements-dev.txt', { lazyPackages: () => this.synthDevDependencies() });
+    new RequirementsFile(project, 'requirements.txt', { _lazyPackages: () => this.synthDependencies() });
+    new RequirementsFile(project, 'requirements-dev.txt', { _lazyPackages: () => this.synthDevDependencies() });
   }
 
   private synthDependencies() {

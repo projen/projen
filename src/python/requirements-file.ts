@@ -9,7 +9,7 @@ export interface RequirementsFileOptions {
    * Accepts a function that resolves to an list of packages that should get included.
    * @internal
    */
-  readonly lazyPackages: any;
+  readonly _lazyPackages: any;
 }
 
 /**
@@ -24,7 +24,7 @@ export class RequirementsFile extends FileBase {
   constructor(project: Project, filePath: string, options: RequirementsFileOptions) {
     super(project, filePath);
 
-    this.lazyPackages = options.lazyPackages;
+    this.lazyPackages = options._lazyPackages;
   }
 
   /**

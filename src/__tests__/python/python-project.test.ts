@@ -1,6 +1,5 @@
 import { LogLevel } from '../../logger';
 import { PythonProject, PythonProjectOptions } from '../../python';
-import { execOrUndefined } from '../../util';
 import { mkdtemp, synthSnapshot } from '../util';
 
 test('defaults', () => {
@@ -39,19 +38,12 @@ test('no pytest', () => {
 
 class TestPythonProject extends PythonProject {
   constructor(options: Partial<PythonProjectOptions> = { }) {
-    const workdir = mkdtemp();
-    const pythonPath = execOrUndefined('which python', { cwd: workdir });
-
-    if (!pythonPath) {
-      fail('Failed to obtain a valid python executable path for tests.');
-    }
-
     super({
       ...options,
       clobber: false,
       name: 'test-python-project',
-      pythonPath: pythonPath,
-      outdir: workdir,
+      pythonPath: '/usr/bin/python',
+      outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
       jsiiFqn: 'projen.python.PythonProject',
     });

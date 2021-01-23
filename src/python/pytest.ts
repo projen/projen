@@ -19,7 +19,7 @@ export class Pytest extends Component {
 
     project.addTestDependency(`pytest@${version}`);
 
-    project.addTask('test', {
+    project.addEnvTask('test', {
       description: 'Runs tests',
       category: TaskCategory.TEST,
       exec: 'pytest',

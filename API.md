@@ -54,6 +54,12 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[python.Pip](#projen-python-pip)|*No description*
+[python.Pytest](#projen-python-pytest)|*No description*
+[python.PythonProject](#projen-python-pythonproject)|Python project.
+[python.PythonSample](#projen-python-pythonsample)|Python code sample.
+[python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
+[python.Venv](#projen-python-venv)|*No description*
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -150,6 +156,12 @@ Name|Description
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)|Options for `Projenrc`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|*No description*
+[python.PipOptions](#projen-python-pipoptions)|*No description*
+[python.PytestOptions](#projen-python-pytestoptions)|*No description*
+[python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
+[python.PythonSampleOptions](#projen-python-pythonsampleoptions)|*No description*
+[python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
+[python.VenvOptions](#projen-python-venvoptions)|*No description*
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -183,6 +195,9 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[python.IPythonDeps](#projen-python-ipythondeps)|*No description*
+[python.IPythonEnv](#projen-python-ipythonenv)|*No description*
+[python.IPythonPackaging](#projen-python-ipythonpackaging)|*No description*
 
 
 **Enums**
@@ -1340,7 +1355,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -4674,6 +4689,324 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **className**🔹 | <code>string</code> | The name of the java class that includes the projen entrypoint.
+
+
+
+## class Pip 🔹 <a id="projen-python-pip"></a>
+
+
+
+__Implements__: [python.IPythonDeps](#projen-python-ipythondeps)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pip(project: Project, _options: PipOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **_options** (<code>[python.PipOptions](#projen-python-pipoptions)</code>)  *No description*
+
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-pip-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-pip-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addTestDependency(spec)🔹 <a id="projen-python-pip-addtestdependency"></a>
+
+Adds a test dependency.
+
+```ts
+addTestDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+
+
+## class Pytest 🔹 <a id="projen-python-pytest"></a>
+
+
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pytest(project: PythonProject, options: PytestOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
+  * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
+
+
+
+
+## class PythonProject 🔹 <a id="projen-python-pythonproject"></a>
+
+Python project.
+
+__Submodule__: python
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new python.PythonProject(options: PythonProjectOptions)
+```
+
+* **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
+**envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
+**packagingManager**🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.
+**pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-pythonproject-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-pythonproject-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addEnvTask(name, props?)🔹 <a id="projen-python-pythonproject-addenvtask"></a>
+
+Adds a task that runs in the project's virtual environment.
+
+```ts
+addEnvTask(name: string, props?: TaskOptions): Task
+```
+
+* **name** (<code>string</code>)  The task name to add.
+* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
+#### addTestDependency(spec)🔹 <a id="projen-python-pythonproject-addtestdependency"></a>
+
+Adds a test dependency.
+
+```ts
+addTestDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+
+
+## class PythonSample 🔹 <a id="projen-python-pythonsample"></a>
+
+Python code sample.
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.PythonSample(project: Project, _options: PythonSampleOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is. 
+
+
+
+
+## class RequirementsFile 🔹 <a id="projen-python-requirementsfile"></a>
+
+Specifies a list of packages to be installed using pip.
+
+__Submodule__: python
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new python.RequirementsFile(project: Project, filePath: string, options: RequirementsFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[python.RequirementsFileOptions](#projen-python-requirementsfileoptions)</code>)  *No description*
+
+
+### Methods
+
+
+#### addPackages(...packages)🔹 <a id="projen-python-requirementsfile-addpackages"></a>
+
+Adds the specified packages provided in semver format.
+
+Comment lines (start with `#`) are ignored.
+
+```ts
+addPackages(...packages: string[]): void
+```
+
+* **packages** (<code>string</code>)  Package version in format `<module>@<semver>`.
+
+
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-python-requirementsfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Venv 🔹 <a id="projen-python-venv"></a>
+
+
+
+__Implements__: [python.IPythonEnv](#projen-python-ipythonenv)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Venv(project: PythonProject, options: VenvOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
+  * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
+  * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**activateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**createEnvTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**deactivateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 
 
@@ -8144,6 +8477,159 @@ Name | Type | Description
 **initializationOptions**?🔹 | <code>Map<string, any></code> | Project initialization options.<br/>__*Optional*__
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
 **testScope**?🔹 | <code>boolean</code> | Defines projenrc under the test scope instead of the main scope, which is reserved to the app.<br/>__*Default*__: true
+
+
+
+## interface IPythonDeps 🔹 <a id="projen-python-ipythondeps"></a>
+
+__Implemented by__: [python.Pip](#projen-python-pip)
+
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-ipythondeps-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-ipythondeps-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addTestDependency(spec)🔹 <a id="projen-python-ipythondeps-addtestdependency"></a>
+
+Adds a test dependency.
+
+```ts
+addTestDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+
+
+## interface IPythonEnv 🔹 <a id="projen-python-ipythonenv"></a>
+
+__Implemented by__: [python.Venv](#projen-python-venv)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**activateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**deactivateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+
+
+
+## interface IPythonPackaging 🔹 <a id="projen-python-ipythonpackaging"></a>
+
+
+
+
+
+## struct PipOptions 🔹 <a id="projen-python-pipoptions"></a>
+
+
+
+
+
+## struct PytestOptions 🔹 <a id="projen-python-pytestoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**version**?🔹 | <code>string</code> | Pytest version.<br/>__*Default*__: "6.2.1"
+
+
+
+## struct PythonProjectOptions 🔹 <a id="projen-python-pythonprojectoptions"></a>
+
+
+Options for `PythonProject`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your project.
+**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
+**pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
+**venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+
+
+
+## struct PythonSampleOptions 🔹 <a id="projen-python-pythonsampleoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is.
+
+
+
+## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>
+
+
+
+
+
+## struct VenvOptions 🔹 <a id="projen-python-venvoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
+**envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
 
 
 
