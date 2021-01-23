@@ -159,7 +159,7 @@ Name|Description
 [python.PipOptions](#projen-python-pipoptions)|*No description*
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
-[python.PythonSampleOptions](#projen-python-pythonsampleoptions)|*No description*
+[python.PythonSampleOptions](#projen-python-pythonsampleoptions)|Options for python sample code.
 [python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
 [python.VenvOptions](#projen-python-venvoptions)|*No description*
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
@@ -4812,6 +4812,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
   * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
@@ -4909,12 +4910,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PythonSample(project: Project, _options: PythonSampleOptions)
+new python.PythonSample(project: Project, _options?: PythonSampleOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is. 
 
 
 
@@ -8584,6 +8584,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
@@ -8603,14 +8604,7 @@ Name | Type | Description
 ## struct PythonSampleOptions 🔹 <a id="projen-python-pythonsampleoptions"></a>
 
 
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is.
-
+Options for python sample code.
 
 
 ## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>

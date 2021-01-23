@@ -1,4 +1,3 @@
-import { EOL } from 'os';
 import { Dependencies } from '../deps';
 import { FileBase, IResolver } from '../file';
 import { Project } from '../project';
@@ -9,7 +8,7 @@ export interface RequirementsFileOptions {
    * Accepts a function that resolves to an list of packages that should get included.
    * @internal
    */
-  readonly _lazyPackages: any;
+  readonly _lazyPackages?: any;
 }
 
 /**
@@ -51,11 +50,13 @@ export class RequirementsFile extends FileBase {
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const additionalPackages = resolver.resolve(this.lazyPackages);
-    this.addPackages(...additionalPackages);
+    if (additionalPackages) {
+      this.addPackages(...additionalPackages);
+    }
 
     return `${resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
       ...this.packages,
-    ]).join(EOL)}${EOL}`;
+    ]).join('\n')}\n`;
   }
 }

@@ -14,6 +14,8 @@ import { Venv } from './venv';
 export interface PythonProjectOptions extends ProjectOptions {
   /**
    * Absolute path to the user's python installation.
+   *
+   * @default "/usr/bin/python"
    */
   readonly pythonPath: string;
 
@@ -22,7 +24,7 @@ export interface PythonProjectOptions extends ProjectOptions {
   /**
    * List of runtime dependencies for this project.
    *
-   * Dependencies use the format: `<groupId>/<artifactId>@<semver>`
+   * Dependencies use the format: `<module>@<semver>`
    *
    * Additional dependencies can be added via `project.addDependency()`.
    *
@@ -33,13 +35,24 @@ export interface PythonProjectOptions extends ProjectOptions {
   /**
    * List of test dependencies for this project.
    *
-   * Dependencies use the format: `<groupId>/<artifactId>@<semver>`
+   * Dependencies use the format: `<module>@<semver>`
    *
    * Additional dependencies can be added via `project.addTestDependency()`.
    *
    * @default []
    */
   readonly testDeps?: string[];
+
+  /**
+   * List of dev dependencies for this project.
+   *
+   * Dependencies use the format: `<module>@<semver>`
+   *
+   * Additional dependencies can be added via `project.addDevDependency()`.
+   *
+   * @default []
+   */
+  readonly devDeps?: string[];
 
   // -- core components --
 
@@ -159,7 +172,7 @@ export class PythonProject extends Project {
     }
 
     if (options.sample ?? true) {
-      new PythonSample(this, { projectType: this.projectType });
+      new PythonSample(this, {});
     }
 
     for (const dep of options.deps ?? []) {
@@ -168,6 +181,10 @@ export class PythonProject extends Project {
 
     for (const dep of options.testDeps ?? []) {
       this.addTestDependency(dep);
+    }
+
+    for (const dep of options.devDeps ?? []) {
+      this.addDevDependency(dep);
     }
   }
 
@@ -179,8 +196,8 @@ export class PythonProject extends Project {
    */
   public addEnvTask(name: string, props: TaskOptions = { }) {
     const task = this.tasks.addTask(name, props);
-    task.prependSpawn(this.envManager?.activateTask);
-    task.spawn(this.envManager?.deactivateTask);
+    task.prependSpawn(this.envManager.activateTask);
+    task.spawn(this.envManager.deactivateTask);
     return task;
   }
 
@@ -190,7 +207,7 @@ export class PythonProject extends Project {
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    return this.depsManager?.addDependency(spec);
+    return this.depsManager.addDependency(spec);
   }
 
   /**
@@ -199,7 +216,7 @@ export class PythonProject extends Project {
    * @param spec Format `<module>@<semver>`
    */
   public addTestDependency(spec: string) {
-    return this.depsManager?.addTestDependency(spec);
+    return this.depsManager.addTestDependency(spec);
   }
 
   /**
@@ -208,6 +225,6 @@ export class PythonProject extends Project {
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    return this.depsManager?.addDevDependency(spec);
+    return this.depsManager.addDevDependency(spec);
   }
 }

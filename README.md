@@ -54,6 +54,7 @@ list):
 * [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/projen/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/projen/projen/blob/master/API.md#projen-project) - Base project.
+* [python](https://github.com/projen/projen/blob/master/API.md#projen-python.pythonproject) - Python project.
 * [react](https://github.com/projen/projen/blob/master/API.md#projen-web.reactproject) - React project without TypeScript.
 * [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.reacttypescriptproject) - React project with TypeScript.
 * [typescript](https://github.com/projen/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
