@@ -18,6 +18,7 @@ export function tryProcessMacro(macro: string) {
 
     case '$GIT_USER_NAME': return getFromGitConfig('user.name') ?? 'user';
     case '$GIT_USER_EMAIL': return resolveEmail();
+    case '$PYTHON_PATH': return execOrUndefined('which python') ?? '/usr/bin/python';
   }
 
   return undefined;

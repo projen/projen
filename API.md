@@ -4707,12 +4707,20 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pip(project: Project, _options: PipOptions)
+new python.Pip(project: PythonProject, _options: PipOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
 * **_options** (<code>[python.PipOptions](#projen-python-pipoptions)</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 ### Methods
 
@@ -4777,8 +4785,17 @@ new python.Pytest(project: PythonProject, options: PytestOptions)
 
 * **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
 * **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
   * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 
 
@@ -4829,7 +4846,9 @@ Name | Type | Description
 -----|------|-------------
 **depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
 **envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
+**moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens replaced with underscores).
 **packagingManager**🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.
+**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
 
 ### Methods
@@ -4861,12 +4880,14 @@ addDevDependency(spec: string): void
 
 
 
-#### addEnvTask(name, props?)🔹 <a id="projen-python-pythonproject-addenvtask"></a>
+#### addEnvTask(name, props)🔹 <a id="projen-python-pythonproject-addenvtask"></a>
 
-Adds a task that runs in the project's virtual environment.
+Adds a single task that runs in the project's virtual environment.
+
+Additional steps can be added, but they will not be run in the environment.
 
 ```ts
-addEnvTask(name: string, props?: TaskOptions): Task
+addEnvTask(name: string, props: TaskOptions): Task
 ```
 
 * **name** (<code>string</code>)  The task name to add.
@@ -4910,10 +4931,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PythonSample(project: Project, _options?: PythonSampleOptions)
+new python.PythonSample(project: PythonProject, _options: PythonSampleOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
 * **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
 
 
@@ -4994,7 +5015,6 @@ new python.Venv(project: PythonProject, options: VenvOptions)
 
 * **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
-  * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
 
 
@@ -5004,9 +5024,30 @@ new python.Venv(project: PythonProject, options: VenvOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**activateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**createEnvTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**deactivateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**setupEnvTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+
+### Methods
+
+
+#### addEnvTask(name, props)🔹 <a id="projen-python-venv-addenvtask"></a>
+
+Adds a task that runs in the project's virtual environment.
+
+```ts
+addEnvTask(name: string, props: TaskOptions): Task
+```
+
+* **name** (<code>string</code>)  The task name to add.
+* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 
 
@@ -8534,14 +8575,28 @@ addTestDependency(spec: string): void
 __Implemented by__: [python.Venv](#projen-python-venv)
 
 
+### Methods
 
-### Properties
+
+#### addEnvTask(name, props)🔹 <a id="projen-python-ipythonenv-addenvtask"></a>
 
 
-Name | Type | Description 
------|------|-------------
-**activateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**deactivateTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+
+```ts
+addEnvTask(name: string, props: TaskOptions): Task
+```
+
+* **name** (<code>string</code>)  *No description*
+* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  *No description*
+  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 
 
@@ -8566,6 +8621,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**testdir**?🔹 | <code>string</code> | Directory with tests.<br/>__*Default*__: 'tests'
 **version**?🔹 | <code>string</code> | Pytest version.<br/>__*Default*__: "6.2.1"
 
 
@@ -8622,7 +8678,6 @@ Options for python sample code.
 
 Name | Type | Description 
 -----|------|-------------
-**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
 
 

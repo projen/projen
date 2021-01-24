@@ -1,5 +1,6 @@
 import { Component } from '../component';
-import { TaskCategory } from '../tasks';
+import { SampleDir } from '../sample-file';
+import { Task, TaskCategory } from '../tasks';
 import { PythonProject } from './python-project';
 
 export interface PytestOptions {
@@ -9,9 +10,18 @@ export interface PytestOptions {
    * @default "6.2.1"
    */
   readonly version?: string;
+
+  /**
+   * Directory with tests
+   *
+   * @default 'tests'
+   */
+  readonly testdir?: string;
 }
 
 export class Pytest extends Component {
+  public readonly testTask: Task;
+
   constructor(project: PythonProject, options: PytestOptions) {
     super(project);
 
@@ -19,12 +29,34 @@ export class Pytest extends Component {
 
     project.addTestDependency(`pytest@${version}`);
 
-    project.addEnvTask('test', {
+    this.testTask = project.addEnvTask('test', {
       description: 'Runs tests',
       category: TaskCategory.TEST,
       exec: 'pytest',
     });
 
-    // TODO: add sample tests with `SampleDir`
+    new SampleDir(project, 'tests', {
+      files: {
+        '__init__.py': '',
+        'test_example.py': [
+          'import pytest',
+          '',
+          `from ${project.moduleName}.example import hello`,
+          '',
+          '@pytest.mark.parametrize(',
+          '    ("name", "expected"),',
+          '    [',
+          '        ("A. Musing", "Hello A. Musing!"),',
+          '        ("traveler", "Hello traveler!"),',
+          '        ("projen developer", "Hello projen developer!"),',
+          '    ],',
+          ')',
+          'def test_hello(name, expected):',
+          '    """Example test with parametrization."""',
+          '    assert hello(name) == expected',
+          '',
+        ].join('\n'),
+      },
+    });
   }
 }

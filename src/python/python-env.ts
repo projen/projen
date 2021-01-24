@@ -1,6 +1,5 @@
-import { Task } from '../tasks';
+import { Task, TaskOptions } from '../tasks';
 
 export interface IPythonEnv {
-  readonly activateTask: Task;
-  readonly deactivateTask: Task;
+  addEnvTask(name: string, props: TaskOptions): Task;
 }

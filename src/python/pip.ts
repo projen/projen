@@ -1,17 +1,28 @@
 import { Component } from '../component';
 import { DependencyType } from '../deps';
-import { Project } from '../project';
+import { Task, TaskCategory } from '../tasks';
 import { IPythonDeps } from './python-deps';
+import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';
 
 export interface PipOptions {}
 
 export class Pip extends Component implements IPythonDeps {
-  constructor(project: Project, _options: PipOptions) {
+  public readonly installTask: Task;
+
+  constructor(project: PythonProject, _options: PipOptions) {
     super(project);
 
     new RequirementsFile(project, 'requirements.txt', { _lazyPackages: () => this.synthDependencies() });
     new RequirementsFile(project, 'requirements-dev.txt', { _lazyPackages: () => this.synthDevDependencies() });
+
+    this.installTask = project.addEnvTask('install', {
+      description: 'Install and upgrade dependencies',
+      category: TaskCategory.BUILD,
+    });
+    this.installTask.exec('pip install --upgrade pip');
+    this.installTask.exec('pip install -r requirements.txt');
+    this.installTask.exec('pip install -r requirements-dev.txt');
   }
 
   private synthDependencies() {

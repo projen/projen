@@ -8,6 +8,10 @@ import { IPythonPackaging } from './python-packaging';
 import { PythonSample } from './python-sample';
 import { Venv } from './venv';
 
+
+/** Allowed characters in python project names */
+const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
+
 /**
  * Options for `PythonProject`.
  */
@@ -15,7 +19,7 @@ export interface PythonProjectOptions extends ProjectOptions {
   /**
    * Absolute path to the user's python installation.
    *
-   * @default "/usr/bin/python"
+   * @default $PYTHON_PATH
    */
   readonly pythonPath: string;
 
@@ -97,6 +101,16 @@ export interface PythonProjectOptions extends ProjectOptions {
  */
 export class PythonProject extends Project {
   /**
+   * Absolute path to the user's python installation.
+   */
+  readonly pythonPath: string;
+
+  /**
+   * Python module name (the project name, with any hyphens replaced with underscores).
+   */
+  readonly moduleName: string;
+
+  /**
    * API for managing dependencies.
    */
   public readonly depsManager!: IPythonDeps;
@@ -119,14 +133,19 @@ export class PythonProject extends Project {
   constructor(options: PythonProjectOptions) {
     super(options);
 
-    if (options.pip ?? true) {
-      this.depsManager = new Pip(this, {});
+    if (!PYTHON_PROJECT_NAME_REGEX.test(options.name)) {
+      throw new Error('Python projects must only consist of alphanumeric characters (A-Za-z0-9), hyphens (-), and underscores.');
     }
 
+    this.moduleName = this.safeName(options.name);
+    this.pythonPath = options.pythonPath;
+
     if (options.venv ?? true) {
-      this.envManager = new Venv(this, {
-        pythonPath: options.pythonPath,
-      });
+      this.envManager = new Venv(this, {});
+    }
+
+    if (options.pip ?? true) {
+      this.depsManager = new Pip(this, {});
     }
 
     // if (options.setuptools ?? true) {
@@ -166,9 +185,7 @@ export class PythonProject extends Project {
     }
 
     if (options.pytest ?? true) {
-      this.pytest = new Pytest(this, {
-        ...options.pytestOptions,
-      });
+      this.pytest = new Pytest(this, {});
     }
 
     if (options.sample ?? true) {
@@ -189,16 +206,26 @@ export class PythonProject extends Project {
   }
 
   /**
-   * Adds a task that runs in the project's virtual environment.
+   * Convert an arbitrary string to a valid module filename.
+   *
+   * Replaces hyphens with underscores.
+   *
+   * @param name project name
+   */
+  private safeName(name: string) {
+    return name.replace('-', '_');
+  }
+
+  /**
+   * Adds a single task that runs in the project's virtual environment.
+   *
+   * Additional steps can be added, but they will not be run in the environment.
    *
    * @param name The task name to add
    * @param props Task properties
    */
-  public addEnvTask(name: string, props: TaskOptions = { }) {
-    const task = this.tasks.addTask(name, props);
-    task.prependSpawn(this.envManager.activateTask);
-    task.spawn(this.envManager.deactivateTask);
-    return task;
+  public addEnvTask(name: string, props: TaskOptions) {
+    return this.envManager.addEnvTask(name, props);
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Component } from '../component';
-import { Project } from '../project';
 import { SampleDir } from '../sample-file';
+import { PythonProject } from './python-project';
 
 /**
  * Options for python sample code.
@@ -11,10 +11,10 @@ export interface PythonSampleOptions {}
  * Python code sample.
  */
 export class PythonSample extends Component {
-  constructor(project: Project, _options: PythonSampleOptions) {
+  constructor(project: PythonProject, _options: PythonSampleOptions) {
     super(project);
 
-    new SampleDir(project, project.name, {
+    new SampleDir(project, project.moduleName, {
       files: {
         '__init__.py': '__version__ = "0.1.0"\n',
         '__main__.py': [
