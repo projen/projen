@@ -134,7 +134,7 @@ export class PythonProject extends Project {
     super(options);
 
     if (!PYTHON_PROJECT_NAME_REGEX.test(options.name)) {
-      throw new Error('Python projects must only consist of alphanumeric characters (A-Za-z0-9), hyphens (-), and underscores.');
+      throw new Error('Python projects must only consist of alphanumeric characters, hyphens, and underscores.');
     }
 
     this.moduleName = this.safeName(options.name);
