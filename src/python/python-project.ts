@@ -97,6 +97,17 @@ export interface PythonProjectOptions extends ProjectOptions {
 /**
  * Python project.
  *
+ * Every python project must have a component for managing dependencies, a
+ * component for managing the Python virtual environment, and if it is a
+ * library, a component for managing packaging the library. Some components
+ * satisfy multiple requirements.
+ *
+ * - pip: dependency manager
+ * - venv: environment manager
+ * - pipenv: dependency and environment manager
+ * - setuptools: packaging manager
+ * - poetry: dependency, environment, and packaging manager
+ *
  * @pjid python
  */
 export class PythonProject extends Project {
