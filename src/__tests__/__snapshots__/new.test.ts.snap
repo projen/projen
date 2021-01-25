@@ -34,6 +34,9 @@ const project = new AwsCdkTypeScriptApp({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -61,10 +64,8 @@ const project = new AwsCdkTypeScriptApp({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -140,6 +141,7 @@ const project = new AwsCdkConstructLibrary({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -164,6 +166,9 @@ const project = new AwsCdkConstructLibrary({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -191,10 +196,8 @@ const project = new AwsCdkConstructLibrary({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -248,6 +251,7 @@ const project = new ConstructLibraryCdk8s({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -272,6 +276,9 @@ const project = new ConstructLibraryCdk8s({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -299,10 +306,8 @@ const project = new ConstructLibraryCdk8s({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -395,6 +400,7 @@ const project = new JsiiProject({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
@@ -419,6 +425,9 @@ const project = new JsiiProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -446,10 +455,8 @@ const project = new JsiiProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -517,6 +524,9 @@ const project = new web.NextJsProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -544,10 +554,8 @@ const project = new web.NextJsProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -611,6 +619,9 @@ const project = new web.NextJsTypeScriptProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -638,10 +649,8 @@ const project = new web.NextJsTypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -717,6 +726,9 @@ const project = new NodeProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -744,10 +756,8 @@ const project = new NodeProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -829,6 +839,9 @@ const project = new web.ReactProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -856,10 +869,8 @@ const project = new web.ReactProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -923,6 +934,9 @@ const project = new web.ReactTypeScriptProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -950,10 +964,8 @@ const project = new web.ReactTypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -1029,6 +1041,9 @@ const project = new TypeScriptProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -1056,10 +1071,8 @@ const project = new TypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -1135,6 +1148,9 @@ const project = new TypeScriptAppProject({
   // licensed: true,                                                           /* Indicates if a license should be added. */
   // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
   // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
@@ -1162,10 +1178,8 @@ const project = new TypeScriptAppProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // npmDistTag: 'latest',                                                     /* The dist-tag to use when releasing to npm. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // npmRegistry: 'registry.npmjs.org',                                        /* The registry url to use when releasing packages. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
