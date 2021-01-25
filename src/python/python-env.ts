@@ -1,5 +1,6 @@
-import { Task, TaskOptions } from '../tasks';
-
 export interface IPythonEnv {
-  addEnvTask(name: string, props: TaskOptions): Task;
+  /**
+   * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+   */
+  setupEnvironment(): void;
 }

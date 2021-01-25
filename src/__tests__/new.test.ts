@@ -14,7 +14,7 @@ for (const type of inventory.discover()) {
       const projectdir = createProjectDir(outdir);
 
       // execute `projen new PJID --no-synth` in the project directory
-      execProjenCLI(projectdir, ['new', '--no-synth', type.pjid]);
+      execProjenCLI(projectdir, ['new', '--no-synth', '--python-path=/usr/bin/python', type.pjid]);
 
       // compare generated .projenrc.js to the snapshot
       const projenrc = readFileSync(join(projectdir, PROJEN_RC), 'utf-8');

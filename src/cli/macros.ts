@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as path from 'path';
 import { execOrUndefined } from '../util';
 
@@ -18,7 +19,7 @@ export function tryProcessMacro(macro: string) {
 
     case '$GIT_USER_NAME': return getFromGitConfig('user.name') ?? 'user';
     case '$GIT_USER_EMAIL': return resolveEmail();
-    case '$PYTHON_PATH': return execOrUndefined('which python') ?? '/usr/bin/python';
+    case '$PYTHON_PATH': return resolvePython();
   }
 
   return undefined;
@@ -35,4 +36,10 @@ function getFromGitConfig(key: string): string | undefined {
 
 function resolveEmail(): string {
   return getFromGitConfig('user.email') ?? 'user@domain.com';
+}
+
+function resolvePython(): string {
+  const command = os.platform() === 'win32' ? '(Get-Command python).Path' : 'which python';
+  const defaultValue = os.platform() === 'win32' ? 'C:\\Python36\\python.exe' : '/usr/bin/python';
+  return execOrUndefined(command) ?? defaultValue;
 }

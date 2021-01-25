@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { Task, TaskCategory } from '../tasks';
+import { exec } from '../util';
 import { IPythonDeps } from './python-deps';
 import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';
@@ -16,7 +17,7 @@ export class Pip extends Component implements IPythonDeps {
     new RequirementsFile(project, 'requirements.txt', { _lazyPackages: () => this.synthDependencies() });
     new RequirementsFile(project, 'requirements-dev.txt', { _lazyPackages: () => this.synthDevDependencies() });
 
-    this.installTask = project.addEnvTask('install', {
+    this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
       category: TaskCategory.BUILD,
     });
@@ -38,7 +39,7 @@ export class Pip extends Component implements IPythonDeps {
   private synthDevDependencies() {
     const dependencies: string[] = [];
     for (const pkg of this.project.deps.all) {
-      if ([DependencyType.TEST, DependencyType.DEVENV].includes(pkg.type)) {
+      if ([DependencyType.DEVENV].includes(pkg.type)) {
         dependencies.push( `${pkg.name}@${pkg.version}`);
       }
     }
@@ -55,20 +56,19 @@ export class Pip extends Component implements IPythonDeps {
   }
 
   /**
-   * Adds a test dependency.
-   *
-   * @param spec Format `<module>@<semver>`
-   */
-  public addTestDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.TEST);
-  }
-
-  /**
    * Adds a dev dependency.
    *
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
     this.project.deps.addDependency(spec, DependencyType.DEVENV);
+  }
+
+  /**
+   * Installs dependencies (called during post-synthesis).
+   */
+  public installDependencies() {
+    this.project.logger.info('Installing dependencies...');
+    exec(this.installTask.toShellCommand(), { cwd: this.project.outdir });
   }
 }

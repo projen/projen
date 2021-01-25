@@ -7,16 +7,14 @@ export interface IPythonDeps {
   addDependency(spec: string): void;
 
   /**
-   * Adds a test dependency.
-   *
-   * @param spec Format `<module>@<semver>`
-   */
-  addTestDependency(spec: string): void;
-
-  /**
    * Adds a dev dependency.
    *
    * @param spec Format `<module>@<semver>`
    */
   addDevDependency(spec: string): void;
+
+  /**
+   * Installs dependencies (called during post-synthesis).
+   */
+  installDependencies(): void;
 }

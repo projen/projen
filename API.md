@@ -4751,15 +4751,14 @@ addDevDependency(spec: string): void
 
 
 
-#### addTestDependency(spec)🔹 <a id="projen-python-pip-addtestdependency"></a>
+#### installDependencies()🔹 <a id="projen-python-pip-installdependencies"></a>
 
-Adds a test dependency.
+Installs dependencies (called during post-synthesis).
 
 ```ts
-addTestDependency(spec: string): void
+installDependencies(): void
 ```
 
-* **spec** (<code>string</code>)  Format `<module>@<semver>`.
 
 
 
@@ -4846,7 +4845,7 @@ Name | Type | Description
 -----|------|-------------
 **depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
 **envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
-**moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens replaced with underscores).
+**moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores).
 **packagingManager**🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.
 **pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
@@ -4880,37 +4879,16 @@ addDevDependency(spec: string): void
 
 
 
-#### addEnvTask(name, props)🔹 <a id="projen-python-pythonproject-addenvtask"></a>
+#### postSynthesize()🔹 <a id="projen-python-pythonproject-postsynthesize"></a>
 
-Adds a single task that runs in the project's virtual environment.
+Called after all components are synthesized.
 
-Additional steps can be added, but they will not be run in the environment.
-
-```ts
-addEnvTask(name: string, props: TaskOptions): Task
-```
-
-* **name** (<code>string</code>)  The task name to add.
-* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
-
-__Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
-
-#### addTestDependency(spec)🔹 <a id="projen-python-pythonproject-addtestdependency"></a>
-
-Adds a test dependency.
+Order is *not* guaranteed.
 
 ```ts
-addTestDependency(spec: string): void
+postSynthesize(): void
 ```
 
-* **spec** (<code>string</code>)  Format `<module>@<semver>`.
 
 
 
@@ -5018,36 +4996,20 @@ new python.Venv(project: PythonProject, options: VenvOptions)
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
 
 
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**setupEnvTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-
 ### Methods
 
 
-#### addEnvTask(name, props)🔹 <a id="projen-python-venv-addenvtask"></a>
+#### setupEnvironment()🔹 <a id="projen-python-venv-setupenvironment"></a>
 
-Adds a task that runs in the project's virtual environment.
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
 
 ```ts
-addEnvTask(name: string, props: TaskOptions): Task
+setupEnvironment(): void
 ```
 
-* **name** (<code>string</code>)  The task name to add.
-* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
-__Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
+
+
 
 
 
@@ -8555,15 +8517,14 @@ addDevDependency(spec: string): void
 
 
 
-#### addTestDependency(spec)🔹 <a id="projen-python-ipythondeps-addtestdependency"></a>
+#### installDependencies()🔹 <a id="projen-python-ipythondeps-installdependencies"></a>
 
-Adds a test dependency.
+Installs dependencies (called during post-synthesis).
 
 ```ts
-addTestDependency(spec: string): void
+installDependencies(): void
 ```
 
-* **spec** (<code>string</code>)  Format `<module>@<semver>`.
 
 
 
@@ -8578,25 +8539,17 @@ __Implemented by__: [python.Venv](#projen-python-venv)
 ### Methods
 
 
-#### addEnvTask(name, props)🔹 <a id="projen-python-ipythonenv-addenvtask"></a>
+#### setupEnvironment()🔹 <a id="projen-python-ipythonenv-setupenvironment"></a>
 
-
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
 
 ```ts
-addEnvTask(name: string, props: TaskOptions): Task
+setupEnvironment(): void
 ```
 
-* **name** (<code>string</code>)  *No description*
-* **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  *No description*
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
-__Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
+
+
 
 
 

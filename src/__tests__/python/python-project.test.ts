@@ -11,7 +11,7 @@ test('dependencies', () => {
   const p = new TestPythonProject();
   p.addDependency('Django@3.1.5');
   p.addDependency('aws-cdk.core@*');
-  p.addTestDependency('hypothesis@^6.0.3');
+  p.addDevDependency('hypothesis@^6.0.3');
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
@@ -21,7 +21,7 @@ test('dependencies via ctor', () => {
       'Django@3.1.5',
       'aws-cdk.core@*',
     ],
-    testDeps: [
+    devDeps: [
       'hypothesis@^6.0.3',
     ],
   });

@@ -27,9 +27,9 @@ export class Pytest extends Component {
 
     const version = options.version ?? '6.2.1';
 
-    project.addTestDependency(`pytest@${version}`);
+    project.addDevDependency(`pytest@${version}`);
 
-    this.testTask = project.addEnvTask('test', {
+    this.testTask = project.addTask('test', {
       description: 'Runs tests',
       category: TaskCategory.TEST,
       exec: 'pytest',

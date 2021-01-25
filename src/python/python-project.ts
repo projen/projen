@@ -1,5 +1,4 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
-import { TaskOptions } from '../tasks';
 import { Pip } from './pip';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
@@ -97,27 +96,18 @@ export interface PythonProjectOptions extends ProjectOptions {
 /**
  * Python project.
  *
- * Every python project must have a component for managing dependencies, a
- * component for managing the Python virtual environment, and if it is a
- * library, a component for managing packaging the library. Some components
- * satisfy multiple requirements.
- *
- * - pip: dependency manager
- * - venv: environment manager
- * - pipenv: dependency and environment manager
- * - setuptools: packaging manager
- * - poetry: dependency, environment, and packaging manager
- *
  * @pjid python
  */
 export class PythonProject extends Project {
   /**
-   * Absolute path to the user's python installation.
+   * Absolute path to the user's python installation. This will be used for
+   * setting up the virtual environment.
    */
   readonly pythonPath: string;
 
   /**
-   * Python module name (the project name, with any hyphens replaced with underscores).
+   * Python module name (the project name, with any hyphens or periods replaced
+   * with underscores).
    */
   readonly moduleName: string;
 
@@ -207,10 +197,6 @@ export class PythonProject extends Project {
       this.addDependency(dep);
     }
 
-    for (const dep of options.testDeps ?? []) {
-      this.addTestDependency(dep);
-    }
-
     for (const dep of options.devDeps ?? []) {
       this.addDevDependency(dep);
     }
@@ -224,19 +210,7 @@ export class PythonProject extends Project {
    * @param name project name
    */
   private safeName(name: string) {
-    return name.replace('-', '_');
-  }
-
-  /**
-   * Adds a single task that runs in the project's virtual environment.
-   *
-   * Additional steps can be added, but they will not be run in the environment.
-   *
-   * @param name The task name to add
-   * @param props Task properties
-   */
-  public addEnvTask(name: string, props: TaskOptions) {
-    return this.envManager.addEnvTask(name, props);
+    return name.replace('-', '_').replace('.', '_');
   }
 
   /**
@@ -249,20 +223,18 @@ export class PythonProject extends Project {
   }
 
   /**
-   * Adds a test dependency.
-   *
-   * @param spec Format `<module>@<semver>`
-   */
-  public addTestDependency(spec: string) {
-    return this.depsManager.addTestDependency(spec);
-  }
-
-  /**
    * Adds a dev dependency.
    *
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
     return this.depsManager.addDevDependency(spec);
+  }
+
+  public postSynthesize() {
+    super.postSynthesize();
+
+    this.envManager.setupEnvironment();
+    this.depsManager.installDependencies();
   }
 }
