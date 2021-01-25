@@ -329,6 +329,7 @@ export class Project {
   /**
    * Prints a "tip" message during synthesis.
    * @param message The message
+   * @deprecated - use `project.logger.info(message)` to show messages during synthesis
    */
   public addTip(message: string) {
     this.tips.push(message);
