@@ -80,6 +80,26 @@ describe('maven repository options', () => {
   });
 });
 
+test('publish to go', () => {
+  const project = new TestJsiiProject({
+    authorAddress: 'https://foo.bar',
+    authorUrl: 'https://foo.bar',
+    repositoryUrl: 'https://github.com/foo/bar.git',
+    author: 'My Name',
+    name: 'testproject',
+    publishToGo: {
+      moduleName: 'github.com/foo/bar',
+    },
+  });
+
+  const targets = synthSnapshot(project)['package.json'].jsii.targets;
+  expect(targets).toStrictEqual({
+    go: {
+      moduleName: 'github.com/foo/bar',
+    },
+  });
+});
+
 class TestJsiiProject extends JsiiProject {
   constructor(options: JsiiProjectOptions) {
     super({

@@ -1,7 +1,9 @@
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
 import * as logging from '../logging';
-import { mkdtemp, synthSnapshot } from './util';
+import { NodePackage, NpmAccess } from '../node-package';
+import { Project } from '../project';
+import { mkdtemp, synthSnapshot, TestProject } from './util';
 
 logging.disable();
 
@@ -166,6 +168,96 @@ describe('deps', () => {
   });
 });
 
+describe('npm publishing options', () => {
+  test('defaults', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'my-package',
+    });
+
+    // THEN
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(npm.npmDistTag).toStrictEqual('latest');
+    expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
+
+    // since these are all defaults, publishConfig is not defined.
+    expect(synthSnapshot(project)['package.json'].publishConfig).toBeUndefined();
+  });
+
+  test('scoped packages default to RESTRICTED access', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+    });
+
+    // THEN
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.RESTRICTED);
+
+    // since these are all defaults, publishConfig is not defined.
+    expect(packageJson(project).publishConfig).toBeUndefined();
+  });
+
+  test('non-scoped package cannot be RESTRICTED', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => new NodePackage(project, {
+      packageName: 'my-package',
+      npmAccess: NpmAccess.RESTRICTED,
+    })).toThrow(/"npmAccess" cannot be RESTRICTED for non-scoped npm package/);
+  });
+
+  test('custom settings', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+      npmDistTag: 'next',
+      npmRegistryUrl: 'https://foo.bar',
+      npmAccess: NpmAccess.PUBLIC,
+    });
+
+    // THEN
+    expect(npm.npmDistTag).toStrictEqual('next');
+    expect(npm.npmRegistry).toStrictEqual('foo.bar');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      access: 'public',
+      registry: 'https://foo.bar/',
+      tag: 'next',
+    });
+  });
+
+  test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+      npmRegistry: 'foo.bar.com',
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual('foo.bar.com');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar.com/');
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry: 'https://foo.bar.com/',
+    });
+  });
+});
+
 test('extend github release workflow', () => {
   const project = new TestNodeProject();
 
@@ -199,7 +291,7 @@ test('extend github release workflow', () => {
   expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
 });
 
-function packageJson(project: NodeProject) {
+function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }
 

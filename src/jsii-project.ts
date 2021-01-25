@@ -46,6 +46,12 @@ export interface JsiiProjectOptions extends NodeProjectOptions {
   readonly publishToPypi?: JsiiPythonTarget;
 
   /**
+   * Publish Go bindings to a git repository.
+   * @default - no publishing
+   */
+  readonly publishToGo?: JsiiGoTarget;
+
+  /**
    * @deprecated use `publishToPyPi`
    */
   readonly python?: JsiiPythonTarget;
@@ -137,6 +143,19 @@ export interface JsiiPythonTarget {
 export interface JsiiDotNetTarget {
   readonly dotNetNamespace: string;
   readonly packageId: string;
+}
+
+/**
+ * Go target configuration
+ */
+export interface JsiiGoTarget {
+  /**
+   * The name of the target go module.
+   *
+   * @example github.com/owner/repo
+   * @example github.com/owner/repo/subdir
+   */
+  readonly moduleName: string;
 }
 
 /**
@@ -256,6 +275,16 @@ export class JsiiProject extends TypeScriptProject {
       publishing = true;
     }
 
+    const golang = options.publishToGo;
+    if (golang) {
+      targets.go = {
+        moduleName: golang.moduleName,
+      };
+
+      this.publishToGo();
+      publishing = true;
+    }
+
     if (!publishing) {
       this.addTip('Use the "java", "python" and "dotnet" options to define publishing settings');
     }
@@ -306,8 +335,8 @@ export class JsiiProject extends TypeScriptProject {
             run: 'npx -p jsii-release jsii-release-npm',
             env: {
               NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-              NPM_DIST_TAG: this.npmDistTag,
-              NPM_REGISTRY: this.npmRegistry,
+              NPM_DIST_TAG: this.package.npmDistTag,
+              NPM_REGISTRY: this.package.npmRegistry,
             },
           },
         ],
@@ -418,7 +447,43 @@ export class JsiiProject extends TypeScriptProject {
       },
     });
   }
+
+  private publishToGo() {
+    if (!this.releaseWorkflow) {
+      return;
+    }
+
+    // TODO: once jsii-release supports golang
+    // this.releaseWorkflow.addJobs({
+    //   release_golang: {
+    //     'name': 'Release to Go',
+    //     'needs': this.releaseWorkflowJobId,
+    //     'runs-on': 'ubuntu-latest',
+    //     'container': {
+    //       image: 'jsii/superchain',
+    //     },
+    //     'steps': [
+    //       {
+    //         name: 'Download build artifacts',
+    //         uses: 'actions/download-artifact@v1',
+    //         with: {
+    //           name: 'dist',
+    //         },
+    //       },
+    //       {
+    //         name: 'Release',
+    //         run: 'npx -p jsii-release jsii-release-golang',
+    //         env: {
+    //           // TODO
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
+  }
 }
+
+
 function parseAuthorAddress(options: JsiiProjectOptions) {
   let authorEmail = options.authorEmail;
   let authorUrl = options.authorUrl;
