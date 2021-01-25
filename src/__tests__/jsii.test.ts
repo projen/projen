@@ -1,18 +1,14 @@
-import { JsiiProject, LogLevel } from '..';
+import { JsiiProject, JsiiProjectOptions, LogLevel } from '..';
 import { mkdtemp, synthSnapshot } from './util';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {
-    const project = new JsiiProject({
+    const project = new TestJsiiProject({
       authorAddress: 'hello@hello.com',
       authorEmail: 'hello@hello.com',
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
       name: 'project',
-      outdir: mkdtemp(),
-      logging: {
-        level: LogLevel.OFF,
-      },
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];
@@ -24,16 +20,12 @@ describe('author', () => {
   });
 
   test('authorUrl and authorAddress can be the same value', () => {
-    const project = new JsiiProject({
+    const project = new TestJsiiProject({
       authorAddress: 'https://foo.bar',
       authorUrl: 'https://foo.bar',
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
       name: 'project',
-      outdir: mkdtemp(),
-      logging: {
-        level: LogLevel.OFF,
-      },
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];
@@ -47,12 +39,11 @@ describe('author', () => {
 
 describe('maven repository options', () => {
   test('use maven central as repository', () => {
-    const project = new JsiiProject({
+    const project = new TestJsiiProject({
       authorAddress: 'https://foo.bar',
       authorUrl: 'https://foo.bar',
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
-      outdir: mkdtemp(),
       name: 'testproject',
       publishToMaven: {
         javaPackage: 'com.github.eladb.watchful',
@@ -68,12 +59,11 @@ describe('maven repository options', () => {
   });
 
   test('use github as repository', () => {
-    const project = new JsiiProject({
+    const project = new TestJsiiProject({
       authorAddress: 'https://foo.bar',
       authorUrl: 'https://foo.bar',
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
-      outdir: mkdtemp(),
       name: 'testproject',
       publishToMaven: {
         javaPackage: 'com.github.eladb.watchful',
@@ -91,12 +81,11 @@ describe('maven repository options', () => {
 });
 
 test('publish to go', () => {
-  const project = new JsiiProject({
+  const project = new TestJsiiProject({
     authorAddress: 'https://foo.bar',
     authorUrl: 'https://foo.bar',
     repositoryUrl: 'https://github.com/foo/bar.git',
     author: 'My Name',
-    outdir: mkdtemp(),
     name: 'testproject',
     publishToGo: {
       moduleName: 'github.com/foo/bar',
@@ -111,3 +100,14 @@ test('publish to go', () => {
   });
 });
 
+class TestJsiiProject extends JsiiProject {
+  constructor(options: JsiiProjectOptions) {
+    super({
+      outdir: mkdtemp(),
+      logging: {
+        level: LogLevel.OFF,
+      },
+      ...options,
+    });
+  }
+}

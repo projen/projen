@@ -9,15 +9,7 @@ logging.disable();
 
 test('license file is added by default', () => {
   // WHEN
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    name: 'test-node-project',
-    mergify: false,
-    projenDevDependency: false,
-    logging: {
-      level: LogLevel.OFF,
-    },
-  });
+  const project = new TestNodeProject();
 
   // THEN
   expect(synthSnapshot(project).LICENSE).toContain('Apache License');
@@ -25,15 +17,8 @@ test('license file is added by default', () => {
 
 test('license file is not added if licensed is false', () => {
   // WHEN
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    name: 'test-node-project',
+  const project = new TestNodeProject({
     licensed: false,
-    mergify: false,
-    projenDevDependency: false,
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
 
   // THEN
@@ -274,10 +259,7 @@ describe('npm publishing options', () => {
 });
 
 test('extend github release workflow', () => {
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    name: 'test-node-project',
-  });
+  const project = new TestNodeProject();
 
   project.releaseWorkflow?.addJobs({
     publish_docker_hub: {
