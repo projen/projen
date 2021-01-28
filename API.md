@@ -3004,7 +3004,7 @@ addTask(name: string, props?: TaskOptions): Task
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
 
-#### addTip(message)🔹 <a id="projen-project-addtip"></a>
+#### addTip(message)⚠️ <a id="projen-project-addtip"></a>
 
 Prints a "tip" message during synthesis.
 
