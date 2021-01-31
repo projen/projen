@@ -48,9 +48,9 @@ export interface SetupPyConfigOptions {
   readonly homepage?: string;
 
   /**
-   * Tags that can be associated with a package.
+   * A list of PyPI trove classifiers that describe the project.
    *
-   * The full list is available at https://pypi.python.org/pypi?%3Aaction=list_classifiers
+   * @see https://pypi.org/classifiers/
    */
   readonly classifiers?: string[];
 

@@ -840,6 +840,7 @@ const project = new python.PythonProject({
   // homepage: undefined,                  /* The project's homepage / website. */
   // license: undefined,                   /* The project license. */
   // pip: true,                            /* Use pip with a requirements.txt file to track project dependencies. */
+  // poetry: false,                        /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging. */
   // pytest: true,                         /* Include pytest tests. */
   // pytestOptions: undefined,             /* pytest options. */
   // sample: undefined,                    /* Include sample code and test if the relevant directories don't exist. */

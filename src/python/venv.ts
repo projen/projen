@@ -41,7 +41,7 @@ export class Venv extends Component implements IPythonEnv {
     if (!fs.pathExistsSync(absoluteEnvdir)) {
       this.project.logger.info(`Setting up a virtual environment using the python installation that was found: ${this.pythonProject.pythonPath}.`);
       exec(`${this.pythonProject.pythonPath} -m venv ${this.envdir}`, { cwd: this.project.outdir });
-      this.project.logger.info(`Environment successfully created (located in /${this.envdir}).`);
+      this.project.logger.info(`Environment successfully created (located in ./${this.envdir}).`);
     }
   }
 }

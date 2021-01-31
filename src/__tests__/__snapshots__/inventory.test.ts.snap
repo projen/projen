@@ -8076,6 +8076,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "false",
+        "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging.",
+        "name": "poetry",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "poetry",
+        ],
+        "switch": "poetry",
+        "type": "boolean",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "docs": "Which type of project this is (library/app).",
         "name": "projectType",

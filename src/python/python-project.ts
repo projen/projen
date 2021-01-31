@@ -1,5 +1,6 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
+import { Poetry } from './poetry';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
@@ -116,6 +117,14 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly setuptools?: boolean;
 
   /**
+   * Use poetry to manage your project dependencies, virtual environment, and
+   * (optional) packaging.
+   *
+   * @default false
+   */
+  readonly poetry?: boolean;
+
+  /**
    * Setuptools options
    * @default - defaults
    */
@@ -222,11 +231,12 @@ export class PythonProject extends Project {
     //   this.envManager = this.depsManager;
     // }
 
-    // if (options.poetry ?? false) {
-    //   this.depsManager = new Poetry(this, options);
-    //   this.envManager = this.depsManager;
-    //   this.packagingManager = this.packagingManager;
-    // }
+    if (options.poetry ?? false) {
+      const poetry = new Poetry(this, options);
+      this.depsManager = poetry;
+      this.envManager = poetry;
+      this.packagingManager = poetry;
+    }
 
     if (!this.depsManager) {
       throw new Error('At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).');
