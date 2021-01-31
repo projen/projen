@@ -59,6 +59,8 @@ Name|Description
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
 [python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
+[python.SetupPy](#projen-python-setuppy)|*No description*
+[python.Setuptools](#projen-python-setuptools)|*No description*
 [python.Venv](#projen-python-venv)|*No description*
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
@@ -161,6 +163,9 @@ Name|Description
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
 [python.PythonSampleOptions](#projen-python-pythonsampleoptions)|Options for python sample code.
 [python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
+[python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)|Fields to pass in the setup() function of setup.py.
+[python.SetupPyOptions](#projen-python-setuppyoptions)|*No description*
+[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)|*No description*
 [python.VenvOptions](#projen-python-venvoptions)|*No description*
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
@@ -1355,7 +1360,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -4827,14 +4832,22 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
   * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **description** (<code>string</code>)  A short project description. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **homepage** (<code>string</code>)  The project's homepage / website. __*Optional*__
+  * **license** (<code>string</code>)  The project license. __*Optional*__
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and distribution. __*Default*__: true if the project type is library
+  * **setuptoolsOptions** (<code>[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)</code>)  Setuptools options. __*Default*__: defaults
   * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **version** (<code>string</code>)  Manually specify package version. __*Optional*__
 
 
 
@@ -4970,6 +4983,79 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
+
+
+
+## class SetupPy 🔹 <a id="projen-python-setuppy"></a>
+
+
+
+__Submodule__: python
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new python.SetupPy(project: PythonProject, options: SetupPyOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.SetupPyOptions](#projen-python-setuppyoptions)</code>)  *No description*
+  * **setupConfig** (<code>[python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)</code>)  Fields to pass in the setup() function. __*Optional*__
+
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-python-setuppy-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Setuptools 🔹 <a id="projen-python-setuptools"></a>
+
+
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Setuptools(project: PythonProject, options: SetuptoolsOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)</code>)  *No description*
+  * **setupConfig** (<code>[python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)</code>)  Fields to pass in the setup() function. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 
 
@@ -8590,12 +8676,17 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
 **pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | A short project description.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | The project's homepage / website.<br/>__*Optional*__
 **jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
+**license**?🔹 | <code>string</code> | The project license.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -8605,8 +8696,11 @@ Name | Type | Description
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and distribution.<br/>__*Default*__: true if the project type is library
+**setuptoolsOptions**?🔹 | <code>[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)</code> | Setuptools options.<br/>__*Default*__: defaults
 **testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
 **venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+**version**?🔹 | <code>string</code> | Manually specify package version.<br/>__*Optional*__
 
 
 
@@ -8619,6 +8713,51 @@ Options for python sample code.
 ## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>
 
 
+
+
+
+## struct SetupPyConfigOptions 🔹 <a id="projen-python-setuppyconfigoptions"></a>
+
+
+Fields to pass in the setup() function of setup.py.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | A short project description.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | The project license.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Name of the package.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | Manually specify package version.<br/>__*Optional*__
+
+
+
+## struct SetupPyOptions 🔹 <a id="projen-python-setuppyoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**setupConfig**?🔹 | <code>[python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)</code> | Fields to pass in the setup() function.<br/>__*Optional*__
+
+
+
+## struct SetuptoolsOptions 🔹 <a id="projen-python-setuptoolsoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**setupConfig**?🔹 | <code>[python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)</code> | Fields to pass in the setup() function.<br/>__*Optional*__
 
 
 

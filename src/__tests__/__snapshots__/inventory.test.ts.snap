@@ -7892,6 +7892,28 @@ Array [
     "moduleName": "projen",
     "options": Array [
       Object {
+        "docs": "Author's e-mail.",
+        "name": "authorEmail",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "authorEmail",
+        ],
+        "switch": "author-email",
+        "type": "string",
+      },
+      Object {
+        "docs": "Author's name.",
+        "name": "authorName",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "authorName",
+        ],
+        "switch": "author-name",
+        "type": "string",
+      },
+      Object {
         "default": "true",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "name": "clobber",
@@ -7914,6 +7936,17 @@ Array [
         ],
         "switch": "deps",
         "type": "unknown",
+      },
+      Object {
+        "docs": "A short project description.",
+        "name": "description",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "description",
+        ],
+        "switch": "description",
+        "type": "string",
       },
       Object {
         "default": "false",
@@ -7952,6 +7985,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "The project's homepage / website.",
+        "name": "homepage",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "homepage",
+        ],
+        "switch": "homepage",
+        "type": "string",
+      },
+      Object {
         "docs": "The JSII FQN (fully qualified name) of the project class.",
         "name": "jsiiFqn",
         "optional": true,
@@ -7960,6 +8004,17 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "docs": "The project license.",
+        "name": "license",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "license",
+        ],
+        "switch": "license",
         "type": "string",
       },
       Object {
@@ -8091,6 +8146,30 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- true if the project type is library",
+        "docs": "Use setuptools with a setup.py script for packaging and distribution.",
+        "name": "setuptools",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "setuptools",
+        ],
+        "switch": "setuptools",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Setuptools options.",
+        "name": "setuptoolsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "setuptoolsOptions",
+        ],
+        "switch": "setuptools-options",
+        "type": "SetuptoolsOptions",
+      },
+      Object {
         "default": "[]",
         "docs": "List of test dependencies for this project.",
         "name": "testDeps",
@@ -8113,6 +8192,17 @@ Array [
         ],
         "switch": "venv",
         "type": "boolean",
+      },
+      Object {
+        "docs": "Manually specify package version.",
+        "name": "version",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "version",
+        ],
+        "switch": "version",
+        "type": "string",
       },
     ],
     "pjid": "python",

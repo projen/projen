@@ -30,7 +30,6 @@ export class Venv extends Component implements IPythonEnv {
     this.project.gitignore.exclude(`/${this.envdir}`);
 
     this.project.tasks.addEnvironment('VIRTUAL_ENV', `$(echo $PWD/${this.envdir})`);
-    this.project.tasks.addEnvironment('PYTHONHOME', '');
     this.project.tasks.addEnvironment('PATH', `$(echo $PWD/${this.envdir}/bin:$PATH)`);
   }
 

@@ -5,6 +5,7 @@ import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
 import { IPythonPackaging } from './python-packaging';
 import { PythonSample } from './python-sample';
+import { Setuptools, SetuptoolsOptions } from './setuptools';
 import { Venv } from './venv';
 
 
@@ -15,12 +16,46 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions extends ProjectOptions {
+  // -- required options --
+
   /**
    * Absolute path to the user's python installation.
    *
    * @default $PYTHON_PATH
    */
   readonly pythonPath: string;
+
+  // -- general information --
+
+  /**
+   * Author's name
+   */
+  readonly authorName?: string;
+
+  /**
+   * Author's e-mail
+   */
+  readonly authorEmail?: string;
+
+  /**
+   * Manually specify package version
+   */
+  readonly version?: string;
+
+  /**
+   * A short project description
+   */
+  readonly description?: string;
+
+  /**
+   * The project license
+   */
+  readonly license?: string;
+
+  /**
+   * The project's homepage / website
+   */
+  readonly homepage?: string;
 
   // -- dependencies --
 
@@ -72,6 +107,19 @@ export interface PythonProjectOptions extends ProjectOptions {
    * @default true
    */
   readonly venv?: boolean;
+
+  /**
+   * Use setuptools with a setup.py script for packaging and distribution.
+   *
+   * @default - true if the project type is library
+   */
+  readonly setuptools?: boolean;
+
+  /**
+   * Setuptools options
+   * @default - defaults
+   */
+  readonly setuptoolsOptions?: SetuptoolsOptions;
 
   // -- optional components --
 
@@ -149,9 +197,20 @@ export class PythonProject extends Project {
       this.depsManager = new Pip(this, {});
     }
 
-    // if (options.setuptools ?? true) {
-    //   this.packagingManager = new SetupTools(this, options);
-    // }
+    if (options.setuptools ?? (this.projectType === ProjectType.LIB)) {
+      this.packagingManager = new Setuptools(this, {
+        ...options.setuptoolsOptions,
+        setupConfig: {
+          authorName: options.authorName,
+          authorEmail: options.authorEmail,
+          version: options.version,
+          description: options.version,
+          license: options.license,
+          homepage: options.homepage,
+          ...options.setuptoolsOptions?.setupConfig,
+        },
+      });
+    }
 
     // if (options.conda ?? false) {
     //   this.depsManager = new Conda(this, options);
@@ -200,6 +259,8 @@ export class PythonProject extends Project {
     for (const dep of options.devDeps ?? []) {
       this.addDevDependency(dep);
     }
+
+    this.addDefaultGitIgnore();
   }
 
   /**
@@ -211,6 +272,141 @@ export class PythonProject extends Project {
    */
   private safeName(name: string) {
     return name.replace('-', '_').replace('.', '_');
+  }
+
+  /**
+   * Adds default gitignore options for a Python project based on
+   * https://github.com/github/gitignore/blob/master/Python.gitignore
+   */
+  private addDefaultGitIgnore() {
+    this.gitignore.exclude(
+      '# Byte-compiled / optimized / DLL files',
+      '__pycache__/',
+      '*.py[cod]',
+      '*$py.class',
+      '',
+      '# C extensions',
+      '*.so',
+      '',
+      '# Distribution / packaging',
+      '.Python',
+      'build/',
+      'develop-eggs/',
+      'dist/',
+      'downloads/',
+      'eggs/',
+      '.eggs/',
+      'lib/',
+      'lib64/',
+      'parts/',
+      'sdist/',
+      'var/',
+      'wheels/',
+      'share/python-wheels/',
+      '*.egg-info/',
+      '.installed.cfg',
+      '*.egg',
+      'MANIFEST',
+      '',
+      '# PyInstaller',
+      '#  Usually these files are written by a python script from a template',
+      '#  before PyInstaller builds the exe, so as to inject date/other infos into it.',
+      '*.manifest',
+      '*.spec',
+      '',
+      '# Installer logs',
+      'pip-log.txt',
+      'pip-delete-this-directory.txt',
+      '',
+      '# Unit test / coverage reports',
+      'htmlcov/',
+      '.tox/',
+      '.nox/',
+      '.coverage',
+      '.coverage.*',
+      '.cache',
+      'nosetests.xml',
+      'coverage.xml',
+      '*.cover',
+      '*.py,cover',
+      '.hypothesis/',
+      '.pytest_cache/',
+      'cover/',
+      '',
+      '# Translations',
+      '*.mo',
+      '*.pot',
+      '',
+      '# Django stuff:',
+      '*.log',
+      'local_settings.py',
+      'db.sqlite3',
+      'db.sqlite3-journal',
+      '',
+      '# Flask stuff:',
+      'instance/',
+      '.webassets-cache',
+      '',
+      '# Scrapy stuff:',
+      '.scrapy',
+      '',
+      '# Sphinx documentation',
+      'docs/_build/',
+      '',
+      '# PyBuilder',
+      '.pybuilder/',
+      'target/',
+      '',
+      '# Jupyter Notebook',
+      '.ipynb_checkpoints',
+      '',
+      '# IPython',
+      'profile_default/',
+      'ipython_config.py',
+      '',
+      '# PEP 582; used by e.g. github.com/David-OConnor/pyflow',
+      '__pypackages__/',
+      '',
+      '# Celery stuff',
+      'celerybeat-schedule',
+      'celerybeat.pid',
+      '',
+      '# SageMath parsed files',
+      '*.sage.py',
+      '',
+      '# Environments',
+      '.env',
+      '.venv',
+      'env/',
+      'venv/',
+      'ENV/',
+      'env.bak/',
+      'venv.bak/',
+      '',
+      '# Spyder project settings',
+      '.spyderproject',
+      '.spyproject',
+      '',
+      '# Rope project settings',
+      '.ropeproject',
+      '',
+      '# mkdocs documentation',
+      '/site',
+      '',
+      '# mypy',
+      '.mypy_cache/',
+      '.dmypy.json',
+      'dmypy.json',
+      '',
+      '# Pyre type checker',
+      '.pyre/',
+      '',
+      '# pytype static type analyzer',
+      '.pytype/',
+      '',
+      '# Cython debug symbols',
+      'cython_debug/',
+    );
   }
 
   /**

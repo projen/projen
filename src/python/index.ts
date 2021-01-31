@@ -6,4 +6,6 @@ export * from './python-packaging';
 export * from './python-project';
 export * from './python-sample';
 export * from './requirements-file';
+export * from './setuppy';
+export * from './setuptools';
 export * from './venv';

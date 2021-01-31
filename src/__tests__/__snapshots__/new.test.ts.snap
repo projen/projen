@@ -832,14 +832,22 @@ const project = new python.PythonProject({
   // readme: undefined,                    /* The README setup. */
 
   /* PythonProjectOptions */
+  // authorEmail: undefined,               /* Author's e-mail. */
+  // authorName: undefined,                /* Author's name. */
   // deps: [],                             /* List of runtime dependencies for this project. */
+  // description: undefined,               /* A short project description. */
   // devDeps: [],                          /* List of dev dependencies for this project. */
+  // homepage: undefined,                  /* The project's homepage / website. */
+  // license: undefined,                   /* The project license. */
   // pip: true,                            /* Use pip with a requirements.txt file to track project dependencies. */
   // pytest: true,                         /* Include pytest tests. */
   // pytestOptions: undefined,             /* pytest options. */
   // sample: undefined,                    /* Include sample code and test if the relevant directories don't exist. */
+  // setuptools: undefined,                /* Use setuptools with a setup.py script for packaging and distribution. */
+  // setuptoolsOptions: undefined,         /* Setuptools options. */
   // testDeps: [],                         /* List of test dependencies for this project. */
   // venv: true,                           /* Use venv to manage a virtual environment for installing dependencies inside. */
+  // version: undefined,                   /* Manually specify package version. */
 });
 
 project.synth();
