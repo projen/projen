@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.14](https://github.com/projen/projen/compare/v0.15.13...v0.15.14) (2021-01-31)
+
+
+### Features
+
+* Golang publishing ([#516](https://github.com/projen/projen/issues/516)) ([9e4ee95](https://github.com/projen/projen/commit/9e4ee958c38547da1fd1da512c9ec6b54d9289c8))
+
 ### [0.15.13](https://github.com/projen/projen/compare/v0.15.12...v0.15.13) (2021-01-25)
 
 ### [0.15.12](https://github.com/projen/projen/compare/v0.15.11...v0.15.12) (2021-01-25)

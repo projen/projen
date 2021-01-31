@@ -80,23 +80,52 @@ describe('maven repository options', () => {
   });
 });
 
-test('publish to go', () => {
-  const project = new TestJsiiProject({
-    authorAddress: 'https://foo.bar',
-    authorUrl: 'https://foo.bar',
-    repositoryUrl: 'https://github.com/foo/bar.git',
-    author: 'My Name',
-    name: 'testproject',
-    publishToGo: {
-      moduleName: 'github.com/foo/bar',
-    },
+describe('publish to go', () => {
+  test('defaults', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      publishToGo: {
+        moduleName: 'github.com/foo/bar',
+      },
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output['package.json'].jsii.targets;
+    expect(targets).toStrictEqual({
+      go: {
+        moduleName: 'github.com/foo/bar',
+      },
+    });
+
+    expect(output['.github/workflows/release.yml']).toMatchSnapshot();
   });
 
-  const targets = synthSnapshot(project)['package.json'].jsii.targets;
-  expect(targets).toStrictEqual({
-    go: {
-      moduleName: 'github.com/foo/bar',
-    },
+  test('customizations', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      publishToGo: {
+        moduleName: 'github.com/foo/bar',
+
+        gitBranch: 'custom-branch',
+        gitCommitMessage: 'custom commit message',
+        gitUserEmail: 'custom@email.com',
+        gitUserName: 'custom user',
+        githubRepo: 'github.com/foo/bar',
+        githubTokenSecret: 'CUSTOM_SECRET',
+      },
+    });
+
+    const output = synthSnapshot(project);
+    expect(output['package.json'].jsii.targets.go).toStrictEqual({ moduleName: 'github.com/foo/bar' });
+    expect(output['.github/workflows/release.yml']).toMatchSnapshot();
   });
 });
 

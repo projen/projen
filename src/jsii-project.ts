@@ -156,6 +156,47 @@ export interface JsiiGoTarget {
    * @example github.com/owner/repo/subdir
    */
   readonly moduleName: string;
+
+  /**
+   * The name of the secret that includes a personal GitHub access token used to
+   * push to the GitHub repository.
+   *
+   * @default "GO_GITHUB_TOKEN"
+   */
+  readonly githubTokenSecret?: string;
+
+  /**
+   * GitHub repository to push to.
+   *
+   * @default - derived from `moduleName`
+   */
+  readonly githubRepo?: string;
+
+  /**
+   * Branch to push to.
+   *
+   * @default "main"
+   */
+  readonly gitBranch?: string;
+
+  /**
+   * The user name to use for the release git commit.
+   * @default "GitHub Actions"
+   */
+  readonly gitUserName?: string;
+
+  /**
+   * The email to use in the release git commit.
+   * @default "github-actions@github.com"
+   */
+  readonly gitUserEmail?: string;
+
+  /**
+   * The commit message.
+   *
+   * @default "chore(release): $VERSION"
+   */
+  readonly gitCommitMessage?: string;
 }
 
 /**
@@ -274,14 +315,14 @@ export class JsiiProject extends TypeScriptProject {
         moduleName: golang.moduleName,
       };
 
-      this.publishToGo();
+      this.publishToGo(golang);
     }
 
     this.addDevDeps(
       'jsii',
       'jsii-diff',
       'jsii-pacmak',
-      'jsii-release',
+      'jsii-release@^0.2.11', // 0.2.11 is when go support was added
     );
 
     this.gitignore.exclude('.jsii', 'tsconfig.json');
@@ -436,38 +477,45 @@ export class JsiiProject extends TypeScriptProject {
     });
   }
 
-  private publishToGo() {
+  private publishToGo(options: JsiiGoTarget) {
     if (!this.releaseWorkflow) {
       return;
     }
 
-    // TODO: once jsii-release supports golang
-    // this.releaseWorkflow.addJobs({
-    //   release_golang: {
-    //     'name': 'Release to Go',
-    //     'needs': this.releaseWorkflowJobId,
-    //     'runs-on': 'ubuntu-latest',
-    //     'container': {
-    //       image: 'jsii/superchain',
-    //     },
-    //     'steps': [
-    //       {
-    //         name: 'Download build artifacts',
-    //         uses: 'actions/download-artifact@v1',
-    //         with: {
-    //           name: 'dist',
-    //         },
-    //       },
-    //       {
-    //         name: 'Release',
-    //         run: 'npx -p jsii-release jsii-release-golang',
-    //         env: {
-    //           // TODO
-    //         },
-    //       },
-    //     ],
-    //   },
-    // });
+    const githubTokenSecret = options.githubTokenSecret ?? 'GO_GITHUB_TOKEN';
+
+
+    this.releaseWorkflow.addJobs({
+      release_golang: {
+        'name': 'Release to Go',
+        'needs': this.releaseWorkflowJobId,
+        'runs-on': 'ubuntu-latest',
+        'container': {
+          image: 'jsii/superchain',
+        },
+        'steps': [
+          {
+            name: 'Download build artifacts',
+            uses: 'actions/download-artifact@v1',
+            with: {
+              name: 'dist',
+            },
+          },
+          {
+            name: 'Release',
+            run: 'npx -p jsii-release jsii-release-golang',
+            env: {
+              GITHUB_REPO: options.githubRepo,
+              GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
+              GIT_BRANCH: options.gitBranch,
+              GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
+              GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
+              GIT_COMMIT_MESSAGE: options.gitCommitMessage,
+            },
+          },
+        ],
+      },
+    });
   }
 }
 
