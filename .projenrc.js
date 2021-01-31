@@ -63,6 +63,10 @@ const project = new JsiiProject({
     distName: 'projen',
     module: 'projen',
   },
+
+  publishToGo: {
+    moduleName: 'github.com/projen/projen-go',
+  },
 });
 
 // this script is what we use as the projen command in this project
