@@ -69,6 +69,9 @@ const project = new JsiiProject({
   },
 });
 
+// temporary until https://github.com/aws/jsii/pull/2492 is resolved
+project.packageTask.exec('echo $(node -p "require(\'./version.json\').version") > dist/go/projen/version');
+
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
 new TextFile(project, 'projen.bash', {
