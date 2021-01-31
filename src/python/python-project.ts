@@ -204,7 +204,7 @@ export class PythonProject extends Project {
           authorName: options.authorName,
           authorEmail: options.authorEmail,
           version: options.version,
-          description: options.version,
+          description: options.description,
           license: options.license,
           homepage: options.homepage,
           ...options.setuptoolsOptions?.setupConfig,

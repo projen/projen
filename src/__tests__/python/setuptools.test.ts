@@ -6,7 +6,7 @@ test('setuptools enabled', () => {
   const p = new TestPythonProject({
     setuptools: true,
     authorEmail: 'foo@example.com',
-    authorName: 'Foo Bar',
+    authorName: 'Firstname Lastname',
     homepage: 'http://www.example.com',
     description: 'a short project description',
     license: 'Apache Software License',
@@ -20,6 +20,11 @@ test('setuptools enabled', () => {
   });
 
   const snapshot = synthSnapshot(p);
+  expect(snapshot['setup.py']).toContain('foo@example.com');
+  expect(snapshot['setup.py']).toContain('Firstname Lastname');
+  expect(snapshot['setup.py']).toContain('http://www.example.com');
+  expect(snapshot['setup.py']).toContain('a short project description');
+  expect(snapshot['setup.py']).toContain('Apache Software License');
   expect(snapshot['setup.py']).toContain('Development Status :: 4 - Beta');
 });
 
