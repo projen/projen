@@ -8,7 +8,7 @@ you want to use, you can specify the right path when setting up the project.
 To create a new Python project, use `projen new python`:
 
 ```shell
-$ projen new python --name=my-project --python-path=/usr/bin/python
+$ projen new python --name=my-project [--python-path=/usr/bin/python]
 ```
 
 This will synthesize a standard project directory structure with some sample
@@ -56,7 +56,7 @@ The following sections describe the various features of Python projects.
 
 Every Python project must have a component for managing/installing dependencies,
 a component for managing the Python virtual environment, and if it is a library,
-a component for managing packaging the library. Some components satisfy multiple
+a component for packaging the library. Some components satisfy multiple
 requirements. See the list below:
 
 - pip: dependency manager
@@ -93,7 +93,7 @@ You can define dependencies when defining the project itself:
 const project = new python.PythonProject({
   deps: [
     'Django@3.1.5',
-    'aws-cdk.core@*',
+    'aws-cdk.core', // implies "@*"
   ],
   testDeps: [
     'hypothesis@^6.0.3',
@@ -115,8 +115,9 @@ Notice the syntax for dependencies:
 
 Where `module` is the module name and `version` is the [semantic version
 requirement](https://semver.org) for the dependency. The semver syntax will be
-converted to the appropriate syntax in synthesized files. For example,
-`lib^3.1.0` will be converted to `lib>=3.1.0, <4.0.0` in `requirements.txt`.
+converted to the appropriate dependency manager syntax in synthesized files. For
+example, `lib^3.1.0` will be converted to `lib>=3.1.0, <4.0.0` in
+`requirements.txt`.
 
 ## Unit Testing with Pytest
 
