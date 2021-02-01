@@ -56,7 +56,7 @@
     "jsii-diff": "^1.16.0",
     "jsii-docgen": "^1.5.2",
     "jsii-pacmak": "^1.16.0",
-    "jsii-release": "^0.2.11",
+    "jsii-release": "^0.2.12",
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
     "standard-version": "^9.0.0",

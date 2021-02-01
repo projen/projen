@@ -322,7 +322,7 @@ export class JsiiProject extends TypeScriptProject {
       'jsii',
       'jsii-diff',
       'jsii-pacmak',
-      'jsii-release@^0.2.11', // 0.2.11 is when go support was added
+      'jsii-release@^0.2.12', // 0.2.12 is when go support was added
     );
 
     this.gitignore.exclude('.jsii', 'tsconfig.json');
