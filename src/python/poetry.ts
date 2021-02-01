@@ -8,7 +8,12 @@ import { IPythonEnv } from './python-env';
 import { IPythonPackaging } from './python-packaging';
 import { PythonProject } from './python-project';
 
-export interface PoetryOptions {}
+export interface PoetryOptions {
+  /**
+   * Configure pyproject.toml
+   */
+  readonly pyprojectConfig?: PoetryPyprojectOptions;
+}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -18,7 +23,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
   private readonly pythonProject: PythonProject;
   public readonly installTask: Task;
 
-  constructor(project: PythonProject, _options: PoetryOptions) {
+  constructor(project: PythonProject, options: PoetryOptions) {
     super(project);
 
     this.pythonProject = project;
@@ -26,8 +31,41 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
       category: TaskCategory.BUILD,
-      exec: 'poetry install',
+      exec: 'poetry update',
     });
+
+    // declare the python versions for which the package is compatible
+    this.addDependency('python@^3.6');
+
+    new PoetryPyproject(project, {
+      name: project.name,
+      // version: options.pyprojectConfig.version,
+      // description: options.pyprojectConfig.description,
+      dependencies: () => this.synthDependencies(),
+      devDependencies: () => this.synthDevDependencies(),
+      scripts: {},
+      ...options.pyprojectConfig,
+    });
+  }
+
+  private synthDependencies() {
+    const dependencies: { [key: string]: any } = {};
+    for (const pkg of this.project.deps.all) {
+      if (pkg.type === DependencyType.RUNTIME) {
+        dependencies[pkg.name] = pkg.version;
+      }
+    }
+    return dependencies;
+  }
+
+  private synthDevDependencies() {
+    const dependencies: { [key: string]: any } = {};
+    for (const pkg of this.project.deps.all) {
+      if ([DependencyType.DEVENV].includes(pkg.type)) {
+        dependencies[pkg.name] = pkg.version;
+      }
+    }
+    return dependencies;
   }
 
   /**
@@ -78,19 +116,19 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
 export interface PoetryPyprojectOptions {
   /**
-   * Name of the package.
+   * Name of the package (required).
    */
-  readonly name: string;
+  readonly name?: string;
 
   /**
-   * Version of the package.
+   * Version of the package (required).
    */
-  readonly version: string;
+  readonly version?: string;
 
   /**
-   * A short description of the package.
+   * A short description of the package (required).
    */
-  readonly description: string;
+  readonly description?: string;
 
   /**
    * License of this package as an SPDX identifier.
@@ -167,19 +205,19 @@ export interface PoetryPyprojectOptions {
    *
    * @example { requests: "^2.13.0" }
    */
-  readonly dependencies: { [key: string]: string };
+  readonly dependencies?: { [key: string]: any };
 
   /**
    * A list of development dependencies for the project.
    *
    * @example { requests: "^2.13.0" }
    */
-  readonly devDependencies: { [key: string]: string };
+  readonly devDependencies?: { [key: string]: any };
 
   /**
    * The scripts or executables that will be installed when installing the package.
    */
-  readonly scripts: { [key: string]: string };
+  readonly scripts?: { [key: string]: any };
 }
 
 /**
@@ -195,32 +233,34 @@ export class PoetryPyproject extends Component {
 
     this.file = new TomlFile(project, 'pyproject.toml', {
       marker: true,
-      omitEmpty: true,
+      omitEmpty: false,
       obj: {
         'build-system': {
           'requires': ['poetry_core>=1.0.0'],
           'build-backend': 'poetry.core.masonry.api',
         },
-        'tool.poetry': {
-          name: options.name,
-          version: options.version,
-          description: options.description,
-          license: options.license,
-          authors: options.authors,
-          maintainers: options.maintainers,
-          readme: options.readme,
-          homepage: options.homepage,
-          repository: options.repository,
-          documentation: options.documentation,
-          keywords: options.keywords,
-          classifiers: options.classifiers,
-          packages: options.packages,
-          include: options.include,
-          exclude: options.exclude,
+        'tool': {
+          poetry: {
+            'name': options.name,
+            'version': options.version,
+            'description': options.description,
+            'license': options.license,
+            'authors': options.authors,
+            'maintainers': options.maintainers,
+            'readme': options.readme,
+            'homepage': options.homepage,
+            'repository': options.repository,
+            'documentation': options.documentation,
+            'keywords': options.keywords,
+            'classifiers': options.classifiers,
+            'packages': options.packages,
+            'include': options.include,
+            'exclude': options.exclude,
+            'dependencies': options.dependencies,
+            'dev-dependencies': options.devDependencies,
+            'scripts': options.scripts,
+          },
         },
-        'tool.poetry.dependencies': options.dependencies,
-        'tool.poetry.dev-dependencies': options.devDependencies,
-        'tool.poetry.scripts': options.scripts,
       },
     });
   }

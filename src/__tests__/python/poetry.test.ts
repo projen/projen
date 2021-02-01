@@ -4,9 +4,10 @@ import { mkdtemp, synthSnapshot } from '../util';
 
 test('poetry enabled', () => {
   const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
     poetry: true,
-    authorEmail: 'foo@example.com',
-    authorName: 'Firstname Lastname',
     homepage: 'http://www.example.com',
     description: 'a short project description',
     license: 'Apache Software License',
@@ -22,6 +23,9 @@ class TestPythonProject extends PythonProject {
       clobber: false,
       name: 'test-python-project',
       pythonPath: '/usr/bin/python',
+      authorName: 'First Last',
+      authorEmail: 'email@example.com',
+      version: '0.1.0',
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
       jsiiFqn: 'projen.python.PythonProject',

@@ -1,13 +1,13 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
-import { Pip } from './pip';
-import { Poetry } from './poetry';
+import { Pip, PipOptions } from './pip';
+import { Poetry, PoetryOptions } from './poetry';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
 import { IPythonPackaging } from './python-packaging';
 import { PythonSample } from './python-sample';
 import { Setuptools, SetuptoolsOptions } from './setuptools';
-import { Venv } from './venv';
+import { Venv, VenvOptions } from './venv';
 
 
 /** Allowed characters in python project names */
@@ -30,18 +30,23 @@ export interface PythonProjectOptions extends ProjectOptions {
 
   /**
    * Author's name
+   *
+   * @default $GIT_USER_NAME
    */
-  readonly authorName?: string;
+  readonly authorName: string;
 
   /**
    * Author's e-mail
+   *
+   * @default $GIT_USER_EMAIL
    */
-  readonly authorEmail?: string;
+  readonly authorEmail: string;
 
   /**
    * Manually specify package version
+   * @default "0.1.0"
    */
-  readonly version?: string;
+  readonly version: string;
 
   /**
    * A short project description
@@ -57,6 +62,13 @@ export interface PythonProjectOptions extends ProjectOptions {
    * The project's homepage / website
    */
   readonly homepage?: string;
+
+  /**
+   * A list of PyPI trove classifiers that describe the project.
+   *
+   * @see https://pypi.org/classifiers/
+   */
+  readonly classifiers?: string[];
 
   // -- dependencies --
 
@@ -103,6 +115,12 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly pip?: boolean;
 
   /**
+   * Pip options
+   * @default - defaults
+   */
+  readonly pipOptions?: PipOptions;
+
+  /**
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
    * @default true
@@ -110,11 +128,23 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly venv?: boolean;
 
   /**
+   * Venv options
+   * @default - defaults
+   */
+  readonly venvOptions?: VenvOptions;
+
+  /**
    * Use setuptools with a setup.py script for packaging and distribution.
    *
    * @default - true if the project type is library
    */
   readonly setuptools?: boolean;
+
+  /**
+   * Setuptools options
+   * @default - defaults
+   */
+  readonly setuptoolsOptions?: SetuptoolsOptions;
 
   /**
    * Use poetry to manage your project dependencies, virtual environment, and
@@ -125,10 +155,10 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly poetry?: boolean;
 
   /**
-   * Setuptools options
+   * Poetry options
    * @default - defaults
    */
-  readonly setuptoolsOptions?: SetuptoolsOptions;
+  readonly poetryOptions?: PoetryOptions;
 
   // -- optional components --
 
@@ -160,13 +190,18 @@ export class PythonProject extends Project {
    * Absolute path to the user's python installation. This will be used for
    * setting up the virtual environment.
    */
-  readonly pythonPath: string;
+  public readonly pythonPath: string;
 
   /**
    * Python module name (the project name, with any hyphens or periods replaced
    * with underscores).
    */
-  readonly moduleName: string;
+  public readonly moduleName: string;
+
+  /**
+   * Version of the package for distribution (should follow semver).
+   */
+  public readonly version: string;
 
   /**
    * API for managing dependencies.
@@ -197,13 +232,14 @@ export class PythonProject extends Project {
 
     this.moduleName = this.safeName(options.name);
     this.pythonPath = options.pythonPath;
+    this.version = options.version;
 
     if (options.venv ?? true) {
-      this.envManager = new Venv(this, {});
+      this.envManager = new Venv(this, options.venvOptions);
     }
 
     if (options.pip ?? true) {
-      this.depsManager = new Pip(this, {});
+      this.depsManager = new Pip(this, options.pipOptions);
     }
 
     if (options.setuptools ?? (this.projectType === ProjectType.LIB)) {
@@ -216,6 +252,7 @@ export class PythonProject extends Project {
           description: options.description,
           license: options.license,
           homepage: options.homepage,
+          classifiers: options.classifiers,
           ...options.setuptoolsOptions?.setupConfig,
         },
       });
@@ -232,18 +269,31 @@ export class PythonProject extends Project {
     // }
 
     if (options.poetry ?? false) {
-      const poetry = new Poetry(this, options);
+      const poetry = new Poetry(this, {
+        ...options.poetryOptions,
+        pyprojectConfig: {
+          name: options.name,
+          version: this.version,
+          description: options.description ?? '',
+          license: options.license,
+          authors: [`${options.authorName} <${options.authorEmail}>`],
+          readme: options.readme?.filename ?? 'README.md',
+          homepage: options.homepage,
+          classifiers: options.classifiers,
+          ...options.poetryOptions?.pyprojectConfig,
+        },
+      });
       this.depsManager = poetry;
       this.envManager = poetry;
       this.packagingManager = poetry;
     }
 
-    if (!this.depsManager) {
-      throw new Error('At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).');
-    }
-
     if (!this.envManager) {
       throw new Error('At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry).');
+    }
+
+    if (!this.depsManager) {
+      throw new Error('At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).');
     }
 
     if (!this.packagingManager) {
@@ -252,6 +302,18 @@ export class PythonProject extends Project {
       } else {
         this.packagingManager = {}; // no-op packaging manager
       }
+    }
+
+    if (Number(options.venv ?? true) + Number(options.poetry ?? false) > 1) {
+      throw new Error('More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)');
+    }
+
+    if (Number(options.pip ?? true) + Number(options.poetry ?? false) > 1) {
+      throw new Error('More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)');
+    }
+
+    if (Number(options.setuptools ?? true) + Number(options.poetry ?? false) > 1) {
+      throw new Error('More than one component has been chosen for managing packaging (setuptools or poetry)');
     }
 
     if (options.pytest ?? true) {

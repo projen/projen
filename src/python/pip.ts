@@ -11,7 +11,7 @@ export interface PipOptions {}
 export class Pip extends Component implements IPythonDeps {
   public readonly installTask: Task;
 
-  constructor(project: PythonProject, _options: PipOptions) {
+  constructor(project: PythonProject, _options: PipOptions = {}) {
     super(project);
 
     new RequirementsFile(project, 'requirements.txt', { _lazyPackages: () => this.synthDependencies() });

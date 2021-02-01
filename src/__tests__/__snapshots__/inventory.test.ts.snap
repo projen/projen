@@ -7892,9 +7892,9 @@ Array [
     "moduleName": "projen",
     "options": Array [
       Object {
+        "default": "$GIT_USER_EMAIL",
         "docs": "Author's e-mail.",
         "name": "authorEmail",
-        "optional": true,
         "parent": "PythonProjectOptions",
         "path": Array [
           "authorEmail",
@@ -7903,15 +7903,26 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "$GIT_USER_NAME",
         "docs": "Author's name.",
         "name": "authorName",
-        "optional": true,
         "parent": "PythonProjectOptions",
         "path": Array [
           "authorName",
         ],
         "switch": "author-name",
         "type": "string",
+      },
+      Object {
+        "docs": "A list of PyPI trove classifiers that describe the project.",
+        "name": "classifiers",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "classifiers",
+        ],
+        "switch": "classifiers",
+        "type": "unknown",
       },
       Object {
         "default": "true",
@@ -8076,6 +8087,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- defaults",
+        "docs": "Pip options.",
+        "name": "pipOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pipOptions",
+        ],
+        "switch": "pip-options",
+        "type": "PipOptions",
+      },
+      Object {
         "default": "false",
         "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging.",
         "name": "poetry",
@@ -8086,6 +8109,18 @@ Array [
         ],
         "switch": "poetry",
         "type": "boolean",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Poetry options.",
+        "name": "poetryOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "poetryOptions",
+        ],
+        "switch": "poetry-options",
+        "type": "PoetryOptions",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -8206,9 +8241,21 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- defaults",
+        "docs": "Venv options.",
+        "name": "venvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "venvOptions",
+        ],
+        "switch": "venv-options",
+        "type": "VenvOptions",
+      },
+      Object {
+        "default": "\\"0.1.0\\"",
         "docs": "Manually specify package version.",
         "name": "version",
-        "optional": true,
         "parent": "PythonProjectOptions",
         "path": Array [
           "version",

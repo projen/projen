@@ -21,7 +21,7 @@ export class Venv extends Component implements IPythonEnv {
   private readonly envdir: string;
   private readonly pythonProject: PythonProject;
 
-  constructor(project: PythonProject, options: VenvOptions) {
+  constructor(project: PythonProject, options: VenvOptions = {}) {
     super(project);
 
     this.envdir = options.envdir ?? '.env';
