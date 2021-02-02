@@ -587,7 +587,7 @@ export class NodeProject extends Project {
       if (options.releaseToNpm ?? false) {
         this.publisher.publishToNpm({
           distTag: this.package.npmDistTag,
-          registryUrl: this.package.npmRegistryUrl,
+          registry: this.package.npmRegistry,
         });
       }
     } else {
