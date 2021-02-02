@@ -1502,7 +1502,7 @@ addPrebuilds(config: GitpodPrebuilds): void
   * **addComment** (<code>boolean</code>)  Add a "Review in Gitpod" button as a comment to pull requests. __*Default*__: false
   * **addLabel** (<code>boolean</code>)  Add a label once the prebuild is ready to pull requests. __*Default*__: false
   * **branches** (<code>boolean</code>)  Enable for all branches in this repo. __*Default*__: false
-  * **main** (<code>boolean</code>)  Enable for the main/default branch. __*Default*__: true
+  * **master** (<code>boolean</code>)  Enable for the master/default branch. __*Default*__: true
   * **pullRequests** (<code>boolean</code>)  Enable for pull requests coming from this repo. __*Default*__: true
   * **pullRequestsFromForks** (<code>boolean</code>)  Enable for pull requests coming from forks. __*Default*__: false
 
@@ -6665,7 +6665,7 @@ Name | Type | Description
 **addComment**?🔹 | <code>boolean</code> | Add a "Review in Gitpod" button as a comment to pull requests.<br/>__*Default*__: false
 **addLabel**?🔹 | <code>boolean</code> | Add a label once the prebuild is ready to pull requests.<br/>__*Default*__: false
 **branches**?🔹 | <code>boolean</code> | Enable for all branches in this repo.<br/>__*Default*__: false
-**main**?🔹 | <code>boolean</code> | Enable for the main/default branch.<br/>__*Default*__: true
+**master**?🔹 | <code>boolean</code> | Enable for the master/default branch.<br/>__*Default*__: true
 **pullRequests**?🔹 | <code>boolean</code> | Enable for pull requests coming from this repo.<br/>__*Default*__: true
 **pullRequestsFromForks**?🔹 | <code>boolean</code> | Enable for pull requests coming from forks.<br/>__*Default*__: false
 
