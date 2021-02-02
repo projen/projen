@@ -29,6 +29,7 @@ export * from './typescript';
 export * from './version';
 export * from './yaml';
 export * from './xmlfile';
+export * from './publisher';
 
 // export submobules
 export * as tasks from './tasks';
