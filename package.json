@@ -90,7 +90,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.15.15",
+  "version": "0.15.16",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
@@ -139,9 +139,6 @@
       "python": {
         "distName": "projen",
         "module": "projen"
-      },
-      "go": {
-        "moduleName": "github.com/projen/projen-go"
       }
     },
     "tsc": {
