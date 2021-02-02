@@ -53,7 +53,7 @@ describe('maven repository options', () => {
     });
 
     const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
-    expect(workflow).toContain('run: npx -p jsii-release jsii-release-maven');
+    expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
     expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
     expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
   });

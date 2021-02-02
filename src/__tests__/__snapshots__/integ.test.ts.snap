@@ -433,11 +433,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
@@ -450,11 +451,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-maven
+        run: npx -p jsii-release@latest jsii-release-maven
         env:
           MAVEN_GPG_PRIVATE_KEY: \${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: \${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}
@@ -469,11 +471,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-pypi
+        run: npx -p jsii-release@latest jsii-release-pypi
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -663,11 +666,6 @@ junit.xml
       Object {
         "name": "jsii-pacmak",
         "type": "build",
-      },
-      Object {
-        "name": "jsii-release",
-        "type": "build",
-        "version": "^0.2.13",
       },
       Object {
         "name": "json-schema",
@@ -1390,7 +1388,6 @@ project.synth();
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
-      "jsii-release": "^0.2.13",
       "json-schema": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",

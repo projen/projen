@@ -54,11 +54,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
@@ -71,11 +72,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-golang
+        run: npx -p jsii-release@latest jsii-release-golang
         env:
           GITHUB_REPO: github.com/foo/bar
           GITHUB_TOKEN: \${{ secrets.CUSTOM_SECRET }}
@@ -140,11 +142,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
@@ -157,11 +160,12 @@ jobs:
       image: jsii/superchain
     steps:
       - name: Download build artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: dist
+          path: dist
       - name: Release
-        run: npx -p jsii-release jsii-release-golang
+        run: npx -p jsii-release@latest jsii-release-golang
         env:
           GITHUB_TOKEN: \${{ secrets.GO_GITHUB_TOKEN }}
           GIT_USER_NAME: GitHub Actions
