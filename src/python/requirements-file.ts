@@ -1,14 +1,14 @@
-import { Dependencies } from '../deps';
+import { Dependencies, DependencyCoordinates } from '../deps';
 import { FileBase, IResolver } from '../file';
 import { Project } from '../project';
 import { toPythonVersionRange } from '../util/semver';
+import { IPackageProvider } from './python-deps';
 
 export interface RequirementsFileOptions {
   /**
-   * Accepts a function that resolves to an list of packages that should get included.
-   * @internal
+   * Provide a list of packages that can be dynamically updated.
    */
-  readonly _lazyPackages?: any;
+  readonly packageProvider?: IPackageProvider;
 }
 
 /**
@@ -18,12 +18,12 @@ export interface RequirementsFileOptions {
  */
 export class RequirementsFile extends FileBase {
   private readonly packages = new Array<string>();
-  private readonly lazyPackages: any;
+  private readonly packageProvider?: IPackageProvider;
 
   constructor(project: Project, filePath: string, options: RequirementsFileOptions) {
     super(project, filePath);
 
-    this.lazyPackages = options._lazyPackages;
+    this.packageProvider = options.packageProvider;
   }
 
   /**
@@ -48,15 +48,23 @@ export class RequirementsFile extends FileBase {
     }
   }
 
+  private formatDependency(dep: DependencyCoordinates) {
+    if (dep.version) {
+      return `${dep.name}${toPythonVersionRange(dep.version)}`;
+    } else {
+      return dep.name;
+    }
+  }
+
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    const additionalPackages = resolver.resolve(this.lazyPackages);
-    if (additionalPackages) {
-      this.addPackages(...additionalPackages);
+    const allPackages = [...this.packages];
+    if (this.packageProvider) {
+      allPackages.push(...this.packageProvider.packages.map(dep => this.formatDependency(dep)));
     }
 
     return `${resolver.resolve([
       `# ${FileBase.PROJEN_MARKER}`,
-      ...this.packages,
+      ...allPackages,
     ]).join('\n')}\n`;
   }
 }

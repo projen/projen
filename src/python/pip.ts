@@ -1,21 +1,27 @@
 import { Component } from '../component';
-import { DependencyType } from '../deps';
+import { Dependency, DependencyType } from '../deps';
 import { Task, TaskCategory } from '../tasks';
 import { exec } from '../util';
-import { IPythonDeps } from './python-deps';
+import { IPackageProvider, IPythonDeps } from './python-deps';
 import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';
 
+/**
+ * Options for pip
+ */
 export interface PipOptions {}
 
+/**
+ * Manages dependencies using a requirements.txt file and the pip CLI tool.
+ */
 export class Pip extends Component implements IPythonDeps {
   public readonly installTask: Task;
 
   constructor(project: PythonProject, _options: PipOptions = {}) {
     super(project);
 
-    new RequirementsFile(project, 'requirements.txt', { _lazyPackages: () => this.synthDependencies() });
-    new RequirementsFile(project, 'requirements-dev.txt', { _lazyPackages: () => this.synthDevDependencies() });
+    new RequirementsFile(project, 'requirements.txt', { packageProvider: new RuntimeDependencyProvider(project) });
+    new RequirementsFile(project, 'requirements-dev.txt', { packageProvider: new DevDependencyProvider(project) });
 
     this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
@@ -24,26 +30,6 @@ export class Pip extends Component implements IPythonDeps {
     this.installTask.exec('pip install --upgrade pip');
     this.installTask.exec('pip install -r requirements.txt');
     this.installTask.exec('pip install -r requirements-dev.txt');
-  }
-
-  private synthDependencies() {
-    const dependencies: string[] = [];
-    for (const pkg of this.project.deps.all) {
-      if (pkg.type === DependencyType.RUNTIME) {
-        dependencies.push( `${pkg.name}@${pkg.version}`);
-      }
-    }
-    return dependencies;
-  }
-
-  private synthDevDependencies() {
-    const dependencies: string[] = [];
-    for (const pkg of this.project.deps.all) {
-      if ([DependencyType.DEVENV].includes(pkg.type)) {
-        dependencies.push( `${pkg.name}@${pkg.version}`);
-      }
-    }
-    return dependencies;
   }
 
   /**
@@ -70,5 +56,19 @@ export class Pip extends Component implements IPythonDeps {
   public installDependencies() {
     this.project.logger.info('Installing dependencies...');
     exec(this.installTask.toShellCommand(), { cwd: this.project.outdir });
+  }
+}
+
+class RuntimeDependencyProvider implements IPackageProvider {
+  constructor(private readonly pythonProject: PythonProject) {}
+  public get packages(): Dependency[] {
+    return this.pythonProject.deps.all.filter(dep => dep.type === DependencyType.RUNTIME);
+  }
+}
+
+class DevDependencyProvider implements IPackageProvider {
+  constructor(private readonly pythonProject: PythonProject) {}
+  public get packages(): Dependency[] {
+    return this.pythonProject.deps.all.filter(dep => dep.type === DependencyType.DEVENV);
   }
 }

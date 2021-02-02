@@ -3,8 +3,14 @@ import { Task, TaskCategory } from '../tasks';
 import { PythonProject } from './python-project';
 import { SetupPy, SetupPyOptions } from './setuppy';
 
+/**
+ * Options for setuptools
+ */
 export interface SetuptoolsOptions extends SetupPyOptions {}
 
+/**
+ * Manages packaging through setuptools with a setup.py script.
+ */
 export class Setuptools extends Component {
   public readonly packageTask: Task;
   public readonly uploadTask: Task;

@@ -8,6 +8,9 @@ import { IPythonEnv } from './python-env';
 import { IPythonPackaging } from './python-packaging';
 import { PythonProject } from './python-project';
 
+/**
+ * Options for poetry.
+ */
 export interface PoetryOptions {
   /**
    * Configure pyproject.toml

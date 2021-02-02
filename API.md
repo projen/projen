@@ -54,16 +54,16 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
-[python.Pip](#projen-python-pip)|*No description*
+[python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
 [python.Pytest](#projen-python-pytest)|*No description*
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
 [python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
-[python.SetupPy](#projen-python-setuppy)|*No description*
-[python.Setuptools](#projen-python-setuptools)|*No description*
-[python.Venv](#projen-python-venv)|*No description*
+[python.SetupPy](#projen-python-setuppy)|Python packaging script where package metadata can be placed.
+[python.Setuptools](#projen-python-setuptools)|Manages packaging through setuptools with a setup.py script.
+[python.Venv](#projen-python-venv)|Manages a virtual environment through the Python venv module.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -160,8 +160,8 @@ Name|Description
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)|Options for `Projenrc`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|*No description*
-[python.PipOptions](#projen-python-pipoptions)|*No description*
-[python.PoetryOptions](#projen-python-poetryoptions)|*No description*
+[python.PipOptions](#projen-python-pipoptions)|Options for pip.
+[python.PoetryOptions](#projen-python-poetryoptions)|Options for poetry.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
@@ -169,8 +169,8 @@ Name|Description
 [python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
 [python.SetupPyConfigOptions](#projen-python-setuppyconfigoptions)|Fields to pass in the setup() function of setup.py.
 [python.SetupPyOptions](#projen-python-setuppyoptions)|*No description*
-[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)|*No description*
-[python.VenvOptions](#projen-python-venvoptions)|*No description*
+[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)|Options for setuptools.
+[python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -204,6 +204,7 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
 [python.IPythonPackaging](#projen-python-ipythonpackaging)|*No description*
@@ -4703,7 +4704,7 @@ Name | Type | Description
 
 ## class Pip 🔹 <a id="projen-python-pip"></a>
 
-
+Manages dependencies using a requirements.txt file and the pip CLI tool.
 
 __Implements__: [python.IPythonDeps](#projen-python-ipythondeps)
 __Submodule__: python
@@ -4729,7 +4730,7 @@ new python.Pip(project: PythonProject, _options?: PipOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
 
 ### Methods
 
@@ -4803,7 +4804,7 @@ new python.Poetry(project: PythonProject, options: PoetryOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
 
 ### Methods
 
@@ -5096,6 +5097,7 @@ new python.RequirementsFile(project: Project, filePath: string, options: Require
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[python.RequirementsFileOptions](#projen-python-requirementsfileoptions)</code>)  *No description*
+  * **packageProvider** (<code>[python.IPackageProvider](#projen-python-ipackageprovider)</code>)  Provide a list of packages that can be dynamically updated. __*Optional*__
 
 
 ### Methods
@@ -5133,7 +5135,7 @@ __Returns__:
 
 ## class SetupPy 🔹 <a id="projen-python-setuppy"></a>
 
-
+Python packaging script where package metadata can be placed.
 
 __Submodule__: python
 
@@ -5173,7 +5175,7 @@ __Returns__:
 
 ## class Setuptools 🔹 <a id="projen-python-setuptools"></a>
 
-
+Manages packaging through setuptools with a setup.py script.
 
 __Submodule__: python
 
@@ -5206,7 +5208,7 @@ Name | Type | Description
 
 ## class Venv 🔹 <a id="projen-python-venv"></a>
 
-
+Manages a virtual environment through the Python venv module.
 
 __Implements__: [python.IPythonEnv](#projen-python-ipythonenv)
 __Submodule__: python
@@ -8720,10 +8722,32 @@ Name | Type | Description
 
 
 
+## interface IPackageProvider 🔹 <a id="projen-python-ipackageprovider"></a>
+
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packages**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | An array of packages (may be dynamically generated).
+
+
+
 ## interface IPythonDeps 🔹 <a id="projen-python-ipythondeps"></a>
 
 __Implemented by__: [python.Pip](#projen-python-pip), [python.Poetry](#projen-python-poetry)
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
 
 ### Methods
 
@@ -8800,13 +8824,13 @@ __Implemented by__: [python.Poetry](#projen-python-poetry)
 ## struct PipOptions 🔹 <a id="projen-python-pipoptions"></a>
 
 
-
+Options for pip.
 
 
 ## struct PoetryOptions 🔹 <a id="projen-python-poetryoptions"></a>
 
 
-
+Options for poetry.
 
 
 
@@ -8916,6 +8940,13 @@ Options for python sample code.
 
 
 
+
+Name | Type | Description 
+-----|------|-------------
+**packageProvider**?🔹 | <code>[python.IPackageProvider](#projen-python-ipackageprovider)</code> | Provide a list of packages that can be dynamically updated.<br/>__*Optional*__
+
+
+
 ## struct SetupPyConfigOptions 🔹 <a id="projen-python-setuppyconfigoptions"></a>
 
 
@@ -8953,7 +8984,7 @@ Name | Type | Description
 ## struct SetuptoolsOptions 🔹 <a id="projen-python-setuptoolsoptions"></a>
 
 
-
+Options for setuptools.
 
 
 
@@ -8966,7 +8997,7 @@ Name | Type | Description
 ## struct VenvOptions 🔹 <a id="projen-python-venvoptions"></a>
 
 
-
+Options for venv.
 
 
 

@@ -67,6 +67,9 @@ export interface SetupPyOptions {
   readonly setupConfig?: SetupPyConfigOptions;
 }
 
+/**
+ * Python packaging script where package metadata can be placed.
+ */
 export class SetupPy extends FileBase {
   private readonly setupConfig: any;
 
@@ -108,7 +111,7 @@ export class SetupPy extends FileBase {
     return `${resolver.resolve(lines).join('\n')}\n`;
   }
 
-  // modify some key names since JSII interfaces must have camelCase fields
+  // modify some key names since JSII interfaces require fields to be camelCase
   private renameFields(options: SetupPyConfigOptions): any {
     const obj: { [key: string]: any } = {};
     for (const [key, value] of Object.entries(options)) {

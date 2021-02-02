@@ -26,8 +26,6 @@ export interface PythonProjectOptions extends ProjectOptions {
    */
   readonly pythonPath: string;
 
-  // -- general information --
-
   /**
    * Author's name
    *
@@ -47,6 +45,8 @@ export interface PythonProjectOptions extends ProjectOptions {
    * @default "0.1.0"
    */
   readonly version: string;
+
+  // -- general information --
 
   /**
    * A short project description

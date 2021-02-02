@@ -5,6 +5,9 @@ import { exec } from '../util';
 import { IPythonEnv } from './python-env';
 import { PythonProject } from './python-project';
 
+/**
+ * Options for venv.
+ */
 export interface VenvOptions {
   /**
    * Name of directory to store the environment in
@@ -14,6 +17,9 @@ export interface VenvOptions {
   readonly envdir?: string;
 }
 
+/**
+ * Manages a virtual environment through the Python venv module.
+ */
 export class Venv extends Component implements IPythonEnv {
   /**
    * Name of directory to store the environment in
