@@ -25,6 +25,13 @@ export interface PoetryOptions {
 export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
   private readonly pythonProject: PythonProject;
   public readonly installTask: Task;
+  public readonly packageTask: Task;
+  public readonly uploadTask: Task;
+
+  /**
+   * A task that uploads the package to the Test PyPI repository.
+   */
+  public readonly uploadTestTask: Task;
 
   constructor(project: PythonProject, options: PoetryOptions) {
     super(project);
@@ -43,14 +50,42 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     // declare the python versions for which the package is compatible
     this.addDependency('python@^3.6');
 
+    this.packageTask = project.addTask('package', {
+      description: 'Creates source archive and wheel for distribution.',
+      category: TaskCategory.RELEASE,
+      exec: 'poetry build',
+    });
+
+    this.uploadTestTask = project.addTask('upload:test', {
+      description: 'Uploads the package against a test PyPI endpoint.',
+      category: TaskCategory.RELEASE,
+      exec: 'poetry publish -r testpypi',
+    });
+
+    this.uploadTask = project.addTask('upload', {
+      description: 'Uploads the package to PyPI.',
+      category: TaskCategory.RELEASE,
+      exec: 'poetry publish',
+    });
+
     new PoetryPyproject(project, {
       name: project.name,
-      // version: options.pyprojectConfig.version,
-      // description: options.pyprojectConfig.description,
       dependencies: () => this.synthDependencies(),
       devDependencies: () => this.synthDevDependencies(),
       scripts: {},
       ...options.pyprojectConfig,
+    });
+
+    new TomlFile(project, 'poetry.toml', {
+      committed: false,
+      readonly: false, // let user manage set local options through `poetry config`
+      obj: {
+        repositories: {
+          testpypi: {
+            url: 'https://test.pypi.org/legacy/',
+          },
+        },
+      },
     });
   }
 

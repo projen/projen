@@ -8041,6 +8041,17 @@ Array [
         "type": "LoggerOptions",
       },
       Object {
+        "default": "$PYTHON_MODULE_NAME",
+        "docs": "Name of the python package as used in imports and filenames.",
+        "name": "moduleName",
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "moduleName",
+        ],
+        "switch": "module-name",
+        "type": "string",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -8182,6 +8193,7 @@ Array [
         "type": "SampleReadmeProps",
       },
       Object {
+        "default": "true",
         "docs": "Include sample code and test if the relevant directories don't exist.",
         "name": "sample",
         "optional": true,
@@ -8215,18 +8227,6 @@ Array [
         ],
         "switch": "setuptools-options",
         "type": "SetuptoolsOptions",
-      },
-      Object {
-        "default": "[]",
-        "docs": "List of test dependencies for this project.",
-        "name": "testDeps",
-        "optional": true,
-        "parent": "PythonProjectOptions",
-        "path": Array [
-          "testDeps",
-        ],
-        "switch": "test-deps",
-        "type": "unknown",
       },
       Object {
         "default": "true",

@@ -4805,6 +4805,9 @@ new python.Poetry(project: PythonProject, options: PoetryOptions)
 Name | Type | Description 
 -----|------|-------------
 **installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package package repository.
+**uploadTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
 ### Methods
 
@@ -4973,6 +4976,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
   * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
   * **version** (<code>string</code>)  Manually specify package version. 
   * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
@@ -4987,10 +4991,9 @@ new python.PythonProject(options: PythonProjectOptions)
   * **poetryOptions** (<code>[python.PoetryOptions](#projen-python-poetryoptions)</code>)  Poetry options. __*Default*__: defaults
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
-  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and distribution. __*Default*__: true if the project type is library
   * **setuptoolsOptions** (<code>[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)</code>)  Setuptools options. __*Default*__: defaults
-  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
   * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
 
@@ -5004,9 +5007,9 @@ Name | Type | Description
 **depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
 **envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
 **moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores).
-**packagingManager**🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.
 **pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **version**🔹 | <code>string</code> | Version of the package for distribution (should follow semver).
+**packagingManager**?🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.<br/>__*Optional*__
 **pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
 
 ### Methods
@@ -5203,6 +5206,7 @@ Name | Type | Description
 -----|------|-------------
 **packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**uploadTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
 
 
@@ -8820,6 +8824,15 @@ __Implemented by__: [python.Poetry](#projen-python-poetry)
 
 
 
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package package repository.
+
+
 
 ## struct PipOptions 🔹 <a id="projen-python-pipoptions"></a>
 
@@ -8895,6 +8908,7 @@ Name | Type | Description
 -----|------|-------------
 **authorEmail**🔹 | <code>string</code> | Author's e-mail.
 **authorName**🔹 | <code>string</code> | Author's name.
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **version**🔹 | <code>string</code> | Manually specify package version.
@@ -8919,10 +8933,9 @@ Name | Type | Description
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and distribution.<br/>__*Default*__: true if the project type is library
 **setuptoolsOptions**?🔹 | <code>[python.SetuptoolsOptions](#projen-python-setuptoolsoptions)</code> | Setuptools options.<br/>__*Default*__: defaults
-**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
 **venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
 **venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
 

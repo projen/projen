@@ -27,6 +27,15 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly pythonPath: string;
 
   /**
+   * Name of the python package as used in imports and filenames.
+   *
+   * Must only consist of alphanumeric characters and underscores.
+   *
+   * @default $PYTHON_MODULE_NAME
+   */
+  readonly moduleName: string;
+
+  /**
    * Author's name
    *
    * @default $GIT_USER_NAME
@@ -82,17 +91,6 @@ export interface PythonProjectOptions extends ProjectOptions {
    * @default []
    */
   readonly deps?: string[];
-
-  /**
-   * List of test dependencies for this project.
-   *
-   * Dependencies use the format: `<module>@<semver>`
-   *
-   * Additional dependencies can be added via `project.addTestDependency()`.
-   *
-   * @default []
-   */
-  readonly testDeps?: string[];
 
   /**
    * List of dev dependencies for this project.
@@ -176,6 +174,7 @@ export interface PythonProjectOptions extends ProjectOptions {
 
   /**
    * Include sample code and test if the relevant directories don't exist.
+   * @default true
    */
   readonly sample?: boolean;
 }
@@ -216,7 +215,7 @@ export class PythonProject extends Project {
   /**
    * API for managing packaging the project as a library. Only applies when the `projectType` is LIB.
    */
-  public readonly packagingManager!: IPythonPackaging;
+  public readonly packagingManager?: IPythonPackaging;
 
   /**
    * Pytest component.
@@ -230,7 +229,7 @@ export class PythonProject extends Project {
       throw new Error('Python projects must only consist of alphanumeric characters, hyphens, and underscores.');
     }
 
-    this.moduleName = this.safeName(options.name);
+    this.moduleName = options.moduleName;
     this.pythonPath = options.pythonPath;
     this.version = options.version;
 
@@ -296,12 +295,8 @@ export class PythonProject extends Project {
       throw new Error('At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).');
     }
 
-    if (!this.packagingManager) {
-      if (this.projectType === ProjectType.LIB) {
-        throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
-      } else {
-        this.packagingManager = {}; // no-op packaging manager
-      }
+    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
+      throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
     }
 
     if (Number(options.venv ?? true) + Number(options.poetry ?? false) > 1) {
@@ -333,17 +328,6 @@ export class PythonProject extends Project {
     }
 
     this.addDefaultGitIgnore();
-  }
-
-  /**
-   * Convert an arbitrary string to a valid module filename.
-   *
-   * Replaces hyphens with underscores.
-   *
-   * @param name project name
-   */
-  private safeName(name: string) {
-    return name.replace('-', '_').replace('.', '_');
   }
 
   /**

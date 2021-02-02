@@ -1,6 +1,6 @@
 import * as os from 'os';
 import * as path from 'path';
-import { execOrUndefined } from '../util';
+import { execOrUndefined, formatAsPythonModule } from '../util';
 
 export function tryProcessMacro(macro: string) {
   if (!macro.startsWith('$')) { return undefined; }
@@ -20,6 +20,7 @@ export function tryProcessMacro(macro: string) {
     case '$GIT_USER_NAME': return getFromGitConfig('user.name') ?? 'user';
     case '$GIT_USER_EMAIL': return resolveEmail();
     case '$PYTHON_PATH': return resolvePython();
+    case '$PYTHON_MODULE_NAME': return formatAsPythonModule(basedir);
   }
 
   return undefined;

@@ -232,3 +232,7 @@ export function sorted<T>(x: T) {
     return x;
   }
 }
+
+export function formatAsPythonModule(name: string) {
+  return name.replace(/-/g, '_').replace(/\./g, '_');
+}

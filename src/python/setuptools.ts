@@ -14,6 +14,12 @@ export interface SetuptoolsOptions extends SetupPyOptions {}
 export class Setuptools extends Component {
   public readonly packageTask: Task;
   public readonly uploadTask: Task;
+
+  /**
+   * A task that uploads the package to the Test PyPI repository.
+   */
+  public readonly uploadTestTask: Task;
+
   constructor(project: PythonProject, options: SetuptoolsOptions) {
     super(project);
 
@@ -26,10 +32,16 @@ export class Setuptools extends Component {
       exec: 'rm -fr dist/* && python setup.py sdist bdist_wheel',
     });
 
-    this.uploadTask = project.addTask('upload:test', {
+    this.uploadTestTask = project.addTask('upload:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
       category: TaskCategory.RELEASE,
       exec: 'twine upload --repository-url https://test.pypi.org/legacy/ dist/*',
+    });
+
+    this.uploadTask = project.addTask('upload', {
+      description: 'Uploads the package against a test PyPI endpoint.',
+      category: TaskCategory.RELEASE,
+      exec: 'twine upload dist/*',
     });
 
     new SetupPy(project, options);
