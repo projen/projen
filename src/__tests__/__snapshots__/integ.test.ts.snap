@@ -667,7 +667,7 @@ junit.xml
       Object {
         "name": "jsii-release",
         "type": "build",
-        "version": "^0.2.12",
+        "version": "^0.2.13",
       },
       Object {
         "name": "json-schema",
@@ -1390,7 +1390,7 @@ project.synth();
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
-      "jsii-release": "^0.2.12",
+      "jsii-release": "^0.2.13",
       "json-schema": "*",
       "projen": "^999.999.999",
       "standard-version": "^9.0.0",

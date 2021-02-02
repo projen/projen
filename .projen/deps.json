@@ -87,7 +87,7 @@
     },
     {
       "name": "jsii-release",
-      "version": "^0.2.12",
+      "version": "^0.2.13",
       "type": "build"
     },
     {
