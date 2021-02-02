@@ -198,10 +198,10 @@ export interface GitpodPort {
  */
 export interface GitpodPrebuilds {
   /**
-   * Enable for the main/default branch
+   * Enable for the master/default branch
    * @default true
    */
-  readonly main?: boolean;
+  readonly master?: boolean;
 
   /**
    * Enable for all branches in this repo
