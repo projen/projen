@@ -182,7 +182,7 @@ test('gitpod prebuilds config', () => {
 
   // WHEN
   project.gitpod?.addPrebuilds({
-    master: true,
+    main: true,
     branches: true,
     pullRequestsFromForks: true,
     addBadge: false,
@@ -192,7 +192,7 @@ test('gitpod prebuilds config', () => {
   const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
   expect(gitpodSnapshot).toContain('github');
   expect(gitpodSnapshot).toContain('prebuilds');
-  expect(gitpodSnapshot).toContain('master');
+  expect(gitpodSnapshot).toContain('main');
   expect(gitpodSnapshot).toContain('branches');
   expect(gitpodSnapshot).toContain('pullRequestsFromForks');
   expect(gitpodSnapshot).toContain('addBadge');
