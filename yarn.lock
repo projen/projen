@@ -3824,23 +3824,23 @@ jsii-rosetta@^1.18.0:
     xmldom "^0.4.0"
     yargs "^16.2.0"
 
-jsii@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.16.0.tgz#bc39ad771b5dc6a631ce4b85191447686fa96967"
-  integrity sha512-8cgroyD6LOlFUlXUMAmjtUhzgyF3oQpVVpIdDzqcn2dNgs7iDnZN/Wo27MfZj8usbIBLLK3DYv7DSf+0/H0yWA==
+jsii@^1.18.0:
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.18.0.tgz#7255fa942144b903759cd46172a18c8580e39ff8"
+  integrity sha512-5s+kOLF9yJOWjJD3UyaRYGT/PGaPvs0hNBDMtZqJ5AH8yIgjfJz+3+eHDXPLK0ffGaZF83sysiUueA5+Stxkww==
   dependencies:
-    "@jsii/spec" "^1.16.0"
+    "@jsii/spec" "^1.18.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.5"
-    fs-extra "^9.0.1"
+    fs-extra "^9.1.0"
     log4js "^6.3.0"
     semver "^7.3.4"
     semver-intersect "^1.4.0"
     sort-json "^2.0.0"
-    spdx-license-list "^6.3.0"
+    spdx-license-list "^6.4.0"
     typescript "~3.9.7"
-    yargs "^16.1.1"
+    yargs "^16.2.0"
 
 json-fixer@^1.5.1:
   version "1.6.8"
@@ -5479,11 +5479,6 @@ spdx-license-ids@^3.0.0:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.7.tgz#e9c18a410e5ed7e12442a549fbd8afa767038d65"
   integrity sha512-U+MTEOO0AiDzxwFvoa4JVnMV6mZlJKk2sBLt90s7G0Gd0Mlknc7kxEn3nuDPNZRta7O2uy8oLcZLVT+4sqNZHQ==
-
-spdx-license-list@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/spdx-license-list/-/spdx-license-list-6.3.0.tgz#29507bdd88e5f1dcf62634d3c7f9051245e7ef07"
-  integrity sha512-Qz8ru5VVK5T4cFOBrshIzggzrQ15fVBcpjpZLCVz2j9KNnpslGbw8w1r06v2vi6YP6bnUSY5CXsFCfUypLZ2GA==
 
 spdx-license-list@^6.4.0:
   version "6.4.0"
