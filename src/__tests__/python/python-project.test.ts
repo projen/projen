@@ -19,7 +19,7 @@ test('dependencies via ctor', () => {
   const p = new TestPythonProject({
     deps: [
       'Django@3.1.5',
-      'aws-cdk.core@*',
+      'aws-cdk.core',
     ],
     devDeps: [
       'hypothesis@^6.0.3',

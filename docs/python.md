@@ -61,9 +61,9 @@ requirements. See the list below:
 
 - pip: dependency manager
 - venv: environment manager
+- poetry: dependency, environment, and packaging manager
 - pipenv (TBD): dependency and environment manager
 - setuptools (TBD): packaging manager
-- poetry (TBD): dependency, environment, and packaging manager
 
 By default, pip, venv, and setuptools will be used. But these can be swapped out
 as needed by using the provided flags, for example:
@@ -136,10 +136,12 @@ TBD
 
 > In the future, it will be possible to write your projenrc file in Python.
 
-## Packaging
+## Packaging and Publishing
 
-TBD
+Python projects can be packaged by using either the `Setuptools` or `Poetry`
+component. `Setuptools` records package metadata within a traditional `setup.py`
+script, while `Poetry` stores metadata in the more-recent `pyproject.toml` file
+format as introduced in PEP 518.
 
-## Publishing
-
-TBD.
+Run `projen package` to generate a source distribution and wheel, and run
+`projen upload` to upload the package to PyPI.

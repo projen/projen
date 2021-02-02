@@ -10,10 +10,19 @@ test('poetry enabled', () => {
     poetry: true,
     homepage: 'http://www.example.com',
     description: 'a short project description',
-    license: 'Apache Software License',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
   });
 
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  const snapshot = synthSnapshot(p);
+  expect(snapshot['pyproject.toml']).toContain('First Last');
+  expect(snapshot['pyproject.toml']).toContain('email@example.com');
+  expect(snapshot['pyproject.toml']).toContain('http://www.example.com');
+  expect(snapshot['pyproject.toml']).toContain('a short project description');
+  expect(snapshot['pyproject.toml']).toContain('Apache-2.0');
+  expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
 });
 
 class TestPythonProject extends PythonProject {
