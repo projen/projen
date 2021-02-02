@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.15](https://github.com/projen/projen/compare/v0.15.14...v0.15.15) (2021-02-02)
+
+
+### Bug Fixes
+
+* **jsii:** jsii-release-golang incorrectly tags releases ([77f8b8d](https://github.com/projen/projen/commit/77f8b8de05d6c998cea8a06660c7b6c2c23e7e07))
+
 ### [0.15.14](https://github.com/projen/projen/compare/v0.15.13...v0.15.14) (2021-01-31)
 
 
