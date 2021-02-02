@@ -140,9 +140,6 @@
       "python": {
         "distName": "projen",
         "module": "projen"
-      },
-      "go": {
-        "moduleName": "github.com/projen/projen-go"
       }
     },
     "tsc": {
