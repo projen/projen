@@ -9,6 +9,7 @@ import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
+import { Publisher } from './publisher';
 import { Semver } from './semver';
 import { Task, TaskCategory } from './tasks';
 import { Version } from './version';
@@ -267,6 +268,19 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - default options
    */
   readonly jestOptions?: JestOptions;
+
+  /**
+   * Version requirement of `jsii-release` which is used to publish modules to npm.
+   * @default "latest"
+   */
+  readonly jsiiReleaseVersion?: string;
+
+  /**
+   * A directory which will contain artifacts to be published to npm.
+   *
+   * @default "dist"
+   */
+  readonly artifactsDirectory?: string;
 }
 
 /**
@@ -345,7 +359,12 @@ export class NodeProject extends Project {
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
    */
   public readonly releaseWorkflow?: GithubWorkflow;
-  protected readonly releaseWorkflowJobId?: string;
+
+  /**
+   * Package publisher. This will be `undefined` if the project does not have a
+   * release workflow.
+   */
+  public readonly publisher?: Publisher;
 
   /**
    * Minimum node.js version required by this package.
@@ -536,6 +555,8 @@ export class NodeProject extends Project {
         trigger.schedule = { cron: options.releaseSchedule };
       }
 
+      const artifactDirectory = options.artifactsDirectory ?? 'dist';
+
       const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
         preBuildSteps: [{
@@ -543,7 +564,7 @@ export class NodeProject extends Project {
           run: this.runTaskCommand(this._version.bumpTask),
         }],
         pushBranch: '${{ github.ref }}',
-        uploadArtifact: true,
+        artifactDirectory,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
@@ -555,33 +576,18 @@ export class NodeProject extends Project {
       });
 
       this.releaseWorkflow = workflow;
-      this.releaseWorkflowJobId = buildJobId;
+
+      this.publisher = new Publisher(this, {
+        workflow: this.releaseWorkflow,
+        artifactName: artifactDirectory,
+        buildJobId,
+        jsiiReleaseVersion: options.jsiiReleaseVersion,
+      });
 
       if (options.releaseToNpm ?? false) {
-        this.releaseWorkflow.addJobs({
-          release_npm: {
-            'name': 'Release to NPM',
-            'needs': this.releaseWorkflowJobId,
-            'runs-on': 'ubuntu-latest',
-            'steps': [
-              {
-                name: 'Download build artifacts',
-                uses: 'actions/download-artifact@v1',
-                with: {
-                  name: 'dist',
-                },
-              },
-              {
-                name: 'Release',
-                run: 'npx -p jsii-release jsii-release-npm',
-                env: {
-                  NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-                  NPM_DIST_TAG: this.package.npmDistTag,
-                  NPM_REGISTRY: this.package.npmRegistry,
-                },
-              },
-            ],
-          },
+        this.publisher.publishToNpm({
+          distTag: this.package.npmDistTag,
+          registry: this.package.npmRegistry,
         });
       }
     } else {
@@ -969,13 +975,13 @@ export class NodeProject extends Project {
       job.container = { image: options.image };
     }
 
-    if (options.uploadArtifact) {
+    if (options.artifactDirectory) {
       job.steps.push({
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
         with: {
-          name: 'dist',
-          path: 'dist',
+          name: options.artifactDirectory,
+          path: options.artifactDirectory,
         },
       });
     }
@@ -1072,8 +1078,13 @@ interface NodeBuildWorkflowOptions {
    */
   readonly condition?: any;
 
-  readonly uploadArtifact?: boolean;
-
+  /**
+   * A directory name which contains artifacts to be published (e.g. `dist`).
+   *
+   * javascript artifacts must be under the `js` subdirectory.
+   * @default undefined By default artifacts are not uploaded
+   */
+  readonly artifactDirectory?: string;
 
   readonly trigger: { [event: string]: any };
 

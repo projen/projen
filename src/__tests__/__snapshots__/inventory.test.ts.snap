@@ -45,6 +45,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -485,6 +497,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -1175,6 +1199,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "$GIT_USER_NAME",
         "docs": "The name of the library author.",
         "name": "author",
@@ -1648,6 +1684,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -2324,6 +2372,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "$GIT_USER_NAME",
         "docs": "The name of the library author.",
         "name": "author",
@@ -2751,6 +2811,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -3752,6 +3824,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "$GIT_USER_NAME",
         "docs": "The name of the library author.",
         "name": "author",
@@ -4156,6 +4240,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -4832,6 +4928,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "\\"public\\"",
         "docs": "Assets directory.",
         "name": "assetsdir",
@@ -5155,6 +5263,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -5786,6 +5906,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "\\"public\\"",
         "docs": "Assets directory.",
         "name": "assetsdir",
@@ -6193,6 +6325,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -6883,6 +7027,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -7194,6 +7350,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -8298,6 +8466,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -8609,6 +8789,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -9228,6 +9420,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -9623,6 +9827,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -10301,6 +10517,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -10696,6 +10924,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {
@@ -11374,6 +11614,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -11769,6 +12021,18 @@ Array [
           "jsiiFqn",
         ],
         "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
         "type": "string",
       },
       Object {

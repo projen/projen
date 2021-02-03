@@ -50,6 +50,7 @@ const project = new AwsCdkTypeScriptApp({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -61,6 +62,7 @@ const project = new AwsCdkTypeScriptApp({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -182,6 +184,7 @@ const project = new AwsCdkConstructLibrary({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -193,6 +196,7 @@ const project = new AwsCdkConstructLibrary({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -292,6 +296,7 @@ const project = new ConstructLibraryCdk8s({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -303,6 +308,7 @@ const project = new ConstructLibraryCdk8s({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -441,6 +447,7 @@ const project = new JsiiProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -452,6 +459,7 @@ const project = new JsiiProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -540,6 +548,7 @@ const project = new web.NextJsProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -551,6 +560,7 @@ const project = new web.NextJsProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -635,6 +645,7 @@ const project = new web.NextJsTypeScriptProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -646,6 +657,7 @@ const project = new web.NextJsTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -742,6 +754,7 @@ const project = new NodeProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -753,6 +766,7 @@ const project = new NodeProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -901,6 +915,7 @@ const project = new web.ReactProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -912,6 +927,7 @@ const project = new web.ReactProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -996,6 +1012,7 @@ const project = new web.ReactTypeScriptProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -1007,6 +1024,7 @@ const project = new web.ReactTypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -1103,6 +1121,7 @@ const project = new TypeScriptProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -1114,6 +1133,7 @@ const project = new TypeScriptProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
@@ -1210,6 +1230,7 @@ const project = new TypeScriptAppProject({
 
   /* NodeProjectOptions */
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
@@ -1221,6 +1242,7 @@ const project = new TypeScriptAppProject({
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */

@@ -52,11 +52,10 @@
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
     "jest-junit": "^12",
-    "jsii": "^1.16.0",
+    "jsii": "^1.18.0",
     "jsii-diff": "^1.16.0",
     "jsii-docgen": "^1.5.2",
-    "jsii-pacmak": "^1.16.0",
-    "jsii-release": "^0.2.11",
+    "jsii-pacmak": "^1.18.0",
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
     "standard-version": "^9.0.0",
@@ -91,7 +90,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.15.14",
+  "version": "0.15.17",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
@@ -140,9 +139,6 @@
       "python": {
         "distName": "projen",
         "module": "projen"
-      },
-      "go": {
-        "moduleName": "github.com/projen/projen-go"
       }
     },
     "tsc": {
