@@ -6,7 +6,7 @@ import { PythonProject } from './python-project';
  *
  * @see https://docs.python.org/3/distutils/setupscript.html
  */
-export interface SetupPyConfigOptions {
+export interface SetupPyOptions {
   /**
    * Name of the package
    */
@@ -60,13 +60,6 @@ export interface SetupPyConfigOptions {
   readonly [name: string]: any;
 }
 
-export interface SetupPyOptions {
-  /**
-   * Fields to pass in the setup() function
-   */
-  readonly setupConfig?: SetupPyConfigOptions;
-}
-
 /**
  * Python packaging script where package metadata can be placed.
  */
@@ -88,7 +81,7 @@ export class SetupPy extends FileBase {
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
       ],
-      ...options.setupConfig ? this.renameFields(options.setupConfig) : [],
+      ...options ? this.renameFields(options) : [],
     };
   }
 
@@ -112,7 +105,7 @@ export class SetupPy extends FileBase {
   }
 
   // modify some key names since JSII interfaces require fields to be camelCase
-  private renameFields(options: SetupPyConfigOptions): any {
+  private renameFields(options: SetupPyOptions): any {
     const obj: { [key: string]: any } = {};
     for (const [key, value] of Object.entries(options)) {
       if (key === 'authorName') {

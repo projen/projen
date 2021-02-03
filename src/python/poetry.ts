@@ -5,18 +5,8 @@ import { TomlFile } from '../toml';
 import { exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
-import { IPythonPackaging } from './python-packaging';
+import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
 import { PythonProject } from './python-project';
-
-/**
- * Options for poetry.
- */
-export interface PoetryOptions {
-  /**
-   * Configure pyproject.toml
-   */
-  readonly pyprojectConfig?: PoetryPyprojectOptions;
-}
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -32,7 +22,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
    */
   public readonly uploadTestTask: Task;
 
-  constructor(project: PythonProject, options: PoetryOptions) {
+  constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
 
     this.installTask = project.addTask('install', {
@@ -67,15 +57,19 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
     new PoetryPyproject(project, {
       name: project.name,
+      version: options.version,
+      description: options.description,
+      license: options.license,
+      authors: [`${options.authorName} <${options.authorEmail}>`],
+      homepage: options.homepage,
+      classifiers: options.classifiers,
+      ...options.poetryOptions,
       dependencies: () => this.synthDependencies(),
       devDependencies: () => this.synthDevDependencies(),
-      scripts: {},
-      ...options.pyprojectConfig,
     });
 
     new TomlFile(project, 'poetry.toml', {
       committed: false,
-      readonly: false, // let user manage set local options through `poetry config`
       obj: {
         repositories: {
           testpypi: {
@@ -152,7 +146,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 }
 
 
-export interface PoetryPyprojectOptions {
+export interface PoetryPyprojectOptionsWithoutDeps {
   /**
    * Name of the package (required).
    */
@@ -237,6 +231,13 @@ export interface PoetryPyprojectOptions {
   readonly exclude?: string[];
 
   /**
+   * The scripts or executables that will be installed when installing the package.
+   */
+  readonly scripts?: { [key: string]: any };
+}
+
+export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
+  /**
    * A list of dependencies for the project.
    *
    * The python version for which your package is compatible is also required.
@@ -251,11 +252,6 @@ export interface PoetryPyprojectOptions {
    * @example { requests: "^2.13.0" }
    */
   readonly devDependencies?: { [key: string]: any };
-
-  /**
-   * The scripts or executables that will be installed when installing the package.
-   */
-  readonly scripts?: { [key: string]: any };
 }
 
 /**

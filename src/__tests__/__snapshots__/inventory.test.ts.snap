@@ -8063,7 +8063,7 @@ Array [
         "default": "$GIT_USER_EMAIL",
         "docs": "Author's e-mail.",
         "name": "authorEmail",
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "authorEmail",
         ],
@@ -8074,7 +8074,7 @@ Array [
         "default": "$GIT_USER_NAME",
         "docs": "Author's name.",
         "name": "authorName",
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "authorName",
         ],
@@ -8085,7 +8085,7 @@ Array [
         "docs": "A list of PyPI trove classifiers that describe the project.",
         "name": "classifiers",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "classifiers",
         ],
@@ -8117,10 +8117,10 @@ Array [
         "type": "unknown",
       },
       Object {
-        "docs": "A short project description.",
+        "docs": "A short description of the package.",
         "name": "description",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "description",
         ],
@@ -8164,10 +8164,10 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "The project's homepage / website.",
+        "docs": "A URL to the website of the project.",
         "name": "homepage",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "homepage",
         ],
@@ -8186,10 +8186,10 @@ Array [
         "type": "string",
       },
       Object {
-        "docs": "The project license.",
+        "docs": "License of this package as an SPDX identifier.",
         "name": "license",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "license",
         ],
@@ -8266,20 +8266,8 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "- defaults",
-        "docs": "Pip options.",
-        "name": "pipOptions",
-        "optional": true,
-        "parent": "PythonProjectOptions",
-        "path": Array [
-          "pipOptions",
-        ],
-        "switch": "pip-options",
-        "type": "PipOptions",
-      },
-      Object {
         "default": "false",
-        "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging.",
+        "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.",
         "name": "poetry",
         "optional": true,
         "parent": "PythonProjectOptions",
@@ -8290,16 +8278,15 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "- defaults",
-        "docs": "Poetry options.",
+        "docs": "Additional options to set for poetry if using poetry.",
         "name": "poetryOptions",
         "optional": true,
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "poetryOptions",
         ],
         "switch": "poetry-options",
-        "type": "PoetryOptions",
+        "type": "PoetryPyprojectOptionsWithoutDeps",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -8362,8 +8349,19 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Additional fields to pass in the setup() function if using setuptools.",
+        "name": "setupConfig",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "setupConfig",
+        ],
+        "switch": "setup-config",
+        "type": "unknown",
+      },
+      Object {
         "default": "- true if the project type is library",
-        "docs": "Use setuptools with a setup.py script for packaging and distribution.",
+        "docs": "Use setuptools with a setup.py script for packaging and publishing.",
         "name": "setuptools",
         "optional": true,
         "parent": "PythonProjectOptions",
@@ -8372,18 +8370,6 @@ Array [
         ],
         "switch": "setuptools",
         "type": "boolean",
-      },
-      Object {
-        "default": "- defaults",
-        "docs": "Setuptools options.",
-        "name": "setuptoolsOptions",
-        "optional": true,
-        "parent": "PythonProjectOptions",
-        "path": Array [
-          "setuptoolsOptions",
-        ],
-        "switch": "setuptools-options",
-        "type": "SetuptoolsOptions",
       },
       Object {
         "default": "true",
@@ -8411,9 +8397,9 @@ Array [
       },
       Object {
         "default": "\\"0.1.0\\"",
-        "docs": "Manually specify package version.",
+        "docs": "Version of the package.",
         "name": "version",
-        "parent": "PythonProjectOptions",
+        "parent": "PythonPackagingOptions",
         "path": Array [
           "version",
         ],

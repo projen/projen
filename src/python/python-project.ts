@@ -1,12 +1,12 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
-import { Pip, PipOptions } from './pip';
-import { Poetry, PoetryOptions } from './poetry';
+import { Pip } from './pip';
+import { Poetry } from './poetry';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
-import { IPythonPackaging } from './python-packaging';
+import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
 import { PythonSample } from './python-sample';
-import { Setuptools, SetuptoolsOptions } from './setuptools';
+import { Setuptools } from './setuptools';
 import { Venv, VenvOptions } from './venv';
 
 
@@ -16,7 +16,7 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 /**
  * Options for `PythonProject`.
  */
-export interface PythonProjectOptions extends ProjectOptions {
+export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOptions {
   // -- required options --
 
   /**
@@ -27,50 +27,6 @@ export interface PythonProjectOptions extends ProjectOptions {
    * @default $PYTHON_MODULE_NAME
    */
   readonly moduleName: string;
-
-  /**
-   * Author's name
-   *
-   * @default $GIT_USER_NAME
-   */
-  readonly authorName: string;
-
-  /**
-   * Author's e-mail
-   *
-   * @default $GIT_USER_EMAIL
-   */
-  readonly authorEmail: string;
-
-  /**
-   * Manually specify package version
-   * @default "0.1.0"
-   */
-  readonly version: string;
-
-  // -- general information --
-
-  /**
-   * A short project description
-   */
-  readonly description?: string;
-
-  /**
-   * The project license
-   */
-  readonly license?: string;
-
-  /**
-   * The project's homepage / website
-   */
-  readonly homepage?: string;
-
-  /**
-   * A list of PyPI trove classifiers that describe the project.
-   *
-   * @see https://pypi.org/classifiers/
-   */
-  readonly classifiers?: string[];
 
   // -- dependencies --
 
@@ -106,12 +62,6 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly pip?: boolean;
 
   /**
-   * Pip options
-   * @default - defaults
-   */
-  readonly pipOptions?: PipOptions;
-
-  /**
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
    * @default true
@@ -125,31 +75,19 @@ export interface PythonProjectOptions extends ProjectOptions {
   readonly venvOptions?: VenvOptions;
 
   /**
-   * Use setuptools with a setup.py script for packaging and distribution.
+   * Use setuptools with a setup.py script for packaging and publishing.
    *
    * @default - true if the project type is library
    */
   readonly setuptools?: boolean;
 
   /**
-   * Setuptools options
-   * @default - defaults
-   */
-  readonly setuptoolsOptions?: SetuptoolsOptions;
-
-  /**
    * Use poetry to manage your project dependencies, virtual environment, and
-   * (optional) packaging.
+   * (optional) packaging/publishing.
    *
    * @default false
    */
   readonly poetry?: boolean;
-
-  /**
-   * Poetry options
-   * @default - defaults
-   */
-  readonly poetryOptions?: PoetryOptions;
 
   // -- optional components --
 
@@ -220,26 +158,23 @@ export class PythonProject extends Project {
     this.version = options.version;
 
     if (options.venv ?? true) {
-      this.envManager = new Venv(this, options.venvOptions);
+      this.envManager = new Venv(this);
     }
 
     if (options.pip ?? true) {
-      this.depsManager = new Pip(this, options.pipOptions);
+      this.depsManager = new Pip(this);
     }
 
     if (options.setuptools ?? (this.projectType === ProjectType.LIB)) {
       this.packagingManager = new Setuptools(this, {
-        ...options.setuptoolsOptions,
-        setupConfig: {
-          authorName: options.authorName,
-          authorEmail: options.authorEmail,
-          version: options.version,
-          description: options.description,
-          license: options.license,
-          homepage: options.homepage,
-          classifiers: options.classifiers,
-          ...options.setuptoolsOptions?.setupConfig,
-        },
+        version: options.version,
+        description: options.description,
+        authorName: options.authorName,
+        authorEmail: options.authorEmail,
+        license: options.license,
+        homepage: options.homepage,
+        classifiers: options.classifiers,
+        setupConfig: options.setupConfig,
       });
     }
 
@@ -255,17 +190,16 @@ export class PythonProject extends Project {
 
     if (options.poetry ?? false) {
       const poetry = new Poetry(this, {
-        ...options.poetryOptions,
-        pyprojectConfig: {
-          name: options.name,
-          version: this.version,
-          description: options.description ?? '',
-          license: options.license,
-          authors: [`${options.authorName} <${options.authorEmail}>`],
+        version: options.version,
+        description: options.description,
+        authorName: options.authorName,
+        authorEmail: options.authorEmail,
+        license: options.license,
+        homepage: options.homepage,
+        classifiers: options.classifiers,
+        poetryOptions: {
           readme: options.readme?.filename ?? 'README.md',
-          homepage: options.homepage,
-          classifiers: options.classifiers,
-          ...options.poetryOptions?.pyprojectConfig,
+          ...options.poetryOptions,
         },
       });
       this.depsManager = poetry;

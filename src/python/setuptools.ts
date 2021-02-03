@@ -1,12 +1,8 @@
 import { Component } from '../component';
 import { Task, TaskCategory } from '../tasks';
+import { PythonPackagingOptions } from './python-packaging';
 import { PythonProject } from './python-project';
-import { SetupPy, SetupPyOptions } from './setuppy';
-
-/**
- * Options for setuptools
- */
-export interface SetuptoolsOptions extends SetupPyOptions {}
+import { SetupPy } from './setuppy';
 
 /**
  * Manages packaging through setuptools with a setup.py script.
@@ -20,7 +16,7 @@ export class Setuptools extends Component {
    */
   public readonly uploadTestTask: Task;
 
-  constructor(project: PythonProject, options: SetuptoolsOptions) {
+  constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
 
     project.addDevDependency('wheel@0.36.2');
@@ -29,7 +25,7 @@ export class Setuptools extends Component {
     this.packageTask = project.addTask('package', {
       description: 'Creates source archive and wheel for distribution.',
       category: TaskCategory.RELEASE,
-      exec: 'rm -fr dist/* && python setup.py sdist bdist_wheel',
+      exec: 'python setup.py sdist bdist_wheel',
     });
 
     this.uploadTestTask = project.addTask('upload:test', {
@@ -44,6 +40,17 @@ export class Setuptools extends Component {
       exec: 'twine upload dist/*',
     });
 
-    new SetupPy(project, options);
+    new SetupPy(project, {
+      name: project.name,
+      packages: [project.moduleName],
+      authorName: options.authorName,
+      authorEmail: options.authorEmail,
+      version: options.version,
+      description: options.description,
+      license: options.license,
+      homepage: options.homepage,
+      classifiers: options.classifiers,
+      ...options.setupConfig,
+    });
   }
 }
