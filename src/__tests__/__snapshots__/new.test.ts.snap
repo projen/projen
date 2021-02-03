@@ -5,6 +5,7 @@ exports[`projen new awscdk-app-ts 1`] = `
 
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.73.0',
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.AwsCdkTypeScriptApp\\",
   name: 'my-project',
 
@@ -56,7 +57,6 @@ const project = new AwsCdkTypeScriptApp({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -77,11 +77,11 @@ const project = new AwsCdkTypeScriptApp({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -124,6 +124,7 @@ const project = new AwsCdkConstructLibrary({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdkVersion: '1.73.0',
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.AwsCdkConstructLibrary\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
@@ -190,7 +191,6 @@ const project = new AwsCdkConstructLibrary({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -211,11 +211,11 @@ const project = new AwsCdkConstructLibrary({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -242,6 +242,7 @@ const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdk8sVersion: '1.0.0-beta.3',
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.ConstructLibraryCdk8s\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
@@ -302,7 +303,6 @@ const project = new ConstructLibraryCdk8s({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -323,11 +323,11 @@ const project = new ConstructLibraryCdk8s({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -396,6 +396,7 @@ exports[`projen new jsii 1`] = `
 const project = new JsiiProject({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.JsiiProject\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
@@ -453,7 +454,6 @@ const project = new JsiiProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -474,11 +474,11 @@ const project = new JsiiProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -502,6 +502,7 @@ exports[`projen new nextjs 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.web.NextJsProject\\",
   name: 'my-project',
 
@@ -554,7 +555,6 @@ const project = new web.NextJsProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -575,11 +575,11 @@ const project = new web.NextJsProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -603,6 +603,7 @@ exports[`projen new nextjs-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.NextJsTypeScriptProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.web.NextJsTypeScriptProject\\",
   name: 'my-project',
 
@@ -651,7 +652,6 @@ const project = new web.NextJsTypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -672,11 +672,11 @@ const project = new web.NextJsTypeScriptProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -716,6 +716,7 @@ exports[`projen new node 1`] = `
 "const { NodeProject } = require('projen');
 
 const project = new NodeProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.NodeProject\\",
   name: 'my-project',
 
@@ -760,7 +761,6 @@ const project = new NodeProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -781,11 +781,11 @@ const project = new NodeProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -831,6 +831,7 @@ exports[`projen new react 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.web.ReactProject\\",
   name: 'my-project',
 
@@ -875,7 +876,6 @@ const project = new web.ReactProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -896,11 +896,11 @@ const project = new web.ReactProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -928,6 +928,7 @@ exports[`projen new react-ts 1`] = `
 "const { web } = require('projen');
 
 const project = new web.ReactTypeScriptProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.web.ReactTypeScriptProject\\",
   name: 'my-project',
 
@@ -972,7 +973,6 @@ const project = new web.ReactTypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -993,11 +993,11 @@ const project = new web.ReactTypeScriptProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1037,6 +1037,7 @@ exports[`projen new typescript 1`] = `
 "const { TypeScriptProject } = require('projen');
 
 const project = new TypeScriptProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.TypeScriptProject\\",
   name: 'my-project',
 
@@ -1081,7 +1082,6 @@ const project = new TypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -1102,11 +1102,11 @@ const project = new TypeScriptProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1146,6 +1146,7 @@ exports[`projen new typescript-app 1`] = `
 "const { TypeScriptAppProject } = require('projen');
 
 const project = new TypeScriptAppProject({
+  defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.TypeScriptAppProject\\",
   name: 'my-project',
 
@@ -1190,7 +1191,6 @@ const project = new TypeScriptAppProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // defaultReleaseBranch: 'master',                                           /* The name of the main release branch. */
   // dependabot: true,                                                         /* Include dependabot configuration. */
   // dependabotOptions: undefined,                                             /* Options for dependabot. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
@@ -1211,11 +1211,11 @@ const project = new TypeScriptAppProject({
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // rebuildBot: undefined,                                                    /* Installs a GitHub workflow which is triggered when the comment \\"@projen rebuild\\" is added to a pull request. */
   // rebuildBotCommand: 'rebuild',                                             /* The pull request bot command to use in order to trigger a rebuild and commit of the contents of the branch. */
-  // releaseBranches: [ 'master' ],                                            /* Branches which trigger a release. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
   // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
