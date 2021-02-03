@@ -41,6 +41,21 @@ test('with version requirement', () => {
   expect(depsManifest(p)).toMatchSnapshot();
 });
 
+test('with package alias', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  const dep = p.deps.addDependency('bar@npm:@bar/legacy', DependencyType.PEER);
+
+  // THEN
+  expect(dep.name).toBe('bar');
+  expect(dep.version).toBe('npm:@bar/legacy');
+  expect(dep.type).toBe(DependencyType.PEER);
+
+  expect(depsManifest(p)).toMatchSnapshot();
+});
+
 test('deps.all returns all the dependencies', () => {
   // GIVEN
   const p = new TestProject();
