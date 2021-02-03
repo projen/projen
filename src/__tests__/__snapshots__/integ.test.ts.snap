@@ -382,7 +382,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch: {}
 jobs:
   build:
@@ -984,14 +984,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to main",
+        "description": "Bumps version & push to master",
         "name": "release",
         "steps": Array [
           Object {
             "spawn": "bump",
           },
           Object {
-            "exec": "git push --follow-tags origin main",
+            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -2161,14 +2161,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to main",
+        "description": "Bumps version & push to master",
         "name": "release",
         "steps": Array [
           Object {
             "spawn": "bump",
           },
           Object {
-            "exec": "git push --follow-tags origin main",
+            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -3447,14 +3447,14 @@ junit.xml
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to main",
+        "description": "Bumps version & push to master",
         "name": "release",
         "steps": Array [
           Object {
             "spawn": "bump",
           },
           Object {
-            "exec": "git push --follow-tags origin main",
+            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -4284,7 +4284,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch: {}
 jobs:
   build:
@@ -4515,14 +4515,14 @@ junit.xml
       "release": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to main",
+        "description": "Bumps version & push to master",
         "name": "release",
         "steps": Array [
           Object {
             "spawn": "bump",
           },
           Object {
-            "exec": "git push --follow-tags origin main",
+            "exec": "git push --follow-tags origin master",
           },
         ],
       },
