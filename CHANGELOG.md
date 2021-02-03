@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.15.18](https://github.com/projen/projen/compare/v0.15.17...v0.15.18) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Projects created with `projen` will now default to using the `main` branch.
+
+### Features
+
+* change default branch to "main" ([#517](https://github.com/projen/projen/issues/517)) ([df74bc9](https://github.com/projen/projen/commit/df74bc9cda2f006a0e5e4ee7337562c477eb9c67))
+
 ### [0.15.17](https://github.com/projen/projen/compare/v0.15.16...v0.15.17) (2021-02-02)
 
 
