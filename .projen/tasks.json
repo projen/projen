@@ -100,13 +100,13 @@
     "release": {
       "name": "release",
       "category": "20.release",
-      "description": "Bumps version & push to master",
+      "description": "Bumps version & push to main",
       "steps": [
         {
           "spawn": "bump"
         },
         {
-          "exec": "git push --follow-tags origin master"
+          "exec": "git push --follow-tags origin main"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
