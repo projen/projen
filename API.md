@@ -4129,6 +4129,7 @@ removeDependency(name: string, type?: DependencyType): void
 Returns the coordinates of a dependency spec.
 
 Given `foo@^3.4.0` returns `{ name: "foo", version: "^3.4.0" }`.
+Given `bar@npm:@bar/legacy` returns `{ name: "bar", version: "npm:@bar/legacy" }`.
 
 ```ts
 static parseDependency(spec: string): DependencyCoordinates
