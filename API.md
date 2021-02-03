@@ -339,6 +339,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -346,7 +347,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -502,6 +502,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -509,7 +510,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -715,6 +715,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -722,7 +723,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -829,6 +829,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -836,7 +837,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -952,6 +952,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -959,7 +960,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -1839,6 +1839,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -1846,7 +1847,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -2536,6 +2536,7 @@ new NodeProject(options: NodeProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -2543,7 +2544,6 @@ new NodeProject(options: NodeProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -3588,6 +3588,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3595,7 +3596,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -3700,6 +3700,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3707,7 +3708,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -3812,6 +3812,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3819,7 +3820,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -5443,6 +5443,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -5450,7 +5451,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -5601,6 +5601,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -5608,7 +5609,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -5785,6 +5785,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -5792,7 +5793,6 @@ new web.ReactProject(options: ReactProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -5939,6 +5939,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -5946,7 +5947,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. __*Default*__: "main"
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
@@ -6049,6 +6049,7 @@ Name | Type | Description
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **cdkVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -6074,7 +6075,6 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -6158,6 +6158,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **cdkVersion**🔹 | <code>string</code> | AWS CDK version to use.
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -6180,7 +6181,6 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -6284,6 +6284,7 @@ Name | Type | Description
 **author**⚠️ | <code>string</code> | The name of the library author.
 **authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
 **cdkVersion**⚠️ | <code>string</code> | Minimum target version this library is tested against.
+**defaultReleaseBranch**⚠️ | <code>string</code> | The name of the main release branch.
 **name**⚠️ | <code>string</code> | This is the name of your project.
 **repositoryUrl**⚠️ | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -6309,7 +6310,6 @@ Name | Type | Description
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -6395,6 +6395,7 @@ Name | Type | Description
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
 **cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -6416,7 +6417,6 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -6501,6 +6501,7 @@ Name | Type | Description
 -----|------|-------------
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -6522,7 +6523,6 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -7215,6 +7215,7 @@ Name | Type | Description
 -----|------|-------------
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -7235,7 +7236,6 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -7537,6 +7537,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -7554,7 +7555,6 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -7861,6 +7861,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**⚠️ | <code>string</code> | The name of the main release branch.
 **name**⚠️ | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -7879,7 +7880,6 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?⚠️ | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -7965,6 +7965,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -7983,7 +7984,6 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -8652,6 +8652,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -8670,7 +8671,6 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -8762,6 +8762,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -8781,7 +8782,6 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -8896,6 +8896,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -8913,7 +8914,6 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -9004,6 +9004,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
@@ -9022,7 +9023,6 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**defaultReleaseBranch**?🔹 | <code>string</code> | The name of the main release branch.<br/>__*Default*__: "main"
 **dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
