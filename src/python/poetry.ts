@@ -23,7 +23,6 @@ export interface PoetryOptions {
  * poetry CLI tool.
  */
 export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
-  private readonly pythonProject: PythonProject;
   public readonly installTask: Task;
   public readonly packageTask: Task;
   public readonly uploadTask: Task;
@@ -35,8 +34,6 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
   constructor(project: PythonProject, options: PoetryOptions) {
     super(project);
-
-    this.pythonProject = project;
 
     this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
@@ -138,8 +135,8 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
     let envPath = execOrUndefined('poetry env info -p', { cwd: this.project.outdir });
     if (!envPath) {
-      this.project.logger.info(`Setting up a virtual environment using the python installation that was found: ${this.pythonProject.pythonPath}.`);
-      exec(`poetry env use ${this.pythonProject.pythonPath}`, { cwd: this.project.outdir });
+      this.project.logger.info('Setting up a virtual environment...');
+      exec('poetry env use python', { cwd: this.project.outdir });
       envPath = execOrUndefined('poetry env info -p', { cwd: this.project.outdir });
       this.project.logger.info(`Environment successfully created (located in ${envPath}}).`);
     }

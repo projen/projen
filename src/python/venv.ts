@@ -25,13 +25,11 @@ export class Venv extends Component implements IPythonEnv {
    * Name of directory to store the environment in
    */
   private readonly envdir: string;
-  private readonly pythonProject: PythonProject;
 
   constructor(project: PythonProject, options: VenvOptions = {}) {
     super(project);
 
     this.envdir = options.envdir ?? '.env';
-    this.pythonProject = project;
 
     this.project.gitignore.exclude(`/${this.envdir}`);
 
@@ -45,8 +43,8 @@ export class Venv extends Component implements IPythonEnv {
   public setupEnvironment() {
     const absoluteEnvdir = path.join(this.project.outdir, this.envdir);
     if (!fs.pathExistsSync(absoluteEnvdir)) {
-      this.project.logger.info(`Setting up a virtual environment using the python installation that was found: ${this.pythonProject.pythonPath}.`);
-      exec(`${this.pythonProject.pythonPath} -m venv ${this.envdir}`, { cwd: this.project.outdir });
+      this.project.logger.info('Setting up a virtual environment...');
+      exec(`python -m venv ${this.envdir}`, { cwd: this.project.outdir });
       this.project.logger.info(`Environment successfully created (located in ./${this.envdir}).`);
     }
   }

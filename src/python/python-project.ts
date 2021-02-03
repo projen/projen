@@ -20,13 +20,6 @@ export interface PythonProjectOptions extends ProjectOptions {
   // -- required options --
 
   /**
-   * Absolute path to the user's python installation.
-   *
-   * @default $PYTHON_PATH
-   */
-  readonly pythonPath: string;
-
-  /**
    * Name of the python package as used in imports and filenames.
    *
    * Must only consist of alphanumeric characters and underscores.
@@ -186,12 +179,6 @@ export interface PythonProjectOptions extends ProjectOptions {
  */
 export class PythonProject extends Project {
   /**
-   * Absolute path to the user's python installation. This will be used for
-   * setting up the virtual environment.
-   */
-  public readonly pythonPath: string;
-
-  /**
    * Python module name (the project name, with any hyphens or periods replaced
    * with underscores).
    */
@@ -230,7 +217,6 @@ export class PythonProject extends Project {
     }
 
     this.moduleName = options.moduleName;
-    this.pythonPath = options.pythonPath;
     this.version = options.version;
 
     if (options.venv ?? true) {

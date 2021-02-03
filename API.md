@@ -5130,7 +5130,6 @@ new python.PythonProject(options: PythonProjectOptions)
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
-  * **pythonPath** (<code>string</code>)  Absolute path to the user's python installation. 
   * **version** (<code>string</code>)  Manually specify package version. 
   * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
   * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
@@ -5160,7 +5159,6 @@ Name | Type | Description
 **depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
 **envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
 **moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores).
-**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **version**🔹 | <code>string</code> | Version of the package for distribution (should follow semver).
 **packagingManager**?🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.<br/>__*Optional*__
 **pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
@@ -9193,7 +9191,6 @@ Name | Type | Description
 **authorName**🔹 | <code>string</code> | Author's name.
 **moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
-**pythonPath**🔹 | <code>string</code> | Absolute path to the user's python installation.
 **version**🔹 | <code>string</code> | Manually specify package version.
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true

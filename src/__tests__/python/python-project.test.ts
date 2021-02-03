@@ -43,7 +43,6 @@ class TestPythonProject extends PythonProject {
       clobber: false,
       name: 'test-python-project',
       moduleName: 'test_python_project',
-      pythonPath: '/usr/bin/python',
       authorName: 'First Last',
       authorEmail: 'email@example.com',
       version: '0.1.0',

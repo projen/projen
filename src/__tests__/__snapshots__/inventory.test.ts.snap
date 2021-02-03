@@ -8338,17 +8338,6 @@ Array [
         "type": "PytestOptions",
       },
       Object {
-        "default": "$PYTHON_PATH",
-        "docs": "Absolute path to the user's python installation.",
-        "name": "pythonPath",
-        "parent": "PythonProjectOptions",
-        "path": Array [
-          "pythonPath",
-        ],
-        "switch": "python-path",
-        "type": "string",
-      },
-      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "name": "readme",
