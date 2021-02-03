@@ -74,9 +74,6 @@ const project = new python.PythonProject({
   venv: false,
   setuptools: false,
   poetry: true,
-  poetryOptions: {
-      ...
-  },
 });
 ```
 
