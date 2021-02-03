@@ -9,6 +9,7 @@ describe('author', () => {
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
       name: 'project',
+      defaultReleaseBranch: 'master',
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];
@@ -26,6 +27,7 @@ describe('author', () => {
       repositoryUrl: 'https://github.com/foo/bar.git',
       author: 'My Name',
       name: 'project',
+      defaultReleaseBranch: 'master',
     });
 
     const pkgjson = synthSnapshot(project)['package.json'];
@@ -50,6 +52,7 @@ describe('maven repository options', () => {
         mavenGroupId: 'com.github.eladb',
         mavenArtifactId: 'cdk-watchful',
       },
+      defaultReleaseBranch: 'master',
     });
 
     const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
@@ -72,6 +75,7 @@ describe('maven repository options', () => {
         mavenServerId: 'github',
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
       },
+      defaultReleaseBranch: 'master',
     });
 
     const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
@@ -91,6 +95,7 @@ describe('publish to go', () => {
       publishToGo: {
         moduleName: 'github.com/foo/bar',
       },
+      defaultReleaseBranch: 'master',
     });
 
     const output = synthSnapshot(project);
@@ -121,6 +126,7 @@ describe('publish to go', () => {
         githubRepo: 'github.com/foo/bar',
         githubTokenSecret: 'CUSTOM_SECRET',
       },
+      defaultReleaseBranch: 'master',
     });
 
     const output = synthSnapshot(project);

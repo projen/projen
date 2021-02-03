@@ -34,6 +34,7 @@ test('Node Project Jest Defaults Configured', () => {
     name: 'test-node-project',
     mergify: false,
     projenDevDependency: false,
+    defaultReleaseBranch: 'master',
     jest: true,
     logging: {
       level: LogLevel.OFF,
@@ -57,6 +58,7 @@ test('Node Project Jest With Options Configured', () => {
   const project = new NodeProject({
     outdir: mkdtemp(),
     name: 'test-node-project',
+    defaultReleaseBranch: 'master',
     mergify: false,
     projenDevDependency: false,
     jest: true,
@@ -86,6 +88,7 @@ test('Typescript Project Jest Defaults Configured', () => {
   const project = new TypeScriptProject({
     outdir: mkdtemp(),
     name: 'test-typescript-project',
+    defaultReleaseBranch: 'master',
     mergify: false,
     projenDevDependency: false,
     jest: true,
@@ -113,6 +116,7 @@ test('Typescript Project Jest With Compiler Options', () => {
   const project = new TypeScriptProject({
     outdir: mkdtemp(),
     name: 'test-typescript-project',
+    defaultReleaseBranch: 'master',
     mergify: false,
     projenDevDependency: false,
     jest: true,
@@ -142,6 +146,7 @@ test('testdir is under src', () => {
   // WHEN
   const project = new TypeScriptProject({
     outdir: mkdtemp(),
+    defaultReleaseBranch: 'master',
     logging: { level: LogLevel.OFF },
     name: 'test-typescript-project',
     srcdir: 'mysrc',
@@ -158,6 +163,7 @@ test('addTestMatch() can be used to add patterns', () => {
   // GIVEN
   const project = new NodeProject({
     outdir: mkdtemp(),
+    defaultReleaseBranch: 'master',
     name: 'test',
     logging: {
       level: LogLevel.OFF,
