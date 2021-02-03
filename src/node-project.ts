@@ -49,7 +49,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * The name of the main release branch.
    *
-   * @default "master"
+   * @default "main"
    */
   readonly defaultReleaseBranch?: string;
 
@@ -75,7 +75,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly codeCovTokenSecret?: string;
 
   /**
-   * Define a GitHub workflow for releasing from "master" when new versions are
+   * Define a GitHub workflow for releasing from "main" when new versions are
    * bumped. Requires that `version` will be undefined.
    *
    * @default - true if not a subproject
@@ -100,7 +100,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    *
    * Default value is based on defaultReleaseBranch.
    *
-   * @default [ "master" ]
+   * @default [ "main" ]
    */
   readonly releaseBranches?: string[];
 
@@ -288,7 +288,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
  */
 export enum AutoRelease {
   /**
-   * Automatically bump & release a new version for every commit to "master"
+   * Automatically bump & release a new version for every commit to "main"
    */
   EVERY_COMMIT,
 
@@ -512,7 +512,7 @@ export class NodeProject extends Project {
       this.addDevDeps(`projen@${projenVersion}`);
     }
 
-    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
+    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
 
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
