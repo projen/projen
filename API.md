@@ -4966,8 +4966,8 @@ Name | Type | Description
 -----|------|-------------
 **installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
 **packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
-**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package package repository.
-**uploadTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
+**publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
 ### Methods
 
@@ -5345,6 +5345,7 @@ __Returns__:
 
 Manages packaging through setuptools with a setup.py script.
 
+__Implements__: [python.IPythonPackaging](#projen-python-ipythonpackaging)
 __Submodule__: python
 
 __Extends__: [Component](#projen-component)
@@ -5377,9 +5378,9 @@ new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**uploadTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
+**publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
 
 
@@ -9123,7 +9124,7 @@ setupEnvironment(): void
 
 ## interface IPythonPackaging 🔹 <a id="projen-python-ipythonpackaging"></a>
 
-__Implemented by__: [python.Poetry](#projen-python-poetry)
+__Implemented by__: [python.Poetry](#projen-python-poetry), [python.Setuptools](#projen-python-setuptools)
 
 
 
@@ -9133,7 +9134,7 @@ __Implemented by__: [python.Poetry](#projen-python-poetry)
 Name | Type | Description 
 -----|------|-------------
 **packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
-**uploadTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package package repository.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
 
 
 

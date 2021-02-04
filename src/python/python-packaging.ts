@@ -8,9 +8,9 @@ export interface IPythonPackaging {
   readonly packageTask: Task;
 
   /**
-   * A task that uploads the package to a package package repository.
+   * A task that uploads the package to a package repository.
    */
-  readonly uploadTask: Task;
+  readonly publishTask: Task;
 }
 
 export interface PythonPackagingOptions {

@@ -15,12 +15,12 @@ import { PythonProject } from './python-project';
 export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
   public readonly installTask: Task;
   public readonly packageTask: Task;
-  public readonly uploadTask: Task;
+  public readonly publishTask: Task;
 
   /**
    * A task that uploads the package to the Test PyPI repository.
    */
-  public readonly uploadTestTask: Task;
+  public readonly publishTestTask: Task;
 
   constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
@@ -43,13 +43,13 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
       exec: 'poetry build',
     });
 
-    this.uploadTestTask = project.addTask('upload:test', {
+    this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
       category: TaskCategory.RELEASE,
       exec: 'poetry publish -r testpypi',
     });
 
-    this.uploadTask = project.addTask('upload', {
+    this.publishTask = project.addTask('publish', {
       description: 'Uploads the package to PyPI.',
       category: TaskCategory.RELEASE,
       exec: 'poetry publish',

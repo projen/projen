@@ -1,20 +1,20 @@
 import { Component } from '../component';
 import { Task, TaskCategory } from '../tasks';
-import { PythonPackagingOptions } from './python-packaging';
+import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
 import { PythonProject } from './python-project';
 import { SetupPy } from './setuppy';
 
 /**
  * Manages packaging through setuptools with a setup.py script.
  */
-export class Setuptools extends Component {
+export class Setuptools extends Component implements IPythonPackaging {
   public readonly packageTask: Task;
-  public readonly uploadTask: Task;
+  public readonly publishTask: Task;
 
   /**
    * A task that uploads the package to the Test PyPI repository.
    */
-  public readonly uploadTestTask: Task;
+  public readonly publishTestTask: Task;
 
   constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
@@ -28,13 +28,13 @@ export class Setuptools extends Component {
       exec: 'python setup.py sdist bdist_wheel',
     });
 
-    this.uploadTestTask = project.addTask('upload:test', {
+    this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
       category: TaskCategory.RELEASE,
       exec: 'twine upload --repository-url https://test.pypi.org/legacy/ dist/*',
     });
 
-    this.uploadTask = project.addTask('upload', {
+    this.publishTask = project.addTask('publish', {
       description: 'Uploads the package against a test PyPI endpoint.',
       category: TaskCategory.RELEASE,
       exec: 'twine upload dist/*',
