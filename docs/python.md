@@ -25,7 +25,7 @@ code.
 ```
 
 The default options will setup a Python environment using `venv`, and will
-create a `requirements.txt` file for installing dependencies via pip.
+create a `requirements.txt` file for installing dependencies via `pip`.
 
 The `projen new` command will also generate a `.projenrc.js` file which includes
 the definition of your project with any options you specified in the command
@@ -37,7 +37,7 @@ const { python } = require('projen');
 const project = new python.PythonProject({
   jsiiFqn: "projen.python.PythonProject",
   name: 'my-project',
-  pythonPath: '/usr/bin/python',
+  moduleName: 'my_project',
 });
 
 project.synth();
@@ -61,12 +61,21 @@ requirements. See the list below:
 
 - pip: dependency manager
 - venv: environment manager
+- setuptools: packaging manager
 - poetry: dependency, environment, and packaging manager
 - pipenv (TBD): dependency and environment manager
-- setuptools (TBD): packaging manager
+- conda (TBD): dependency and environment manager
 
-By default, pip, venv, and setuptools will be used. But these can be swapped out
-as needed by using the provided flags, for example:
+By default, pip, and venv will be used, along with setuptools if the project is a library:
+
+```js
+const project = new python.PythonProject({
+  ...
+  projectType: ProjectType.LIB
+});
+```
+
+But these can be swapped out as needed by using the provided flags, for example:
 
 ```js
 const project = new python.PythonProject({
