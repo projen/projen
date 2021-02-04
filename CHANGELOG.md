@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.2](https://github.com/projen/projen/compare/v0.16.1...v0.16.2) (2021-02-04)
+
+
+### Features
+
+* python projects ([#514](https://github.com/projen/projen/issues/514)) ([bf6b6af](https://github.com/projen/projen/commit/bf6b6afe568c9031503eea9c06a6249d242ce784)), closes [#359](https://github.com/projen/projen/issues/359)
+
 ### [0.16.1](https://github.com/projen/projen/compare/v0.16.0...v0.16.1) (2021-02-03)
 
 ## [0.16.0](https://github.com/projen/projen/compare/v0.15.18...v0.16.0) (2021-02-03)
