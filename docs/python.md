@@ -1,14 +1,14 @@
 # Python Projects
 
 Before creating a new project, make sure you have the version of Python you want
-to use set up in your terminal. If running `which python` on UNIX/macOS or
-`Get-Command python` on Windows does not print the path to the python version
-you want to use, you can specify the right path when setting up the project.
+to use set up in your terminal. Running `which python` on UNIX/macOS or
+`Get-Command python` on Windows should print the path to the python version you
+want to use.
 
 To create a new Python project, use `projen new python`:
 
 ```shell
-$ projen new python --name=my-project [--python-path=/usr/bin/python]
+$ projen new python --name=my-project
 ```
 
 This will synthesize a standard project directory structure with some sample
