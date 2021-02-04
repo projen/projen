@@ -4,6 +4,7 @@ const project = new NodeProject({
   name: "pnpm-project",
 
   packageManager: NodePackageManager.PNPM,
+  defaultReleaseBranch: 'master',
 
   deps: ["esbuild"],
 

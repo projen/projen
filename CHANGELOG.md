@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.1](https://github.com/projen/projen/compare/v0.16.0...v0.16.1) (2021-02-03)
+
+## [0.16.0](https://github.com/projen/projen/compare/v0.15.18...v0.16.0) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* as we migrate the default value of `defaultReleaseBranch` from `master` to `main`, this option will be required and an error will be printed if the value is not set. We will make this optional in a future release.
+
+### Features
+
+* change default release branch to “main” (phase 1) ([#524](https://github.com/projen/projen/issues/524)) ([9d6888f](https://github.com/projen/projen/commit/9d6888ff1ee330b25fe25a531d3b53e45873f643)), closes [#517](https://github.com/projen/projen/issues/517)
+
+### [0.15.18](https://github.com/projen/projen/compare/v0.15.17...v0.15.18) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Projects created with `projen` will now default to using the `main` branch.
+
+### Features
+
+* change default branch to "main" ([#517](https://github.com/projen/projen/issues/517)) ([df74bc9](https://github.com/projen/projen/commit/df74bc9cda2f006a0e5e4ee7337562c477eb9c67))
+
 ### [0.15.17](https://github.com/projen/projen/compare/v0.15.16...v0.15.17) (2021-02-02)
 
 

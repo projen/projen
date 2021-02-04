@@ -296,13 +296,14 @@ function packageJson(project: Project) {
 }
 
 class TestNodeProject extends NodeProject {
-  constructor(options: Omit<NodeProjectOptions, 'name'> = {}) {
+  constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
       outdir: mkdtemp(),
       name: 'test-node-project',
       logging: {
         level: LogLevel.OFF,
       },
+      defaultReleaseBranch: 'master',
       ...options,
     });
   }

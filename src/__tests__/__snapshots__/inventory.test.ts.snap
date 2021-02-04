@@ -264,10 +264,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -953,7 +952,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -1002,7 +1001,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -1476,10 +1475,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -2175,7 +2173,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -2224,7 +2222,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -2603,10 +2601,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -3302,7 +3299,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -3351,7 +3348,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -4032,10 +4029,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -4731,7 +4727,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -4780,7 +4776,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -5102,10 +5098,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -5695,7 +5690,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -5744,7 +5739,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -6092,10 +6087,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -6781,7 +6775,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -6830,7 +6824,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -7189,10 +7183,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -7782,7 +7775,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -7831,7 +7824,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -8603,10 +8596,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -9196,7 +9188,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -9245,7 +9237,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -9569,10 +9561,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -10258,7 +10249,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -10307,7 +10298,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -10666,10 +10657,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -11355,7 +11345,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -11404,7 +11394,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -11763,10 +11753,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -12452,7 +12441,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -12501,7 +12490,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",

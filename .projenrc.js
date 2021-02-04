@@ -42,6 +42,7 @@ const project = new JsiiProject({
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
   codeCov: true,
+  defaultReleaseBranch: 'main',
   compileBeforeTest: true, // since we want to run the cli in tests
   gitpod: true,
   devContainer: true,

@@ -1061,7 +1061,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
 const project = new ConstructLibraryAws({
   name: 'cdk-watchful',
   description: 'Watching your CDK apps since 2019',
-
+  defaultReleaseBranch: 'master',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/eladb/cdk-watchful.git',
@@ -2243,6 +2243,7 @@ const common = require('./cdk8s.common');
 const project = new JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
+  defaultReleaseBranch: 'master',
   stability: common.options.stability,
 
   // without this, the version of 'constructs' would need to be controlled
@@ -2523,6 +2524,7 @@ const common = require('./cdk8s.common');
 const project = new TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
+  defaultReleaseBranch: 'master',
   bin: {
     cdk8s: 'bin/cdk8s',
   },
@@ -2613,6 +2615,7 @@ const common = require('./cdk8s.common');
 const project = new JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
+  defaultReleaseBranch: 'master',
   stability: common.options.stability,
 
   // without this, the version of 'constructs' would need to be controlled
@@ -3529,6 +3532,7 @@ const common = require('./cdk8s.common');
 const project = new TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
+  defaultReleaseBranch: 'master',
   bin: {
     cdk8s: 'bin/cdk8s',
   },
@@ -3791,6 +3795,7 @@ const common = require('./cdk8s.common');
 const project = new TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
+  defaultReleaseBranch: 'master',
   bin: {
     cdk8s: 'bin/cdk8s',
   },
@@ -3881,6 +3886,7 @@ const common = require('./cdk8s.common');
 const project = new JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
+  defaultReleaseBranch: 'master',
   stability: common.options.stability,
 
   // without this, the version of 'constructs' would need to be controlled
@@ -4572,6 +4578,7 @@ const project = new NodeProject({
   name: \\"pnpm-project\\",
 
   packageManager: NodePackageManager.PNPM,
+  defaultReleaseBranch: 'master',
 
   deps: [\\"esbuild\\"],
 
