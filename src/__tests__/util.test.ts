@@ -1,5 +1,5 @@
 import { JsonFile } from '../json';
-import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions } from '../util';
+import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions, formatAsPythonModule } from '../util';
 import { TestProject } from './util';
 
 describe('decamelizeRecursively', () => {
@@ -227,4 +227,9 @@ test('getFilePermissions', () => {
   expect(getFilePermissions({ readonly: false, executable: false })).toEqual('644');
   expect(getFilePermissions({ readonly: false })).toEqual('644');
   expect(getFilePermissions({ executable: true })).toEqual('755');
+});
+
+test('formatAsPythonModule', () => {
+  expect(formatAsPythonModule('foo-bar-baz')).toEqual('foo_bar_baz');
+  expect(formatAsPythonModule('foo.bar.baz')).toEqual('foo_bar_baz');
 });

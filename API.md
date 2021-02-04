@@ -55,6 +55,16 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
+[python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
+[python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
+[python.Pytest](#projen-python-pytest)|*No description*
+[python.PythonProject](#projen-python-pythonproject)|Python project.
+[python.PythonSample](#projen-python-pythonsample)|Python code sample.
+[python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
+[python.SetupPy](#projen-python-setuppy)|Python packaging script where package metadata can be placed.
+[python.Setuptools](#projen-python-setuptools)|Manages packaging through setuptools with a setup.py script.
+[python.Venv](#projen-python-venv)|Manages a virtual environment through the Python venv module.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -157,6 +167,16 @@ Name|Description
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)|Options for `Projenrc`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|*No description*
+[python.PipOptions](#projen-python-pipoptions)|Options for pip.
+[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
+[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
+[python.PytestOptions](#projen-python-pytestoptions)|*No description*
+[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)|*No description*
+[python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
+[python.PythonSampleOptions](#projen-python-pythonsampleoptions)|Options for python sample code.
+[python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
+[python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
+[python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -190,6 +210,10 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
+[python.IPythonDeps](#projen-python-ipythondeps)|*No description*
+[python.IPythonEnv](#projen-python-ipythonenv)|*No description*
+[python.IPythonPackaging](#projen-python-ipythonpackaging)|*No description*
 
 
 **Enums**
@@ -1357,7 +1381,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -4828,6 +4852,577 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **className**🔹 | <code>string</code> | The name of the java class that includes the projen entrypoint.
+
+
+
+## class Pip 🔹 <a id="projen-python-pip"></a>
+
+Manages dependencies using a requirements.txt file and the pip CLI tool.
+
+__Implements__: [python.IPythonDeps](#projen-python-ipythondeps)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pip(project: PythonProject, _options?: PipOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **_options** (<code>[python.PipOptions](#projen-python-pipoptions)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-pip-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-pip-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### installDependencies()🔹 <a id="projen-python-pip-installdependencies"></a>
+
+Installs dependencies (called during post-synthesis).
+
+```ts
+installDependencies(): void
+```
+
+
+
+
+
+
+
+## class Poetry 🔹 <a id="projen-python-poetry"></a>
+
+Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
+
+__Implements__: [python.IPythonDeps](#projen-python-ipythondeps), [python.IPythonEnv](#projen-python-ipythonenv), [python.IPythonPackaging](#projen-python-ipythonpackaging)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Poetry(project: PythonProject, options: PythonPackagingOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
+**publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-poetry-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-poetry-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### installDependencies()🔹 <a id="projen-python-poetry-installdependencies"></a>
+
+Installs dependencies (called during post-synthesis).
+
+```ts
+installDependencies(): void
+```
+
+
+
+
+
+#### setupEnvironment()🔹 <a id="projen-python-poetry-setupenvironment"></a>
+
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+
+```ts
+setupEnvironment(): void
+```
+
+
+
+
+
+
+
+## class PoetryPyproject 🔹 <a id="projen-python-poetrypyproject"></a>
+
+Represents configuration of a pyproject.toml file for a Poetry project.
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.PoetryPyproject(project: PythonProject, options: PoetryPyprojectOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)</code>)  *No description*
+  * **authors** (<code>Array<string></code>)  The authors of the package. __*Optional*__
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package (required). __*Optional*__
+  * **documentation** (<code>string</code>)  A URL to the documentation of the project. __*Optional*__
+  * **exclude** (<code>Array<string></code>)  A list of patterns that will be excluded in the final package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **include** (<code>Array<string></code>)  A list of patterns that will be included in the final package. __*Optional*__
+  * **keywords** (<code>Array<string></code>)  A list of keywords (max: 5) that the package is related to. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **maintainers** (<code>Array<string></code>)  the maintainers of the package. __*Optional*__
+  * **name** (<code>string</code>)  Name of the package (required). __*Optional*__
+  * **packages** (<code>Array<string></code>)  A list of packages and modules to include in the final distribution. __*Optional*__
+  * **readme** (<code>string</code>)  The name of the readme file of the package. __*Optional*__
+  * **repository** (<code>string</code>)  A URL to the repository of the project. __*Optional*__
+  * **scripts** (<code>Map<string, any></code>)  The scripts or executables that will be installed when installing the package. __*Optional*__
+  * **version** (<code>string</code>)  Version of the package (required). __*Optional*__
+  * **dependencies** (<code>Map<string, any></code>)  A list of dependencies for the project. __*Optional*__
+  * **devDependencies** (<code>Map<string, any></code>)  A list of development dependencies for the project. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[TomlFile](#projen-tomlfile)</code> | <span></span>
+
+
+
+## class Pytest 🔹 <a id="projen-python-pytest"></a>
+
+
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pytest(project: PythonProject, options?: PytestOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
+  * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
+  * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
+  * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+
+
+
+## class PythonProject 🔹 <a id="projen-python-pythonproject"></a>
+
+Python project.
+
+__Submodule__: python
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new python.PythonProject(options: PythonProjectOptions)
+```
+
+* **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**depsManager**🔹 | <code>[python.IPythonDeps](#projen-python-ipythondeps)</code> | API for managing dependencies.
+**envManager**🔹 | <code>[python.IPythonEnv](#projen-python-ipythonenv)</code> | API for mangaging the Python runtime environment.
+**moduleName**🔹 | <code>string</code> | Python module name (the project name, with any hyphens or periods replaced with underscores).
+**version**🔹 | <code>string</code> | Version of the package for distribution (should follow semver).
+**packagingManager**?🔹 | <code>[python.IPythonPackaging](#projen-python-ipythonpackaging)</code> | API for managing packaging the project as a library.<br/>__*Optional*__
+**pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-pythonproject-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-pythonproject-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### postSynthesize()🔹 <a id="projen-python-pythonproject-postsynthesize"></a>
+
+Called after all components are synthesized.
+
+Order is *not* guaranteed.
+
+```ts
+postSynthesize(): void
+```
+
+
+
+
+
+
+
+## class PythonSample 🔹 <a id="projen-python-pythonsample"></a>
+
+Python code sample.
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.PythonSample(project: PythonProject, _options: PythonSampleOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+
+
+
+
+## class RequirementsFile 🔹 <a id="projen-python-requirementsfile"></a>
+
+Specifies a list of packages to be installed using pip.
+
+__Submodule__: python
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new python.RequirementsFile(project: Project, filePath: string, options: RequirementsFileOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[python.RequirementsFileOptions](#projen-python-requirementsfileoptions)</code>)  *No description*
+  * **packageProvider** (<code>[python.IPackageProvider](#projen-python-ipackageprovider)</code>)  Provide a list of packages that can be dynamically updated. __*Optional*__
+
+
+### Methods
+
+
+#### addPackages(...packages)🔹 <a id="projen-python-requirementsfile-addpackages"></a>
+
+Adds the specified packages provided in semver format.
+
+Comment lines (start with `#`) are ignored.
+
+```ts
+addPackages(...packages: string[]): void
+```
+
+* **packages** (<code>string</code>)  Package version in format `<module>@<semver>`.
+
+
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-python-requirementsfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class SetupPy 🔹 <a id="projen-python-setuppy"></a>
+
+Python packaging script where package metadata can be placed.
+
+__Submodule__: python
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new python.SetupPy(project: PythonProject, options: SetupPyOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.SetupPyOptions](#projen-python-setuppyoptions)</code>)  *No description*
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short project description. __*Optional*__
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **license** (<code>string</code>)  The project license. __*Optional*__
+  * **name** (<code>string</code>)  Name of the package. __*Optional*__
+  * **packages** (<code>Array<string></code>)  List of submodules to be packaged. __*Optional*__
+  * **version** (<code>string</code>)  Manually specify package version. __*Optional*__
+
+
+### Methods
+
+
+#### protected synthesizeContent(resolver)🔹 <a id="projen-python-setuppy-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(resolver: IResolver): string
+```
+
+* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Setuptools 🔹 <a id="projen-python-setuptools"></a>
+
+Manages packaging through setuptools with a setup.py script.
+
+__Implements__: [python.IPythonPackaging](#projen-python-ipythonpackaging)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
+**publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
+
+
+
+## class Venv 🔹 <a id="projen-python-venv"></a>
+
+Manages a virtual environment through the Python venv module.
+
+__Implements__: [python.IPythonEnv](#projen-python-ipythonenv)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Venv(project: PythonProject, options?: VenvOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
+  * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
+
+
+### Methods
+
+
+#### setupEnvironment()🔹 <a id="projen-python-venv-setupenvironment"></a>
+
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+
+```ts
+setupEnvironment(): void
+```
+
+
+
+
 
 
 
@@ -8434,6 +9029,309 @@ Name | Type | Description
 **initializationOptions**?🔹 | <code>Map<string, any></code> | Project initialization options.<br/>__*Optional*__
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
 **testScope**?🔹 | <code>boolean</code> | Defines projenrc under the test scope instead of the main scope, which is reserved to the app.<br/>__*Default*__: true
+
+
+
+## interface IPackageProvider 🔹 <a id="projen-python-ipackageprovider"></a>
+
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packages**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | An array of packages (may be dynamically generated).
+
+
+
+## interface IPythonDeps 🔹 <a id="projen-python-ipythondeps"></a>
+
+__Implemented by__: [python.Pip](#projen-python-pip), [python.Poetry](#projen-python-poetry)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-ipythondeps-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-ipythondeps-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### installDependencies()🔹 <a id="projen-python-ipythondeps-installdependencies"></a>
+
+Installs dependencies (called during post-synthesis).
+
+```ts
+installDependencies(): void
+```
+
+
+
+
+
+
+
+## interface IPythonEnv 🔹 <a id="projen-python-ipythonenv"></a>
+
+__Implemented by__: [python.Poetry](#projen-python-poetry), [python.Venv](#projen-python-venv)
+
+
+### Methods
+
+
+#### setupEnvironment()🔹 <a id="projen-python-ipythonenv-setupenvironment"></a>
+
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+
+```ts
+setupEnvironment(): void
+```
+
+
+
+
+
+
+
+## interface IPythonPackaging 🔹 <a id="projen-python-ipythonpackaging"></a>
+
+__Implemented by__: [python.Poetry](#projen-python-poetry), [python.Setuptools](#projen-python-setuptools)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
+**publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
+
+
+
+## struct PipOptions 🔹 <a id="projen-python-pipoptions"></a>
+
+
+Options for pip.
+
+
+## struct PoetryPyprojectOptions 🔹 <a id="projen-python-poetrypyprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authors**?🔹 | <code>Array<string></code> | The authors of the package.<br/>__*Optional*__
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**dependencies**?🔹 | <code>Map<string, any></code> | A list of dependencies for the project.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | A short description of the package (required).<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, any></code> | A list of development dependencies for the project.<br/>__*Optional*__
+**documentation**?🔹 | <code>string</code> | A URL to the documentation of the project.<br/>__*Optional*__
+**exclude**?🔹 | <code>Array<string></code> | A list of patterns that will be excluded in the final package.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**include**?🔹 | <code>Array<string></code> | A list of patterns that will be included in the final package.<br/>__*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | A list of keywords (max: 5) that the package is related to.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**maintainers**?🔹 | <code>Array<string></code> | the maintainers of the package.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Name of the package (required).<br/>__*Optional*__
+**packages**?🔹 | <code>Array<string></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**readme**?🔹 | <code>string</code> | The name of the readme file of the package.<br/>__*Optional*__
+**repository**?🔹 | <code>string</code> | A URL to the repository of the project.<br/>__*Optional*__
+**scripts**?🔹 | <code>Map<string, any></code> | The scripts or executables that will be installed when installing the package.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | Version of the package (required).<br/>__*Optional*__
+
+
+
+## struct PoetryPyprojectOptionsWithoutDeps 🔹 <a id="projen-python-poetrypyprojectoptionswithoutdeps"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authors**?🔹 | <code>Array<string></code> | The authors of the package.<br/>__*Optional*__
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | A short description of the package (required).<br/>__*Optional*__
+**documentation**?🔹 | <code>string</code> | A URL to the documentation of the project.<br/>__*Optional*__
+**exclude**?🔹 | <code>Array<string></code> | A list of patterns that will be excluded in the final package.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**include**?🔹 | <code>Array<string></code> | A list of patterns that will be included in the final package.<br/>__*Optional*__
+**keywords**?🔹 | <code>Array<string></code> | A list of keywords (max: 5) that the package is related to.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**maintainers**?🔹 | <code>Array<string></code> | the maintainers of the package.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Name of the package (required).<br/>__*Optional*__
+**packages**?🔹 | <code>Array<string></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**readme**?🔹 | <code>string</code> | The name of the readme file of the package.<br/>__*Optional*__
+**repository**?🔹 | <code>string</code> | A URL to the repository of the project.<br/>__*Optional*__
+**scripts**?🔹 | <code>Map<string, any></code> | The scripts or executables that will be installed when installing the package.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | Version of the package (required).<br/>__*Optional*__
+
+
+
+## struct PytestOptions 🔹 <a id="projen-python-pytestoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**maxFailures**?🔹 | <code>number</code> | Stop the testing process after the first N failures.<br/>__*Optional*__
+**testdir**?🔹 | <code>string</code> | Directory with tests.<br/>__*Default*__: 'tests'
+**version**?🔹 | <code>string</code> | Pytest version.<br/>__*Default*__: "6.2.1"
+
+
+
+## struct PythonPackagingOptions 🔹 <a id="projen-python-pythonpackagingoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**🔹 | <code>string</code> | Author's e-mail.
+**authorName**🔹 | <code>string</code> | Author's name.
+**version**🔹 | <code>string</code> | Version of the package.
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
+**setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
+
+
+
+## struct PythonProjectOptions 🔹 <a id="projen-python-pythonprojectoptions"></a>
+
+
+Options for `PythonProject`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**🔹 | <code>string</code> | Author's e-mail.
+**authorName**🔹 | <code>string</code> | Author's name.
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | Version of the package.
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
+**poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
+**projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
+**pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
+**setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
+**setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
+**venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+**venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
+
+
+
+## struct PythonSampleOptions 🔹 <a id="projen-python-pythonsampleoptions"></a>
+
+
+Options for python sample code.
+
+
+## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**packageProvider**?🔹 | <code>[python.IPackageProvider](#projen-python-ipackageprovider)</code> | Provide a list of packages that can be dynamically updated.<br/>__*Optional*__
+
+
+
+## struct SetupPyOptions 🔹 <a id="projen-python-setuppyoptions"></a>
+
+
+Fields to pass in the setup() function of setup.py.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
+**authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | A short project description.<br/>__*Optional*__
+**homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | The project license.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Name of the package.<br/>__*Optional*__
+**packages**?🔹 | <code>Array<string></code> | List of submodules to be packaged.<br/>__*Optional*__
+**version**?🔹 | <code>string</code> | Manually specify package version.<br/>__*Optional*__
+
+
+
+## struct VenvOptions 🔹 <a id="projen-python-venvoptions"></a>
+
+
+Options for venv.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**envdir**?🔹 | <code>string</code> | Name of directory to store the environment in.<br/>__*Default*__: ".env"
 
 
 
