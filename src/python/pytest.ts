@@ -17,12 +17,17 @@ export interface PytestOptions {
    * @default 'tests'
    */
   readonly testdir?: string;
+
+  /**
+   * Stop the testing process after the first N failures
+   */
+  readonly maxFailures?: number;
 }
 
 export class Pytest extends Component {
   public readonly testTask: Task;
 
-  constructor(project: PythonProject, options: PytestOptions) {
+  constructor(project: PythonProject, options: PytestOptions = {}) {
     super(project);
 
     const version = options.version ?? '6.2.1';
@@ -32,7 +37,10 @@ export class Pytest extends Component {
     this.testTask = project.addTask('test', {
       description: 'Runs tests',
       category: TaskCategory.TEST,
-      exec: 'pytest',
+      exec: [
+        'pytest',
+        ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
+      ].join(' '),
     });
 
     new SampleDir(project, 'tests', {

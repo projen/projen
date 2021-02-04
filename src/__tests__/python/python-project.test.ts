@@ -36,6 +36,16 @@ test('no pytest', () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
+test('pytest maxfailures', () => {
+  const p = new TestPythonProject({
+    pytestOptions: {
+      maxFailures: 3,
+    },
+  });
+
+  expect(synthSnapshot(p)['.projen/tasks.json'].tasks.test.steps[0].exec).toContain('--maxfail=3');
+});
+
 class TestPythonProject extends PythonProject {
   constructor(options: Partial<PythonProjectOptions> = { }) {
     super({

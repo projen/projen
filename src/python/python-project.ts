@@ -232,7 +232,7 @@ export class PythonProject extends Project {
     }
 
     if (options.pytest ?? true) {
-      this.pytest = new Pytest(this, {});
+      this.pytest = new Pytest(this, options.pytestOptions);
     }
 
     if (options.sample ?? true) {

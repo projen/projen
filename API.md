@@ -5087,11 +5087,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pytest(project: PythonProject, options: PytestOptions)
+new python.Pytest(project: PythonProject, options?: PytestOptions)
 ```
 
 * **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
 * **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
+  * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
   * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
   * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
 
@@ -9211,6 +9212,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**maxFailures**?🔹 | <code>number</code> | Stop the testing process after the first N failures.<br/>__*Optional*__
 **testdir**?🔹 | <code>string</code> | Directory with tests.<br/>__*Default*__: 'tests'
 **version**?🔹 | <code>string</code> | Pytest version.<br/>__*Default*__: "6.2.1"
 
