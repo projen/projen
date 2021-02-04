@@ -58,7 +58,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     new PoetryPyproject(project, {
       name: project.name,
       version: options.version,
-      description: options.description,
+      description: options.description ?? '',
       license: options.license,
       authors: [`${options.authorName} <${options.authorEmail}>`],
       homepage: options.homepage,
