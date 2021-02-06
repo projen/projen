@@ -16,6 +16,7 @@ async function main() {
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
+  ya.strictCommands();
   ya.wrap(yargs.terminalWidth());
   ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
   ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
