@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.3](https://github.com/projen/projen/compare/v0.16.2...v0.16.3) (2021-02-07)
+
+
+### Bug Fixes
+
+* **cli:** error when the given task doesn't exist ([#528](https://github.com/projen/projen/issues/528)) ([8a5e4d8](https://github.com/projen/projen/commit/8a5e4d890b38a65eab0274dd64d3d692b76d33eb)), closes [#484](https://github.com/projen/projen/issues/484)
+
 ### [0.16.2](https://github.com/projen/projen/compare/v0.16.1...v0.16.2) (2021-02-04)
 
 
