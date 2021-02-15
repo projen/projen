@@ -197,10 +197,11 @@ export class TypeScriptProject extends NodeProject {
         category: TaskCategory.RELEASE,
       });
 
-      this.packageTask.exec('rm -fr dist');
-      this.packageTask.exec('mkdir -p dist/js');
+      this.addDevDeps('shx');
+      this.packageTask.exec('shx rm -fr dist');
+      this.packageTask.exec('shx mkdir -p dist/js');
       this.packageTask.exec(`${this.package.packageManager} pack`);
-      this.packageTask.exec('mv *.tgz dist/js/');
+      this.packageTask.exec('shx mv *.tgz dist/js/');
 
       this.buildTask.spawn(this.packageTask);
     }
@@ -327,7 +328,7 @@ export class TypeScriptProject extends NodeProject {
       if (!compileBeforeTest) {
         // make sure to delete "lib" *before* running tests to ensure that
         // test code does not take a dependency on "lib" and instead on "src".
-        this.testTask.prependExec(`rm -fr ${this.libdir}/`);
+        this.testTask.prependExec(`shx rm -fr ${this.libdir}/`);
       }
 
       // compile test code
