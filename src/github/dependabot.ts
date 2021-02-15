@@ -175,8 +175,10 @@ export class Dependabot extends Component {
         ],
         actions: {
           merge: {
-            method: 'merge',
+            method: 'squash',
             commit_message: 'title+body',
+            strict: 'smart',
+            strict_method: 'merge',
           },
         },
       });
