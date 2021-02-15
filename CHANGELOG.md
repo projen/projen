@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.5](https://github.com/projen/projen/compare/v0.16.3...v0.16.5) (2021-02-15)
+
+
+### Bug Fixes
+
+* dependabot auto-merge is not squash ([#539](https://github.com/projen/projen/issues/539)) ([33debca](https://github.com/projen/projen/commit/33debcae23a52cfe081b1b2a632872341552b5ac))
+
+### [0.16.4](https://github.com/projen/projen/compare/v0.16.3...v0.16.4) (2021-02-15)
+
 ### [0.16.3](https://github.com/projen/projen/compare/v0.16.2...v0.16.3) (2021-02-07)
 
 
