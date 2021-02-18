@@ -903,13 +903,26 @@ export class NodeProject extends Project {
       run: `git commit -am "${options.commit}"`,
     }];
 
-    const pushChanges = !options.pushBranch ? [] : [{
-      name: 'Push changes',
-      run: 'git push --follow-tags origin $BRANCH',
-      env: {
-        BRANCH: options.pushBranch,
+    const pushChanges = !options.pushBranch ? [] : [
+      {
+        name: 'Push commits',
+        run: 'git push origin $BRANCH',
+        env: {
+          BRANCH: options.pushBranch,
+        },
       },
-    }];
+
+      // push tags only after we've managed to push our commits in order to
+      // avoid tags being pushed but commits being rejected due to new commits
+      // see https://github.com/projen/projen/issues/553
+      {
+        name: 'Push tags',
+        run: 'git push --follow-tags origin $BRANCH',
+        env: {
+          BRANCH: options.pushBranch,
+        },
+      },
+    ];
 
     const job: any = {
       'runs-on': 'ubuntu-latest',
