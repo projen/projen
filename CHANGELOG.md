@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.7](https://github.com/projen/projen/compare/v0.16.5...v0.16.7) (2021-02-18)
+
+
+### Bug Fixes
+
+* **node:** tags may be pushed without a bump commit ([#554](https://github.com/projen/projen/issues/554)) ([3826217](https://github.com/projen/projen/commit/3826217d89f68d3d147ea038e4953f8a010fea4e)), closes [#553](https://github.com/projen/projen/issues/553)
+
 ### [0.16.5](https://github.com/projen/projen/compare/v0.16.3...v0.16.5) (2021-02-15)
 
 
