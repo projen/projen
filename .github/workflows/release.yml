@@ -40,7 +40,11 @@ jobs:
           directory: coverage
       - name: Anti-tamper check
         run: git diff --exit-code
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: ${{ github.ref }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: ${{ github.ref }}

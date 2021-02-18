@@ -366,7 +366,11 @@ jobs:
         run: npx projen build
       - name: Commit changes
         run: 'git commit -am \\"chore: update generated files\\"'
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: \${{ steps.query_pull_request.outputs.branch }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: \${{ steps.query_pull_request.outputs.branch }}
@@ -414,7 +418,11 @@ jobs:
         run: npx projen build
       - name: Anti-tamper check
         run: git diff --exit-code
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: \${{ github.ref }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: \${{ github.ref }}
@@ -4276,7 +4284,11 @@ jobs:
         run: npx projen build
       - name: Commit changes
         run: 'git commit -am \\"chore: update generated files\\"'
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: \${{ steps.query_pull_request.outputs.branch }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: \${{ steps.query_pull_request.outputs.branch }}
@@ -4320,7 +4332,11 @@ jobs:
         run: npx projen build
       - name: Anti-tamper check
         run: git diff --exit-code
-      - name: Push changes
+      - name: Push commits
+        run: git push origin $BRANCH
+        env:
+          BRANCH: \${{ github.ref }}
+      - name: Push tags
         run: git push --follow-tags origin $BRANCH
         env:
           BRANCH: \${{ github.ref }}
