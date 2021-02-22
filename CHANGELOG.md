@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.11](https://github.com/projen/projen/compare/v0.16.10...v0.16.11) (2021-02-22)
+
+
+### Bug Fixes
+
+* **eslint:** plugin versions cannot be managed by package manager ([a0e2d6c](https://github.com/projen/projen/commit/a0e2d6c5e92b8912fb9ec1b6af21b0907261a48d))
+* **typescript:** typescript version cannot be managed by package manager ([a8bef4c](https://github.com/projen/projen/commit/a8bef4c91fdb8e6c9268d74a90000da21492ce72))
+* **version:** relax standard-version version req to `^9` ([ffef447](https://github.com/projen/projen/commit/ffef4473302319caa56cb7c39cd8c5a9f9dcfb55))
+
 ### [0.16.10](https://github.com/projen/projen/compare/v0.16.9...v0.16.10) (2021-02-22)
 
 ### [0.16.9](https://github.com/projen/projen/compare/v0.16.8...v0.16.9) (2021-02-19)
