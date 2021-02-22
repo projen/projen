@@ -58,7 +58,7 @@
     "jsii-pacmak": "^1.18.0",
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
-    "standard-version": "^9.0.0",
+    "standard-version": "^9",
     "typescript": "^3.9.5"
   },
   "dependencies": {
