@@ -625,12 +625,10 @@ junit.xml
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "aws-sdk",
@@ -689,7 +687,7 @@ junit.xml
       Object {
         "name": "standard-version",
         "type": "build",
-        "version": "^9.0.0",
+        "version": "^9",
       },
       Object {
         "name": "ts-jest",
@@ -698,7 +696,6 @@ junit.xml
       Object {
         "name": "typescript",
         "type": "build",
-        "version": "^3.9.5",
       },
       Object {
         "name": "@aws-cdk/aws-apigateway",
@@ -1385,8 +1382,8 @@ project.synth();
       "@aws-cdk/assert": "^1.75.0",
       "@types/jest": "*",
       "@types/node": "^14.0.0",
-      "@typescript-eslint/eslint-plugin": "^4.3.0",
-      "@typescript-eslint/parser": "^4.3.0",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
       "aws-sdk": "*",
       "eslint": "*",
       "eslint-import-resolver-node": "*",
@@ -1400,9 +1397,9 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "projen": "^999.999.999",
-      "standard-version": "^9.0.0",
+      "standard-version": "^9",
       "ts-jest": "*",
-      "typescript": "^3.9.5",
+      "typescript": "*",
     },
     "engines": Object {
       "node": ">= 14.0.0",
@@ -1931,12 +1928,10 @@ junit.xml
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "constructs",
@@ -1999,7 +1994,7 @@ junit.xml
       Object {
         "name": "standard-version",
         "type": "build",
-        "version": "^9.0.0",
+        "version": "^9",
       },
       Object {
         "name": "ts-jest",
@@ -2008,12 +2003,6 @@ junit.xml
       Object {
         "name": "typescript",
         "type": "build",
-        "version": "^3.9.5",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-        "version": "~3.9.5",
       },
       Object {
         "name": "fast-json-patch",
@@ -2607,13 +2596,6 @@ exports.fixup = project => {
   // jsii-release is declared at the root level, we don't need it here.
   project.deps.removeDependency('jsii-release');
 
-  // typescript is not semantically versionned and should remain on the same minor.
-  // https://github.com/microsoft/TypeScript/issues/14116
-  // TODO add this to projen.
-  const tsc = project.deps.getDependency('typescript');
-  const tscVer = tsc.version.replace('^', '~');
-  project.deps.addDependency(\`typescript@\${tscVer}\`, tsc.type);
-
   delete project.manifest.scripts.bump;
   delete project.manifest.scripts.release;
 };
@@ -2704,8 +2686,8 @@ project.synth();
       "@types/json-stable-stringify": "*",
       "@types/node": "^10.17.0",
       "@types/yaml": "*",
-      "@typescript-eslint/eslint-plugin": "^4.3.0",
-      "@typescript-eslint/parser": "^4.3.0",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
       "constructs": "*",
       "eslint": "*",
       "eslint-import-resolver-node": "*",
@@ -2720,9 +2702,9 @@ project.synth();
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "projen": "^999.999.999",
-      "standard-version": "^9.0.0",
+      "standard-version": "^9",
       "ts-jest": "*",
-      "typescript": "~3.9.5",
+      "typescript": "*",
     },
     "engines": Object {
       "node": ">= 10.17.0",
@@ -3234,12 +3216,10 @@ junit.xml
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
-        "version": "^4.3.0",
       },
       Object {
         "name": "eslint",
@@ -3278,7 +3258,7 @@ junit.xml
       Object {
         "name": "standard-version",
         "type": "build",
-        "version": "^9.0.0",
+        "version": "^9",
       },
       Object {
         "name": "ts-jest",
@@ -3287,12 +3267,6 @@ junit.xml
       Object {
         "name": "typescript",
         "type": "build",
-        "version": "^3.9.5",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-        "version": "~3.9.5",
       },
       Object {
         "name": "@types/node",
@@ -3878,13 +3852,6 @@ exports.fixup = project => {
   // jsii-release is declared at the root level, we don't need it here.
   project.deps.removeDependency('jsii-release');
 
-  // typescript is not semantically versionned and should remain on the same minor.
-  // https://github.com/microsoft/TypeScript/issues/14116
-  // TODO add this to projen.
-  const tsc = project.deps.getDependency('typescript');
-  const tscVer = tsc.version.replace('^', '~');
-  project.deps.addDependency(\`typescript@\${tscVer}\`, tsc.type);
-
   delete project.manifest.scripts.bump;
   delete project.manifest.scripts.release;
 };
@@ -3980,8 +3947,8 @@ project.synth();
       "@types/jest": "*",
       "@types/json-schema": "*",
       "@types/node": "^10.17.0",
-      "@typescript-eslint/eslint-plugin": "^4.3.0",
-      "@typescript-eslint/parser": "^4.3.0",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
       "eslint": "*",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
@@ -3990,9 +3957,9 @@ project.synth();
       "jest-junit": "^12",
       "json-schema": "*",
       "projen": "^999.999.999",
-      "standard-version": "^9.0.0",
+      "standard-version": "^9",
       "ts-jest": "*",
-      "typescript": "~3.9.5",
+      "typescript": "*",
     },
     "engines": Object {
       "node": ">= 10.17.0",
@@ -4457,7 +4424,7 @@ junit.xml
       Object {
         "name": "standard-version",
         "type": "build",
-        "version": "^9.0.0",
+        "version": "^9",
       },
       Object {
         "name": "esbuild",
@@ -4839,7 +4806,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^12",
       "projen": "^999.999.999",
-      "standard-version": "^9.0.0",
+      "standard-version": "^9",
     },
     "jest": Object {
       "clearMocks": true,

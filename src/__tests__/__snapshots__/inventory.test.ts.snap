@@ -1116,7 +1116,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -6939,7 +6939,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -10401,7 +10401,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -11497,7 +11497,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -12593,7 +12593,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,

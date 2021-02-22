@@ -110,7 +110,7 @@ const project = new AwsCdkTypeScriptApp({
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
-  // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
 
 project.synth();
@@ -705,7 +705,7 @@ const project = new web.NextJsTypeScriptProject({
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
-  // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
 
 project.synth();
@@ -1072,7 +1072,7 @@ const project = new web.ReactTypeScriptProject({
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
-  // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
 
 project.synth();
@@ -1181,7 +1181,7 @@ const project = new TypeScriptProject({
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
-  // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
 
 project.synth();
@@ -1290,7 +1290,7 @@ const project = new TypeScriptAppProject({
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
-  // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
 
 project.synth();

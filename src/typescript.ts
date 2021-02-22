@@ -52,7 +52,11 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * TypeScript version to use.
-   * @default "^3.9.5"
+   *
+   * NOTE: Typescript is not semantically versioned and should remain on the
+   * same minor, so we recommend using a `~` dependency (e.g. `~1.2.3`).
+   *
+   * @default "latest"
    */
   readonly typescriptVersion?: string;
 
@@ -357,8 +361,10 @@ export class TypeScriptProject extends NodeProject {
       });
     }
 
+    const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
+
     this.addDevDeps(
-      `typescript@${options.typescriptVersion ?? '^3.9.5'}`,
+      `typescript${tsver}`,
       `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
     );
 
