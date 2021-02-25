@@ -1616,6 +1616,17 @@ Array [
         "type": "EslintOptions",
       },
       Object {
+        "docs": "Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -2740,6 +2751,17 @@ Array [
         ],
         "switch": "eslint-options",
         "type": "EslintOptions",
+      },
+      Object {
+        "docs": "Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
       },
       Object {
         "docs": "Additional entries to .gitignore.",
@@ -4168,6 +4190,17 @@ Array [
         ],
         "switch": "eslint-options",
         "type": "EslintOptions",
+      },
+      Object {
+        "docs": "Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
       },
       Object {
         "docs": "Additional entries to .gitignore.",

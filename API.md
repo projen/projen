@@ -408,6 +408,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. __*Optional*__
   * **publishToGo** (<code>[JsiiGoTarget](#projen-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -784,6 +785,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. __*Optional*__
   * **publishToGo** (<code>[JsiiGoTarget](#projen-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -898,6 +900,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. __*Optional*__
   * **publishToGo** (<code>[JsiiGoTarget](#projen-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -1021,6 +1024,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. __*Optional*__
   * **publishToGo** (<code>[JsiiGoTarget](#projen-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -1908,6 +1912,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **dotnet** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **eslint** (<code>boolean</code>)  Install eslint. __*Default*__: true
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
+  * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. __*Optional*__
   * **publishToGo** (<code>[JsiiGoTarget](#projen-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[JsiiJavaTarget](#projen-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -6682,6 +6687,7 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.<br/>__*Optional*__
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -6917,6 +6923,7 @@ Name | Type | Description
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?⚠️ | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**excludeTypescript**?⚠️ | <code>Array<string></code> | Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.<br/>__*Optional*__
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -7024,6 +7031,7 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.<br/>__*Optional*__
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -7130,6 +7138,7 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.<br/>__*Optional*__
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
@@ -7843,6 +7852,7 @@ Name | Type | Description
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **eslint**?🔹 | <code>boolean</code> | Install eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript.<br/>__*Optional*__
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__

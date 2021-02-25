@@ -103,6 +103,15 @@ export interface JsiiProjectOptions extends NodeProjectOptions {
    * @default ".compatignore"
    */
   readonly compatIgnore?: string;
+
+  /**
+   * Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript
+   *
+   * By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
+   * This can be problematic for example when the package's build or test procedure generates .ts files
+   * that cannot be compiled with jsii's compiler settings.
+   */
+  readonly excludeTypescript?: string[];
 }
 
 export enum Stability {
@@ -197,16 +206,18 @@ export class JsiiProject extends TypeScriptProject {
 
     const targets: Record<string, any> = { };
 
-    this.addFields({
-      jsii: {
-        outdir: 'dist',
-        targets,
-        tsc: {
-          outDir: libdir,
-          rootDir: srcdir,
-        },
+    let jsii: any = {
+      outdir: 'dist',
+      targets,
+      tsc: {
+        outDir: libdir,
+        rootDir: srcdir,
       },
-    });
+    };
+    if (options.excludeTypescript) {
+      jsii.excludeTypescript = options.excludeTypescript;
+    }
+    this.addFields({ jsii });
 
     this.publisher?.publishToNpm({
       distTag: this.package.npmDistTag,

@@ -144,6 +144,7 @@ const project = new AwsCdkConstructLibrary({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
@@ -256,6 +257,7 @@ const project = new ConstructLibraryCdk8s({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
@@ -407,6 +409,7 @@ const project = new JsiiProject({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
