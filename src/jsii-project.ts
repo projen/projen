@@ -82,6 +82,12 @@ export interface JsiiProjectOptions extends NodeProjectOptions {
   readonly eslintOptions?: EslintOptions;
 
   /**
+   * Generate one-time sample in `src/` and `test/` if there are no files there.
+   * @default true
+   */
+  readonly sampleCode?: boolean;
+
+  /**
    * Automatically generate API.md from jsii
    * @default true
    */
@@ -105,7 +111,7 @@ export interface JsiiProjectOptions extends NodeProjectOptions {
   readonly compatIgnore?: string;
 
   /**
-   * Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript
+   * Accepts a list of glob patterns. Files matching any of those patterns will be excluded from the TypeScript compiler input.
    *
    * By default, jsii will include all *.ts files (except .d.ts files) in the TypeScript compiler input.
    * This can be problematic for example when the package's build or test procedure generates .ts files
@@ -206,7 +212,7 @@ export class JsiiProject extends TypeScriptProject {
 
     const targets: Record<string, any> = { };
 
-    let jsii: any = {
+    const jsii: any = {
       outdir: 'dist',
       targets,
       tsc: {
