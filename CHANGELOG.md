@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.17](https://github.com/projen/projen/compare/v0.16.16...v0.16.17) (2021-02-25)
+
+
+### Features
+
+* **jsii:** add excludeTypescript config option ([#571](https://github.com/projen/projen/issues/571)) ([2e2d123](https://github.com/projen/projen/commit/2e2d123ecf53dbcf2efce9d76e8de297cd847786))
+
 ### [0.16.16](https://github.com/projen/projen/compare/v0.16.15...v0.16.16) (2021-02-25)
 
 ### [0.16.15](https://github.com/projen/projen/compare/v0.16.14...v0.16.15) (2021-02-24)
