@@ -144,11 +144,13 @@ const project = new AwsCdkConstructLibrary({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -256,11 +258,13 @@ const project = new ConstructLibraryCdk8s({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -407,11 +411,13 @@ const project = new JsiiProject({
   // docgen: true,                                                             /* Automatically generate API.md from jsii. */
   // eslint: true,                                                             /* Install eslint. */
   // eslintOptions: undefined,                                                 /* Eslint options. */
+  // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */

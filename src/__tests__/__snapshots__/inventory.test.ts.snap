@@ -1616,6 +1616,17 @@ Array [
         "type": "EslintOptions",
       },
       Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -2275,6 +2286,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",
@@ -2742,6 +2765,17 @@ Array [
         "type": "EslintOptions",
       },
       Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -3401,6 +3435,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",
@@ -4170,6 +4216,17 @@ Array [
         "type": "EslintOptions",
       },
       Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -4829,6 +4886,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",

@@ -127,11 +127,13 @@ describe('publish to go', () => {
         githubTokenSecret: 'CUSTOM_SECRET',
       },
       defaultReleaseBranch: 'master',
+      excludeTypescript: ['src/**/test/*.ts', 'src/**/__tests__/*.ts'],
     });
 
     const output = synthSnapshot(project);
     expect(output['package.json'].jsii.targets.go).toStrictEqual({ moduleName: 'github.com/foo/bar' });
     expect(output['.github/workflows/release.yml']).toMatchSnapshot();
+    expect(output['package.json'].jsii.excludeTypescript).toStrictEqual(['src/**/test/*.ts', 'src/**/__tests__/*.ts']);
   });
 });
 
