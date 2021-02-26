@@ -1,4 +1,5 @@
 import { spawnSync } from 'child_process';
+import { EOL } from 'os';
 import { basename, join } from 'path';
 import { mkdirpSync } from 'fs-extra';
 import { Project } from '../..';
@@ -11,11 +12,11 @@ test('minimal case (just a shell command)', () => {
 
   // WHEN
   p.addTask('test', {
-    exec: 'echo "hello, tasks!"',
+    exec: 'echo hello_tasks!',
   });
 
   // THEN
-  expect(executeTask(p, 'test')).toEqual(['hello, tasks!']);
+  expect(executeTask(p, 'test')).toEqual(['hello_tasks!']);
 });
 
 test('fails if the step fails', () => {
@@ -72,7 +73,7 @@ describe('condition', () =>{
 
     // WHEN
     const t = p.addTask('foo', {
-      condition: 'echo "evaluating condition"',
+      condition: 'echo evaluating_condition',
     });
 
     t.exec('echo step1');
@@ -80,7 +81,7 @@ describe('condition', () =>{
 
     // THEN
     expect(executeTask(p, 'foo')).toEqual([
-      'evaluating condition',
+      'evaluating_condition',
       'step1',
       'step2',
     ]);
@@ -92,7 +93,7 @@ describe('condition', () =>{
 
     // WHEN
     const t = p.addTask('foo', {
-      condition: 'echo "failing condition" && false',
+      condition: 'echo failing_condition && false',
     });
 
     t.exec('echo step1');
@@ -100,7 +101,7 @@ describe('condition', () =>{
 
     // THEN
     expect(executeTask(p, 'foo')).toEqual([
-      'failing condition',
+      'failing_condition',
     ]);
   });
 });
@@ -191,12 +192,12 @@ function executeTask(p: Project, taskName: string) {
   const args = [
     require.resolve('../../cli'),
     taskName,
-  ];
+  ].map(x => `"${x}"`);
 
-  const result = spawnSync(process.execPath, args, { cwd: p.outdir });
+  const result = spawnSync(`"${process.execPath}"`, args, { cwd: p.outdir, shell: true, env: { ...process.env } });
   if (result.status !== 0) {
     throw new Error(`non-zero exit code: ${result.stderr.toString('utf-8')}`);
   }
 
-  return result.stdout.toString('utf-8').trim().split('\n');
+  return result.stdout.toString('utf-8').trim().split(EOL);
 }

@@ -11,5 +11,5 @@ module.exports = {
                 const dir = path.dirname(path.dirname(snap)).replace(srctest, libtest);
                 return path.join(dir, filename);
             },
-  testPathForConsistencyCheck: "some/__tests__/example.test.js"
+  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')
 };
