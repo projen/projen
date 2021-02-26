@@ -5,6 +5,7 @@ const common = require('./cdk8s.common');
 const project = new TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
+  defaultReleaseBranch: 'master',
   bin: {
     cdk8s: 'bin/cdk8s',
   },

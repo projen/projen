@@ -102,6 +102,8 @@ any number of jsii target languages.
     javaPackage: 'com.acme.hello',
     mavenArtifactId: 'hello-jsii',
     mavenGroupId: 'com.acme.hello'
+    serverId: 'github',
+    repositoryUrl: 'https://maven.pkg.github.com/example/hello-jsii',
   },
   python: {
     distName: 'acme.hello-jsii',
@@ -126,7 +128,7 @@ Two workflows will be created as Github Actions:
 
 * The Build workflow - controlled by the `buildWorkflow` field. On a 'pull_request' or 'workflow_dispatch' the library
 will be built and checked for anti-tamper (ensure no manual changes to generated files).
-* The Release workflow - controlled by the `releaseWorkflow` field. On a push to `master` (overridden at
+* The Release workflow - controlled by the `releaseWorkflow` field. On a push to `main` (overridden at
  `props.defaultReleaseBranch`) the library is built, anti-tampered, version bumped with a commit, pushed back to git, 
  and then published to the configured artifact repositories (e.g. npm, pypi).
 

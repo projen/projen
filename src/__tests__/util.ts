@@ -29,7 +29,7 @@ export class TestProject extends Project {
   }
 }
 
-export function execProjenCLI(workdir: string, args: string[]) {
+export function execProjenCLI(workdir: string, args: string[] = []) {
   const command = [
     process.execPath,
     PROJEN_CLI,

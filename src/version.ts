@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
@@ -42,12 +43,16 @@ export class Version extends Component {
     release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
 
     project.addDevDeps(
-      'standard-version@^9.0.0',
+      'standard-version@^9',
     );
 
     project.npmignore?.exclude('/.versionrc.json');
     project.gitignore.include(VERSION_FILE);
 
+    let projenCommand = project.package.projenCommand;
+    if (project.parent) {
+      projenCommand = `cd ${path.relative(project.outdir, project.root.outdir)} && ${project.package.projenCommand}`;
+    }
     new JsonFile(project, '.versionrc.json', {
       obj: {
         packageFiles: [{ filename: VERSION_FILE, type: 'json' }],
@@ -55,7 +60,7 @@ export class Version extends Component {
         commitAll: true,
         scripts: {
           // run projen after release to update package.json
-          postbump: `${project.package.projenCommand} && git add .`,
+          postbump: `${projenCommand} && git add .`,
         },
       },
     });

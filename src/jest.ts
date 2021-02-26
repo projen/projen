@@ -633,8 +633,6 @@ export class Jest {
     project.npmignore?.exclude(coverageDirectoryPath);
     project.gitignore.exclude(coverageDirectoryPath);
 
-    project.addTip('The VSCode jest extension watches in the background and shows inline test results');
-
     if (options.coverageText ?? true) {
       this.coverageReporters.push('text');
     }

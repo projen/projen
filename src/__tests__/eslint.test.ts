@@ -8,6 +8,7 @@ test('devdirs', () => {
     outdir: mkdtemp(),
     name: 'test',
     logging: { level: LogLevel.OFF },
+    defaultReleaseBranch: 'master',
   });
 
   // WHEN

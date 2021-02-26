@@ -1,21 +1,15 @@
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
 import * as logging from '../logging';
-import { mkdtemp, synthSnapshot } from './util';
+import { NodePackage, NpmAccess } from '../node-package';
+import { Project } from '../project';
+import { mkdtemp, synthSnapshot, TestProject } from './util';
 
 logging.disable();
 
 test('license file is added by default', () => {
   // WHEN
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    name: 'test-node-project',
-    mergify: false,
-    projenDevDependency: false,
-    logging: {
-      level: LogLevel.OFF,
-    },
-  });
+  const project = new TestNodeProject();
 
   // THEN
   expect(synthSnapshot(project).LICENSE).toContain('Apache License');
@@ -23,15 +17,8 @@ test('license file is added by default', () => {
 
 test('license file is not added if licensed is false', () => {
   // WHEN
-  const project = new NodeProject({
-    outdir: mkdtemp(),
-    name: 'test-node-project',
+  const project = new TestNodeProject({
     licensed: false,
-    mergify: false,
-    projenDevDependency: false,
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
 
   // THEN
@@ -181,18 +168,142 @@ describe('deps', () => {
   });
 });
 
-function packageJson(project: NodeProject) {
+describe('npm publishing options', () => {
+  test('defaults', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'my-package',
+    });
+
+    // THEN
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(npm.npmDistTag).toStrictEqual('latest');
+    expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
+
+    // since these are all defaults, publishConfig is not defined.
+    expect(synthSnapshot(project)['package.json'].publishConfig).toBeUndefined();
+  });
+
+  test('scoped packages default to RESTRICTED access', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+    });
+
+    // THEN
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.RESTRICTED);
+
+    // since these are all defaults, publishConfig is not defined.
+    expect(packageJson(project).publishConfig).toBeUndefined();
+  });
+
+  test('non-scoped package cannot be RESTRICTED', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => new NodePackage(project, {
+      packageName: 'my-package',
+      npmAccess: NpmAccess.RESTRICTED,
+    })).toThrow(/"npmAccess" cannot be RESTRICTED for non-scoped npm package/);
+  });
+
+  test('custom settings', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+      npmDistTag: 'next',
+      npmRegistryUrl: 'https://foo.bar',
+      npmAccess: NpmAccess.PUBLIC,
+    });
+
+    // THEN
+    expect(npm.npmDistTag).toStrictEqual('next');
+    expect(npm.npmRegistry).toStrictEqual('foo.bar');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
+    expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      access: 'public',
+      registry: 'https://foo.bar/',
+      tag: 'next',
+    });
+  });
+
+  test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      packageName: 'scoped@my-package',
+      npmRegistry: 'foo.bar.com',
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual('foo.bar.com');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar.com/');
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry: 'https://foo.bar.com/',
+    });
+  });
+});
+
+test('extend github release workflow', () => {
+  const project = new TestNodeProject();
+
+  project.releaseWorkflow?.addJobs({
+    publish_docker_hub: {
+      'runs-on': 'ubuntu-latest',
+      'env': {
+        CI: 'true',
+      },
+      'steps': [
+        {
+          name: 'Check out the repo',
+          uses: 'actions/checkout@v2',
+        },
+        {
+          name: 'Push to Docker Hub',
+          uses: 'docker/build-push-action@v1',
+          with: {
+            username: '${{ secrets.DOCKER_USERNAME }}',
+            password: '${{ secrets.DOCKER_PASSWORD }}',
+            repository: 'projen/projen-docker',
+            tag_with_ref: true,
+          },
+        },
+      ],
+    },
+  });
+
+  const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+  expect(workflow).toContain('publish_docker_hub:\n    runs-on: ubuntu-latest\n');
+  expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
+});
+
+function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }
 
 class TestNodeProject extends NodeProject {
-  constructor(options: Omit<NodeProjectOptions, 'name'> = {}) {
+  constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
       outdir: mkdtemp(),
       name: 'test-node-project',
       logging: {
         level: LogLevel.OFF,
       },
+      defaultReleaseBranch: 'master',
       ...options,
     });
   }

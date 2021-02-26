@@ -45,6 +45,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -252,10 +264,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -477,6 +488,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -607,11 +641,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -642,15 +690,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -892,7 +952,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -941,7 +1001,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -1056,7 +1116,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -1136,6 +1196,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "default": "$GIT_USER_NAME",
@@ -1403,10 +1475,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -1533,6 +1604,29 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
+      },
+      Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -1589,6 +1683,29 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -1709,11 +1826,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -1744,15 +1875,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -1923,6 +2066,18 @@ Array [
       },
       Object {
         "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
+      },
+      Object {
+        "default": "- no publishing",
         "docs": "Publish to maven.",
         "name": "publishToMaven",
         "optional": true,
@@ -2029,7 +2184,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -2078,7 +2233,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -2131,6 +2286,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",
@@ -2224,6 +2391,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "default": "$GIT_USER_NAME",
@@ -2445,10 +2624,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -2575,6 +2753,29 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
+      },
+      Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -2631,6 +2832,29 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -2751,11 +2975,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -2786,15 +3024,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -2965,6 +3215,18 @@ Array [
       },
       Object {
         "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
+      },
+      Object {
+        "default": "- no publishing",
         "docs": "Publish to maven.",
         "name": "publishToMaven",
         "optional": true,
@@ -3071,7 +3333,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -3120,7 +3382,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -3173,6 +3435,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",
@@ -3349,6 +3623,17 @@ Array [
         "type": "string",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "default": "true",
         "docs": "Include junit tests.",
         "name": "junit",
@@ -3455,7 +3740,7 @@ Array [
         "type": "ProjectType",
       },
       Object {
-        "default": "false",
+        "default": "true",
         "docs": "Use projenrc in java.",
         "name": "projenrcJava",
         "optional": true,
@@ -3476,7 +3761,7 @@ Array [
           "projenrcJavaOptions",
         ],
         "switch": "projenrc-java-options",
-        "type": "ProjenrcOptions",
+        "type": "ProjenrcCommonOptions",
       },
       Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -3580,6 +3865,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "default": "$GIT_USER_NAME",
@@ -3778,10 +4075,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -3908,6 +4204,29 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- opinionated default options",
+        "docs": "Eslint options.",
+        "name": "eslintOptions",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "eslintOptions",
+        ],
+        "switch": "eslint-options",
+        "type": "EslintOptions",
+      },
+      Object {
+        "docs": "Accepts a list of glob patterns.",
+        "name": "excludeTypescript",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "excludeTypescript",
+        ],
+        "switch": "exclude-typescript",
+        "type": "unknown",
+      },
+      Object {
         "docs": "Additional entries to .gitignore.",
         "name": "gitignore",
         "optional": true,
@@ -3964,6 +4283,29 @@ Array [
         ],
         "switch": "jest-options",
         "type": "JestOptions",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -4084,11 +4426,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -4119,15 +4475,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -4298,6 +4666,18 @@ Array [
       },
       Object {
         "default": "- no publishing",
+        "docs": "Publish Go bindings to a git repository.",
+        "name": "publishToGo",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "publishToGo",
+        ],
+        "switch": "publish-to-go",
+        "type": "JsiiGoTarget",
+      },
+      Object {
+        "default": "- no publishing",
         "docs": "Publish to maven.",
         "name": "publishToMaven",
         "optional": true,
@@ -4404,7 +4784,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -4453,7 +4833,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -4506,6 +4886,18 @@ Array [
         ],
         "switch": "rootdir",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Generate one-time sample in \`src/\` and \`test/\` if there are no files there.",
+        "name": "sampleCode",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "sampleCode",
+        ],
+        "switch": "sample-code",
+        "type": "boolean",
       },
       Object {
         "default": "{}",
@@ -4599,6 +4991,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "default": "\\"public\\"",
@@ -4763,10 +5167,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -4916,6 +5319,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -5034,11 +5460,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -5069,15 +5509,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -5307,7 +5759,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -5356,7 +5808,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -5518,6 +5970,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "default": "\\"public\\"",
         "docs": "Assets directory.",
         "name": "assetsdir",
@@ -5692,10 +6156,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -5917,6 +6380,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -6047,11 +6533,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -6082,15 +6582,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -6332,7 +6844,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -6381,7 +6893,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -6496,7 +7008,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -6576,6 +7088,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "docs": "Author's e-mail.",
@@ -6728,10 +7252,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -6881,6 +7404,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -6999,11 +7545,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -7034,15 +7594,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -7272,7 +7844,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -7321,7 +7893,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -7459,6 +8031,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
         "default": "{}",
         "docs": "Configure logging options such as verbosity.",
         "name": "logging",
@@ -7533,6 +8116,363 @@ Array [
     "typename": "Project",
   },
   Object {
+    "docs": "Python project.",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-python.pythonproject",
+    "fqn": "projen.python.PythonProject",
+    "moduleName": "projen",
+    "options": Array [
+      Object {
+        "default": "$GIT_USER_EMAIL",
+        "docs": "Author's e-mail.",
+        "name": "authorEmail",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "authorEmail",
+        ],
+        "switch": "author-email",
+        "type": "string",
+      },
+      Object {
+        "default": "$GIT_USER_NAME",
+        "docs": "Author's name.",
+        "name": "authorName",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "authorName",
+        ],
+        "switch": "author-name",
+        "type": "string",
+      },
+      Object {
+        "docs": "A list of PyPI trove classifiers that describe the project.",
+        "name": "classifiers",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "classifiers",
+        ],
+        "switch": "classifiers",
+        "type": "unknown",
+      },
+      Object {
+        "default": "true",
+        "docs": "Add a \`clobber\` task which resets the repo to origin.",
+        "name": "clobber",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "clobber",
+        ],
+        "switch": "clobber",
+        "type": "boolean",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of runtime dependencies for this project.",
+        "name": "deps",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "deps",
+        ],
+        "switch": "deps",
+        "type": "unknown",
+      },
+      Object {
+        "docs": "A short description of the package.",
+        "name": "description",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "description",
+        ],
+        "switch": "description",
+        "type": "string",
+      },
+      Object {
+        "default": "false",
+        "docs": "Add a VSCode development environment (used for GitHub Codespaces).",
+        "name": "devContainer",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "devContainer",
+        ],
+        "switch": "dev-container",
+        "type": "boolean",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of dev dependencies for this project.",
+        "name": "devDeps",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "devDeps",
+        ],
+        "switch": "dev-deps",
+        "type": "unknown",
+      },
+      Object {
+        "default": "false",
+        "docs": "Add a Gitpod development environment.",
+        "name": "gitpod",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitpod",
+        ],
+        "switch": "gitpod",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "A URL to the website of the project.",
+        "name": "homepage",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "homepage",
+        ],
+        "switch": "homepage",
+        "type": "string",
+      },
+      Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "docs": "License of this package as an SPDX identifier.",
+        "name": "license",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "license",
+        ],
+        "switch": "license",
+        "type": "string",
+      },
+      Object {
+        "default": "{}",
+        "docs": "Configure logging options such as verbosity.",
+        "name": "logging",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "logging",
+        ],
+        "switch": "logging",
+        "type": "LoggerOptions",
+      },
+      Object {
+        "default": "$PYTHON_MODULE_NAME",
+        "docs": "Name of the python package as used in imports and filenames.",
+        "name": "moduleName",
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "moduleName",
+        ],
+        "switch": "module-name",
+        "type": "string",
+      },
+      Object {
+        "default": "$BASEDIR",
+        "docs": "This is the name of your project.",
+        "name": "name",
+        "parent": "ProjectOptions",
+        "path": Array [
+          "name",
+        ],
+        "switch": "name",
+        "type": "string",
+      },
+      Object {
+        "default": "\\".\\"",
+        "docs": "The root directory of the project.",
+        "name": "outdir",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "outdir",
+        ],
+        "switch": "outdir",
+        "type": "string",
+      },
+      Object {
+        "docs": "The parent project, if this project is part of a bigger project.",
+        "name": "parent",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "parent",
+        ],
+        "switch": "parent",
+        "type": "Project",
+      },
+      Object {
+        "default": "true",
+        "docs": "Use pip with a requirements.txt file to track project dependencies.",
+        "name": "pip",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pip",
+        ],
+        "switch": "pip",
+        "type": "boolean",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.",
+        "name": "poetry",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "poetry",
+        ],
+        "switch": "poetry",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Additional options to set for poetry if using poetry.",
+        "name": "poetryOptions",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "poetryOptions",
+        ],
+        "switch": "poetry-options",
+        "type": "PoetryPyprojectOptionsWithoutDeps",
+      },
+      Object {
+        "default": "ProjectType.UNKNOWN",
+        "docs": "Which type of project this is (library/app).",
+        "name": "projectType",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "projectType",
+        ],
+        "switch": "project-type",
+        "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include pytest tests.",
+        "name": "pytest",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pytest",
+        ],
+        "switch": "pytest",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "pytest options.",
+        "name": "pytestOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pytestOptions",
+        ],
+        "switch": "pytest-options",
+        "type": "PytestOptions",
+      },
+      Object {
+        "default": "- { filename: 'README.md', contents: '# replace this' }",
+        "docs": "The README setup.",
+        "name": "readme",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "readme",
+        ],
+        "switch": "readme",
+        "type": "SampleReadmeProps",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include sample code and test if the relevant directories don't exist.",
+        "name": "sample",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "sample",
+        ],
+        "switch": "sample",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Additional fields to pass in the setup() function if using setuptools.",
+        "name": "setupConfig",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "setupConfig",
+        ],
+        "switch": "setup-config",
+        "type": "unknown",
+      },
+      Object {
+        "default": "- true if the project type is library",
+        "docs": "Use setuptools with a setup.py script for packaging and publishing.",
+        "name": "setuptools",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "setuptools",
+        ],
+        "switch": "setuptools",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
+        "name": "venv",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "venv",
+        ],
+        "switch": "venv",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Venv options.",
+        "name": "venvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "venvOptions",
+        ],
+        "switch": "venv-options",
+        "type": "VenvOptions",
+      },
+      Object {
+        "default": "\\"0.1.0\\"",
+        "docs": "Version of the package.",
+        "name": "version",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "version",
+        ],
+        "switch": "version",
+        "type": "string",
+      },
+    ],
+    "pjid": "python",
+    "typename": "python.PythonProject",
+  },
+  Object {
     "docs": "React project without TypeScript.",
     "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web.reactproject",
     "fqn": "projen.web.ReactProject",
@@ -7561,6 +8501,18 @@ Array [
         ],
         "switch": "antitamper",
         "type": "boolean",
+      },
+      Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
       },
       Object {
         "docs": "Author's e-mail.",
@@ -7713,10 +8665,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -7866,6 +8817,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -7984,11 +8958,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -8019,15 +9007,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -8257,7 +9257,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -8306,7 +9306,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -8456,6 +9456,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -8618,10 +9630,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -8843,6 +9854,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -8973,11 +10007,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -9008,15 +10056,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -9258,7 +10318,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -9307,7 +10367,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -9410,7 +10470,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -9492,6 +10552,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -9654,10 +10726,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -9879,6 +10950,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -10009,11 +11103,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -10044,15 +11152,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -10294,7 +11414,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -10343,7 +11463,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -10446,7 +11566,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,
@@ -10528,6 +11648,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "\\"dist\\"",
+        "docs": "A directory which will contain artifacts to be published to npm.",
+        "name": "artifactsDirectory",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "artifactsDirectory",
+        ],
+        "switch": "artifacts-directory",
+        "type": "string",
+      },
+      Object {
         "docs": "Author's e-mail.",
         "name": "authorEmail",
         "optional": true,
@@ -10690,10 +11822,9 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "\\"master\\"",
+        "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "name": "defaultReleaseBranch",
-        "optional": true,
         "parent": "NodeProjectOptions",
         "path": Array [
           "defaultReleaseBranch",
@@ -10915,6 +12046,29 @@ Array [
         "type": "JestOptions",
       },
       Object {
+        "docs": "The JSII FQN (fully qualified name) of the project class.",
+        "name": "jsiiFqn",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "jsiiFqn",
+        ],
+        "switch": "jsii-fqn",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"latest\\"",
+        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "name": "jsiiReleaseVersion",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "jsiiReleaseVersion",
+        ],
+        "switch": "jsii-release-version",
+        "type": "string",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "name": "keywords",
         "optional": true,
@@ -11045,11 +12199,25 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- for scoped packages (e.g. \`foo@bar\`), the default is
+\`NpmAccess.RESTRICTED\`, for non-scoped packages, the default is
+\`NpmAccess.PUBLIC\`.",
+        "docs": "Access level of the npm package.",
+        "name": "npmAccess",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmAccess",
+        ],
+        "switch": "npm-access",
+        "type": "NpmAccess",
+      },
+      Object {
         "default": "\\"latest\\"",
-        "docs": "The dist-tag to use when releasing to npm.",
+        "docs": "Tags can be used to provide an alias instead of version numbers.",
         "name": "npmDistTag",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmDistTag",
         ],
@@ -11080,15 +12248,27 @@ Array [
         "type": "boolean",
       },
       Object {
-        "default": "\\"registry.npmjs.org\\"",
-        "docs": "The registry url to use when releasing packages.",
+        "deprecated": true,
+        "docs": "The host name of the npm registry to publish to.",
         "name": "npmRegistry",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "NodePackageOptions",
         "path": Array [
           "npmRegistry",
         ],
         "switch": "npm-registry",
+        "type": "string",
+      },
+      Object {
+        "default": "\\"https://registry.npmjs.org\\"",
+        "docs": "The base URL of the npm package registry.",
+        "name": "npmRegistryUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmRegistryUrl",
+        ],
+        "switch": "npm-registry-url",
         "type": "string",
       },
       Object {
@@ -11330,7 +12510,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "[ \\"master\\" ]",
+        "default": "[ \\"main\\" ]",
         "docs": "Branches which trigger a release.",
         "name": "releaseBranches",
         "optional": true,
@@ -11379,7 +12559,7 @@ Array [
       },
       Object {
         "default": "- true if not a subproject",
-        "docs": "Define a GitHub workflow for releasing from \\"master\\" when new versions are bumped.",
+        "docs": "Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped.",
         "name": "releaseWorkflow",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -11482,7 +12662,7 @@ Array [
         "type": "TypescriptConfigOptions",
       },
       Object {
-        "default": "\\"^3.9.5\\"",
+        "default": "\\"latest\\"",
         "docs": "TypeScript version to use.",
         "name": "typescriptVersion",
         "optional": true,

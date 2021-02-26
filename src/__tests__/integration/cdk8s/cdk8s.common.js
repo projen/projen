@@ -36,13 +36,6 @@ exports.fixup = project => {
   // jsii-release is declared at the root level, we don't need it here.
   project.deps.removeDependency('jsii-release');
 
-  // typescript is not semantically versionned and should remain on the same minor.
-  // https://github.com/microsoft/TypeScript/issues/14116
-  // TODO add this to projen.
-  const tsc = project.deps.getDependency('typescript');
-  const tscVer = tsc.version.replace('^', '~');
-  project.deps.addDependency(`typescript@${tscVer}`, tsc.type);
-
   delete project.manifest.scripts.bump;
   delete project.manifest.scripts.release;
 };

@@ -32,12 +32,14 @@
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^4.3.0",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^4.3.0",
+      "type": "build"
+    },
+    {
+      "name": "all-contributors-cli",
       "type": "build"
     },
     {
@@ -82,10 +84,6 @@
       "type": "build"
     },
     {
-      "name": "jsii-release",
-      "type": "build"
-    },
-    {
       "name": "json-schema",
       "type": "build"
     },
@@ -95,12 +93,11 @@
     },
     {
       "name": "standard-version",
-      "version": "^9.0.0",
+      "version": "^9",
       "type": "build"
     },
     {
       "name": "typescript",
-      "version": "^3.9.5",
       "type": "build"
     },
     {

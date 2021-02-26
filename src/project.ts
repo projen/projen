@@ -9,6 +9,7 @@ import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
+import { ObjectFile } from './object-file';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -80,12 +81,24 @@ export interface ProjectOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
+
+  /**
+   * The JSII FQN (fully qualified name) of the project class.
+   * @default undefined
+   */
+  readonly jsiiFqn?: string;
 }
 
 /**
  * Base project
  */
 export class Project {
+  /**
+   * The name of the default task (the task executed when `projen` is run without arguments). Normally
+   * this task should synthesize the project files.
+   */
+  public static readonly DEFAULT_TASK = 'default';
+
   /**
    * Project name.
    */
@@ -156,6 +169,11 @@ export class Project {
    */
   public readonly logger: Logger;
 
+  /**
+   * The JSII FQN of the project type (if known).
+   */
+  public readonly jsiiFqn?: string;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -164,6 +182,9 @@ export class Project {
   constructor(options: ProjectOptions) {
     // https://github.com/aws/jsii/issues/2406
     process.stdout.write = (...args: any) => process.stderr.write.apply(process.stderr, args);
+
+    this.jsiiFqn = options.jsiiFqn;
+    delete (options as any).jsiiFqn; // remove so it's not included in projenrc
 
     this.name = options.name;
     this.parent = options.parent;
@@ -273,9 +294,10 @@ export class Project {
   /**
    * Finds a json file by name.
    * @param filePath The file path.
+   * @deprecated use `tryFindObjectFile`
    */
   public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindFile(filePath);
+    const file = this.tryFindObjectFile(filePath);
     if (!file) {
       return undefined;
     }
@@ -288,8 +310,26 @@ export class Project {
   }
 
   /**
+   * Finds an object file (like JsonFile, YamlFile, etc.) by name.
+   * @param filePath The file path.
+   */
+  public tryFindObjectFile(filePath: string): ObjectFile | undefined {
+    const file = this.tryFindFile(filePath);
+    if (!file) {
+      return undefined;
+    }
+
+    if (!(file instanceof ObjectFile)) {
+      throw new Error(`found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`);
+    }
+
+    return file;
+  }
+
+  /**
    * Prints a "tip" message during synthesis.
    * @param message The message
+   * @deprecated - use `project.logger.info(message)` to show messages during synthesis
    */
   public addTip(message: string) {
     this.tips.push(message);

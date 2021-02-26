@@ -4,7 +4,7 @@ import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
 import { MavenSample } from './maven-sample';
 import { PluginOptions, Pom, PomOptions } from './pom';
-import { Projenrc as ProjenrcJava, ProjenrcOptions as ProjenrcJavaOptions } from './projenrc';
+import { Projenrc as ProjenrcJava, ProjenrcCommonOptions } from './projenrc';
 
 /**
  * Options for `JavaProject`.
@@ -84,7 +84,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * This will install `projen` as a java depedency and will add a `synth` task which
    * will compile & execute `main()` from `src/main/java/projenrc.java`.
    *
-   * @default false
+   * @default true
    */
   readonly projenrcJava?: boolean;
 
@@ -92,7 +92,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Options related to projenrc in java.
    * @default - default options
    */
-  readonly projenrcJavaOptions?: ProjenrcJavaOptions;
+  readonly projenrcJavaOptions?: ProjenrcCommonOptions;
 }
 
 /**
@@ -137,8 +137,11 @@ export class JavaProject extends Project {
     this.distdir = options.distdir ?? 'dist/java';
     this.pom = new Pom(this, options);
 
-    if (options.projenrcJava ?? false) {
-      this.projenrc = new ProjenrcJava(this, this.pom, options.projenrcJavaOptions);
+    if (options.projenrcJava ?? true) {
+      this.projenrc = new ProjenrcJava(this, this.pom, {
+        ...options.projenrcJavaOptions,
+        initializationOptions: options,
+      });
     }
 
     const sampleJavaPackage = options.sampleJavaPackage ?? 'org.acme';

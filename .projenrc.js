@@ -35,12 +35,14 @@ const project = new JsiiProject({
     '@types/inquirer',
     '@types/semver',
     'markmac',
+    'all-contributors-cli',
   ],
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '10.17.0',
   codeCov: true,
+  defaultReleaseBranch: 'main',
   compileBeforeTest: true, // since we want to run the cli in tests
   gitpod: true,
   devContainer: true,
@@ -49,20 +51,28 @@ const project = new JsiiProject({
 
   // makes it very hard to iterate with jest --watch
   jestOptions: {
-    coverageText: false
+    coverageText: false,
   },
 
   publishToMaven: {
     javaPackage: 'org.projen',
     mavenGroupId: 'com.github.eladb',
-    mavenArtifactId: 'projen'
+    mavenArtifactId: 'projen',
   },
 
   publishToPypi: {
     distName: 'projen',
-    module: 'projen'
+    module: 'projen',
   },
+
+  // Disabled due to cycles between main module and submodules
+  // publishToGo: {
+  //   moduleName: 'github.com/projen/projen-go',
+  // },
 });
+
+// temporary until https://github.com/aws/jsii/pull/2492 is resolved
+// project.packageTask.exec('echo $(node -p "require(\'./version.json\').version") > dist/go/projen/version');
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.
@@ -136,5 +146,9 @@ const setup = project.addTask('devenv:setup');
 setup.exec('yarn install');
 setup.spawn(project.buildTask);
 project.devContainer.addTasks(setup);
+
+project.addTask('contributors:update', {
+  exec: 'all-contributors check | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
+});
 
 project.synth();
