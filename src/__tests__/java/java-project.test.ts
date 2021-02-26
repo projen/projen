@@ -1,7 +1,13 @@
 
+import { mkdirpSync } from 'fs-extra';
 import { JavaProject, JavaProjectOptions } from '../../java/java-project';
 import { LogLevel } from '../../logger';
 import { mkdtemp, synthSnapshot } from '../util';
+
+let cwd = process.cwd();
+
+beforeAll(() => process.chdir(mkdtemp()));
+afterAll(() => process.chdir(cwd));
 
 test('defaults', () => {
   const p = new TestJavaProject();
@@ -70,10 +76,13 @@ function snapPom(p: JavaProject) {
 
 class TestJavaProject extends JavaProject {
   constructor(options: Partial<JavaProjectOptions> = { }) {
-    const tmpdir = mkdtemp();
+    // using a subdirectory to ensure synthSnapshot can clean up the project safely
+    mkdirpSync('project-dir');
+
     super({
       ...options,
-      outdir: tmpdir,
+      // not using outdir: mkdtemp() since that will make snapshots non-deterministic
+      outdir: './project-dir',
       groupId: 'org.acme',
       artifactId: 'my-artifact',
       name: 'test-project',
