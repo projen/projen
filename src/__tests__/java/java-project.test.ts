@@ -6,8 +6,8 @@ import { mkdtemp, synthSnapshot } from '../util';
 
 let cwd = process.cwd();
 
-beforeAll(() => process.chdir(mkdtemp()));
-afterAll(() => process.chdir(cwd));
+beforeEach(() => process.chdir(mkdtemp()));
+afterEach(() => process.chdir(cwd));
 
 test('defaults', () => {
   const p = new TestJavaProject();
