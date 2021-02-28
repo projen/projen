@@ -131,10 +131,17 @@ interface CreateProjectOptions {
  * type, so we can easily support multiple languages of projenrc.
  */
 function createProject(opts: CreateProjectOptions) {
+  // Default project resolution location
+  let mod = '../../index';
+
   // External projects need to load the module from the modules directory
-  const mod = opts.type.moduleName !== 'projen'
-    ? path.join(process.cwd(), 'node_modules', opts.type.moduleName)
-    : '../../index';
+  if (opts.type.moduleName !== 'projen') {
+    try {
+      mod = path.dirname(require.resolve(path.join(opts.type.moduleName, 'package.json'), { paths: [process.cwd()] }));
+    } catch (err) {
+      throw new Error(`External project module '${opts.type.moduleName}' could not be found.`);
+    }
+  }
 
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
