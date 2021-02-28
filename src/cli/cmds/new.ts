@@ -138,8 +138,7 @@ function createProject(opts: CreateProjectOptions) {
   if (opts.type.moduleName !== 'projen') {
     try {
       mod = path.dirname(
-        require.resolve(path.join(opts.type.moduleName, 'package.json'),
-        { paths: [process.cwd()] })
+        require.resolve(path.join(opts.type.moduleName, 'package.json'), { paths: [process.cwd()] })
       );
     } catch (err) {
       throw new Error(`External project module '${opts.type.moduleName}' could not be resolved.`);
