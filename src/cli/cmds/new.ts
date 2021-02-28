@@ -139,7 +139,7 @@ function createProject(opts: CreateProjectOptions) {
     try {
       mod = path.dirname(require.resolve(path.join(opts.type.moduleName, 'package.json'), { paths: [process.cwd()] }));
     } catch (err) {
-      throw new Error(`External project module '${opts.type.moduleName}' could not be found.`);
+      throw new Error(`External project module '${opts.type.moduleName}' could not be resolved.`);
     }
   }
 
