@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.21](https://github.com/projen/projen/compare/v0.16.20...v0.16.21) (2021-03-01)
+
+
+### Bug Fixes
+
+* **react-ts:** `react-scripts build` altering `tsconfig.json` for React 17 conflicts anit-tamper ([#500](https://github.com/projen/projen/issues/500)) ([23d360b](https://github.com/projen/projen/commit/23d360b96183d5ed8433b06d4dc2ef9387ed278e)), closes [#499](https://github.com/projen/projen/issues/499)
+
 ### [0.16.20](https://github.com/projen/projen/compare/v0.16.19...v0.16.20) (2021-03-01)
 
 
