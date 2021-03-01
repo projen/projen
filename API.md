@@ -431,7 +431,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**cdkDependenciesAsDeps**🔹 | <code>boolean</code> | Wether to add `cdkDependencies` to `dependencies`.
+**cdkDependenciesAsDeps**🔹 | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies).
 **version**🔹 | <code>string</code> | The target CDK version for this library.
 
 ### Methods

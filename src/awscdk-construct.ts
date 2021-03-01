@@ -28,12 +28,13 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   readonly cdkDependencies?: string[];
 
   /**
-   * If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).
+   * If this is enabled (default), all modules declared in `cdkDependencies` will be also added as
+   * normal `dependencies` (as well as `peerDependencies`).
    *
    * This is to ensure that downstream consumers actually have your CDK dependencies installed
-   * when using npm < 7 or yarn, 
-where peer dependencies are not automatically installed. 
-   * If this is disabled, `cdkDependencies` will be added to `devDependencies` to ensure they are present during development.
+   * when using npm < 7 or yarn, where peer dependencies are not automatically installed.
+   * If this is disabled, `cdkDependencies` will be added to `devDependencies` to ensure
+   * they are present during development.
    *
    * @default true
    */
@@ -125,7 +126,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   public readonly version: string;
 
   /**
-   * Wether to add `cdkDependencies` to `dependencies`.
+   * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
    */
   public readonly cdkDependenciesAsDeps: boolean
 
