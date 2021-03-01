@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.24](https://github.com/projen/projen/compare/v0.16.23...v0.16.24) (2021-03-01)
+
+
+### Features
+
+* **awscdk-construct:** cdkDependenciesAsDeps ([#581](https://github.com/projen/projen/issues/581)) ([cdb2c5b](https://github.com/projen/projen/commit/cdb2c5bbdfd2cbd57b5aa3ca22220b6520e47e6d)), closes [#577](https://github.com/projen/projen/issues/577)
+
 ### [0.16.23](https://github.com/projen/projen/compare/v0.16.22...v0.16.23) (2021-03-01)
 
 ### [0.16.22](https://github.com/projen/projen/compare/v0.16.21...v0.16.22) (2021-03-01)
