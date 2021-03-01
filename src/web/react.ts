@@ -98,7 +98,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
           resolveJsonModule: true,
           isolatedModules: true,
           noEmit: true,
-          jsx: TypeScriptJsxMode.REACT,
+          jsx: TypeScriptJsxMode.REACT_JSX,
         },
       },
       typescriptVersion: options.typescriptVersion ?? '^4.0.3',

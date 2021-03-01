@@ -444,7 +444,19 @@ export enum TypeScriptJsxMode {
   /**
    * Keeps all JSX like 'preserve' mode, but output will have a .js extension.
    */
-  REACT_NATIVE = 'react-native'
+  REACT_NATIVE = 'react-native',
+
+  /**
+   * Passes `key` separately from props and always passes `children` as props (since React 17).
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#react-17-jsx-factories
+   */
+  REACT_JSX = 'react-jsx',
+
+  /**
+   * Same as `REACT_JSX` with additional debug data.
+   */
+  REACT_JSXDEV = 'react-jsxdev',
 }
 
 export interface TypeScriptCompilerOptions {
@@ -523,7 +535,7 @@ export interface TypeScriptCompilerOptions {
   readonly isolatedModules?: boolean;
 
   /**
-   * Support JSX in .tsx files: "react", "preserve", "react-native"
+   * Support JSX in .tsx files: "react", "preserve", "react-native" etc.
    *
    * @default undefined
    */
