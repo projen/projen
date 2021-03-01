@@ -85,8 +85,8 @@ export class Eslint extends Component {
 
     project.addDevDeps(
       'eslint',
-      '@typescript-eslint/eslint-plugin@^4.3.0',
-      '@typescript-eslint/parser@^4.3.0',
+      '@typescript-eslint/eslint-plugin',
+      '@typescript-eslint/parser',
       'eslint-import-resolver-node',
       'eslint-import-resolver-typescript',
       'eslint-plugin-import',

@@ -9,6 +9,7 @@ import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
+import { Publisher } from './publisher';
 import { Semver } from './semver';
 import { Task, TaskCategory } from './tasks';
 import { Version } from './version';
@@ -48,9 +49,13 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * The name of the main release branch.
    *
-   * @default "master"
+   * NOTE: this field is temporarily required as we migrate the default value
+   * from "master" to "main". Shortly, it will be made optional with "main" as
+   * the default.
+   *
+   * @default "main"
    */
-  readonly defaultReleaseBranch?: string;
+  readonly defaultReleaseBranch: string;
 
   /**
    * Define a GitHub workflow for building PRs.
@@ -74,7 +79,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly codeCovTokenSecret?: string;
 
   /**
-   * Define a GitHub workflow for releasing from "master" when new versions are
+   * Define a GitHub workflow for releasing from "main" when new versions are
    * bumped. Requires that `version` will be undefined.
    *
    * @default - true if not a subproject
@@ -99,7 +104,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    *
    * Default value is based on defaultReleaseBranch.
    *
-   * @default [ "master" ]
+   * @default [ "main" ]
    */
   readonly releaseBranches?: string[];
 
@@ -135,20 +140,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - same as `minNodeVersion`
    */
   readonly workflowNodeVersion?: string;
-
-  /**
-   * The dist-tag to use when releasing to npm.
-   *
-   * @default "latest"
-   */
-  readonly npmDistTag?: string;
-
-  /**
-   * The registry url to use when releasing packages.
-   *
-   * @default "registry.npmjs.org"
-   */
-  readonly npmRegistry?: string;
 
   /**
    * Include dependabot configuration.
@@ -281,6 +272,19 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - default options
    */
   readonly jestOptions?: JestOptions;
+
+  /**
+   * Version requirement of `jsii-release` which is used to publish modules to npm.
+   * @default "latest"
+   */
+  readonly jsiiReleaseVersion?: string;
+
+  /**
+   * A directory which will contain artifacts to be published to npm.
+   *
+   * @default "dist"
+   */
+  readonly artifactsDirectory?: string;
 }
 
 /**
@@ -288,7 +292,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
  */
 export enum AutoRelease {
   /**
-   * Automatically bump & release a new version for every commit to "master"
+   * Automatically bump & release a new version for every commit to "main"
    */
   EVERY_COMMIT,
 
@@ -358,8 +362,13 @@ export class NodeProject extends Project {
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
    */
-  protected readonly releaseWorkflow?: GithubWorkflow;
-  protected readonly releaseWorkflowJobId?: string;
+  public readonly releaseWorkflow?: GithubWorkflow;
+
+  /**
+   * Package publisher. This will be `undefined` if the project does not have a
+   * release workflow.
+   */
+  public readonly publisher?: Publisher;
 
   /**
    * Minimum node.js version required by this package.
@@ -378,8 +387,14 @@ export class NodeProject extends Project {
    */
   public readonly antitamper: boolean;
 
+  /**
+   * @deprecated use `package.npmDistTag`
+   */
   protected readonly npmDistTag: string;
 
+  /**
+   * @deprecated use `package.npmRegistry`
+   */
   protected readonly npmRegistry: string;
 
   /**
@@ -461,8 +476,8 @@ export class NodeProject extends Project {
 
     this.addLicense(options);
 
-    this.npmDistTag = options.npmDistTag ?? 'latest';
-    this.npmRegistry = options.npmRegistry ?? 'registry.npmjs.org';
+    this.npmDistTag = this.package.npmDistTag;
+    this.npmRegistry = this.package.npmRegistry;
 
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
@@ -501,7 +516,11 @@ export class NodeProject extends Project {
       this.addDevDeps(`projen@${projenVersion}`);
     }
 
-    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'master';
+    if (!options.defaultReleaseBranch) {
+      throw new Error('"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"');
+    }
+
+    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
 
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
@@ -544,6 +563,8 @@ export class NodeProject extends Project {
         trigger.schedule = { cron: options.releaseSchedule };
       }
 
+      const artifactDirectory = options.artifactsDirectory ?? 'dist';
+
       const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
         trigger,
         preBuildSteps: [{
@@ -551,7 +572,7 @@ export class NodeProject extends Project {
           run: this.runTaskCommand(this._version.bumpTask),
         }],
         pushBranch: '${{ github.ref }}',
-        uploadArtifact: true,
+        artifactDirectory,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
@@ -563,33 +584,18 @@ export class NodeProject extends Project {
       });
 
       this.releaseWorkflow = workflow;
-      this.releaseWorkflowJobId = buildJobId;
+
+      this.publisher = new Publisher(this, {
+        workflow: this.releaseWorkflow,
+        artifactName: artifactDirectory,
+        buildJobId,
+        jsiiReleaseVersion: options.jsiiReleaseVersion,
+      });
 
       if (options.releaseToNpm ?? false) {
-        this.releaseWorkflow.addJobs({
-          release_npm: {
-            'name': 'Release to NPM',
-            'needs': this.releaseWorkflowJobId,
-            'runs-on': 'ubuntu-latest',
-            'steps': [
-              {
-                name: 'Download build artifacts',
-                uses: 'actions/download-artifact@v1',
-                with: {
-                  name: 'dist',
-                },
-              },
-              {
-                name: 'Release',
-                run: 'npx -p jsii-release jsii-release-npm',
-                env: {
-                  NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-                  NPM_DIST_TAG: this.npmDistTag,
-                  NPM_REGISTRY: this.npmRegistry,
-                },
-              },
-            ],
-          },
+        this.publisher.publishToNpm({
+          distTag: this.package.npmDistTag,
+          registry: this.package.npmRegistry,
         });
       }
     } else {
@@ -897,13 +903,26 @@ export class NodeProject extends Project {
       run: `git commit -am "${options.commit}"`,
     }];
 
-    const pushChanges = !options.pushBranch ? [] : [{
-      name: 'Push changes',
-      run: 'git push --follow-tags origin $BRANCH',
-      env: {
-        BRANCH: options.pushBranch,
+    const pushChanges = !options.pushBranch ? [] : [
+      {
+        name: 'Push commits',
+        run: 'git push origin $BRANCH',
+        env: {
+          BRANCH: options.pushBranch,
+        },
       },
-    }];
+
+      // push tags only after we've managed to push our commits in order to
+      // avoid tags being pushed but commits being rejected due to new commits
+      // see https://github.com/projen/projen/issues/553
+      {
+        name: 'Push tags',
+        run: 'git push --follow-tags origin $BRANCH',
+        env: {
+          BRANCH: options.pushBranch,
+        },
+      },
+    ];
 
     const job: any = {
       'runs-on': 'ubuntu-latest',
@@ -977,13 +996,13 @@ export class NodeProject extends Project {
       job.container = { image: options.image };
     }
 
-    if (options.uploadArtifact) {
+    if (options.artifactDirectory) {
       job.steps.push({
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
         with: {
-          name: 'dist',
-          path: 'dist',
+          name: options.artifactDirectory,
+          path: options.artifactDirectory,
         },
       });
     }
@@ -1080,8 +1099,13 @@ interface NodeBuildWorkflowOptions {
    */
   readonly condition?: any;
 
-  readonly uploadArtifact?: boolean;
-
+  /**
+   * A directory name which contains artifacts to be published (e.g. `dist`).
+   *
+   * javascript artifacts must be under the `js` subdirectory.
+   * @default undefined By default artifacts are not uploaded
+   */
+  readonly artifactDirectory?: string;
 
   readonly trigger: { [event: string]: any };
 

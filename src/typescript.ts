@@ -52,7 +52,11 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * TypeScript version to use.
-   * @default "^3.9.5"
+   *
+   * NOTE: Typescript is not semantically versioned and should remain on the
+   * same minor, so we recommend using a `~` dependency (e.g. `~1.2.3`).
+   *
+   * @default "latest"
    */
   readonly typescriptVersion?: string;
 
@@ -178,7 +182,7 @@ export class TypeScriptProject extends NodeProject {
 
     // if the test directory is under `src/`, then we will run our tests against
     // the javascript files and not let jest compile it for us.
-    const compiledTests = this.testdir.startsWith(this.srcdir + path.sep);
+    const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
     // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
     const compileBeforeTest = options.compileBeforeTest ?? compiledTests;
@@ -247,7 +251,7 @@ export class TypeScriptProject extends NodeProject {
         },
       };
       this.tsconfig = new TypescriptConfig(this,
-        deepMerge(baseTsconfig, options.tsconfig) as TypescriptConfigOptions);
+        deepMerge([baseTsconfig, options.tsconfig]) as TypescriptConfigOptions);
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
@@ -268,16 +272,13 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.idea');
     this.npmignore?.exclude('/.projenrc.js');
 
-    // the tsconfig file to use for estlint (if jest is enabled, we use the jest one, otherwise we use the normal one).
-    let eslintTsConfig = 'tsconfig.json';
-
     // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
     // just run them directly from javascript.
     if (this.jest && compiledTests) {
       this.addDevDeps('@types/jest');
 
-      const testout = path.relative(this.srcdir, this.testdir);
-      const libtest = path.join(this.libdir, testout);
+      const testout = path.posix.relative(this.srcdir, this.testdir);
+      const libtest = path.posix.join(this.libdir, testout);
       const srctest = this.testdir;
 
       this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
@@ -294,14 +295,14 @@ export class TypeScriptProject extends NodeProject {
         return path.join(dir, filename);
       };
 
-      const resolver = new TextFile(this, path.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
+      const resolver = new TextFile(this, path.posix.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
       resolver.addLine('const path = require("path");');
       resolver.addLine(`const libtest = "${libtest}";`);
       resolver.addLine(`const srctest= "${srctest}";`);
       resolver.addLine('module.exports = {');
       resolver.addLine(`  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`);
       resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
-      resolver.addLine('  testPathForConsistencyCheck: "some/__tests__/example.test.js"');
+      resolver.addLine('  testPathForConsistencyCheck: path.join(\'some\', \'__tests__\', \'example.test.js\')');
       resolver.addLine('};');
 
       this.jest.addSnapshotResolver(`./${resolver.path}`);
@@ -325,8 +326,6 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       });
 
-      eslintTsConfig = tsconfig.fileName;
-
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
       if (!compileBeforeTest) {
@@ -341,17 +340,31 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: `./${eslintTsConfig}`,
+        tsconfigPath: './tsconfig.eslint.json',
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
-        lintProjenRc: compiledTests ? false : true,
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });
+
+      new TypescriptConfig(this, {
+        fileName: 'tsconfig.eslint.json',
+        include: [
+          PROJEN_RC,
+          `${this.srcdir}/**/*.ts`,
+          `${this.testdir}/**/*.ts`,
+        ],
+        exclude: [
+          'node_modules',
+        ],
+        compilerOptions: compilerOptionDefaults,
+      });
     }
 
+    const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
+
     this.addDevDeps(
-      `typescript@${options.typescriptVersion ?? '^3.9.5'}`,
+      `typescript${tsver}`,
       `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
     );
 

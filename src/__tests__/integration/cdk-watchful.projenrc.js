@@ -3,7 +3,7 @@ const { ConstructLibraryAws, Semver } = require('projen');
 const project = new ConstructLibraryAws({
   name: 'cdk-watchful',
   description: 'Watching your CDK apps since 2019',
-
+  defaultReleaseBranch: 'master',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'elad.benisrael@gmail.com',
   repository: 'https://github.com/eladb/cdk-watchful.git',

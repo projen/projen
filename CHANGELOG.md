@@ -2,6 +2,215 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.20](https://github.com/projen/projen/compare/v0.16.19...v0.16.20) (2021-03-01)
+
+
+### Bug Fixes
+
+* createProject now requires external modules from the correct path/directory ([#570](https://github.com/projen/projen/issues/570)) ([c8c3f45](https://github.com/projen/projen/commit/c8c3f456c016db7a51d05838556aa1756a5a4b68)), closes [#569](https://github.com/projen/projen/issues/569)
+
+### [0.16.19](https://github.com/projen/projen/compare/v0.16.18...v0.16.19) (2021-02-26)
+
+
+### Bug Fixes
+
+* unit tests failing on Windows ([#487](https://github.com/projen/projen/issues/487)) ([8f53bc0](https://github.com/projen/projen/commit/8f53bc03ee041945c8d70c704b8ff945d587ff71)), closes [#452](https://github.com/projen/projen/issues/452)
+
+### [0.16.18](https://github.com/projen/projen/compare/v0.16.17...v0.16.18) (2021-02-26)
+
+### [0.16.17](https://github.com/projen/projen/compare/v0.16.16...v0.16.17) (2021-02-25)
+
+
+### Features
+
+* **jsii:** add excludeTypescript config option ([#571](https://github.com/projen/projen/issues/571)) ([2e2d123](https://github.com/projen/projen/commit/2e2d123ecf53dbcf2efce9d76e8de297cd847786))
+
+### [0.16.16](https://github.com/projen/projen/compare/v0.16.15...v0.16.16) (2021-02-25)
+
+### [0.16.15](https://github.com/projen/projen/compare/v0.16.14...v0.16.15) (2021-02-24)
+
+### [0.16.14](https://github.com/projen/projen/compare/v0.16.13...v0.16.14) (2021-02-24)
+
+### [0.16.13](https://github.com/projen/projen/compare/v0.16.12...v0.16.13) (2021-02-24)
+
+### [0.16.12](https://github.com/projen/projen/compare/v0.16.11...v0.16.12) (2021-02-23)
+
+### [0.16.11](https://github.com/projen/projen/compare/v0.16.10...v0.16.11) (2021-02-22)
+
+
+### Bug Fixes
+
+* **eslint:** plugin versions cannot be managed by package manager ([a0e2d6c](https://github.com/projen/projen/commit/a0e2d6c5e92b8912fb9ec1b6af21b0907261a48d))
+* **typescript:** typescript version cannot be managed by package manager ([a8bef4c](https://github.com/projen/projen/commit/a8bef4c91fdb8e6c9268d74a90000da21492ce72))
+* **version:** relax standard-version version req to `^9` ([ffef447](https://github.com/projen/projen/commit/ffef4473302319caa56cb7c39cd8c5a9f9dcfb55))
+
+### [0.16.10](https://github.com/projen/projen/compare/v0.16.9...v0.16.10) (2021-02-22)
+
+### [0.16.9](https://github.com/projen/projen/compare/v0.16.8...v0.16.9) (2021-02-19)
+
+### [0.16.8](https://github.com/projen/projen/compare/v0.16.7...v0.16.8) (2021-02-19)
+
+### [0.16.7](https://github.com/projen/projen/compare/v0.16.5...v0.16.7) (2021-02-18)
+
+
+### Bug Fixes
+
+* **node:** tags may be pushed without a bump commit ([#554](https://github.com/projen/projen/issues/554)) ([3826217](https://github.com/projen/projen/commit/3826217d89f68d3d147ea038e4953f8a010fea4e)), closes [#553](https://github.com/projen/projen/issues/553)
+
+### [0.16.5](https://github.com/projen/projen/compare/v0.16.3...v0.16.5) (2021-02-15)
+
+
+### Bug Fixes
+
+* dependabot auto-merge is not squash ([#539](https://github.com/projen/projen/issues/539)) ([33debca](https://github.com/projen/projen/commit/33debcae23a52cfe081b1b2a632872341552b5ac))
+
+### [0.16.4](https://github.com/projen/projen/compare/v0.16.3...v0.16.4) (2021-02-15)
+
+### [0.16.3](https://github.com/projen/projen/compare/v0.16.2...v0.16.3) (2021-02-07)
+
+
+### Bug Fixes
+
+* **cli:** error when the given task doesn't exist ([#528](https://github.com/projen/projen/issues/528)) ([8a5e4d8](https://github.com/projen/projen/commit/8a5e4d890b38a65eab0274dd64d3d692b76d33eb)), closes [#484](https://github.com/projen/projen/issues/484)
+
+### [0.16.2](https://github.com/projen/projen/compare/v0.16.1...v0.16.2) (2021-02-04)
+
+
+### Features
+
+* python projects ([#514](https://github.com/projen/projen/issues/514)) ([bf6b6af](https://github.com/projen/projen/commit/bf6b6afe568c9031503eea9c06a6249d242ce784)), closes [#359](https://github.com/projen/projen/issues/359)
+
+### [0.16.1](https://github.com/projen/projen/compare/v0.16.0...v0.16.1) (2021-02-03)
+
+## [0.16.0](https://github.com/projen/projen/compare/v0.15.18...v0.16.0) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* as we migrate the default value of `defaultReleaseBranch` from `master` to `main`, this option will be required and an error will be printed if the value is not set. We will make this optional in a future release.
+
+### Features
+
+* change default release branch to “main” (phase 1) ([#524](https://github.com/projen/projen/issues/524)) ([9d6888f](https://github.com/projen/projen/commit/9d6888ff1ee330b25fe25a531d3b53e45873f643)), closes [#517](https://github.com/projen/projen/issues/517)
+
+### [0.15.18](https://github.com/projen/projen/compare/v0.15.17...v0.15.18) (2021-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Projects created with `projen` will now default to using the `main` branch.
+
+### Features
+
+* change default branch to "main" ([#517](https://github.com/projen/projen/issues/517)) ([df74bc9](https://github.com/projen/projen/commit/df74bc9cda2f006a0e5e4ee7337562c477eb9c67))
+
+### [0.15.17](https://github.com/projen/projen/compare/v0.15.16...v0.15.17) (2021-02-02)
+
+
+### Features
+
+* publisher ([#518](https://github.com/projen/projen/issues/518)) ([5a04874](https://github.com/projen/projen/commit/5a04874e71f826353c41f28348ca10d67d3a52a0))
+
+### [0.15.16](https://github.com/projen/projen/compare/v0.15.15...v0.15.16) (2021-02-02)
+
+### [0.15.15](https://github.com/projen/projen/compare/v0.15.14...v0.15.15) (2021-02-02)
+
+
+### Bug Fixes
+
+* **jsii:** jsii-release-golang incorrectly tags releases ([77f8b8d](https://github.com/projen/projen/commit/77f8b8de05d6c998cea8a06660c7b6c2c23e7e07))
+
+### [0.15.14](https://github.com/projen/projen/compare/v0.15.13...v0.15.14) (2021-01-31)
+
+
+### Features
+
+* Golang publishing ([#516](https://github.com/projen/projen/issues/516)) ([9e4ee95](https://github.com/projen/projen/commit/9e4ee958c38547da1fd1da512c9ec6b54d9289c8))
+
+### [0.15.13](https://github.com/projen/projen/compare/v0.15.12...v0.15.13) (2021-01-25)
+
+### [0.15.12](https://github.com/projen/projen/compare/v0.15.11...v0.15.12) (2021-01-25)
+
+### [0.15.11](https://github.com/projen/projen/compare/v0.15.10...v0.15.11) (2021-01-21)
+
+
+### Features
+
+* **jsii:** Golang support (without publishing yet) ([#513](https://github.com/projen/projen/issues/513)) ([5794594](https://github.com/projen/projen/commit/5794594bc9d6fedf292bf20201822d8b2f61cc1d))
+
+### [0.15.10](https://github.com/projen/projen/compare/v0.15.9...v0.15.10) (2021-01-21)
+
+
+### Features
+
+* **node:** npm publish configuration ([#510](https://github.com/projen/projen/issues/510)) ([6c98f54](https://github.com/projen/projen/commit/6c98f54adca7548947a4c2e348dd7146b195deff)), closes [#317](https://github.com/projen/projen/issues/317) [#192](https://github.com/projen/projen/issues/192)
+
+### [0.15.9](https://github.com/projen/projen/compare/v0.15.8...v0.15.9) (2021-01-20)
+
+
+### Features
+
+* **node:** make "releaseWorkflow" public ([#508](https://github.com/projen/projen/issues/508)) ([951bab1](https://github.com/projen/projen/commit/951bab16804bf407ade145f2b83971bc77dd636e)), closes [#494](https://github.com/projen/projen/issues/494) [#494](https://github.com/projen/projen/issues/494)
+
+### [0.15.8](https://github.com/projen/projen/compare/v0.15.7...v0.15.8) (2021-01-20)
+
+### [0.15.7](https://github.com/projen/projen/compare/v0.15.6...v0.15.7) (2021-01-19)
+
+
+### Bug Fixes
+
+* **cli:** `projen` does not work for projects with a “synth” task ([#509](https://github.com/projen/projen/issues/509)) ([f492e21](https://github.com/projen/projen/commit/f492e2184efd5e587a04c588cc3db3db6dcdcdfa)), closes [#505](https://github.com/projen/projen/issues/505) [#507](https://github.com/projen/projen/issues/507)
+
+### [0.15.6](https://github.com/projen/projen/compare/v0.15.5...v0.15.6) (2021-01-19)
+
+
+### Features
+
+* **java:** generate projenrc in java ([#505](https://github.com/projen/projen/issues/505)) ([8c0931d](https://github.com/projen/projen/commit/8c0931dd04a3c109be079cfe80d1be87f1dcddd9))
+
+### [0.15.5](https://github.com/projen/projen/compare/v0.15.4...v0.15.5) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** task fails due to test directory missing from config ([#506](https://github.com/projen/projen/issues/506)) ([f1901cf](https://github.com/projen/projen/commit/f1901cf3cc269aff2fbc0c395f90644124fbb0c0))
+
+### [0.15.4](https://github.com/projen/projen/compare/v0.15.3...v0.15.4) (2021-01-19)
+
+
+### Bug Fixes
+
+* [#503](https://github.com/projen/projen/issues/503) implement docker compose version tag ([#504](https://github.com/projen/projen/issues/504)) ([6830692](https://github.com/projen/projen/commit/68306924b75c839dca884b9a0b774d6153924e50))
+
+### [0.15.3](https://github.com/projen/projen/compare/v0.15.2...v0.15.3) (2021-01-19)
+
+
+### Bug Fixes
+
+* **eslint:** lintProjenRc not working with compiled jest tests ([#473](https://github.com/projen/projen/issues/473)) ([42f8116](https://github.com/projen/projen/commit/42f81166d6c6185449f931bad77e908ae55f99d3)), closes [#472](https://github.com/projen/projen/issues/472)
+
+### [0.15.2](https://github.com/projen/projen/compare/v0.15.1...v0.15.2) (2021-01-19)
+
+
+### Bug Fixes
+
+* **react-ts:** unused `import` line in `app.jsx` fails TS compilation ([#502](https://github.com/projen/projen/issues/502)) ([0079b82](https://github.com/projen/projen/commit/0079b8250b6c7b54034f619ccede02b36c93b6a1)), closes [#501](https://github.com/projen/projen/issues/501)
+
+### [0.15.1](https://github.com/projen/projen/compare/v0.15.0...v0.15.1) (2021-01-18)
+
+## [0.15.0](https://github.com/projen/projen/compare/v0.14.10...v0.15.0) (2021-01-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* `GithubWorkflow` no longer extends `FileBase`. Use `workflow.file` instead to access file properties.
+* **project** `project.tryFindJsonFile()` is now deprecated. Use `tryFindObjectFile()` instead.
+* **project** The `obj` field on files is now private. Use `file.addOverride()` to make changes instead.
+
+### Features
+
+* standard escape hatches ([#495](https://github.com/projen/projen/issues/495)) ([6356371](https://github.com/projen/projen/commit/6356371b7e5a1cb57e79c037a765232d91c4cd5a))
+
 ### [0.14.10](https://github.com/projen/projen/compare/v0.14.9...v0.14.10) (2021-01-17)
 
 

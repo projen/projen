@@ -55,3 +55,10 @@ a service to manage secrets for me in AWS Secrets Manager, a cloud development a
 Using the CDKs (AWS CDK, CDK for Terraform, CDK for Kubernetes), complete services can be expressed as constructs
 and shared and published as libraries. It is fairly easy (#) to simply allow CDK constructs to be freely used
 inside projen components.
+
+## Ideas
+
+- [ ] Components: re-think/re-factor how components and projects interact to allow more modular and composable usage.
+- [ ] Discoverability of external components/modules through the CLI
+- [ ] Support projenrc in YAML (fully declarative, if one desires)
+- [ ] CLI bash completion

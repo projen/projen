@@ -100,13 +100,13 @@
     "release": {
       "name": "release",
       "category": "20.release",
-      "description": "Bumps version & push to master",
+      "description": "Bumps version & push to main",
       "steps": [
         {
           "spawn": "bump"
         },
         {
-          "exec": "git push --follow-tags origin master"
+          "exec": "git push --follow-tags origin main"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -170,7 +170,7 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src src/__tests__ build-tools"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src src/__tests__ build-tools .projenrc.js"
         }
       ]
     },
@@ -216,6 +216,14 @@
         },
         {
           "spawn": "build"
+        }
+      ]
+    },
+    "contributors:update": {
+      "name": "contributors:update",
+      "steps": [
+        {
+          "exec": "all-contributors check | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     }

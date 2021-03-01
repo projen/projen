@@ -149,7 +149,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     };
 
     // never generate default TypeScript sample code, since this class provides its own
-    super(deepMerge(defaultOptions, options, { sampleCode: false }) as TypeScriptProjectOptions);
+    super(deepMerge([defaultOptions, options, { sampleCode: false }]) as TypeScriptProjectOptions);
 
     this.srcdir = options.srcdir ?? 'pages';
     this.assetsdir = options.assetsdir ?? 'public';

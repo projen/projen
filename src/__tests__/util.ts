@@ -29,13 +29,13 @@ export class TestProject extends Project {
   }
 }
 
-export function execProjenCLI(workdir: string, args: string[]) {
+export function execProjenCLI(workdir: string, args: string[] = []) {
   const command = [
     process.execPath,
     PROJEN_CLI,
     ...args,
   ];
-  return exec(command.join(' '), { cwd: workdir });
+  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir });
 }
 
 export interface SynthOutput {
@@ -89,7 +89,7 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
     cwd: root,
     nodir: true,
     dot: true,
-  });
+  }); // returns relative file paths with POSIX separators
 
   for (const file of files) {
     const filePath = path.join(root, file);

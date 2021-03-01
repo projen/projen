@@ -629,11 +629,9 @@ export class Jest {
 
     project.addFields({ jest: this.config });
 
-    const coverageDirectoryPath = path.join('/', coverageDirectory);
+    const coverageDirectoryPath = path.posix.join('/', coverageDirectory);
     project.npmignore?.exclude(coverageDirectoryPath);
     project.gitignore.exclude(coverageDirectoryPath);
-
-    project.addTip('The VSCode jest extension watches in the background and shows inline test results');
 
     if (options.coverageText ?? true) {
       this.coverageReporters.push('text');

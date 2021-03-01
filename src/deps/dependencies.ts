@@ -18,12 +18,13 @@ export class Dependencies extends Component {
   /**
    * The project-relative path of the deps manifest file.
    */
-  public static readonly MANIFEST_FILE = path.join(PROJEN_DIR, 'deps.json');
+  public static readonly MANIFEST_FILE = path.posix.join(PROJEN_DIR, 'deps.json');
 
   /**
    * Returns the coordinates of a dependency spec.
    *
    * Given `foo@^3.4.0` returns `{ name: "foo", version: "^3.4.0" }`.
+   * Given `bar@npm:@bar/legacy` returns `{ name: "bar", version: "npm:@bar/legacy" }`.
    */
   public static parseDependency(spec: string): DependencyCoordinates {
     const scope = spec.startsWith('@');
@@ -31,9 +32,13 @@ export class Dependencies extends Component {
       spec = spec.substr(1);
     }
 
-    const [module, version] = spec.split('@');
+    const [module, ...version] = spec.split('@');
     const name = scope ? `@${module}` : module;
-    return { name, version };
+    if (version.length == 0) {
+      return { name };
+    } else {
+      return { name, version: version?.join('@') };
+    }
   }
 
   private readonly _deps = new Array<Dependency>();

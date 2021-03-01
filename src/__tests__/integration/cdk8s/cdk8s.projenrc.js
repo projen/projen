@@ -5,6 +5,7 @@ const common = require('./cdk8s.common');
 const project = new JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
+  defaultReleaseBranch: 'master',
   stability: common.options.stability,
 
   // without this, the version of 'constructs' would need to be controlled
