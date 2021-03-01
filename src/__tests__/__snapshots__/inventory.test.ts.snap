@@ -1357,6 +1357,18 @@ Array [
         "type": "unknown",
       },
       Object {
+        "default": "true",
+        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
+        "name": "cdkDependenciesAsDeps",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "cdkDependenciesAsDeps",
+        ],
+        "switch": "cdk-dependencies-as-deps",
+        "type": "boolean",
+      },
+      Object {
         "docs": "AWS CDK modules required for testing.",
         "name": "cdkTestDependencies",
         "optional": true,
