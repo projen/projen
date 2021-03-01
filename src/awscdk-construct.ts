@@ -28,6 +28,17 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   readonly cdkDependencies?: string[];
 
   /**
+   * If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).
+   *
+   * This is to ensure that downstream consumers actually have your cdk Dependencies installed
+   * when using npm < 7 or yarn, since theese don't install peerDependencies by default.
+   * If `false` `cdkDependencies` will be added to `devDependencies` to ensure they are present during development.
+   *
+   * @default true
+   */
+  readonly cdkDependenciesAsDeps?: boolean;
+
+  /**
    * Install the @aws-cdk/assert library?
    * @default true
    */
@@ -112,6 +123,11 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    */
   public readonly version: string;
 
+  /**
+   * Wether to add `cdkDependencies` to `dependencies`.
+   */
+  public readonly cdkDependenciesAsDeps: boolean
+
   constructor(options: AwsCdkConstructLibraryOptions) {
     super({
       ...options,
@@ -121,6 +137,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     });
 
     this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
     this.addPeerDeps('constructs@^3.2.27');
 
@@ -135,19 +152,25 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * Adds CDK modules as runtime dependencies.
    *
-   * Modules are currently added with a caret CDK version both as "dependencies"
+   * Modules are currently by default added with a caret CDK version both as "dependencies"
    * and "peerDependencies". This is because currently npm would not
    * automatically install peer dependencies that are not declared as concerete
    * dependencies by the consumer, so this is a little npm "hack" so that
    * consumers will not need to depend on them directly if they don't interact
    * with them.
+   * See `cdkDependenciesAsDeps` for changing the default behavior.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
    */
   public addCdkDependencies(...deps: string[]) {
     // this ugliness will go away in cdk v2.0
     this.addPeerDeps(...deps.map(m => this.formatModuleSpec(m)));
-    this.addDeps(...deps.map(m => this.formatModuleSpec(m)));
+
+    if (this.cdkDependenciesAsDeps) {
+      this.addDeps(...deps.map(m => this.formatModuleSpec(m)));
+    } else {
+      this.addDevDeps(...deps.map(m => this.formatModuleSpec(m)));
+    }
   }
 
   /**
