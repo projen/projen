@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.19](https://github.com/projen/projen/compare/v0.16.18...v0.16.19) (2021-02-26)
+
+
+### Bug Fixes
+
+* unit tests failing on Windows ([#487](https://github.com/projen/projen/issues/487)) ([8f53bc0](https://github.com/projen/projen/commit/8f53bc03ee041945c8d70c704b8ff945d587ff71)), closes [#452](https://github.com/projen/projen/issues/452)
+
+### [0.16.18](https://github.com/projen/projen/compare/v0.16.17...v0.16.18) (2021-02-26)
+
+### [0.16.17](https://github.com/projen/projen/compare/v0.16.16...v0.16.17) (2021-02-25)
+
+
+### Features
+
+* **jsii:** add excludeTypescript config option ([#571](https://github.com/projen/projen/issues/571)) ([2e2d123](https://github.com/projen/projen/commit/2e2d123ecf53dbcf2efce9d76e8de297cd847786))
+
+### [0.16.16](https://github.com/projen/projen/compare/v0.16.15...v0.16.16) (2021-02-25)
+
 ### [0.16.15](https://github.com/projen/projen/compare/v0.16.14...v0.16.15) (2021-02-24)
 
 ### [0.16.14](https://github.com/projen/projen/compare/v0.16.13...v0.16.14) (2021-02-24)

@@ -52,7 +52,7 @@ test('subprojects cannot introduce files that override each other', () => {
   const child = new TestSubproject({ name: 'sub-project', parent: root, outdir: 'sub-project' });
 
   new TextFile(root, 'sub-project/file.txt');
-  expect(() => new TextFile(child, 'file.txt')).toThrow(/there is already a file under sub-project\/file\.txt/);
+  expect(() => new TextFile(child, 'file.txt')).toThrow(/there is already a file under sub-project(\\|\/)file\.txt/);
 });
 
 test('"outdir" for subprojects must be relative', () => {
