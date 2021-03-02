@@ -754,13 +754,13 @@
     eslint-utils "^2.0.0"
 
 "@typescript-eslint/parser@^4.3.0":
-  version "4.15.2"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-4.15.2.tgz#c804474321ef76a3955aec03664808f0d6e7872e"
-  integrity sha512-SHeF8xbsC6z2FKXsaTb1tBCf0QZsjJ94H6Bo51Y1aVEZ4XAefaw5ZAilMoDPlGghe+qtq7XdTiDlGfVTOmvA+Q==
+  version "4.16.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-4.16.1.tgz#3bbd3234dd3c5b882b2bcd9899bc30e1e1586d2a"
+  integrity sha512-/c0LEZcDL5y8RyI1zLcmZMvJrsR6SM1uetskFkoh3dvqDKVXPsXI+wFB/CbVw7WkEyyTKobC1mUNp/5y6gRvXg==
   dependencies:
-    "@typescript-eslint/scope-manager" "4.15.2"
-    "@typescript-eslint/types" "4.15.2"
-    "@typescript-eslint/typescript-estree" "4.15.2"
+    "@typescript-eslint/scope-manager" "4.16.1"
+    "@typescript-eslint/types" "4.16.1"
+    "@typescript-eslint/typescript-estree" "4.16.1"
     debug "^4.1.1"
 
 "@typescript-eslint/scope-manager@4.15.2":
@@ -3730,9 +3730,9 @@ jsii-diff@^1.16.0:
     yargs "^16.2.0"
 
 jsii-docgen@^1.5.2:
-  version "1.8.57"
-  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.8.57.tgz#3afe44662fa6cbdd57c2a444a793d39f4e096a9f"
-  integrity sha512-bE8t9Ck022gFH3bT8kmvC/EKczVzyzGKZI38el4BSYc6s74BXQsn6MV7GFwkvwbbGC80pkLxUeHO2RDWaBe3XA==
+  version "1.8.60"
+  resolved "https://registry.yarnpkg.com/jsii-docgen/-/jsii-docgen-1.8.60.tgz#5a6d1628ebf63cc0786eda934a5fb59cc3c207cf"
+  integrity sha512-afNkLMt/P9PDZ9UpkwYwqf/EzoWb3x8jUcOrNVP/aU0THE8Si1xqStwPiBq63UnqmA0dDkKz3SnKE2y6DIgapQ==
   dependencies:
     "@jsii/spec" "^1.16.0"
     fs-extra "^9.0.1"
