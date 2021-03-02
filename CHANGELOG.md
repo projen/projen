@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.26](https://github.com/projen/projen/compare/v0.16.25...v0.16.26) (2021-03-02)
+
+### [0.16.25](https://github.com/projen/projen/compare/v0.16.24...v0.16.25) (2021-03-02)
+
 ### [0.16.24](https://github.com/projen/projen/compare/v0.16.23...v0.16.24) (2021-03-01)
 
 
