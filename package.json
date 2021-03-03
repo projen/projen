@@ -90,7 +90,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.16.30",
+  "version": "0.16.31",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
