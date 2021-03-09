@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.42](https://github.com/projen/projen/compare/v0.16.41...v0.16.42) (2021-03-09)
+
+
+### Bug Fixes
+
+* **cleanup:** some projen synthesized files are left orphaned ([#603](https://github.com/projen/projen/issues/603)) ([b359474](https://github.com/projen/projen/commit/b35947496f368faa75ce8df5d35daca625ed3eed))
+
 ### [0.16.41](https://github.com/projen/projen/compare/v0.16.40...v0.16.41) (2021-03-09)
 
 
