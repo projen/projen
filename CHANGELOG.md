@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.16.41](https://github.com/projen/projen/compare/v0.16.40...v0.16.41) (2021-03-09)
+
+
+### Bug Fixes
+
+* **node:** security vulnerability in rebuild-bot ([#602](https://github.com/projen/projen/issues/602)) ([36030c6](https://github.com/projen/projen/commit/36030c6a4b1acd0054673322612e7c70e9446643))
+
 ### [0.16.40](https://github.com/projen/projen/compare/v0.16.39...v0.16.40) (2021-03-09)
 
 ### [0.16.39](https://github.com/projen/projen/compare/v0.16.38...v0.16.39) (2021-03-09)
