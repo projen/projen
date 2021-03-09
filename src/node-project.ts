@@ -881,7 +881,13 @@ export class NodeProject extends Project {
 
     const workflow = github.addWorkflow(name);
 
-    workflow.on(options.trigger);
+    if (options.trigger) {
+      if (options.trigger.issue_comment) {
+        throw new Error('"issue_comment" should not be used as a trigger due to a security issue');
+      }
+
+      workflow.on(options.trigger);
+    }
 
     workflow.on({
       workflow_dispatch: {}, // allow manual triggering
@@ -1041,7 +1047,7 @@ export class NodeProject extends Project {
     });
 
     this.createBuildWorkflow('rebuild-bot', {
-      trigger: { issue_comment: { types: ['created'] } },
+      // trigger: { issue_comment: { types: ['created'] } }, // <--- disabled due to a security issue
       condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
       antitamperDisabled: true, // definitely do not want that
 
@@ -1107,7 +1113,12 @@ interface NodeBuildWorkflowOptions {
    */
   readonly artifactDirectory?: string;
 
-  readonly trigger: { [event: string]: any };
+  /**
+   * What should trigger the workflow?
+   *
+   * @default - by default workflows can only be triggered by manually.
+   */
+  readonly trigger?: { [event: string]: any };
 
   /**
    * Bump a new version for this build.
