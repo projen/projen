@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.17.0](https://github.com/projen/projen/compare/v0.16.42...v0.17.0) (2021-03-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* `@projen rebuild` is no longer supported due to a security issue.
+
+### Features
+
+* rebuild-bot is no longer supported ([#604](https://github.com/projen/projen/issues/604)) ([c83304d](https://github.com/projen/projen/commit/c83304d433b9764ef6f64cd6481d6ac844cfe177))
+
 ### [0.16.42](https://github.com/projen/projen/compare/v0.16.41...v0.16.42) (2021-03-09)
 
 
