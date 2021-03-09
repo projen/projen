@@ -238,25 +238,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly pullRequestTemplateContents?: string;
 
   /**
-   * Installs a GitHub workflow which is triggered when the comment "@projen
-   * rebuild" is added to a pull request. The workflow will run a full build and
-   * commit the changes to the pull request branch. This is useful for updating
-   * test snapshots and other generated files like API.md.
-   *
-   * @default - true if not a subproject
-   */
-  readonly rebuildBot?: boolean;
-
-  /**
-   * The pull request bot command to use in order to trigger a rebuild and
-   * commit of the contents of the branch. The command must be prefixed by "@projen", e.g. "@projen rebuild"
-   * `gh pr review $pr --comment -b "@projen rebuild"`
-   *
-   * @default "rebuild"
-   */
-  readonly rebuildBotCommand?: string;
-
-  /**
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
@@ -642,11 +623,6 @@ export class NodeProject extends Project {
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
-
-    if (options.rebuildBot ?? (this.parent ? false : true)) {
-      this.addRebuildBot(options.rebuildBotCommand ?? 'rebuild');
-    }
-
   }
 
   public addBins(bins: Record<string, string>) {
@@ -1033,59 +1009,6 @@ export class NodeProject extends Project {
       default:
         throw new Error(`invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`);
     }
-  }
-
-  private addRebuildBot(command: string) {
-
-    const postComment = (message: string) => ({
-      name: 'Post comment to issue',
-      uses: 'peter-evans/create-or-update-comment@v1',
-      with: {
-        'issue-number': '${{ github.event.issue.number }}',
-        'body': `_projen_: ${message}`,
-      },
-    });
-
-    this.createBuildWorkflow('rebuild-bot', {
-      // trigger: { issue_comment: { types: ['created'] } }, // <--- disabled due to a security issue
-      condition: `\${{ github.event.issue.pull_request && contains(github.event.comment.body, '@projen ${command}') }}`,
-      antitamperDisabled: true, // definitely do not want that
-
-      // since the "issue_comment" event is not triggered on a branch, we need to resolve
-      // the git ref of the pull request before we check out
-      preCheckoutSteps: [
-        postComment('Rebuild started'),
-        {
-          name: 'Get pull request branch',
-          id: 'query_pull_request',
-          env: { PULL_REQUEST_URL: '${{ github.event.issue.pull_request.url }}' },
-          run: [
-            'rm -f /tmp/pr.json',
-            'curl --silent $PULL_REQUEST_URL > /tmp/pr.json',
-            'BRANCH_STR=$(cat /tmp/pr.json | jq ".head.ref")',
-            'REPO_NAME=$(cat /tmp/pr.json | jq ".head.repo.full_name")',
-            'echo "::set-output name=branch::$(node -p $BRANCH_STR)"',
-            'echo "::set-output name=repo::$(node -p $REPO_NAME)"',
-          ].join('\n'),
-        },
-      ],
-
-      // tell checkout to use the branch we acquired at the previous step
-      checkoutWith: {
-        ref: '${{ steps.query_pull_request.outputs.branch }}',
-        repository: '${{ steps.query_pull_request.outputs.repo }}',
-      },
-
-      // commit changes
-      commit: 'chore: update generated files',
-
-      // and push to the pull request branch
-      pushBranch: '${{ steps.query_pull_request.outputs.branch }}',
-
-      postSteps: [
-        postComment('Rebuild complete. Updates pushed to pull request branch.'),
-      ],
-    });
   }
 }
 

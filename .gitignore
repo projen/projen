@@ -34,7 +34,6 @@ yarn-error.log*
 !/.github/dependabot.yml
 !/.github/pull_request_template.md
 !/.github/workflows/build.yml
-!/.github/workflows/rebuild-bot.yml
 !/.github/workflows/release.yml
 !/.gitpod.yml
 !/.markdownlint.json
