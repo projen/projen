@@ -314,7 +314,7 @@ export interface JsiiReleaseMaven {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
-   * @default - "https://oss.sonatype.org"
+   * @default "https://oss.sonatype.org"
    */
   readonly mavenEndpoint?: string;
 
