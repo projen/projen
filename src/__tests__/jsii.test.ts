@@ -61,6 +61,29 @@ describe('maven repository options', () => {
     expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
   });
 
+  test('use nexus repo new endpoint', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      publishToMaven: {
+        javaPackage: 'com.github.eladb.watchful',
+        mavenGroupId: 'com.github.eladb',
+        mavenArtifactId: 'cdk-watchful',
+        mavenEndpoint: 'https://s01.oss.sonatype.org',
+      },
+      defaultReleaseBranch: 'master',
+    });
+
+    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
+    expect(workflow).toContain('MAVEN_ENDPOINT: https://s01.oss.sonatype.org');
+    expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
+    expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
+  });
+
   test('use github as repository', () => {
     const project = new TestJsiiProject({
       authorAddress: 'https://foo.bar',

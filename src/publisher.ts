@@ -140,6 +140,7 @@ export class Publisher extends Component {
             name: 'Release',
             run: this.renderJsiiReleaseCommand('jsii-release-maven'),
             env: {
+              MAVEN_ENDPOINT: options.mavenEndpoint,
               MAVEN_SERVER_ID: options.mavenServerId,
               MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
               MAVEN_GPG_PRIVATE_KEY: `\${{ secrets.${mavenGpgPrivateKeySecret} }}`,
@@ -310,6 +311,13 @@ export interface JsiiReleaseNuget {
  * Options for Maven releases
  */
 export interface JsiiReleaseMaven {
+  /**
+   * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
+   *
+   * @default - not set
+   */
+  readonly mavenEndpoint?: string;
+
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
    *
