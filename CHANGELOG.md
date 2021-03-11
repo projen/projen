@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.1](https://github.com/projen/projen/compare/v0.17.0...v0.17.1) (2021-03-11)
+
+
+### Features
+
+* **publishToMaven:** add MAVEN_ENDPOINT ([#606](https://github.com/projen/projen/issues/606)) ([#607](https://github.com/projen/projen/issues/607)) ([5511eda](https://github.com/projen/projen/commit/5511eda057f76442c8ec61cd30960eb0062fa75b))
+
 ## [0.17.0](https://github.com/projen/projen/compare/v0.16.42...v0.17.0) (2021-03-09)
 
 
