@@ -3200,6 +3200,7 @@ publishToMaven(options: JsiiReleaseMaven): void
 ```
 
 * **options** (<code>[JsiiReleaseMaven](#projen-jsiireleasemaven)</code>)  Options.
+  * **mavenEndpoint** (<code>string</code>)  URL of Nexus repository. __*Default*__: "https://oss.sonatype.org"
   * **mavenGpgPrivateKeyPassphrase** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
   * **mavenGpgPrivateKeySecret** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY"
   * **mavenPassword** (<code>string</code>)  GitHub secret name which contains the Password for maven repository. __*Default*__: "MAVEN_PASSWORD"
@@ -7776,6 +7777,7 @@ Name | Type | Description
 **javaPackage**🔹 | <code>string</code> | <span></span>
 **mavenArtifactId**🔹 | <code>string</code> | <span></span>
 **mavenGroupId**🔹 | <code>string</code> | <span></span>
+**mavenEndpoint**?🔹 | <code>string</code> | URL of Nexus repository.<br/>__*Default*__: "https://oss.sonatype.org"
 **mavenGpgPrivateKeyPassphrase**?🔹 | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
 **mavenGpgPrivateKeySecret**?🔹 | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY"
 **mavenPassword**?🔹 | <code>string</code> | GitHub secret name which contains the Password for maven repository.<br/>__*Default*__: "MAVEN_PASSWORD"
@@ -7935,6 +7937,7 @@ Options for Maven releases.
 
 Name | Type | Description 
 -----|------|-------------
+**mavenEndpoint**?🔹 | <code>string</code> | URL of Nexus repository.<br/>__*Default*__: "https://oss.sonatype.org"
 **mavenGpgPrivateKeyPassphrase**?🔹 | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
 **mavenGpgPrivateKeySecret**?🔹 | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY"
 **mavenPassword**?🔹 | <code>string</code> | GitHub secret name which contains the Password for maven repository.<br/>__*Default*__: "MAVEN_PASSWORD"
