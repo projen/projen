@@ -880,6 +880,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -2040,6 +2041,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -3164,6 +3166,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -4590,6 +4593,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -5599,6 +5603,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -6659,6 +6664,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -7634,6 +7640,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -9022,6 +9029,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -10058,6 +10066,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -11129,6 +11138,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -12200,6 +12210,7 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
