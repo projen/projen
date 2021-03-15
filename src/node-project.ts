@@ -34,7 +34,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Version of projen to install.
    *
-   * Defaults to the latest version.
+   * @default - Defaults to the latest version.
    */
   readonly projenVersion?: string;
 
