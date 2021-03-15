@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.4](https://github.com/projen/projen/compare/v0.17.3...v0.17.4) (2021-03-15)
+
+
+### Bug Fixes
+
+* **node-project:** fix projenVersion type to correctly use a string ([#608](https://github.com/projen/projen/issues/608)) ([dbc3c9c](https://github.com/projen/projen/commit/dbc3c9ca84ba6e0d8990d2b326bd00001787d5ea))
+
 ### [0.17.3](https://github.com/projen/projen/compare/v0.17.2...v0.17.3) (2021-03-15)
 
 ### [0.17.2](https://github.com/projen/projen/compare/v0.17.1...v0.17.2) (2021-03-15)
