@@ -10,7 +10,6 @@ import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions }
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Publisher } from './publisher';
-import { Semver } from './semver';
 import { Task, TaskCategory } from './tasks';
 import { Version } from './version';
 
@@ -35,9 +34,9 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Version of projen to install.
    *
-   * @default Semver.latest()
+   * @default - Defaults to the latest version.
    */
-  readonly projenVersion?: Semver;
+  readonly projenVersion?: string;
 
   /**
    * Indicates of "projen" should be installed as a devDependency.

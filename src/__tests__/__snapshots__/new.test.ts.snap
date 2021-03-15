@@ -72,7 +72,7 @@ const project = new AwsCdkTypeScriptApp({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -207,7 +207,7 @@ const project = new AwsCdkConstructLibrary({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -319,7 +319,7 @@ const project = new ConstructLibraryCdk8s({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -470,7 +470,7 @@ const project = new JsiiProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -569,7 +569,7 @@ const project = new web.NextJsProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -664,7 +664,7 @@ const project = new web.NextJsTypeScriptProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -771,7 +771,7 @@ const project = new NodeProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -930,7 +930,7 @@ const project = new web.ReactProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -1025,7 +1025,7 @@ const project = new web.ReactTypeScriptProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -1132,7 +1132,7 @@ const project = new TypeScriptProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
@@ -1239,7 +1239,7 @@ const project = new TypeScriptAppProject({
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: Semver.latest(),                                           /* Version of projen to install. */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
   // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
