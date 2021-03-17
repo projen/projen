@@ -34,11 +34,7 @@ jobs:
         run: 'git diff --exit-code || git commit -am "chore: updates to generated
           files"'
       - name: Push commits
-        run: git push origin $BRANCH
-        env:
-          BRANCH: ${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin $BRANCH
+        run: git diff --exit-code || git push origin $BRANCH
         env:
           BRANCH: ${{ github.ref }}
     container:
