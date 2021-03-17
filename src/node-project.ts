@@ -906,7 +906,7 @@ export class NodeProject extends Project {
     const pushChanges = !options.pushBranch ? [] : [
       {
         name: 'Push commits',
-        run: `${gitNoChanges} || git push origin $BRANCH`,
+        run: 'git push origin HEAD:$BRANCH',
         env: {
           BRANCH: options.pushBranch,
         },
@@ -1101,6 +1101,9 @@ interface NodeBuildWorkflowOptions {
    */
   readonly pushBranch?: string;
 
+  /**
+   * Push tags after pushing commits.
+   */
   readonly pushTags: boolean;
 
   /**

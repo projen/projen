@@ -41,7 +41,7 @@ jobs:
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Push commits
-        run: git diff --exit-code || git push origin $BRANCH
+        run: git push origin HEAD:$BRANCH
         env:
           BRANCH: ${{ github.ref }}
       - name: Push tags
