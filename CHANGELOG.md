@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.15](https://github.com/projen/projen/compare/v0.17.14...v0.17.15) (2021-03-17)
+
+
+### Bug Fixes
+
+* **resolve:** allow objects without constructors to be resolved ([#630](https://github.com/projen/projen/issues/630)) ([410d4b5](https://github.com/projen/projen/commit/410d4b5cc8f49c984614859d8c8d14a7b77da75f))
+
 ### [0.17.14](https://github.com/projen/projen/compare/v0.17.13...v0.17.14) (2021-03-17)
 
 ### [0.17.13](https://github.com/projen/projen/compare/v0.17.12...v0.17.13) (2021-03-17)
