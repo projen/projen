@@ -33,6 +33,7 @@ test('array', () => {
 });
 
 test('object', () => {
+  expect(resolve(Object.create(null))).toStrictEqual({ });
   expect(resolve({ })).toStrictEqual({ });
   expect(resolve({ foo: 123, hello: [1, 2, { bar: 3 }] })).toStrictEqual({
     foo: 123,
