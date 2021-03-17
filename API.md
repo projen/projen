@@ -5570,15 +5570,18 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 
 
 
-#### reset(command?)🔹 <a id="projen-tasks-task-reset"></a>
+#### reset(command?, options?)🔹 <a id="projen-tasks-task-reset"></a>
 
 Reset the task so it no longer has any commands.
 
 ```ts
-reset(command?: string): void
+reset(command?: string, options?: TaskStepOptions): void
 ```
 
 * **command** (<code>string</code>)  the first command to add to the task after it was cleared.
+* **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
 
 
 

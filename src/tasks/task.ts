@@ -61,13 +61,13 @@ export class Task {
    * Reset the task so it no longer has any commands.
    * @param command the first command to add to the task after it was cleared.
   */
-  public reset(command?: string) {
+  public reset(command?: string, options: TaskStepOptions = { }) {
     while (this._steps.length) {
       this._steps.shift();
     }
 
     if (command) {
-      this.exec(command);
+      this.exec(command, options);
     }
   }
 

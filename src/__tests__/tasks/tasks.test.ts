@@ -100,7 +100,7 @@ test('reset() can be used to reset task steps', () => {
 
   // WHEN
   t.reset('line3');
-  t.exec('line4');
+  t.exec('line4', { cwd: 'foo' });
 
   // THEN
   expectManifest(p, {
@@ -112,7 +112,7 @@ test('reset() can be used to reset task steps', () => {
         name: 'my-task',
         steps: [
           { exec: 'line3' },
-          { exec: 'line4' },
+          { cwd: 'foo', exec: 'line4' },
         ],
       },
     },
