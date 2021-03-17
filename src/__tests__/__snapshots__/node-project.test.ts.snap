@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildWorkflowMutable will push changes to PR branches 1`] = `
+Array [
+  Object {
+    "name": "Checkout",
+    "uses": "actions/checkout@v2",
+  },
+  Object {
+    "name": "Install dependencies",
+    "run": "yarn install --check-files --frozen-lockfile",
+  },
+  Object {
+    "name": "Synthesize project files",
+    "run": "npx projen",
+  },
+  Object {
+    "name": "Set git identity",
+    "run": "git config user.name \\"Auto-bump\\"
+git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "name": "Build",
+    "run": "npx projen build",
+  },
+  Object {
+    "name": "Commit changes",
+    "run": "git diff --exit-code || git commit -am \\"chore: updates to generated files\\"",
+  },
+  Object {
+    "env": Object {
+      "BRANCH": "\${{ github.ref }}",
+    },
+    "name": "Push commits",
+    "run": "git push origin $BRANCH",
+  },
+  Object {
+    "env": Object {
+      "BRANCH": "\${{ github.ref }}",
+    },
+    "name": "Push tags",
+    "run": "git push --follow-tags origin $BRANCH",
+  },
+]
+`;

@@ -1,3 +1,4 @@
+import * as yaml from 'yaml';
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
 import * as logging from '../logging';
@@ -289,6 +290,18 @@ test('extend github release workflow', () => {
   const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
   expect(workflow).toContain('publish_docker_hub:\n    runs-on: ubuntu-latest\n');
   expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
+});
+
+test('buildWorkflowMutable will push changes to PR branches', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    buildWorkflowMutable: true,
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
 function packageJson(project: Project) {

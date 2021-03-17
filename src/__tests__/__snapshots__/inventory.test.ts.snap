@@ -136,6 +136,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
+        "type": "boolean",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -1284,6 +1295,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {
@@ -2467,6 +2489,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {
@@ -3920,6 +3953,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
+        "type": "boolean",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -5012,6 +5056,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
+        "type": "boolean",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -5962,6 +6017,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {
@@ -7046,6 +7112,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {
@@ -8438,6 +8515,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
+        "type": "boolean",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -9364,6 +9452,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {
@@ -10439,6 +10538,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
+        "type": "boolean",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -11508,6 +11618,17 @@ Array [
           "buildWorkflow",
         ],
         "switch": "build-workflow",
+        "type": "boolean",
+      },
+      Object {
+        "docs": "Automatically push changes to files generated during PR builds.",
+        "name": "buildWorkflowMutable",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowMutable",
+        ],
+        "switch": "build-workflow-mutable",
         "type": "boolean",
       },
       Object {

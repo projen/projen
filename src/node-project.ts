@@ -63,6 +63,12 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly buildWorkflow?: boolean;
 
   /**
+   * Automatically push changes to files generated during PR builds. This
+   * implies that PR builds do not have anti-tamper checks.
+   */
+  readonly buildWorkflowMutable?: boolean;
+
+  /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
    * Uses codecov/codecov-action@v1
    * A secret is required for private repos. Configured with @codeCovTokenSecret
@@ -506,9 +512,12 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.package.addVersion(this._version.currentVersion);
 
+    const buildWorkflowEnabled = options.buildWorkflow ?? (this.parent ? false : true);
+    const buildWorkflowMutable = options.buildWorkflowMutable ?? false;
+
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
-    this.antitamper = (options.buildWorkflow ?? (this.parent ? false : true)) && (options.antitamper ?? true);
+    this.antitamper = buildWorkflowEnabled && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -521,6 +530,9 @@ export class NodeProject extends Project {
         trigger: {
           pull_request: { },
         },
+        commit: buildWorkflowMutable ? 'chore: updates to generated files' : undefined,
+        pushBranch: buildWorkflowMutable ? '${{ github.ref }}' : undefined,
+        antitamperDisabled: buildWorkflowMutable, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
@@ -881,7 +893,7 @@ export class NodeProject extends Project {
 
     const commitChanges = !options.commit ? [] : [{
       name: 'Commit changes',
-      run: `git commit -am "${options.commit}"`,
+      run: `git diff --exit-code || git commit -am "${options.commit}"`,
     }];
 
     const pushChanges = !options.pushBranch ? [] : [
