@@ -532,6 +532,7 @@ export class NodeProject extends Project {
         },
         commit: buildWorkflowMutable ? 'chore: updates to generated files' : undefined,
         pushBranch: buildWorkflowMutable ? '${{ github.ref }}' : undefined,
+        pushTags: false,
         antitamperDisabled: buildWorkflowMutable, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -564,6 +565,7 @@ export class NodeProject extends Project {
           run: this.runTaskCommand(this._version.bumpTask),
         }],
         pushBranch: '${{ github.ref }}',
+        pushTags: true,
         artifactDirectory,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -886,28 +888,36 @@ export class NodeProject extends Project {
     const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const postSteps = options.postSteps ?? [];
 
+    const gitNoChanges = 'git diff --exit-code';
+
     const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
       name: 'Anti-tamper check',
-      run: 'git diff --exit-code',
+      run: gitNoChanges,
     }];
 
     const commitChanges = !options.commit ? [] : [{
       name: 'Commit changes',
-      run: `git diff --exit-code || git commit -am "${options.commit}"`,
+      run: `${gitNoChanges} || git commit -am "${options.commit}"`,
     }];
 
     const pushChanges = !options.pushBranch ? [] : [
       {
         name: 'Push commits',
-        run: 'git push origin $BRANCH',
+        run: `${gitNoChanges} || git push origin $BRANCH`,
         env: {
           BRANCH: options.pushBranch,
         },
       },
+    ];
 
-      // push tags only after we've managed to push our commits in order to
-      // avoid tags being pushed but commits being rejected due to new commits
-      // see https://github.com/projen/projen/issues/553
+    // push tags only after we've managed to push our commits in order to
+    // avoid tags being pushed but commits being rejected due to new commits
+    // see https://github.com/projen/projen/issues/553
+    if (options.pushTags && !options.pushBranch) {
+      throw new Error('pushBranch must not be undefined if pushTags is enabled');
+    }
+
+    const pushTags = !options.pushTags ? [] : [
       {
         name: 'Push tags',
         run: 'git push --follow-tags origin $BRANCH',
@@ -980,6 +990,7 @@ export class NodeProject extends Project {
 
         // push bump commit
         ...pushChanges,
+        ...pushTags,
 
         ...postSteps,
       ],
@@ -1086,6 +1097,8 @@ interface NodeBuildWorkflowOptions {
    * @default - do not push the changes to a branch
    */
   readonly pushBranch?: string;
+
+  readonly pushTags: boolean;
 
   /**
    * Disables anti-tamper checks in the workflow.

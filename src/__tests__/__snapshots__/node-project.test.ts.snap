@@ -32,14 +32,7 @@ git config user.email \\"github-actions@github.com\\"",
       "BRANCH": "\${{ github.ref }}",
     },
     "name": "Push commits",
-    "run": "git push origin $BRANCH",
-  },
-  Object {
-    "env": Object {
-      "BRANCH": "\${{ github.ref }}",
-    },
-    "name": "Push tags",
-    "run": "git push --follow-tags origin $BRANCH",
+    "run": "git diff --exit-code || git push origin $BRANCH",
   },
 ]
 `;
