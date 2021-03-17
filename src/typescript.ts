@@ -8,7 +8,6 @@ import { SampleDir } from './sample-file';
 import { Task, TaskCategory } from './tasks';
 import { TextFile } from './textfile';
 import { TypedocDocgen } from './typescript-typedoc';
-import { deepMerge } from './util';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -251,7 +250,7 @@ export class TypeScriptProject extends NodeProject {
         },
       };
       this.tsconfig = new TypescriptConfig(this,
-        deepMerge([baseTsconfig, options.tsconfig]) as TypescriptConfigOptions);
+        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
@@ -311,9 +310,8 @@ export class TypeScriptProject extends NodeProject {
     if (this.jest && !compiledTests) {
       this.jest.addTestMatch('**\/__tests__/**\/*.ts?(x)');
       this.jest.addTestMatch('**\/?(*.)+(spec|test).ts?(x)');
-      // create a tsconfig for jest that does NOT include outDir and rootDir and
-      // includes both "src" and "test" as inputs.
-      const tsconfig = this.jest.generateTypescriptConfig({
+
+      const baseTsconfig: TypescriptConfigOptions = {
         fileName: 'tsconfig.jest.json',
         include: [
           PROJEN_RC,
@@ -324,7 +322,12 @@ export class TypeScriptProject extends NodeProject {
           'node_modules',
         ],
         compilerOptions: compilerOptionDefaults,
-      });
+      };
+
+      // create a tsconfig for jest that does NOT include outDir and rootDir and
+      // includes both "src" and "test" as inputs.
+      const tsconfig = this.jest.generateTypescriptConfig(
+        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
 
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
@@ -347,7 +350,7 @@ export class TypeScriptProject extends NodeProject {
         ...options.eslintOptions,
       });
 
-      new TypescriptConfig(this, {
+      const baseTsconfig = {
         fileName: 'tsconfig.eslint.json',
         include: [
           PROJEN_RC,
@@ -358,7 +361,9 @@ export class TypeScriptProject extends NodeProject {
           'node_modules',
         ],
         compilerOptions: compilerOptionDefaults,
-      });
+      };
+
+      new TypescriptConfig(this, mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
     }
 
     const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
@@ -789,4 +794,27 @@ export class TypeScriptLibraryProject extends TypeScriptProject {
  * @deprecated use TypeScriptProjectOptions
  */
 export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
+}
+
+/**
+ * @internal
+ */
+export function mergeTsconfigOptions(options: (TypescriptConfigOptions | undefined)[]): TypescriptConfigOptions {
+  const definedOptions = options.filter(Boolean) as TypescriptConfigOptions[];
+  return definedOptions.reduce<TypescriptConfigOptions>((previous, current) => ({
+    ...previous,
+    ...current,
+    include: [
+      ...previous.include ?? [],
+      ...current.include ?? [],
+    ],
+    exclude: [
+      ...previous.exclude ?? [],
+      ...current.exclude ?? [],
+    ],
+    compilerOptions: {
+      ...previous.compilerOptions,
+      ...current.compilerOptions,
+    },
+  }), { compilerOptions: {} });
 }
