@@ -630,6 +630,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -880,7 +892,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -889,7 +901,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -1803,6 +1815,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -2041,7 +2065,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -2050,7 +2074,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "- no publishing",
@@ -2928,6 +2952,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -3166,7 +3202,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -3175,7 +3211,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "- no publishing",
@@ -4355,6 +4391,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -4593,7 +4641,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -4602,7 +4650,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "- no publishing",
@@ -5365,6 +5413,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -5603,7 +5663,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -5612,7 +5672,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -6414,6 +6474,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -6664,7 +6736,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -6673,7 +6745,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -7402,6 +7474,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -7640,7 +7724,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -7649,7 +7733,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -8791,6 +8875,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -9029,7 +9125,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -9038,7 +9134,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -9816,6 +9912,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -10066,7 +10174,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -10075,7 +10183,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -10888,6 +10996,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -11138,7 +11258,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -11147,7 +11267,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",
@@ -11960,6 +12080,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -12210,7 +12342,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "Semver.latest()",
+        "default": "- Defaults to the latest version.",
         "docs": "Version of projen to install.",
         "name": "projenVersion",
         "optional": true,
@@ -12219,7 +12351,7 @@ Array [
           "projenVersion",
         ],
         "switch": "projen-version",
-        "type": "Semver",
+        "type": "string",
       },
       Object {
         "default": "true",

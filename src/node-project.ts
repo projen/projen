@@ -10,7 +10,6 @@ import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions }
 import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Publisher } from './publisher';
-import { Semver } from './semver';
 import { Task, TaskCategory } from './tasks';
 import { Version } from './version';
 
@@ -35,9 +34,9 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Version of projen to install.
    *
-   * @default Semver.latest()
+   * @default - Defaults to the latest version.
    */
-  readonly projenVersion?: Semver;
+  readonly projenVersion?: string;
 
   /**
    * Indicates of "projen" should be installed as a devDependency.
@@ -62,6 +61,17 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - true if not a subproject
    */
   readonly buildWorkflow?: boolean;
+
+  /**
+   * Automatically update files modified during builds to pull-request branches. This means
+   * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
+   * before a PR is merged.
+   *
+   * Implies that PR builds do not have anti-tamper checks.
+   *
+   * @default true
+   */
+  readonly mutableBuild?: boolean;
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
@@ -507,9 +517,12 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.package.addVersion(this._version.currentVersion);
 
+    const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
+    const mutableBuilds = options.mutableBuild ?? true;
+
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
-    this.antitamper = (options.buildWorkflow ?? (this.parent ? false : true)) && (options.antitamper ?? true);
+    this.antitamper = buildEnabled && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -518,10 +531,27 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
+      const branch = '${{ github.event.pull_request.head.ref }}';
+      const repo = '${{ github.event.pull_request.head.repo.full_name }}';
+
       const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
         trigger: {
           pull_request: { },
         },
+
+        checkoutWith: mutableBuilds ? {
+          ref: branch,
+          repository: repo,
+        } : undefined,
+
+        postSteps: [
+          {
+            name: 'Commit and push changes (if any)',
+            run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
+          },
+        ],
+
+        antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
@@ -552,7 +582,18 @@ export class NodeProject extends Project {
           name: 'Bump to next version',
           run: this.runTaskCommand(this._version.bumpTask),
         }],
-        pushBranch: '${{ github.ref }}',
+
+        postSteps: [
+          {
+            name: 'Push commits',
+            run: 'git push origin HEAD:${{ github.ref }}',
+          },
+          {
+            name: 'Push tags',
+            run: 'git push --follow-tags origin ${{ github.ref }}',
+          },
+        ],
+
         artifactDirectory,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -880,32 +921,6 @@ export class NodeProject extends Project {
       run: 'git diff --exit-code',
     }];
 
-    const commitChanges = !options.commit ? [] : [{
-      name: 'Commit changes',
-      run: `git commit -am "${options.commit}"`,
-    }];
-
-    const pushChanges = !options.pushBranch ? [] : [
-      {
-        name: 'Push commits',
-        run: 'git push origin $BRANCH',
-        env: {
-          BRANCH: options.pushBranch,
-        },
-      },
-
-      // push tags only after we've managed to push our commits in order to
-      // avoid tags being pushed but commits being rejected due to new commits
-      // see https://github.com/projen/projen/issues/553
-      {
-        name: 'Push tags',
-        run: 'git push --follow-tags origin $BRANCH',
-        env: {
-          BRANCH: options.pushBranch,
-        },
-      },
-    ];
-
     const job: any = {
       'runs-on': 'ubuntu-latest',
       'env': {
@@ -963,12 +978,6 @@ export class NodeProject extends Project {
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
         ...antitamperSteps,
-
-        // if required, commit changes to the repo
-        ...commitChanges,
-
-        // push bump commit
-        ...pushChanges,
 
         ...postSteps,
       ],
@@ -1065,16 +1074,6 @@ interface NodeBuildWorkflowOptions {
   readonly preCheckoutSteps?: any[];
   readonly postSteps?: any[];
   readonly checkoutWith?: { [key: string]: any };
-
-  /**
-   * Commit any changes with the specified commit message.
-   */
-  readonly commit?: string;
-
-  /**
-   * @default - do not push the changes to a branch
-   */
-  readonly pushBranch?: string;
 
   /**
    * Disables anti-tamper checks in the workflow.
