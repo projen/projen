@@ -2,7 +2,7 @@ const { JsiiProject, JsonFile, TextFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
-  description: 'A new generation of project generators',
+  description: 'CDK for software projects',
   repository: 'https://github.com/projen/projen.git',
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
