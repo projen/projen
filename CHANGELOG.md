@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.11](https://github.com/projen/projen/compare/v0.17.10...v0.17.11) (2021-03-17)
+
+
+### Features
+
+* **task:** add TaskStepOptions to task reset ([#619](https://github.com/projen/projen/issues/619)) ([996b0c2](https://github.com/projen/projen/commit/996b0c24b8ff46f2e52f65e9e64b8b1d9f484934))
+
 ### [0.17.10](https://github.com/projen/projen/compare/v0.17.9...v0.17.10) (2021-03-17)
 
 
