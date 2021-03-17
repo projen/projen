@@ -630,6 +630,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -1803,6 +1815,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -2926,6 +2950,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -4355,6 +4391,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -5363,6 +5411,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -6414,6 +6474,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -7400,6 +7472,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -8791,6 +8875,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -9814,6 +9910,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -10888,6 +10996,18 @@ Array [
         "type": "string",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -11958,6 +12078,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",

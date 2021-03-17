@@ -41,13 +41,9 @@ jobs:
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Push commits
-        run: git push origin $BRANCH
-        env:
-          BRANCH: ${{ github.ref }}
+        run: git push origin HEAD:${{ github.ref }}
       - name: Push tags
-        run: git push --follow-tags origin $BRANCH
-        env:
-          BRANCH: ${{ github.ref }}
+        run: git push --follow-tags origin ${{ github.ref }}
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         with:

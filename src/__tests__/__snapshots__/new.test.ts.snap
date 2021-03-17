@@ -66,6 +66,7 @@ const project = new AwsCdkTypeScriptApp({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -201,6 +202,7 @@ const project = new AwsCdkConstructLibrary({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -313,6 +315,7 @@ const project = new ConstructLibraryCdk8s({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -464,6 +467,7 @@ const project = new JsiiProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -563,6 +567,7 @@ const project = new web.NextJsProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -658,6 +663,7 @@ const project = new web.NextJsTypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -765,6 +771,7 @@ const project = new NodeProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -924,6 +931,7 @@ const project = new web.ReactProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -1019,6 +1027,7 @@ const project = new web.ReactTypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -1126,6 +1135,7 @@ const project = new TypeScriptProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
@@ -1233,6 +1243,7 @@ const project = new TypeScriptAppProject({
   // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
