@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.12](https://github.com/projen/projen/compare/v0.17.11...v0.17.12) (2021-03-17)
+
+
+### Features
+
+* **typescript:** TypeScriptProject now merges tsconfig prop into jest and eslint config ([#611](https://github.com/projen/projen/issues/611)) ([514ac9e](https://github.com/projen/projen/commit/514ac9e8df4cbd45fd819cd2f99ed91302f9317b))
+
 ### [0.17.11](https://github.com/projen/projen/compare/v0.17.10...v0.17.11) (2021-03-17)
 
 
