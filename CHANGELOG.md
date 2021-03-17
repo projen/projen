@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.10](https://github.com/projen/projen/compare/v0.17.9...v0.17.10) (2021-03-17)
+
+
+### Features
+
+* **node:** mutable pull request builds ([#624](https://github.com/projen/projen/issues/624)) ([757f8b1](https://github.com/projen/projen/commit/757f8b12a3a93aa83608a7dd18f171738088665c)), closes [#602](https://github.com/projen/projen/issues/602) [#604](https://github.com/projen/projen/issues/604)
+
 ### [0.17.9](https://github.com/projen/projen/compare/v0.17.8...v0.17.9) (2021-03-17)
 
 ### [0.17.8](https://github.com/projen/projen/compare/v0.17.7...v0.17.8) (2021-03-17)
