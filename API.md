@@ -380,6 +380,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -546,6 +547,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -757,6 +759,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -871,6 +874,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -995,6 +999,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -1882,6 +1887,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -2579,6 +2585,7 @@ new NodeProject(options: NodeProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -3630,6 +3637,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -3740,6 +3748,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -3850,6 +3859,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -6054,6 +6064,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -6210,6 +6221,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -6392,6 +6404,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -6544,6 +6557,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
@@ -6690,6 +6704,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -6798,6 +6813,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -6924,6 +6940,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -7031,6 +7048,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -7137,6 +7155,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -7851,6 +7870,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -8166,6 +8186,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -8496,6 +8517,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -8598,6 +8620,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -9579,6 +9602,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -9695,6 +9719,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -9818,6 +9843,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
@@ -9932,6 +9958,7 @@ Name | Type | Description
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
