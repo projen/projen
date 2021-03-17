@@ -14,9 +14,11 @@ The following tools need to be installed to develop on projen locally.
 
 - [Node]
 - [Yarn]
+- [Maven]
 
 [Node]: https://nodejs.org/en/download/
 [Yarn]: https://yarnpkg.com/en/docs/install
+[Maven]: https://maven.apache.org/install
 
 ## Getting Started
 

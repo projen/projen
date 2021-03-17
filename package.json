@@ -1,6 +1,6 @@
 {
   "name": "projen",
-  "description": "A new generation of project generators",
+  "description": "CDK for software projects",
   "repository": {
     "type": "git",
     "url": "https://github.com/projen/projen.git"
@@ -90,7 +90,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.17.12",
+  "version": "0.17.14",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
