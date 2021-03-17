@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
@@ -36,6 +39,6 @@ jobs:
       - name: Push commits
         run: git push origin HEAD:$BRANCH
         env:
-          BRANCH: ${{ github.ref }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
     container:
       image: jsii/superchain

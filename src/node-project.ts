@@ -533,8 +533,12 @@ export class NodeProject extends Project {
         trigger: {
           pull_request: { },
         },
+        checkoutWith: buildWorkflowMutable ? {
+          ref: '${{ github.event.pull_request.head.ref }}',
+          repository: '${{ github.event.pull_request.head.repo.full_name }}',
+        } : undefined,
         commit: buildWorkflowMutable ? 'chore: updates to generated files' : undefined,
-        pushBranch: buildWorkflowMutable ? '${{ github.ref }}' : undefined,
+        pushBranch: buildWorkflowMutable ? '${{ github.event.pull_request.head.ref }}' : undefined,
         pushTags: false,
         antitamperDisabled: buildWorkflowMutable, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
