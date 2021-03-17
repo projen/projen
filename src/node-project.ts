@@ -533,13 +533,19 @@ export class NodeProject extends Project {
         trigger: {
           pull_request: { },
         },
+
         checkoutWith: buildWorkflowMutable ? {
           ref: '${{ github.event.pull_request.head.ref }}',
           repository: '${{ github.event.pull_request.head.repo.full_name }}',
         } : undefined,
-        commit: buildWorkflowMutable ? 'chore: updates to generated files' : undefined,
-        pushBranch: buildWorkflowMutable ? '${{ github.event.pull_request.head.ref }}' : undefined,
-        pushTags: false,
+
+        postSteps: [
+          {
+            name: 'Commit and push changes (if any)',
+            run: 'git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${{ github.event.pull_request.head.ref }}',
+          },
+        ],
+
         antitamperDisabled: buildWorkflowMutable, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -571,8 +577,18 @@ export class NodeProject extends Project {
           name: 'Bump to next version',
           run: this.runTaskCommand(this._version.bumpTask),
         }],
-        pushBranch: '${{ github.ref }}',
-        pushTags: true,
+
+        postSteps: [
+          {
+            name: 'Push commits',
+            run: 'git push origin HEAD:${{ github.ref }}',
+          },
+          {
+            name: 'Push tags',
+            run: 'git push --follow-tags origin ${{ github.ref }}',
+          },
+        ],
+
         artifactDirectory,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
@@ -895,44 +911,10 @@ export class NodeProject extends Project {
     const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const postSteps = options.postSteps ?? [];
 
-    const gitNoChanges = 'git diff --exit-code';
-
     const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
       name: 'Anti-tamper check',
-      run: gitNoChanges,
+      run: 'git diff --exit-code',
     }];
-
-    const commitChanges = !options.commit ? [] : [{
-      name: 'Commit changes',
-      run: `${gitNoChanges} || git commit -am "${options.commit}"`,
-    }];
-
-    const pushChanges = !options.pushBranch ? [] : [
-      {
-        name: 'Push commits',
-        run: 'git push origin HEAD:$BRANCH',
-        env: {
-          BRANCH: options.pushBranch,
-        },
-      },
-    ];
-
-    // push tags only after we've managed to push our commits in order to
-    // avoid tags being pushed but commits being rejected due to new commits
-    // see https://github.com/projen/projen/issues/553
-    if (options.pushTags && !options.pushBranch) {
-      throw new Error('pushBranch must not be undefined if pushTags is enabled');
-    }
-
-    const pushTags = !options.pushTags ? [] : [
-      {
-        name: 'Push tags',
-        run: 'git push --follow-tags origin $BRANCH',
-        env: {
-          BRANCH: options.pushBranch,
-        },
-      },
-    ];
 
     const job: any = {
       'runs-on': 'ubuntu-latest',
@@ -991,13 +973,6 @@ export class NodeProject extends Project {
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
         ...antitamperSteps,
-
-        // if required, commit changes to the repo
-        ...commitChanges,
-
-        // push bump commit
-        ...pushChanges,
-        ...pushTags,
 
         ...postSteps,
       ],
@@ -1094,21 +1069,6 @@ interface NodeBuildWorkflowOptions {
   readonly preCheckoutSteps?: any[];
   readonly postSteps?: any[];
   readonly checkoutWith?: { [key: string]: any };
-
-  /**
-   * Commit any changes with the specified commit message.
-   */
-  readonly commit?: string;
-
-  /**
-   * @default - do not push the changes to a branch
-   */
-  readonly pushBranch?: string;
-
-  /**
-   * Push tags after pushing commits.
-   */
-  readonly pushTags: boolean;
 
   /**
    * Disables anti-tamper checks in the workflow.
