@@ -35,6 +35,6 @@ jobs:
           directory: coverage
       - name: Commit and push changes (if any)
         run: 'git diff --exit-code || (git commit -am "chore: self mutation" && git push
-          origin HEAD:${{ github.event.pull_request.head.ref }}'
+          origin HEAD:${{ github.event.pull_request.head.ref }})'
     container:
       image: jsii/superchain

@@ -136,17 +136,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -639,6 +628,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -1298,17 +1299,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -1823,6 +1813,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -2492,17 +2494,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -2959,6 +2950,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -3953,17 +3956,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -4397,6 +4389,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -5056,17 +5060,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -5418,6 +5411,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -6020,17 +6025,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -6478,6 +6472,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -7115,17 +7121,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -7477,6 +7472,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -8515,17 +8522,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -8877,6 +8873,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -9455,17 +9463,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -9913,6 +9910,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -10538,17 +10547,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -10996,6 +10994,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",
@@ -11621,17 +11631,6 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically update files modified during builds to pull-request branches.",
-        "name": "buildWorkflowMutable",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "buildWorkflowMutable",
-        ],
-        "switch": "build-workflow-mutable",
-        "type": "boolean",
-      },
-      Object {
         "docs": "List of dependencies to bundle into this module.",
         "name": "bundledDeps",
         "optional": true,
@@ -12079,6 +12078,18 @@ Array [
         ],
         "switch": "min-node-version",
         "type": "string",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
+        "name": "mutableBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "mutableBuild",
+        ],
+        "switch": "mutable-build",
+        "type": "boolean",
       },
       Object {
         "default": "$BASEDIR",

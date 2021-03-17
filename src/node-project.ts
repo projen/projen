@@ -68,8 +68,10 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * before a PR is merged.
    *
    * Implies that PR builds do not have anti-tamper checks.
+   *
+   * @default true
    */
-  readonly buildWorkflowMutable?: boolean;
+  readonly mutableBuild?: boolean;
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
@@ -515,12 +517,12 @@ export class NodeProject extends Project {
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
     this.package.addVersion(this._version.currentVersion);
 
-    const buildWorkflowEnabled = options.buildWorkflow ?? (this.parent ? false : true);
-    const buildWorkflowMutable = options.buildWorkflowMutable ?? false;
+    const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
+    const mutableBuilds = options.mutableBuild ?? true;
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
-    this.antitamper = buildWorkflowEnabled && (options.antitamper ?? true);
+    this.antitamper = buildEnabled && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -529,24 +531,27 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
+      const branch = '${{ github.event.pull_request.head.ref }}';
+      const repo = '${{ github.event.pull_request.head.repo.full_name }}';
+
       const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
         trigger: {
           pull_request: { },
         },
 
-        checkoutWith: buildWorkflowMutable ? {
-          ref: '${{ github.event.pull_request.head.ref }}',
-          repository: '${{ github.event.pull_request.head.repo.full_name }}',
+        checkoutWith: mutableBuilds ? {
+          ref: branch,
+          repository: repo,
         } : undefined,
 
         postSteps: [
           {
             name: 'Commit and push changes (if any)',
-            run: 'git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${{ github.event.pull_request.head.ref }}',
+            run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
           },
         ],
 
-        antitamperDisabled: buildWorkflowMutable, // <-- disable anti-tamper if build workflow is mutable
+        antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,

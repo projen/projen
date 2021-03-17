@@ -28,15 +28,8 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "name": "Commit changes",
-    "run": "git diff --exit-code || git commit -am \\"chore: updates to generated files\\"",
-  },
-  Object {
-    "env": Object {
-      "BRANCH": "\${{ github.event.pull_request.head.ref }}",
-    },
-    "name": "Push commits",
-    "run": "git push origin HEAD:$BRANCH",
+    "name": "Commit and push changes (if any)",
+    "run": "git diff --exit-code || (git commit -am \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }})",
   },
 ]
 `;

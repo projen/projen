@@ -295,7 +295,7 @@ test('extend github release workflow', () => {
 test('buildWorkflowMutable will push changes to PR branches', () => {
   // WHEN
   const project = new TestNodeProject({
-    buildWorkflowMutable: true,
+    mutableBuild: true,
   });
 
   // THEN
