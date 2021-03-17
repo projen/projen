@@ -63,8 +63,11 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly buildWorkflow?: boolean;
 
   /**
-   * Automatically push changes to files generated during PR builds. This
-   * implies that PR builds do not have anti-tamper checks.
+   * Automatically update files modified during builds to pull-request branches. This means
+   * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
+   * before a PR is merged.
+   *
+   * Implies that PR builds do not have anti-tamper checks.
    */
   readonly buildWorkflowMutable?: boolean;
 
