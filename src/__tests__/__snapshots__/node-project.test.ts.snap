@@ -5,6 +5,10 @@ Array [
   Object {
     "name": "Checkout",
     "uses": "actions/checkout@v2",
+    "with": Object {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
   },
   Object {
     "name": "Install dependencies",
@@ -29,10 +33,10 @@ git config user.email \\"github-actions@github.com\\"",
   },
   Object {
     "env": Object {
-      "BRANCH": "\${{ github.ref }}",
+      "BRANCH": "\${{ github.event.pull_request.head.ref }}",
     },
     "name": "Push commits",
-    "run": "git diff --exit-code || git push origin $BRANCH",
+    "run": "git push origin HEAD:$BRANCH",
   },
 ]
 `;

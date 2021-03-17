@@ -53,7 +53,7 @@ const project = new AwsCdkTypeScriptApp({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -189,7 +189,7 @@ const project = new AwsCdkConstructLibrary({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -302,7 +302,7 @@ const project = new ConstructLibraryCdk8s({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -454,7 +454,7 @@ const project = new JsiiProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -554,7 +554,7 @@ const project = new web.NextJsProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -650,7 +650,7 @@ const project = new web.NextJsTypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -758,7 +758,7 @@ const project = new NodeProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -918,7 +918,7 @@ const project = new web.ReactProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -1014,7 +1014,7 @@ const project = new web.ReactTypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -1122,7 +1122,7 @@ const project = new TypeScriptProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
@@ -1230,7 +1230,7 @@ const project = new TypeScriptAppProject({
   // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
   // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
   // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // buildWorkflowMutable: undefined,                                          /* Automatically push changes to files generated during PR builds. */
+  // buildWorkflowMutable: undefined,                                          /* Automatically update files modified during builds to pull-request branches. */
   // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */

@@ -136,7 +136,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -1298,7 +1298,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -2492,7 +2492,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -3953,7 +3953,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -5056,7 +5056,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -6020,7 +6020,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -7115,7 +7115,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -8515,7 +8515,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -9455,7 +9455,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -10538,7 +10538,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
@@ -11621,7 +11621,7 @@ Array [
         "type": "boolean",
       },
       Object {
-        "docs": "Automatically push changes to files generated during PR builds.",
+        "docs": "Automatically update files modified during builds to pull-request branches.",
         "name": "buildWorkflowMutable",
         "optional": true,
         "parent": "NodeProjectOptions",
