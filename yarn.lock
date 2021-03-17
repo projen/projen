@@ -3691,13 +3691,13 @@ jsesc@^2.5.1:
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
 jsii-diff@^1.16.0:
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.24.0.tgz#97375083661a9cdd931764b526184bb5eb192497"
-  integrity sha512-Wkj/fyAmtNsaLSr5r6abgm5nnU7aHnlaqj//gG0azum7+TkbrmNj9LaxwXYJWT2fROCmP/fS8/jJta5U3wAi7Q==
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/jsii-diff/-/jsii-diff-1.25.0.tgz#410c05422427291c7b19e2d410090b6945eda142"
+  integrity sha512-rW4mpldvQrUDgDY+9Bvglew6nwXPWyVaePgeYTTB/4+9NEoAE7vecQAYhDokTBRdcOVCaEt5ffucwwawMu2ctQ==
   dependencies:
-    "@jsii/spec" "^1.24.0"
+    "@jsii/spec" "^1.25.0"
     fs-extra "^9.1.0"
-    jsii-reflect "^1.24.0"
+    jsii-reflect "^1.25.0"
     log4js "^6.3.0"
     typescript "~3.9.9"
     yargs "^16.2.0"
@@ -3754,11 +3754,11 @@ jsii-rosetta@^1.25.0:
     yargs "^16.2.0"
 
 jsii@^1.18.0:
-  version "1.24.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.24.0.tgz#48e156b77f54d067520e0789f75d70c883be058a"
-  integrity sha512-ROCFFFdbs2o8OgQEWvpMY/UMXshndkGr8TunG0NQx8kQfONYeCjgNFqMcbcyXuhlR+DI1MUGVVOzw6zc9geyGA==
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.25.0.tgz#ec60566f6c2c7829d25aa8f1fb14d49c700f621e"
+  integrity sha512-5dchUvG+RTc48v8euUUNvxKxAlPMIaE9rG8BFp4RiXQiB3EFDTJeeM89cXK4w/vAhjgDlAxMDx3EJr7k6e461A==
   dependencies:
-    "@jsii/spec" "^1.24.0"
+    "@jsii/spec" "^1.25.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.5"
