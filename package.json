@@ -1,6 +1,6 @@
 {
   "name": "projen",
-  "description": "A new generation of project generators",
+  "description": "CDK for software projects",
   "repository": {
     "type": "git",
     "url": "https://github.com/projen/projen.git"
