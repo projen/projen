@@ -383,6 +383,11 @@ export class NodePackage extends Component {
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
 
+    // reads the current "package.json" file (if exists) so that we can fall
+    // back to existing values in certain cases
+    // TODO: move dependency management from "preSynth" to here
+    const current = this.readPackageJson() ?? {};
+
     this.processDeps(options);
 
     // empty objects are here to preserve order for backwards compatibility
@@ -405,16 +410,15 @@ export class NodePackage extends Component {
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
-      version: '0.0.0',
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
+      version: current.version ?? '0.0.0',
     };
 
     // override any scripts from options (if specified)
     for (const [cmdname, shell] of Object.entries(options.scripts ?? {})) {
       project.addTask(cmdname, { exec: shell });
     }
-
 
     new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
@@ -759,12 +763,10 @@ export class NodePackage extends Component {
     this.manifest.bundledDependencies = bundledDependencies;
 
     // nothing further to do if package.json file does not exist
-    const root = join(this.project.outdir, 'package.json');
-    if (!existsSync(root)) {
+    const pkg = this.readPackageJson();
+    if (!pkg) {
       return { devDependencies, peerDependencies, dependencies };
     }
-
-    const pkg = readJsonSync(root);
 
     const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
       for (const [name, userVersion] of Object.entries(user)) {
@@ -923,6 +925,15 @@ export class NodePackage extends Component {
       default:
         throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
     }
+  }
+
+  private readPackageJson() {
+    const file = join(this.project.outdir, 'package.json');
+    if (!existsSync(file)) {
+      return undefined;
+    }
+
+    return readJsonSync(file);
   }
 }
 

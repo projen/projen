@@ -67,11 +67,13 @@ export class Version extends Component {
    * Returns the current version of the project.
    */
   public get currentVersion() {
-    const tag = execOrUndefined('git describe --abbrev=0 --tags --match "v[0-9]*"', { cwd: this.project.outdir });
-    if (!tag) {
-      return '0.0.0';
-    }
+    return undefined;
 
-    return tag.slice(1); // skip "v" prefix
+    // const tag = execOrUndefined('git describe --abbrev=0 --tags --match "v[0-9]*"', { cwd: this.project.outdir });
+    // if (!tag) {
+    //   return undefined;
+    // }
+
+    // return tag.slice(1); // skip "v" prefix
   }
 }
