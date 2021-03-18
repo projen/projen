@@ -55,6 +55,9 @@ export class Version extends Component {
         packageFiles: [],
         bumpFiles: [],
         commitAll: false,
+        skip: {
+          commit: true,
+        },
         scripts: {
           // run projen after release to update package.json
           postbump: `${projenCommand} && git add .`,

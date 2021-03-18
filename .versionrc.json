@@ -2,6 +2,9 @@
   "packageFiles": [],
   "bumpFiles": [],
   "commitAll": false,
+  "skip": {
+    "commit": true
+  },
   "scripts": {
     "postbump": "/bin/bash ./projen.bash && git add ."
   }
