@@ -1,11 +1,9 @@
 import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Task, TaskCategory } from './tasks';
-
-const VERSION_FILE = 'version.json';
+import { execOrUndefined } from './util';
 
 export interface VersionOptions {
   /**
@@ -47,7 +45,6 @@ export class Version extends Component {
     );
 
     project.npmignore?.exclude('/.versionrc.json');
-    project.gitignore.include(VERSION_FILE);
 
     let projenCommand = project.package.projenCommand;
     if (project.parent) {
@@ -55,9 +52,9 @@ export class Version extends Component {
     }
     new JsonFile(project, '.versionrc.json', {
       obj: {
-        packageFiles: [{ filename: VERSION_FILE, type: 'json' }],
-        bumpFiles: [{ filename: VERSION_FILE, type: 'json' }],
-        commitAll: true,
+        packageFiles: [],
+        bumpFiles: [],
+        commitAll: false,
         scripts: {
           // run projen after release to update package.json
           postbump: `${projenCommand} && git add .`,
@@ -70,15 +67,11 @@ export class Version extends Component {
    * Returns the current version of the project.
    */
   public get currentVersion() {
-    const outdir = this.project.outdir;
-    const versionFile = `${outdir}/${VERSION_FILE}`;
-    if (!fs.existsSync(versionFile)) {
-      if (!fs.existsSync(outdir)) {
-        fs.mkdirpSync(outdir);
-      }
-      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
+    const tag = execOrUndefined('git describe --abbrev=0 --tags --match "v[0-9]*"', { cwd: this.project.outdir });
+    if (!tag) {
+      return '0.0.0';
     }
 
-    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
+    return tag.slice(1); // skip "v" prefix
   }
 }

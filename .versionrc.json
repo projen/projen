@@ -1,17 +1,7 @@
 {
-  "packageFiles": [
-    {
-      "filename": "version.json",
-      "type": "json"
-    }
-  ],
-  "bumpFiles": [
-    {
-      "filename": "version.json",
-      "type": "json"
-    }
-  ],
-  "commitAll": true,
+  "packageFiles": [],
+  "bumpFiles": [],
+  "commitAll": false,
   "scripts": {
     "postbump": "/bin/bash ./projen.bash && git add ."
   }
