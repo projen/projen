@@ -2442,9 +2442,9 @@ addVersion(version: string): void
 
 
 
-#### hasScript(name)🔹 <a id="projen-nodepackage-hasscript"></a>
+#### hasScript(name)⚠️ <a id="projen-nodepackage-hasscript"></a>
 
-Indicates if a script by the name name is defined.
+Indicates if a script by the given name is defined.
 
 ```ts
 hasScript(name: string): boolean
@@ -2496,7 +2496,7 @@ removeScript(name: string): void
 
 #### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
 
-Replaces the contents of an npm package.json script.
+Override the contents of an npm package.json script.
 
 ```ts
 setScript(name: string, command: string): void

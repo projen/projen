@@ -9,8 +9,6 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "projen": "/bin/bash ./projen.bash",
-    "start": "/bin/bash ./projen.bash start",
     "clobber": "/bin/bash ./projen.bash clobber",
     "compile": "/bin/bash ./projen.bash compile",
     "test:compile": "/bin/bash ./projen.bash test:compile",
@@ -28,7 +26,9 @@
     "docgen": "/bin/bash ./projen.bash docgen",
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
-    "contributors:update": "/bin/bash ./projen.bash contributors:update"
+    "contributors:update": "/bin/bash ./projen.bash contributors:update",
+    "projen": "/bin/bash ./projen.bash",
+    "start": "/bin/bash ./projen.bash start"
   },
   "author": {
     "name": "Elad Ben-Israel",
