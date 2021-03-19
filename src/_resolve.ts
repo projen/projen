@@ -1,4 +1,8 @@
-import { ResolveOptions } from './file';
+import { ResolveOptions, IResolvable } from './file';
+
+function isResolvable(obj: any): obj is IResolvable {
+  return (obj as IResolvable).toJSON !== undefined;
+}
 
 export function resolve(value: any, options: ResolveOptions = {}): any {
   const args = options.args ?? [];
@@ -8,8 +12,8 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
     return value;
   }
 
-  if ('resolve' in value) {
-    const resolved = value.resolveContent();
+  if (isResolvable(value)) {
+    const resolved = value.toJSON();
     return resolve(resolved, options);
   }
 

@@ -212,6 +212,7 @@ Name|Description
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
+[IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
@@ -8105,6 +8106,27 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 
 
+
+
+
+## interface IResolvable 🔹 <a id="projen-iresolvable"></a>
+
+
+
+### Methods
+
+
+#### toJSON()🔹 <a id="projen-iresolvable-tojson"></a>
+
+Resolves and returns content.
+
+```ts
+toJSON(): any
+```
+
+
+__Returns__:
+* <code>any</code>
 
 
 
