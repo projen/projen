@@ -1,4 +1,4 @@
-import { create as createxml } from 'xmlbuilder2';
+import { create as createxml } from '@campionfellin/xmlbuilder2';
 import { IResolver } from './file';
 import { ObjectFile, ObjectFileOptions } from './object-file';
 import { Project } from './project';

@@ -29,7 +29,7 @@ const project = new JsiiProject({
     'inquirer',
     'chalk',
     '@iarna/toml',
-    'xmlbuilder2',
+    '@campionfellin/xmlbuilder2',
   ],
 
   devDeps: [

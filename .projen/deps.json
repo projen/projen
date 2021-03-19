@@ -101,6 +101,10 @@
       "type": "build"
     },
     {
+      "name": "@campionfellin/xmlbuilder2",
+      "type": "bundled"
+    },
+    {
       "name": "@iarna/toml",
       "type": "bundled"
     },
@@ -127,10 +131,6 @@
     },
     {
       "name": "semver",
-      "type": "bundled"
-    },
-    {
-      "name": "xmlbuilder2",
       "type": "bundled"
     },
     {
