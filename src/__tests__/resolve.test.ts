@@ -1,4 +1,5 @@
 import { resolve } from '../_resolve';
+import { IResolvable } from '../file';
 
 test('null', () => {
   expect(resolve(null)).toStrictEqual(null);
@@ -45,6 +46,12 @@ test('functions are resolved', () => {
   expect(resolve(() => 123)).toStrictEqual(123);
   expect(resolve(() => 'hello')).toStrictEqual('hello');
   expect(resolve(() => undefined)).toStrictEqual(undefined);
+});
+
+test('resolvable objects are resolved', () => {
+  const resolvedContent = 'Content';
+  const resolvable: IResolvable = { toJSON: () => resolvedContent };
+  expect(resolve({ foo: resolvable })).toStrictEqual({ foo: resolvedContent });
 });
 
 test('recursive resolve', () => {
