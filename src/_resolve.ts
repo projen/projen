@@ -8,6 +8,11 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
     return value;
   }
 
+  if ('resolve' in value) {
+    const resolved = value.resolveContent();
+    return resolve(resolved, options);
+  }
+
   // if value is a function, call it and resolve the result.
   if (typeof(value) === 'function') {
     const resolved = value.apply(undefined, args);
