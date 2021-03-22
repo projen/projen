@@ -21,10 +21,12 @@ export interface DependabotOptions {
   readonly versioningStrategy?: VersioningStrategy;
 
   /**
-   * Automatically merge dependabot PRs if build CI build passes.
+   * Automatically approve dependabot PRs. This will cause mergify
+   * to auto merge them given the CI checks pass.
+   *
    * @default true
    */
-  readonly autoMerge?: boolean;
+  readonly autoApprove?: boolean;
 
   /**
    * You can use the `ignore` option to customize which dependencies are updated.
@@ -145,6 +147,14 @@ export class Dependabot extends Component {
 
     this.ignore = [];
 
+    const labels = [];
+    if (options.autoApprove ?? true) {
+      if (!project.autoApprove) {
+        throw new Error('Project must be configured with auto-approve to auto approve dependabot PRs');
+      }
+      labels.push(project.autoApprove.label);
+    }
+
     this.config = {
       version: 2,
       updates: [
@@ -165,24 +175,6 @@ export class Dependabot extends Component {
       committed: true,
       marker: true,
     });
-
-    if (options.autoMerge ?? true) {
-      github.addMergifyRules({
-        name: 'Merge pull requests from dependabot if CI passes',
-        conditions: [
-          'author=dependabot[bot]',
-          'status-success=build',
-        ],
-        actions: {
-          merge: {
-            method: 'squash',
-            commit_message: 'title+body',
-            strict: 'smart',
-            strict_method: 'merge',
-          },
-        },
-      });
-    }
 
     for (const i of options.ignore ?? []) {
       this.addIgnore(i.dependencyName, ...(i.versions ?? []));

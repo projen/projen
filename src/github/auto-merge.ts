@@ -13,14 +13,6 @@ export interface AutoMergeOptions {
    */
   readonly approvedReviews?: number;
 
-  /**
-   * Automatically merge PRs that build successfully and have this label.
-   *
-   * To disable, set this value to an empty string.
-   *
-   * @default "auto-merge"
-   */
-  readonly autoMergeLabel?: string;
 }
 
 /**
@@ -33,7 +25,6 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-  public readonly autoMergeLabel: string;
 
   constructor(project: Project, options: AutoMergeOptions = { }) {
     super(project);
@@ -69,18 +60,5 @@ export class AutoMerge extends Component {
       ],
     });
 
-    // empty string means disabled.
-    const autoMergeLabel = options.autoMergeLabel ?? 'auto-merge';;
-    this.autoMergeLabel = autoMergeLabel;
-    if (this.autoMergeLabel) {
-      project.github?.addMergifyRules({
-        name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
-        actions: mergeAction,
-        conditions: [
-          `label=${autoMergeLabel}`,
-          ...successfulBuild,
-        ],
-      });
-    }
   }
 }

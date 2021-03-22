@@ -2,30 +2,20 @@ import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
 
 export interface ProjenUpgradeOptions {
-  /**
-   * The secret name which contains a GitHub Access Token with `repo` and
-   * `workflow` permissions. This token is used to submit the upgrade pull
-   * request, which will likely include workflow updates.
-   *
-   * @default - auto-upgrade is disabled
-   */
-  readonly autoUpgradeSecret?: string;
 
   /**
-   * Apply labels to the PR. For example, you can add the label "auto-merge",
-   * which, in-tandem with mergify configuration will automatically merge these
-   * PRs if their build passes.
+   * Cron expression that determines the upgrade schedule.
    *
-   * @default []
+   * @default [ '0 6 * * *' ]
    */
-  readonly labels?: string[];
+  readonly schedule?: string[];
 
   /**
-   * Customize the projenUpgrade schedule in cron expression.
+   * Auto approve PR's, allowing mergify to merge them.
    *
-   @default [ '0 6 * * *' ]
+   * @default true
    */
-  readonly autoUpgradeSchedule?: string[];
+  readonly autoApprove?: boolean;
 }
 
 /**
@@ -41,30 +31,34 @@ export class ProjenUpgrade {
     upgradeTask.exec('yarn upgrade -L projen');
     upgradeTask.exec('CI="" yarn projen');
 
-    if (options.autoUpgradeSecret) {
+    if (project.projenSecret) {
+
       if (!project.github) {
-        throw new Error('github workflows are required in order for auto-update');
+        throw new Error('GitHub must be configured to enable auto projen upgrades');
       }
 
       const workflow = project.github.addWorkflow('ProjenUpgrade');
 
       workflow.on({
-        schedule: options.autoUpgradeSchedule
-          ? options.autoUpgradeSchedule.map(s => ({ cron: s }))
+        schedule: options.schedule
+          ? options.schedule.map(s => ({ cron: s }))
           : [{ cron: '0 6 * * *' }], // 6am every day
         workflow_dispatch: {}, // allow manual triggering
       });
 
       const withOptions: Record<string, string> = {
-        'token': '${{ secrets.' + options.autoUpgradeSecret + ' }}',
+        'token': '${{ secrets.' + project.projenSecret + ' }}',
         'commit-message': 'chore: upgrade projen',
         'branch': 'auto/projen-upgrade',
         'title': 'chore: upgrade projen',
         'body': 'This PR upgrades projen to the latest version',
       };
 
-      if (options.labels?.length) {
-        withOptions.labels = options.labels.join(',');
+      if (options.autoApprove ?? true) {
+        if (!project.autoApprove) {
+          throw new Error('Project must have auto-approve configured in order to auto-approve projen upgrades');
+        }
+        withOptions.labels = project.autoApprove.label;
       }
 
       workflow.addJobs({

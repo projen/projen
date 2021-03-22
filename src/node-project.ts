@@ -1,7 +1,7 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
+import { DependenciesUpgrade } from './dependencies-upgrade';
 import { GithubWorkflow } from './github';
 import { AutoMerge } from './github/auto-merge';
-import { DependabotOptions } from './github/dependabot';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
@@ -152,18 +152,11 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowNodeVersion?: string;
 
   /**
-   * Include dependabot configuration.
+   * Controls how dependencies are upgraded.
    *
-   * @default true
+   * @default - DependenciesUpgrade.githubActions()
    */
-  readonly dependabot?: boolean;
-
-  /**
-   * Options for dependabot.
-   *
-   * @default - default options
-   */
-  readonly dependabotOptions?: DependabotOptions;
+  readonly dependenciesUpgrade?: DependenciesUpgrade;
 
   /**
    * Adds mergify configuration.
@@ -180,37 +173,12 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-   * Automatically merge PRs that build successfully and have this label.
+   * Automatically approve projen upgrade PRs, causing mergify to merge them
+   * given the CI passes.
    *
-   * To disable, set this value to an empty string.
-   *
-   * @default "auto-merge"
+   * @default true
    */
-  readonly mergifyAutoMergeLabel?: string;
-
-  /**
-   * Periodically submits a pull request for projen upgrades (executes `yarn
-   * projen:upgrade`).
-   *
-   * This setting is a GitHub secret name which contains a GitHub Access Token
-   * with `repo` and `workflow` permissions.
-   *
-   * This token is used to submit the upgrade pull request, which will likely
-   * include workflow updates.
-   *
-   * To create a personal access token see https://github.com/settings/tokens
-   *
-   * @default - no automatic projen upgrade pull requests
-   */
-  readonly projenUpgradeSecret?: string;
-
-  /**
-   * Automatically merge projen upgrade PRs when build passes.
-   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
-   *
-   * @default - "true" if mergify auto-merge is enabled (default)
-   */
-  readonly projenUpgradeAutoMerge?: boolean;
+  readonly projenUpgradeAutoApprove?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -336,11 +304,6 @@ export class NodeProject extends Project {
    * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
-
-  /**
-   * Automatic PR merges.
-   */
-  public readonly autoMerge?: AutoMerge;
 
   private readonly _version: Version;
 
@@ -500,7 +463,6 @@ export class NodeProject extends Project {
     this.npmignore?.exclude(`/${PROJEN_DIR}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
-
     const projen = options.projenDevDependency ?? true;
     if (projen) {
       const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
@@ -640,25 +602,19 @@ export class NodeProject extends Project {
     }
 
     if (options.mergify ?? true) {
-      this.autoMerge = new AutoMerge(this, {
-        autoMergeLabel: options.mergifyAutoMergeLabel,
-        buildJob: this.buildWorkflowJobId,
-      });
-
+      new AutoMerge(this, { buildJob: this.buildWorkflowJobId });
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    if (options.dependabot ?? true) {
-      this.github?.addDependabot(options.dependabotOptions);
-    }
+    const dependenciesUpgrade = options.dependenciesUpgrade ?? (
+      this.projenSecret ? DependenciesUpgrade.GITHUB_ACTIONS : DependenciesUpgrade.DEPENDABOT
+    );
 
-    const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
+    dependenciesUpgrade.bind(this);
+
     new ProjenUpgrade(this, {
-      autoUpgradeSecret: options.projenUpgradeSecret,
-      autoUpgradeSchedule: options.projenUpgradeSchedule,
-      labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-        ? [this.autoMerge.autoMergeLabel]
-        : [],
+      schedule: options.projenUpgradeSchedule,
+      autoApprove: options.projenUpgradeAutoApprove ?? true,
     });
 
     if (options.pullRequestTemplate ?? true) {
