@@ -14,6 +14,13 @@ export interface PublisherOptions {
   readonly workflow: GithubWorkflow;
 
   /**
+   * Container image to use for GitHub workflows.
+   *
+   * @default - 'jsii/superchain'
+   */
+  readonly workflowContainerImage?: string;
+
+  /**
    * The job ID that produces the build artifacts. All publish jobs will take a dependency on this job.
    */
   readonly buildJobId: string;
@@ -47,6 +54,7 @@ export class Publisher extends Component {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
+  public readonly workflowContainerImage: string;
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -54,6 +62,7 @@ export class Publisher extends Component {
     this.workflow = options.workflow;
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
+    this.workflowContainerImage = options.workflowContainerImage ?? 'jsii/superchain';
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
   }
 
@@ -69,7 +78,7 @@ export class Publisher extends Component {
         'needs': this.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          image: 'jsii/superchain',
+          image: this.workflowContainerImage,
         },
         'steps': [
           this.renderDownloadArtifactStep(),

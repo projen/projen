@@ -304,6 +304,19 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
+test('workflowContainerImage propagates to the release workflow', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    workflowContainerImage: 'some-other-workflow-image',
+    releaseToNpm: true,
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)['.github/workflows/release.yml'];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.release_npm.container.image).toEqual('some-other-workflow-image');
+});
+
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }
