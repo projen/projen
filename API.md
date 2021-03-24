@@ -3163,7 +3163,7 @@ new Publisher(project: Project, options: PublisherOptions)
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
   * **workflow** (<code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>)  The github workflow to add release jobs to. 
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
-  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: 'jsii/superchain'
+  * **workflowImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: 'jsii/superchain'
 
 
 
@@ -3176,7 +3176,7 @@ Name | Type | Description
 **buildJobId**🔹 | <code>string</code> | <span></span>
 **jsiiReleaseVersion**🔹 | <code>string</code> | <span></span>
 **workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | <span></span>
-**workflowContainerImage**🔹 | <code>string</code> | <span></span>
+**workflowImage**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -8308,7 +8308,7 @@ Name | Type | Description
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The github workflow to add release jobs to.
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
-**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: 'jsii/superchain'
+**workflowImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: 'jsii/superchain'
 
 
 

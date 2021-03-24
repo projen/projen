@@ -612,7 +612,7 @@ export class NodeProject extends Project {
         artifactName: artifactDirectory,
         buildJobId,
         jsiiReleaseVersion: options.jsiiReleaseVersion,
-        workflowContainerImage: options.workflowContainerImage,
+        workflowImage: options.workflowContainerImage,
       });
 
       if (options.releaseToNpm ?? false) {

@@ -304,7 +304,7 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
-test('workflowContainerImage propagates to the release workflow', () => {
+test('workflowImage propagates to the release workflow', () => {
   // WHEN
   const project = new TestNodeProject({
     workflowContainerImage: 'some-other-workflow-image',

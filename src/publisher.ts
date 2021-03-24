@@ -18,7 +18,7 @@ export interface PublisherOptions {
    *
    * @default - 'jsii/superchain'
    */
-  readonly workflowContainerImage?: string;
+  readonly workflowImage?: string;
 
   /**
    * The job ID that produces the build artifacts. All publish jobs will take a dependency on this job.
@@ -54,7 +54,7 @@ export class Publisher extends Component {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
-  public readonly workflowContainerImage: string;
+  public readonly workflowImage: string;
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -62,7 +62,7 @@ export class Publisher extends Component {
     this.workflow = options.workflow;
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
-    this.workflowContainerImage = options.workflowContainerImage ?? 'jsii/superchain';
+    this.workflowImage = options.workflowImage ?? 'jsii/superchain';
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
   }
 
@@ -78,7 +78,7 @@ export class Publisher extends Component {
         'needs': this.buildJobId,
         'runs-on': 'ubuntu-latest',
         'container': {
-          image: this.workflowContainerImage,
+          image: this.workflowImage,
         },
         'steps': [
           this.renderDownloadArtifactStep(),
