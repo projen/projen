@@ -292,6 +292,22 @@ test('extend github release workflow', () => {
   expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
 });
 
+describe('scripts', () => {
+  test('removeScript will remove tasks and scripts', () => {
+    const p = new TestNodeProject();
+
+    p.addTask('chortle', { exec: 'echo "frabjous day!"' });
+    p.setScript('slithy-toves', 'gyre && gimble');
+    expect(packageJson(p).scripts).toHaveProperty('chortle');
+    expect(packageJson(p).scripts).toHaveProperty('slithy-toves');
+
+    p.removeScript('chortle');
+    p.removeScript('slithy-toves');
+    expect(packageJson(p).scripts).not.toHaveProperty('chortle');
+    expect(packageJson(p).scripts).not.toHaveProperty('slithy-toves');
+  });
+});
+
 test('buildWorkflowMutable will push changes to PR branches', () => {
   // WHEN
   const project = new TestNodeProject({

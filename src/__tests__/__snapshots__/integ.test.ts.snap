@@ -2719,7 +2719,7 @@ project.synth();
       "url": "https://github.com/awslabs/cdk8s.git",
     },
     "scripts": Object {
-      "build": "npx projen build",
+      "build": "yarn compile",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
       "compat": "npx projen compat",
@@ -3950,7 +3950,7 @@ project.synth();
       "url": "https://github.com/awslabs/cdk8s.git",
     },
     "scripts": Object {
-      "build": "npx projen build",
+      "build": "yarn compile",
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",

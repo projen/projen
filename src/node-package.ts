@@ -361,9 +361,9 @@ export class NodePackage extends Component {
 
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
-  private readonly scripts: Record<string, string[]> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly file: JsonFile;
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -415,8 +415,7 @@ export class NodePackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-
-    new JsonFile(this.project, 'package.json', {
+    this.file = new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
       marker: true,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
@@ -543,13 +542,13 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Replaces the contents of an npm package.json script.
+   * Override the contents of an npm package.json script.
    *
    * @param name The script name
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    this.scripts[name] = [command];
+    this.file.addOverride(`scripts.${name}`, command);
   }
 
   /**
@@ -557,16 +556,17 @@ export class NodePackage extends Component {
    * @param name The name of the script.
    */
   public removeScript(name: string) {
-    delete this.scripts[name];
+    this.file.addDeletionOverride(`scripts.${name}`);
   }
 
 
   /**
-   * Indicates if a script by the name name is defined.
+   * Indicates if a script by the given name is defined.
    * @param name The name of the script
+   * @deprecated Use `project.tasks.tryFind(name)`
    */
   public hasScript(name: string) {
-    return name in this.scripts;
+    return this.project.tasks.tryFind(name) !== undefined;
   }
 
   /**
@@ -904,10 +904,6 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const [name, commands] of Object.entries(this.scripts)) {
-      const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
-      result[name] = cmds.join(' && ');
-    }
     for (const task of this.project.tasks.all) {
       result[task.name] = this.npmScriptForTask(task);
     }
