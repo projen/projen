@@ -363,8 +363,8 @@ export class NodePackage extends Component {
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly file: JsonFile;
   private _renderedDeps?: NpmDependencies;
-  private file: JsonFile;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
     super(project);
