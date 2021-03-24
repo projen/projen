@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.17](https://github.com/projen/projen/compare/v0.17.16...v0.17.17) (2021-03-24)
+
+
+### Bug Fixes
+
+* **node:** removeScript does not remove scripts associated with tasks ([#632](https://github.com/projen/projen/issues/632)) ([2d86f12](https://github.com/projen/projen/commit/2d86f121c362018d8befcacbccf151bed87981b7)), closes [#631](https://github.com/projen/projen/issues/631)
+
 ### [0.17.16](https://github.com/projen/projen/compare/v0.17.15...v0.17.16) (2021-03-18)
 
 ### [0.17.15](https://github.com/projen/projen/compare/v0.17.14...v0.17.15) (2021-03-17)
