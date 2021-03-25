@@ -307,7 +307,7 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
 test('workflowImage propagates to the release workflow', () => {
   // WHEN
   const project = new TestNodeProject({
-    workflowContainerImage: 'some-other-workflow-image',
+    workflowImage: 'some-other-workflow-image',
     releaseToNpm: true,
   });
 
