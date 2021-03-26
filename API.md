@@ -56,6 +56,8 @@ Name|Description
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
+[python.Pipenv](#projen-python-pipenv)|Manage project dependencies and virtual environments through the Pipenv CLI tool.
+[python.PipenvPipfile](#projen-python-pipenvpipfile)|Represents configuration of a Pipfile file for a Pipenv project.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
 [python.Pytest](#projen-python-pytest)|*No description*
@@ -168,6 +170,9 @@ Name|Description
 [java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)|Options for `Projenrc`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|*No description*
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
+[python.PipenvOptions](#projen-python-pipenvoptions)|*No description*
+[python.PipenvPipfileOptions](#projen-python-pipenvpipfileoptions)|*No description*
+[python.PipenvPipfileOptionsWithoutDeps](#projen-python-pipenvpipfileoptionswithoutdeps)|*No description*
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
@@ -4933,6 +4938,126 @@ installDependencies(): void
 
 
 
+## class Pipenv 🔹 <a id="projen-python-pipenv"></a>
+
+Manage project dependencies and virtual environments through the Pipenv CLI tool.
+
+__Implements__: [python.IPythonDeps](#projen-python-ipythondeps), [python.IPythonEnv](#projen-python-ipythonenv)
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pipenv(project: PythonProject, options: PipenvOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PipenvOptions](#projen-python-pipenvoptions)</code>)  *No description*
+  * **pipfileOptions** (<code>[python.PipenvPipfileOptionsWithoutDeps](#projen-python-pipenvpipfileoptionswithoutdeps)</code>)  Options to pass through to the Pipfile. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
+
+### Methods
+
+
+#### addDependency(spec)🔹 <a id="projen-python-pipenv-adddependency"></a>
+
+Adds a runtime dependency.
+
+```ts
+addDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### addDevDependency(spec)🔹 <a id="projen-python-pipenv-adddevdependency"></a>
+
+Adds a dev dependency.
+
+```ts
+addDevDependency(spec: string): void
+```
+
+* **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### installDependencies()🔹 <a id="projen-python-pipenv-installdependencies"></a>
+
+Installs dependencies (called during post-synthesis).
+
+```ts
+installDependencies(): void
+```
+
+
+
+
+
+#### setupEnvironment()🔹 <a id="projen-python-pipenv-setupenvironment"></a>
+
+Initializes the virtual environment if it doesn't exist (called during post-synthesis).
+
+```ts
+setupEnvironment(): void
+```
+
+
+
+
+
+
+
+## class PipenvPipfile 🔹 <a id="projen-python-pipenvpipfile"></a>
+
+Represents configuration of a Pipfile file for a Pipenv project.
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.PipenvPipfile(project: PythonProject, options: PipenvPipfileOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PipenvPipfileOptions](#projen-python-pipenvpipfileoptions)</code>)  *No description*
+  * **pythonVersion** (<code>string</code>)  Version of python for Pipenv to use. __*Default*__: "3"
+  * **dependencies** (<code>Map<string, any></code>)  A list of dependencies for the project. __*Optional*__
+  * **devDependencies** (<code>Map<string, any></code>)  A list of development dependencies for the project. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[TomlFile](#projen-tomlfile)</code> | <span></span>
+
+
+
 ## class Poetry 🔹 <a id="projen-python-poetry"></a>
 
 Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
@@ -5154,6 +5279,8 @@ new python.PythonProject(options: PythonProjectOptions)
   * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **pipenv** (<code>boolean</code>)  Use pipenv to manage your project dependencies and virtual environment. __*Default*__: false
+  * **pipenvOptions** (<code>[python.PipenvOptions](#projen-python-pipenvoptions)</code>)  pipenv options. __*Default*__: defaults
   * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
@@ -9057,7 +9184,7 @@ Name | Type | Description
 
 ## interface IPythonDeps 🔹 <a id="projen-python-ipythondeps"></a>
 
-__Implemented by__: [python.Pip](#projen-python-pip), [python.Poetry](#projen-python-poetry)
+__Implemented by__: [python.Pip](#projen-python-pip), [python.Pipenv](#projen-python-pipenv), [python.Poetry](#projen-python-poetry)
 
 
 
@@ -9113,7 +9240,7 @@ installDependencies(): void
 
 ## interface IPythonEnv 🔹 <a id="projen-python-ipythonenv"></a>
 
-__Implemented by__: [python.Poetry](#projen-python-poetry), [python.Venv](#projen-python-venv)
+__Implemented by__: [python.Pipenv](#projen-python-pipenv), [python.Poetry](#projen-python-poetry), [python.Venv](#projen-python-venv)
 
 
 ### Methods
@@ -9153,6 +9280,47 @@ Name | Type | Description
 
 
 Options for pip.
+
+
+## struct PipenvOptions 🔹 <a id="projen-python-pipenvoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pipfileOptions**?🔹 | <code>[python.PipenvPipfileOptionsWithoutDeps](#projen-python-pipenvpipfileoptionswithoutdeps)</code> | Options to pass through to the Pipfile.<br/>__*Optional*__
+
+
+
+## struct PipenvPipfileOptions 🔹 <a id="projen-python-pipenvpipfileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencies**?🔹 | <code>Map<string, any></code> | A list of dependencies for the project.<br/>__*Optional*__
+**devDependencies**?🔹 | <code>Map<string, any></code> | A list of development dependencies for the project.<br/>__*Optional*__
+**pythonVersion**?🔹 | <code>string</code> | Version of python for Pipenv to use.<br/>__*Default*__: "3"
+
+
+
+## struct PipenvPipfileOptionsWithoutDeps 🔹 <a id="projen-python-pipenvpipfileoptionswithoutdeps"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**pythonVersion**?🔹 | <code>string</code> | Version of python for Pipenv to use.<br/>__*Default*__: "3"
+
 
 
 ## struct PoetryPyprojectOptions 🔹 <a id="projen-python-poetrypyprojectoptions"></a>
@@ -9277,6 +9445,8 @@ Name | Type | Description
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**pipenv**?🔹 | <code>boolean</code> | Use pipenv to manage your project dependencies and virtual environment.<br/>__*Default*__: false
+**pipenvOptions**?🔹 | <code>[python.PipenvOptions](#projen-python-pipenvoptions)</code> | pipenv options.<br/>__*Default*__: defaults
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN

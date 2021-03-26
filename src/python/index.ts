@@ -1,4 +1,5 @@
 export * from './pip';
+export * from './pipenv';
 export * from './poetry';
 export * from './pytest';
 export * from './python-env';

@@ -8257,6 +8257,30 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Use pipenv to manage your project dependencies and virtual environment.",
+        "name": "pipenv",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pipenv",
+        ],
+        "switch": "pipenv",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "pipenv options.",
+        "name": "pipenvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pipenvOptions",
+        ],
+        "switch": "pipenv-options",
+        "type": "PipenvOptions",
+      },
+      Object {
+        "default": "false",
         "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.",
         "name": "poetry",
         "optional": true,

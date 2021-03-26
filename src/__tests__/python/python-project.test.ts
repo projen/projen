@@ -1,6 +1,5 @@
-import { LogLevel } from '../../logger';
-import { PythonProject, PythonProjectOptions } from '../../python';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
+import { TestPythonProject } from './util';
 
 test('defaults', () => {
   const p = new TestPythonProject();
@@ -46,19 +45,3 @@ test('pytest maxfailures', () => {
   expect(synthSnapshot(p)['.projen/tasks.json'].tasks.test.steps[0].exec).toContain('--maxfail=3');
 });
 
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = { }) {
-    super({
-      ...options,
-      clobber: false,
-      name: 'test-python-project',
-      moduleName: 'test_python_project',
-      authorName: 'First Last',
-      authorEmail: 'email@example.com',
-      version: '0.1.0',
-      outdir: mkdtemp(),
-      logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.python.PythonProject',
-    });
-  }
-}

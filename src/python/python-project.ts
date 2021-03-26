@@ -1,5 +1,6 @@
 import { Project, ProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
+import { Pipenv, PipenvOptions } from './pipenv';
 import { Poetry } from './poetry';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
@@ -88,6 +89,19 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * @default false
    */
   readonly poetry?: boolean;
+
+  /**
+   * Use pipenv to manage your project dependencies and virtual environment
+   *
+   * @default false
+   */
+  readonly pipenv?: boolean;
+
+  /**
+   * pipenv options
+   * @default - defaults
+   */
+  readonly pipenvOptions?: PipenvOptions;
 
   // -- optional components --
 
@@ -183,10 +197,13 @@ export class PythonProject extends Project {
     //   this.envManager = this.depsManager;
     // }
 
-    // if (options.pipenv ?? false) {
-    //   this.depsManager = new Pipenv(this, options);
-    //   this.envManager = this.depsManager;
-    // }
+    if (options.pipenv ?? false) {
+      const pipenv = new Pipenv(this, {
+        ...options.pipenvOptions,
+      });
+      this.depsManager = pipenv;
+      this.envManager = pipenv;
+    }
 
     if (options.poetry ?? false) {
       const poetry = new Poetry(this, {
@@ -219,11 +236,11 @@ export class PythonProject extends Project {
       throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
     }
 
-    if (Number(options.venv ?? true) + Number(options.poetry ?? false) > 1) {
+    if (Number(options.venv ?? true) + Number(options.poetry ?? false) + Number(options.pipenv ?? false) > 1) {
       throw new Error('More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)');
     }
 
-    if (Number(options.pip ?? true) + Number(options.poetry ?? false) > 1) {
+    if (Number(options.pip ?? true) + Number(options.poetry ?? false) + Number(options.pipenv ?? false) > 1) {
       throw new Error('More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)');
     }
 

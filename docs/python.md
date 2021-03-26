@@ -63,7 +63,7 @@ requirements. See the list below:
 - venv: environment manager
 - setuptools: packaging manager
 - poetry: dependency, environment, and packaging manager
-- pipenv (TBD): dependency and environment manager
+- pipenv: dependency and environment manager
 - conda (TBD): dependency and environment manager
 
 By default, pip, and venv will be used, along with setuptools if the project is a library:

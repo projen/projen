@@ -860,6 +860,8 @@ const project = new python.PythonProject({
   // deps: [],                             /* List of runtime dependencies for this project. */
   // devDeps: [],                          /* List of dev dependencies for this project. */
   // pip: true,                            /* Use pip with a requirements.txt file to track project dependencies. */
+  // pipenv: false,                        /* Use pipenv to manage your project dependencies and virtual environment. */
+  // pipenvOptions: undefined,             /* pipenv options. */
   // poetry: false,                        /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
   // pytest: true,                         /* Include pytest tests. */
   // pytestOptions: undefined,             /* pytest options. */

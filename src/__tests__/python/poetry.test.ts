@@ -1,6 +1,5 @@
-import { LogLevel } from '../../logger';
-import { PythonProject, PythonProjectOptions } from '../../python';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
+import { TestPythonProject } from './util';
 
 test('poetry enabled', () => {
   const p = new TestPythonProject({
@@ -24,20 +23,3 @@ test('poetry enabled', () => {
   expect(snapshot['pyproject.toml']).toContain('Apache-2.0');
   expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
 });
-
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = { }) {
-    super({
-      ...options,
-      clobber: false,
-      name: 'test-python-project',
-      moduleName: 'test_python_project',
-      authorName: 'First Last',
-      authorEmail: 'email@example.com',
-      version: '0.1.0',
-      outdir: mkdtemp(),
-      logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.python.PythonProject',
-    });
-  }
-}
