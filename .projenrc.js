@@ -30,6 +30,7 @@ const project = new JsiiProject({
     'chalk',
     '@iarna/toml',
     'xmlbuilder2',
+    'ini',
   ],
 
   devDeps: [
@@ -38,6 +39,7 @@ const project = new JsiiProject({
     '@types/glob',
     '@types/inquirer',
     '@types/semver',
+    '@types/ini',
     'markmac',
     'all-contributors-cli',
   ],
