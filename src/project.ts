@@ -1,11 +1,11 @@
 import * as path from 'path';
-import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub } from './github';
+import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
@@ -106,7 +106,7 @@ export interface ProjectOptions {
   readonly projenSecret?: string;
 
   /**
-   * Create a github workflow for auto approval of PR's.
+   * Create a github workflow for auto approval of PR's based on specific PR metadata. (see `autoApproveOptions`)
    *
    * @default true
    */
@@ -281,7 +281,8 @@ export class Project {
 
     new SampleReadme(this, options.readme);
 
-    if (options.autoApprove ?? true) {
+    // configure auto approval by default only if a projen secret exists.
+    if (options.autoApprove ?? !!this.projenSecret) {
       this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
     }
 

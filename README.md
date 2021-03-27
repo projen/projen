@@ -163,6 +163,7 @@ Some examples for features built-in to project types:
 * gitignore + npmignore management
 * Node "engines" support with coupling to CI build environment and @types/node
 * Anti-tamper: CI builds will fail if a synthesized file is modified manually
+* Automatic dependency upgrades via Dependabot or GitHub workflows
 
 ## API Reference
 

@@ -1,6 +1,9 @@
 import { DependabotOptions } from './github';
 import { NodeProject } from './node-project';
 
+/**
+ * Optiosn for dependency upgrades via GitHub actions workflow.
+ */
 export interface GitHubActionsDepenenciesUpgradeOptions {
 
   /**
@@ -13,24 +16,49 @@ export interface GitHubActionsDepenenciesUpgradeOptions {
   /**
    * Auto approve PR's, allowing mergify to merge them.
    *
-   * @default true
+   * Note that if the project doesn't have the auto-approve workflow configured,
+   * enabling this will throw an error, as auto-approve cannot be accomplished.
+   *
+   * @default - true if auto approval workflow is configured for the project, false otherwise.
    */
   readonly autoApprove?: boolean;
 
 }
 
+/**
+ * Dependencies upgrade.
+ */
 export class DependenciesUpgrade {
 
+  /**
+   * Disable dependency upgrades.
+   */
   public static readonly DISABLED: DependenciesUpgrade = new DependenciesUpgrade('disabled');
 
+  /**
+   * Use dependabot (with the default options) to upgrade dependencies.
+   */
   public static readonly DEPENDABOT: DependenciesUpgrade = new DependenciesUpgrade('dependabot');
 
+  /**
+   * Use GitHub actions (with the default options) to upgrade dependencies.
+   */
   public static readonly GITHUB_ACTIONS: DependenciesUpgrade = new DependenciesUpgrade('github-actions');
 
+  /**
+   * Use GitHub actions (with custom options) to upgrade dependencies.
+   *
+   * @param options The options.
+   */
   public static githubActions(options: GitHubActionsDepenenciesUpgradeOptions = {}): DependenciesUpgrade {
     return new DependenciesUpgrade('github-actions', options);
   }
 
+  /**
+   * Use Dependabot (with custom options) to upgrade dependencies.
+   *
+   * @param options The options.
+   */
   public static dependabot(options: DependabotOptions = {}): DependenciesUpgrade {
     return new DependenciesUpgrade('dependabot', options);
   }
@@ -79,8 +107,8 @@ export class DependenciesUpgrade {
 
     const labels: string[] = [];
 
-    if (options.autoApprove ?? true) {
-      labels.push(project.autoApprove!.label);
+    if ((options.autoApprove ?? true) && project.autoApprove) {
+      labels.push(project.autoApprove.label);
     }
 
     const dependencies = project.github.addWorkflow('dependencies-upgrade');
@@ -104,7 +132,7 @@ export class DependenciesUpgrade {
           },
           {
             name: 'Upgrade yarn.lock dependencies',
-            run: 'yarn install',
+            run: 'yarn install && yarn upgrade',
           },
           {
             name: 'Create Pull Request',

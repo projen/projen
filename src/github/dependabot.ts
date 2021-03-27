@@ -24,7 +24,7 @@ export interface DependabotOptions {
    * Automatically approve dependabot PRs. This will cause mergify
    * to auto merge them given the CI checks pass.
    *
-   * @default true
+   * @default - true if auto approval workflow is configured for the project, false otherwise.
    */
   readonly autoApprove?: boolean;
 
@@ -145,13 +145,14 @@ export class Dependabot extends Component {
 
     const project = github.project;
 
+    if (options.autoApprove && !project.autoApprove) {
+      throw new Error('Project must have auto-approve configured in order to auto-approve dependabot PRs');
+    }
+
     this.ignore = [];
 
     const labels = [];
-    if (options.autoApprove ?? true) {
-      if (!project.autoApprove) {
-        throw new Error('Project must be configured with auto-approve to auto approve dependabot PRs');
-      }
+    if ((options.autoApprove ?? true) && project.autoApprove) {
       labels.push(project.autoApprove.label);
     }
 
@@ -166,6 +167,7 @@ export class Dependabot extends Component {
             interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
           'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
+          'default_labels': labels,
         },
       ],
     };

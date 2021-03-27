@@ -57,22 +57,19 @@ const project = new AwsCdkTypeScriptApp({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -86,6 +83,8 @@ const project = new AwsCdkTypeScriptApp({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -93,6 +92,7 @@ const project = new AwsCdkTypeScriptApp({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -193,22 +193,19 @@ const project = new AwsCdkConstructLibrary({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -222,6 +219,8 @@ const project = new AwsCdkConstructLibrary({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -229,6 +228,7 @@ const project = new AwsCdkConstructLibrary({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -306,22 +306,19 @@ const project = new ConstructLibraryCdk8s({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -335,6 +332,8 @@ const project = new ConstructLibraryCdk8s({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -342,6 +341,7 @@ const project = new ConstructLibraryCdk8s({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -378,6 +378,8 @@ const project = new java.JavaProject({
   // url: undefined,                    /* The URL, like the name, is not required. */
 
   /* ProjectOptions */
+  // autoApprove: true,                 /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,     /* Options for PR auto-approvals. */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                     /* Add a Gitpod development environment. */
@@ -385,6 +387,7 @@ const project = new java.JavaProject({
   // outdir: '.',                       /* The root directory of the project. */
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // projenSecret: undefined,           /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                 /* The README setup. */
 });
 
@@ -458,22 +461,19 @@ const project = new JsiiProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -487,6 +487,8 @@ const project = new JsiiProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -494,6 +496,7 @@ const project = new JsiiProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -558,22 +561,19 @@ const project = new web.NextJsProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -587,6 +587,8 @@ const project = new web.NextJsProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -594,6 +596,7 @@ const project = new web.NextJsProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -654,22 +657,19 @@ const project = new web.NextJsTypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -683,6 +683,8 @@ const project = new web.NextJsTypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -690,6 +692,7 @@ const project = new web.NextJsTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -762,22 +765,19 @@ const project = new NodeProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -791,6 +791,8 @@ const project = new NodeProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -798,6 +800,7 @@ const project = new NodeProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -813,6 +816,8 @@ const project = new Project({
   name: 'my-project',
 
   /* ProjectOptions */
+  // autoApprove: true,                 /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,     /* Options for PR auto-approvals. */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                     /* Add a Gitpod development environment. */
@@ -820,6 +825,7 @@ const project = new Project({
   // outdir: '.',                       /* The root directory of the project. */
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // projenSecret: undefined,           /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                 /* The README setup. */
 });
 
@@ -839,6 +845,8 @@ const project = new python.PythonProject({
   version: '0.1.0',
 
   /* ProjectOptions */
+  // autoApprove: true,                    /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,        /* Options for PR auto-approvals. */
   // clobber: true,                        /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                  /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                        /* Add a Gitpod development environment. */
@@ -846,6 +854,7 @@ const project = new python.PythonProject({
   // outdir: '.',                          /* The root directory of the project. */
   // parent: undefined,                    /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,     /* Which type of project this is (library/app). */
+  // projenSecret: undefined,              /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                    /* The README setup. */
 
   /* PythonPackagingOptions */
@@ -922,22 +931,19 @@ const project = new web.ReactProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -951,6 +957,8 @@ const project = new web.ReactProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -958,6 +966,7 @@ const project = new web.ReactProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* ReactProjectOptions */
@@ -1018,22 +1027,19 @@ const project = new web.ReactTypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -1047,6 +1053,8 @@ const project = new web.ReactTypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -1054,6 +1062,7 @@ const project = new web.ReactTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -1126,22 +1135,19 @@ const project = new TypeScriptProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -1155,6 +1161,8 @@ const project = new TypeScriptProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -1162,6 +1170,7 @@ const project = new TypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -1234,22 +1243,19 @@ const project = new TypeScriptAppProject({
   // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
   // copyrightOwner: undefined,                                                /* License copyright owner. */
   // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // dependenciesUpgrade: undefined,                                           /* Controls how dependencies are upgraded. */
   // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
   // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
   // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
   // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
@@ -1263,6 +1269,8 @@ const project = new TypeScriptAppProject({
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
 
   /* ProjectOptions */
+  // autoApprove: true,                                                        /* Create a github workflow for auto approval of PR's based on specific PR metadata. */
+  // autoApproveOptions: undefined,                                            /* Options for PR auto-approvals. */
   // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
   // gitpod: false,                                                            /* Add a Gitpod development environment. */
@@ -1270,6 +1278,7 @@ const project = new TypeScriptAppProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */

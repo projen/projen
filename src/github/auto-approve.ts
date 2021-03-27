@@ -33,7 +33,7 @@ export class AutoApprove extends Component {
     }
 
     if (!project.projenSecret) {
-      throw new Error('Projen secret must be configured to enable dependency upgrades via github actions');
+      throw new Error('Projen secret must be configured to enable auto approvals');
     }
 
     this.label = options.label ?? 'pr/auto-approve';
