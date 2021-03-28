@@ -15,6 +15,10 @@ Array [
     "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
+    "name": "Synthesize project files",
+    "run": "npx projen",
+  },
+  Object {
     "name": "Set git identity",
     "run": "git config user.name \\"Auto-bump\\"
 git config user.email \\"github-actions@github.com\\"",

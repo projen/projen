@@ -716,10 +716,10 @@ export class NodeProject extends Project {
     });
 
     // run "projen"
-    // install.push({
-    //   name: 'Synthesize project files',
-    //   run: this.package.projenCommand,
-    // });
+    install.push({
+      name: 'Synthesize project files',
+      run: this.package.projenCommand,
+    });
 
     return install;
   }

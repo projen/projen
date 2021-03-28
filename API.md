@@ -4,7 +4,7 @@
 
 Name|Description
 ----|-----------
-[AutoApprove](#projen-autoapprove)|AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+[AutoApprove](#projen-autoapprove)|Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 [AutoMerge](#projen-automerge)|Sets up mergify to merging approved pull requests.
 [AutoUpgradeDependencies](#projen-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
@@ -51,7 +51,7 @@ Name|Description
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
-[github.AutoApprove](#projen-github-autoapprove)|AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+[github.AutoApprove](#projen-github-autoapprove)|Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.AutoUpgradeDependencies](#projen-github-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -270,7 +270,7 @@ Name|Description
 
 ## class AutoApprove 🔹 <a id="projen-autoapprove"></a>
 
-AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 
 __Extends__: [Component](#projen-component)
 
@@ -345,6 +345,7 @@ new AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDependenc
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
   * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
   * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
@@ -481,7 +482,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -648,7 +649,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -860,7 +861,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -975,7 +976,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1100,7 +1101,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1261,6 +1262,7 @@ static githubActions(options?: AutoUpgradeDependenciesOptions): DependenciesUpgr
 
 * **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  The options.
   * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
   * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 __Returns__:
@@ -2250,7 +2252,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -2989,7 +2991,7 @@ new NodeProject(options: NodeProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -3402,7 +3404,7 @@ Name | Type | Description
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
-**autoApprove**?🔹 | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | The auto-approve configured (if enabled).<br/>__*Optional*__
+**autoApprove**?🔹 | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | The auto-approve workflow configuration (if enabled).<br/>__*Optional*__
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
@@ -4067,7 +4069,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4178,7 +4180,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4289,7 +4291,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4609,7 +4611,7 @@ __Returns__:
 
 ## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
 
-AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 
 __Submodule__: github
 
@@ -4690,6 +4692,7 @@ new github.AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDe
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
   * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
   * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
@@ -6548,7 +6551,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -6705,7 +6708,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -6888,7 +6891,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7041,7 +7044,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.githubActions()
+  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7164,6 +7167,7 @@ Options for `AutoUpgradeDependencies`.
 Name | Type | Description 
 -----|------|-------------
 **autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+**ignore**?🔹 | <code>Array<string></code> | List of package names to ignore during the upgrade.<br/>__*Default*__: Only projen itself is ignored.
 **schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
@@ -7209,7 +7213,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7316,7 +7320,7 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7445,7 +7449,7 @@ Name | Type | Description
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7553,7 +7557,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7660,7 +7664,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8408,7 +8412,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8757,7 +8761,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9097,7 +9101,7 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9200,7 +9204,7 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9422,6 +9426,7 @@ Options for `AutoUpgradeDependencies`.
 Name | Type | Description 
 -----|------|-------------
 **autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+**ignore**?🔹 | <code>Array<string></code> | List of package names to ignore during the upgrade.<br/>__*Default*__: Only projen itself is ignored.
 **schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
@@ -10221,7 +10226,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -10331,7 +10336,7 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -10462,7 +10467,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -10570,7 +10575,7 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.githubActions()
+**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false

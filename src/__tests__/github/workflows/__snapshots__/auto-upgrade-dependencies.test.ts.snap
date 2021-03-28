@@ -17,6 +17,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
+      - name: Synthesize project files
+        run: npx projen
       - name: Upgrade package.json dependencies
         run: npx npm-check-updates --upgrade --reject projen
       - name: Upgrade yarn.lock dependencies
@@ -55,6 +57,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
+      - name: Synthesize project files
+        run: npx projen
       - name: Upgrade package.json dependencies
         run: npx npm-check-updates --upgrade --reject projen
       - name: Upgrade yarn.lock dependencies
