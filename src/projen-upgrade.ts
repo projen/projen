@@ -4,18 +4,19 @@ import { TaskCategory } from './tasks';
 export interface ProjenUpgradeOptions {
 
   /**
+   * Auto approve PR's, allowing mergify to merge them.
+   *
+   * @default true
+   */
+  readonly autoApprove?: boolean;
+
+  /**
    * Cron expression that determines the upgrade schedule.
    *
    * @default [ '0 6 * * *' ]
    */
   readonly autoUpgradeSchedule?: string[];
 
-  /**
-   * Auto approve PR's, allowing mergify to merge them.
-   *
-   * @default true
-   */
-  readonly autoApprove?: boolean;
 }
 
 /**

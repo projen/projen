@@ -304,6 +304,11 @@ export class NodeProject extends Project {
    */
   public readonly buildTask: Task;
 
+  /**
+   * Automatic PR merges.
+   */
+  public readonly autoMerge?: AutoMerge;
+
   private readonly _version: Version;
 
   /**
@@ -601,14 +606,13 @@ export class NodeProject extends Project {
     }
 
     if (options.mergify ?? true) {
-      new AutoMerge(this, { buildJob: this.buildWorkflowJobId });
+      this.autoMerge = new AutoMerge(this, { buildJob: this.buildWorkflowJobId });
       this.npmignore?.exclude('/.mergify.yml');
     }
 
     const dependenciesUpgrade = options.dependenciesUpgrade ?? (
       this.projenSecret ? DependenciesUpgrade.GITHUB_ACTIONS : DependenciesUpgrade.DEPENDABOT
     );
-
     dependenciesUpgrade.bind(this);
 
     new ProjenUpgrade(this, {
