@@ -1,5 +1,5 @@
 import { Dependabot } from '../..';
-import { synthSnapshot, TestProject } from '../util';
+import { TestProject } from '../util';
 
 test('throws if auto approve and project isnt configured with auto approval workflow', () => {
 
@@ -12,14 +12,14 @@ test('throws if auto approve and project isnt configured with auto approval work
 
 test('auto approve defaults to true when secret is defined', () => {
   const project = new TestProject({ projenSecret: 'PROJEN_SECRET' });
-  new Dependabot(project.github!);
+  const dependabot = new Dependabot(project.github!);
 
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(dependabot.config.updates[0].default_labels).toEqual([project.autoApprove?.label]);
 });
 
 test('auto approve can be disabled', () => {
   const project = new TestProject({ projenSecret: 'PROJEN_SECRET' });
-  new Dependabot(project.github!, { autoApprove: false });
+  const dependabot = new Dependabot(project.github!, { autoApprove: false });
 
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(dependabot.config.updates[0].default_labels).toEqual([]);
 });
