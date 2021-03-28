@@ -4,18 +4,24 @@
 
 Name|Description
 ----|-----------
+[AutoApprove](#projen-autoapprove)|AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+[AutoMerge](#projen-automerge)|Sets up mergify to merging approved pull requests.
+[AutoUpgradeDependencies](#projen-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
 [AwsCdkTypeScriptApp](#projen-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [Component](#projen-component)|Represents a project component.
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
+[Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [DependenciesUpgrade](#projen-dependenciesupgrade)|Dependencies upgrade.
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
+[GitHub](#projen-github)|*No description*
+[GithubWorkflow](#projen-githubworkflow)|*No description*
 [Gitpod](#projen-gitpod)|The Gitpod component which emits .gitpod.yml.
 [IgnoreFile](#projen-ignorefile)|*No description*
 [Jest](#projen-jest)|Installs the following npm scripts:.
@@ -24,11 +30,13 @@ Name|Description
 [License](#projen-license)|*No description*
 [Logger](#projen-logger)|Project-level logging utilities.
 [Makefile](#projen-makefile)|Minimal Makefile.
+[Mergify](#projen-mergify)|*No description*
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
 [Publisher](#projen-publisher)|Implements GitHub jobs for publishing modules to package managers.
+[PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
@@ -44,6 +52,8 @@ Name|Description
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [github.AutoApprove](#projen-github-autoapprove)|AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+[github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
+[github.AutoUpgradeDependencies](#projen-github-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
@@ -88,6 +98,9 @@ Name|Description
 
 Name|Description
 ----|-----------
+[AutoApproveOptions](#projen-autoapproveoptions)|Options for 'AutoApprove'.
+[AutoMergeOptions](#projen-automergeoptions)|*No description*
+[AutoUpgradeDependenciesOptions](#projen-autoupgradedependenciesoptions)|Options for `AutoUpgradeDependencies`.
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
@@ -95,6 +108,8 @@ Name|Description
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
+[DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
+[DependabotOptions](#projen-dependabotoptions)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environemnt.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
@@ -106,7 +121,6 @@ Name|Description
 [EslintOptions](#projen-eslintoptions)|*No description*
 [EslintOverride](#projen-eslintoverride)|eslint rules override.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
-[GitHubActionsDepenenciesUpgradeOptions](#projen-githubactionsdepenenciesupgradeoptions)|Optiosn for dependency upgrades via GitHub actions workflow.
 [GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
@@ -129,6 +143,8 @@ Name|Description
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
 [MarkableFileOptions](#projen-markablefileoptions)|Options for files that may include the Projen marker.
+[MergifyOptions](#projen-mergifyoptions)|*No description*
+[MergifyRule](#projen-mergifyrule)|*No description*
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
@@ -136,6 +152,7 @@ Name|Description
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [PublisherOptions](#projen-publisheroptions)|Options for `Publisher`.
+[PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
@@ -154,6 +171,8 @@ Name|Description
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
+[github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
+[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)|Options for `AutoUpgradeDependencies`.
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -223,7 +242,9 @@ Name|Description
 Name|Description
 ----|-----------
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
+[AutoUpgradeDependenciesSchedule](#projen-autoupgradedependenciesschedule)|How often to check for new versions and raise pull requests for version updates.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
+[DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
 [GitpodOnOpen](#projen-gitpodonopen)|What to do when a service on a port is detected.
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
@@ -237,11 +258,95 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
+[VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
+[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)|How often to check for new versions and raise pull requests for version updates.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+
+
+## class AutoApprove 🔹 <a id="projen-autoapprove"></a>
+
+AutoApprove configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new AutoApprove(project: Project, options?: AutoApproveOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
+  * **label** (<code>string</code>)  PR's assigned with this label will be auto-approved. __*Default*__: pr/auto-approve
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**label**🔹 | <code>string</code> | The configured label for auto-approvals.
+
+
+
+## class AutoMerge 🔹 <a id="projen-automerge"></a>
+
+Sets up mergify to merging approved pull requests.
+
+If `buildJob` is specified, the specified GitHub workflow job ID is required
+to succeed in order for the PR to be merged.
+
+`approvedReviews` specified the number of code review approvals required for
+the PR to be merged.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new AutoMerge(project: Project, options?: AutoMergeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
+  * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
+  * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
+
+
+
+
+## class AutoUpgradeDependencies 🔹 <a id="projen-autoupgradedependencies"></a>
+
+Upgrade node project dependencies via a GitHub workflow.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDependenciesOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
+  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
+
 
 
 
@@ -1042,6 +1147,61 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 
 
+## class Dependabot 🔹 <a id="projen-dependabot"></a>
+
+Defines dependabot configuration for node projects.
+
+Since module versions are managed in projen, the versioning strategy will be
+configured to "lockfile-only" which means that only updates that can be done
+on the lockfile itself will be proposed.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Dependabot(github: GitHub, options?: DependabotOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **autoApprove** (<code>boolean</code>)  Automatically approve dependabot PRs. __*Default*__: true if auto approval workflow is configured for the project, false otherwise.
+  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>any</code> | The raw dependabot configuration.
+
+### Methods
+
+
+#### addIgnore(dependencyName, ...versions)🔹 <a id="projen-dependabot-addignore"></a>
+
+Ignores a dependency from automatic updates.
+
+```ts
+addIgnore(dependencyName: string, ...versions: string[]): void
+```
+
+* **dependencyName** (<code>string</code>)  Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+* **versions** (<code>string</code>)  Use to ignore specific versions or ranges of versions.
+
+
+
+
+
+
 ## class DependenciesUpgrade 🔹 <a id="projen-dependenciesupgrade"></a>
 
 Dependencies upgrade.
@@ -1096,12 +1256,12 @@ __Returns__:
 Use GitHub actions (with custom options) to upgrade dependencies.
 
 ```ts
-static githubActions(options?: GitHubActionsDepenenciesUpgradeOptions): DependenciesUpgrade
+static githubActions(options?: AutoUpgradeDependenciesOptions): DependenciesUpgrade
 ```
 
-* **options** (<code>[GitHubActionsDepenenciesUpgradeOptions](#projen-githubactionsdepenenciesupgradeoptions)</code>)  The options.
-  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto approval workflow is configured for the project, false otherwise.
-  * **schedule** (<code>string</code>)  Cron expression that determines the upgrade schedule. __*Default*__: '0 8 * * 1' (every monday at 8AM)
+* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  The options.
+  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 __Returns__:
 * <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>
@@ -1456,7 +1616,7 @@ addRules(rules: Map<string, any>): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [PullRequestTemplate](#projen-pullrequesttemplate), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1516,6 +1676,147 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
+
+
+
+## class GitHub 🔹 <a id="projen-github"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new GitHub(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+### Methods
+
+
+#### addDependabot(options?)🔹 <a id="projen-github-adddependabot"></a>
+
+
+
+```ts
+addDependabot(options?: DependabotOptions): Dependabot
+```
+
+* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **autoApprove** (<code>boolean</code>)  Automatically approve dependabot PRs. __*Default*__: true if auto approval workflow is configured for the project, false otherwise.
+  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+__Returns__:
+* <code>[github.Dependabot](#projen-github-dependabot)</code>
+
+#### addMergifyRules(...rules)🔹 <a id="projen-github-addmergifyrules"></a>
+
+
+
+```ts
+addMergifyRules(...rules: MergifyRule[]): void
+```
+
+* **rules** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
+  * **actions** (<code>Map<string, any></code>)  *No description* 
+  * **conditions** (<code>Array<string></code>)  *No description* 
+  * **name** (<code>string</code>)  *No description* 
+
+
+
+
+#### addPullRequestTemplate(...content)🔹 <a id="projen-github-addpullrequesttemplate"></a>
+
+
+
+```ts
+addPullRequestTemplate(...content: string[]): PullRequestTemplate
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.PullRequestTemplate](#projen-github-pullrequesttemplate)</code>
+
+#### addWorkflow(name)🔹 <a id="projen-github-addworkflow"></a>
+
+
+
+```ts
+addWorkflow(name: string): GithubWorkflow
+```
+
+* **name** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
+
+
+
+## class GithubWorkflow 🔹 <a id="projen-githubworkflow"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new GithubWorkflow(github: GitHub, name: string)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
+
+### Methods
+
+
+#### addJobs(jobs)🔹 <a id="projen-githubworkflow-addjobs"></a>
+
+
+
+```ts
+addJobs(jobs: Map<string, any>): void
+```
+
+* **jobs** (<code>Map<string, any></code>)  *No description*
+
+
+
+
+#### on(events)🔹 <a id="projen-githubworkflow-on"></a>
+
+
+
+```ts
+on(events: Map<string, any>): void
+```
+
+* **events** (<code>Map<string, any></code>)  *No description*
+
+
+
 
 
 
@@ -2305,6 +2606,47 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
+
+
+
+## class Mergify 🔹 <a id="projen-mergify"></a>
+
+
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Mergify(github: GitHub, options?: MergifyOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
+
+
+### Methods
+
+
+#### addRule(rule)🔹 <a id="projen-mergify-addrule"></a>
+
+
+
+```ts
+addRule(rule: MergifyRule): void
+```
+
+* **rule** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
+  * **actions** (<code>Map<string, any></code>)  *No description* 
+  * **conditions** (<code>Array<string></code>)  *No description* 
+  * **name** (<code>string</code>)  *No description* 
+
+
+
 
 
 
@@ -3339,6 +3681,28 @@ publishToPyPi(options: JsiiReleasePyPi): void
 
 
 
+## class PullRequestTemplate 🔹 <a id="projen-pullrequesttemplate"></a>
+
+Template for GitHub pull requests.
+
+__Extends__: [TextFile](#projen-textfile)
+
+### Initializer
+
+
+
+
+```ts
+new PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
+  * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
+
+
+
+
 ## class SampleDir 🔹 <a id="projen-sampledir"></a>
 
 Renders the given files into the directory if the directory does not exist.
@@ -4272,6 +4636,62 @@ new github.AutoApprove(project: Project, options?: AutoApproveOptions)
 Name | Type | Description 
 -----|------|-------------
 **label**🔹 | <code>string</code> | The configured label for auto-approvals.
+
+
+
+## class AutoMerge 🔹 <a id="projen-github-automerge"></a>
+
+Sets up mergify to merging approved pull requests.
+
+If `buildJob` is specified, the specified GitHub workflow job ID is required
+to succeed in order for the PR to be merged.
+
+`approvedReviews` specified the number of code review approvals required for
+the PR to be merged.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.AutoMerge(project: Project, options?: AutoMergeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
+  * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
+  * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
+
+
+
+
+## class AutoUpgradeDependencies 🔹 <a id="projen-github-autoupgradedependencies"></a>
+
+Upgrade node project dependencies via a GitHub workflow.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDependenciesOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
+  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
+
 
 
 
@@ -6707,6 +7127,47 @@ Name | Type | Description
 
 
 
+## struct AutoApproveOptions 🔹 <a id="projen-autoapproveoptions"></a>
+
+
+Options for 'AutoApprove'.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**label**?🔹 | <code>string</code> | PR's assigned with this label will be auto-approved.<br/>__*Default*__: pr/auto-approve
+
+
+
+## struct AutoMergeOptions 🔹 <a id="projen-automergeoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
+**buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
+
+
+
+## struct AutoUpgradeDependenciesOptions 🔹 <a id="projen-autoupgradedependenciesoptions"></a>
+
+
+Options for `AutoUpgradeDependencies`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+**schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
+
+
+
 ## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
 
 
@@ -7287,6 +7748,39 @@ Name | Type | Description
 
 
 
+## struct DependabotIgnore 🔹 <a id="projen-dependabotignore"></a>
+
+
+You can use the `ignore` option to customize which dependencies are updated.
+
+The ignore option supports the following options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dependencyName**🔹 | <code>string</code> | Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
+**versions**?🔹 | <code>Array<string></code> | Use to ignore specific versions or ranges of versions.<br/>__*Optional*__
+
+
+
+## struct DependabotOptions 🔹 <a id="projen-dependabotoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoApprove**?🔹 | <code>boolean</code> | Automatically approve dependabot PRs.<br/>__*Default*__: true if auto approval workflow is configured for the project, false otherwise.
+**ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
+**ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
+**scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
+**versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
 ## struct DevEnvironmentOptions 🔹 <a id="projen-devenvironmentoptions"></a>
 
 
@@ -7458,20 +7952,6 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
-
-
-
-## struct GitHubActionsDepenenciesUpgradeOptions 🔹 <a id="projen-githubactionsdepenenciesupgradeoptions"></a>
-
-
-Optiosn for dependency upgrades via GitHub actions workflow.
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto approval workflow is configured for the project, false otherwise.
-**schedule**?🔹 | <code>string</code> | Cron expression that determines the upgrade schedule.<br/>__*Default*__: '0 8 * * 1' (every monday at 8AM)
 
 
 
@@ -8176,6 +8656,34 @@ Name | Type | Description
 
 
 
+## struct MergifyOptions 🔹 <a id="projen-mergifyoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
+
+
+
+## struct MergifyRule 🔹 <a id="projen-mergifyrule"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**actions**🔹 | <code>Map<string, any></code> | <span></span>
+**conditions**🔹 | <code>Array<string></code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct NodePackageOptions 🔹 <a id="projen-nodepackageoptions"></a>
 
 
@@ -8393,6 +8901,19 @@ Name | Type | Description
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The github workflow to add release jobs to.
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
+
+
+
+## struct PullRequestTemplateOptions 🔹 <a id="projen-pullrequesttemplateoptions"></a>
+
+
+Options for `PullRequestTemplate`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
 
 
 
@@ -8874,6 +9395,34 @@ Options for 'AutoApprove'.
 Name | Type | Description 
 -----|------|-------------
 **label**?🔹 | <code>string</code> | PR's assigned with this label will be auto-approved.<br/>__*Default*__: pr/auto-approve
+
+
+
+## struct AutoMergeOptions 🔹 <a id="projen-github-automergeoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
+**buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
+
+
+
+## struct AutoUpgradeDependenciesOptions 🔹 <a id="projen-github-autoupgradedependenciesoptions"></a>
+
+
+Options for `AutoUpgradeDependencies`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
+**schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
 
@@ -10117,6 +10666,17 @@ Name | Description
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
 
 
+## enum AutoUpgradeDependenciesSchedule 🔹 <a id="projen-autoupgradedependenciesschedule"></a>
+
+How often to check for new versions and raise pull requests for version updates.
+
+Name | Description
+-----|-----
+**DAILY** 🔹|Runs on every weekday, Monday to Friday.
+**WEEKLY** 🔹|Runs once each week.
+**MONTHLY** 🔹|Runs once each month.
+
+
 ## enum CdkApprovalLevel 🔹 <a id="projen-cdkapprovallevel"></a>
 
 
@@ -10126,6 +10686,17 @@ Name | Description
 **NEVER** 🔹|Approval is never required.
 **ANY_CHANGE** 🔹|Requires approval on any IAM or security-group-related change.
 **BROADENING** 🔹|Requires approval when IAM statements or traffic rules are added;
+
+
+## enum DependabotScheduleInterval 🔹 <a id="projen-dependabotscheduleinterval"></a>
+
+How often to check for new versions and raise pull requests for version updates.
+
+Name | Description
+-----|-----
+**DAILY** 🔹|Runs on every weekday, Monday to Friday.
+**WEEKLY** 🔹|Runs once each week.
+**MONTHLY** 🔹|Runs once each month.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
@@ -10276,6 +10847,19 @@ Name | Description
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 
+## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>
+
+The strategy to use when edits manifest and lock files.
+
+Name | Description
+-----|-----
+**LOCKFILE_ONLY** 🔹|Only create pull requests to update lockfiles updates.
+**AUTO** 🔹|- For apps, the version requirements are increased.
+**WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
+**INCREASE** 🔹|Always increase the version requirement to match the new version.
+**INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
+
+
 ## enum DependencyType 🔹 <a id="projen-deps-dependencytype"></a>
 
 Type of dependency.
@@ -10288,6 +10872,17 @@ Name | Description
 **BUILD** 🔹|The dependency is required to run the `build` task.
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
+
+
+## enum AutoUpgradeDependenciesSchedule 🔹 <a id="projen-github-autoupgradedependenciesschedule"></a>
+
+How often to check for new versions and raise pull requests for version updates.
+
+Name | Description
+-----|-----
+**DAILY** 🔹|Runs on every weekday, Monday to Friday.
+**WEEKLY** 🔹|Runs once each week.
+**MONTHLY** 🔹|Runs once each month.
 
 
 ## enum DependabotScheduleInterval 🔹 <a id="projen-github-dependabotscheduleinterval"></a>

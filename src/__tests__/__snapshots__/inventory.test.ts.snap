@@ -299,7 +299,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -1510,7 +1510,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -2647,7 +2647,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -4122,7 +4122,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -5202,7 +5202,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -6179,7 +6179,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -7263,7 +7263,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -8736,7 +8736,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -9689,7 +9689,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -10773,7 +10773,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,
@@ -11857,7 +11857,7 @@ Array [
         "type": "string",
       },
       Object {
-        "default": "- DependenciesUpgrade.githubActions()",
+        "default": "- DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.",
         "docs": "Controls how dependencies are upgraded.",
         "name": "dependenciesUpgrade",
         "optional": true,

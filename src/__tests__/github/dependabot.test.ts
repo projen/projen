@@ -1,4 +1,4 @@
-import { Dependabot } from '../../github';
+import { Dependabot } from '../..';
 import { synthSnapshot, TestProject } from '../util';
 
 test('throws if auto approve and project isnt configured with auto approval workflow', () => {

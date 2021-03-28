@@ -8,7 +8,7 @@ export interface ProjenUpgradeOptions {
    *
    * @default [ '0 6 * * *' ]
    */
-  readonly schedule?: string[];
+  readonly autoUpgradeSchedule?: string[];
 
   /**
    * Auto approve PR's, allowing mergify to merge them.
@@ -40,8 +40,8 @@ export class ProjenUpgrade {
       const workflow = project.github.addWorkflow('ProjenUpgrade');
 
       workflow.on({
-        schedule: options.schedule
-          ? options.schedule.map(s => ({ cron: s }))
+        schedule: options.autoUpgradeSchedule
+          ? options.autoUpgradeSchedule.map(s => ({ cron: s }))
           : [{ cron: '0 6 * * *' }], // 6am every day
         workflow_dispatch: {}, // allow manual triggering
       });

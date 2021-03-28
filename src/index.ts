@@ -30,7 +30,7 @@ export * from './version';
 export * from './yaml';
 export * from './xmlfile';
 export * from './publisher';
-export * from './dependencies-upgrade';
+export * from './github';
 
 // export submobules
 export * as tasks from './tasks';

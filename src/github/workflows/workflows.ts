@@ -1,6 +1,6 @@
-import { Component } from '../component';
-import { YamlFile } from '../yaml';
-import { GitHub } from './github';
+import { Component } from '../../component';
+import { YamlFile } from '../../yaml';
+import { GitHub } from '../github';
 
 export class GithubWorkflow extends Component {
   private readonly name: string;

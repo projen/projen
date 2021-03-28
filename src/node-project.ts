@@ -1,8 +1,8 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { DependenciesUpgrade } from './dependencies-upgrade';
-import { GithubWorkflow } from './github';
-import { AutoMerge } from './github/auto-merge';
+import { DependabotOptions, GithubWorkflow } from './github';
 import { MergifyOptions } from './github/mergify';
+import { AutoMerge } from './github/workflows/auto-merge';
+import { AutoUpgradeDependencies, AutoUpgradeDependenciesOptions } from './github/workflows/auto-upgrade-dependencies';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
@@ -154,7 +154,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Controls how dependencies are upgraded.
    *
-   * @default - DependenciesUpgrade.githubActions()
+   * @default - DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
    */
   readonly dependenciesUpgrade?: DependenciesUpgrade;
 
@@ -613,7 +613,7 @@ export class NodeProject extends Project {
     dependenciesUpgrade.bind(this);
 
     new ProjenUpgrade(this, {
-      schedule: options.projenUpgradeSchedule,
+      autoUpgradeSchedule: options.projenUpgradeSchedule,
       autoApprove: options.projenUpgradeAutoApprove ?? true,
     });
 
@@ -716,10 +716,10 @@ export class NodeProject extends Project {
     });
 
     // run "projen"
-    install.push({
-      name: 'Synthesize project files',
-      run: this.package.projenCommand,
-    });
+    // install.push({
+    //   name: 'Synthesize project files',
+    //   run: this.package.projenCommand,
+    // });
 
     return install;
   }
@@ -1040,4 +1040,74 @@ interface NodeBuildWorkflowOptions {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
+}
+
+/**
+ * Dependencies upgrade.
+ */
+export class DependenciesUpgrade {
+
+  /**
+   * Disable dependency upgrades.
+   */
+  public static readonly DISABLED: DependenciesUpgrade = new DependenciesUpgrade('disabled');
+
+  /**
+   * Use dependabot (with the default options) to upgrade dependencies.
+   */
+  public static readonly DEPENDABOT: DependenciesUpgrade = new DependenciesUpgrade('dependabot');
+
+  /**
+   * Use GitHub actions (with the default options) to upgrade dependencies.
+   */
+  public static readonly GITHUB_ACTIONS: DependenciesUpgrade = new DependenciesUpgrade('github-actions');
+
+  /**
+   * Use GitHub actions (with custom options) to upgrade dependencies.
+   *
+   * @param options The options.
+   */
+  public static githubActions(options: AutoUpgradeDependenciesOptions = {}): DependenciesUpgrade {
+    return new DependenciesUpgrade('github-actions', options);
+  }
+
+  /**
+   * Use Dependabot (with custom options) to upgrade dependencies.
+   *
+   * @param options The options.
+   */
+  public static dependabot(options: DependabotOptions = {}): DependenciesUpgrade {
+    return new DependenciesUpgrade('dependabot', options);
+  }
+
+  private constructor(
+    private readonly type: 'github-actions' | 'dependabot' | 'disabled',
+    private readonly options?: DependabotOptions | AutoUpgradeDependenciesOptions) {
+
+  }
+
+  public bind(project: NodeProject) {
+
+    switch (this.type) {
+      case 'disabled':
+        break;
+      case 'dependabot':
+        this.bindDependabot(project);
+        break;
+      case 'github-actions':
+        this.bindGitHubActions(project);
+        break;
+      default:
+        throw new Error(`Unsupported dependency upgrade type: ${this.type}`);
+    }
+  }
+
+  private bindDependabot(project: NodeProject) {
+    project.github?.addDependabot((this.options ?? {}) as DependabotOptions);
+  }
+
+  private bindGitHubActions(project: NodeProject) {
+    new AutoUpgradeDependencies(project, (this.options ?? {}) as AutoUpgradeDependenciesOptions);
+  }
+
 }

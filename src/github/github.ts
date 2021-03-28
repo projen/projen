@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { Mergify, MergifyRule } from './mergify';
 import { PullRequestTemplate } from './pr-template';
-import { GithubWorkflow } from './workflows';
+import { GithubWorkflow } from './workflows/workflows';
 
 export class GitHub extends Component {
   private mergify?: Mergify;

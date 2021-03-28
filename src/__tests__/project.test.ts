@@ -2,6 +2,25 @@ import * as path from 'path';
 import { JsonFile, Project, TextFile } from '..';
 import { TestProject } from './util';
 
+describe('auto approve', () => {
+
+  test('defaults to true when a projen secret is defined', () => {
+    const project = new TestProject({ projenSecret: 'PROJEN_SECRET' });
+    expect(project.autoApprove).toBeDefined();
+  });
+
+  test('default to false when a projen secret is undefined', () => {
+    const project = new TestProject({});
+    expect(project.autoApprove).toBeUndefined();
+  });
+
+  test('can be disabled', () => {
+    const project = new TestProject({ projenSecret: 'PROJEN_SECRET', autoApprove: false });
+    expect(project.autoApprove).toBeUndefined();
+  });
+
+});
+
 test('file paths are relative to the project outdir', () => {
   // GIVEN
   const p = new TestProject();

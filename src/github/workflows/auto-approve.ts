@@ -1,5 +1,5 @@
-import { Component } from '../component';
-import { Project } from '../project';
+import { Component } from '../../component';
+import { Project } from '../../project';
 
 /**
  * Options for 'AutoApprove'
@@ -15,8 +15,7 @@ export interface AutoApproveOptions {
 }
 
 /**
- * AutoApprove configures a GitHub workflow that auto-approves PR's that are
- * assigned with a specific label.
+ * Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
  */
 export class AutoApprove extends Component {
 
@@ -32,15 +31,11 @@ export class AutoApprove extends Component {
       throw new Error('GitHub must be configured to enable auto approvals');
     }
 
-    if (!project.projenSecret) {
-      throw new Error('Projen secret must be configured to enable auto approvals');
-    }
-
     this.label = options.label ?? 'pr/auto-approve';
 
     const autoApprove = project.github.addWorkflow('auto-approve');
     autoApprove.on({
-      pull_request: { types: ['labeled', 'opened'] },
+      pull_request: { types: ['labeled', 'opened', 'unlabeled'] },
     });
     autoApprove.addJobs({
       approve: {
@@ -49,7 +44,7 @@ export class AutoApprove extends Component {
         'steps': [
           {
             uses: 'hmarr/auto-approve-action@v2.0.0',
-            with: { 'github-token': `{{ secrets.${project.projenSecret} }}` },
+            with: { 'github-token': '${{ secrets.GITHUB_TOKEN }}' },
           },
         ],
       },
