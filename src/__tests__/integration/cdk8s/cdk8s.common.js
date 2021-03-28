@@ -10,7 +10,7 @@ exports.options = {
   rebuildBot: false,
   stability: 'experimental',
   releaseWorkflow: false,
-  dependenciesUpgrade: DependenciesUpgrade.DISABLE,
+  dependenciesUpgrade: DependenciesUpgrade.DISABLED,
   mergify: false,
   compat: false,
   pullRequestTemplate: false,
