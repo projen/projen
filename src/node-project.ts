@@ -1,8 +1,7 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { DependabotOptions, GithubWorkflow } from './github';
+import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
+import { AutoUpgradeDependencies, AutoUpgradeDependenciesOptions } from './github/auto-upgrade-dependencies';
 import { MergifyOptions } from './github/mergify';
-import { AutoMerge } from './github/workflows/auto-merge';
-import { AutoUpgradeDependencies, AutoUpgradeDependenciesOptions } from './github/workflows/auto-upgrade-dependencies';
 import { IgnoreFile } from './ignore-file';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';

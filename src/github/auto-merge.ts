@@ -1,5 +1,5 @@
-import { Component } from '../../component';
-import { Project } from '../../project';
+import { Component } from '../component';
+import { Project } from '../project';
 
 export interface AutoMergeOptions {
   /**

@@ -5,7 +5,7 @@ import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub } from './github';
-import { AutoApprove, AutoApproveOptions } from './github/workflows/auto-approve';
+import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';

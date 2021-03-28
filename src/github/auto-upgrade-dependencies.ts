@@ -1,5 +1,5 @@
-import { Component } from '../../component';
-import { NodeProject } from '../../node-project';
+import { Component } from '../component';
+import { NodeProject } from '../node-project';
 
 /**
  * Options for `AutoUpgradeDependencies`.
