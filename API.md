@@ -377,7 +377,7 @@ const project = new ConstructLibraryAws({
    },
 
    // creates PRs for projen upgrades
-   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+   projenSecret: 'PROJEN_GITHUB_TOKEN',
 
    cdkVersion: '1.54.0',
    cdkDependencies: [

@@ -31,17 +31,17 @@ We will also need to indicate major version compatibility of each project/compon
 
 ### Velocity
 
-In semver (semantic versioning), the only right way to introduce a breaking change (API or behavioral) is to release 
-a new major version. It will take a couple of years for projen to stabilize, and we want the ecosystem to grow with it. 
+In semver (semantic versioning), the only right way to introduce a breaking change (API or behavioral) is to release
+a new major version. It will take a couple of years for projen to stabilize, and we want the ecosystem to grow with it.
 A monolithic module makes this less of a problem because there aren't many libraries that depend on projen, so a major
 version once in a while is tolerable.
 
-This means that projen will release major versions all the time. Think 232.4.34. 
+This means that projen will release major versions all the time. Think 232.4.34.
 
-So we need our ecosystem to continuously take updates and release new versions that were tested with the new major version. 
+So we need our ecosystem to continuously take updates and release new versions that were tested with the new major version.
 In most cases, projects and component won't get broken, but sometimes they will and then the maintainer will need to resolve.
-Luckily this mechanism already exists in projen (`projenUpgradeSecret`). 
-It is opt-in because it requires a the user to upload a GitHub secret, but maybe if we implement some support for secret management, 
+Luckily this mechanism already exists in projen (`projenSecret`).
+It is opt-in because it requires a the user to upload a GitHub secret, but maybe if we implement some support for secret management,
 we could make that the default behavior.
 
 As mentioned above, when we process our "sources" during build, we can check the projen version they were tested with and
