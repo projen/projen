@@ -2529,7 +2529,9 @@ common.fixup(project);
 
 project.synth();
 ",
-  "cdk8s.common.js": "exports.options = {
+  "cdk8s.common.js": "const { DependenciesUpgrade } = require('projen');
+
+exports.options = {
   minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
@@ -2539,10 +2541,9 @@ project.synth();
   rebuildBot: false,
   stability: 'experimental',
   releaseWorkflow: false,
-  dependabot: false,
+  dependenciesUpgrade: DependenciesUpgrade.DISABLE,
   mergify: false,
   compat: false,
-  dependabot: false,
   pullRequestTemplate: false,
   keywords: [
     \\"cdk\\",
@@ -3799,7 +3800,9 @@ common.fixup(project);
 
 project.synth();
 ",
-  "cdk8s.common.js": "exports.options = {
+  "cdk8s.common.js": "const { DependenciesUpgrade } = require('projen');
+
+exports.options = {
   minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
@@ -3809,10 +3812,9 @@ project.synth();
   rebuildBot: false,
   stability: 'experimental',
   releaseWorkflow: false,
-  dependabot: false,
+  dependenciesUpgrade: DependenciesUpgrade.DISABLE,
   mergify: false,
   compat: false,
-  dependabot: false,
   pullRequestTemplate: false,
   keywords: [
     \\"cdk\\",
