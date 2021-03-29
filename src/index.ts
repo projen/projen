@@ -9,6 +9,7 @@ export * from './eslint';
 export * from './file';
 export * from './gitpod';
 export * from './ignore-file';
+export * from './ini';
 export * from './jest';
 export * from './jsii-project';
 export * from './json';
