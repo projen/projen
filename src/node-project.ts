@@ -172,6 +172,22 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
+   * This setting is a GitHub secret name which contains a GitHub Access Token
+   * with `repo` and `workflow` permissions.
+   *
+   * This token is used by projen to create workflows that require repository write permissions,
+   * such as dependency upgrades and auto approvals or PRs.
+   *
+   * To create a personal access token see https://github.com/settings/tokens
+   *
+   * By default, if a secret is configured, projen will periodically submit a pull request for projen upgrades (executes `yarn
+   * projen:upgrade`) so that your project is always up to date.
+   *
+   * @default - Projen managed workflows are disabled.
+   */
+  readonly projenSecret?: string;
+
+  /**
    * Automatically approve projen upgrade PRs, causing mergify to merge them
    * given the CI passes.
    *
@@ -385,6 +401,11 @@ export class NodeProject extends Project {
   public get projenCommand(): string { return this.package.projenCommand; }
 
   /**
+   * The secret this project uses for projen managed workflows.
+   */
+  public readonly projenSecret?: string;
+
+  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
@@ -406,6 +427,7 @@ export class NodeProject extends Project {
     })();
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
+    this.projenSecret = options.projenSecret;
 
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');

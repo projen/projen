@@ -860,7 +860,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -2033,7 +2033,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -3170,7 +3170,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -3762,18 +3762,6 @@ Array [
         ],
         "switch": "projenrc-java-options",
         "type": "ProjenrcCommonOptions",
-      },
-      Object {
-        "default": "- Projen managed workflows are disabled.",
-        "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
-        "name": "projenSecret",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenSecret",
-        ],
-        "switch": "projen-secret",
-        "type": "string",
       },
       Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
@@ -4645,7 +4633,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -5667,7 +5655,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -6740,7 +6728,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -7728,7 +7716,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -8088,18 +8076,6 @@ Array [
         "type": "ProjectType",
       },
       Object {
-        "default": "- Projen managed workflows are disabled.",
-        "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
-        "name": "projenSecret",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenSecret",
-        ],
-        "switch": "projen-secret",
-        "type": "string",
-      },
-      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "name": "readme",
@@ -8385,18 +8361,6 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
-      },
-      Object {
-        "default": "- Projen managed workflows are disabled.",
-        "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
-        "name": "projenSecret",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenSecret",
-        ],
-        "switch": "projen-secret",
-        "type": "string",
       },
       Object {
         "default": "true",
@@ -9201,7 +9165,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -10250,7 +10214,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -11334,7 +11298,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],
@@ -12418,7 +12382,7 @@ Array [
         "docs": "This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions.",
         "name": "projenSecret",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "projenSecret",
         ],

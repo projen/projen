@@ -68,6 +68,7 @@ const project = new AwsCdkTypeScriptApp({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -92,7 +93,6 @@ const project = new AwsCdkTypeScriptApp({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -204,6 +204,7 @@ const project = new AwsCdkConstructLibrary({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -228,7 +229,6 @@ const project = new AwsCdkConstructLibrary({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -317,6 +317,7 @@ const project = new ConstructLibraryCdk8s({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -341,7 +342,6 @@ const project = new ConstructLibraryCdk8s({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -387,7 +387,6 @@ const project = new java.JavaProject({
   // outdir: '.',                       /* The root directory of the project. */
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // projenSecret: undefined,           /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                 /* The README setup. */
 });
 
@@ -472,6 +471,7 @@ const project = new JsiiProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -496,7 +496,6 @@ const project = new JsiiProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -572,6 +571,7 @@ const project = new web.NextJsProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -596,7 +596,6 @@ const project = new web.NextJsProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -668,6 +667,7 @@ const project = new web.NextJsTypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -692,7 +692,6 @@ const project = new web.NextJsTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -776,6 +775,7 @@ const project = new NodeProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -800,7 +800,6 @@ const project = new NodeProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 });
 
@@ -825,7 +824,6 @@ const project = new Project({
   // outdir: '.',                       /* The root directory of the project. */
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // projenSecret: undefined,           /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                 /* The README setup. */
 });
 
@@ -854,7 +852,6 @@ const project = new python.PythonProject({
   // outdir: '.',                          /* The root directory of the project. */
   // parent: undefined,                    /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,     /* Which type of project this is (library/app). */
-  // projenSecret: undefined,              /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                    /* The README setup. */
 
   /* PythonPackagingOptions */
@@ -942,6 +939,7 @@ const project = new web.ReactProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -966,7 +964,6 @@ const project = new web.ReactProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* ReactProjectOptions */
@@ -1038,6 +1035,7 @@ const project = new web.ReactTypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -1062,7 +1060,6 @@ const project = new web.ReactTypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -1146,6 +1143,7 @@ const project = new TypeScriptProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -1170,7 +1168,6 @@ const project = new TypeScriptProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */
@@ -1254,6 +1251,7 @@ const project = new TypeScriptAppProject({
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // projenUpgradeAutoApprove: true,                                           /* Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenVersion: undefined,                                                 /* Version of projen to install. */
@@ -1278,7 +1276,6 @@ const project = new TypeScriptAppProject({
   // outdir: '.',                                                              /* The root directory of the project. */
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // projenSecret: undefined,                                                  /* This setting is a GitHub secret name which contains a GitHub Access Token with \`repo\` and \`workflow\` permissions. */
   // readme: undefined,                                                        /* The README setup. */
 
   /* TypeScriptProjectOptions */

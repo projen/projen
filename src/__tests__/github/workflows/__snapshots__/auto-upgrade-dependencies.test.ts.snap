@@ -20,7 +20,7 @@ jobs:
       - name: Synthesize project files
         run: npx projen
       - name: Upgrade package.json dependencies
-        run: npx npm-check-updates --upgrade --reject projen
+        run: npx npm-check-updates --upgrade --reject 'projen'
       - name: Upgrade yarn.lock dependencies
         run: yarn install && yarn upgrade --pattern !(projen)
       - name: Create Pull Request
@@ -60,7 +60,7 @@ jobs:
       - name: Synthesize project files
         run: npx projen
       - name: Upgrade package.json dependencies
-        run: npx npm-check-updates --upgrade --reject projen
+        run: npx npm-check-updates --upgrade --reject 'projen'
       - name: Upgrade yarn.lock dependencies
         run: yarn install && yarn upgrade --pattern !(projen)
       - name: Create Pull Request

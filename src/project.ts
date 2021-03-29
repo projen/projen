@@ -90,22 +90,6 @@ export interface ProjectOptions {
   readonly jsiiFqn?: string;
 
   /**
-   * This setting is a GitHub secret name which contains a GitHub Access Token
-   * with `repo` and `workflow` permissions.
-   *
-   * This token is used by projen to create workflows that require repository write permissions,
-   * such as dependency upgrades and auto approvals or PRs.
-   *
-   * To create a personal access token see https://github.com/settings/tokens
-   *
-   * By default, if a secret is configured, projen will periodically submit a pull request for projen upgrades (executes `yarn
-   * projen:upgrade`) so that your project is always up to date.
-   *
-   * @default - Projen managed workflows are disabled.
-   */
-  readonly projenSecret?: string;
-
-  /**
    * Create a github workflow for auto approval of PR's based on specific PR metadata. (see `autoApproveOptions`)
    *
    * @default true
@@ -207,11 +191,6 @@ export class Project {
   public readonly jsiiFqn?: string;
 
   /**
-   * The secret this project uses for projen managed workflows.
-   */
-  public readonly projenSecret?: string;
-
-  /**
    * The auto-approve workflow configuration (if enabled).
    */
   public readonly autoApprove?: AutoApprove;
@@ -232,7 +211,6 @@ export class Project {
     this.parent = options.parent;
     this.excludeFromCleanup = [];
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
-    this.projenSecret = options.projenSecret;
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');

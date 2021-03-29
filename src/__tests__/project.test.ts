@@ -10,7 +10,7 @@ describe('auto approve', () => {
   });
 
   test('can be disabled', () => {
-    const project = new TestProject({ projenSecret: 'PROJEN_SECRET', autoApprove: false });
+    const project = new TestProject({ autoApprove: false });
     expect(project.autoApprove).toBeUndefined();
   });
 

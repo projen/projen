@@ -102,7 +102,7 @@ export class AutoUpgradeDependencies extends Component {
           ...project.installWorkflowSteps,
           {
             name: 'Upgrade package.json dependencies',
-            run: 'npx npm-check-updates --upgrade --reject projen',
+            run: `npx npm-check-updates --upgrade --reject '${ignore.join(',')}'`,
           },
           {
             name: 'Upgrade yarn.lock dependencies',
