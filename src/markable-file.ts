@@ -5,7 +5,7 @@ export interface MarkableFileOptions {
   /**
    * Adds the projen marker to the file.
    *
-   * @default false
+   * @default true
    */
   readonly marker?: boolean;
 }
@@ -17,7 +17,7 @@ export interface IMarkableFile {
   /**
    * Adds the projen marker to the file.
    *
-   * @default false
+   * @default true
    */
   readonly marker: boolean;
 }

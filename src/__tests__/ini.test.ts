@@ -9,7 +9,7 @@ test('ini object can be mutated before synthesis', () => {
     hello: 'world',
   };
 
-  new IniFile(prj, 'my/ini/file.ini', { obj });
+  new IniFile(prj, 'my/ini/file.ini', { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {

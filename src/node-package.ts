@@ -417,7 +417,6 @@ export class NodePackage extends Component {
 
     this.file = new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
-      marker: true,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 

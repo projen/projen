@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { DevEnvironmentDockerImage } from '../dev-env';
+import { FileBase } from '../file';
 import { GitpodOpenIn, GitpodOpenMode } from '../gitpod';
 import * as logging from '../logging';
 import { synthSnapshot, TestProject } from './util';
@@ -82,7 +83,10 @@ describe('dev environment docker options', () => {
     expect(gitpodSnapshot).toContain('image: jsii/superchain');
 
     const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-    expect(devContainerSnapshot).toStrictEqual({ image: 'jsii/uberchain' });
+    expect(devContainerSnapshot).toStrictEqual({
+      '//': FileBase.PROJEN_MARKER,
+      'image': 'jsii/uberchain',
+    });
   });
 
   test('given a docker file dep', () => {
@@ -102,7 +106,10 @@ describe('dev environment docker options', () => {
     expect(gitpodSnapshot).toContain('file: .gitpod.Dockerfile');
 
     const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-    expect(devContainerSnapshot).toStrictEqual({ build: { dockerfile: 'Dockerfile' } });
+    expect(devContainerSnapshot).toStrictEqual({
+      '//': FileBase.PROJEN_MARKER,
+      'build': { dockerfile: 'Dockerfile' },
+    });
   });
 });
 
@@ -170,7 +177,10 @@ test('dev environment ports', () => {
   expect(gitpodSnapshot).toContain('port: 3000-3999');
 
   const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-  expect(devContainerSnapshot).toStrictEqual({ forwardPorts: ['8080', '3000'] });
+  expect(devContainerSnapshot).toStrictEqual({
+    '//': FileBase.PROJEN_MARKER,
+    'forwardPorts': ['8080', '3000'],
+  });
 });
 
 test('gitpod prebuilds config', () => {
@@ -215,5 +225,8 @@ test('dev environment vscode extensions', () => {
   expect(gitpodSnapshot).toContain('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
 
   const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
-  expect(devContainerSnapshot).toStrictEqual({ extensions: ['dbaeumer.vscode-eslint'] });
+  expect(devContainerSnapshot).toStrictEqual({
+    '//': FileBase.PROJEN_MARKER,
+    'extensions': ['dbaeumer.vscode-eslint'],
+  });
 });

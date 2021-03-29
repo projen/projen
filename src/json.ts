@@ -17,6 +17,8 @@ export class JsonFile extends ObjectFile {
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
     }
+
+    // console.log(this.marker);
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
