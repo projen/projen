@@ -11,7 +11,7 @@ export interface ProjenUpgradeOptions {
   readonly autoApprove?: boolean;
 
   /**
-   * Cron expression that determines the upgrade schedule.
+   * Customize the projenUpgrade schedule in cron expression.
    *
    * @default [ '0 6 * * *' ]
    */

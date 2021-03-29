@@ -281,8 +281,8 @@ export class Project {
 
     new SampleReadme(this, options.readme);
 
-    // configure auto approval by default only if a projen secret exists.
-    if (options.autoApprove ?? !!this.projenSecret) {
+    // enable by default only for root projects.
+    if (options.autoApprove ?? (this.parent ? false : true)) {
       this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
     }
 

@@ -9,4 +9,5 @@ updates:
       interval: daily
     ignore:
       - dependency-name: projen
-    default_labels: []
+    default_labels:
+      - pr/auto-approve

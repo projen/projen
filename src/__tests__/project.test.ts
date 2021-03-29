@@ -4,14 +4,9 @@ import { TestProject } from './util';
 
 describe('auto approve', () => {
 
-  test('defaults to true when a projen secret is defined', () => {
-    const project = new TestProject({ projenSecret: 'PROJEN_SECRET' });
+  test('defaults to true', () => {
+    const project = new TestProject();
     expect(project.autoApprove).toBeDefined();
-  });
-
-  test('default to false when a projen secret is undefined', () => {
-    const project = new TestProject({});
-    expect(project.autoApprove).toBeUndefined();
   });
 
   test('can be disabled', () => {

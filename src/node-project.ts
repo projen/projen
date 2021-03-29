@@ -610,10 +610,11 @@ export class NodeProject extends Project {
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    const dependenciesUpgrade = options.dependenciesUpgrade ?? (
-      this.projenSecret ? DependenciesUpgrade.GITHUB_ACTIONS : DependenciesUpgrade.DEPENDABOT
-    );
-    dependenciesUpgrade.bind(this);
+    const defaultDependenciesUpgrade = (this.projenSecret ? DependenciesUpgrade.GITHUB_ACTIONS : DependenciesUpgrade.DEPENDABOT);
+
+    // enable by default only for root projects.
+    const dependenciesUpgrade = options.dependenciesUpgrade ?? (this.parent ? undefined : defaultDependenciesUpgrade);
+    dependenciesUpgrade?.bind(this);
 
     new ProjenUpgrade(this, {
       autoUpgradeSchedule: options.projenUpgradeSchedule,

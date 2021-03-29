@@ -33,6 +33,7 @@ yarn-error.log*
 !/.eslintrc.json
 !/.github/dependabot.yml
 !/.github/pull_request_template.md
+!/.github/workflows/auto-approve.yml
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
 !/.gitpod.yml
