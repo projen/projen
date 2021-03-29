@@ -1712,7 +1712,7 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -2005,7 +2005,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -2910,7 +2910,7 @@ new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -3587,7 +3587,7 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -4051,7 +4051,7 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -4097,7 +4097,7 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
 
@@ -7717,7 +7717,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -8093,7 +8093,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -8155,7 +8155,7 @@ Options for files that may include the Projen marker.
 
 Name | Type | Description 
 -----|------|-------------
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 
 
 
@@ -8318,7 +8318,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -8475,7 +8475,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -8773,7 +8773,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -8792,7 +8792,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true

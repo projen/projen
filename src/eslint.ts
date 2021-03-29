@@ -284,7 +284,7 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    new JsonFile(project, '.eslintrc.json', { obj: this.config });
+    new JsonFile(project, '.eslintrc.json', { obj: this.config, marker: false });
   }
 
   /**
