@@ -56,9 +56,7 @@ export abstract class ObjectFile extends FileBase implements IMarkableFile {
     }
 
     this.obj = options.obj ?? {};
-    // console.log('options.marker', options.marker);
     this.marker = options.marker ?? true;
-    // console.log('this.marker', this.marker);
     this.omitEmpty = options.omitEmpty ?? false;
     this.rawOverrides = {};
   }
