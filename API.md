@@ -128,7 +128,6 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
-[MarkableFileOptions](#projen-markablefileoptions)|Options for files that may include the Projen marker.
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
@@ -210,7 +209,6 @@ Name|Description
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
-[IMarkableFile](#projen-imarkablefile)|Files that may include the Projen marker.
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
@@ -1693,7 +1691,6 @@ __Returns__:
 
 Represents an INI file.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
@@ -1986,7 +1983,6 @@ Name | Type | Description
 
 Represents a JSON file.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
@@ -2889,7 +2885,6 @@ setScript(name: string, command: string): void
 
 Represents an Object file.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [FileBase](#projen-filebase)
 __Implemented by__: [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindObjectFile](#projen-project#projen-project-tryfindobjectfile)()
@@ -3568,7 +3563,6 @@ __Returns__:
 
 Represents a TOML file.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
@@ -4032,7 +4026,6 @@ Represents an XML file.
 
 Objects passed in will be synthesized using the npm "xml" library.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
@@ -4078,7 +4071,6 @@ __Returns__:
 
 Represents a YAML file.
 
-__Implements__: [IMarkableFile](#projen-imarkablefile)
 __Extends__: [ObjectFile](#projen-objectfile)
 
 ### Initializer
@@ -7665,21 +7657,6 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 
 
-## interface IMarkableFile 🔹 <a id="projen-imarkablefile"></a>
-
-__Implemented by__: [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
-
-Files that may include the Projen marker.
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**marker**🔹 | <code>boolean</code> | Adds the projen marker to the file.
-
-
-
 ## interface IResolver 🔹 <a id="projen-iresolver"></a>
 
 
@@ -8143,19 +8120,6 @@ Name | Type | Description
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 **rules**?🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.<br/>__*Default*__: []
-
-
-
-## struct MarkableFileOptions 🔹 <a id="projen-markablefileoptions"></a>
-
-
-Options for files that may include the Projen marker.
-
-
-
-Name | Type | Description 
------|------|-------------
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 
 
 

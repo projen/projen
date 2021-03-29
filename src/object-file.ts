@@ -1,12 +1,11 @@
 import { FileBase, FileBaseOptions, IResolver } from './file';
-import { IMarkableFile, MarkableFileOptions } from './markable-file';
 import { Project } from './project';
 import { deepMerge } from './util';
 
 /**
  * Options for `ObjectFile`.
  */
-export interface ObjectFileOptions extends FileBaseOptions, MarkableFileOptions {
+export interface ObjectFileOptions extends FileBaseOptions {
   /**
    * The object that will be serialized. You can modify the object's contents
    * before synthesis.
@@ -20,12 +19,19 @@ export interface ObjectFileOptions extends FileBaseOptions, MarkableFileOptions 
    * @default false
    */
   readonly omitEmpty?: boolean;
+
+  /**
+   * Adds the projen marker to the file.
+   *
+   * @default true
+   */
+  readonly marker?: boolean;
 }
 
 /**
  * Represents an Object file.
  */
-export abstract class ObjectFile extends FileBase implements IMarkableFile {
+export abstract class ObjectFile extends FileBase {
   /**
    * The output object. This object can be mutated until the project is
    * synthesized.
@@ -36,7 +42,7 @@ export abstract class ObjectFile extends FileBase implements IMarkableFile {
    * Indicates if the projen marker JSON-comment will be added to the output
    * object.
    */
-  public readonly marker: boolean;
+  public marker: boolean;
 
   /**
    * An object to be merged on top of `obj` after the resolver is called
