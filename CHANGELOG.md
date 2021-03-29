@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.18](https://github.com/projen/projen/compare/v0.17.17...v0.17.18) (2021-03-29)
+
+
+### Features
+
+* IniFile component ([#650](https://github.com/projen/projen/issues/650)) ([6c39104](https://github.com/projen/projen/commit/6c391046ea333f00b19b8cd1254e4c4e0ef9ac88)), closes [#646](https://github.com/projen/projen/issues/646)
+
 ### [0.17.17](https://github.com/projen/projen/compare/v0.17.16...v0.17.17) (2021-03-24)
 
 
