@@ -256,7 +256,7 @@ jobs:
 name: auto-upgrade-dependencies
 on:
   schedule:
-    - cron: 0 8 * * *
+    - cron: 0 0 * * 1-5
   workflow_dispatch: {}
 jobs:
   upgrade:

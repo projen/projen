@@ -4,7 +4,7 @@ import { synthSnapshot, TestProject } from '../../util';
 
 test('default options', () => {
 
-  const project = createProject({ projenSecret: 'PROJEN_SECRET' });
+  const project = createProject();
   new AutoApprove(project);
 
   const snapshot = synthSnapshot(project);
@@ -15,9 +15,7 @@ test('default options', () => {
 
 test('custom options', () => {
 
-  const project = createProject({
-    projenSecret: 'PROJEN_SECRET',
-  });
+  const project = createProject();
   new AutoApprove(project, {
     label: 'custom-auto-approve',
   });

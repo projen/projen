@@ -10678,9 +10678,10 @@ How often to check for new versions and raise pull requests for version updates.
 
 Name | Description
 -----|-----
-**DAILY** 🔹|Runs on every weekday, Monday to Friday.
-**WEEKLY** 🔹|Runs once each week.
-**MONTHLY** 🔹|Runs once each month.
+**DAILY** 🔹|At 00:00.
+**WEEKDAY** 🔹|At 00:00 on every day-of-week from Monday through Friday.
+**WEEKLY** 🔹|At 00:00 on Monday.
+**MONTHLY** 🔹|At 00:00 on day-of-month 1.
 
 
 ## enum CdkApprovalLevel 🔹 <a id="projen-cdkapprovallevel"></a>
@@ -10886,9 +10887,10 @@ How often to check for new versions and raise pull requests for version updates.
 
 Name | Description
 -----|-----
-**DAILY** 🔹|Runs on every weekday, Monday to Friday.
-**WEEKLY** 🔹|Runs once each week.
-**MONTHLY** 🔹|Runs once each month.
+**DAILY** 🔹|At 00:00.
+**WEEKDAY** 🔹|At 00:00 on every day-of-week from Monday through Friday.
+**WEEKLY** 🔹|At 00:00 on Monday.
+**MONTHLY** 🔹|At 00:00 on day-of-month 1.
 
 
 ## enum DependabotScheduleInterval 🔹 <a id="projen-github-dependabotscheduleinterval"></a>

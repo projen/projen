@@ -37,17 +37,22 @@ export interface AutoUpgradeDependenciesOptions {
  */
 export enum AutoUpgradeDependenciesSchedule {
   /**
-   * Runs on every weekday, Monday to Friday.
+   * At 00:00.
    */
   DAILY = 'daily',
 
   /**
-   * Runs once each week. By default, this is on Monday.
+   * At 00:00 on every day-of-week from Monday through Friday.
+   */
+  WEEKDAY = 'weekday',
+
+  /**
+   * At 00:00 on Monday.
    */
   WEEKLY = 'weekly',
 
   /**
-   * Runs once each month. This is on the first day of the month.
+   * At 00:00 on day-of-month 1.
    */
   MONTHLY = 'monthly'
 }
@@ -82,7 +87,7 @@ export class AutoUpgradeDependencies extends Component {
 
     const dependencies = project.github.addWorkflow('auto-upgrade-dependencies');
     dependencies.on({
-      schedule: [{ cron: this.scheduleToCron(options.schedule ?? AutoUpgradeDependenciesSchedule.DAILY) }],
+      schedule: [{ cron: this.scheduleToCron(options.schedule ?? AutoUpgradeDependenciesSchedule.WEEKDAY) }],
       workflow_dispatch: {}, // allow manual triggering
     });
     dependencies.addJobs({
@@ -124,9 +129,11 @@ export class AutoUpgradeDependencies extends Component {
 
     switch (schedule) {
       case AutoUpgradeDependenciesSchedule.DAILY:
-        return '0 8 * * *';
+        return '0 0 * * *';
+      case AutoUpgradeDependenciesSchedule.WEEKDAY:
+        return '0 0 * * 1-5';
       case AutoUpgradeDependenciesSchedule.WEEKLY:
-        return '0 0 * * 0';
+        return '0 0 * * 1';
       case AutoUpgradeDependenciesSchedule.MONTHLY:
         return '0 0 1 * *';
       default:
