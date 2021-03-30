@@ -832,6 +832,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -2005,6 +2017,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -3140,6 +3164,18 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
       },
       Object {
         "default": "\\"npx projen\\"",
@@ -4581,6 +4617,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -5601,6 +5649,18 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
       },
       Object {
         "default": "\\"npx projen\\"",
@@ -6676,6 +6736,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -7662,6 +7734,18 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
       },
       Object {
         "default": "\\"npx projen\\"",
@@ -9065,6 +9149,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -10112,6 +10208,18 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
       },
       Object {
         "default": "\\"npx projen\\"",
@@ -11198,6 +11306,18 @@ Array [
         "type": "ProjectType",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "\\"npx projen\\"",
         "docs": "The shell command to use in order to run the projen CLI.",
         "name": "projenCommand",
@@ -12280,6 +12400,18 @@ Array [
         ],
         "switch": "project-type",
         "type": "ProjectType",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenBuild",
+        ],
+        "switch": "projen-build",
+        "type": "boolean",
       },
       Object {
         "default": "\\"npx projen\\"",

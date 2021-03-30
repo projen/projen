@@ -69,6 +69,7 @@ const project = new AwsCdkTypeScriptApp({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -205,6 +206,7 @@ const project = new AwsCdkConstructLibrary({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -318,6 +320,7 @@ const project = new ConstructLibraryCdk8s({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -470,6 +473,7 @@ const project = new JsiiProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -570,6 +574,7 @@ const project = new web.NextJsProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -666,6 +671,7 @@ const project = new web.NextJsTypeScriptProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -774,6 +780,7 @@ const project = new NodeProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -934,6 +941,7 @@ const project = new web.ReactProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -1030,6 +1038,7 @@ const project = new web.ReactTypeScriptProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -1138,6 +1147,7 @@ const project = new TypeScriptProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
@@ -1246,6 +1256,7 @@ const project = new TypeScriptAppProject({
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
   // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenBuild: true,                                                        /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
