@@ -60,7 +60,7 @@ export class Version extends Component {
         },
         scripts: {
           // run projen after release to update package.json
-          postbump: `${projenCommand} && git add .`,
+          postbump: projenCommand,
         },
       },
     });
