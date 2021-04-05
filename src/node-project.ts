@@ -219,6 +219,16 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    */
   readonly projenUpgradeSchedule?: string[];
 
+  /**
+   * Execute `projen` as the first step of the `build` task to synthesize
+   * project files. This applies both to local builds and to CI builds.
+   *
+   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
+   * synthesized project files will be persisted.
+   *
+   * @default true
+   */
+  readonly projenDuringBuild?: boolean;
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -464,6 +474,11 @@ export class NodeProject extends Project {
       description: 'Full release build (test+compile)',
       category: TaskCategory.BUILD,
     });
+
+    // first, execute projen as the first thing during build
+    if (options.projenDuringBuild ?? true) {
+      this.buildTask.exec(this.projenCommand);
+    }
 
     this.addLicense(options);
 
@@ -758,13 +773,6 @@ export class NodeProject extends Project {
       name: 'Install dependencies',
       run: this.package.installCommand,
     });
-
-    // run "projen"
-    install.push({
-      name: 'Synthesize project files',
-      run: this.package.projenCommand,
-    });
-
     return install;
   }
 

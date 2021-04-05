@@ -22,8 +22,6 @@ jobs:
           node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Synthesize project files
-        run: /bin/bash ./projen.bash
       - name: Anti-tamper check
         run: git diff --exit-code
       - name: Set git identity

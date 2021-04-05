@@ -856,6 +856,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -2029,6 +2041,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -3163,6 +3187,18 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
         "type": "boolean",
       },
       Object {
@@ -4605,6 +4641,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -5624,6 +5672,18 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
         "type": "boolean",
       },
       Object {
@@ -6700,6 +6760,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -7685,6 +7757,18 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
         "type": "boolean",
       },
       Object {
@@ -9089,6 +9173,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -10135,6 +10231,18 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
         "type": "boolean",
       },
       Object {
@@ -11222,6 +11330,18 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
+        "type": "boolean",
+      },
+      Object {
         "default": "- \\"true\\" if mergify auto-merge is enabled (default)",
         "docs": "Automatically merge projen upgrade PRs when build passes.",
         "name": "projenUpgradeAutoMerge",
@@ -12303,6 +12423,18 @@ Array [
           "projenDevDependency",
         ],
         "switch": "projen-dev-dependency",
+        "type": "boolean",
+      },
+      Object {
+        "default": "true",
+        "docs": "Execute \`projen\` as the first step of the \`build\` task to synthesize project files.",
+        "name": "projenDuringBuild",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "projenDuringBuild",
+        ],
+        "switch": "projen-during-build",
         "type": "boolean",
       },
       Object {

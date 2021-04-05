@@ -320,6 +320,21 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
+test('projenBuild can be used to disable "projen" during build', () => {
+  const enabled = new TestNodeProject({
+    projenDuringBuild: true,
+  });
+
+  const disabled = new TestNodeProject({
+    projenDuringBuild: false,
+  });
+
+  const buildTaskEnabled = synthSnapshot(enabled)['.projen/tasks.json'].tasks.build;
+  const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
+  expect(buildTaskEnabled.steps[0].exec).toEqual('npx projen');
+  expect(buildTaskDisabled.steps).toBeUndefined();
+});
+
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }

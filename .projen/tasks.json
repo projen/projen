@@ -73,6 +73,9 @@
       "description": "Full release build (test+compile)",
       "steps": [
         {
+          "exec": "/bin/bash ./projen.bash"
+        },
+        {
           "spawn": "compile"
         },
         {
