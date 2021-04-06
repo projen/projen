@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.26](https://github.com/projen/projen/compare/v0.17.25...v0.17.26) (2021-04-06)
+
+
+### Bug Fixes
+
+* **node:** subprojects fail to run "projen" as part of "build" ([#662](https://github.com/projen/projen/issues/662)) ([8dbae6b](https://github.com/projen/projen/commit/8dbae6be731b6ed9aef8d68e1bf0efb9330b58a8)), closes [#658](https://github.com/projen/projen/issues/658) [#661](https://github.com/projen/projen/issues/661)
+
 ### [0.17.25](https://github.com/projen/projen/compare/v0.17.24...v0.17.25) (2021-04-05)
 
 ### [0.17.24](https://github.com/projen/projen/compare/v0.17.23...v0.17.24) (2021-04-05)
