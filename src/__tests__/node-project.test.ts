@@ -320,7 +320,7 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
-test('projenBuild can be used to disable "projen" during build', () => {
+test('projenDuringBuild can be used to disable "projen synth" during build', () => {
   const enabled = new TestNodeProject({
     projenDuringBuild: true,
   });
@@ -333,6 +333,30 @@ test('projenBuild can be used to disable "projen" during build', () => {
   const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
   expect(buildTaskEnabled.steps[0].exec).toEqual('npx projen');
   expect(buildTaskDisabled.steps).toBeUndefined();
+});
+
+test('projen synth is only executed for subprojects', () => {
+  // GIVEN
+  const root = new TestNodeProject();
+
+  // WHEN
+  new TestNodeProject({ parent: root, outdir: 'child' });
+
+  // THEN
+  const snapshot = synthSnapshot(root);
+  const rootBuildTask = snapshot['.projen/tasks.json'].tasks.build;
+  const childBuildTask = snapshot['child/.projen/tasks.json'].tasks.build;
+  expect(rootBuildTask).toStrictEqual({
+    category: '00.build',
+    description: 'Full release build (test+compile)',
+    name: 'build',
+    steps: [{ exec: 'npx projen' }],
+  });
+  expect(childBuildTask).toStrictEqual({
+    category: '00.build',
+    description: 'Full release build (test+compile)',
+    name: 'build',
+  });
 });
 
 function packageJson(project: Project) {
