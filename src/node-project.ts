@@ -477,7 +477,11 @@ export class NodeProject extends Project {
 
     // first, execute projen as the first thing during build
     if (options.projenDuringBuild ?? true) {
-      this.buildTask.exec(this.projenCommand);
+      // skip for sub-projects (i.e. "parent" is defined) since synthing the
+      // root project will include the subprojects.
+      if (!this.parent) {
+        this.buildTask.exec(this.projenCommand);
+      }
     }
 
     this.addLicense(options);
