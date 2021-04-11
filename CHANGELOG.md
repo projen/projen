@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.32](https://github.com/projen/projen/compare/v0.17.31...v0.17.32) (2021-04-11)
+
+
+### Features
+
+* include projen markers in synthesized files by default ([#653](https://github.com/projen/projen/issues/653)) ([b9104a6](https://github.com/projen/projen/commit/b9104a6550b0c0685b43cf21e372843329116970))
+
+
+### Bug Fixes
+
+* **deps:** SECURITY: CVE-2021-28918, aws-cdk < 1.95.2 include this dependency ([#673](https://github.com/projen/projen/issues/673)) ([6e7b30f](https://github.com/projen/projen/commit/6e7b30fa9e2ac9ba96360b323e8c965812d5c1ff))
+
 ### [0.17.31](https://github.com/projen/projen/compare/v0.17.30...v0.17.31) (2021-04-09)
 
 ### [0.17.30](https://github.com/projen/projen/compare/v0.17.29...v0.17.30) (2021-04-07)
