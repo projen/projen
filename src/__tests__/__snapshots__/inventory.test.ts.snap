@@ -158,7 +158,7 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": "\\"1.73.0\\"",
+        "default": "\\"1.95.2\\"",
         "docs": "AWS CDK version to use.",
         "name": "cdkVersion",
         "parent": "AwsCdkTypeScriptAppOptions",
@@ -1380,7 +1380,7 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": "\\"1.73.0\\"",
+        "default": "\\"1.95.2\\"",
         "docs": "Minimum target version this library is tested against.",
         "name": "cdkVersion",
         "parent": "AwsCdkConstructLibraryOptions",
