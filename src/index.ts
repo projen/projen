@@ -15,7 +15,6 @@ export * from './jsii-project';
 export * from './json';
 export * from './logger';
 export * from './license';
-export * from './markable-file';
 export * from './makefile';
 export * from './node-package';
 export * from './node-project';

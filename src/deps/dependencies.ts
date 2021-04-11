@@ -54,7 +54,6 @@ export class Dependencies extends Component {
     // checked-in source of truth for dependencies and will potentially be
     // valuable in the future for CLI tools.
     new JsonFile(project, Dependencies.MANIFEST_FILE, {
-      marker: true,
       omitEmpty: true,
       obj: () => this.toJson(),
     });

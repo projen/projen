@@ -29,7 +29,6 @@ export class Tasks extends Component {
     this._env = {};
 
     new JsonFile(project, manifestFile, {
-      marker: true,
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,

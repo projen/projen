@@ -11,7 +11,7 @@ test('json object can be mutated before synthesis', () => {
     hello: 'world',
   };
 
-  new ChildObjectFile(prj, 'my/object/file.json', { obj });
+  new ChildObjectFile(prj, 'my/object/file.json', { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
@@ -28,7 +28,7 @@ describe('overrides', () => {
   test('addOverride(p, v) allows assigning arbitrary values to synthesized resource definitions', () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' } });
+    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' }, marker: false });
 
     // WHEN
     file.addOverride('metadata', { key: 12 });
@@ -54,6 +54,7 @@ describe('overrides', () => {
           },
         },
       },
+      marker: false,
     });
 
     // WHEN
@@ -72,7 +73,7 @@ describe('overrides', () => {
   test('addOverride(p, undefined) will not create empty trees', () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' } });
+    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' }, marker: false });
 
     // WHEN
     file.addOverride('tree.exists', 42);
@@ -100,6 +101,7 @@ describe('overrides', () => {
           },
         },
       },
+      marker: false,
     });
 
     // WHEN
@@ -125,6 +127,7 @@ describe('overrides', () => {
           world: 42,
         },
       },
+      marker: false,
     });
 
     // WHEN
@@ -144,7 +147,7 @@ describe('overrides', () => {
   test('addOverride(p, v) will not split on escaped dots', () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'cannot be empty' } });
+    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'cannot be empty' }, marker: false });
 
     // WHEN
     file.addOverride(String.raw`Hello\.World.Foo\.Bar\.Baz`, 42);
