@@ -1,7 +1,7 @@
 import { Makefile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
-test('makefile synthesises correctly', () => {
+test('makefile synthesizes correctly', () => {
   const prj = new TestProject();
 
   new Makefile(prj, 'Makefile', {
@@ -42,7 +42,7 @@ test('makefile synthesises correctly', () => {
   ].join('\n'));
 });
 
-test('makefile synthesises correctly using imperative API', () => {
+test('makefile synthesizes correctly using imperative API', () => {
   const prj = new TestProject();
 
   new Makefile(prj, 'Makefile')

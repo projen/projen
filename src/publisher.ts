@@ -88,7 +88,7 @@ export class Publisher extends Component {
   }
 
   /**
-   * Publishes artifacts from `dotnet/**` to NuGet Gallary.
+   * Publishes artifacts from `dotnet/**` to NuGet Gallery.
    * @param options Options
    */
   public publishToNuget(options: JsiiReleaseNuget) {
