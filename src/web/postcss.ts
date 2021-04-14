@@ -43,7 +43,7 @@ export class PostCss {
       project.addDeps('tailwindcss', 'autoprefixer');
     }
 
-    this.file = new JsonFile(project, this.fileName, { obj: config });
+    this.file = new JsonFile(project, this.fileName, { obj: config, marker: false });
 
     project.npmignore?.exclude(`/${this.fileName}`);
   }
