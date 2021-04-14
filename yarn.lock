@@ -1355,10 +1355,10 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
 
-codemaker@^1.27.1:
-  version "1.27.1"
-  resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.27.1.tgz#80ee71860870e604bc837e27a2deb8ce49bf4dae"
-  integrity sha512-0Ypru4bovWAqZY+giAMIFQh1aJlTJLU7rbNPzkAW7U9mPoja2IE4KLWNlSEYvP7hpamY51Nrz/VfcazsB6a/rg==
+codemaker@^1.28.0:
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.28.0.tgz#21237f9240ab05ecca6c65da48141b8b752539b8"
+  integrity sha512-TlpvV3q/68cZk7aljYW6b/5EvyB4uw523xJISTATrCrQu/UTA79/mxpA2ug8uhPcJoGYcfWXH4BHVVLNIuEtrg==
   dependencies:
     camelcase "^6.2.0"
     decamelize "^5.0.0"
@@ -3718,18 +3718,18 @@ jsii-docgen@^1.5.2:
     yargs "^16.2.0"
 
 jsii-pacmak@^1.18.0:
-  version "1.27.1"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.27.1.tgz#abf6966d3bfedf03997464f1b2c7d597737b5788"
-  integrity sha512-OA9lPxOFHyGmLsGWe8VjbTnIsAjZo8vHHB7RVHZeZ5pwKZJxV3ND2SBgb8cvzbu9rwLi/eFD0aAadq9fRFrDLA==
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.28.0.tgz#3d20c27a91266cf740a1ff229b29270785d2bcfc"
+  integrity sha512-QAW8rq7M9rA/QSXwaJKMVpttkNW/BJgE9GT6i9UahobQMkmp+zsXCJUENeRg2mndLqX0DDyxO1in/fuIeCeR3A==
   dependencies:
-    "@jsii/spec" "^1.27.1"
+    "@jsii/spec" "^1.28.0"
     clone "^2.1.2"
-    codemaker "^1.27.1"
+    codemaker "^1.28.0"
     commonmark "^0.29.3"
     escape-string-regexp "^4.0.0"
     fs-extra "^9.1.0"
-    jsii-reflect "^1.27.1"
-    jsii-rosetta "^1.27.1"
+    jsii-reflect "^1.28.0"
+    jsii-rosetta "^1.28.0"
     semver "^7.3.5"
     spdx-license-list "^6.4.0"
     xmlbuilder "^15.1.1"
@@ -3746,12 +3746,12 @@ jsii-reflect@^1.16.0, jsii-reflect@^1.27.1, jsii-reflect@^1.28.0:
     oo-ascii-tree "^1.28.0"
     yargs "^16.2.0"
 
-jsii-rosetta@^1.27.1:
-  version "1.27.1"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.27.1.tgz#9258ab731eb414478807a76da436f8e2d8600002"
-  integrity sha512-GLoKI5iRvqhcDYxtgXReVEbBChyGbUvTy8n344UkVNvIPHnq0bhLPGArttnrbbHmIZcxrAoYd+6o5sqZ2fUZNQ==
+jsii-rosetta@^1.28.0:
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.28.0.tgz#89625e817d4bf50fe51924177eb78bcb08908193"
+  integrity sha512-lttDhXiBuWaN0DwsWakD5o7GxyVP8yMCRvpmpXOqz1eK+MMlZp654R6o39M7RksXhhxipCNwfbIY3T7Y7N85qQ==
   dependencies:
-    "@jsii/spec" "^1.27.1"
+    "@jsii/spec" "^1.28.0"
     commonmark "^0.29.3"
     fs-extra "^9.1.0"
     typescript "~3.9.9"
@@ -3759,11 +3759,11 @@ jsii-rosetta@^1.27.1:
     yargs "^16.2.0"
 
 jsii@^1.18.0:
-  version "1.27.1"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.27.1.tgz#e595e8ba462c40b6fd1cb7c1dd56913ad21b3610"
-  integrity sha512-2VIZwLytVRsOnqhdZNqZPPKrAPYIAmqxest7YcrwgFbTK+Zyxsa2FQyWyD2nNVzdxWqVUqALvuV3RMKMEHWv7g==
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.28.0.tgz#c453f2a81d001dd2c3c3991e6e36d4bbb1d03f42"
+  integrity sha512-B6CbHi60fabeQZJYNea8wSUsrILJzN7ng+yx69GmMJ4C6NtCVt7Oc/CITfhY/cYTwdhN3FAJf01e5/v8qj6bUA==
   dependencies:
-    "@jsii/spec" "^1.27.1"
+    "@jsii/spec" "^1.28.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.5"
