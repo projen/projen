@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.38](https://github.com/projen/projen/compare/v0.17.37...v0.17.38) (2021-04-14)
+
+
+### Bug Fixes
+
+* **nextjs:** projen marker causes NextJS build warning ([#685](https://github.com/projen/projen/issues/685)) ([a174ace](https://github.com/projen/projen/commit/a174ace74f9640016f2da7933e92481a43310aac))
+
 ### [0.17.37](https://github.com/projen/projen/compare/v0.17.36...v0.17.37) (2021-04-13)
 
 ### [0.17.36](https://github.com/projen/projen/compare/v0.17.35...v0.17.36) (2021-04-13)
