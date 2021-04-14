@@ -244,7 +244,7 @@ exports[`projen new cdk8s-construct 1`] = `
 const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
-  cdk8sVersion: '1.0.0-beta.3',
+  cdk8sVersion: '1.0.0-beta.10',
   defaultReleaseBranch: 'main',
   jsiiFqn: \\"projen.ConstructLibraryCdk8s\\",
   name: 'my-project',
