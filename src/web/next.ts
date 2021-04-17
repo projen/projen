@@ -240,6 +240,12 @@ export class NextComponent extends Component {
       exec: 'next build',
     });
 
+    project.addTask('export', {
+      description: 'Exports the application for production deployment',
+      category: TaskCategory.RELEASE,
+      exec: 'next export',
+    });
+
     project.addTask('server', {
       description: 'Starts the Next.js application in production mode',
       category: TaskCategory.RELEASE,
