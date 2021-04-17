@@ -75,7 +75,7 @@ export class NextJsProject extends NodeProject {
     this.assetsdir = options.assetsdir ?? 'public';
     this.tailwind = options.tailwind ?? true;
 
-    new NextComponent(this, { typescript: false, tailwind: options.tailwind });
+    new NextComponent(this, { typescript: false, tailwind: this.tailwind });
 
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
