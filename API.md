@@ -3287,7 +3287,7 @@ publishToNpm(options: JsiiReleaseNpm): void
 
 #### publishToNuget(options)🔹 <a id="projen-publisher-publishtonuget"></a>
 
-Publishes artifacts from `dotnet/**` to NuGet Gallary.
+Publishes artifacts from `dotnet/**` to NuGet Gallery.
 
 ```ts
 publishToNuget(options: JsiiReleaseNuget): void
