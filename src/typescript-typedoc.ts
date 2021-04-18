@@ -6,7 +6,7 @@ import { TypeScriptProject } from './typescript';
  */
 export class TypedocDocgen {
   constructor(project: TypeScriptProject) {
-    project.addDevDeps('typedoc@^2');
+    project.addDevDeps('typedoc@^0.20.35');
 
     const docgen = project.addTask('docgen', {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
