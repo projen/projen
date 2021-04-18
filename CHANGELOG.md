@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.46](https://github.com/projen/projen/compare/v0.17.45...v0.17.46) (2021-04-18)
+
+
+### Bug Fixes
+
+* **deps:** SECURITY: CVE-2021-21306; force typedoc >= 2.0.0 ([#683](https://github.com/projen/projen/issues/683)) ([2ca874d](https://github.com/projen/projen/commit/2ca874de37eb405cf734082c7d5817efbd6210f2))
+
 ### [0.17.45](https://github.com/projen/projen/compare/v0.17.44...v0.17.45) (2021-04-18)
 
 
