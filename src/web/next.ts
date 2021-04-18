@@ -68,6 +68,7 @@ export class NextJsProject extends NodeProject {
   constructor(options: NextJsProjectOptions) {
     super({
       jest: false,
+      minNodeVersion: '12.13.0', // https://tailwindcss.com/docs/installation
       ...options,
     });
 
@@ -75,7 +76,7 @@ export class NextJsProject extends NodeProject {
     this.assetsdir = options.assetsdir ?? 'public';
     this.tailwind = options.tailwind ?? true;
 
-    new NextComponent(this, { typescript: false, tailwind: options.tailwind });
+    new NextComponent(this, { typescript: false, tailwind: this.tailwind });
 
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
@@ -124,6 +125,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     const defaultOptions = {
       srcdir: 'pages',
       eslint: false,
+      minNodeVersion: '12.13.0', // https://tailwindcss.com/docs/installation
       jest: false,
       tsconfig: {
         include: ['**/*.ts', '**/*.tsx'],
@@ -238,6 +240,12 @@ export class NextComponent extends Component {
       description: 'Creates an optimized production build of your Next.js application',
       category: TaskCategory.BUILD,
       exec: 'next build',
+    });
+
+    project.addTask('export', {
+      description: 'Exports the application for production deployment',
+      category: TaskCategory.RELEASE,
+      exec: 'next export',
     });
 
     project.addTask('server', {
