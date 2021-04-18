@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.47](https://github.com/projen/projen/compare/v0.17.46...v0.17.47) (2021-04-18)
+
+
+### Bug Fixes
+
+* **projen-upgrade:** does not respect package manager selection ([#692](https://github.com/projen/projen/issues/692)) ([3a421db](https://github.com/projen/projen/commit/3a421db25528a3d04e1b08ca70ece76dd763594b)), closes [#691](https://github.com/projen/projen/issues/691)
+
 ### [0.17.46](https://github.com/projen/projen/compare/v0.17.45...v0.17.46) (2021-04-18)
 
 
