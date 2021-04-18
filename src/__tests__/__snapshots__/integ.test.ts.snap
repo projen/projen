@@ -4370,10 +4370,10 @@ junit.xml
         "name": "projen:upgrade",
         "steps": Array [
           Object {
-            "exec": "yarn upgrade -L projen",
+            "exec": "pnpm update -L projen",
           },
           Object {
-            "exec": "CI=\\"\\" yarn projen",
+            "exec": "CI=\\"\\" pnpm run projen",
           },
         ],
       },
