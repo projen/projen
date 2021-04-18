@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.45](https://github.com/projen/projen/compare/v0.17.44...v0.17.45) (2021-04-18)
+
+
+### Features
+
+* **nextjs:** adds `export` to out/ directory ([#695](https://github.com/projen/projen/issues/695)) ([47d0f26](https://github.com/projen/projen/commit/47d0f26535f503d00ff2e9257daaf895f0b01790))
+
+
+### Bug Fixes
+
+* **nextjs:** honor the default of tailwind: true ([#697](https://github.com/projen/projen/issues/697)) ([f348709](https://github.com/projen/projen/commit/f3487098cf4ad17c016f2ad5791bd4c87f9dbd27))
+* **nextjs:** tailwind css requires Node.js 12.13.0+ ([#698](https://github.com/projen/projen/issues/698)) ([bb0ef8e](https://github.com/projen/projen/commit/bb0ef8eea9550e5c3658429ed518300e897da661))
+
 ### [0.17.44](https://github.com/projen/projen/compare/v0.17.43...v0.17.44) (2021-04-16)
 
 ### [0.17.43](https://github.com/projen/projen/compare/v0.17.42...v0.17.43) (2021-04-15)
