@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.50](https://github.com/projen/projen/compare/v0.17.49...v0.17.50) (2021-04-19)
+
+
+### Bug Fixes
+
+* **cdk8s-app-ts:** cdk8s not found, and JS file path ([#702](https://github.com/projen/projen/issues/702)) ([9d8d7f5](https://github.com/projen/projen/commit/9d8d7f5b646c2ff2c0667ea061ced6557749e33b))
+
 ### [0.17.49](https://github.com/projen/projen/compare/v0.17.48...v0.17.49) (2021-04-19)
 
 ### [0.17.48](https://github.com/projen/projen/compare/v0.17.47...v0.17.48) (2021-04-19)
