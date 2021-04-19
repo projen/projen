@@ -78,7 +78,10 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       'constructs@^3.2.34',
       `cdk8s-plus-17@${this.cdk8sVersion}`,
     );
-    this.addDevDeps('ts-node');
+    this.addDevDeps(
+      'ts-node',
+      `cdk8s-cli@${this.cdk8sVersion}`,
+    );
 
     const synth = this.addTask('synth', {
       description: 'Synthesizes your cdk8s app into dist (part of "yarn build")',
@@ -165,7 +168,7 @@ app.synth();`;
     const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
 
     const cdk8sYaml = `language: typescript
-app: node src/${appEntrypointName}.js
+app: node lib/${appEntrypointName}.js
 imports:
   - k8s
     `;
