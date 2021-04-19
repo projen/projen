@@ -165,7 +165,7 @@ app.synth();`;
     const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
 
     const cdk8sYaml = `language: typescript
-app: node src/${appEntrypointName}.js
+app: node lib/${appEntrypointName}.js
 imports:
   - k8s
     `;
