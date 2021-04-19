@@ -41,7 +41,6 @@ test ('test if cdk8s synth is possible', () => {
 
   expect(output['package.json'].dependencies).toStrictEqual({
     'cdk8s': '^1.0.0-beta.11',
-    'cdk8s-cli': '^1.0.0-beta.11',
     'cdk8s-plus-17': '^1.0.0-beta.11',
     'constructs': '^3.2.34',
   });
