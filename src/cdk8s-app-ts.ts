@@ -77,8 +77,12 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       `cdk8s@${this.cdk8sVersion}`,
       'constructs@^3.2.34',
       `cdk8s-plus-17@${this.cdk8sVersion}`,
+      `cdk8s-cli@${this.cdk8sVersion}`,
     );
-    this.addDevDeps('ts-node');
+    this.addDevDeps(
+      'ts-node',
+      `cdk8s-cli@${this.cdk8sVersion}`,
+    );
 
     const synth = this.addTask('synth', {
       description: 'Synthesizes your cdk8s app into dist (part of "yarn build")',
