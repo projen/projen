@@ -1,5 +1,4 @@
-import { Cdk8sTypeScriptApp } from '..';
-import { Cdk8sTypeScriptAppOptions } from '../cdk8s-app-ts';
+import { Cdk8sTypeScriptAppOptions, Cdk8sTypeScriptApp } from '../cdk8s-app-ts';
 import { LogLevel } from '../logger';
 import { synthSnapshot, mkdtemp } from './util';
 
@@ -39,6 +38,12 @@ test ('test if cdk8s synth is possible', () => {
       spawn: 'synth',
     },
   ]);
+
+  expect(output['package.json'].dependencies).toStrictEqual({
+    'cdk8s': '^1.0.0-beta.11',
+    'cdk8s-plus-17': '^1.0.0-beta.11',
+    'constructs': '^3.2.34',
+  });
 
 });
 
