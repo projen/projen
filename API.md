@@ -82,7 +82,7 @@ Name|Description
 [web.ReactProject](#projen-web-reactproject)|React project without TypeScript.
 [web.ReactTypeDef](#projen-web-reacttypedef)|*No description*
 [web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)|React project with TypeScript.
-[web.TailwindConfig](#projen-web-tailwindconfig)|Declares a Tailwind CSS configuration file.
+[web.TailwindConfig](#projen-web-tailwindconfig)|Declares a Tailwind CSS JS configuration file.
 
 
 **Structs**
@@ -200,7 +200,7 @@ Name|Description
 [web.ReactProjectOptions](#projen-web-reactprojectoptions)|*No description*
 [web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)|*No description*
 [web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)|*No description*
-[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)|*No description*
+[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)|Tailwind options.
 
 
 **Interfaces**
@@ -242,6 +242,7 @@ Name|Description
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+[web.TailwindConfigFileType](#projen-web-tailwindconfigfiletype)|The possible tailwind config file names.
 
 
 
@@ -6784,10 +6785,12 @@ Name | Type | Description
 
 ## class TailwindConfig 🔹 <a id="projen-web-tailwindconfig"></a>
 
-Declares a Tailwind CSS configuration file.
+Declares a Tailwind CSS JS configuration file.
 
 There are multiple ways to add Tailwind CSS in your node project - see:
 https://tailwindcss.com/docs/installation
+
+https://github.com/tailwindlabs/tailwindcss-intellisense/blob/master/packages/tailwindcss-intellisense/README.md
 
 __Submodule__: web
 
@@ -6803,7 +6806,7 @@ new web.TailwindConfig(project: NodeProject, options?: TailwindConfigOptions)
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)</code>)  *No description*
-  * **fileName** (<code>string</code>)  *No description* __*Default*__: "tailwind.config.json"
+  * **fileName** (<code>[web.TailwindConfigFileType](#projen-web-tailwindconfigfiletype)</code>)  *No description* __*Default*__: TAILWIND_CONFIG_JS
 
 
 
@@ -6812,8 +6815,8 @@ new web.TailwindConfig(project: NodeProject, options?: TailwindConfigOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
-**fileName**🔹 | <code>string</code> | <span></span>
+**file**🔹 | <code>[SampleFile](#projen-samplefile)</code> | <span></span>
+**fileName**🔹 | <code>[web.TailwindConfigFileType](#projen-web-tailwindconfigfiletype)</code> | <span></span>
 
 
 
@@ -10297,13 +10300,13 @@ Name | Type | Description
 ## struct TailwindConfigOptions 🔹 <a id="projen-web-tailwindconfigoptions"></a>
 
 
-
+Tailwind options.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**fileName**?🔹 | <code>string</code> | __*Default*__: "tailwind.config.json"
+**fileName**?🔹 | <code>[web.TailwindConfigFileType](#projen-web-tailwindconfigfiletype)</code> | __*Default*__: TAILWIND_CONFIG_JS
 
 
 
@@ -10536,5 +10539,15 @@ Name | Description
 **NEVER_OPEN** 🔹|
 **OPEN_ON_FIRST_SESSION_START** 🔹|
 **OPEN_ON_SESSION_START** 🔹|
+
+
+## enum TailwindConfigFileType 🔹 <a id="projen-web-tailwindconfigfiletype"></a>
+
+The possible tailwind config file names.
+
+Name | Description
+-----|-----
+**TAILWIND_CONFIG_JS** 🔹|tailwind.config.js.
+**TAILWIND_JS** 🔹|tailwind.js.
 
 
