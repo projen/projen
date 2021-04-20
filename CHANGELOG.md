@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.17.51](https://github.com/projen/projen/compare/v0.17.50...v0.17.51) (2021-04-20)
+
+
+### Bug Fixes
+
+* marked is @^2.0.0; typedoc is @^0.20.35 ([#700](https://github.com/projen/projen/issues/700)) ([3b938b2](https://github.com/projen/projen/commit/3b938b2a3a809b01718fbd6f92eb879b9b7ae9cf))
+
 ### [0.17.50](https://github.com/projen/projen/compare/v0.17.49...v0.17.50) (2021-04-19)
 
 
