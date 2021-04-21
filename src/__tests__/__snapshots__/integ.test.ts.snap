@@ -358,7 +358,7 @@ jobs:
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          ./CHANGELOG.md -t v$(node -p \\"require('./package.json').version\\")
+          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
           ./dist/*/**
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -530,6 +530,7 @@ pull_request_rules:
 /.projenrc.js
 /.versionrc.json
 /.vscode
+/changelog.tmp.md
 /coverage
 /src
 /test
@@ -1089,6 +1090,8 @@ project.synth();
       "package.json",
     ],
     "commitAll": false,
+    "header": "",
+    "infile": "changelog.tmp.md",
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
@@ -1834,6 +1837,7 @@ yarn-error.log*
 /.projenrc.js
 /.versionrc.json
 /.vscode
+/changelog.tmp.md
 /coverage
 /src
 /test
@@ -2261,6 +2265,8 @@ project.synth();
       "package.json",
     ],
     "commitAll": false,
+    "header": "",
+    "infile": "changelog.tmp.md",
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
@@ -3132,6 +3138,7 @@ yarn-error.log*
 /.projenrc.js
 /.versionrc.json
 /.vscode
+/changelog.tmp.md
 /coverage
 /src
 /test
@@ -3522,6 +3529,8 @@ project.synth();
       "package.json",
     ],
     "commitAll": false,
+    "header": "",
+    "infile": "changelog.tmp.md",
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
@@ -4204,7 +4213,7 @@ jobs:
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          ./CHANGELOG.md -t v$(node -p \\"require('./package.json').version\\")
+          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
           ./dist/*/**
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
@@ -4300,6 +4309,7 @@ pull_request_rules:
 /.projen
 /.projenrc.js
 /.versionrc.json
+/changelog.tmp.md
 /coverage
 /test-reports/
 junit.xml
@@ -4502,6 +4512,8 @@ project.synth();
       "package.json",
     ],
     "commitAll": false,
+    "header": "",
+    "infile": "changelog.tmp.md",
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
