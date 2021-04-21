@@ -1,9 +1,7 @@
-import * as path from 'path';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Task, TaskCategory } from './tasks';
-import { execOrUndefined } from './util';
 
 export interface VersionOptions {
   /**
@@ -46,35 +44,15 @@ export class Version extends Component {
 
     project.npmignore?.exclude('/.versionrc.json');
 
-    let projenCommand = project.package.projenCommand;
-    if (project.parent) {
-      projenCommand = `cd ${path.relative(project.outdir, project.root.outdir)} && ${project.package.projenCommand}`;
-    }
     new JsonFile(project, '.versionrc.json', {
       obj: {
         packageFiles: [],
-        bumpFiles: [],
+        bumpFiles: ['package.json'],
         commitAll: false,
         skip: {
           commit: true,
         },
-        scripts: {
-          // run projen after release to update package.json
-          postbump: projenCommand,
-        },
       },
     });
-  }
-
-  /**
-   * Returns the current version of the project.
-   */
-  public get currentVersion() {
-    const tag = execOrUndefined('git describe --abbrev=0 --tags --match "v[0-9]*"', { cwd: this.project.outdir });
-    if (!tag) {
-      return undefined;
-    }
-
-    return tag.slice(1); // skip "v" prefix
   }
 }

@@ -383,11 +383,6 @@ export class NodePackage extends Component {
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
 
-    // reads the current "package.json" file (if exists) so that we can fall
-    // back to existing values in certain cases
-    // TODO: move dependency management from "preSynth" to here
-    const current = this.readPackageJson() ?? {};
-
     this.processDeps(options);
 
     // empty objects are here to preserve order for backwards compatibility
@@ -410,9 +405,9 @@ export class NodePackage extends Component {
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
+      version: '0.0.0', // <-- version is set based on latest git tag during release builds
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
-      version: current.version ?? '0.0.0',
     };
 
     // override any scripts from options (if specified)

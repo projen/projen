@@ -534,10 +534,6 @@ export class NodeProject extends Project {
 
     // version is read from a committed file called version.json which is how we bump
     this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
-    const version = this._version.currentVersion;
-    if (version) {
-      this.package.addVersion(version);
-    }
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
     const mutableBuilds = options.mutableBuild ?? true;
