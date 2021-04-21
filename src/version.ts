@@ -63,6 +63,7 @@ export class Version extends Component {
         bumpFiles: ['package.json'],
         commitAll: false,
         infile: this.changelogFile,
+        header: '',
         skip: {
           commit: true,
         },

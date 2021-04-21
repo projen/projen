@@ -5,6 +5,7 @@
   ],
   "commitAll": false,
   "infile": "changelog.tmp.md",
+  "header": "",
   "skip": {
     "commit": true
   },
