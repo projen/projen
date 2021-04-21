@@ -97,7 +97,7 @@ Name|Description
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
-[DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environemnt.
+[DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environment.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
 [DockerComposeProps](#projen-dockercomposeprops)|Props for DockerCompose.
@@ -7512,7 +7512,7 @@ Name | Type | Description
 ## struct DevEnvironmentOptions 🔹 <a id="projen-devenvironmentoptions"></a>
 
 
-Base options for configuring a container-based development environemnt.
+Base options for configuring a container-based development environment.
 
 
 
