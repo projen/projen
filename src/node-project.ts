@@ -603,12 +603,15 @@ export class NodeProject extends Project {
 
         postSteps: [
           {
-            name: 'Push commits',
-            run: 'git push origin HEAD:${{ github.ref }}',
+            name: 'Create release',
+            run: `gh release create v$(node -p \"require('package.json').version\") -F CHANGELOG.md ./${artifactDirectory}/**`,
+            env: {
+              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            },
           },
           {
-            name: 'Push tags',
-            run: 'git push --follow-tags origin ${{ github.ref }}',
+            name: 'Unbump',
+            run: this.runTaskCommand(this._version.unbumpTask),
           },
         ],
 
@@ -929,7 +932,7 @@ export class NodeProject extends Project {
 
     const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
       name: 'Anti-tamper check',
-      run: 'git diff --exit-code',
+      run: 'git diff --ignore-space-at-eol --exit-code',
     }];
 
     const job: any = {

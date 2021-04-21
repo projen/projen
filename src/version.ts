@@ -13,6 +13,7 @@ export interface VersionOptions {
 export class Version extends Component {
 
   public readonly bumpTask: Task;
+  public readonly unbumpTask: Task;
 
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
@@ -28,6 +29,14 @@ export class Version extends Component {
       exec: 'standard-version',
       condition: changesSinceLastRelease,
     });
+
+    this.unbumpTask = project.addTask('unbump', {
+      description: 'Restores version to 0.0.0',
+      category: TaskCategory.RELEASE,
+      exec: 'standard-version -r 0.0.0',
+    });
+
+    this.unbumpTask.exec('git tag -d v0.0.0');
 
     const release = project.addTask('release', {
       description: `Bumps version & push to ${options.releaseBranch}`,
