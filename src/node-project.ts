@@ -133,6 +133,12 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowContainerImage?: string;
 
   /**
+   * A set of workflow steps to execute in order to setup the workflow
+   * container.
+   */
+  readonly releaseWorkflowSetupSteps?: any[];
+
+  /**
    * Automatically release to npm when new versions are introduced.
    * @default false
    */
@@ -645,10 +651,13 @@ export class NodeProject extends Project {
       const workflow = this.createBuildWorkflow('Release', {
         jobId: jobId,
         trigger,
-        preBuildSteps: [{
-          name: 'Bump to next version',
-          run: this.runTaskCommand(this._version.bumpTask),
-        }],
+        preBuildSteps: [
+          {
+            name: 'Bump to next version',
+            run: this.runTaskCommand(this._version.bumpTask),
+          },
+          ...options.releaseWorkflowSetupSteps ?? [],
+        ],
         postSteps: releaseSteps,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,

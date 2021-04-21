@@ -398,6 +398,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -566,6 +567,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -710,6 +712,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -903,6 +906,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1019,6 +1023,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1145,6 +1150,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2079,6 +2085,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -2777,6 +2784,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -3828,6 +3836,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -3940,6 +3949,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -4052,6 +4062,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -6257,6 +6268,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -6415,6 +6427,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -6599,6 +6612,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -6753,6 +6767,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
+  * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -6920,6 +6935,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -7026,6 +7042,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **requireApproval**?🔹 | <code>[CdkApprovalLevel](#projen-cdkapprovallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: CdkApprovalLevel.BROADENING
@@ -7148,6 +7165,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -7265,6 +7283,7 @@ Name | Type | Description
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?⚠️ | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?⚠️ | <code>string</code> | __*Default*__: "."
@@ -7374,6 +7393,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -7482,6 +7502,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -8202,6 +8223,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -8501,6 +8523,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
@@ -8834,6 +8857,7 @@ Name | Type | Description
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?⚠️ | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -8938,6 +8962,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -9920,6 +9945,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
@@ -10039,6 +10065,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -10163,6 +10190,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
@@ -10280,6 +10308,7 @@ Name | Type | Description
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for releasing from "main" when new versions are bumped.<br/>__*Default*__: true if not a subproject
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<any></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true

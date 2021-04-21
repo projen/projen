@@ -1012,6 +1012,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -2256,6 +2267,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -3360,6 +3382,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -4534,6 +4567,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -5987,6 +6031,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -6960,6 +7015,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -8047,6 +8113,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -9045,6 +9122,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -10460,6 +10548,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -11519,6 +11618,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",
@@ -12617,6 +12727,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "name": "repository",
         "optional": true,
@@ -13711,6 +13832,17 @@ Array [
         ],
         "switch": "release-workflow",
         "type": "boolean",
+      },
+      Object {
+        "docs": "A set of workflow steps to execute in order to setup the workflow container.",
+        "name": "releaseWorkflowSetupSteps",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "releaseWorkflowSetupSteps",
+        ],
+        "switch": "release-workflow-setup-steps",
+        "type": "unknown",
       },
       Object {
         "docs": "The repository is the location where the actual code for your package lives.",

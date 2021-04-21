@@ -167,6 +167,19 @@ export class JsiiProject extends TypeScriptProject {
     super({
       ...options,
       workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
+
+      // this is needed temporarily because our release workflows use the 'gh'
+      // cli and its not yet available in jsii/superchain
+      releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps ?? [
+        {
+          name: 'Install GitHub CLI',
+          run: [
+            'curl -sL https://github.com/cli/cli/releases/download/v1.9.2/gh_1.9.2_linux_amd64.tar.gz |',
+            'tar -xzv --strip-components=2 gh_1.9.2_linux_amd64/bin/gh',
+            '&& mv gh /usr/bin/',
+          ].join(' '),
+        },
+      ],
       releaseToNpm: false, // we have a jsii release workflow
       repository: options.repositoryUrl,
       authorName: options.author,
