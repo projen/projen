@@ -33,6 +33,30 @@
       ],
       "condition": "git diff --exit-code > /dev/null"
     },
+    "bump": {
+      "name": "bump",
+      "category": "20.release",
+      "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "steps": [
+        {
+          "exec": "standard-version"
+        }
+      ],
+      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
+    "unbump": {
+      "name": "unbump",
+      "category": "20.release",
+      "description": "Restores version to 0.0.0",
+      "steps": [
+        {
+          "exec": "standard-version -r 0.0.0"
+        },
+        {
+          "exec": "git tag -d v0.0.0"
+        }
+      ]
+    },
     "compile": {
       "name": "compile",
       "category": "00.build",
@@ -88,44 +112,6 @@
           "spawn": "readme-macros"
         }
       ]
-    },
-    "bump": {
-      "name": "bump",
-      "category": "20.release",
-      "description": "Commits a bump to the package version based on conventional commits",
-      "steps": [
-        {
-          "exec": "standard-version"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
-    },
-    "unbump": {
-      "name": "unbump",
-      "category": "20.release",
-      "description": "Restores version to 0.0.0",
-      "steps": [
-        {
-          "exec": "standard-version -r 0.0.0"
-        },
-        {
-          "exec": "git tag -d v0.0.0"
-        }
-      ]
-    },
-    "release": {
-      "name": "release",
-      "category": "20.release",
-      "description": "Bumps version & push to main",
-      "steps": [
-        {
-          "spawn": "bump"
-        },
-        {
-          "exec": "git push --follow-tags origin main"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
     "test:watch": {
       "name": "test:watch",

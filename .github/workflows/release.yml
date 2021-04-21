@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: "true"
+      RELEASE: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,7 +27,7 @@ jobs:
         run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name "Auto-bump"
+          git config user.name "Automation"
           git config user.email "github-actions@github.com"
       - name: Bump to next version
         run: /bin/bash ./projen.bash bump
@@ -37,11 +38,7 @@ jobs:
           /usr/bin/
       - name: Build
         run: /bin/bash ./projen.bash build
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          directory: coverage
-      - name: Get latest commit from remote
+      - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
           github.ref }} | cut -f1)"

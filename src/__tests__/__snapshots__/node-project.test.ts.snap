@@ -16,7 +16,7 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"Auto-bump\\"
+    "run": "git config user.name \\"Automation\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {

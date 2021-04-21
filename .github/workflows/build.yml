@@ -23,7 +23,7 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Set git identity
         run: |-
-          git config user.name "Auto-bump"
+          git config user.name "Automation"
           git config user.email "github-actions@github.com"
       - name: Build
         run: /bin/bash ./projen.bash build

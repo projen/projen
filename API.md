@@ -148,7 +148,6 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
-[VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
@@ -4148,12 +4147,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: NodeProject, options: VersionOptions)
+new Version(project: NodeProject)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **releaseBranch** (<code>string</code>)  The name of the release branch where the code and tags are pushed to. 
 
 
 
@@ -8991,19 +8988,6 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
-
-
-
-## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**releaseBranch**🔹 | <code>string</code> | The name of the release branch where the code and tags are pushed to.
 
 
 
