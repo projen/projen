@@ -50,6 +50,7 @@ export class Version extends Component {
         header: '',
         skip: {
           commit: true,
+          tag: true,
         },
       },
     });

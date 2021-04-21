@@ -636,11 +636,7 @@ export class NodePackage extends Component {
       return '0.0.0';
     }
 
-    if (!currVersion || currVersion === '0.0.0') {
-      throw new Error('if the RELEASE environment variable is set the version in package.json must not be 0.0.0 (did you run the "bump" task?)');
-    }
-
-    return currVersion;
+    return currVersion ?? '0.0.0';
   }
 
   /**
