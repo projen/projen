@@ -551,8 +551,10 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
+      const buildJobId = 'build';
 
-      const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
+      const workflow = this.createBuildWorkflow('Build', {
+        jobId: buildJobId,
         trigger: {
           pull_request: { },
         },
@@ -566,6 +568,21 @@ export class NodeProject extends Project {
           {
             name: 'Commit and push changes (if any)',
             run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
+          },
+          {
+            name: 'Update status check',
+            run: [
+              'gh api',
+              '-X POST',
+              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
+              `-F name="${buildJobId}"`,
+              '-F head_sha="$(git rev-parse HEAD)"',
+              '-F status="completed"',
+              '-F conclusion="success"',
+            ].join(' '),
+            env: {
+              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            },
           },
         ],
 
@@ -593,29 +610,61 @@ export class NodeProject extends Project {
       }
 
       const artifactDirectory = options.artifactsDirectory ?? 'dist';
+      const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
+      const jobId = 'release';
 
-      const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
+      const releaseSteps: any[] = [];
+
+      // to avoid race conditions between two commits trying to release the same
+      // version, we check if the head sha is identical to the remote sha. if
+      // not, we will skip the release and just finish the build.
+      const gitRemoteStep = 'git_remote';
+      const latestCommitOutput = 'latest_commit';
+      const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
+
+      releaseSteps.push({
+        name: 'Get latest commit from remote',
+        id: gitRemoteStep,
+        run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
+      });
+
+      releaseSteps.push({
+        name: 'Create release',
+        if: noNewCommits,
+        run: [
+          `gh release create ${getVersion}`,
+          '-F ./CHANGELOG.md',
+          `-t ${getVersion}`,
+          `./${artifactDirectory}/*/**`,
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      });
+
+      releaseSteps.push({
+        name: 'Unbump',
+        run: this.runTaskCommand(this._version.unbumpTask),
+      });
+
+      releaseSteps.push({
+        name: 'Upload artifact',
+        if: noNewCommits,
+        uses: 'actions/upload-artifact@v2.1.1',
+        with: {
+          name: artifactDirectory,
+          path: artifactDirectory,
+        },
+      });
+
+      const workflow = this.createBuildWorkflow('Release', {
+        jobId: jobId,
         trigger,
         preBuildSteps: [{
           name: 'Bump to next version',
           run: this.runTaskCommand(this._version.bumpTask),
         }],
-
-        postSteps: [
-          {
-            name: 'Create release',
-            run: `gh release create v$(node -p \"require('package.json').version\") -F CHANGELOG.md ./${artifactDirectory}/**`,
-            env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-            },
-          },
-          {
-            name: 'Unbump',
-            run: this.runTaskCommand(this._version.unbumpTask),
-          },
-        ],
-
-        artifactDirectory,
+        postSteps: releaseSteps,
         image: options.workflowContainerImage,
         codeCov: options.codeCov ?? false,
         codeCovTokenSecret: options.codeCovTokenSecret,
@@ -631,7 +680,7 @@ export class NodeProject extends Project {
       this.publisher = new Publisher(this, {
         workflow: this.releaseWorkflow,
         artifactName: artifactDirectory,
-        buildJobId,
+        buildJobId: jobId,
         jsiiReleaseVersion: options.jsiiReleaseVersion,
       });
 
@@ -904,8 +953,8 @@ export class NodeProject extends Project {
     );
   }
 
-  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): BuildWorkflow {
-    const buildJobId = 'build';
+  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): GithubWorkflow {
+    const buildJobId = options.jobId;
 
     const github = this.github;
     if (!github) { throw new Error('no github support'); }
@@ -989,11 +1038,11 @@ export class NodeProject extends Project {
           },
         }] : [],
 
+        ...postSteps,
+
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
         ...antitamperSteps,
-
-        ...postSteps,
       ],
     };
 
@@ -1001,20 +1050,9 @@ export class NodeProject extends Project {
       job.container = { image: options.image };
     }
 
-    if (options.artifactDirectory) {
-      job.steps.push({
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
-        with: {
-          name: options.artifactDirectory,
-          path: options.artifactDirectory,
-        },
-      });
-    }
-
     workflow.addJobs({ [buildJobId]: job });
 
-    return { workflow, buildJobId };
+    return workflow;
   }
 
   /**
@@ -1035,12 +1073,12 @@ export class NodeProject extends Project {
   }
 }
 
-interface BuildWorkflow {
-  readonly workflow: GithubWorkflow;
-  readonly buildJobId: string;
-}
-
 interface NodeBuildWorkflowOptions {
+  /**
+   * The primary job id.
+   */
+  readonly jobId: string;
+
   /**
    * @default - default image
    */
@@ -1050,14 +1088,6 @@ interface NodeBuildWorkflowOptions {
    * Adds an "if" condition to the workflow.
    */
   readonly condition?: any;
-
-  /**
-   * A directory name which contains artifacts to be published (e.g. `dist`).
-   *
-   * javascript artifacts must be under the `js` subdirectory.
-   * @default undefined By default artifacts are not uploaded
-   */
-  readonly artifactDirectory?: string;
 
   /**
    * What should trigger the workflow?
