@@ -14,9 +14,12 @@ export class Version extends Component {
 
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;
+  public readonly changelogFile: string;
 
   constructor(project: NodeProject, options: VersionOptions) {
     super(project);
+
+    this.changelogFile = 'changelog.tmp.md';
 
     // this command determines if there were any changes since the last release
     // (the top-most commit is not a bump). it is used as a condition for both
@@ -52,12 +55,14 @@ export class Version extends Component {
     );
 
     project.npmignore?.exclude('/.versionrc.json');
+    project.npmignore?.addPatterns(`/${this.changelogFile}`);
 
     new JsonFile(project, '.versionrc.json', {
       obj: {
         packageFiles: [],
         bumpFiles: ['package.json'],
         commitAll: false,
+        infile: this.changelogFile,
         skip: {
           commit: true,
         },

@@ -4,6 +4,7 @@
     "package.json"
   ],
   "commitAll": false,
+  "infile": "changelog.tmp.md",
   "skip": {
     "commit": true
   },

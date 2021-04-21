@@ -633,7 +633,7 @@ export class NodeProject extends Project {
         if: noNewCommits,
         run: [
           `gh release create ${getVersion}`,
-          '-F ./CHANGELOG.md',
+          `-F ${this._version.changelogFile}`,
           `-t ${getVersion}`,
           `./${artifactDirectory}/*/**`,
         ].join(' '),

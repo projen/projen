@@ -7,6 +7,7 @@
 /.projenrc.js
 /.versionrc.json
 /.vscode
+/changelog.tmp.md
 /coverage
 /src
 /src/__tests__
