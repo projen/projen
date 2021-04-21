@@ -626,7 +626,6 @@ export class NodeProject extends Project {
           `gh release create ${getVersion}`,
           `-F ${this._version.changelogFile}`,
           `-t ${getVersion}`,
-          `./${artifactDirectory}/*/**`,
         ].join(' '),
         env: {
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
