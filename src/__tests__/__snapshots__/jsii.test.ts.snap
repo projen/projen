@@ -44,7 +44,6 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
           changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
-          ./dist/*/**
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
@@ -145,7 +144,6 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
           changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
-          ./dist/*/**
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
