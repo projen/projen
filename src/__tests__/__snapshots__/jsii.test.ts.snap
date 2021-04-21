@@ -10,7 +10,7 @@ on:
       - master
   workflow_dispatch: {}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Anti-tamper check
-        run: git diff --exit-code
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Auto-bump\\"
@@ -31,22 +31,32 @@ jobs:
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Anti-tamper check
-        run: git diff --exit-code
-      - name: Push commits
-        run: git push origin HEAD:\${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin \${{ github.ref }}
+      - name: Get latest commit from remote
+        id: git_remote
+        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
+          github.ref }} | cut -f1)\\"
+      - name: Create release
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
+          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+          ./dist/*/**
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+      - name: Unbump
+        run: npx projen unbump
       - name: Upload artifact
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -64,7 +74,7 @@ jobs:
           NPM_REGISTRY: registry.npmjs.org
   release_golang:
     name: Release to Go
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -96,7 +106,7 @@ on:
       - master
   workflow_dispatch: {}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
@@ -108,7 +118,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Anti-tamper check
-        run: git diff --exit-code
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Auto-bump\\"
@@ -117,22 +127,32 @@ jobs:
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Anti-tamper check
-        run: git diff --exit-code
-      - name: Push commits
-        run: git push origin HEAD:\${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin \${{ github.ref }}
+      - name: Get latest commit from remote
+        id: git_remote
+        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
+          github.ref }} | cut -f1)\\"
+      - name: Create release
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
+          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+          ./dist/*/**
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+      - name: Unbump
+        run: npx projen unbump
       - name: Upload artifact
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -150,7 +170,7 @@ jobs:
           NPM_REGISTRY: registry.npmjs.org
   release_golang:
     name: Release to Go
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain

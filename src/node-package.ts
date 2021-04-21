@@ -405,7 +405,7 @@ export class NodePackage extends Component {
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
-      version: '0.0.0',
+      version: '0.0.0', // <-- version is set based on latest git tag during release builds
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
     };
@@ -758,12 +758,10 @@ export class NodePackage extends Component {
     this.manifest.bundledDependencies = bundledDependencies;
 
     // nothing further to do if package.json file does not exist
-    const root = join(this.project.outdir, 'package.json');
-    if (!existsSync(root)) {
+    const pkg = this.readPackageJson();
+    if (!pkg) {
       return { devDependencies, peerDependencies, dependencies };
     }
-
-    const pkg = readJsonSync(root);
 
     const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
       for (const [name, userVersion] of Object.entries(user)) {
@@ -918,6 +916,15 @@ export class NodePackage extends Component {
       default:
         throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
     }
+  }
+
+  private readPackageJson() {
+    const file = join(this.project.outdir, 'package.json');
+    if (!existsSync(file)) {
+      return undefined;
+    }
+
+    return readJsonSync(file);
   }
 }
 

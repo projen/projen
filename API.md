@@ -4152,7 +4152,8 @@ new Version(project: NodeProject, options: VersionOptions)
 Name | Type | Description 
 -----|------|-------------
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**currentVersion**🔹 | <code>any</code> | Returns the current version of the project.
+**changelogFile**🔹 | <code>string</code> | <span></span>
+**unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 
 
 
