@@ -1078,6 +1078,7 @@ project.synth();
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
+      "tag": true,
     },
   },
   "LICENSE": "                                 Apache License
@@ -2236,6 +2237,7 @@ project.synth();
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
+      "tag": true,
     },
   },
   "LICENSE": "                                 Apache License
@@ -3483,6 +3485,7 @@ project.synth();
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
+      "tag": true,
     },
   },
   "LICENSE": "                                 Apache License
@@ -4443,6 +4446,7 @@ project.synth();
     "packageFiles": Array [],
     "skip": Object {
       "commit": true,
+      "tag": true,
     },
   },
   "LICENSE": "                                 Apache License
