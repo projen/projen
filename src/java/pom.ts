@@ -143,7 +143,7 @@ export class Pom extends Component {
     this.description = options.description;
     this.url = options.url;
 
-    new XmlFile(project, this.fileName, { obj: () => this.synthPom(), marker: true });
+    new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
   }
 
   /**

@@ -10,6 +10,10 @@
       "type": "build"
     },
     {
+      "name": "@types/ini",
+      "type": "build"
+    },
+    {
       "name": "@types/inquirer",
       "type": "build"
     },
@@ -119,6 +123,10 @@
     {
       "name": "glob",
       "version": "^7",
+      "type": "bundled"
+    },
+    {
+      "name": "ini",
       "type": "bundled"
     },
     {

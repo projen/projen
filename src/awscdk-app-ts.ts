@@ -23,7 +23,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * AWS CDK version to use.
    *
-   * @default "1.73.0"
+   * @default "1.95.2"
    */
   readonly cdkVersion: string;
 

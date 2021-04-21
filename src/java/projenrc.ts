@@ -81,7 +81,7 @@ export class Projenrc extends Component {
     defaultTask.exec(`mvn ${compileGoal} --quiet`);
     defaultTask.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
 
-    // if this is a new project, generate a skelaton for projenrc.java
+    // if this is a new project, generate a skeleton for projenrc.java
     this.generateProjenrc(options.initializationOptions);
   }
 
