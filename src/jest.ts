@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
-import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
+import { TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 

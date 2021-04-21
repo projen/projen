@@ -3,7 +3,8 @@ import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
 import { TaskCategory } from '../tasks';
-import { TypeScriptAppProject, TypeScriptJsxMode, TypeScriptModuleResolution, TypeScriptProjectOptions } from '../typescript';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
+import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
 import { PostCss } from './postcss';
 

@@ -51,6 +51,9 @@
       "steps": [
         {
           "exec": "standard-version -r 0.0.0"
+        },
+        {
+          "exec": "git tag -d v0.0.0"
         }
       ]
     },
