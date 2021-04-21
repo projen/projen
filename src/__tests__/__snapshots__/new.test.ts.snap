@@ -82,6 +82,7 @@ const project = new AwsCdkTypeScriptApp({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -219,6 +220,7 @@ const project = new AwsCdkConstructLibrary({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -317,6 +319,7 @@ const project = new Cdk8sTypeScriptApp({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -447,6 +450,7 @@ const project = new ConstructLibraryCdk8s({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -600,6 +604,7 @@ const project = new JsiiProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -701,6 +706,7 @@ const project = new web.NextJsProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -798,6 +804,7 @@ const project = new web.NextJsTypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -907,6 +914,7 @@ const project = new NodeProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1068,6 +1076,7 @@ const project = new web.ReactProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1165,6 +1174,7 @@ const project = new web.ReactTypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1274,6 +1284,7 @@ const project = new TypeScriptProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
@@ -1383,6 +1394,7 @@ const project = new TypeScriptAppProject({
   // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
   // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
   // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
   // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
   // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
   // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
