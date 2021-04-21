@@ -456,6 +456,8 @@ export class NodeProject extends Project {
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
+    this._version = new Version(this);
+
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
@@ -536,11 +538,6 @@ export class NodeProject extends Project {
       throw new Error('"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"');
     }
 
-    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
-
-    // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
-
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
     const mutableBuilds = options.mutableBuild ?? true;
 
@@ -588,6 +585,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+      const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = { };
@@ -614,7 +612,7 @@ export class NodeProject extends Project {
       const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
       releaseSteps.push({
-        name: 'Get latest commit from remote',
+        name: 'Check for new commits',
         id: gitRemoteStep,
         run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
       });
@@ -650,6 +648,9 @@ export class NodeProject extends Project {
       const workflow = this.createBuildWorkflow('Release', {
         jobId: jobId,
         trigger,
+        env: {
+          RELEASE: 'true',
+        },
         preBuildSteps: [
           {
             name: 'Bump to next version',
@@ -659,8 +660,7 @@ export class NodeProject extends Project {
         ],
         postSteps: releaseSteps,
         image: options.workflowContainerImage,
-        codeCov: options.codeCov ?? false,
-        codeCovTokenSecret: options.codeCovTokenSecret,
+        codeCov: false, // no code coverage needed for release
         checkoutWith: {
           // we must use 'fetch-depth=0' in order to fetch all tags
           // otherwise tags are not checked out
@@ -981,6 +981,7 @@ export class NodeProject extends Project {
       'runs-on': 'ubuntu-latest',
       'env': {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+        ...options.env ?? {},
       },
       ...condition,
       'steps': [
@@ -1003,7 +1004,7 @@ export class NodeProject extends Project {
         {
           name: 'Set git identity',
           run: [
-            'git config user.name "Auto-bump"',
+            'git config user.name "Automation"',
             'git config user.email "github-actions@github.com"',
           ].join('\n'),
         },
@@ -1116,6 +1117,12 @@ interface NodeBuildWorkflowOptions {
    * Disables anti-tamper checks in the workflow.
    */
   readonly antitamperDisabled?: boolean;
+
+  /**
+   * Workflow environment variables.
+   * @default {}
+   */
+  readonly env?: { [name: string]: string };
 }
 
 export interface NodeWorkflowSteps {

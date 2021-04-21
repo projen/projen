@@ -270,7 +270,7 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Build
         run: npx projen build
@@ -324,6 +324,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
+      RELEASE: \\"true\\"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -339,7 +340,7 @@ jobs:
         run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
         run: npx projen bump
@@ -350,7 +351,7 @@ jobs:
           /usr/bin/
       - name: Build
         run: npx projen build
-      - name: Get latest commit from remote
+      - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
           github.ref }} | cut -f1)\\"
@@ -526,9 +527,7 @@ pull_request_rules:
 /.mergify.yml
 /.projen
 /.projenrc.js
-/.versionrc.json
 /.vscode
-/changelog.tmp.md
 /coverage
 /src
 /test
@@ -820,7 +819,7 @@ junit.xml
       "bump": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Commits a bump to the package version based on conventional commits",
+        "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
           Object {
@@ -926,20 +925,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "CI=\\"\\" yarn projen",
-          },
-        ],
-      },
-      "release": Object {
-        "category": "20.release",
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to master",
-        "name": "release",
-        "steps": Array [
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -1453,7 +1438,6 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
-      "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
@@ -1833,9 +1817,7 @@ yarn-error.log*
 /.idea
 /.projen
 /.projenrc.js
-/.versionrc.json
 /.vscode
-/changelog.tmp.md
 /coverage
 /src
 /test
@@ -1994,7 +1976,7 @@ junit.xml
       "bump": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Commits a bump to the package version based on conventional commits",
+        "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
           Object {
@@ -2103,20 +2085,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "CI=\\"\\" yarn projen",
-          },
-        ],
-      },
-      "release": Object {
-        "category": "20.release",
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to master",
-        "name": "release",
-        "steps": Array [
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -2756,7 +2724,6 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
-      "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
@@ -3134,9 +3101,7 @@ yarn-error.log*
 /.idea
 /.projen
 /.projenrc.js
-/.versionrc.json
 /.vscode
-/changelog.tmp.md
 /coverage
 /src
 /test
@@ -3295,7 +3260,7 @@ junit.xml
       "bump": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Commits a bump to the package version based on conventional commits",
+        "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
           Object {
@@ -3385,20 +3350,6 @@ junit.xml
           },
           Object {
             "exec": "CI=\\"\\" yarn projen",
-          },
-        ],
-      },
-      "release": Object {
-        "category": "20.release",
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to master",
-        "name": "release",
-        "steps": Array [
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -3993,7 +3944,6 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
-      "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
@@ -4160,7 +4110,7 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Build
         run: npx projen build
@@ -4181,6 +4131,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
+      RELEASE: \\"true\\"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -4192,13 +4143,13 @@ jobs:
         run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Get latest commit from remote
+      - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
           github.ref }} | cut -f1)\\"
@@ -4299,8 +4250,6 @@ pull_request_rules:
 /.mergify.yml
 /.projen
 /.projenrc.js
-/.versionrc.json
-/changelog.tmp.md
 /coverage
 /test-reports/
 junit.xml
@@ -4356,7 +4305,7 @@ junit.xml
       "bump": Object {
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Commits a bump to the package version based on conventional commits",
+        "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
           Object {
@@ -4412,20 +4361,6 @@ junit.xml
           },
           Object {
             "exec": "CI=\\"\\" pnpm run projen",
-          },
-        ],
-      },
-      "release": Object {
-        "category": "20.release",
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version & push to master",
-        "name": "release",
-        "steps": Array [
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "exec": "git push --follow-tags origin master",
           },
         ],
       },
@@ -4770,7 +4705,6 @@ project.synth();
       "compile": "npx projen compile",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
-      "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",

@@ -385,6 +385,8 @@ export class NodePackage extends Component {
 
     this.processDeps(options);
 
+    const prev = this.readPackageJson() ?? {};
+
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
       name: this.packageName,
@@ -405,9 +407,12 @@ export class NodePackage extends Component {
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
-      version: '0.0.0', // <-- version is set based on latest git tag during release builds
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
+
+      // in release CI builds we bump the version before we run "build" so we want
+      // to preserve the version number. otherwise, we always set it to 0.0.0
+      version: this.determineVersion(prev?.version),
     };
 
     // override any scripts from options (if specified)
@@ -614,9 +619,35 @@ export class NodePackage extends Component {
       }
     } catch (e) { }
 
-    exec(this.renderInstallCommand(isTruthy(process.env.CI)), { cwd: outdir });
+    exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
 
     this.resolveDepsAndWritePackageJson(outdir);
+  }
+
+  /**
+   * Returns `true` if we are running within a CI build.
+   */
+  private get isAutomatedBuild(): boolean {
+    return isTruthy(process.env.CI);
+  }
+
+  private determineVersion(currVersion?: string) {
+    if (!this.isRelaseBuild) {
+      return '0.0.0';
+    }
+
+    if (!currVersion || currVersion === '0.0.0') {
+      throw new Error('if the RELEASE environment variable is set the version in package.json must not be 0.0.0 (did you run the "bump" task?)');
+    }
+
+    return currVersion;
+  }
+
+  /**
+   * Returns `true` if this is a CI release build.
+   */
+  private get isRelaseBuild(): boolean {
+    return isTruthy(process.env.RELEASE);
   }
 
   // -------------------------------------------------------------------------------------------
