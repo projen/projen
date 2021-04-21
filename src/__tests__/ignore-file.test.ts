@@ -1,7 +1,7 @@
 import { IgnoreFile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
-test('ignorefile synthesises correctly', () => {
+test('ignorefile synthesizes correctly', () => {
   // GIVEN
   const prj = new TestProject();
 

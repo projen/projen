@@ -115,7 +115,7 @@ interface CreateProjectOptions {
   synth: boolean;
 
   /**
-   * Should we execuite post synthesis hooks? (usually package manager install).
+   * Should we execute post synthesis hooks? (usually package manager install).
    */
   post: boolean;
 }

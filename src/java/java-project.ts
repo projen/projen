@@ -81,7 +81,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
   /**
    * Use projenrc in java.
    *
-   * This will install `projen` as a java depedency and will add a `synth` task which
+   * This will install `projen` as a java dependency and will add a `synth` task which
    * will compile & execute `main()` from `src/main/java/projenrc.java`.
    *
    * @default true

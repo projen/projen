@@ -4,7 +4,7 @@ import { Project } from '..';
 import { Dependencies, DependencyType } from '../deps';
 import { TestProject } from './util';
 
-test('no dependencieds, no manifest', () => {
+test('no dependencies, no manifest', () => {
   // GIVEN
   const p = new TestProject();
 
