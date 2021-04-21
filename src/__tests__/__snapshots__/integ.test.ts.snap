@@ -985,9 +985,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           Object {
             "exec": "standard-version -r 0.0.0",
           },
-          Object {
-            "exec": "git tag -d v0.0.0",
-          },
         ],
       },
       "watch": Object {
@@ -2148,9 +2145,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "standard-version -r 0.0.0",
-          },
-          Object {
-            "exec": "git tag -d v0.0.0",
           },
         ],
       },
@@ -3415,9 +3409,6 @@ junit.xml
           Object {
             "exec": "standard-version -r 0.0.0",
           },
-          Object {
-            "exec": "git tag -d v0.0.0",
-          },
         ],
       },
       "watch": Object {
@@ -4412,9 +4403,6 @@ junit.xml
         "steps": Array [
           Object {
             "exec": "standard-version -r 0.0.0",
-          },
-          Object {
-            "exec": "git tag -d v0.0.0",
           },
         ],
       },

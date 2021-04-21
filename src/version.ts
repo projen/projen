@@ -32,8 +32,6 @@ export class Version extends Component {
       exec: 'standard-version -r 0.0.0',
     });
 
-    this.unbumpTask.exec('git tag -d v0.0.0');
-
     project.addDevDeps(
       'standard-version@^9',
     );
