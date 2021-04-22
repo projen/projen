@@ -15,7 +15,6 @@ class TestNextJsTypeScriptProject extends NextJsTypeScriptProject {
       name: 'test-nextjs-project',
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.web.NextJsTypeScriptProject',
       defaultReleaseBranch: 'main',
     });
   }

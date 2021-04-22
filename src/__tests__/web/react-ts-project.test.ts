@@ -15,7 +15,6 @@ class TestReactTypeScriptProject extends ReactTypeScriptProject {
       name: 'test-nextjs-project',
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.web.ReactProject',
       defaultReleaseBranch: 'main',
     });
   }
