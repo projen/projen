@@ -39,6 +39,7 @@ const project = new AwsCdkTypeScriptApp({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -177,6 +178,7 @@ const project = new AwsCdkConstructLibrary({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -276,6 +278,7 @@ const project = new Cdk8sTypeScriptApp({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -407,6 +410,7 @@ const project = new ConstructLibraryCdk8s({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -561,6 +565,7 @@ const project = new JsiiProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -663,6 +668,7 @@ const project = new web.NextJsProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -761,6 +767,7 @@ const project = new web.NextJsTypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -871,6 +878,7 @@ const project = new NodeProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1033,6 +1041,7 @@ const project = new web.ReactProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1131,6 +1140,7 @@ const project = new web.ReactTypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1241,6 +1251,7 @@ const project = new TypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1351,6 +1362,7 @@ const project = new TypeScriptAppProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */

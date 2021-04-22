@@ -13,6 +13,7 @@ import { exec, sorted, isTruthy, writeFile } from './util';
 const UNLICENSED = 'UNLICENSED';
 const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
 const DEFAULT_NPM_TAG = 'latest';
+const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
 
 export interface NodePackageOptions {
   /**
@@ -280,6 +281,13 @@ export interface NodePackageOptions {
    * `NpmAccess.PUBLIC`.
    */
   readonly npmAccess?: NpmAccess;
+
+  /**
+   * GitHub secret which contains the NPM token to use when publishing packages.
+   *
+   * @default "NPM_TOKEN"
+   */
+  readonly npmTokenSecret?: string;
 }
 
 /**
@@ -355,6 +363,11 @@ export class NodePackage extends Component {
   public readonly npmRegistry: string;
 
   /**
+   * GitHub secret which contains the NPM token to use when publishing packages.
+   */
+  public readonly npmTokenSecret: string;
+
+  /**
    * npm package access level.
    */
   public readonly npmAccess: NpmAccess;
@@ -377,11 +390,12 @@ export class NodePackage extends Component {
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
-    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl } = this.parseNpmOptions(options);
+    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
+    this.npmTokenSecret = npmTokenSecret;
 
     this.processDeps(options);
 
@@ -673,6 +687,7 @@ export class NodePackage extends Component {
       npmAccess,
       npmRegistry: npmr.hostname,
       npmRegistryUrl: npmr.href,
+      npmTokenSecret: options.npmTokenSecret ?? DEFAULT_NPM_TOKEN_SECRET,
     };
   }
 
