@@ -184,6 +184,7 @@ describe('npm publishing options', () => {
     expect(npm.npmDistTag).toStrictEqual('latest');
     expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
     expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
+    expect(npm.npmTokenSecret).toStrictEqual('NPM_TOKEN');
 
     // since these are all defaults, publishConfig is not defined.
     expect(synthSnapshot(project)['package.json'].publishConfig).toBeUndefined();
@@ -226,6 +227,7 @@ describe('npm publishing options', () => {
       npmDistTag: 'next',
       npmRegistryUrl: 'https://foo.bar',
       npmAccess: NpmAccess.PUBLIC,
+      npmTokenSecret: 'GITHUB_TOKEN',
     });
 
     // THEN
@@ -233,6 +235,7 @@ describe('npm publishing options', () => {
     expect(npm.npmRegistry).toStrictEqual('foo.bar');
     expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(npm.npmTokenSecret).toStrictEqual('GITHUB_TOKEN');
     expect(packageJson(project).publishConfig).toStrictEqual({
       access: 'public',
       registry: 'https://foo.bar/',

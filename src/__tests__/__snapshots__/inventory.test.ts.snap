@@ -738,6 +738,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -1946,6 +1958,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -3110,6 +3134,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -4246,6 +4282,18 @@ Array [
         ],
         "switch": "npm-task-execution",
         "type": "NpmTaskExecution",
+      },
+      Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
       },
       Object {
         "default": "\\".\\"",
@@ -5710,6 +5758,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -6753,6 +6813,18 @@ Array [
         ],
         "switch": "npm-task-execution",
         "type": "NpmTaskExecution",
+      },
+      Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
       },
       Object {
         "default": "\\".\\"",
@@ -7839,6 +7911,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -8860,6 +8944,18 @@ Array [
         ],
         "switch": "npm-task-execution",
         "type": "NpmTaskExecution",
+      },
+      Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
       },
       Object {
         "default": "\\".\\"",
@@ -10286,6 +10382,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -11344,6 +11452,18 @@ Array [
         ],
         "switch": "npm-task-execution",
         "type": "NpmTaskExecution",
+      },
+      Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
       },
       Object {
         "default": "\\".\\"",
@@ -12453,6 +12573,18 @@ Array [
         "type": "NpmTaskExecution",
       },
       Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
+      },
+      Object {
         "default": "\\".\\"",
         "docs": "The root directory of the project.",
         "name": "outdir",
@@ -13558,6 +13690,18 @@ Array [
         ],
         "switch": "npm-task-execution",
         "type": "NpmTaskExecution",
+      },
+      Object {
+        "default": "\\"NPM_TOKEN\\"",
+        "docs": "GitHub secret which contains the NPM token to use when publishing packages.",
+        "name": "npmTokenSecret",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "npmTokenSecret",
+        ],
+        "switch": "npm-token-secret",
+        "type": "string",
       },
       Object {
         "default": "\\".\\"",
