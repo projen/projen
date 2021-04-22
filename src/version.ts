@@ -12,7 +12,8 @@ export class Version extends Component {
   constructor(project: NodeProject) {
     super(project);
 
-    this.changelogFile = 'changelog.tmp.md';
+    const versionFile = '.version.tmp.json';
+    this.changelogFile = '.changelog.tmp.md';
 
     // this command determines if there were any changes since the last release
     // (the top-most commit is not a bump). it is used as a condition for both
@@ -22,9 +23,14 @@ export class Version extends Component {
     this.bumpTask = project.addTask('bump', {
       description: 'Bumps version based on latest git tag and generates a changelog entry',
       category: TaskCategory.RELEASE,
-      exec: 'standard-version',
       condition: changesSinceLastRelease,
     });
+
+    // the default for "standard-version" is to find a tag across the entire
+    // repository but we want to select the last tag accessible from the
+    // *current branch*.
+    this.bumpTask.exec(`git describe --abbrev=0 --tags > ${versionFile}`);
+    this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
@@ -37,11 +43,15 @@ export class Version extends Component {
     );
 
     project.npmignore?.exclude('/.versionrc.json');
-    project.npmignore?.addPatterns(`/${this.changelogFile}`);
+    project.gitignore.addPatterns(`/${this.changelogFile}`);
+    project.gitignore.addPatterns(`/${versionFile}`);
 
     new JsonFile(project, '.versionrc.json', {
       obj: {
-        packageFiles: [],
+        packageFiles: [{
+          filename: versionFile,
+          type: 'plain-text',
+        }],
         bumpFiles: ['package.json'],
         commitAll: false,
         infile: this.changelogFile,
