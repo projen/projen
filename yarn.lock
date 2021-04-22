@@ -3759,11 +3759,11 @@ jsii-rosetta@^1.29.0:
     yargs "^16.2.0"
 
 jsii@^1.18.0:
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.28.0.tgz#c453f2a81d001dd2c3c3991e6e36d4bbb1d03f42"
-  integrity sha512-B6CbHi60fabeQZJYNea8wSUsrILJzN7ng+yx69GmMJ4C6NtCVt7Oc/CITfhY/cYTwdhN3FAJf01e5/v8qj6bUA==
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-1.29.0.tgz#1f34c29db9299ace0f361e6d72627d4478994396"
+  integrity sha512-7o1yE/si/nbGsNquSejwxaiPq0iDSTPfDENd7ZyO3xzGIROV8UZSs+VhGyys9t/VF4og8p9s2olkajEN60fzMw==
   dependencies:
-    "@jsii/spec" "^1.28.0"
+    "@jsii/spec" "^1.29.0"
     case "^1.6.3"
     colors "^1.4.0"
     deep-equal "^2.0.5"
