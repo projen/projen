@@ -572,6 +572,23 @@ export class NodeProject extends Project {
             name: 'Commit and push changes (if any)',
             run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
           },
+          {
+            // only if not running from a fork
+            if: '${{ github.repository == github.event.pull_request.head.repo.full_name }}',
+            name: 'Update status check',
+            run: [
+              'gh api',
+              '-X POST',
+              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
+              `-F name="${buildJobId}"`,
+              '-F head_sha="$(git rev-parse HEAD)"',
+              '-F status="completed"',
+              '-F conclusion="success"',
+            ].join(' '),
+            env: {
+              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            },
+          },
         ],
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
