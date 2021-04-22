@@ -29,7 +29,7 @@ export class Version extends Component {
     // the default for "standard-version" is to find a tag across the entire
     // repository but we want to select the last tag accessible from the
     // *current branch*.
-    this.bumpTask.exec(`git describe --abbrev=0 --tags > ${versionFile}`);
+    this.bumpTask.exec(`git describe --tags --match="v*" --first-parent --abbrev=0 > ${versionFile}`);
     this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {

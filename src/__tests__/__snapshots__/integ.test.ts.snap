@@ -820,7 +820,7 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+            "exec": "git describe --tags --match=\\"v*\\" --first-parent --abbrev=0 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -1985,7 +1985,7 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+            "exec": "git describe --tags --match=\\"v*\\" --first-parent --abbrev=0 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -3277,7 +3277,7 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+            "exec": "git describe --tags --match=\\"v*\\" --first-parent --abbrev=0 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -4330,7 +4330,7 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+            "exec": "git describe --tags --match=\\"v*\\" --first-parent --abbrev=0 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
