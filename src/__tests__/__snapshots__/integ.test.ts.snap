@@ -358,7 +358,7 @@ jobs:
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
@@ -444,6 +444,8 @@ jobs:
 .jsii
 .nyc_output
 .yarn-integrity
+/.changelog.tmp.md
+/.version.tmp.json
 /coverage
 /dist
 /lib
@@ -823,6 +825,9 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
+            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+          },
+          Object {
             "exec": "standard-version",
           },
         ],
@@ -1071,8 +1076,13 @@ project.synth();
     ],
     "commitAll": false,
     "header": "",
-    "infile": "changelog.tmp.md",
-    "packageFiles": Array [],
+    "infile": ".changelog.tmp.md",
+    "packageFiles": Array [
+      Object {
+        "filename": ".version.tmp.json",
+        "type": "plain-text",
+      },
+    ],
     "skip": Object {
       "commit": true,
       "tag": true,
@@ -1776,6 +1786,8 @@ Object {
 .jsii
 .nyc_output
 .yarn-integrity
+/.changelog.tmp.md
+/.version.tmp.json
 /coverage
 /dist
 /lib
@@ -1977,6 +1989,9 @@ junit.xml
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
+          Object {
+            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+          },
           Object {
             "exec": "standard-version",
           },
@@ -2227,8 +2242,13 @@ project.synth();
     ],
     "commitAll": false,
     "header": "",
-    "infile": "changelog.tmp.md",
-    "packageFiles": Array [],
+    "infile": ".changelog.tmp.md",
+    "packageFiles": Array [
+      Object {
+        "filename": ".version.tmp.json",
+        "type": "plain-text",
+      },
+    ],
     "skip": Object {
       "commit": true,
       "tag": true,
@@ -3060,6 +3080,8 @@ Object {
 .eslintcache
 .nyc_output
 .yarn-integrity
+/.changelog.tmp.md
+/.version.tmp.json
 /coverage
 /dist
 /lib
@@ -3259,6 +3281,9 @@ junit.xml
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
+          Object {
+            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+          },
           Object {
             "exec": "standard-version",
           },
@@ -3472,8 +3497,13 @@ project.synth();
     ],
     "commitAll": false,
     "header": "",
-    "infile": "changelog.tmp.md",
-    "packageFiles": Array [],
+    "infile": ".changelog.tmp.md",
+    "packageFiles": Array [
+      Object {
+        "filename": ".version.tmp.json",
+        "type": "plain-text",
+      },
+    ],
     "skip": Object {
       "commit": true,
       "tag": true,
@@ -4150,7 +4180,7 @@ jobs:
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
@@ -4176,6 +4206,8 @@ jobs:
 .eslintcache
 .nyc_output
 .yarn-integrity
+/.changelog.tmp.md
+/.version.tmp.json
 /coverage
 /test-reports/
 build/Release
@@ -4302,6 +4334,9 @@ junit.xml
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "name": "bump",
         "steps": Array [
+          Object {
+            "exec": "git describe --abbrev=0 --tags > .version.tmp.json",
+          },
           Object {
             "exec": "standard-version",
           },
@@ -4430,8 +4465,13 @@ project.synth();
     ],
     "commitAll": false,
     "header": "",
-    "infile": "changelog.tmp.md",
-    "packageFiles": Array [],
+    "infile": ".changelog.tmp.md",
+    "packageFiles": Array [
+      Object {
+        "filename": ".version.tmp.json",
+        "type": "plain-text",
+      },
+    ],
     "skip": Object {
       "commit": true,
       "tag": true,

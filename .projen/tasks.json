@@ -39,6 +39,9 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "steps": [
         {
+          "exec": "git describe --abbrev=0 --tags > .version.tmp.json"
+        },
+        {
           "exec": "standard-version"
         }
       ],
