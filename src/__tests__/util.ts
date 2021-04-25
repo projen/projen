@@ -35,7 +35,8 @@ export function execProjenCLI(workdir: string, args: string[] = []) {
     PROJEN_CLI,
     ...args,
   ];
-  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir });
+
+  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir, stdio: 'inherit' });
 }
 
 export interface SynthOutput {
