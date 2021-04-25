@@ -1,4 +1,5 @@
 import * as path from 'path';
+import { Commitlint, CommitlintOptions } from './commitlint';
 import { PROJEN_DIR, PROJEN_RC } from './common';
 import { Component } from './component';
 import { Eslint, EslintOptions } from './eslint';
@@ -112,6 +113,22 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default true
    */
   readonly package?: boolean;
+
+  /**
+   * Enables Commitlint on project.
+   *
+   * @default false
+   */
+
+  readonly commitlint?: boolean;
+
+  /**
+   * Commit lint options
+   *
+   * @default - opinionated default options
+   */
+
+  readonly commitlintOptions?: CommitlintOptions;
 }
 
 /**
@@ -122,6 +139,7 @@ export class TypeScriptProject extends NodeProject {
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
+  public readonly commitlint?: Commitlint;
   public readonly tsconfig?: TypescriptConfig;
 
   /**
@@ -341,6 +359,12 @@ export class TypeScriptProject extends NodeProject {
       this.testCompileTask.exec(`tsc --noEmit --project ${tsconfig.fileName}`);
     }
 
+    if (options.commitlint) {
+      this.commitlint = new Commitlint(this, {
+        ...options.commitlintOptions,
+      });
+    }
+
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
         tsconfigPath: './tsconfig.eslint.json',
@@ -349,6 +373,7 @@ export class TypeScriptProject extends NodeProject {
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });
+
 
       const baseTsconfig = {
         fileName: 'tsconfig.eslint.json',

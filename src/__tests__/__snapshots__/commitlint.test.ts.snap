@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commit lint config 1`] = `"module.exports = {extends: ['@commitlint/config-conventional']};"`;
+
+exports[`commit lint config 2`] = `undefined`;
