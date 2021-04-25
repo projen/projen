@@ -207,6 +207,12 @@ function renderParams(opts: CreateProjectOptions) {
     }
 
     const optionName = option.name;
+
+    // skip the JSII FQN option
+    if (optionName === 'jsiiFqn') {
+      continue;
+    }
+
     let paramRender;
     if (opts.params[optionName] !== undefined) {
       paramRender = `${optionName}: ${opts.params[optionName]},`;
