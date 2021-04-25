@@ -56,7 +56,7 @@ export class Commitlint extends Component {
       });
 
       project.addDevDeps(
-        'husky',
+        'husky@^6.0.0',
       );
 
       project.gitignore.include(
