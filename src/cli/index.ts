@@ -1,7 +1,6 @@
 import { resolve } from 'path';
 import * as yargs from 'yargs';
 import { PROJEN_RC } from '../common';
-import { Project } from '../project';
 import { TaskRuntime } from '../tasks';
 import { synth } from './synth';
 import { discoverTaskCommands } from './tasks';
@@ -19,6 +18,7 @@ async function main() {
   ya.strictCommands();
   ya.wrap(yargs.terminalWidth());
   ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
+  ya.option('watch', { type: 'boolean', default: false, desc: 'Keep running and resynthesize when projenrc changes', alias: 'w' });
   ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
   ya.options('rc', { desc: 'path to .projenrc.js file', default: DEFAULT_RC, type: 'string' });
   ya.version(false);
@@ -30,20 +30,16 @@ async function main() {
     process.env.DEBUG = 'true';
   }
 
-  // no command means just require .projenrc.js
+  // no command means synthesize
   if (args._.length === 0) {
-    process.env.PROJEN_DISABLE_POST = (!args.post).toString();
-
-    // if there is a "default" task, execute it, otherwise, defer to the javascript synth
-    // TODO: move javascript synth to `NodeProject`.
-    const defaultTask = runtime.tasks.find(t => t.name === Project.DEFAULT_TASK);
-    if (defaultTask) {
-      runtime.runTask(defaultTask.name);
-    } else {
-      await synth((args.rc as string) ?? DEFAULT_RC);
-    }
+    await synth(runtime, {
+      post: args.post as boolean,
+      watch: args.watch as boolean,
+      rcfile: args.rc as string,
+    });
   }
 }
+
 
 main().catch(e => {
   console.error(e.stack);
