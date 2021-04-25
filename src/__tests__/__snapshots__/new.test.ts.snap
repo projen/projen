@@ -6,7 +6,6 @@ exports[`projen new awscdk-app-ts 1`] = `
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.AwsCdkTypeScriptApp\\",
   name: 'my-project',
 
   /* AwsCdkTypeScriptAppOptions */
@@ -127,7 +126,6 @@ const project = new AwsCdkConstructLibrary({
   authorAddress: 'my@user.email.com',
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.AwsCdkConstructLibrary\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -248,7 +246,6 @@ exports[`projen new cdk8s-app-ts 1`] = `
 const project = new Cdk8sTypeScriptApp({
   cdk8sVersion: '1.0.0-beta.10',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.Cdk8sTypeScriptApp\\",
   name: 'my-project',
 
   /* Cdk8sTypeScriptAppOptions */
@@ -366,7 +363,6 @@ const project = new ConstructLibraryCdk8s({
   authorAddress: 'my@user.email.com',
   cdk8sVersion: '1.0.0-beta.10',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.ConstructLibraryCdk8s\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -480,7 +476,6 @@ exports[`projen new java 1`] = `
 const project = new java.JavaProject({
   artifactId: 'my-app',
   groupId: 'org.acme',
-  jsiiFqn: \\"projen.java.JavaProject\\",
   name: 'my-project',
   version: '0.1.0',
 
@@ -524,7 +519,6 @@ const project = new JsiiProject({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.JsiiProject\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -634,7 +628,6 @@ exports[`projen new nextjs 1`] = `
 
 const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.NextJsProject\\",
   name: 'my-project',
 
   /* NextJsCommonProjectOptions */
@@ -737,7 +730,6 @@ exports[`projen new nextjs-ts 1`] = `
 
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.NextJsTypeScriptProject\\",
   name: 'my-project',
 
   /* NextJsCommonProjectOptions */
@@ -852,7 +844,6 @@ exports[`projen new node 1`] = `
 
 const project = new NodeProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.NodeProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -946,7 +937,6 @@ exports[`projen new project 1`] = `
 "const { Project } = require('projen');
 
 const project = new Project({
-  jsiiFqn: \\"projen.Project\\",
   name: 'my-project',
 
   /* ProjectOptions */
@@ -970,40 +960,39 @@ exports[`projen new python 1`] = `
 const project = new python.PythonProject({
   authorEmail: 'my@user.email.com',
   authorName: 'My User Name',
-  jsiiFqn: \\"projen.python.PythonProject\\",
   moduleName: 'my_project',
   name: 'my-project',
   version: '0.1.0',
 
   /* ProjectOptions */
-  // clobber: true,                        /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                  /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                        /* Add a Gitpod development environment. */
-  // logging: {},                          /* Configure logging options such as verbosity. */
-  // outdir: '.',                          /* The root directory of the project. */
-  // parent: undefined,                    /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,     /* Which type of project this is (library/app). */
-  // readme: undefined,                    /* The README setup. */
+  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
+  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                     /* Add a Gitpod development environment. */
+  // logging: {},                       /* Configure logging options such as verbosity. */
+  // outdir: '.',                       /* The root directory of the project. */
+  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // readme: undefined,                 /* The README setup. */
 
   /* PythonPackagingOptions */
-  // classifiers: undefined,               /* A list of PyPI trove classifiers that describe the project. */
-  // description: undefined,               /* A short description of the package. */
-  // homepage: undefined,                  /* A URL to the website of the project. */
-  // license: undefined,                   /* License of this package as an SPDX identifier. */
-  // poetryOptions: undefined,             /* Additional options to set for poetry if using poetry. */
-  // setupConfig: undefined,               /* Additional fields to pass in the setup() function if using setuptools. */
+  // classifiers: undefined,            /* A list of PyPI trove classifiers that describe the project. */
+  // description: undefined,            /* A short description of the package. */
+  // homepage: undefined,               /* A URL to the website of the project. */
+  // license: undefined,                /* License of this package as an SPDX identifier. */
+  // poetryOptions: undefined,          /* Additional options to set for poetry if using poetry. */
+  // setupConfig: undefined,            /* Additional fields to pass in the setup() function if using setuptools. */
 
   /* PythonProjectOptions */
-  // deps: [],                             /* List of runtime dependencies for this project. */
-  // devDeps: [],                          /* List of dev dependencies for this project. */
-  // pip: true,                            /* Use pip with a requirements.txt file to track project dependencies. */
-  // poetry: false,                        /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
-  // pytest: true,                         /* Include pytest tests. */
-  // pytestOptions: undefined,             /* pytest options. */
-  // sample: true,                         /* Include sample code and test if the relevant directories don't exist. */
-  // setuptools: undefined,                /* Use setuptools with a setup.py script for packaging and publishing. */
-  // venv: true,                           /* Use venv to manage a virtual environment for installing dependencies inside. */
-  // venvOptions: undefined,               /* Venv options. */
+  // deps: [],                          /* List of runtime dependencies for this project. */
+  // devDeps: [],                       /* List of dev dependencies for this project. */
+  // pip: true,                         /* Use pip with a requirements.txt file to track project dependencies. */
+  // poetry: false,                     /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
+  // pytest: true,                      /* Include pytest tests. */
+  // pytestOptions: undefined,          /* pytest options. */
+  // sample: true,                      /* Include sample code and test if the relevant directories don't exist. */
+  // setuptools: undefined,             /* Use setuptools with a setup.py script for packaging and publishing. */
+  // venv: true,                        /* Use venv to manage a virtual environment for installing dependencies inside. */
+  // venvOptions: undefined,            /* Venv options. */
 });
 
 project.synth();
@@ -1015,7 +1004,6 @@ exports[`projen new react 1`] = `
 
 const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.ReactProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -1114,7 +1102,6 @@ exports[`projen new react-ts 1`] = `
 
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.ReactTypeScriptProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -1225,7 +1212,6 @@ exports[`projen new typescript 1`] = `
 
 const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.TypeScriptProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
@@ -1336,7 +1322,6 @@ exports[`projen new typescript-app 1`] = `
 
 const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.TypeScriptAppProject\\",
   name: 'my-project',
 
   /* NodePackageOptions */
