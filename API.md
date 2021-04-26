@@ -34,6 +34,7 @@ Name|Description
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
+[SourceCode](#projen-sourcecode)|Represents a source file.
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|Represents a TOML file.
 [TypeScriptAppProject](#projen-typescriptappproject)|TypeScript app.
@@ -142,6 +143,7 @@ Name|Description
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
+[SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|Options for `TomlFile`.
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -3700,6 +3702,71 @@ static tilde(version: string): Semver
 
 __Returns__:
 * <code>[Semver](#projen-semver)</code>
+
+
+
+## class SourceCode 🔹 <a id="projen-sourcecode"></a>
+
+Represents a source file.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **filePath** (<code>string</code>)  *No description*
+* **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
+  * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
+
+
+### Methods
+
+
+#### close(code?)🔹 <a id="projen-sourcecode-close"></a>
+
+Decreases the indentation level and closes a code block.
+
+```ts
+close(code?: string): void
+```
+
+* **code** (<code>string</code>)  The code after the block is closed (e.g. `}`).
+
+
+
+
+#### line(code?)🔹 <a id="projen-sourcecode-line"></a>
+
+Emit a line of code.
+
+```ts
+line(code?: string): void
+```
+
+* **code** (<code>string</code>)  The contents, if not specified, just adds a newline.
+
+
+
+
+#### open(code?)🔹 <a id="projen-sourcecode-open"></a>
+
+Opens a code block and increases the indentation level.
+
+```ts
+open(code?: string): void
+```
+
+* **code** (<code>string</code>)  The code before the block starts (e.g. `export class {`).
+
+
+
 
 
 
@@ -8808,6 +8875,19 @@ Name | Type | Description
 -----|------|-------------
 **contents**?🔹 | <code>string</code> | The contents.<br/>__*Default*__: "# replace this"
 **filename**?🔹 | <code>string</code> | The name of the README.md file.<br/>__*Default*__: "README.md"
+
+
+
+## struct SourceCodeOptions 🔹 <a id="projen-sourcecodeoptions"></a>
+
+
+Options for `SourceCodeFile`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**indent**?🔹 | <code>number</code> | Indentation size.<br/>__*Default*__: 2
 
 
 

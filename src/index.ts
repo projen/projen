@@ -31,6 +31,7 @@ export * from './version';
 export * from './yaml';
 export * from './xmlfile';
 export * from './publisher';
+export * from './source-code';
 
 // export submobules
 export * as tasks from './tasks';
