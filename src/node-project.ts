@@ -981,7 +981,7 @@ export class NodeProject extends Project {
     }
 
     workflow.on({
-      workflow_dispatch: {}, // allow manual triggering
+      workflowDispatch: {}, // allow manual triggering
     });
 
     const condition = options.condition ? { if: options.condition } : {};
@@ -995,14 +995,14 @@ export class NodeProject extends Project {
       run: 'git diff --ignore-space-at-eol --exit-code',
     }];
 
-    const job: any = {
-      'runs-on': 'ubuntu-latest',
-      'env': {
+    const job: Mutable<GithubWorkflow.Job> = {
+      runsOn: 'ubuntu-latest',
+      env: {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
         ...options.env ?? {},
       },
       ...condition,
-      'steps': [
+      steps: [
         ...preCheckoutSteps,
 
         // check out sources.
@@ -1147,3 +1147,5 @@ export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
 }
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };

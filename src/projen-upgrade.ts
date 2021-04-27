@@ -66,7 +66,7 @@ export class ProjenUpgrade {
         schedule: options.autoUpgradeSchedule
           ? options.autoUpgradeSchedule.map(s => ({ cron: s }))
           : [{ cron: '0 6 * * *' }], // 6am every day
-        workflow_dispatch: {}, // allow manual triggering
+        workflowDispatch: {}, // allow manual triggering
       });
 
       const withOptions: Record<string, string> = {
@@ -83,8 +83,8 @@ export class ProjenUpgrade {
 
       workflow.addJobs({
         upgrade: {
-          'runs-on': 'ubuntu-latest',
-          'steps': [
+          runsOn: 'ubuntu-latest',
+          steps: [
             // check out sources.
             {
               name: 'Checkout',

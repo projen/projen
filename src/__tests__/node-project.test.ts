@@ -267,11 +267,11 @@ test('extend github release workflow', () => {
 
   project.releaseWorkflow?.addJobs({
     publish_docker_hub: {
-      'runs-on': 'ubuntu-latest',
-      'env': {
+      runsOn: 'ubuntu-latest',
+      env: {
         CI: 'true',
       },
-      'steps': [
+      steps: [
         {
           name: 'Check out the repo',
           uses: 'actions/checkout@v2',
@@ -283,7 +283,7 @@ test('extend github release workflow', () => {
             username: '${{ secrets.DOCKER_USERNAME }}',
             password: '${{ secrets.DOCKER_PASSWORD }}',
             repository: 'projen/projen-docker',
-            tag_with_ref: true,
+            tag_with_ref: 'true',
           },
         },
       ],

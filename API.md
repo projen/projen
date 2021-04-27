@@ -158,6 +158,47 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
+[github.GithubWorkflow.CheckRunOptions](#projen-github-githubworkflow-checkrunoptions)|Check run options.
+[github.GithubWorkflow.CheckSuiteOptions](#projen-github-githubworkflow-checksuiteoptions)|Check suite options.
+[github.GithubWorkflow.ContainerCredentials](#projen-github-githubworkflow-containercredentials)|Credentials to use to authenticate to Docker registries.
+[github.GithubWorkflow.ContainerOptions](#projen-github-githubworkflow-containeroptions)|Options petaining to container environments.
+[github.GithubWorkflow.CreateOptions](#projen-github-githubworkflow-createoptions)|The Create event accepts no options.
+[github.GithubWorkflow.CronScheduleOptions](#projen-github-githubworkflow-cronscheduleoptions)|CRON schedule options.
+[github.GithubWorkflow.DeleteOptions](#projen-github-githubworkflow-deleteoptions)|The Delete event accepts no options.
+[github.GithubWorkflow.DeploymentOptions](#projen-github-githubworkflow-deploymentoptions)|The Deployment event accepts no options.
+[github.GithubWorkflow.DeploymentStatusOptions](#projen-github-githubworkflow-deploymentstatusoptions)|The Deployment status event accepts no options.
+[github.GithubWorkflow.ForkOptions](#projen-github-githubworkflow-forkoptions)|The Fork event accepts no options.
+[github.GithubWorkflow.GollumOptions](#projen-github-githubworkflow-gollumoptions)|The Gollum event accepts no options.
+[github.GithubWorkflow.IssueCommentOptions](#projen-github-githubworkflow-issuecommentoptions)|Issue comment options.
+[github.GithubWorkflow.IssuesOptions](#projen-github-githubworkflow-issuesoptions)|Issues options.
+[github.GithubWorkflow.Job](#projen-github-githubworkflow-job)|A GitHub Workflow job definition.
+[github.GithubWorkflow.JobDefaults](#projen-github-githubworkflow-jobdefaults)|Default settings for all steps in the job.
+[github.GithubWorkflow.JobMatrix](#projen-github-githubworkflow-jobmatrix)|A job matrix.
+[github.GithubWorkflow.JobPermissions](#projen-github-githubworkflow-jobpermissions)|The available scopes and access values for workflow permissions.
+[github.GithubWorkflow.JobStep](#projen-github-githubworkflow-jobstep)|A job step.
+[github.GithubWorkflow.JobStepOutput](#projen-github-githubworkflow-jobstepoutput)|An output binding for a job.
+[github.GithubWorkflow.JobStrategy](#projen-github-githubworkflow-jobstrategy)|A strategy creates a build matrix for your jobs.
+[github.GithubWorkflow.LabelOptions](#projen-github-githubworkflow-labeloptions)|label options.
+[github.GithubWorkflow.MilestoneOptions](#projen-github-githubworkflow-milestoneoptions)|Milestone options.
+[github.GithubWorkflow.PageBuildOptions](#projen-github-githubworkflow-pagebuildoptions)|The Page build event accepts no options.
+[github.GithubWorkflow.ProjectCardOptions](#projen-github-githubworkflow-projectcardoptions)|Project card options.
+[github.GithubWorkflow.ProjectColumnOptions](#projen-github-githubworkflow-projectcolumnoptions)|Probject column options.
+[github.GithubWorkflow.ProjectOptions](#projen-github-githubworkflow-projectoptions)|Project options.
+[github.GithubWorkflow.PublicOptions](#projen-github-githubworkflow-publicoptions)|The Public event accepts no options.
+[github.GithubWorkflow.PullRequestOptions](#projen-github-githubworkflow-pullrequestoptions)|Pull request options.
+[github.GithubWorkflow.PullRequestReviewCommentOptions](#projen-github-githubworkflow-pullrequestreviewcommentoptions)|Pull request review comment options.
+[github.GithubWorkflow.PullRequestReviewOptions](#projen-github-githubworkflow-pullrequestreviewoptions)|Pull request review options.
+[github.GithubWorkflow.PullRequestTargetOptions](#projen-github-githubworkflow-pullrequesttargetoptions)|Pull request target options.
+[github.GithubWorkflow.PushOptions](#projen-github-githubworkflow-pushoptions)|Options for push-like events.
+[github.GithubWorkflow.RegistryPackageOptions](#projen-github-githubworkflow-registrypackageoptions)|Registry package options.
+[github.GithubWorkflow.ReleaseOptions](#projen-github-githubworkflow-releaseoptions)|Release options.
+[github.GithubWorkflow.RepositoryDispatchOptions](#projen-github-githubworkflow-repositorydispatchoptions)|Repository dispatch options.
+[github.GithubWorkflow.RunSettings](#projen-github-githubworkflow-runsettings)|Run settings for a job.
+[github.GithubWorkflow.StatusOptions](#projen-github-githubworkflow-statusoptions)|The Status event accepts no options.
+[github.GithubWorkflow.Triggers](#projen-github-githubworkflow-triggers)|The set of available triggers for GitHub Workflows.
+[github.GithubWorkflow.WatchOptions](#projen-github-githubworkflow-watchoptions)|Watch options.
+[github.GithubWorkflow.WorkflowDispatchOptions](#projen-github-githubworkflow-workflowdispatchoptions)|The Workflow dispatch event accepts no options.
+[github.GithubWorkflow.WorkflowRunOptions](#projen-github-githubworkflow-workflowrunoptions)|Workflow run options.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -240,6 +281,7 @@ Name|Description
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)|Access level for workflow permission scopes.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -4705,10 +4747,10 @@ Name | Type | Description
 
 
 ```ts
-addJobs(jobs: Map<string, any>): void
+addJobs(jobs: Map<string, Job>): void
 ```
 
-* **jobs** (<code>Map<string, any></code>)  *No description*
+* **jobs** (<code>Map<string, [github.GithubWorkflow.Job](#projen-github-githubworkflow-job)></code>)  *No description*
 
 
 
@@ -4718,10 +4760,40 @@ addJobs(jobs: Map<string, any>): void
 
 
 ```ts
-on(events: Map<string, any>): void
+on(events: Triggers): void
 ```
 
-* **events** (<code>Map<string, any></code>)  *No description*
+* **events** (<code>[github.GithubWorkflow.Triggers](#projen-github-githubworkflow-triggers)</code>)  *No description*
+  * **checkRun** (<code>[github.GithubWorkflow.CheckRunOptions](#projen-github-githubworkflow-checkrunoptions)</code>)  Runs your workflow anytime the check_run event occurs. __*Optional*__
+  * **checkSuite** (<code>[github.GithubWorkflow.CheckSuiteOptions](#projen-github-githubworkflow-checksuiteoptions)</code>)  Runs your workflow anytime the check_suite event occurs. __*Optional*__
+  * **create** (<code>[github.GithubWorkflow.CreateOptions](#projen-github-githubworkflow-createoptions)</code>)  Runs your workflow anytime someone creates a branch or tag, which triggers the create event. __*Optional*__
+  * **delete** (<code>[github.GithubWorkflow.DeleteOptions](#projen-github-githubworkflow-deleteoptions)</code>)  Runs your workflow anytime someone deletes a branch or tag, which triggers the delete event. __*Optional*__
+  * **deployment** (<code>[github.GithubWorkflow.DeploymentOptions](#projen-github-githubworkflow-deploymentoptions)</code>)  Runs your workflow anytime someone creates a deployment, which triggers the deployment event. __*Optional*__
+  * **deploymentStatus** (<code>[github.GithubWorkflow.DeploymentStatusOptions](#projen-github-githubworkflow-deploymentstatusoptions)</code>)  Runs your workflow anytime a third party provides a deployment status, which triggers the deployment_status event. __*Optional*__
+  * **fork** (<code>[github.GithubWorkflow.ForkOptions](#projen-github-githubworkflow-forkoptions)</code>)  Runs your workflow anytime when someone forks a repository, which triggers the fork event. __*Optional*__
+  * **gollum** (<code>[github.GithubWorkflow.GollumOptions](#projen-github-githubworkflow-gollumoptions)</code>)  Runs your workflow when someone creates or updates a Wiki page, which triggers the gollum event. __*Optional*__
+  * **issueComment** (<code>[github.GithubWorkflow.IssueCommentOptions](#projen-github-githubworkflow-issuecommentoptions)</code>)  Runs your workflow anytime the issue_comment event occurs. __*Optional*__
+  * **issues** (<code>[github.GithubWorkflow.IssuesOptions](#projen-github-githubworkflow-issuesoptions)</code>)  Runs your workflow anytime the issues event occurs. __*Optional*__
+  * **label** (<code>[github.GithubWorkflow.LabelOptions](#projen-github-githubworkflow-labeloptions)</code>)  Runs your workflow anytime the label event occurs. __*Optional*__
+  * **milestone** (<code>[github.GithubWorkflow.MilestoneOptions](#projen-github-githubworkflow-milestoneoptions)</code>)  Runs your workflow anytime the milestone event occurs. __*Optional*__
+  * **pageBuild** (<code>[github.GithubWorkflow.PageBuildOptions](#projen-github-githubworkflow-pagebuildoptions)</code>)  Runs your workflow anytime someone pushes to a GitHub Pages-enabled branch, which triggers the page_build event. __*Optional*__
+  * **project** (<code>[github.GithubWorkflow.ProjectOptions](#projen-github-githubworkflow-projectoptions)</code>)  Runs your workflow anytime the project event occurs. __*Optional*__
+  * **projectCard** (<code>[github.GithubWorkflow.ProjectCardOptions](#projen-github-githubworkflow-projectcardoptions)</code>)  Runs your workflow anytime the project_card event occurs. __*Optional*__
+  * **projectColumn** (<code>[github.GithubWorkflow.ProjectColumnOptions](#projen-github-githubworkflow-projectcolumnoptions)</code>)  Runs your workflow anytime the project_column event occurs. __*Optional*__
+  * **public** (<code>[github.GithubWorkflow.PublicOptions](#projen-github-githubworkflow-publicoptions)</code>)  Runs your workflow anytime someone makes a private repository public, which triggers the public event. __*Optional*__
+  * **pullRequest** (<code>[github.GithubWorkflow.PullRequestOptions](#projen-github-githubworkflow-pullrequestoptions)</code>)  Runs your workflow anytime the pull_request event occurs. __*Optional*__
+  * **pullRequestReview** (<code>[github.GithubWorkflow.PullRequestReviewOptions](#projen-github-githubworkflow-pullrequestreviewoptions)</code>)  Runs your workflow anytime the pull_request_review event occurs. __*Optional*__
+  * **pullRequestReviewComment** (<code>[github.GithubWorkflow.PullRequestReviewCommentOptions](#projen-github-githubworkflow-pullrequestreviewcommentoptions)</code>)  Runs your workflow anytime a comment on a pull request's unified diff is modified, which triggers the pull_request_review_comment event. __*Optional*__
+  * **pullRequestTarget** (<code>[github.GithubWorkflow.PullRequestTargetOptions](#projen-github-githubworkflow-pullrequesttargetoptions)</code>)  This event runs in the context of the base of the pull request, rather than in the merge commit as the pull_request event does. __*Optional*__
+  * **push** (<code>[github.GithubWorkflow.PushOptions](#projen-github-githubworkflow-pushoptions)</code>)  Runs your workflow when someone pushes to a repository branch, which triggers the push event. __*Optional*__
+  * **registryPackage** (<code>[github.GithubWorkflow.RegistryPackageOptions](#projen-github-githubworkflow-registrypackageoptions)</code>)  Runs your workflow anytime a package is published or updated. __*Optional*__
+  * **release** (<code>[github.GithubWorkflow.ReleaseOptions](#projen-github-githubworkflow-releaseoptions)</code>)  Runs your workflow anytime the release event occurs. __*Optional*__
+  * **repositoryDispatch** (<code>[github.GithubWorkflow.RepositoryDispatchOptions](#projen-github-githubworkflow-repositorydispatchoptions)</code>)  You can use the GitHub API to trigger a webhook event called repository_dispatch when you want to trigger a workflow for activity that happens outside of GitHub. __*Optional*__
+  * **schedule** (<code>Array<[github.GithubWorkflow.CronScheduleOptions](#projen-github-githubworkflow-cronscheduleoptions)></code>)  You can schedule a workflow to run at specific UTC times using POSIX cron syntax. __*Optional*__
+  * **status** (<code>[github.GithubWorkflow.StatusOptions](#projen-github-githubworkflow-statusoptions)</code>)  Runs your workflow anytime the status of a Git commit changes, which triggers the status event. __*Optional*__
+  * **watch** (<code>[github.GithubWorkflow.WatchOptions](#projen-github-githubworkflow-watchoptions)</code>)  Runs your workflow anytime the watch event occurs. __*Optional*__
+  * **workflowDispatch** (<code>[github.GithubWorkflow.WorkflowDispatchOptions](#projen-github-githubworkflow-workflowdispatchoptions)</code>)  You can configure custom-defined input properties, default input values, and required inputs for the event directly in your workflow. __*Optional*__
+  * **workflowRun** (<code>[github.GithubWorkflow.WorkflowRunOptions](#projen-github-githubworkflow-workflowrunoptions)</code>)  This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow. __*Optional*__
 
 
 
@@ -9330,6 +9402,555 @@ Name | Type | Description
 
 
 
+## struct CheckRunOptions 🔹 <a id="projen-github-githubworkflow-checkrunoptions"></a>
+
+
+Check run options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct CheckSuiteOptions 🔹 <a id="projen-github-githubworkflow-checksuiteoptions"></a>
+
+
+Check suite options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct ContainerCredentials 🔹 <a id="projen-github-githubworkflow-containercredentials"></a>
+
+
+Credentials to use to authenticate to Docker registries.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**password**🔹 | <code>string</code> | The password.
+**username**🔹 | <code>string</code> | The username.
+
+
+
+## struct ContainerOptions 🔹 <a id="projen-github-githubworkflow-containeroptions"></a>
+
+
+Options petaining to container environments.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | The Docker image to use as the container to run the action.
+**credentials**?🔹 | <code>[github.GithubWorkflow.ContainerCredentials](#projen-github-githubworkflow-containercredentials)</code> | f the image's container registry requires authentication to pull the image, you can use credentials to set a map of the username and password.<br/>__*Optional*__
+**env**?🔹 | <code>Map<string, string></code> | Sets a map of environment variables in the container.<br/>__*Optional*__
+**options**?🔹 | <code>Array<string></code> | Additional Docker container resource options.<br/>__*Optional*__
+**ports**?🔹 | <code>Array<number></code> | Sets an array of ports to expose on the container.<br/>__*Optional*__
+**volumes**?🔹 | <code>Array<string></code> | Sets an array of volumes for the container to use.<br/>__*Optional*__
+
+
+
+## struct CreateOptions 🔹 <a id="projen-github-githubworkflow-createoptions"></a>
+
+
+The Create event accepts no options.
+
+
+## struct CronScheduleOptions 🔹 <a id="projen-github-githubworkflow-cronscheduleoptions"></a>
+
+
+CRON schedule options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cron**🔹 | <code>string</code> | <span></span>
+
+
+
+## struct DeleteOptions 🔹 <a id="projen-github-githubworkflow-deleteoptions"></a>
+
+
+The Delete event accepts no options.
+
+
+## struct DeploymentOptions 🔹 <a id="projen-github-githubworkflow-deploymentoptions"></a>
+
+
+The Deployment event accepts no options.
+
+
+## struct DeploymentStatusOptions 🔹 <a id="projen-github-githubworkflow-deploymentstatusoptions"></a>
+
+
+The Deployment status event accepts no options.
+
+
+## struct ForkOptions 🔹 <a id="projen-github-githubworkflow-forkoptions"></a>
+
+
+The Fork event accepts no options.
+
+
+## struct GollumOptions 🔹 <a id="projen-github-githubworkflow-gollumoptions"></a>
+
+
+The Gollum event accepts no options.
+
+
+## struct IssueCommentOptions 🔹 <a id="projen-github-githubworkflow-issuecommentoptions"></a>
+
+
+Issue comment options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct IssuesOptions 🔹 <a id="projen-github-githubworkflow-issuesoptions"></a>
+
+
+Issues options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct Job 🔹 <a id="projen-github-githubworkflow-job"></a>
+
+
+A GitHub Workflow job definition.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**runsOn**🔹 | <code>string</code> | The type of machine to run the job on.
+**steps**🔹 | <code>Array<[github.GithubWorkflow.JobStep](#projen-github-githubworkflow-jobstep)></code> | A job contains a sequence of tasks called steps.
+**concurrency**?🔹 | <code>any</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Optional*__
+**container**?🔹 | <code>[github.GithubWorkflow.ContainerOptions](#projen-github-githubworkflow-containeroptions)</code> | A container to run any steps in a job that don't already specify a container.<br/>__*Optional*__
+**continueOnError**?🔹 | <code>boolean</code> | Prevents a workflow run from failing when a job fails.<br/>__*Optional*__
+**defaults**?🔹 | <code>[github.GithubWorkflow.JobDefaults](#projen-github-githubworkflow-jobdefaults)</code> | A map of default settings that will apply to all steps in the job.<br/>__*Optional*__
+**env**?🔹 | <code>Map<string, string></code> | A map of environment variables that are available to all steps in the job.<br/>__*Optional*__
+**environment**?🔹 | <code>any</code> | The environment that the job references.<br/>__*Optional*__
+**if**?🔹 | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The name of the job displayed on GitHub.<br/>__*Optional*__
+**needs**?🔹 | <code>Array<string></code> | Identifies any jobs that must complete successfully before this job will run.<br/>__*Optional*__
+**outputs**?🔹 | <code>Map<string, [github.GithubWorkflow.JobStepOutput](#projen-github-githubworkflow-jobstepoutput)></code> | A map of outputs for a job.<br/>__*Optional*__
+**permissions**?🔹 | <code>[github.GithubWorkflow.JobPermissions](#projen-github-githubworkflow-jobpermissions)</code> | You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access.<br/>__*Optional*__
+**services**?🔹 | <code>Map<string, [github.GithubWorkflow.ContainerOptions](#projen-github-githubworkflow-containeroptions)></code> | Used to host service containers for a job in a workflow.<br/>__*Optional*__
+**strategy**?🔹 | <code>[github.GithubWorkflow.JobStrategy](#projen-github-githubworkflow-jobstrategy)</code> | A strategy creates a build matrix for your jobs.<br/>__*Optional*__
+**timeoutMinutes**?🔹 | <code>number</code> | The maximum number of minutes to let a job run before GitHub automatically cancels it.<br/>__*Default*__: 360
+
+
+
+## struct JobDefaults 🔹 <a id="projen-github-githubworkflow-jobdefaults"></a>
+
+
+Default settings for all steps in the job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**run**?🔹 | <code>[github.GithubWorkflow.RunSettings](#projen-github-githubworkflow-runsettings)</code> | Default run settings.<br/>__*Optional*__
+
+
+
+## struct JobMatrix 🔹 <a id="projen-github-githubworkflow-jobmatrix"></a>
+
+
+A job matrix.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**domain**?🔹 | <code>Map<string, Array<string>></code> | Each option you define in the matrix has a key and value.<br/>__*Optional*__
+**exclude**?🔹 | <code>Array<Map<string, string>></code> | You can remove a specific configurations defined in the build matrix using the exclude option.<br/>__*Optional*__
+**include**?🔹 | <code>Array<Map<string, string>></code> | You can add additional configuration options to a build matrix job that already exists.<br/>__*Optional*__
+
+
+
+## struct JobPermissions 🔹 <a id="projen-github-githubworkflow-jobpermissions"></a>
+
+
+The available scopes and access values for workflow permissions.
+
+If you
+specify the access for any of these scopes, all those that are not
+specified are set to `JobPermission.NONE`, instead of the default behavior
+when none is specified.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**actions**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**checks**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**contents**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**deployments**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**issues**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**packages**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**pullRequests**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**repositoryProjects**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**securityEvents**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+**statuses**?🔹 | <code>[github.GithubWorkflow.JobPermission](#projen-github-githubworkflow-jobpermission)</code> | __*Optional*__
+
+
+
+## struct JobStep 🔹 <a id="projen-github-githubworkflow-jobstep"></a>
+
+
+A job step.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**continueOnError**?🔹 | <code>boolean</code> | Prevents a job from failing when a step fails.<br/>__*Optional*__
+**env**?🔹 | <code>Map<string, string></code> | Sets environment variables for steps to use in the runner environment.<br/>__*Optional*__
+**id**?🔹 | <code>string</code> | A unique identifier for the step.<br/>__*Optional*__
+**if**?🔹 | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | A name for your step to display on GitHub.<br/>__*Optional*__
+**run**?🔹 | <code>string</code> | Runs command-line programs using the operating system's shell.<br/>__*Optional*__
+**timeoutMinutes**?🔹 | <code>number</code> | The maximum number of minutes to run the step before killing the process.<br/>__*Optional*__
+**uses**?🔹 | <code>string</code> | Selects an action to run as part of a step in your job.<br/>__*Optional*__
+**with**?🔹 | <code>Map<string, string></code> | A map of the input parameters defined by the action.<br/>__*Optional*__
+
+
+
+## struct JobStepOutput 🔹 <a id="projen-github-githubworkflow-jobstepoutput"></a>
+
+
+An output binding for a job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**outputName**🔹 | <code>string</code> | The name of the job output that is being bound.
+**stepId**🔹 | <code>string</code> | The ID of the step that exposes the output.
+
+
+
+## struct JobStrategy 🔹 <a id="projen-github-githubworkflow-jobstrategy"></a>
+
+
+A strategy creates a build matrix for your jobs.
+
+You can define different
+variations to run each job in.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**failFast**?🔹 | <code>boolean</code> | When set to true, GitHub cancels all in-progress jobs if any matrix job fails.<br/>__*Optional*__
+**matrix**?🔹 | <code>[github.GithubWorkflow.JobMatrix](#projen-github-githubworkflow-jobmatrix)</code> | You can define a matrix of different job configurations.<br/>__*Optional*__
+**maxParallel**?🔹 | <code>number</code> | The maximum number of jobs that can run simultaneously when using a matrix job strategy.<br/>__*Optional*__
+
+
+
+## struct LabelOptions 🔹 <a id="projen-github-githubworkflow-labeloptions"></a>
+
+
+label options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct MilestoneOptions 🔹 <a id="projen-github-githubworkflow-milestoneoptions"></a>
+
+
+Milestone options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PageBuildOptions 🔹 <a id="projen-github-githubworkflow-pagebuildoptions"></a>
+
+
+The Page build event accepts no options.
+
+
+## struct ProjectCardOptions 🔹 <a id="projen-github-githubworkflow-projectcardoptions"></a>
+
+
+Project card options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct ProjectColumnOptions 🔹 <a id="projen-github-githubworkflow-projectcolumnoptions"></a>
+
+
+Probject column options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct ProjectOptions 🔹 <a id="projen-github-githubworkflow-projectoptions"></a>
+
+
+Project options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PublicOptions 🔹 <a id="projen-github-githubworkflow-publicoptions"></a>
+
+
+The Public event accepts no options.
+
+
+## struct PullRequestOptions 🔹 <a id="projen-github-githubworkflow-pullrequestoptions"></a>
+
+
+Pull request options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PullRequestReviewCommentOptions 🔹 <a id="projen-github-githubworkflow-pullrequestreviewcommentoptions"></a>
+
+
+Pull request review comment options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PullRequestReviewOptions 🔹 <a id="projen-github-githubworkflow-pullrequestreviewoptions"></a>
+
+
+Pull request review options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PullRequestTargetOptions 🔹 <a id="projen-github-githubworkflow-pullrequesttargetoptions"></a>
+
+
+Pull request target options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branches**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run on specific branches or tags.<br/>__*Optional*__
+**paths**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run when at least one file does not match paths-ignore or at least one modified file matches the configured paths.<br/>__*Optional*__
+**tags**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run on specific branches or tags.<br/>__*Optional*__
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct PushOptions 🔹 <a id="projen-github-githubworkflow-pushoptions"></a>
+
+
+Options for push-like events.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branches**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run on specific branches or tags.<br/>__*Optional*__
+**paths**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run when at least one file does not match paths-ignore or at least one modified file matches the configured paths.<br/>__*Optional*__
+**tags**?🔹 | <code>Array<string></code> | When using the push and pull_request events, you can configure a workflow to run on specific branches or tags.<br/>__*Optional*__
+
+
+
+## struct RegistryPackageOptions 🔹 <a id="projen-github-githubworkflow-registrypackageoptions"></a>
+
+
+Registry package options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct ReleaseOptions 🔹 <a id="projen-github-githubworkflow-releaseoptions"></a>
+
+
+Release options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct RepositoryDispatchOptions 🔹 <a id="projen-github-githubworkflow-repositorydispatchoptions"></a>
+
+
+Repository dispatch options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct RunSettings 🔹 <a id="projen-github-githubworkflow-runsettings"></a>
+
+
+Run settings for a job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**shell**?🔹 | <code>string</code> | Which shell to use for running the step.<br/>__*Optional*__
+**workingDirectory**?🔹 | <code>string</code> | Working directory to use when running the step.<br/>__*Optional*__
+
+
+
+## struct StatusOptions 🔹 <a id="projen-github-githubworkflow-statusoptions"></a>
+
+
+The Status event accepts no options.
+
+
+## struct Triggers 🔹 <a id="projen-github-githubworkflow-triggers"></a>
+
+
+The set of available triggers for GitHub Workflows.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**checkRun**?🔹 | <code>[github.GithubWorkflow.CheckRunOptions](#projen-github-githubworkflow-checkrunoptions)</code> | Runs your workflow anytime the check_run event occurs.<br/>__*Optional*__
+**checkSuite**?🔹 | <code>[github.GithubWorkflow.CheckSuiteOptions](#projen-github-githubworkflow-checksuiteoptions)</code> | Runs your workflow anytime the check_suite event occurs.<br/>__*Optional*__
+**create**?🔹 | <code>[github.GithubWorkflow.CreateOptions](#projen-github-githubworkflow-createoptions)</code> | Runs your workflow anytime someone creates a branch or tag, which triggers the create event.<br/>__*Optional*__
+**delete**?🔹 | <code>[github.GithubWorkflow.DeleteOptions](#projen-github-githubworkflow-deleteoptions)</code> | Runs your workflow anytime someone deletes a branch or tag, which triggers the delete event.<br/>__*Optional*__
+**deployment**?🔹 | <code>[github.GithubWorkflow.DeploymentOptions](#projen-github-githubworkflow-deploymentoptions)</code> | Runs your workflow anytime someone creates a deployment, which triggers the deployment event.<br/>__*Optional*__
+**deploymentStatus**?🔹 | <code>[github.GithubWorkflow.DeploymentStatusOptions](#projen-github-githubworkflow-deploymentstatusoptions)</code> | Runs your workflow anytime a third party provides a deployment status, which triggers the deployment_status event.<br/>__*Optional*__
+**fork**?🔹 | <code>[github.GithubWorkflow.ForkOptions](#projen-github-githubworkflow-forkoptions)</code> | Runs your workflow anytime when someone forks a repository, which triggers the fork event.<br/>__*Optional*__
+**gollum**?🔹 | <code>[github.GithubWorkflow.GollumOptions](#projen-github-githubworkflow-gollumoptions)</code> | Runs your workflow when someone creates or updates a Wiki page, which triggers the gollum event.<br/>__*Optional*__
+**issueComment**?🔹 | <code>[github.GithubWorkflow.IssueCommentOptions](#projen-github-githubworkflow-issuecommentoptions)</code> | Runs your workflow anytime the issue_comment event occurs.<br/>__*Optional*__
+**issues**?🔹 | <code>[github.GithubWorkflow.IssuesOptions](#projen-github-githubworkflow-issuesoptions)</code> | Runs your workflow anytime the issues event occurs.<br/>__*Optional*__
+**label**?🔹 | <code>[github.GithubWorkflow.LabelOptions](#projen-github-githubworkflow-labeloptions)</code> | Runs your workflow anytime the label event occurs.<br/>__*Optional*__
+**milestone**?🔹 | <code>[github.GithubWorkflow.MilestoneOptions](#projen-github-githubworkflow-milestoneoptions)</code> | Runs your workflow anytime the milestone event occurs.<br/>__*Optional*__
+**pageBuild**?🔹 | <code>[github.GithubWorkflow.PageBuildOptions](#projen-github-githubworkflow-pagebuildoptions)</code> | Runs your workflow anytime someone pushes to a GitHub Pages-enabled branch, which triggers the page_build event.<br/>__*Optional*__
+**project**?🔹 | <code>[github.GithubWorkflow.ProjectOptions](#projen-github-githubworkflow-projectoptions)</code> | Runs your workflow anytime the project event occurs.<br/>__*Optional*__
+**projectCard**?🔹 | <code>[github.GithubWorkflow.ProjectCardOptions](#projen-github-githubworkflow-projectcardoptions)</code> | Runs your workflow anytime the project_card event occurs.<br/>__*Optional*__
+**projectColumn**?🔹 | <code>[github.GithubWorkflow.ProjectColumnOptions](#projen-github-githubworkflow-projectcolumnoptions)</code> | Runs your workflow anytime the project_column event occurs.<br/>__*Optional*__
+**public**?🔹 | <code>[github.GithubWorkflow.PublicOptions](#projen-github-githubworkflow-publicoptions)</code> | Runs your workflow anytime someone makes a private repository public, which triggers the public event.<br/>__*Optional*__
+**pullRequest**?🔹 | <code>[github.GithubWorkflow.PullRequestOptions](#projen-github-githubworkflow-pullrequestoptions)</code> | Runs your workflow anytime the pull_request event occurs.<br/>__*Optional*__
+**pullRequestReview**?🔹 | <code>[github.GithubWorkflow.PullRequestReviewOptions](#projen-github-githubworkflow-pullrequestreviewoptions)</code> | Runs your workflow anytime the pull_request_review event occurs.<br/>__*Optional*__
+**pullRequestReviewComment**?🔹 | <code>[github.GithubWorkflow.PullRequestReviewCommentOptions](#projen-github-githubworkflow-pullrequestreviewcommentoptions)</code> | Runs your workflow anytime a comment on a pull request's unified diff is modified, which triggers the pull_request_review_comment event.<br/>__*Optional*__
+**pullRequestTarget**?🔹 | <code>[github.GithubWorkflow.PullRequestTargetOptions](#projen-github-githubworkflow-pullrequesttargetoptions)</code> | This event runs in the context of the base of the pull request, rather than in the merge commit as the pull_request event does.<br/>__*Optional*__
+**push**?🔹 | <code>[github.GithubWorkflow.PushOptions](#projen-github-githubworkflow-pushoptions)</code> | Runs your workflow when someone pushes to a repository branch, which triggers the push event.<br/>__*Optional*__
+**registryPackage**?🔹 | <code>[github.GithubWorkflow.RegistryPackageOptions](#projen-github-githubworkflow-registrypackageoptions)</code> | Runs your workflow anytime a package is published or updated.<br/>__*Optional*__
+**release**?🔹 | <code>[github.GithubWorkflow.ReleaseOptions](#projen-github-githubworkflow-releaseoptions)</code> | Runs your workflow anytime the release event occurs.<br/>__*Optional*__
+**repositoryDispatch**?🔹 | <code>[github.GithubWorkflow.RepositoryDispatchOptions](#projen-github-githubworkflow-repositorydispatchoptions)</code> | You can use the GitHub API to trigger a webhook event called repository_dispatch when you want to trigger a workflow for activity that happens outside of GitHub.<br/>__*Optional*__
+**schedule**?🔹 | <code>Array<[github.GithubWorkflow.CronScheduleOptions](#projen-github-githubworkflow-cronscheduleoptions)></code> | You can schedule a workflow to run at specific UTC times using POSIX cron syntax.<br/>__*Optional*__
+**status**?🔹 | <code>[github.GithubWorkflow.StatusOptions](#projen-github-githubworkflow-statusoptions)</code> | Runs your workflow anytime the status of a Git commit changes, which triggers the status event.<br/>__*Optional*__
+**watch**?🔹 | <code>[github.GithubWorkflow.WatchOptions](#projen-github-githubworkflow-watchoptions)</code> | Runs your workflow anytime the watch event occurs.<br/>__*Optional*__
+**workflowDispatch**?🔹 | <code>[github.GithubWorkflow.WorkflowDispatchOptions](#projen-github-githubworkflow-workflowdispatchoptions)</code> | You can configure custom-defined input properties, default input values, and required inputs for the event directly in your workflow.<br/>__*Optional*__
+**workflowRun**?🔹 | <code>[github.GithubWorkflow.WorkflowRunOptions](#projen-github-githubworkflow-workflowrunoptions)</code> | This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow.<br/>__*Optional*__
+
+
+
+## struct WatchOptions 🔹 <a id="projen-github-githubworkflow-watchoptions"></a>
+
+
+Watch options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
+## struct WorkflowDispatchOptions 🔹 <a id="projen-github-githubworkflow-workflowdispatchoptions"></a>
+
+
+The Workflow dispatch event accepts no options.
+
+
+## struct WorkflowRunOptions 🔹 <a id="projen-github-githubworkflow-workflowrunoptions"></a>
+
+
+Workflow run options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**types**?🔹 | <code>Array<string></code> | Which activity types to trigger on.<br/>__*Optional*__
+
+
+
 ## struct MergifyOptions 🔹 <a id="projen-github-mergifyoptions"></a>
 
 
@@ -10725,6 +11346,17 @@ Name | Description
 **DAILY** 🔹|Runs on every weekday, Monday to Friday.
 **WEEKLY** 🔹|Runs once each week.
 **MONTHLY** 🔹|Runs once each month.
+
+
+## enum JobPermission 🔹 <a id="projen-github-githubworkflow-jobpermission"></a>
+
+Access level for workflow permission scopes.
+
+Name | Description
+-----|-----
+**READ** 🔹|Read-only access.
+**WRITE** 🔹|Read-write access.
+**NONE** 🔹|No access at all.
 
 
 ## enum VersioningStrategy 🔹 <a id="projen-github-versioningstrategy"></a>
