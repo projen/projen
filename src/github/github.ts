@@ -91,6 +91,10 @@ class GitattributesFile extends FileBase {
       .sort(([l], [r]) => l.localeCompare(r));
 
     const maxLen = Math.max(...entries.map(([glob]) => glob.length));
-    return entries.map(([name, attributes]) => `${name.padEnd(maxLen, ' ')}\t${Array.from(attributes).join(' ')}`).join('\n');
+    return [
+      `# ${FileBase.PROJEN_MARKER}`,
+      '',
+      ...entries.map(([name, attributes]) => `${name.padEnd(maxLen, ' ')}\t${Array.from(attributes).join(' ')}`),
+    ].join('\n');
   }
 }
