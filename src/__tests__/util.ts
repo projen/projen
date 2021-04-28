@@ -44,7 +44,7 @@ export interface SynthOutput {
 }
 
 export function mkdtemp() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  return removeAtExit(fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-')));
 }
 
 export function synthSnapshot(project: Project): any {
@@ -106,4 +106,21 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
   }
 
   return output;
+}
+
+const cleanUpDirectories = new Set<string>();
+function removeAtExit(directory: string): string {
+  if (cleanUpDirectories.size === 0) {
+    process.once('exit', () => {
+      for (const dir of cleanUpDirectories) {
+        try {
+          fs.removeSync(dir);
+        } catch {
+          // IGNORE: It's unsafe to do much else during `exit`, unfortunately.
+        }
+      }
+    });
+  }
+  cleanUpDirectories.add(directory);
+  return directory;
 }

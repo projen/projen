@@ -137,6 +137,7 @@ const project = new AwsCdkConstructLibrary({
   // cdkDependenciesAsDeps: true,                                              /* If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`). */
   // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
   // cdkVersionPinning: false,                                                 /* Use pinned version instead of caret version for CDK. */
+  // constructsVersion: undefined,                                             /* Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:. */
 
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */

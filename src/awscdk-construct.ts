@@ -12,6 +12,20 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   readonly cdkVersion: string;
 
   /**
+   * Minimum target version of constructs being tested against. If not provided,
+   * the default value depends on the configured `cdkVersion`:
+   *
+   * - For CDK 1.x, the default is "3.2.27"
+   * - For CDK 2.x, the default is "10.0.0"
+   * - Otherwise, the default is "*"
+   *
+   * When the default behavior is used, the dependency on `constructs` will only
+   * be added as a `peerDependency`. Otherwise, a `devDependency` will also be
+   * added, set to the exact version configrued here.
+   */
+  readonly constructsVersion?: string;
+
+  /**
    * Use pinned version instead of caret version for CDK.
    *
    * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
@@ -141,7 +155,19 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
-    this.addPeerDeps('constructs@^3.2.27');
+    if (options.constructsVersion) {
+      this.addPeerDeps(`constructs@^${options.constructsVersion}`);
+      this.addDevDeps(`constructs@${options.constructsVersion}`);
+    } else if (options.cdkVersion.startsWith('1.')) {
+      // CDK 1.x is built on constructs 3.x
+      this.addPeerDeps('constructs@^3.2.27');
+    } else if (options.cdkVersion.startsWith('2.')) {
+      // CDK 2.x is built on constructs 10.x
+      this.addPeerDeps('constructs@^10.0.0');
+    } else {
+      // Otherwise, let the user manage which version they use
+      this.addPeerDeps('constructs');
+    }
 
     if (options.cdkAssert ?? true) {
       this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
