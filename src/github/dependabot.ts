@@ -166,7 +166,7 @@ export class Dependabot extends Component {
     });
 
     if (options.autoMerge ?? true) {
-      github.addMergifyRules({
+      github.mergify?.addRule({
         name: 'Merge pull requests from dependabot if CI passes',
         conditions: [
           'author=dependabot[bot]',

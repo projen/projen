@@ -15,6 +15,9 @@ const project = new AwsCdkTypeScriptApp({
   // context: undefined,                                                       /* Additional context to include in \`cdk.json\`. */
   // requireApproval: CdkApprovalLevel.BROADENING,                             /* To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -63,7 +66,6 @@ const project = new AwsCdkTypeScriptApp({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -139,6 +141,9 @@ const project = new AwsCdkConstructLibrary({
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
@@ -197,7 +202,6 @@ const project = new AwsCdkConstructLibrary({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -264,6 +268,9 @@ const project = new Cdk8sTypeScriptApp({
   // appEntrypoint: 'main.ts',                                                 /* The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default). */
   // cdk8sVersionPinning: false,                                               /* Use pinned version instead of caret version for CDK8s. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -312,7 +319,6 @@ const project = new Cdk8sTypeScriptApp({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -381,6 +387,9 @@ const project = new ConstructLibraryCdk8s({
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
@@ -439,7 +448,6 @@ const project = new ConstructLibraryCdk8s({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -503,6 +511,9 @@ const project = new java.JavaProject({
   name: 'my-project',
   version: '0.1.0',
 
+  /* GitHubOptions */
+  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
+
   /* JavaProjectOptions */
   // compileOptions: undefined,         /* Compile options. */
   // deps: [],                          /* List of runtime dependencies for this project. */
@@ -545,6 +556,9 @@ const project = new JsiiProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
@@ -604,7 +618,6 @@ const project = new JsiiProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -666,6 +679,9 @@ const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
   // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
@@ -722,7 +738,6 @@ const project = new web.NextJsProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -767,6 +782,9 @@ exports[`projen new nextjs-ts 1`] = `
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
@@ -820,7 +838,6 @@ const project = new web.NextJsTypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -882,6 +899,9 @@ const project = new NodeProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -930,7 +950,6 @@ const project = new NodeProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -975,6 +994,9 @@ exports[`projen new project 1`] = `
 const project = new Project({
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
+
   /* ProjectOptions */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
   // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
@@ -999,6 +1021,9 @@ const project = new python.PythonProject({
   moduleName: 'my_project',
   name: 'my-project',
   version: '0.1.0',
+
+  /* GitHubOptions */
+  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
 
   /* ProjectOptions */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
@@ -1041,6 +1066,9 @@ exports[`projen new react 1`] = `
 const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -1090,7 +1118,6 @@ const project = new web.ReactProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1140,6 +1167,9 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -1188,7 +1218,6 @@ const project = new web.ReactTypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1250,6 +1279,9 @@ const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -1298,7 +1330,6 @@ const project = new TypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1360,6 +1391,9 @@ const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -1408,7 +1442,6 @@ const project = new TypeScriptAppProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */

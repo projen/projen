@@ -172,13 +172,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * Adds mergify configuration.
-   *
-   * @default true
-   */
-  readonly mergify?: boolean;
-
-  /**
    * Options for mergify
    *
    * @default - default options
@@ -720,17 +713,17 @@ export class NodeProject extends Project {
       }
     }
 
-    if (options.mergify ?? true) {
+    if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         autoMergeLabel: options.mergifyAutoMergeLabel,
         buildJob: this.buildWorkflowJobId,
       });
 
       this.npmignore?.exclude('/.mergify.yml');
+    }
 
-      if (options.dependabot ?? true) {
-        this.github?.addDependabot(options.dependabotOptions);
-      }
+    if (options.dependabot ?? true) {
+      this.github?.addDependabot(options.dependabotOptions);
     }
 
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
