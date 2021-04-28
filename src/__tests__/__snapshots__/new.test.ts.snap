@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`projen new awscdk-app-ts 1`] = `
-"const { AwsCdkTypeScriptApp } = require('projen');
-
+Object {
+  ".projenrc.js": "const { AwsCdkTypeScriptApp } = require('projen');
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
@@ -73,6 +73,8 @@ const project = new AwsCdkTypeScriptApp({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -109,20 +111,21 @@ const project = new AwsCdkTypeScriptApp({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new awscdk-construct 1`] = `
-"const { AwsCdkConstructLibrary } = require('projen');
-
+Object {
+  ".projenrc.js": "const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
@@ -210,6 +213,8 @@ const project = new AwsCdkConstructLibrary({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -246,20 +251,21 @@ const project = new AwsCdkConstructLibrary({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new cdk8s-app-ts 1`] = `
-"const { Cdk8sTypeScriptApp } = require('projen');
-
+Object {
+  ".projenrc.js": "const { Cdk8sTypeScriptApp } = require('projen');
 const project = new Cdk8sTypeScriptApp({
   cdk8sVersion: '1.0.0-beta.10',
   defaultReleaseBranch: 'main',
@@ -327,6 +333,8 @@ const project = new Cdk8sTypeScriptApp({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -363,20 +371,21 @@ const project = new Cdk8sTypeScriptApp({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new cdk8s-construct 1`] = `
-"const { ConstructLibraryCdk8s } = require('projen');
-
+Object {
+  ".projenrc.js": "const { ConstructLibraryCdk8s } = require('projen');
 const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
@@ -456,6 +465,8 @@ const project = new ConstructLibraryCdk8s({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -492,65 +503,40 @@ const project = new ConstructLibraryCdk8s({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new java 1`] = `
-"const { java } = require('projen');
+Object {
+  "src/test/java/projenrc.java": "import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
 
-const project = new java.JavaProject({
-  artifactId: 'my-app',
-  groupId: 'org.acme',
-  name: 'my-project',
-  version: '0.1.0',
-
-  /* GitHubOptions */
-  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
-
-  /* JavaProjectOptions */
-  // compileOptions: undefined,         /* Compile options. */
-  // deps: [],                          /* List of runtime dependencies for this project. */
-  // distdir: 'dist/java',              /* Final artifact output directory. */
-  // junit: true,                       /* Include junit tests. */
-  // junitOptions: undefined,           /* junit options. */
-  // packagingOptions: undefined,       /* Packaging options. */
-  // projenrcJava: true,                /* Use projenrc in java. */
-  // projenrcJavaOptions: undefined,    /* Options related to projenrc in java. */
-  // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
-  // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
-  // testDeps: [],                      /* List of test dependencies for this project. */
-
-  /* PomOptions */
-  // description: undefined,            /* Description of a project is always good. */
-  // packaging: 'jar',                  /* Project packaging format. */
-  // url: undefined,                    /* The URL, like the name, is not required. */
-
-  /* ProjectOptions */
-  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                     /* Add a Gitpod development environment. */
-  // logging: {},                       /* Configure logging options such as verbosity. */
-  // outdir: '.',                       /* The root directory of the project. */
-  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // readme: undefined,                 /* The README setup. */
-});
-
-project.synth();
-"
+public class projenrc {
+    public static void main(String[] args) {
+        JavaProject project = new JavaProject(JavaProjectOptions.builder()
+            .artifactId(\\"my-app\\")
+            .groupId(\\"org.acme\\")
+            .name(\\"my-project\\")
+            .version(\\"0.1.0\\")
+            .build());
+        project.synth();
+    }
+}",
+}
 `;
 
 exports[`projen new jsii 1`] = `
-"const { JsiiProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { JsiiProject } = require('projen');
 const project = new JsiiProject({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
@@ -626,6 +612,8 @@ const project = new JsiiProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -662,20 +650,21 @@ const project = new JsiiProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new nextjs 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -746,6 +735,8 @@ const project = new web.NextJsProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -772,14 +763,13 @@ const project = new web.NextJsProject({
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new nextjs-ts 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -846,6 +836,8 @@ const project = new web.NextJsTypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -882,20 +874,21 @@ const project = new web.NextJsTypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new node 1`] = `
-"const { NodeProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { NodeProject } = require('projen');
 const project = new NodeProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -958,6 +951,8 @@ const project = new NodeProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -984,38 +979,15 @@ const project = new NodeProject({
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
-exports[`projen new project 1`] = `
-"const { Project } = require('projen');
-
-const project = new Project({
-  name: 'my-project',
-
-  /* GitHubOptions */
-  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
-
-  /* ProjectOptions */
-  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                     /* Add a Gitpod development environment. */
-  // logging: {},                       /* Configure logging options such as verbosity. */
-  // outdir: '.',                       /* The root directory of the project. */
-  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // readme: undefined,                 /* The README setup. */
-});
-
-project.synth();
-"
-`;
+exports[`projen new project 1`] = `Object {}`;
 
 exports[`projen new python 1`] = `
-"const { python } = require('projen');
-
+Object {
+  ".projenrc.js": "const { python } = require('projen');
 const project = new python.PythonProject({
   authorEmail: 'my@user.email.com',
   authorName: 'My User Name',
@@ -1056,14 +1028,13 @@ const project = new python.PythonProject({
   // venv: true,                        /* Use venv to manage a virtual environment for installing dependencies inside. */
   // venvOptions: undefined,            /* Venv options. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new react 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -1126,6 +1097,8 @@ const project = new web.ReactProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1156,14 +1129,13 @@ const project = new web.ReactProject({
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`public/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Source directory. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new react-ts 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -1226,6 +1198,8 @@ const project = new web.ReactTypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1262,20 +1236,21 @@ const project = new web.ReactTypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new typescript 1`] = `
-"const { TypeScriptProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { TypeScriptProject } = require('projen');
 const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -1338,6 +1313,8 @@ const project = new TypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1374,20 +1351,21 @@ const project = new TypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new typescript-app 1`] = `
-"const { TypeScriptAppProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { TypeScriptAppProject } = require('projen');
 const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
@@ -1450,6 +1428,8 @@ const project = new TypeScriptAppProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1486,13 +1466,14 @@ const project = new TypeScriptAppProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;

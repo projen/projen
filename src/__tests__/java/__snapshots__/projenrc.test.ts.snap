@@ -6,9 +6,7 @@ import org.projen.java.JavaProjectOptions;
 
 public class projenrc {
     public static void main(String[] args) {
-        JavaProject project = new JavaProject(JavaProjectOptions.builder()
-            .junit(false)
-            .build());
+        JavaProject project = new JavaProject();
         project.synth();
     }
 }"

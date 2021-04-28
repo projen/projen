@@ -87,7 +87,12 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   function watchLoop() {
     logging.info(`Watching for changes in ${workdir}...`);
     const watch = fs.watch(workdir, { recursive: true });
-    watch.on('change', () => {
+    watch.on('change', event => {
+      // we only care about "change" events
+      if (event !== 'change') {
+        return;
+      }
+
       process.stdout.write('\x1Bc'); // clear screen
       watch.close();
       trySynth()

@@ -1,6 +1,7 @@
 
 import { mkdirpSync } from 'fs-extra';
 import { JavaProject, JavaProjectOptions } from '../../java/java-project';
+import { renderProjenNewOptions } from '../../javascript/render-options';
 import { LogLevel } from '../../logger';
 import { mkdtemp, synthSnapshot } from '../util';
 
@@ -79,7 +80,7 @@ class TestJavaProject extends JavaProject {
     // using a subdirectory to ensure synthSnapshot can clean up the project safely
     mkdirpSync('project-dir');
 
-    super({
+    super(renderProjenNewOptions('projen.java.JavaProject', {
       ...options,
       // not using outdir: mkdtemp() since that will make snapshots non-deterministic
       outdir: './project-dir',
@@ -88,10 +89,9 @@ class TestJavaProject extends JavaProject {
       name: 'test-project',
       version: '1.0.0',
       logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.java.JavaProject',
       projenrcJavaOptions: {
         projenVersion: '^1.2.3',
       },
-    });
+    }));
   }
 }

@@ -41,3 +41,5 @@ export * as vscode from './vscode';
 export * as deps from './deps';
 export * as java from './java';
 export * as python from './python';
+export * as typescript from './typescript/index'; // <-- we also have typescript.ts
+export * as javascript from './javascript';
