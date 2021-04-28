@@ -3,6 +3,26 @@ import * as inventory from '../inventory';
 const PROJEN_NEW = '__new__';
 
 /**
+ * Choices for how to display commented out options.
+ */
+export enum ProjectOptionsVerbosity {
+  /**
+   * Display all possible options (grouped by which interface they belong to).
+   */
+  ALL = 'all',
+
+  /**
+   * Display only featured options, in alphabetical order.
+   */
+  FEATURED = 'featured',
+
+  /**
+   * Display no extra options.
+   */
+  NONE = 'none'
+}
+
+/**
  * Options for `renderProjectOptions`.
  */
 export interface RenderProjectOptions {
@@ -18,9 +38,9 @@ export interface RenderProjectOptions {
 
   /**
    * Include commented out options.
-   * @default false
+   * @default ProjectOptionsVerbosity.FEATURED
    */
-  readonly comments?: boolean;
+  readonly comments?: ProjectOptionsVerbosity;
 
   /**
    * Inject a `__new__` attribute to the project constructor with a stringified
@@ -140,7 +160,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   }
 
   // render options without defaults
-  if (opts.comments) {
+  if (opts.comments === ProjectOptionsVerbosity.ALL) {
     for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
       result.push(`${tab}/* ${moduleName} */`);
       for (const option of options) {
@@ -148,6 +168,13 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
         result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
       }
       result.push('');
+    }
+  } else if (opts.comments === ProjectOptionsVerbosity.FEATURED) {
+    for (const option of opts.type.options) {
+      if (option.featured) {
+        const paramRender = renders[option.name];
+        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
+      }
     }
   }
   if (result[result.length - 1] === '') {

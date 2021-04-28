@@ -104,6 +104,7 @@ export interface NodePackageOptions {
    * for specifying these.
    *
    * @default true
+   * @featured
    */
   readonly allowLibraryDependencies?: boolean;
 

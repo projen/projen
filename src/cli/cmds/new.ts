@@ -5,7 +5,7 @@ import * as fs from 'fs-extra';
 import * as inquirer from 'inquirer';
 import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
-import { renderJavaScriptOptions } from '../../javascript/render-options';
+import { ProjectOptionsVerbosity, renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
 import { exec, execOrUndefined } from '../../util';
 import { tryProcessMacro } from '../macros';
@@ -106,7 +106,7 @@ interface CreateProjectOptions {
   /**
    * Should we render commented-out default options in .projerc.js file?
    */
-  comments: boolean;
+  comments: ProjectOptionsVerbosity;
 
   /**
    * Should we call `project.synth()` or instantiate the project (could still
@@ -149,7 +149,7 @@ function createProject(opts: CreateProjectOptions) {
   // generate the projenrc file.
   const js = renderJavaScriptOptions({
     bootstrap: true,
-    comments: false,
+    comments: ProjectOptionsVerbosity.NONE,
     type: opts.type,
     args: opts.params,
   });
