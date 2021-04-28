@@ -43,8 +43,29 @@ export interface SynthOutput {
   [filePath: string]: any;
 }
 
+const autoRemove = new Set<string>();
+
+// Hook to automatically remove temporary directories without needing each
+// place to actually handle this specifically.
+afterAll((done) => {
+  // Array.from used to get a copy, so we can safely remove from the set
+  for (const dir of Array.from(autoRemove)) {
+    try {
+      // Note - fs-extra.removeSync is idempotent, so we're safe if the
+      // directory has already been cleaned up before we get there!
+      fs.removeSync(dir);
+    } catch (e) {
+      done.fail(e);
+    }
+    autoRemove.delete(dir);
+  }
+  done();
+});
+
 export function mkdtemp() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  autoRemove.add(tmpdir);
+  return tmpdir;
 }
 
 export function synthSnapshot(project: Project): any {

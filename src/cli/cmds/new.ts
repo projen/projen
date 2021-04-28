@@ -435,15 +435,21 @@ function yarnAdd(baseDir: string, spec: string): string {
     const moduleName = spec.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
 
     const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
-    const copy = path.join(tmpdir, 'pkg.tgz');
-    fs.copyFileSync(spec, copy);
-    spec = copy;
+    try {
+      const copy = path.join(tmpdir, 'pkg.tgz');
+      fs.copyFileSync(spec, copy);
 
-    dependencyInfo = `${moduleName}@${spec}`;
+      spec = copy;
+
+      dependencyInfo = `${moduleName}@${spec}`;
+
+      logging.info(`installing external module ${spec}...`);
+      exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
+    } finally {
+      // Clean up after ourselves!
+      fs.removeSync(tmpdir);
+    }
   }
-
-  logging.info(`installing external module ${spec}...`);
-  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
 
   // if package.json did not exist before calling yarn add, we should remove it
   // so we can start off clean.

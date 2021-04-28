@@ -1498,6 +1498,17 @@ Array [
         "type": "boolean",
       },
       Object {
+        "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
+        "name": "constructsVersion",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "constructsVersion",
+        ],
+        "switch": "constructs-version",
+        "type": "string",
+      },
+      Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "name": "copyrightOwner",
