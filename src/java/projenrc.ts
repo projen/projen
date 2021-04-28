@@ -141,6 +141,8 @@ export class Projenrc extends Component {
 
     mkdirpSync(dirname(javaFile));
     writeFileSync(javaFile, lines.join('\n'));
+
+    this.project.logger.info(`Project definition file was created at ${javaFile}`);
   }
 }
 
