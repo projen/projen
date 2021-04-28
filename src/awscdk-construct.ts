@@ -16,7 +16,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * the default value depends on the configured `cdkVersion`:
    *
    * - For CDK 1.x, the default is "3.2.27"
-   * - For CDK 2.x, the default is "10.0.0"
+   * - For CDK 2.x, the default is "10.0.5"
    * - Otherwise, the default is "*"
    *
    * When the default behavior is used, the dependency on `constructs` will only
@@ -163,7 +163,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       this.addPeerDeps('constructs@^3.2.27');
     } else if (options.cdkVersion.startsWith('2.')) {
       // CDK 2.x is built on constructs 10.x
-      this.addPeerDeps('constructs@^10.0.0');
+      this.addPeerDeps('constructs@^10.0.5');
     } else {
       // Otherwise, let the user manage which version they use
       this.addPeerDeps('constructs');
