@@ -1,3 +1,4 @@
+import { Projenrc } from '../javascript';
 import { Project, ProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
 import { Poetry } from './poetry';
@@ -248,6 +249,10 @@ export class PythonProject extends Project {
     }
 
     this.addDefaultGitIgnore();
+
+    // python currently only supports projenrc in java (would be great to
+    // support .projenrc.py of course).
+    new Projenrc(this);
   }
 
   /**

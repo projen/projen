@@ -7,6 +7,8 @@ import { FileBase } from './file';
 import { GitHub, GitHubOptions } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
+import * as inventory from './inventory';
+import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
@@ -81,12 +83,6 @@ export interface ProjectOptions extends GitHubOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
-
-  /**
-   * The JSII FQN (fully qualified name) of the project class.
-   * @default undefined
-   */
-  readonly jsiiFqn?: string;
 }
 
 /**
@@ -170,9 +166,11 @@ export class Project {
   public readonly logger: Logger;
 
   /**
-   * The JSII FQN of the project type (if known).
+   * The options used when this project is bootstrapped via `projen new`. It
+   * includes the original set of options passed to the CLI and also the JSII
+   * FQN of the project type.
    */
-  public readonly jsiiFqn?: string;
+  public readonly newProject?: NewProject;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -180,11 +178,7 @@ export class Project {
   private readonly excludeFromCleanup: string[];
 
   constructor(options: ProjectOptions) {
-    // https://github.com/aws/jsii/issues/2406
-    process.stdout.write = (...args: any) => process.stderr.write.apply(process.stderr, args);
-
-    this.jsiiFqn = options.jsiiFqn;
-    delete (options as any).jsiiFqn; // remove so it's not included in projenrc
+    this.newProject = resolveNewProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
@@ -458,4 +452,25 @@ export enum ProjectType {
    * be deployed or published for end-user consumption.
    */
   APP = 'app'
+}
+
+/**
+ * Information passed from `projen new` to the project object when the project
+ * is first created. It is used to generate projenrc files in various languages.
+ */
+export interface NewProject {
+  /**
+   * The JSII FQN of the project type.
+   */
+  readonly fqn: string;
+
+  /**
+   * Initial arguments passed to `projen new`.
+   */
+  readonly args: Record<string, any>;
+
+  /**
+   * Project metadata.
+   */
+  readonly type: inventory.ProjectType;
 }

@@ -892,6 +892,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "docgen": Object {
         "category": "20.release",
         "description": "Generate API.md from .jsii manifest",
@@ -1443,6 +1451,7 @@ project.synth();
       "clobber": "npx projen clobber",
       "compat": "npx projen compat",
       "compile": "npx projen compile",
+      "default": "npx projen default",
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
@@ -2057,6 +2066,14 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "cp src/_loadurl.js lib/",
+          },
+        ],
+      },
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
           },
         ],
       },
@@ -2737,6 +2754,7 @@ project.synth();
       "clobber": "npx projen clobber",
       "compat": "npx projen compat",
       "compile": "npx projen compile",
+      "default": "npx projen default",
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
@@ -3331,6 +3349,14 @@ junit.xml
         "steps": Array [
           Object {
             "exec": "tsc",
+          },
+        ],
+      },
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
           },
         ],
       },
@@ -3966,6 +3992,7 @@ project.synth();
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
+      "default": "npx projen default",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
@@ -4389,6 +4416,14 @@ junit.xml
         "description": "Only compile",
         "name": "compile",
       },
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "projen:upgrade": Object {
         "category": "30.maintain",
         "description": "upgrades projen to the latest version",
@@ -4744,6 +4779,7 @@ project.synth();
       "bump": "npx projen bump",
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
+      "default": "npx projen default",
       "projen": "npx projen",
       "projen:upgrade": "npx projen projen:upgrade",
       "start": "npx projen start",
