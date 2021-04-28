@@ -103,6 +103,14 @@ wheels/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "install": Object {
         "category": "00.build",
         "description": "Install and upgrade dependencies",
@@ -292,6 +300,14 @@ wheels/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "install": Object {
         "category": "00.build",
         "description": "Install and upgrade dependencies",
@@ -483,6 +499,14 @@ wheels/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "install": Object {
         "category": "00.build",
         "description": "Install and upgrade dependencies",
@@ -650,6 +674,14 @@ wheels/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
       "install": Object {
         "category": "00.build",
         "description": "Install and upgrade dependencies",

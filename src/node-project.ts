@@ -4,6 +4,7 @@ import { AutoMerge } from './github/auto-merge';
 import { DependabotOptions } from './github/dependabot';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
+import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
@@ -285,6 +286,20 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
+   * .projenrc.js generation.
+   *
+   * @default true
+   */
+  readonly projenrcJs?: boolean;
+
+  /**
+   * Options for .projenrc.js
+   * @default - default options
+   */
+  readonly projenrcJsOptions?: ProjenrcOptions;
 }
 
 /**
@@ -737,6 +752,11 @@ export class NodeProject extends Project {
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
+    }
+
+    const projenrcJs = options.projenrcJs ?? true;
+    if (projenrcJs) {
+      new Projenrc(this, options.projenrcJsOptions);
     }
   }
 
