@@ -4741,6 +4741,23 @@ addWorkflow(name: string): GithubWorkflow
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
 
+#### annotateGenerated(glob)🔹 <a id="projen-github-github-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
+
+
+
+
 
 
 ## class GithubWorkflow 🔹 <a id="projen-github-githubworkflow"></a>

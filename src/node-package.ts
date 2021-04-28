@@ -398,6 +398,10 @@ export class NodePackage extends Component {
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
+    if (this.packageManager === NodePackageManager.YARN) {
+      project.root.github?.annotateGenerated('/yarn.lock');
+    }
+
     const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
