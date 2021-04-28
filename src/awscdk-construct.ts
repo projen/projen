@@ -8,6 +8,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * Minimum target version this library is tested against.
    *
    * @default "1.95.2"
+   * @featured
    */
   readonly cdkVersion: string;
 
@@ -38,6 +39,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
    * require when consumed?
+   * @featured
    */
   readonly cdkDependencies?: string[];
 
@@ -62,6 +64,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
 
   /**
    * AWS CDK modules required for testing.
+   * @featured
    */
   readonly cdkTestDependencies?: string[];
 }

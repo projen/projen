@@ -23,6 +23,7 @@ export interface ProjectOptions extends GitHubOptions {
    * This is the name of your project.
    *
    * @default $BASEDIR
+   * @featured
    */
   readonly name: string;
 
@@ -75,6 +76,7 @@ export interface ProjectOptions extends GitHubOptions {
   /**
    * Which type of project this is (library/app).
    * @default ProjectType.UNKNOWN
+   * @featured
    */
   readonly projectType?: ProjectType;
 

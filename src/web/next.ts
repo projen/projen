@@ -21,6 +21,7 @@ export interface NextJsCommonProjectOptions {
    * @see https://tailwindcss.com/docs/installation
    *
    * @default true
+   * @featured
    */
   readonly tailwind?: boolean;
 }

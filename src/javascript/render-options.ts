@@ -171,7 +171,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     }
   } else if (opts.comments === ProjectOptionsVerbosity.FEATURED) {
     for (const option of opts.type.options) {
-      if (option.featured) {
+      if (option.featured && option.optional) {
         const paramRender = renders[option.name];
         result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
       }

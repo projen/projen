@@ -32,16 +32,19 @@ export interface PythonPackagingOptions {
    * Version of the package.
    *
    * @default "0.1.0"
+   * @featured
    */
   readonly version: string;
 
   /**
    * A short description of the package.
+   * @featured
    */
   readonly description?: string;
 
   /**
    * License of this package as an SPDX identifier.
+   * @featured
    */
   readonly license?: string;
 
