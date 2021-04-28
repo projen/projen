@@ -1,6 +1,7 @@
 import * as inventory from '../inventory';
 
 const PROJEN_NEW = '__new__';
+const TAB = makePadding(2);
 
 /**
  * Choices for how to display commented out options.
@@ -104,10 +105,8 @@ export function resolveNewProject(opts: any) {
  * while all other parameters are rendered as commented out.
  */
 export function renderJavaScriptOptions(opts: RenderProjectOptions) {
-  // preprocessing
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -116,21 +115,15 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     const optionName = option.name;
 
-    let paramRender;
     if (opts.args[optionName] !== undefined) {
       const value = opts.args[optionName];
       const js = JSON.stringify(value).replace(/^"(.+)"$/, '\'$1\'');
-      paramRender = `${optionName}: ${js},`;
+      renders[optionName] = `${optionName}: ${js},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      paramRender = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
-
-      const parentModule = option.parent;
-      optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
-      optionsByModule[parentModule].push(option);
+      renders[optionName] = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
     }
-    renders[optionName] = paramRender;
   }
 
   const bootstrap = opts.bootstrap ?? false;
@@ -139,49 +132,73 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     optionsWithDefaults.push(PROJEN_NEW);
   }
 
-  // alphabetize
-  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
-  optionsWithDefaults.sort();
-  for (const parentModule in optionsByModule) {
-    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
-  }
-
   // generate rendering
-  const tab = makePadding(2);
   const result: string[] = [];
   result.push('{');
 
   // render options with defaults
+  optionsWithDefaults.sort();
   for (const optionName of optionsWithDefaults) {
-    result.push(`${tab}${renders[optionName]}`);
+    result.push(`${TAB}${renders[optionName]}`);
   }
   if (result.length > 1) {
     result.push('');
   }
 
-  // render options without defaults
+  // render options without defaults as comments
   if (opts.comments === ProjectOptionsVerbosity.ALL) {
-    for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
-      result.push(`${tab}/* ${moduleName} */`);
-      for (const option of options) {
-        const paramRender = renders[option.name];
-        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
-      }
-      result.push('');
-    }
+    const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined);
+    result.push(...renderCommentedOptionsByModule(renders, options));
   } else if (opts.comments === ProjectOptionsVerbosity.FEATURED) {
-    for (const option of opts.type.options) {
-      if (option.featured && option.optional) {
-        const paramRender = renders[option.name];
-        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
-      }
-    }
+    const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined && opt.featured);
+    result.push(...renderCommentedOptionsInOrder(renders, options));
+  } else if (opts.comments === ProjectOptionsVerbosity.NONE) {
+    // don't render any extra options
   }
+
   if (result[result.length - 1] === '') {
     result.pop();
   }
   result.push('}');
   return result.join('\n');
+}
+
+function renderCommentedOptionsByModule(renders: Record<string, string>, options: inventory.ProjectOption[]) {
+  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
+
+  for (const option of options) {
+    const parentModule = option.parent;
+    optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
+    optionsByModule[parentModule].push(option);
+  }
+
+  for (const parentModule in optionsByModule) {
+    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
+  }
+
+  const result = [];
+  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  for (const [moduleName, optionGroup] of Object.entries(optionsByModule).sort()) {
+    result.push(`${TAB}/* ${moduleName} */`);
+    for (const option of optionGroup) {
+      const paramRender = renders[option.name];
+      const docstring = option.docs || 'No documentation found.';
+      result.push(`${TAB}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${docstring} */`);
+    }
+    result.push('');
+  }
+  return result;
+}
+
+function renderCommentedOptionsInOrder(renders: Record<string, string>, options: inventory.ProjectOption[]) {
+  const result = [];
+  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  for (const option of options) {
+    const paramRender = renders[option.name];
+    const docstring = option.docs || 'No documentation found.';
+    result.push(`${TAB}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${docstring} */`);
+  }
+  return result;
 }
 
 function makePadding(paddingLength: number): string {
