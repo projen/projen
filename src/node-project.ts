@@ -727,10 +727,10 @@ export class NodeProject extends Project {
       });
 
       this.npmignore?.exclude('/.mergify.yml');
-    }
 
-    if (options.dependabot ?? true) {
-      this.github?.addDependabot(options.dependabotOptions);
+      if (options.dependabot ?? true) {
+        this.github?.addDependabot(options.dependabotOptions);
+      }
     }
 
     const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
