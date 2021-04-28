@@ -583,10 +583,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -1863,10 +1863,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -3098,10 +3098,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -4308,10 +4308,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -5143,6 +5143,18 @@ Array [
         "type": "LoggerOptions",
       },
       Object {
+        "default": "true",
+        "docs": "Whether mergify should be enabled on this repository or not.",
+        "name": "mergify",
+        "optional": true,
+        "parent": "GitHubOptions",
+        "path": Array [
+          "mergify",
+        ],
+        "switch": "mergify",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -5901,10 +5913,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -7017,10 +7029,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -8113,10 +8125,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -9148,10 +9160,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -9738,6 +9750,18 @@ Array [
         "type": "LoggerOptions",
       },
       Object {
+        "default": "true",
+        "docs": "Whether mergify should be enabled on this repository or not.",
+        "name": "mergify",
+        "optional": true,
+        "parent": "GitHubOptions",
+        "path": Array [
+          "mergify",
+        ],
+        "switch": "mergify",
+        "type": "boolean",
+      },
+      Object {
         "default": "$BASEDIR",
         "docs": "This is the name of your project.",
         "name": "name",
@@ -9953,6 +9977,18 @@ Array [
         ],
         "switch": "logging",
         "type": "LoggerOptions",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether mergify should be enabled on this repository or not.",
+        "name": "mergify",
+        "optional": true,
+        "parent": "GitHubOptions",
+        "path": Array [
+          "mergify",
+        ],
+        "switch": "mergify",
+        "type": "boolean",
       },
       Object {
         "default": "$PYTHON_MODULE_NAME",
@@ -10584,10 +10620,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -11656,10 +11692,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -12775,10 +12811,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],
@@ -13894,10 +13930,10 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Adds mergify configuration.",
+        "docs": "Whether mergify should be enabled on this repository or not.",
         "name": "mergify",
         "optional": true,
-        "parent": "NodeProjectOptions",
+        "parent": "GitHubOptions",
         "path": Array [
           "mergify",
         ],

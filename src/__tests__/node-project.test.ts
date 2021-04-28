@@ -362,6 +362,21 @@ test('projen synth is only executed for subprojects', () => {
   });
 });
 
+test('enabling dependabot does not overturn mergify: false', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    dependabot: true,
+    mergify: false,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).not.toHaveProperty(['.mergify.yml']);
+  expect(snapshot).toHaveProperty(['.github/dependabot.yml']);
+});
+
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }

@@ -4,7 +4,7 @@ import { Clobber } from './clobber';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
-import { GitHub } from './github';
+import { GitHub, GitHubOptions } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import { JsonFile } from './json';
@@ -16,7 +16,7 @@ import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
-export interface ProjectOptions {
+export interface ProjectOptions extends GitHubOptions {
   /**
    * This is the name of your project.
    *
@@ -226,7 +226,7 @@ export class Project {
     this.logger = new Logger(this, options.logging);
 
     // we only allow these global services to be used in root projects
-    this.github = !this.parent ? new GitHub(this) : undefined;
+    this.github = !this.parent ? new GitHub(this, options) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
