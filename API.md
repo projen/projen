@@ -236,10 +236,10 @@ Name|Description
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [LogLevel](#projen-loglevel)|Logging verbosity.
+[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
-[OptionHints](#projen-optionhints)|Choices for how to display commented out options.
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
@@ -5286,7 +5286,7 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[OptionHints](#projen-optionhints)</code>)  Include commented out properties. __*Default*__: OptionHints.FEATURED
+  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Include commented out properties. __*Default*__: NewProjectOptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6231,7 +6231,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[OptionHints](#projen-optionhints)</code>)  Include commented out properties. __*Default*__: OptionHints.FEATURED
+  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Include commented out properties. __*Default*__: NewProjectOptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -9749,7 +9749,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[OptionHints](#projen-optionhints)</code> | Include commented out properties.<br/>__*Default*__: OptionHints.FEATURED
+**comments**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out properties.<br/>__*Default*__: NewProjectOptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
@@ -10169,7 +10169,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[OptionHints](#projen-optionhints)</code> | Include commented out properties.<br/>__*Default*__: OptionHints.FEATURED
+**comments**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out properties.<br/>__*Default*__: NewProjectOptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
@@ -10856,6 +10856,17 @@ Name | Description
 **VERBOSE** 🔹|
 
 
+## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
+
+Choices for how to display commented out options.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
+
+
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>
 
 The node package manager to use.
@@ -10885,17 +10896,6 @@ Name | Description
 -----|-----
 **PROJEN** 🔹|`package.json` scripts invoke to the projen CLI.
 **SHELL** 🔹|Task is implemented directly as a shell script within `package.json`.
-
-
-## enum OptionHints 🔹 <a id="projen-optionhints"></a>
-
-Choices for how to display commented out options.
-
-Name | Description
------|-----
-**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
-**FEATURED** 🔹|Display only featured options, in alphabetical order.
-**NONE** 🔹|Display no extra options.
 
 
 ## enum ProjectType 🔹 <a id="projen-projecttype"></a>

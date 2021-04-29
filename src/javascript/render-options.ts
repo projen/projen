@@ -1,5 +1,5 @@
 import * as inventory from '../inventory';
-import { OptionHints } from '../option-hints';
+import { NewProjectOptionHints } from '../option-hints';
 
 const PROJEN_NEW = '__new__';
 const TAB = makePadding(2);
@@ -20,9 +20,9 @@ export interface RenderProjectOptions {
 
   /**
    * Include commented out options.
-   * @default OptionHints.FEATURED
+   * @default NewProjectOptionHints.FEATURED
    */
-  readonly comments?: OptionHints;
+  readonly comments?: NewProjectOptionHints;
 
   /**
    * Inject a `__new__` attribute to the project constructor with a stringified
@@ -128,13 +128,13 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   }
 
   // render options without defaults as comments
-  if (opts.comments === OptionHints.ALL) {
+  if (opts.comments === NewProjectOptionHints.ALL) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined);
     result.push(...renderCommentedOptionsByModule(renders, options));
-  } else if (opts.comments === OptionHints.FEATURED) {
+  } else if (opts.comments === NewProjectOptionHints.FEATURED) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined && opt.featured);
     result.push(...renderCommentedOptionsInOrder(renders, options));
-  } else if (opts.comments === OptionHints.NONE) {
+  } else if (opts.comments === NewProjectOptionHints.NONE) {
     // don't render any extra options
   }
 
