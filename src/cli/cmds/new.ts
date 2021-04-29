@@ -267,7 +267,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   await newProject(baseDir, type, args, {
-    devDeps: JSON.stringify([specDependencyInfo]),
+    devDeps: [specDependencyInfo],
   });
 }
 
@@ -277,7 +277,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
+async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -329,22 +329,17 @@ function yarnAdd(baseDir: string, spec: string): string {
     // (e.g foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
     const moduleName = spec.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
 
-    const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
-    try {
-      const copy = path.join(tmpdir, 'pkg.tgz');
-      fs.copyFileSync(spec, copy);
+    const packageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
+    const copy = path.join(packageDir, 'pkg.tgz');
+    fs.copyFileSync(spec, copy);
 
-      spec = copy;
+    spec = copy;
 
-      dependencyInfo = `${moduleName}@${spec}`;
-
-      logging.info(`installing external module ${spec}...`);
-      exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
-    } finally {
-      // Clean up after ourselves!
-      fs.removeSync(tmpdir);
-    }
+    dependencyInfo = `${moduleName}@${spec}`;
   }
+
+  logging.info(`installing external module ${spec}...`);
+  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
 
   // if package.json did not exist before calling yarn add, we should remove it
   // so we can start off clean.

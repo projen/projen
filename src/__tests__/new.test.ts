@@ -40,6 +40,31 @@ test('post-synthesis option disabled', () => {
   expect(synthSnapshot(project)['.postsynth']).toBeUndefined();
 });
 
+test('projen new --from external', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    // execute `projen new --from cdk-appsync-project` in the project directory
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project']);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    expect(actual).toMatchSnapshot();
+    expect(actual['schema.graphql']).toBeDefined();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
   const projectdir = join(workdir, 'my-project');
