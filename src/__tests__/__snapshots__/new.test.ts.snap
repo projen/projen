@@ -8,16 +8,16 @@ const project = new AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // cdkDependencies: undefined,               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -34,17 +34,17 @@ const project = new AwsCdkConstructLibrary({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
-  // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // cdkDependencies: undefined,               /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
+  // cdkTestDependencies: undefined,           /* AWS CDK modules required for testing. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -58,15 +58,15 @@ const project = new Cdk8sTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -83,15 +83,15 @@ const project = new ConstructLibraryCdk8s({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -126,15 +126,15 @@ const project = new JsiiProject({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -147,15 +147,15 @@ const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tailwind: true,                           /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -168,16 +168,16 @@ const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tailwind: true,                                                           /* Setup Tailwind CSS as a PostCSS plugin. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tailwind: true,                           /* Setup Tailwind CSS as a PostCSS plugin. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -190,14 +190,14 @@ const project = new NodeProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
 });
 project.synth();",
 }
@@ -237,14 +237,14 @@ const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
 });
 project.synth();",
 }
@@ -257,15 +257,15 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -278,15 +278,15 @@ const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }
@@ -299,15 +299,15 @@ const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // deps: [],                                 /* Runtime dependencies of this module. */
+  // description: undefined,                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                              /* Build dependencies for this module. */
+  // license: 'Apache-2.0',                    /* License's SPDX identifier. */
+  // packageManager: NodePackageManager.YARN,  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                   /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,         /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // tsconfig: undefined,                      /* Custom TSConfig. */
 });
 project.synth();",
 }

@@ -290,7 +290,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     dir: baseDir,
     type,
     params: props,
-    comments: args.comments,
+    comments: args.comments ? ProjectOptionsVerbosity.FEATURED : ProjectOptionsVerbosity.NONE,
     synth: args.synth,
     post: args.post,
   });

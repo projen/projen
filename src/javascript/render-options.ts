@@ -177,7 +177,7 @@ function renderCommentedOptionsByModule(renders: Record<string, string>, options
   }
 
   const result = [];
-  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  const marginSize = Math.max(...options.map((opt) => renders[opt.name].length));
   for (const [moduleName, optionGroup] of Object.entries(optionsByModule).sort()) {
     result.push(`${TAB}/* ${moduleName} */`);
     for (const option of optionGroup) {
@@ -192,7 +192,7 @@ function renderCommentedOptionsByModule(renders: Record<string, string>, options
 
 function renderCommentedOptionsInOrder(renders: Record<string, string>, options: inventory.ProjectOption[]) {
   const result = [];
-  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
+  const marginSize = Math.max(...options.map((opt) => renders[opt.name].length));
   for (const option of options) {
     const paramRender = renders[option.name];
     const docstring = option.docs || 'No documentation found.';
