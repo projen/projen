@@ -247,7 +247,7 @@ Name|Description
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)|Choices for how to display commented out options.
+[javascript.OptionHints](#projen-javascript-optionhints)|Choices for how to display commented out options.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
@@ -5287,7 +5287,7 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
+  * **comments** (<code>[javascript.OptionHints](#projen-javascript-optionhints)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6232,7 +6232,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
+  * **comments** (<code>[javascript.OptionHints](#projen-javascript-optionhints)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -9750,7 +9750,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
+**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
@@ -9767,7 +9767,7 @@ Name | Type | Description
 **args**🔹 | <code>Map<string, any></code> | Project arguments as passed to `projen new`.
 **type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | The project type to render.
 **bootstrap**?🔹 | <code>boolean</code> | Inject a `__new__` attribute to the project constructor with a stringified version of the project parameters and a `jsiiFqn` attribute that includes the FQN of the project type.<br/>__*Default*__: false
-**comments**?🔹 | <code>[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)</code> | Include commented out options.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
+**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out options.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
 
 
 
@@ -10186,7 +10186,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[javascript.ProjectOptionsVerbosity](#projen-javascript-projectoptionsverbosity)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
+**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
@@ -10987,7 +10987,7 @@ Name | Description
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
 
 
-## enum ProjectOptionsVerbosity 🔹 <a id="projen-javascript-projectoptionsverbosity"></a>
+## enum OptionHints 🔹 <a id="projen-javascript-optionhints"></a>
 
 Choices for how to display commented out options.
 

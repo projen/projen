@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
-import { ProjectOptionsVerbosity, renderJavaScriptOptions } from '../javascript/render-options';
+import { OptionHints, renderJavaScriptOptions } from '../javascript/render-options';
 import { Project } from '../project';
 import { TypeScriptProject } from '../typescript';
 
@@ -16,7 +16,7 @@ export interface ProjenrcOptions {
    * Include commented out properties.
    * @default ProjectOptionsVerbosity.FEATURED
    */
-  readonly comments?: ProjectOptionsVerbosity;
+  readonly comments?: OptionHints;
 }
 
 /**
@@ -24,13 +24,13 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments?: ProjectOptionsVerbosity;
+  private readonly comments?: OptionHints;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.js';
-    this.comments = options.comments ?? ProjectOptionsVerbosity.FEATURED;
+    this.comments = options.comments ?? OptionHints.FEATURED;
 
     // this is the task projen executes when running `projen`
     project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });

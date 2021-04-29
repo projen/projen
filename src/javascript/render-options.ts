@@ -6,7 +6,7 @@ const TAB = makePadding(2);
 /**
  * Choices for how to display commented out options.
  */
-export enum ProjectOptionsVerbosity {
+export enum OptionHints {
   /**
    * Display all possible options (grouped by which interface they belong to).
    */
@@ -41,7 +41,7 @@ export interface RenderProjectOptions {
    * Include commented out options.
    * @default ProjectOptionsVerbosity.FEATURED
    */
-  readonly comments?: ProjectOptionsVerbosity;
+  readonly comments?: OptionHints;
 
   /**
    * Inject a `__new__` attribute to the project constructor with a stringified
@@ -146,13 +146,13 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   }
 
   // render options without defaults as comments
-  if (opts.comments === ProjectOptionsVerbosity.ALL) {
+  if (opts.comments === OptionHints.ALL) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined);
     result.push(...renderCommentedOptionsByModule(renders, options));
-  } else if (opts.comments === ProjectOptionsVerbosity.FEATURED) {
+  } else if (opts.comments === OptionHints.FEATURED) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined && opt.featured);
     result.push(...renderCommentedOptionsInOrder(renders, options));
-  } else if (opts.comments === ProjectOptionsVerbosity.NONE) {
+  } else if (opts.comments === OptionHints.NONE) {
     // don't render any extra options
   }
 

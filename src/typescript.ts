@@ -76,7 +76,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * Custom TSConfig
-   * @featured
    */
   readonly tsconfig?: TypescriptConfigOptions;
 

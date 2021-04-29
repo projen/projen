@@ -44,7 +44,6 @@ export interface PythonPackagingOptions {
 
   /**
    * License of this package as an SPDX identifier.
-   * @featured
    */
   readonly license?: string;
 

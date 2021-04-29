@@ -170,7 +170,6 @@ export interface NodePackageOptions {
    * The Node Package Manager used to execute scripts
    *
    * @default NodePackageManager.YARN
-   * @featured
    */
   readonly packageManager?: NodePackageManager;
 
@@ -236,7 +235,6 @@ export interface NodePackageOptions {
    * Use the `licensed` option if you want to no license to be specified.
    *
    * @default "Apache-2.0"
-   * @featured
    */
   readonly license?: string;
 

@@ -569,7 +569,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -829,7 +829,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -1263,7 +1263,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -2008,7 +2008,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -2268,7 +2268,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -2777,7 +2777,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -3386,7 +3386,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -3646,7 +3646,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -4067,7 +4067,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -4737,7 +4737,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -4997,7 +4997,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -5506,7 +5506,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -6504,7 +6504,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -6764,7 +6764,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -7273,7 +7273,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -7753,7 +7753,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -8000,7 +8000,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -8955,7 +8955,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -9215,7 +9215,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -9649,7 +9649,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -10116,7 +10116,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -10363,7 +10363,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -11032,7 +11032,7 @@ Array [
       },
       Object {
         "docs": "License of this package as an SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "PythonPackagingOptions",
@@ -11688,7 +11688,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -11935,7 +11935,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -12864,7 +12864,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -13124,7 +13124,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -13545,7 +13545,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -14116,7 +14116,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -14376,7 +14376,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -14797,7 +14797,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -15368,7 +15368,7 @@ Array [
       Object {
         "default": "\\"Apache-2.0\\"",
         "docs": "License's SPDX identifier.",
-        "featured": true,
+        "featured": false,
         "name": "license",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -15628,7 +15628,7 @@ Array [
       Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
-        "featured": true,
+        "featured": false,
         "name": "packageManager",
         "optional": true,
         "parent": "NodePackageOptions",
@@ -16049,7 +16049,7 @@ Array [
       },
       Object {
         "docs": "Custom TSConfig.",
-        "featured": true,
+        "featured": false,
         "name": "tsconfig",
         "optional": true,
         "parent": "TypeScriptProjectOptions",

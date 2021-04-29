@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
-import { ProjectOptionsVerbosity, renderJavaScriptOptions } from '../javascript/render-options';
+import { OptionHints, renderJavaScriptOptions } from '../javascript/render-options';
 import { TypeScriptProject } from '../typescript';
 
 export interface ProjenrcOptions {
@@ -15,7 +15,7 @@ export interface ProjenrcOptions {
    * Include commented out properties.
    * @default ProjectOptionsVerbosity.FEATURED
    */
-  readonly comments?: ProjectOptionsVerbosity;
+  readonly comments?: OptionHints;
 }
 
 /**
@@ -23,13 +23,13 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments: ProjectOptionsVerbosity;
+  private readonly comments: OptionHints;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.ts';
-    this.comments = options.comments ?? ProjectOptionsVerbosity.FEATURED;
+    this.comments = options.comments ?? OptionHints.FEATURED;
 
     // tell eslint to take .projenrc.ts into account as a dev-dependency
     project.eslint?.allowDevDeps(this.rcfile);
