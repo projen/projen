@@ -917,8 +917,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -1520,6 +1518,30 @@ Array [
         ],
         "switch": "code-cov-token-secret",
         "type": "string",
+      },
+      Object {
+        "default": "false",
+        "docs": "Enables Commitlint on project.",
+        "name": "commitlint",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlint",
+        ],
+        "switch": "commitlint",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Commit lint options.",
+        "name": "commitlintOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlintOptions",
+        ],
+        "switch": "commitlint-options",
+        "type": "CommitlintOptions",
       },
       Object {
         "default": "false",
@@ -2244,8 +2266,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -3539,8 +3559,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -4072,6 +4090,30 @@ Array [
         ],
         "switch": "code-cov-token-secret",
         "type": "string",
+      },
+      Object {
+        "default": "false",
+        "docs": "Enables Commitlint on project.",
+        "name": "commitlint",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlint",
+        ],
+        "switch": "commitlint",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Commit lint options.",
+        "name": "commitlintOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlintOptions",
+        ],
+        "switch": "commitlint-options",
+        "type": "CommitlintOptions",
       },
       Object {
         "default": "false",
@@ -4785,8 +4827,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -5705,6 +5745,30 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Enables Commitlint on project.",
+        "name": "commitlint",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlint",
+        ],
+        "switch": "commitlint",
+        "type": "boolean",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Commit lint options.",
+        "name": "commitlintOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "commitlintOptions",
+        ],
+        "switch": "commitlint-options",
+        "type": "CommitlintOptions",
+      },
+      Object {
+        "default": "false",
         "docs": "Automatically run API compatibility test against the latest version published to npm after compilation.",
         "name": "compat",
         "optional": true,
@@ -6415,8 +6479,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -8700,8 +8762,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -12331,8 +12391,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -13510,8 +13568,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",
@@ -14689,8 +14745,6 @@ Array [
         "type": "ProjenrcOptions",
       },
       Object {
-        "default": "false",
-        "docs": "Use TypeScript for your projenrc file (\`.projenrc.ts\`).",
         "name": "projenrcTs",
         "optional": true,
         "parent": "TypeScriptProjectOptions",

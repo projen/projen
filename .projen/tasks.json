@@ -146,14 +146,6 @@
         }
       ]
     },
-    "default": {
-      "name": "default",
-      "steps": [
-        {
-          "exec": "node .projenrc.js"
-        }
-      ]
-    },
     "watch": {
       "name": "watch",
       "category": "00.build",

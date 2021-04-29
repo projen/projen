@@ -131,7 +131,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   readonly commitlintOptions?: CommitlintOptions;
 
-   /* Use TypeScript for your projenrc file (`.projenrc.ts`).
+  /* Use TypeScript for your projenrc file (`.projenrc.ts`).
    *
    * @default false
    */
