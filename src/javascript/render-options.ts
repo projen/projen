@@ -1,27 +1,8 @@
 import * as inventory from '../inventory';
+import { OptionHints } from '../option-hints';
 
 const PROJEN_NEW = '__new__';
 const TAB = makePadding(2);
-
-/**
- * Choices for how to display commented out options.
- */
-export enum OptionHints {
-  /**
-   * Display all possible options (grouped by which interface they belong to).
-   */
-  ALL = 'all',
-
-  /**
-   * Display only featured options, in alphabetical order.
-   */
-  FEATURED = 'featured',
-
-  /**
-   * Display no extra options.
-   */
-  NONE = 'none'
-}
 
 /**
  * Options for `renderProjectOptions`.
@@ -39,7 +20,7 @@ export interface RenderProjectOptions {
 
   /**
    * Include commented out options.
-   * @default ProjectOptionsVerbosity.FEATURED
+   * @default OptionHints.FEATURED
    */
   readonly comments?: OptionHints;
 
@@ -107,6 +88,7 @@ export function resolveNewProject(opts: any) {
 export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
+  const useSingleQuotes = (str: string | undefined) => str?.replace(/"(.+)"/, '\'$1\'');
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -117,12 +99,12 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     if (opts.args[optionName] !== undefined) {
       const value = opts.args[optionName];
-      const js = JSON.stringify(value).replace(/^"(.+)"$/, '\'$1\'');
-      renders[optionName] = `${optionName}: ${js},`;
+      const js = JSON.stringify(value);
+      renders[optionName] = `${optionName}: ${useSingleQuotes(js)},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      renders[optionName] = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
+      renders[optionName] = `// ${optionName}: ${useSingleQuotes(defaultValue)},`;
     }
   }
 

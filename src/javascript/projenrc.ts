@@ -1,10 +1,10 @@
 import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
-import { OptionHints, renderJavaScriptOptions } from '../javascript/render-options';
+import { renderJavaScriptOptions } from '../javascript/render-options';
+import { OptionHints } from '../option-hints';
 import { Project } from '../project';
 import { TypeScriptProject } from '../typescript';
-
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.
@@ -14,7 +14,7 @@ export interface ProjenrcOptions {
 
   /**
    * Include commented out properties.
-   * @default ProjectOptionsVerbosity.FEATURED
+   * @default OptionHints.FEATURED
    */
   readonly comments?: OptionHints;
 }

@@ -175,7 +175,6 @@ Name|Description
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
-[javascript.RenderProjectOptions](#projen-javascript-renderprojectoptions)|Options for `renderProjectOptions`.
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
@@ -240,6 +239,7 @@ Name|Description
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
+[OptionHints](#projen-optionhints)|Choices for how to display commented out options.
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
@@ -247,7 +247,6 @@ Name|Description
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[javascript.OptionHints](#projen-javascript-optionhints)|Choices for how to display commented out options.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
@@ -5287,7 +5286,7 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[javascript.OptionHints](#projen-javascript-optionhints)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
+  * **comments** (<code>[OptionHints](#projen-optionhints)</code>)  Include commented out properties. __*Default*__: OptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6232,7 +6231,7 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[javascript.OptionHints](#projen-javascript-optionhints)</code>)  Include commented out properties. __*Default*__: ProjectOptionsVerbosity.FEATURED
+  * **comments** (<code>[OptionHints](#projen-optionhints)</code>)  Include commented out properties. __*Default*__: OptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -9750,24 +9749,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
+**comments**?🔹 | <code>[OptionHints](#projen-optionhints)</code> | Include commented out properties.<br/>__*Default*__: OptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
-
-
-
-## struct RenderProjectOptions 🔹 <a id="projen-javascript-renderprojectoptions"></a>
-
-
-Options for `renderProjectOptions`.
-
-
-
-Name | Type | Description 
------|------|-------------
-**args**🔹 | <code>Map<string, any></code> | Project arguments as passed to `projen new`.
-**type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | The project type to render.
-**bootstrap**?🔹 | <code>boolean</code> | Inject a `__new__` attribute to the project constructor with a stringified version of the project parameters and a `jsiiFqn` attribute that includes the FQN of the project type.<br/>__*Default*__: false
-**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out options.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
 
 
 
@@ -10186,7 +10169,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[javascript.OptionHints](#projen-javascript-optionhints)</code> | Include commented out properties.<br/>__*Default*__: ProjectOptionsVerbosity.FEATURED
+**comments**?🔹 | <code>[OptionHints](#projen-optionhints)</code> | Include commented out properties.<br/>__*Default*__: OptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
@@ -10904,6 +10887,17 @@ Name | Description
 **SHELL** 🔹|Task is implemented directly as a shell script within `package.json`.
 
 
+## enum OptionHints 🔹 <a id="projen-optionhints"></a>
+
+Choices for how to display commented out options.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
+
+
 ## enum ProjectType 🔹 <a id="projen-projecttype"></a>
 
 Which type of project this is.
@@ -10985,17 +10979,6 @@ Name | Description
 **WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
 **INCREASE** 🔹|Always increase the version requirement to match the new version.
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
-
-
-## enum OptionHints 🔹 <a id="projen-javascript-optionhints"></a>
-
-Choices for how to display commented out options.
-
-Name | Description
------|-----
-**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
-**FEATURED** 🔹|Display only featured options, in alphabetical order.
-**NONE** 🔹|Display no extra options.
 
 
 ## enum TaskCategory 🔹 <a id="projen-tasks-taskcategory"></a>

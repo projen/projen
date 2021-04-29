@@ -5,8 +5,9 @@ import * as fs from 'fs-extra';
 import * as inquirer from 'inquirer';
 import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
-import { OptionHints, renderJavaScriptOptions } from '../../javascript/render-options';
+import { renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
+import { OptionHints } from '../../option-hints';
 import { exec, execOrUndefined } from '../../util';
 import { tryProcessMacro } from '../macros';
 
