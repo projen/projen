@@ -9,6 +9,7 @@ import { SampleDir } from './sample-file';
 import { Task, TaskCategory } from './tasks';
 import { TextFile } from './textfile';
 import { TypedocDocgen } from './typescript-typedoc';
+import { Projenrc, ProjenrcOptions as ProjenrcTsOptions } from './typescript/projenrc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -129,6 +130,17 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    */
 
   readonly commitlintOptions?: CommitlintOptions;
+
+   /* Use TypeScript for your projenrc file (`.projenrc.ts`).
+   *
+   * @default false
+   */
+  readonly projenrcTs?: boolean;
+
+  /**
+   * Options for .projenrc.ts
+   */
+  readonly projenrcTsOptions?: ProjenrcTsOptions;
 }
 
 /**
@@ -140,6 +152,7 @@ export class TypeScriptProject extends NodeProject {
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
   public readonly commitlint?: Commitlint;
+  public readonly tsconfigEslint?: TypescriptConfig;
   public readonly tsconfig?: TypescriptConfig;
 
   /**
@@ -170,6 +183,10 @@ export class TypeScriptProject extends NodeProject {
   constructor(options: TypeScriptProjectOptions) {
     super({
       ...options,
+
+      // disable .projenrc.js if typescript is enabled
+      projenrcJs: options.projenrcTs ? false : options.projenrcJs,
+
       jestOptions: {
         ...options.jestOptions,
         jestConfig: {
@@ -388,7 +405,7 @@ export class TypeScriptProject extends NodeProject {
         compilerOptions: compilerOptionDefaults,
       };
 
-      new TypescriptConfig(this, mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+      this.tsconfigEslint = new TypescriptConfig(this, mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
     }
 
     const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
@@ -405,6 +422,11 @@ export class TypeScriptProject extends NodeProject {
 
     if (this.docgen) {
       new TypedocDocgen(this);
+    }
+
+    const projenrcTypeScript = options.projenrcTs ?? false;
+    if (projenrcTypeScript) {
+      new Projenrc(this, options.projenrcTsOptions);
     }
   }
 }
@@ -749,12 +771,20 @@ export class TypescriptConfig {
     this.file = new JsonFile(project, fileName, {
       obj: {
         compilerOptions: this.compilerOptions,
-        include: this.include,
-        exclude: this.exclude,
+        include: () => this.include,
+        exclude: () => this.exclude,
       },
     });
 
     project.npmignore?.exclude(`/${fileName}`);
+  }
+
+  public addInclude(pattern: string) {
+    this.include.push(pattern);
+  }
+
+  public addExclude(pattern: string) {
+    this.exclude.push(pattern);
   }
 }
 

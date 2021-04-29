@@ -558,6 +558,9 @@ export class Jest {
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
 
+    // Jest snapshot files are generated files!
+    project.root.github?.annotateGenerated('*.snap');
+
     const jestDep = options.jestVersion ? `jest@${options.jestVersion}` : 'jest';
     project.addDevDeps(jestDep);
 

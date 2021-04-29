@@ -14,20 +14,25 @@ export interface MergifyOptions {
 
 export class Mergify extends Component {
   private readonly rules = new Array<MergifyRule>();
+  // The actual YAML file will only be created if at least 1 rule is added.
+  private yamlFile?: YamlFile;
 
   constructor(github: GitHub, options: MergifyOptions = { }) {
     super(github.project);
 
-    new YamlFile(this.project, '.mergify.yml', {
-      obj: {
-        pull_request_rules: this.rules,
-      },
-    });
-
-    (options.rules ?? []).forEach(rule => this.addRule(rule));
+    for (const rule of options.rules ?? []) {
+      this.addRule(rule);
+    }
   }
 
   public addRule(rule: MergifyRule) {
     this.rules.push(rule);
+    if (this.yamlFile == null) {
+      this.yamlFile = new YamlFile(this.project, '.mergify.yml', {
+        obj: {
+          pull_request_rules: this.rules,
+        },
+      });
+    }
   }
 }
