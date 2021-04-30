@@ -184,6 +184,7 @@ describe('npm publishing options', () => {
     expect(npm.npmDistTag).toStrictEqual('latest');
     expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
     expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
+    expect(npm.npmTokenSecret).toStrictEqual('NPM_TOKEN');
 
     // since these are all defaults, publishConfig is not defined.
     expect(synthSnapshot(project)['package.json'].publishConfig).toBeUndefined();
@@ -226,6 +227,7 @@ describe('npm publishing options', () => {
       npmDistTag: 'next',
       npmRegistryUrl: 'https://foo.bar',
       npmAccess: NpmAccess.PUBLIC,
+      npmTokenSecret: 'GITHUB_TOKEN',
     });
 
     // THEN
@@ -233,6 +235,7 @@ describe('npm publishing options', () => {
     expect(npm.npmRegistry).toStrictEqual('foo.bar');
     expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(npm.npmTokenSecret).toStrictEqual('GITHUB_TOKEN');
     expect(packageJson(project).publishConfig).toStrictEqual({
       access: 'public',
       registry: 'https://foo.bar/',
@@ -357,6 +360,21 @@ test('projen synth is only executed for subprojects', () => {
     description: 'Full release build (test+compile)',
     name: 'build',
   });
+});
+
+test('enabling dependabot does not overturn mergify: false', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    dependabot: true,
+    mergify: false,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).not.toHaveProperty(['.mergify.yml']);
+  expect(snapshot).toHaveProperty(['.github/dependabot.yml']);
 });
 
 function packageJson(project: Project) {

@@ -60,7 +60,7 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
-    project.github?.addMergifyRules({
+    project.github?.mergify?.addRule({
       name: 'Automatic merge on approval and successful build',
       actions: mergeAction,
       conditions: [
@@ -73,7 +73,7 @@ export class AutoMerge extends Component {
     const autoMergeLabel = options.autoMergeLabel ?? 'auto-merge';;
     this.autoMergeLabel = autoMergeLabel;
     if (this.autoMergeLabel) {
-      project.github?.addMergifyRules({
+      project.github?.mergify?.addRule({
         name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
         actions: mergeAction,
         conditions: [

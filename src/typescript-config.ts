@@ -341,11 +341,19 @@ export class TypescriptConfig {
     this.file = new JsonFile(project, fileName, {
       obj: {
         compilerOptions: this.compilerOptions,
-        include: this.include,
-        exclude: this.exclude,
+        include: () => this.include,
+        exclude: () => this.exclude,
       },
     });
 
     project.npmignore?.exclude(`/${fileName}`);
+  }
+
+  public addInclude(pattern: string) {
+    this.include.push(pattern);
+  }
+
+  public addExclude(pattern: string) {
+    this.exclude.push(pattern);
   }
 }

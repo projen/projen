@@ -34,7 +34,6 @@ class TestPythonProject extends PythonProject {
       version: '0.1.0',
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
-      jsiiFqn: 'projen.python.PythonProject',
     });
   }
 }

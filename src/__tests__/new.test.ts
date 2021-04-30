@@ -2,10 +2,9 @@
 // and compare against a golden snapshot.
 import { execSync } from 'child_process';
 import { join } from 'path';
-import { mkdirSync, readFileSync, removeSync } from 'fs-extra';
-import { PROJEN_RC } from '../common';
+import { mkdirSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
-import { execProjenCLI, mkdtemp, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, mkdtemp, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
@@ -17,8 +16,12 @@ for (const type of inventory.discover()) {
       execProjenCLI(projectdir, ['new', '--no-synth', type.pjid]);
 
       // compare generated .projenrc.js to the snapshot
-      const projenrc = readFileSync(join(projectdir, PROJEN_RC), 'utf-8');
-      expect(projenrc).toMatchSnapshot();
+      const actual = directorySnapshot(projectdir, {
+        excludeGlobs: [
+          '.git/**',
+        ],
+      });
+      expect(actual).toMatchSnapshot();
     } finally {
       removeSync(outdir);
     }
@@ -35,6 +38,31 @@ test('post-synthesis option disabled', () => {
   const project = new TestProject();
 
   expect(synthSnapshot(project)['.postsynth']).toBeUndefined();
+});
+
+test('projen new --from external', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    // execute `projen new --from cdk-appsync-project` in the project directory
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project']);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    expect(actual).toMatchSnapshot();
+    expect(actual['schema.graphql']).toBeDefined();
+  } finally {
+    removeSync(outdir);
+  }
 });
 
 function createProjectDir(workdir: string) {

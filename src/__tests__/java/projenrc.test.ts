@@ -1,5 +1,6 @@
 import { Pom } from '../../java';
 import { Projenrc } from '../../java/projenrc';
+import { renderProjenNewOptions } from '../../javascript/render-options';
 import { synthSnapshot, TestProject } from '../util';
 
 test('projenrc.java support', () => {
@@ -60,9 +61,7 @@ test('set the class name', () => {
 
 test('generate projenrc in java', () => {
   // GIVEN
-  const project = new TestProject({
-    jsiiFqn: 'projen.java.JavaProject',
-  });
+  const project = new TestProject(renderProjenNewOptions('projen.java.JavaProject', {}));
   const pom = new Pom(project, {
     groupId: 'my.group.id',
     artifactId: 'hello-world',
@@ -70,11 +69,7 @@ test('generate projenrc in java', () => {
   });
 
   // WHEN
-  new Projenrc(project, pom, {
-    initializationOptions: {
-      junit: false,
-    },
-  });
+  new Projenrc(project, pom);
 
   // THEN
   expect(synthSnapshot(project)['src/test/java/projenrc.java']).toMatchSnapshot();

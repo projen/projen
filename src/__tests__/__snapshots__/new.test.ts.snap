@@ -1,12 +1,969 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`projen new awscdk-app-ts 1`] = `
-"const { AwsCdkTypeScriptApp } = require('projen');
+exports[`projen new --from external 1`] = `
+Object {
+  ".eslintrc.json": Object {
+    "env": Object {
+      "jest": true,
+      "node": true,
+    },
+    "extends": Array [
+      "plugin:import/typescript",
+    ],
+    "ignorePatterns": Array [
+      "*.js",
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": Object {
+      "ecmaVersion": 2018,
+      "project": "./tsconfig.jest.json",
+      "sourceType": "module",
+    },
+    "plugins": Array [
+      "@typescript-eslint",
+      "import",
+    ],
+    "root": true,
+    "rules": Object {
+      "@typescript-eslint/indent": Array [
+        "error",
+        2,
+      ],
+      "@typescript-eslint/member-delimiter-style": Array [
+        "error",
+      ],
+      "@typescript-eslint/member-ordering": Array [
+        "error",
+        Object {
+          "default": Array [
+            "public-static-field",
+            "public-static-method",
+            "protected-static-field",
+            "protected-static-method",
+            "private-static-field",
+            "private-static-method",
+            "field",
+            "constructor",
+            "method",
+          ],
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-require-imports": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-shadow": Array [
+        "error",
+      ],
+      "@typescript-eslint/return-await": Array [
+        "error",
+      ],
+      "array-bracket-newline": Array [
+        "error",
+        "consistent",
+      ],
+      "array-bracket-spacing": Array [
+        "error",
+        "never",
+      ],
+      "brace-style": Array [
+        "error",
+        "1tbs",
+        Object {
+          "allowSingleLine": true,
+        },
+      ],
+      "comma-dangle": Array [
+        "error",
+        "always-multiline",
+      ],
+      "comma-spacing": Array [
+        "error",
+        Object {
+          "after": true,
+          "before": false,
+        },
+      ],
+      "curly": Array [
+        "error",
+        "multi-line",
+        "consistent",
+      ],
+      "dot-notation": Array [
+        "error",
+      ],
+      "import/no-extraneous-dependencies": Array [
+        "error",
+        Object {
+          "devDependencies": Array [
+            "**/build-tools/**",
+            "**/test/**",
+          ],
+          "optionalDependencies": false,
+          "peerDependencies": true,
+        },
+      ],
+      "import/no-unresolved": Array [
+        "error",
+      ],
+      "import/order": Array [
+        "warn",
+        Object {
+          "alphabetize": Object {
+            "caseInsensitive": true,
+            "order": "asc",
+          },
+          "groups": Array [
+            "builtin",
+            "external",
+          ],
+        },
+      ],
+      "indent": Array [
+        "off",
+      ],
+      "key-spacing": Array [
+        "error",
+      ],
+      "keyword-spacing": Array [
+        "error",
+      ],
+      "max-len": Array [
+        "error",
+        Object {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+          "ignoreUrls": true,
+        },
+      ],
+      "no-bitwise": Array [
+        "error",
+      ],
+      "no-duplicate-imports": Array [
+        "error",
+      ],
+      "no-multi-spaces": Array [
+        "error",
+        Object {
+          "ignoreEOLComments": false,
+        },
+      ],
+      "no-multiple-empty-lines": Array [
+        "error",
+      ],
+      "no-return-await": Array [
+        "off",
+      ],
+      "no-shadow": Array [
+        "off",
+      ],
+      "no-trailing-spaces": Array [
+        "error",
+      ],
+      "object-curly-newline": Array [
+        "error",
+        Object {
+          "consistent": true,
+          "multiline": true,
+        },
+      ],
+      "object-curly-spacing": Array [
+        "error",
+        "always",
+      ],
+      "object-property-newline": Array [
+        "error",
+        Object {
+          "allowAllPropertiesOnSameLine": true,
+        },
+      ],
+      "quote-props": Array [
+        "error",
+        "consistent-as-needed",
+      ],
+      "quotes": Array [
+        "error",
+        "single",
+        Object {
+          "avoidEscape": true,
+        },
+      ],
+      "semi": Array [
+        "error",
+        "always",
+      ],
+      "space-before-blocks": Array [
+        "error",
+      ],
+    },
+    "settings": Object {
+      "import/parsers": Object {
+        "@typescript-eslint/parser": Array [
+          ".ts",
+          ".tsx",
+        ],
+      },
+      "import/resolver": Object {
+        "node": Object {},
+        "typescript": Object {
+          "directory": "./tsconfig.json",
+        },
+      },
+    },
+  },
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+# Directory for instrumented libs generated by jscoverage/JSCover
+lib-cov
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+# nyc test coverage
+.nyc_output
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+# Dependency directories
+node_modules/
+jspm_packages/
+# TypeScript cache
+*.tsbuildinfo
+# Optional eslint cache
+.eslintcache
+# Output of 'npm pack'
+*.tgz
+# Yarn Integrity file
+.yarn-integrity
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+# jest-junit artifacts
+/test-reports/
+junit.xml
+/coverage
+/lib
+/dist
+cdk.out/
+.cdk.staging/
+.parcel-cache/
+appsync/
+!/package.json
+!/.npmignore
+!/LICENSE
+!/.projenrc.js
+!version.json
+!/.versionrc.json
+!/test
+!/.github/workflows/build.yml
+!/.mergify.yml
+!/.github/dependabot.yml
+!/.github/pull_request_template.md
+!/tsconfig.json
+!/src
+!/tsconfig.jest.json
+!/.eslintrc.json
+!/cdk.json",
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
+pull_request_rules:
+  - name: Automatic merge on approval and successful build
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        strict: smart
+        strict_method: merge
+      delete_head_branch: {}
+    conditions:
+      - \\"#approved-reviews-by>=1\\"
+      - status-success=build
+  - name: Automatic merge PRs with auto-merge label upon successful build
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        strict: smart
+        strict_method: merge
+      delete_head_branch: {}
+    conditions:
+      - label=auto-merge
+      - status-success=build
+  - name: Merge pull requests from dependabot if CI passes
+    conditions:
+      - author=dependabot[bot]
+      - status-success=build
+    actions:
+      merge:
+        method: merge
+        commit_message: title+body
+",
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+/.projenrc.js
+/.versionrc.json
+/coverage
+/test
+/.mergify.yml
+/tsconfig.json
+/src
+dist
+/tsconfig.json
+/.github
+/.vscode
+/.idea
+/.projenrc.js
+/tsconfig.jest.json
+/.eslintrc.json
+cdk.out/
+.cdk.staging/
+appsync/
+!/lib
+!/lib/**/*.js
+!/lib/**/*.d.ts",
+  ".versionrc.json": Object {
+    "bumpFiles": Array [
+      Object {
+        "filename": "version.json",
+        "type": "json",
+      },
+    ],
+    "commitAll": true,
+    "packageFiles": Array [
+      Object {
+        "filename": "version.json",
+        "type": "json",
+      },
+    ],
+    "scripts": Object {
+      "postbump": "yarn run projen && git add .",
+    },
+  },
+  "LICENSE": "                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      \\"control\\" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      \\"Source\\" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      \\"Object\\" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      \\"Work\\" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      \\"Contribution\\" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+
+      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same \\"printed page\\" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright 2021 
+
+   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+",
+  "README.md": "# my project",
+  "cdk.json": Object {
+    "app": "npx ts-node --prefer-ts-exts src/main.ts",
+  },
+  "package.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "bin": Object {},
+    "bundledDependencies": Array [],
+    "dependencies": Object {
+      "@aws-cdk/assert": "^1.95.2",
+      "@aws-cdk/aws-appsync": "^1.95.2",
+      "@aws-cdk/aws-cognito": "^1.95.2",
+      "@aws-cdk/aws-dynamodb": "^1.95.2",
+      "@aws-cdk/core": "^1.95.2",
+      "aws-cdk-appsync-transformer": "^1.63.0-rc.3",
+    },
+    "devDependencies": Object {
+      "@types/jest": "^26.0.23",
+      "@types/node": "^10.17.0",
+      "@typescript-eslint/eslint-plugin": "^4.3.0",
+      "@typescript-eslint/parser": "^4.3.0",
+      "aws-cdk": "^1.95.2",
+      "cdk-appsync-project": "^1.0.4",
+      "eslint": "^7.25.0",
+      "eslint-import-resolver-node": "^0.3.4",
+      "eslint-import-resolver-typescript": "^2.4.0",
+      "eslint-plugin-import": "^2.22.1",
+      "jest": "^26.6.3",
+      "jest-junit": "^12",
+      "json-schema": "^0.3.0",
+      "projen": "^0.3.178",
+      "standard-version": "^9.0.0",
+      "ts-jest": "^26.5.5",
+      "ts-node": "^9.1.1",
+      "typescript": "^3.9.5",
+    },
+    "jest": Object {
+      "clearMocks": true,
+      "collectCoverage": true,
+      "coverageDirectory": "coverage",
+      "coveragePathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "globals": Object {
+        "ts-jest": Object {
+          "tsconfig": "tsconfig.jest.json",
+        },
+      },
+      "preset": "ts-jest",
+      "reporters": Array [
+        "default",
+        Array [
+          "jest-junit",
+          Object {
+            "outputDirectory": "test-reports",
+          },
+        ],
+      ],
+      "testMatch": Array [
+        "**/__tests__/**/*.ts?(x)",
+        "**/?(*.)+(spec|test).ts?(x)",
+      ],
+      "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+    },
+    "keywords": Array [],
+    "license": "Apache-2.0",
+    "name": "my-project",
+    "peerDependencies": Object {},
+    "scripts": Object {
+      "build": "yarn run test && yarn run compile && yarn run synth",
+      "bump": "yarn run --silent no-changes || standard-version",
+      "cdk": "cdk",
+      "compile": "true",
+      "deploy": "cdk deploy",
+      "destroy": "cdk destroy",
+      "diff": "cdk diff",
+      "eslint": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test",
+      "no-changes": "(git log --oneline -1 | grep -q \\"chore(release):\\") && echo \\"No changes to release.\\"",
+      "projen": "node .projenrc.js",
+      "projen:upgrade": "yarn upgrade -L projen && CI=\\"\\" yarn projen",
+      "release": "yarn run --silent no-changes || (yarn run bump && git push --follow-tags origin main)",
+      "start": "npx projen start -i",
+      "synth": "cdk synth",
+      "test": "rm -fr lib/ && jest --passWithNoTests --updateSnapshot && yarn run eslint",
+      "test:update": "jest --updateSnapshot",
+      "test:watch": "jest --watch",
+    },
+    "start": Object {
+      "build": Object {
+        "category": 0,
+        "command": "yarn run build",
+        "desc": "Full release build (test+compile)",
+      },
+      "bump": Object {
+        "category": 2,
+        "command": "yarn run bump",
+        "desc": "Commits a bump to the package version based on conventional commits",
+      },
+      "compile": Object {
+        "category": 0,
+        "command": "yarn run compile",
+        "desc": "Only compile",
+      },
+      "deploy": Object {
+        "category": 2,
+        "command": "yarn run deploy",
+        "desc": "Deploys your cdk app to the AWS cloud",
+      },
+      "destroy": Object {
+        "category": 2,
+        "command": "yarn run destroy",
+        "desc": "Destroys your cdk app in the AWS cloud",
+      },
+      "eslint": Object {
+        "category": 1,
+        "command": "yarn run eslint",
+        "desc": "Runs eslint against the codebase",
+      },
+      "projen": Object {
+        "category": 3,
+        "command": "yarn run projen",
+        "desc": "Synthesize project configuration from .projenrc.js",
+      },
+      "projen:upgrade": Object {
+        "category": 3,
+        "command": "yarn run projen:upgrade",
+        "desc": "upgrades projen to the latest version",
+      },
+      "release": Object {
+        "category": 2,
+        "command": "yarn run release",
+        "desc": "Bumps version & push to main",
+      },
+      "start": Object {
+        "command": "yarn run start",
+        "desc": "Shows this menu",
+      },
+      "synth": Object {
+        "category": 0,
+        "command": "yarn run synth",
+        "desc": "Synthesizes your cdk app into cdk.out (part of \\"yarn build\\")",
+      },
+      "test": Object {
+        "category": 1,
+        "command": "yarn run test",
+        "desc": "Run tests",
+      },
+      "test:watch": Object {
+        "category": 1,
+        "command": "yarn run test:watch",
+        "desc": "Run jest in watch mode",
+      },
+      "watch": Object {
+        "category": 0,
+        "command": "yarn run watch",
+        "desc": "Watch & compile in the background",
+      },
+    },
+    "version": "0.0.0",
+  },
+  "schema.graphql": "# This is a sample generated schema
+type Customer @model
+    @auth(rules: [
+        { allow: groups, groups: [\\"Admins\\"] },
+        { allow: private, provider: iam, operations: [read, update] }
+    ]) {
+        id: ID!
+        firstName: String!
+        lastName: String!
+        active: Boolean!
+        address: String!
+}
+
+type Product @model
+    @auth(rules: [
+        { allow: groups, groups: [\\"Admins\\"] },
+        { allow: public, provider: iam, operations: [read] }
+    ]) {
+        id: ID!
+        name: String!
+        description: String!
+        price: String!
+        active: Boolean!
+        added: AWSDateTime!
+        orders: [Order] @connection
+}
+
+type Order @model
+    @key(fields: [\\"id\\", \\"productID\\"]) {
+        id: ID!
+        productID: ID!
+        total: String!
+        ordered: AWSDateTime!
+}
+
+# Demonstrate the FUNCTION resolvers
+type User @model(queries: null, mutations: null, subscriptions: null)
+    @auth(rules: [
+        { allow: groups, groups: [\\"Admins\\"] },
+        { allow: owner, ownerField: \\"sub\\" },
+        { allow: private, provider: iam, operations: [create, update] }
+    ]) {
+    id: ID!
+    enabled: Boolean!
+    status: String!
+    email: String!
+    name: String!
+    email_verified: String
+    phone_number: String
+    phone_number_verified: String
+}
+
+type UserConnection {
+    items: [User]
+}
+
+input CreateUserInput {
+    email: String!
+    name: String!
+}
+
+input UpdateUserInput {
+    id: ID!
+    email: String
+    name: String
+    number: String
+}
+
+# Demonstrate the FUNCTION resolvers
+type Query {
+  listUsers: UserConnection @function(name: \\"currently-unused\\")
+  getUser(id: ID!): User @function(name: \\"currently-unused\\")
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User @function(name: \\"currently-unused\\")
+  updateUser(input: UpdateUserInput!): User @function(name: \\"currently-unused\\")
+}",
+  "src/main.ts": "import { App, Construct, Stack, StackProps } from '@aws-cdk/core';
+import { UserPool, UserPoolClient, VerificationEmailStyle } from '@aws-cdk/aws-cognito';
+import { AuthorizationType, UserPoolDefaultAction } from '@aws-cdk/aws-appsync';
+
+import { AppSyncTransformer } from 'aws-cdk-appsync-transformer';
+
+export class MyStack extends Stack {
+  public userPool: UserPool;
+  public api: AppSyncTransformer
+
+  constructor(scope: Construct, id: string, props: StackProps = {}) {
+    super(scope, id, props);
+
+    this.userPool = new UserPool(this, 'cognito', {
+      autoVerify: {
+        email: true,
+        phone: false
+      },
+      selfSignUpEnabled: true,
+      signInAliases: {
+        email: true
+      },
+      standardAttributes: {
+        email: {
+          mutable: true,
+          required: true
+        },
+      },
+      userVerification: {
+        emailSubject: 'Verify your email',
+        emailBody: 'Hello {username}! Your verification code is {####}',
+        emailStyle: VerificationEmailStyle.CODE,
+      }
+    });
+
+    const userpoolWebClient = new UserPoolClient(this, 'cognito-user-pool-client', {
+      userPool: this.userPool,
+      generateSecret: false,
+      authFlows: {
+        userPassword: true,
+        refreshToken: true
+      }
+    })
+
+    this.api = new AppSyncTransformer(this, 'appsync-api', {
+      schemaPath: './schema.graphql',
+      apiName: 'my-cool-api',
+      authorizationConfig: {
+        defaultAuthorization: {
+          authorizationType: AuthorizationType.USER_POOL,
+          userPoolConfig: {
+            userPool: this.userPool,
+            appIdClientRegex: userpoolWebClient.userPoolClientId,
+            defaultAction: UserPoolDefaultAction.ALLOW
+          }
+        }
+      }
+    })
+  }
+}
+
+// for development, use account/region from cdk cli
+const devEnv = {
+  account: process.env.CDK_DEFAULT_ACCOUNT,
+  region: process.env.CDK_DEFAULT_REGION,
+};
+
+const app = new App();
+
+new MyStack(app, 'my-stack-dev', { env: devEnv });
+// new MyStack(app, 'my-stack-prod', { env: prodEnv });
+
+app.synth();",
+  "test/main.test.ts": "import '@aws-cdk/assert/jest';
+import { MyStack } from '../src/main'
+import { App } from '@aws-cdk/core';
+
+test('Snapshot', () => {
+  const app = new App();
+  const stack = new MyStack(app, 'test');
+
+  expect(stack).toHaveResource('AWS::Cognito::UserPool');
+  expect(stack.api.nestedAppsyncStack).toHaveResource('AWS::AppSync::GraphQLApi');
+});",
+  "tsconfig.jest.json": Object {
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "resolveJsonModule": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [
+      "node_modules",
+    ],
+    "include": Array [
+      "src/**/*.ts",
+      "test/**/*.ts",
+    ],
+  },
+  "tsconfig.json": Object {
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "outDir": "lib",
+      "resolveJsonModule": true,
+      "rootDir": "src",
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [
+      "node_modules",
+      "lib",
+      "cdk.out",
+    ],
+    "include": Array [
+      "src/**/*.ts",
+    ],
+  },
+  "version.json": Object {
+    "version": "0.0.0",
+  },
+}
+`;
+
+exports[`projen new awscdk-app-ts 1`] = `
+Object {
+  ".projenrc.js": "const { AwsCdkTypeScriptApp } = require('projen');
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.AwsCdkTypeScriptApp\\",
   name: 'my-project',
 
   /* AwsCdkTypeScriptAppOptions */
@@ -16,6 +973,9 @@ const project = new AwsCdkTypeScriptApp({
   // context: undefined,                                                       /* Additional context to include in \`cdk.json\`. */
   // requireApproval: CdkApprovalLevel.BROADENING,                             /* To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
   // authorEmail: undefined,                                                   /* Author's e-mail. */
@@ -39,6 +999,7 @@ const project = new AwsCdkTypeScriptApp({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -63,7 +1024,6 @@ const project = new AwsCdkTypeScriptApp({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -71,6 +1031,8 @@ const project = new AwsCdkTypeScriptApp({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -107,26 +1069,26 @@ const project = new AwsCdkTypeScriptApp({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new awscdk-construct 1`] = `
-"const { AwsCdkConstructLibrary } = require('projen');
-
+Object {
+  ".projenrc.js": "const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.AwsCdkConstructLibrary\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
@@ -136,23 +1098,23 @@ const project = new AwsCdkConstructLibrary({
   // cdkDependenciesAsDeps: true,                                              /* If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`). */
   // cdkTestDependencies: undefined,                                           /* AWS CDK modules required for testing. */
   // cdkVersionPinning: false,                                                 /* Use pinned version instead of caret version for CDK. */
+  // constructsVersion: undefined,                                             /* Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:. */
 
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
-  // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // eslint: true,                                                             /* Install eslint. */
-  // eslintOptions: undefined,                                                 /* Eslint options. */
   // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
-  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -177,6 +1139,7 @@ const project = new AwsCdkConstructLibrary({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -201,7 +1164,6 @@ const project = new AwsCdkConstructLibrary({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -209,105 +1171,8 @@ const project = new AwsCdkConstructLibrary({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
-  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
-  // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
-  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
-  // projenVersion: undefined,                                                 /* Version of projen to install. */
-  // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
-  // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
-  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
-  // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
-  // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
-  // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
-  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
-  // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
-  // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
-  // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
-
-  /* ProjectOptions */
-  // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                                                            /* Add a Gitpod development environment. */
-  // logging: {},                                                              /* Configure logging options such as verbosity. */
-  // outdir: '.',                                                              /* The root directory of the project. */
-  // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
-  // readme: undefined,                                                        /* The README setup. */
-});
-
-project.synth();
-"
-`;
-
-exports[`projen new cdk8s-app-ts 1`] = `
-"const { Cdk8sTypeScriptApp } = require('projen');
-
-const project = new Cdk8sTypeScriptApp({
-  cdk8sVersion: '1.0.0-beta.10',
-  defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.Cdk8sTypeScriptApp\\",
-  name: 'my-project',
-
-  /* Cdk8sTypeScriptAppOptions */
-  // appEntrypoint: 'main.ts',                                                 /* The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default). */
-  // cdk8sVersionPinning: false,                                               /* Use pinned version instead of caret version for CDK8s. */
-
-  /* NodePackageOptions */
-  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
-  // authorEmail: undefined,                                                   /* Author's e-mail. */
-  // authorName: undefined,                                                    /* Author's name. */
-  // authorOrganization: undefined,                                            /* Author's Organization. */
-  // authorUrl: undefined,                                                     /* Author's URL / Website. */
-  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
-  // bin: undefined,                                                           /* Binary programs vended with your module. */
-  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
-  // deps: [],                                                                 /* Runtime dependencies of this module. */
-  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                                                              /* Build dependencies for this module. */
-  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
-  // homepage: undefined,                                                      /* Package's Homepage / Website. */
-  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
-  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
-  // licensed: true,                                                           /* Indicates if a license should be added. */
-  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
-  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
-  // npmAccess: undefined,                                                     /* Access level of the npm package. */
-  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
-  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
-  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
-  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
-  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
-  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
-  // peerDeps: [],                                                             /* Peer dependencies for this module. */
-  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
-  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
-  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
-  // scripts: {},                                                              /* npm scripts to include. */
-  // stability: undefined,                                                     /* Package's Stability. */
-
-  /* NodeProjectOptions */
-  // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
-  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
-  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
-  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
-  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
-  // copyrightOwner: undefined,                                                /* License copyright owner. */
-  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
-  // dependabot: true,                                                         /* Include dependabot configuration. */
-  // dependabotOptions: undefined,                                             /* Options for dependabot. */
-  // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
-  // jest: true,                                                               /* Setup jest unit tests. */
-  // jestOptions: undefined,                                                   /* Jest options. */
-  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
-  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
-  // mergifyOptions: undefined,                                                /* Options for mergify. */
-  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
-  // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
-  // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
-  // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
-  // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -344,45 +1209,164 @@ const project = new Cdk8sTypeScriptApp({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
+project.synth();",
+}
+`;
 
-project.synth();
-"
+exports[`projen new cdk8s-app-ts 1`] = `
+Object {
+  ".projenrc.js": "const { Cdk8sTypeScriptApp } = require('projen');
+const project = new Cdk8sTypeScriptApp({
+  cdk8sVersion: '1.0.0-beta.10',
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+
+  /* Cdk8sTypeScriptAppOptions */
+  // appEntrypoint: 'main.ts',                                                 /* The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default). */
+  // cdk8sVersionPinning: false,                                               /* Use pinned version instead of caret version for CDK8s. */
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
+  /* NodePackageOptions */
+  // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
+  // authorEmail: undefined,                                                   /* Author's e-mail. */
+  // authorName: undefined,                                                    /* Author's name. */
+  // authorOrganization: undefined,                                            /* Author's Organization. */
+  // authorUrl: undefined,                                                     /* Author's URL / Website. */
+  // autoDetectBin: true,                                                      /* Automatically add all executables under the \`bin\` directory to your \`package.json\` file under the \`bin\` section. */
+  // bin: undefined,                                                           /* Binary programs vended with your module. */
+  // bundledDeps: undefined,                                                   /* List of dependencies to bundle into this module. */
+  // deps: [],                                                                 /* Runtime dependencies of this module. */
+  // description: undefined,                                                   /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                                                              /* Build dependencies for this module. */
+  // entrypoint: 'lib/index.js',                                               /* Module entrypoint (\`main\` in \`package.json\`). */
+  // homepage: undefined,                                                      /* Package's Homepage / Website. */
+  // keywords: undefined,                                                      /* Keywords to include in \`package.json\`. */
+  // license: 'Apache-2.0',                                                    /* License's SPDX identifier. */
+  // licensed: true,                                                           /* Indicates if a license should be added. */
+  // maxNodeVersion: undefined,                                                /* Minimum node.js version to require via \`engines\` (inclusive). */
+  // minNodeVersion: undefined,                                                /* Minimum Node.js version to require via package.json \`engines\` (inclusive). */
+  // npmAccess: undefined,                                                     /* Access level of the npm package. */
+  // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
+  // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
+  // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
+  // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
+  // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
+  // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
+  // peerDeps: [],                                                             /* Peer dependencies for this module. */
+  // projenCommand: 'npx projen',                                              /* The shell command to use in order to run the projen CLI. */
+  // repository: undefined,                                                    /* The repository is the location where the actual code for your package lives. */
+  // repositoryDirectory: undefined,                                           /* If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. */
+  // scripts: {},                                                              /* npm scripts to include. */
+  // stability: undefined,                                                     /* Package's Stability. */
+
+  /* NodeProjectOptions */
+  // antitamper: true,                                                         /* Checks that after build there are no modified files on git. */
+  // artifactsDirectory: 'dist',                                               /* A directory which will contain artifacts to be published to npm. */
+  // buildWorkflow: undefined,                                                 /* Define a GitHub workflow for building PRs. */
+  // codeCov: false,                                                           /* Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. */
+  // codeCovTokenSecret: undefined,                                            /* Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. */
+  // copyrightOwner: undefined,                                                /* License copyright owner. */
+  // copyrightPeriod: undefined,                                               /* The copyright years to put in the LICENSE file. */
+  // dependabot: true,                                                         /* Include dependabot configuration. */
+  // dependabotOptions: undefined,                                             /* Options for dependabot. */
+  // gitignore: undefined,                                                     /* Additional entries to .gitignore. */
+  // jest: true,                                                               /* Setup jest unit tests. */
+  // jestOptions: undefined,                                                   /* Jest options. */
+  // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
+  // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
+  // mergifyOptions: undefined,                                                /* Options for mergify. */
+  // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
+  // npmignore: undefined,                                                     /* Additional entries to .npmignore. */
+  // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
+  // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
+  // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
+  // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
+  // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
+  // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
+  // projenVersion: undefined,                                                 /* Version of projen to install. */
+  // pullRequestTemplate: true,                                                /* Include a GitHub pull request template. */
+  // pullRequestTemplateContents: undefined,                                   /* The contents of the pull request template. */
+  // releaseBranches: [ 'main' ],                                              /* Branches which trigger a release. */
+  // releaseEveryCommit: true,                                                 /* Automatically release new versions every commit to one of branches in \`releaseBranches\`. */
+  // releaseSchedule: undefined,                                               /* CRON schedule to trigger new releases. */
+  // releaseToNpm: false,                                                      /* Automatically release to npm when new versions are introduced. */
+  // releaseWorkflow: undefined,                                               /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+  // releaseWorkflowSetupSteps: undefined,                                     /* A set of workflow steps to execute in order to setup the workflow container. */
+  // workflowBootstrapSteps: 'yarn install --frozen-lockfile && yarn projen',  /* Workflow steps to use in order to bootstrap this repo. */
+  // workflowContainerImage: undefined,                                        /* Container image to use for GitHub workflows. */
+  // workflowNodeVersion: undefined,                                           /* The node version to use in GitHub workflows. */
+
+  /* ProjectOptions */
+  // clobber: true,                                                            /* Add a \`clobber\` task which resets the repo to origin. */
+  // devContainer: false,                                                      /* Add a VSCode development environment (used for GitHub Codespaces). */
+  // gitpod: false,                                                            /* Add a Gitpod development environment. */
+  // logging: {},                                                              /* Configure logging options such as verbosity. */
+  // outdir: '.',                                                              /* The root directory of the project. */
+  // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
+  // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
+  // readme: undefined,                                                        /* The README setup. */
+
+  /* TypeScriptProjectOptions */
+  // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
+  // disableTsconfig: false,                                                   /* Do not generate a \`tsconfig.json\` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). */
+  // docgen: false,                                                            /* Docgen by Typedoc. */
+  // docsDirectory: 'docs',                                                    /* Docs directory. */
+  // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
+  // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
+  // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
+  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
+});
+project.synth();",
+}
 `;
 
 exports[`projen new cdk8s-construct 1`] = `
-"const { ConstructLibraryCdk8s } = require('projen');
-
+Object {
+  ".projenrc.js": "const { ConstructLibraryCdk8s } = require('projen');
 const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   cdk8sVersion: '1.0.0-beta.10',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.ConstructLibraryCdk8s\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
   /* ConstructLibraryOptions */
   // catalog: undefined,                                                       /* Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. */
 
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
+
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
-  // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // eslint: true,                                                             /* Install eslint. */
-  // eslintOptions: undefined,                                                 /* Eslint options. */
   // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
-  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -407,6 +1391,7 @@ const project = new ConstructLibraryCdk8s({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -431,7 +1416,6 @@ const project = new ConstructLibraryCdk8s({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -439,6 +1423,8 @@ const project = new ConstructLibraryCdk8s({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -464,79 +1450,70 @@ const project = new ConstructLibraryCdk8s({
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
-});
 
-project.synth();
-"
+  /* TypeScriptProjectOptions */
+  // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
+  // disableTsconfig: false,                                                   /* Do not generate a \`tsconfig.json\` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). */
+  // docgen: false,                                                            /* Docgen by Typedoc. */
+  // docsDirectory: 'docs',                                                    /* Docs directory. */
+  // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
+  // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
+  // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
+  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
+});
+project.synth();",
+}
 `;
 
 exports[`projen new java 1`] = `
-"const { java } = require('projen');
+Object {
+  "src/test/java/projenrc.java": "import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
 
-const project = new java.JavaProject({
-  artifactId: 'my-app',
-  groupId: 'org.acme',
-  jsiiFqn: \\"projen.java.JavaProject\\",
-  name: 'my-project',
-  version: '0.1.0',
-
-  /* JavaProjectOptions */
-  // compileOptions: undefined,         /* Compile options. */
-  // deps: [],                          /* List of runtime dependencies for this project. */
-  // distdir: 'dist/java',              /* Final artifact output directory. */
-  // junit: true,                       /* Include junit tests. */
-  // junitOptions: undefined,           /* junit options. */
-  // packagingOptions: undefined,       /* Packaging options. */
-  // projenrcJava: true,                /* Use projenrc in java. */
-  // projenrcJavaOptions: undefined,    /* Options related to projenrc in java. */
-  // sample: undefined,                 /* Include sample code and test if the relevant directories don't exist. */
-  // sampleJavaPackage: 'org.acme',     /* The java package to use for the code sample. */
-  // testDeps: [],                      /* List of test dependencies for this project. */
-
-  /* PomOptions */
-  // description: undefined,            /* Description of a project is always good. */
-  // packaging: 'jar',                  /* Project packaging format. */
-  // url: undefined,                    /* The URL, like the name, is not required. */
-
-  /* ProjectOptions */
-  // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,               /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                     /* Add a Gitpod development environment. */
-  // logging: {},                       /* Configure logging options such as verbosity. */
-  // outdir: '.',                       /* The root directory of the project. */
-  // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // readme: undefined,                 /* The README setup. */
-});
-
-project.synth();
-"
+public class projenrc {
+    public static void main(String[] args) {
+        JavaProject project = new JavaProject(JavaProjectOptions.builder()
+            .artifactId(\\"my-app\\")
+            .groupId(\\"org.acme\\")
+            .name(\\"my-project\\")
+            .version(\\"0.1.0\\")
+            .build());
+        project.synth();
+    }
+}",
+}
 `;
 
 exports[`projen new jsii 1`] = `
-"const { JsiiProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { JsiiProject } = require('projen');
 const project = new JsiiProject({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.JsiiProject\\",
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* JsiiProjectOptions */
   // compat: false,                                                            /* Automatically run API compatibility test against the latest version published to npm after compilation. */
   // compatIgnore: '.compatignore',                                            /* Name of the ignore file for API compatibility tests. */
-  // docgen: true,                                                             /* Automatically generate API.md from jsii. */
-  // eslint: true,                                                             /* Install eslint. */
-  // eslintOptions: undefined,                                                 /* Eslint options. */
   // excludeTypescript: undefined,                                             /* Accepts a list of glob patterns. */
   // publishToGo: undefined,                                                   /* Publish Go bindings to a git repository. */
   // publishToMaven: undefined,                                                /* Publish to maven. */
   // publishToNuget: undefined,                                                /* Publish to NuGet. */
   // publishToPypi: undefined,                                                 /* Publish to pypi. */
   // rootdir: '.',                                                             /* undefined */
-  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -561,6 +1538,7 @@ const project = new JsiiProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -585,7 +1563,6 @@ const project = new JsiiProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -593,6 +1570,8 @@ const project = new JsiiProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -618,19 +1597,38 @@ const project = new JsiiProject({
   // parent: undefined,                                                        /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
-});
 
-project.synth();
-"
+  /* TypeScriptProjectOptions */
+  // compileBeforeTest: undefined,                                             /* Compile the code before running tests. */
+  // disableTsconfig: false,                                                   /* Do not generate a \`tsconfig.json\` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). */
+  // docgen: false,                                                            /* Docgen by Typedoc. */
+  // docsDirectory: 'docs',                                                    /* Docs directory. */
+  // entrypointTypes: undefined,                                               /* The .d.ts file that includes the type declarations for this module. */
+  // eslint: true,                                                             /* Setup eslint. */
+  // eslintOptions: undefined,                                                 /* Eslint options. */
+  // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
+  // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
+  // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
+  // srcdir: 'src',                                                            /* Typescript sources directory. */
+  // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
+  // tsconfig: undefined,                                                      /* Custom TSConfig. */
+  // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
+});
+project.synth();",
+}
 `;
 
 exports[`projen new nextjs 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.NextJsProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
@@ -663,6 +1661,7 @@ const project = new web.NextJsProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -687,7 +1686,6 @@ const project = new web.NextJsProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -695,6 +1693,8 @@ const project = new web.NextJsProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -721,18 +1721,19 @@ const project = new web.NextJsProject({
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new nextjs-ts 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.NextJsTypeScriptProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NextJsCommonProjectOptions */
   // assetsdir: 'public',                                                      /* Assets directory. */
@@ -761,6 +1762,7 @@ const project = new web.NextJsTypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -785,7 +1787,6 @@ const project = new web.NextJsTypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -793,6 +1794,8 @@ const project = new web.NextJsTypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -829,24 +1832,27 @@ const project = new web.NextJsTypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new node 1`] = `
-"const { NodeProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { NodeProject } = require('projen');
 const project = new NodeProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.NodeProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -871,6 +1877,7 @@ const project = new NodeProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -895,7 +1902,6 @@ const project = new NodeProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -903,6 +1909,8 @@ const project = new NodeProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -929,17 +1937,24 @@ const project = new NodeProject({
   // projectType: ProjectType.UNKNOWN,                                         /* Which type of project this is (library/app). */
   // readme: undefined,                                                        /* The README setup. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
-exports[`projen new project 1`] = `
-"const { Project } = require('projen');
+exports[`projen new project 1`] = `Object {}`;
 
-const project = new Project({
-  jsiiFqn: \\"projen.Project\\",
+exports[`projen new python 1`] = `
+Object {
+  ".projenrc.js": "const { python } = require('projen');
+const project = new python.PythonProject({
+  authorEmail: 'my@user.email.com',
+  authorName: 'My User Name',
+  moduleName: 'my_project',
   name: 'my-project',
+  version: '0.1.0',
+
+  /* GitHubOptions */
+  // mergify: true,                     /* Whether mergify should be enabled on this repository or not. */
 
   /* ProjectOptions */
   // clobber: true,                     /* Add a \`clobber\` task which resets the repo to origin. */
@@ -950,65 +1965,40 @@ const project = new Project({
   // parent: undefined,                 /* The parent project, if this project is part of a bigger project. */
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
   // readme: undefined,                 /* The README setup. */
-});
-
-project.synth();
-"
-`;
-
-exports[`projen new python 1`] = `
-"const { python } = require('projen');
-
-const project = new python.PythonProject({
-  authorEmail: 'my@user.email.com',
-  authorName: 'My User Name',
-  jsiiFqn: \\"projen.python.PythonProject\\",
-  moduleName: 'my_project',
-  name: 'my-project',
-  version: '0.1.0',
-
-  /* ProjectOptions */
-  // clobber: true,                        /* Add a \`clobber\` task which resets the repo to origin. */
-  // devContainer: false,                  /* Add a VSCode development environment (used for GitHub Codespaces). */
-  // gitpod: false,                        /* Add a Gitpod development environment. */
-  // logging: {},                          /* Configure logging options such as verbosity. */
-  // outdir: '.',                          /* The root directory of the project. */
-  // parent: undefined,                    /* The parent project, if this project is part of a bigger project. */
-  // projectType: ProjectType.UNKNOWN,     /* Which type of project this is (library/app). */
-  // readme: undefined,                    /* The README setup. */
 
   /* PythonPackagingOptions */
-  // classifiers: undefined,               /* A list of PyPI trove classifiers that describe the project. */
-  // description: undefined,               /* A short description of the package. */
-  // homepage: undefined,                  /* A URL to the website of the project. */
-  // license: undefined,                   /* License of this package as an SPDX identifier. */
-  // poetryOptions: undefined,             /* Additional options to set for poetry if using poetry. */
-  // setupConfig: undefined,               /* Additional fields to pass in the setup() function if using setuptools. */
+  // classifiers: undefined,            /* A list of PyPI trove classifiers that describe the project. */
+  // description: undefined,            /* A short description of the package. */
+  // homepage: undefined,               /* A URL to the website of the project. */
+  // license: undefined,                /* License of this package as an SPDX identifier. */
+  // poetryOptions: undefined,          /* Additional options to set for poetry if using poetry. */
+  // setupConfig: undefined,            /* Additional fields to pass in the setup() function if using setuptools. */
 
   /* PythonProjectOptions */
-  // deps: [],                             /* List of runtime dependencies for this project. */
-  // devDeps: [],                          /* List of dev dependencies for this project. */
-  // pip: true,                            /* Use pip with a requirements.txt file to track project dependencies. */
-  // poetry: false,                        /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
-  // pytest: true,                         /* Include pytest tests. */
-  // pytestOptions: undefined,             /* pytest options. */
-  // sample: true,                         /* Include sample code and test if the relevant directories don't exist. */
-  // setuptools: undefined,                /* Use setuptools with a setup.py script for packaging and publishing. */
-  // venv: true,                           /* Use venv to manage a virtual environment for installing dependencies inside. */
-  // venvOptions: undefined,               /* Venv options. */
+  // deps: [],                          /* List of runtime dependencies for this project. */
+  // devDeps: [],                       /* List of dev dependencies for this project. */
+  // pip: true,                         /* Use pip with a requirements.txt file to track project dependencies. */
+  // poetry: false,                     /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
+  // pytest: true,                      /* Include pytest tests. */
+  // pytestOptions: undefined,          /* pytest options. */
+  // sample: true,                      /* Include sample code and test if the relevant directories don't exist. */
+  // setuptools: undefined,             /* Use setuptools with a setup.py script for packaging and publishing. */
+  // venv: true,                        /* Use venv to manage a virtual environment for installing dependencies inside. */
+  // venvOptions: undefined,            /* Venv options. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new react 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.ReactProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -1033,6 +2023,7 @@ const project = new web.ReactProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1057,7 +2048,6 @@ const project = new web.ReactProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1065,6 +2055,8 @@ const project = new web.ReactProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1095,18 +2087,19 @@ const project = new web.ReactProject({
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`public/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Source directory. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new react-ts 1`] = `
-"const { web } = require('projen');
-
+Object {
+  ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.web.ReactTypeScriptProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -1131,6 +2124,7 @@ const project = new web.ReactTypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1155,7 +2149,6 @@ const project = new web.ReactTypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1163,6 +2156,8 @@ const project = new web.ReactTypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1199,24 +2194,27 @@ const project = new web.ReactTypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new typescript 1`] = `
-"const { TypeScriptProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { TypeScriptProject } = require('projen');
 const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.TypeScriptProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -1241,6 +2239,7 @@ const project = new TypeScriptProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1265,7 +2264,6 @@ const project = new TypeScriptProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1273,6 +2271,8 @@ const project = new TypeScriptProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1309,24 +2309,27 @@ const project = new TypeScriptProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;
 
 exports[`projen new typescript-app 1`] = `
-"const { TypeScriptAppProject } = require('projen');
-
+Object {
+  ".projenrc.js": "const { TypeScriptAppProject } = require('projen');
 const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
-  jsiiFqn: \\"projen.TypeScriptAppProject\\",
   name: 'my-project',
+
+  /* GitHubOptions */
+  // mergify: true,                                                            /* Whether mergify should be enabled on this repository or not. */
 
   /* NodePackageOptions */
   // allowLibraryDependencies: true,                                           /* Allow the project to include \`peerDependencies\` and \`bundledDependencies\`. */
@@ -1351,6 +2354,7 @@ const project = new TypeScriptAppProject({
   // npmDistTag: 'latest',                                                     /* Tags can be used to provide an alias instead of version numbers. */
   // npmRegistryUrl: 'https://registry.npmjs.org',                             /* The base URL of the npm package registry. */
   // npmTaskExecution: NpmTaskExecution.PROJEN,                                /* Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz). */
+  // npmTokenSecret: 'NPM_TOKEN',                                              /* GitHub secret which contains the NPM token to use when publishing packages. */
   // packageManager: NodePackageManager.YARN,                                  /* The Node Package Manager used to execute scripts. */
   // packageName: undefined,                                                   /* The \\"name\\" in package.json. */
   // peerDependencyOptions: undefined,                                         /* Options for \`peerDeps\`. */
@@ -1375,7 +2379,6 @@ const project = new TypeScriptAppProject({
   // jest: true,                                                               /* Setup jest unit tests. */
   // jestOptions: undefined,                                                   /* Jest options. */
   // jsiiReleaseVersion: 'latest',                                             /* Version requirement of \`jsii-release\` which is used to publish modules to npm. */
-  // mergify: true,                                                            /* Adds mergify configuration. */
   // mergifyAutoMergeLabel: 'auto-merge',                                      /* Automatically merge PRs that build successfully and have this label. */
   // mergifyOptions: undefined,                                                /* Options for mergify. */
   // mutableBuild: true,                                                       /* Automatically update files modified during builds to pull-request branches. */
@@ -1383,6 +2386,8 @@ const project = new TypeScriptAppProject({
   // npmignoreEnabled: true,                                                   /* Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. */
   // projenDevDependency: true,                                                /* Indicates of \\"projen\\" should be installed as a devDependency. */
   // projenDuringBuild: true,                                                  /* Execute \`projen\` as the first step of the \`build\` task to synthesize project files. */
+  // projenrcJs: true,                                                         /* Generate (once) .projenrc.js (in JavaScript). Set to \`false\` in order to disable .projenrc.js generation. */
+  // projenrcJsOptions: undefined,                                             /* Options for .projenrc.js. */
   // projenUpgradeAutoMerge: undefined,                                        /* Automatically merge projen upgrade PRs when build passes. */
   // projenUpgradeSchedule: [ '0 6 * * *' ],                                   /* Customize the projenUpgrade schedule in cron expression. */
   // projenUpgradeSecret: undefined,                                           /* Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`). */
@@ -1419,13 +2424,14 @@ const project = new TypeScriptAppProject({
   // eslintOptions: undefined,                                                 /* Eslint options. */
   // libdir: 'lib',                                                            /* Typescript  artifacts output directory. */
   // package: true,                                                            /* Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`. */
+  // projenrcTs: false,                                                        /* Use TypeScript for your projenrc file (\`.projenrc.ts\`). */
+  // projenrcTsOptions: undefined,                                             /* Options for .projenrc.ts. */
   // sampleCode: true,                                                         /* Generate one-time sample in \`src/\` and \`test/\` if there are no files there. */
   // srcdir: 'src',                                                            /* Typescript sources directory. */
   // testdir: 'test',                                                          /* Jest tests directory. Tests files should be named \`xxx.test.ts\`. */
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: 'latest',                                              /* TypeScript version to use. */
 });
-
-project.synth();
-"
+project.synth();",
+}
 `;

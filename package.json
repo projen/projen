@@ -19,6 +19,7 @@
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "test:update": "/bin/bash ./projen.bash test:update",
     "projen:upgrade": "/bin/bash ./projen.bash projen:upgrade",
+    "default": "/bin/bash ./projen.bash default",
     "watch": "/bin/bash ./projen.bash watch",
     "package": "/bin/bash ./projen.bash package",
     "eslint": "/bin/bash ./projen.bash eslint",

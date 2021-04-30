@@ -127,7 +127,7 @@ project.vscode.launchConfiguration.addConfiguration({
   ],
 });
 
-project.github.addMergifyRules({
+project.github.mergify.addRule({
   name: 'Label core contributions',
   actions: {
     label: {

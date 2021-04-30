@@ -4,6 +4,7 @@ import { AutoMerge } from './github/auto-merge';
 import { DependabotOptions } from './github/dependabot';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
+import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
@@ -172,13 +173,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * Adds mergify configuration.
-   *
-   * @default true
-   */
-  readonly mergify?: boolean;
-
-  /**
    * Options for mergify
    *
    * @default - default options
@@ -292,6 +286,20 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
+   * .projenrc.js generation.
+   *
+   * @default true
+   */
+  readonly projenrcJs?: boolean;
+
+  /**
+   * Options for .projenrc.js
+   * @default - default options
+   */
+  readonly projenrcJsOptions?: ProjenrcOptions;
 }
 
 /**
@@ -572,6 +580,23 @@ export class NodeProject extends Project {
             name: 'Commit and push changes (if any)',
             run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
           },
+          {
+            // only if not running from a fork
+            if: '${{ github.repository == github.event.pull_request.head.repo.full_name }}',
+            name: 'Update status check',
+            run: [
+              'gh api',
+              '-X POST',
+              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
+              `-F name="${buildJobId}"`,
+              '-F head_sha="$(git rev-parse HEAD)"',
+              '-F status="completed"',
+              '-F conclusion="success"',
+            ].join(' '),
+            env: {
+              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            },
+          },
         ],
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
@@ -681,6 +706,7 @@ export class NodeProject extends Project {
         this.publisher.publishToNpm({
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
+          npmTokenSecret: this.package.npmTokenSecret,
         });
       }
     } else {
@@ -702,7 +728,7 @@ export class NodeProject extends Project {
       }
     }
 
-    if (options.mergify ?? true) {
+    if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         autoMergeLabel: options.mergifyAutoMergeLabel,
         buildJob: this.buildWorkflowJobId,
@@ -726,6 +752,11 @@ export class NodeProject extends Project {
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
+    }
+
+    const projenrcJs = options.projenrcJs ?? true;
+    if (projenrcJs) {
+      new Projenrc(this, options.projenrcJsOptions);
     }
   }
 

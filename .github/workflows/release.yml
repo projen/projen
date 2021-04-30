@@ -31,11 +31,6 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Bump to next version
         run: /bin/bash ./projen.bash bump
-      - name: Install GitHub CLI
-        run: curl -sL
-          https://github.com/cli/cli/releases/download/v1.9.2/gh_1.9.2_linux_amd64.tar.gz
-          | tar -xzv --strip-components=2 gh_1.9.2_linux_amd64/bin/gh && mv gh
-          /usr/bin/
       - name: Build
         run: /bin/bash ./projen.bash build
       - name: Check for new commits
@@ -45,7 +40,7 @@ jobs:
       - name: Create release
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: gh release create v$(node -p "require('./package.json').version") -F
-          changelog.tmp.md -t v$(node -p "require('./package.json').version")
+          .changelog.tmp.md -t v$(node -p "require('./package.json').version")
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Unbump

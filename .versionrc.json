@@ -1,10 +1,15 @@
 {
-  "packageFiles": [],
+  "packageFiles": [
+    {
+      "filename": ".version.tmp.json",
+      "type": "plain-text"
+    }
+  ],
   "bumpFiles": [
     "package.json"
   ],
   "commitAll": false,
-  "infile": "changelog.tmp.md",
+  "infile": ".changelog.tmp.md",
   "header": "",
   "skip": {
     "commit": true,

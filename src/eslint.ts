@@ -80,6 +80,8 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
+  private readonly _allowDevDeps: string[];
+
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
 
@@ -93,8 +95,12 @@ export class Eslint extends Component {
       'json-schema',
     );
 
-    const dirs = [...options.dirs, ...options.devdirs ?? []];
+    const devdirs = options.devdirs ?? [];
+
+    const dirs = [...options.dirs, ...devdirs];
     const fileExtensions = options.fileExtensions ?? ['.ts'];
+
+    this._allowDevDeps = (devdirs ?? []).map(dir => `**/${dir}/**`);
 
     const lintProjenRc = options.lintProjenRc ?? true;
 
@@ -145,7 +151,7 @@ export class Eslint extends Component {
         'error',
         {
           // Only allow importing devDependencies from "devdirs".
-          devDependencies: (options.devdirs ?? []).map(dir => `**/${dir}/**`),
+          devDependencies: () => this.renderDevDepsAllowList(),
           optionalDependencies: false, // Disallow importing optional dependencies (those shouldn't be in use in the project)
           peerDependencies: true, // Allow importing peer dependencies (that aren't also direct dependencies)
         },
@@ -308,5 +314,17 @@ export class Eslint extends Component {
    */
   public addIgnorePattern(pattern: string) {
     this.ignorePatterns.push(pattern);
+  }
+
+  /**
+   * Add a glob file pattern which allows importing dev dependencies.
+   * @param pattern glob pattern.
+   */
+  public allowDevDeps(pattern: string) {
+    this._allowDevDeps.push(pattern);
+  }
+
+  private renderDevDepsAllowList() {
+    return this._allowDevDeps;
   }
 }
