@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as semver from 'semver';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { TaskCategory } from './tasks';
@@ -108,9 +109,16 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     // CLI
     this.addDevDeps(this.formatModuleSpec('aws-cdk'));
-
     this.addCdkDependency('@aws-cdk/assert');
-    this.addCdkDependency('@aws-cdk/core');
+
+    const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
+    if (cdkMajorVersion < 2) {
+      this.addCdkDependency('@aws-cdk/core');
+    } else {
+      this.addCdkDependency('aws-cdk-lib');
+      this.addDeps('constructs@^10.0.5');
+    }
+
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
     const synth = this.addTask('synth', {
@@ -175,7 +183,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     });
 
     if (options.sampleCode ?? true) {
-      new SampleCode(this);
+      new SampleCode(this, cdkMajorVersion);
     }
   }
 
@@ -184,6 +192,9 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
+    if (modules.length === 0) {
+      return;
+    }
     this.addDeps(...modules.map(m => this.formatModuleSpec(m)));
   }
 
@@ -194,7 +205,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
 class SampleCode extends Component {
   private readonly appProject: AwsCdkTypeScriptApp;
-  constructor(project: AwsCdkTypeScriptApp) {
+  constructor(project: AwsCdkTypeScriptApp, private readonly cdkMajorVersion: number) {
     super(project);
     this.appProject = project;
   }
@@ -206,7 +217,15 @@ class SampleCode extends Component {
       return;
     }
 
-    const srcCode = `import { App, Construct, Stack, StackProps } from '@aws-cdk/core';
+    const srcImports = new Array<string>();
+    if (this.cdkMajorVersion < 2) {
+      srcImports.push('import { App, Construct, Stack, StackProps } from \'@aws-cdk/core\';');
+    } else {
+      srcImports.push('import { App, Stack, StackProps } from \'aws-cdk-lib\';');
+      srcImports.push('import { Construct } from \'constructs\';');
+    }
+
+    const srcCode = `${srcImports.join('\n')}
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
@@ -236,9 +255,18 @@ app.synth();`;
     if (fs.pathExistsSync(testdir) && fs.readdirSync(testdir).filter(x => x.endsWith('.ts'))) {
       return;
     }
+
+    const testImports = new Array<string>();
+    if (this.cdkMajorVersion < 2) {
+      testImports.push('import { App } from \'@aws-cdk/core\';');
+    } else {
+      testImports.push('import { App } from \'aws-cdk-lib\';');
+    }
+
+
     const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
     const testCode = `import '@aws-cdk/assert/jest';
-import { App } from '@aws-cdk/core';
+${testImports.join('\n')}
 import { MyStack } from '../src/${appEntrypointName}';
 
 test('Snapshot', () => {

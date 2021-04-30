@@ -1534,6 +1534,9 @@ Array [
         "type": "boolean",
       },
       Object {
+        "default": "- When the default behavior is used, the dependency on \`constructs\` will only
+be added as a \`peerDependency\`. Otherwise, a \`devDependency\` will also be
+added, set to the exact version configrued here.",
         "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
         "name": "constructsVersion",
         "optional": true,
