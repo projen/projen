@@ -2,8 +2,8 @@ import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
+import { NodeProject } from '../node-project';
 import { Project } from '../project';
-import { TypeScriptProject } from '../typescript';
 
 export interface ProjenrcOptions {
   /**
@@ -20,7 +20,7 @@ export interface ProjenrcOptions {
 }
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * Sets up a javascript project to use TypeScript for projenrc.
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
@@ -33,7 +33,7 @@ export class Projenrc extends Component {
     this.comments = options.comments ?? true;
 
     // this is the task projen executes when running `projen`
-    project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
+    project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
 
     this.generateProjenrc();
   }
