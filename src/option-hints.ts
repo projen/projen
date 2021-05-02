@@ -1,5 +1,5 @@
 /**
- * Choices for how to display commented out options.
+ * Choices for how to display commented out options in projenrc files.
  */
 export enum NewProjectOptionHints {
   /**

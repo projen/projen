@@ -236,7 +236,7 @@ Name|Description
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [LogLevel](#projen-loglevel)|Logging verbosity.
-[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options.
+[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
@@ -10856,7 +10856,7 @@ Name | Description
 
 ## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
 
-Choices for how to display commented out options.
+Choices for how to display commented out options in projenrc files.
 
 Name | Description
 -----|-----
