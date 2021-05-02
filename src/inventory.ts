@@ -118,8 +118,15 @@ export function discover(...moduleDirs: string[]) {
 
 export function resolveProjectType(projectFqn: string) {
   const manifest = readJsiiManifest(projectFqn);
+
   const jsii: JsiiTypes = {};
   for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
+    jsii[fqn] = type;
+  }
+
+  // Read Projen JSII types
+  const projenManifest = readJsiiManifest('projen');
+  for (const [fqn, type] of Object.entries(projenManifest.types as JsiiTypes)) {
     jsii[fqn] = type;
   }
 
