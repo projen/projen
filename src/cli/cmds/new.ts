@@ -150,7 +150,7 @@ function createProject(opts: CreateProjectOptions) {
   // generate the projenrc file.
   const js = renderJavaScriptOptions({
     bootstrap: true,
-    comments: NewProjectOptionHints.NONE,
+    comments: opts.comments,
     type: opts.type,
     args: opts.params,
   });

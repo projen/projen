@@ -12,6 +12,7 @@ import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
+import { NewProjectOptionHints } from './option-hints';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -475,4 +476,10 @@ export interface NewProject {
    * Project metadata.
    */
   readonly type: inventory.ProjectType;
+
+  /**
+   * Include commented out options.
+   * @default NewProjectOptionHints.FEATURED
+   */
+  readonly comments: NewProjectOptionHints;
 }

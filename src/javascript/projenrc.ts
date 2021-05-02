@@ -2,7 +2,6 @@ import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
-import { NewProjectOptionHints } from '../option-hints';
 import { Project } from '../project';
 import { TypeScriptProject } from '../typescript';
 export interface ProjenrcOptions {
@@ -11,12 +10,6 @@ export interface ProjenrcOptions {
    * @default ".projenrc.js"
    */
   readonly filename?: string;
-
-  /**
-   * Include commented out properties.
-   * @default NewProjectOptionHints.FEATURED
-   */
-  readonly comments?: NewProjectOptionHints;
 }
 
 /**
@@ -24,13 +17,11 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments?: NewProjectOptionHints;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.js';
-    this.comments = options.comments ?? NewProjectOptionHints.FEATURED;
 
     // this is the task projen executes when running `projen`
     project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
@@ -55,7 +46,7 @@ export class Projenrc extends Component {
     const className = parts.slice(1).join('.');
 
     const js = renderJavaScriptOptions({
-      comments: this.comments,
+      comments: bootstrap.comments,
       args: bootstrap.args,
       type: bootstrap.type,
     });

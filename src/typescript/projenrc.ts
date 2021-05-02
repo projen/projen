@@ -2,7 +2,6 @@ import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
-import { NewProjectOptionHints } from '../option-hints';
 import { TypeScriptProject } from '../typescript';
 
 export interface ProjenrcOptions {
@@ -11,12 +10,6 @@ export interface ProjenrcOptions {
    * @default ".projenrc.ts"
    */
   readonly filename?: string;
-
-  /**
-   * Include commented out properties.
-   * @default NewProjectOptionHints.FEATURED
-   */
-  readonly comments?: NewProjectOptionHints;
 }
 
 /**
@@ -24,13 +17,11 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments: NewProjectOptionHints;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.ts';
-    this.comments = options.comments ?? NewProjectOptionHints.FEATURED;
 
     // tell eslint to take .projenrc.ts into account as a dev-dependency
     project.eslint?.allowDevDeps(this.rcfile);
@@ -65,7 +56,7 @@ export class Projenrc extends Component {
     const js = renderJavaScriptOptions({
       args: bootstrap.args,
       type: bootstrap.type,
-      comments: this.comments,
+      comments: bootstrap.comments,
     });
 
     const lines = new Array<string>();

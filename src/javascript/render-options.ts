@@ -49,16 +49,21 @@ interface ProjenNew {
    * Initial arguments passed to `projen new`.
    */
   readonly args: Record<string, any>;
+
+  /**
+   * Include commented out options.
+   */
+  readonly comments: NewProjectOptionHints;
 }
 
 
 /**
  * Renders options as if the project was created via `projen new` (embeds the __new__ field).
  */
-export function renderProjenNewOptions(fqn: string, args: Record<string, any>): any {
+export function renderProjenNewOptions(fqn: string, args: Record<string, any>, comments: NewProjectOptionHints = NewProjectOptionHints.NONE): any {
   return {
     ...args,
-    [PROJEN_NEW]: { fqn, args } as ProjenNew,
+    [PROJEN_NEW]: { fqn, args, comments } as ProjenNew,
   };
 }
 
@@ -76,6 +81,7 @@ export function resolveNewProject(opts: any) {
     args: f.args,
     fqn: f.fqn,
     type: type,
+    comments: f.comments,
   };
 }
 
@@ -110,7 +116,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
   const bootstrap = opts.bootstrap ?? false;
   if (bootstrap) {
-    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn } as ProjenNew)},`;
+    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
 

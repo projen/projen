@@ -5286,7 +5286,6 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Include commented out properties. __*Default*__: NewProjectOptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6231,7 +6230,6 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Include commented out properties. __*Default*__: NewProjectOptionHints.FEATURED
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -8772,6 +8770,7 @@ It is used to generate projenrc files in various languages.
 Name | Type | Description 
 -----|------|-------------
 **args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
+**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out options.
 **fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
 **type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
 
@@ -9749,7 +9748,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out properties.<br/>__*Default*__: NewProjectOptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
@@ -10169,7 +10167,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out properties.<br/>__*Default*__: NewProjectOptionHints.FEATURED
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
