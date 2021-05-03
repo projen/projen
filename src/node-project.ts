@@ -94,6 +94,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * bumped. Requires that `version` will be undefined.
    *
    * @default - true if not a subproject
+   * @featured
    */
   readonly releaseWorkflow?: boolean;
 

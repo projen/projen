@@ -236,6 +236,7 @@ Name|Description
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [LogLevel](#projen-loglevel)|Logging verbosity.
+[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
@@ -5286,7 +5287,6 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>boolean</code>)  Include commented out properties. __*Default*__: true
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6231,7 +6231,6 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>boolean</code>)  Include commented out properties. __*Default*__: true
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -8772,6 +8771,7 @@ It is used to generate projenrc files in various languages.
 Name | Type | Description 
 -----|------|-------------
 **args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
+**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out options.
 **fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
 **type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
 
@@ -9749,7 +9749,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>boolean</code> | Include commented out properties.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
@@ -10169,7 +10168,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>boolean</code> | Include commented out properties.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
@@ -10854,6 +10852,17 @@ Name | Description
 **INFO** 🔹|
 **DEBUG** 🔹|
 **VERBOSE** 🔹|
+
+
+## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
+
+Choices for how to display commented out options in projenrc files.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>
