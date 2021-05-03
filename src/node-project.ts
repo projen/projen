@@ -579,7 +579,7 @@ export class NodeProject extends Project {
         postSteps: [
           {
             name: 'Commit and push changes (if any)',
-            run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
+            run: `git diff --exit-code || (git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch})`,
           },
           {
             // only if not running from a fork
