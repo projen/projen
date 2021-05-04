@@ -260,6 +260,17 @@ export class Project {
   }
 
   /**
+   * Removes a task from this project.
+   *
+   * @param name The task name to remove
+   *
+   * @returns `true` if task was removed, `false` otherwise
+   */
+  public removeTask(name: string) {
+    return this.tasks.removeTask(name);
+  }
+
+  /**
    * Finds a file at the specified relative path within this project and all
    * its subprojects.
    *

@@ -25,6 +25,32 @@ test('empty task', () => {
   });
 });
 
+test('remove task', () => {
+  const p = new TestProject();
+
+  // WHEN
+  p.addTask('task1');
+  p.addTask('task2');
+  const removeTask = p.removeTask('task1');
+
+
+  // THEN
+  expect(removeTask).toBe(true);
+  expectManifest(p, {
+    tasks: {
+      task2: {
+        name: 'task2',
+      },
+    },
+  });
+});
+
+test('remove already removed task', () => {
+  const p = new TestProject();
+
+  expect(p.removeTask('task1')).toBe(false);
+});
+
 test('multiple "exec" commands', () => {
   const p = new TestProject();
 

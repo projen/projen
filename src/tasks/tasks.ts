@@ -56,6 +56,19 @@ export class Tasks extends Component {
   }
 
   /**
+   * Remove a task from a project.
+   * @param name The name of the task
+   */
+  public removeTask(name: string): boolean {
+    if (this._tasks[name]) {
+      delete this._tasks[name];
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
    * Adds global environment.
    * @param name Environment variable name
    * @param value Value
