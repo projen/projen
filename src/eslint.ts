@@ -42,6 +42,12 @@ export interface EslintOptions {
    * @default true
    */
   readonly lintProjenRc?: boolean;
+
+  /**
+   * Enable prettier for code formatting
+   * @default false
+   */
+  readonly prettier?: boolean;
 }
 
 /**
@@ -95,6 +101,14 @@ export class Eslint extends Component {
       'json-schema',
     );
 
+    if (options.prettier) {
+      project.addDevDeps(
+        'prettier',
+        'eslint-plugin-prettier',
+        'eslint-config-prettier',
+      );
+    }
+
     const devdirs = options.devdirs ?? [];
 
     const dirs = [...options.dirs, ...devdirs];
@@ -122,10 +136,9 @@ export class Eslint extends Component {
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');
 
-    this.rules = {
-      // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
-      '@typescript-eslint/no-require-imports': ['error'],
-
+    const formattingRules: { [rule: string]: any } = options.prettier ? {
+      'prettier/prettier': ['error'],
+    } : {
       // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
       'indent': ['off'],
       '@typescript-eslint/indent': ['error', 2],
@@ -145,6 +158,28 @@ export class Eslint extends Component {
       'space-before-blocks': ['error'], // require space before blocks
       'curly': ['error', 'multi-line', 'consistent'], // require curly braces for multiline control statements
       '@typescript-eslint/member-delimiter-style': ['error'],
+
+      // Require semicolons
+      'semi': ['error', 'always'],
+
+      // Max line lengths
+      'max-len': ['error', {
+        code: 150,
+        ignoreUrls: true, // Most common reason to disable it
+        ignoreStrings: true, // These are not fantastic but necessary for error messages
+        ignoreTemplateLiterals: true,
+        ignoreComments: true,
+        ignoreRegExpLiterals: true,
+      }],
+
+      // Don't unnecessarily quote properties
+      'quote-props': ['error', 'consistent-as-needed'],
+    };
+
+    this.rules = {
+      ...formattingRules,
+      // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
+      '@typescript-eslint/no-require-imports': ['error'],
 
       // Require all imported dependencies are actually declared in package.json
       'import/no-extraneous-dependencies': [
@@ -176,24 +211,8 @@ export class Eslint extends Component {
       // Required spacing in property declarations (copied from TSLint, defaults are good)
       'key-spacing': ['error'],
 
-      // Require semicolons
-      'semi': ['error', 'always'],
-
-      // Don't unnecessarily quote properties
-      'quote-props': ['error', 'consistent-as-needed'],
-
       // No multiple empty lines
       'no-multiple-empty-lines': ['error'],
-
-      // Max line lengths
-      'max-len': ['error', {
-        code: 150,
-        ignoreUrls: true, // Most common reason to disable it
-        ignoreStrings: true, // These are not fantastic but necessary for error messages
-        ignoreTemplateLiterals: true,
-        ignoreComments: true,
-        ignoreRegExpLiterals: true,
-      }],
 
       // One of the easiest mistakes to make
       '@typescript-eslint/no-floating-promises': ['error'],
@@ -255,25 +274,34 @@ export class Eslint extends Component {
 
     const tsconfig = options.tsconfigPath ?? './tsconfig.json';
 
+    const plugins = [
+      '@typescript-eslint',
+      'import',
+      ...(options.prettier ? ['prettier'] : []),
+    ];
+
+    const extendsConf = [
+      'plugin:import/typescript',
+      ...(options.prettier ? [
+        'prettier',
+        'plugin:prettier/recommended',
+      ] : []),
+    ];
+
     this.config = {
       env: {
         jest: true,
         node: true,
       },
       root: true,
-      plugins: [
-        '@typescript-eslint',
-        'import',
-      ],
+      plugins,
       parser: '@typescript-eslint/parser',
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
         project: tsconfig,
       },
-      extends: [
-        'plugin:import/typescript',
-      ],
+      extends: extendsConf,
       settings: {
         'import/parsers': {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
