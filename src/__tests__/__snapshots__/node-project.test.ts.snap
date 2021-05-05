@@ -25,7 +25,7 @@ git config user.email \\"github-actions@github.com\\"",
   },
   Object {
     "name": "Commit and push changes (if any)",
-    "run": "git diff --exit-code || (git commit -am \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }})",
+    "run": "git diff --exit-code || (git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }})",
   },
   Object {
     "env": Object {

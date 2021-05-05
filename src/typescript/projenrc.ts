@@ -10,12 +10,6 @@ export interface ProjenrcOptions {
    * @default ".projenrc.ts"
    */
   readonly filename?: string;
-
-  /**
-   * Include commented out properties.
-   * @default true
-   */
-  readonly comments?: boolean;
 }
 
 /**
@@ -23,13 +17,11 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments: boolean;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.ts';
-    this.comments = options.comments ?? true;
 
     // tell eslint to take .projenrc.ts into account as a dev-dependency
     project.eslint?.allowDevDeps(this.rcfile);
@@ -64,7 +56,7 @@ export class Projenrc extends Component {
     const js = renderJavaScriptOptions({
       args: bootstrap.args,
       type: bootstrap.type,
-      comments: this.comments,
+      comments: bootstrap.comments,
     });
 
     const lines = new Array<string>();

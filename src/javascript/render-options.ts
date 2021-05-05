@@ -1,6 +1,8 @@
 import * as inventory from '../inventory';
+import { NewProjectOptionHints } from '../option-hints';
 
 const PROJEN_NEW = '__new__';
+const TAB = makePadding(2);
 
 /**
  * Options for `renderProjectOptions`.
@@ -18,9 +20,9 @@ export interface RenderProjectOptions {
 
   /**
    * Include commented out options.
-   * @default false
+   * @default NewProjectOptionHints.FEATURED
    */
-  readonly comments?: boolean;
+  readonly comments?: NewProjectOptionHints;
 
   /**
    * Inject a `__new__` attribute to the project constructor with a stringified
@@ -47,16 +49,21 @@ interface ProjenNew {
    * Initial arguments passed to `projen new`.
    */
   readonly args: Record<string, any>;
+
+  /**
+   * Include commented out options.
+   */
+  readonly comments: NewProjectOptionHints;
 }
 
 
 /**
  * Renders options as if the project was created via `projen new` (embeds the __new__ field).
  */
-export function renderProjenNewOptions(fqn: string, args: Record<string, any>): any {
+export function renderProjenNewOptions(fqn: string, args: Record<string, any>, comments: NewProjectOptionHints = NewProjectOptionHints.NONE): any {
   return {
     ...args,
-    [PROJEN_NEW]: { fqn, args } as ProjenNew,
+    [PROJEN_NEW]: { fqn, args, comments } as ProjenNew,
   };
 }
 
@@ -74,6 +81,7 @@ export function resolveNewProject(opts: any) {
     args: f.args,
     fqn: f.fqn,
     type: type,
+    comments: f.comments,
   };
 }
 
@@ -84,10 +92,9 @@ export function resolveNewProject(opts: any) {
  * while all other parameters are rendered as commented out.
  */
 export function renderJavaScriptOptions(opts: RenderProjectOptions) {
-  // preprocessing
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
+  const useSingleQuotes = (str: string | undefined) => str?.replace(/"(.+)"/, '\'$1\'');
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -96,65 +103,90 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     const optionName = option.name;
 
-    let paramRender;
     if (opts.args[optionName] !== undefined) {
       const value = opts.args[optionName];
-      const js = JSON.stringify(value).replace(/^"(.+)"$/, '\'$1\'');
-      paramRender = `${optionName}: ${js},`;
+      const js = JSON.stringify(value);
+      renders[optionName] = `${optionName}: ${useSingleQuotes(js)},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      paramRender = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
-
-      const parentModule = option.parent;
-      optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
-      optionsByModule[parentModule].push(option);
+      renders[optionName] = `// ${optionName}: ${useSingleQuotes(defaultValue)},`;
     }
-    renders[optionName] = paramRender;
   }
 
   const bootstrap = opts.bootstrap ?? false;
   if (bootstrap) {
-    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn } as ProjenNew)},`;
+    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
 
-  // alphabetize
-  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
-  optionsWithDefaults.sort();
-  for (const parentModule in optionsByModule) {
-    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
-  }
-
   // generate rendering
-  const tab = makePadding(2);
   const result: string[] = [];
   result.push('{');
 
   // render options with defaults
+  optionsWithDefaults.sort();
   for (const optionName of optionsWithDefaults) {
-    result.push(`${tab}${renders[optionName]}`);
+    result.push(`${TAB}${renders[optionName]}`);
   }
   if (result.length > 1) {
     result.push('');
   }
 
-  // render options without defaults
-  if (opts.comments) {
-    for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
-      result.push(`${tab}/* ${moduleName} */`);
-      for (const option of options) {
-        const paramRender = renders[option.name];
-        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
-      }
-      result.push('');
-    }
+  // render options without defaults as comments
+  if (opts.comments === NewProjectOptionHints.ALL) {
+    const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined);
+    result.push(...renderCommentedOptionsByModule(renders, options));
+  } else if (opts.comments === NewProjectOptionHints.FEATURED) {
+    const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined && opt.featured);
+    result.push(...renderCommentedOptionsInOrder(renders, options));
+  } else if (opts.comments === NewProjectOptionHints.NONE) {
+    // don't render any extra options
   }
+
   if (result[result.length - 1] === '') {
     result.pop();
   }
   result.push('}');
   return result.join('\n');
+}
+
+function renderCommentedOptionsByModule(renders: Record<string, string>, options: inventory.ProjectOption[]) {
+  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
+
+  for (const option of options) {
+    const parentModule = option.parent;
+    optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
+    optionsByModule[parentModule].push(option);
+  }
+
+  for (const parentModule in optionsByModule) {
+    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
+  }
+
+  const result = [];
+  const marginSize = Math.max(...options.map((opt) => renders[opt.name].length));
+  for (const [moduleName, optionGroup] of Object.entries(optionsByModule).sort()) {
+    result.push(`${TAB}/* ${moduleName} */`);
+    for (const option of optionGroup) {
+      const paramRender = renders[option.name];
+      const docstring = option.docs || 'No documentation found.';
+      result.push(`${TAB}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${docstring} */`);
+    }
+    result.push('');
+  }
+  return result;
+}
+
+function renderCommentedOptionsInOrder(renders: Record<string, string>, options: inventory.ProjectOption[]) {
+  const result = [];
+  const marginSize = Math.max(...options.map((opt) => renders[opt.name].length));
+  for (const option of options) {
+    const paramRender = renders[option.name];
+    const docstring = option.docs || 'No documentation found.';
+    result.push(`${TAB}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${docstring} */`);
+  }
+  return result;
 }
 
 function makePadding(paddingLength: number): string {

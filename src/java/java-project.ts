@@ -27,6 +27,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Additional dependencies can be added via `project.addDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -38,6 +39,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Additional dependencies can be added via `project.addTestDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly testDeps?: string[];
 
