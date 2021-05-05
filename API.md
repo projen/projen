@@ -3369,16 +3369,16 @@ preSynthesize(): void
 
 #### removeTask(name)🔹 <a id="projen-project-removetask"></a>
 
-Removes a task from this project.
+Removes a task from a project.
 
 ```ts
-removeTask(name: string): boolean
+removeTask(name: string): Task
 ```
 
-* **name** (<code>string</code>)  The task name to remove.
+* **name** (<code>string</code>)  The name of the task to remove.
 
 __Returns__:
-* <code>boolean</code>
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 #### synth()🔹 <a id="projen-project-synth"></a>
 
@@ -6210,16 +6210,16 @@ __Returns__:
 
 #### removeTask(name)🔹 <a id="projen-tasks-tasks-removetask"></a>
 
-Remove a task from a project.
+Removes a task from a project.
 
 ```ts
-removeTask(name: string): boolean
+removeTask(name: string): Task
 ```
 
-* **name** (<code>string</code>)  The name of the task.
+* **name** (<code>string</code>)  The name of the task to remove.
 
 __Returns__:
-* <code>boolean</code>
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 #### tryFind(name)🔹 <a id="projen-tasks-tasks-tryfind"></a>
 

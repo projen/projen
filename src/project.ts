@@ -260,11 +260,11 @@ export class Project {
   }
 
   /**
-   * Removes a task from this project.
+   * Removes a task from a project.
    *
-   * @param name The task name to remove
+   * @param name The name of the task to remove.
    *
-   * @returns `true` if task was removed, `false` otherwise
+   * @returns The `Task` that was removed, otherwise `undefined`.
    */
   public removeTask(name: string) {
     return this.tasks.removeTask(name);

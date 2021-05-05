@@ -56,15 +56,25 @@ export class Tasks extends Component {
   }
 
   /**
-   * Remove a task from a project.
-   * @param name The name of the task
+   * Removes a task from a project.
+   *
+   * @param name The name of the task to remove.
+   *
+   * @returns The `Task` that was removed, otherwise `undefined`.
    */
-  public removeTask(name: string): boolean {
-    if (this._tasks[name]) {
+  public removeTask(name: string): undefined | Task {
+    const dependentTasks = this.all.filter(task => task.steps.find(step => step.spawn == name));
+    if (dependentTasks.length > 0) {
+      const errList = dependentTasks.map(depTask => depTask.name).join(', ');
+      throw new Error(`Unable to remove task "${name}" because the following tasks depend on it: ${errList}`);
+    }
+
+    const task = this._tasks[name];
+    if (task) {
       delete this._tasks[name];
-      return true;
+      return task;
     } else {
-      return false;
+      return undefined;
     }
   }
 
