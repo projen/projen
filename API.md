@@ -58,7 +58,7 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
-[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
+[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
@@ -5270,7 +5270,7 @@ Name | Type | Description
 
 ## class Projenrc 🔹 <a id="projen-javascript-projenrc"></a>
 
-Sets up a typescript project to use TypeScript for projenrc.
+Sets up a javascript project to use TypeScript for projenrc.
 
 __Submodule__: javascript
 
