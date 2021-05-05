@@ -25,6 +25,69 @@ test('empty task', () => {
   });
 });
 
+test('remove task', () => {
+  const p = new TestProject();
+
+  // WHEN
+  const task = p.addTask('task1');
+  p.addTask('task2');
+  const removeTask = p.removeTask('task1');
+
+
+  // THEN
+  expect(removeTask).toEqual(task);
+  expectManifest(p, {
+    tasks: {
+      task2: {
+        name: 'task2',
+      },
+    },
+  });
+});
+
+test('re-add removed task', () => {
+  const p = new TestProject();
+
+  // WHEN
+  p.addTask('task1');
+  p.addTask('task2');
+  const removeTask = p.removeTask('task2');
+  p.addTask('task2');
+
+
+  // THEN
+  expect(removeTask).toBeTruthy();
+  expectManifest(p, {
+    tasks: {
+      task1: {
+        name: 'task1',
+      },
+      task2: {
+        name: 'task2',
+      },
+    },
+  });
+});
+
+test('throw when removing a dependent task', () => {
+  const p = new TestProject();
+
+  // WHEN
+  const primary = p.addTask('primary');
+  const dependent = p.addTask('dependent');
+  primary.spawn(dependent);
+
+  // THEN
+  expect(() => p.removeTask('dependent'))
+    .toThrowError('Unable to remove task "dependent" because the following tasks depend on it: primary');
+});
+
+test('remove already removed task', () => {
+  const p = new TestProject();
+
+  expect(p.removeTask('task1')).toBe(undefined);
+});
+
 test('multiple "exec" commands', () => {
   const p = new TestProject();
 

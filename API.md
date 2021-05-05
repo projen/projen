@@ -3369,6 +3369,19 @@ preSynthesize(): void
 
 
 
+#### removeTask(name)🔹 <a id="projen-project-removetask"></a>
+
+Removes a task from a project.
+
+```ts
+removeTask(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task to remove.
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
 #### synth()🔹 <a id="projen-project-synth"></a>
 
 Synthesize all project files into `outdir`.
@@ -6192,6 +6205,19 @@ addTask(name: string, options?: TaskOptions): Task
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
+#### removeTask(name)🔹 <a id="projen-tasks-tasks-removetask"></a>
+
+Removes a task from a project.
+
+```ts
+removeTask(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task to remove.
 
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
