@@ -2,38 +2,29 @@ import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
+import { NodeProject } from '../node-project';
 import { Project } from '../project';
-import { TypeScriptProject } from '../typescript';
-
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.
    * @default ".projenrc.js"
    */
   readonly filename?: string;
-
-  /**
-   * Include commented out properties.
-   * @default true
-   */
-  readonly comments?: boolean;
 }
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * Sets up a javascript project to use TypeScript for projenrc.
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments?: boolean;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.js';
-    this.comments = options.comments ?? true;
 
     // this is the task projen executes when running `projen`
-    project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
+    project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
 
     this.generateProjenrc();
   }
@@ -55,7 +46,7 @@ export class Projenrc extends Component {
     const className = parts.slice(1).join('.');
 
     const js = renderJavaScriptOptions({
-      comments: this.comments,
+      comments: bootstrap.comments,
       args: bootstrap.args,
       type: bootstrap.type,
     });

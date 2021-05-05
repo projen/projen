@@ -58,7 +58,7 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
-[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
+[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
@@ -236,6 +236,7 @@ Name|Description
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [LogLevel](#projen-loglevel)|Logging verbosity.
+[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
@@ -1533,6 +1534,7 @@ new Eslint(project: NodeProject, options: EslintOptions)
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
 
 
@@ -5282,7 +5284,7 @@ Name | Type | Description
 
 ## class Projenrc 🔹 <a id="projen-javascript-projenrc"></a>
 
-Sets up a typescript project to use TypeScript for projenrc.
+Sets up a javascript project to use TypeScript for projenrc.
 
 __Submodule__: javascript
 
@@ -5299,7 +5301,6 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>boolean</code>)  Include commented out properties. __*Default*__: true
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
 
@@ -6257,7 +6258,6 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
-  * **comments** (<code>boolean</code>)  Include commented out properties. __*Default*__: true
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
 
 
@@ -8044,6 +8044,7 @@ Name | Type | Description
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
 **lintProjenRc**?🔹 | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
 
 
@@ -8798,6 +8799,7 @@ It is used to generate projenrc files in various languages.
 Name | Type | Description 
 -----|------|-------------
 **args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
+**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out options.
 **fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
 **type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
 
@@ -9775,7 +9777,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>boolean</code> | Include commented out properties.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
@@ -10195,7 +10196,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**?🔹 | <code>boolean</code> | Include commented out properties.<br/>__*Default*__: true
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 
 
@@ -10880,6 +10880,17 @@ Name | Description
 **INFO** 🔹|
 **DEBUG** 🔹|
 **VERBOSE** 🔹|
+
+
+## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
+
+Choices for how to display commented out options in projenrc files.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>

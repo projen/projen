@@ -18,6 +18,7 @@ export interface ProjectOption {
   default?: string;
   optional?: boolean;
   deprecated?: boolean;
+  featured?: boolean;
 }
 
 export interface ProjectType {
@@ -51,6 +52,7 @@ interface JsiiType {
       default?: string;
       deprecated?: string;
       stability?: string;
+      custom?: { [name: string]: string };
     };
     optional?: boolean;
     type?: {
@@ -232,6 +234,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
+        featured: prop.docs?.custom?.featured === 'true',
         deprecated: prop.docs.stability === 'deprecated' ? true : undefined,
       });
     }

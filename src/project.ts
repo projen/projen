@@ -12,6 +12,7 @@ import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
+import { NewProjectOptionHints } from './option-hints';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
@@ -23,6 +24,7 @@ export interface ProjectOptions extends GitHubOptions {
    * This is the name of your project.
    *
    * @default $BASEDIR
+   * @featured
    */
   readonly name: string;
 
@@ -75,6 +77,7 @@ export interface ProjectOptions extends GitHubOptions {
   /**
    * Which type of project this is (library/app).
    * @default ProjectType.UNKNOWN
+   * @featured
    */
   readonly projectType?: ProjectType;
 
@@ -484,4 +487,10 @@ export interface NewProject {
    * Project metadata.
    */
   readonly type: inventory.ProjectType;
+
+  /**
+   * Include commented out options.
+   * @default NewProjectOptionHints.FEATURED
+   */
+  readonly comments: NewProjectOptionHints;
 }

@@ -65,6 +65,21 @@ test('projen new --from external', () => {
   }
 });
 
+test('projen new --no-comments', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'node', '--no-comments', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    expect(projenrc).toBeDefined();
+    expect(projenrc).not.toMatch('//');
+  } finally {
+    removeSync(outdir);
+  }
+});
+
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
   const projectdir = join(workdir, 'my-project');
