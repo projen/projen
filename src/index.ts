@@ -28,6 +28,7 @@ export * from './semver';
 export * from './textfile';
 export * from './toml';
 export * from './typescript';
+export * from './typescript-config';
 export * from './version';
 export * from './yaml';
 export * from './xmlfile';
