@@ -61,8 +61,8 @@ jobs:
       - name: Build
         run: npx projen build
       - name: Commit and push changes (if any)
-        run: 'git diff --exit-code || (git commit -am \\"chore: self mutation\\" && git push
-          origin HEAD:\${{ github.event.pull_request.head.ref }})'
+        run: 'git diff --exit-code || (git add . && git commit -m \\"chore: self mutation\\"
+          && git push origin HEAD:\${{ github.event.pull_request.head.ref }})'
       - if: \${{ github.repository == github.event.pull_request.head.repo.full_name }}
         name: Update status check
         run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
