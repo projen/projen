@@ -1,3 +1,4 @@
+import * as semver from 'semver';
 import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 /**
@@ -8,6 +9,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * Minimum target version this library is tested against.
    *
    * @default "1.95.2"
+   * @featured
    */
   readonly cdkVersion: string;
 
@@ -19,7 +21,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * - For CDK 2.x, the default is "10.0.5"
    * - Otherwise, the default is "*"
    *
-   * When the default behavior is used, the dependency on `constructs` will only
+   * @default - When the default behavior is used, the dependency on `constructs` will only
    * be added as a `peerDependency`. Otherwise, a `devDependency` will also be
    * added, set to the exact version configrued here.
    */
@@ -38,6 +40,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
    * require when consumed?
+   * @featured
    */
   readonly cdkDependencies?: string[];
 
@@ -62,6 +65,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
 
   /**
    * AWS CDK modules required for testing.
+   * @featured
    */
   readonly cdkTestDependencies?: string[];
 }
@@ -137,7 +141,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * The target CDK version for this library.
    */
-  public readonly version: string;
+  public readonly cdkVersion: string;
 
   /**
    * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
@@ -152,16 +156,17 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
-    this.version = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
+    const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (options.constructsVersion) {
       this.addPeerDeps(`constructs@^${options.constructsVersion}`);
       this.addDevDeps(`constructs@${options.constructsVersion}`);
-    } else if (options.cdkVersion.startsWith('1.')) {
+    } else if (cdkMajorVersion === 1) {
       // CDK 1.x is built on constructs 3.x
       this.addPeerDeps('constructs@^3.2.27');
-    } else if (options.cdkVersion.startsWith('2.')) {
+    } else if (cdkMajorVersion == 2) {
       // CDK 2.x is built on constructs 10.x
       this.addPeerDeps('constructs@^10.0.5');
     } else {
@@ -175,6 +180,13 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
 
     this.addCdkDependencies(...options.cdkDependencies ?? []);
     this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
+  }
+
+  /**
+   * @deprecated use `cdkVersion`
+   */
+  public get version() {
+    return this.cdkVersion;
   }
 
   /**
@@ -211,7 +223,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   }
 
   private formatModuleSpec(module: string): string {
-    return `${module}@${this.version}`;
+    return `${module}@${this.cdkVersion}`;
   }
 }
 

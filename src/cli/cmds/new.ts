@@ -7,6 +7,7 @@ import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
 import { renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
+import { NewProjectOptionHints } from '../../option-hints';
 import { exec, execOrUndefined } from '../../util';
 import { tryProcessMacro } from '../macros';
 
@@ -106,7 +107,7 @@ interface CreateProjectOptions {
   /**
    * Should we render commented-out default options in .projerc.js file?
    */
-  comments: boolean;
+  comments: NewProjectOptionHints;
 
   /**
    * Should we call `project.synth()` or instantiate the project (could still
@@ -149,7 +150,7 @@ function createProject(opts: CreateProjectOptions) {
   // generate the projenrc file.
   const js = renderJavaScriptOptions({
     bootstrap: true,
-    comments: false,
+    comments: opts.comments,
     type: opts.type,
     args: opts.params,
   });
@@ -290,7 +291,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     dir: baseDir,
     type,
     params: props,
-    comments: args.comments,
+    comments: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
     synth: args.synth,
     post: args.post,
   });

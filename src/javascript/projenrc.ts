@@ -4,19 +4,12 @@ import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
 import { NodeProject } from '../node-project';
 import { Project } from '../project';
-
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.
    * @default ".projenrc.js"
    */
   readonly filename?: string;
-
-  /**
-   * Include commented out properties.
-   * @default true
-   */
-  readonly comments?: boolean;
 }
 
 /**
@@ -24,13 +17,11 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
-  private readonly comments?: boolean;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? '.projenrc.js';
-    this.comments = options.comments ?? true;
 
     // this is the task projen executes when running `projen`
     project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
@@ -55,7 +46,7 @@ export class Projenrc extends Component {
     const className = parts.slice(1).join('.');
 
     const js = renderJavaScriptOptions({
-      comments: this.comments,
+      comments: bootstrap.comments,
       args: bootstrap.args,
       type: bootstrap.type,
     });
