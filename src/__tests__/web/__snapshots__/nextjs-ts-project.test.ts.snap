@@ -193,7 +193,7 @@ dist
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^0.0.0",
+        "version": "^1.2.3",
       },
       Object {
         "name": "standard-version",
@@ -607,7 +607,7 @@ dist
       "@types/node": "^12.13.0",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "projen": "^0.0.0",
+      "projen": "^1.2.3",
       "standard-version": "^9",
       "typescript": "*",
     },

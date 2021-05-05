@@ -22,6 +22,7 @@ class TestNextJsProject extends NextJsProject {
       outdir: mkdtemp(),
       logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'main',
+      projenVersion: '^1.2.3',
     });
   }
 }
