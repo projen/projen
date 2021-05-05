@@ -40,9 +40,6 @@
     "coverage"
   ],
   "rules": {
-    "@typescript-eslint/no-require-imports": [
-      "error"
-    ],
     "indent": [
       "off"
     ],
@@ -120,6 +117,28 @@
     "@typescript-eslint/member-delimiter-style": [
       "error"
     ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 150,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreComments": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "@typescript-eslint/no-require-imports": [
+      "error"
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -159,27 +178,8 @@
     "key-spacing": [
       "error"
     ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "quote-props": [
-      "error",
-      "consistent-as-needed"
-    ],
     "no-multiple-empty-lines": [
       "error"
-    ],
-    "max-len": [
-      "error",
-      {
-        "code": 150,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true,
-        "ignoreComments": true,
-        "ignoreRegExpLiterals": true
-      }
     ],
     "@typescript-eslint/no-floating-promises": [
       "error"
