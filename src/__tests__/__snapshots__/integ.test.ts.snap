@@ -848,7 +848,7 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
+            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list=\\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -2037,7 +2037,7 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
+            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list=\\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -3354,7 +3354,7 @@ tsconfig.tsbuildinfo
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
+            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list=\\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
@@ -4438,7 +4438,7 @@ junit.xml
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
+            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list=\\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
