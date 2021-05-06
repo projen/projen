@@ -288,6 +288,7 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude('/.vscode');
     this.npmignore?.exclude('/.idea');
     this.npmignore?.exclude('/.projenrc.js');
+    this.npmignore?.exclude('tsconfig.tsbuildinfo');
 
     // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
     // just run them directly from javascript.
@@ -298,6 +299,7 @@ export class TypeScriptProject extends NodeProject {
       const libtest = path.posix.join(this.libdir, testout);
       const srctest = this.testdir;
 
+      this.npmignore?.addPatterns(`/${libtest}`);
       this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
       this.jest.addWatchIgnorePattern(`/${this.srcdir}/`);
 

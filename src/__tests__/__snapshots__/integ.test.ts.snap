@@ -561,6 +561,7 @@ pull_request_rules:
 /tsconfig.json
 dist
 junit.xml
+tsconfig.tsbuildinfo
 !.jsii
 !/lib
 !/lib/**/*.d.ts
@@ -1882,6 +1883,7 @@ yarn-error.log*
 /tsconfig.json
 dist
 junit.xml
+tsconfig.tsbuildinfo
 !.jsii
 !/lib
 !/lib/**/*.d.ts
@@ -3198,6 +3200,7 @@ yarn-error.log*
 /tsconfig.json
 dist
 junit.xml
+tsconfig.tsbuildinfo
 !/lib
 !/lib/**/*.d.ts
 !/lib/**/*.js
