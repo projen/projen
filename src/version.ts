@@ -26,10 +26,15 @@ export class Version extends Component {
       condition: changesSinceLastRelease,
     });
 
-    // the default for "standard-version" is to find a tag across the entire
-    // repository but we want to select the last tag accessible from the
-    // *current branch*.
-    this.bumpTask.exec(`git describe --tags --match="v*" --first-parent --abbrev=0 > ${versionFile}`);
+    const listGitTags = [
+      'git',
+      '-c "versionsort.suffix=-"', // makes sure pre-release versions are listed after the primary version
+      'tag',
+      '--sort="-version:refname"', // sort as versions and not lexicographically
+      '--list="v*"', // only tags that start with "v"
+    ].join(' ');
+
+    this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
     this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {
