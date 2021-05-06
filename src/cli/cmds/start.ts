@@ -1,13 +1,17 @@
-import * as yargs from 'yargs';
-import { TaskRuntime } from '../../tasks';
-import { printStartMenu, showStartMenu } from './start-app';
+import * as yargs from "yargs";
+import { TaskRuntime } from "../../tasks";
+import { printStartMenu, showStartMenu } from "./start-app";
 
 class Command implements yargs.CommandModule {
-  command = 'start';
-  describe = 'Prints all project commands';
+  command = "start";
+  describe = "Prints all project commands";
 
   public builder(args: yargs.Argv) {
-    return args.option('interactive', { alias: 'i', desc: 'Interactive menu', default: true });
+    return args.option("interactive", {
+      alias: "i",
+      desc: "Interactive menu",
+      default: true,
+    });
   }
 
   async handler(opts: any) {

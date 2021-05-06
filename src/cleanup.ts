@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import * as glob from 'glob';
-import { PROJEN_MARKER } from './common';
-import * as logging from './logging';
+import * as path from "path";
+import * as fs from "fs-extra";
+import * as glob from "glob";
+import { PROJEN_MARKER } from "./common";
+import * as logging from "./logging";
 
 export function cleanup(dir: string, exclude: string[]) {
   try {
@@ -15,9 +15,14 @@ export function cleanup(dir: string, exclude: string[]) {
 }
 
 function findGeneratedFiles(dir: string, exclude: string[]) {
-  const ignore = [...readGitIgnore(dir), 'node_modules/**', ...exclude, '.git/**'];
+  const ignore = [
+    ...readGitIgnore(dir),
+    "node_modules/**",
+    ...exclude,
+    ".git/**",
+  ];
 
-  const files = glob.sync('**', {
+  const files = glob.sync("**", {
     ignore,
     cwd: dir,
     dot: true,
@@ -28,8 +33,7 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
   const generated = new Array<string>();
 
   for (const file of files) {
-
-    const contents = fs.readFileSync(file, 'utf-8');
+    const contents = fs.readFileSync(file, "utf-8");
 
     if (contents.includes(PROJEN_MARKER)) {
       generated.push(file);
@@ -40,18 +44,18 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
 }
 
 function readGitIgnore(dir: string) {
-  const filepath = path.join(dir, '.gitignore');
+  const filepath = path.join(dir, ".gitignore");
   if (!fs.pathExistsSync(filepath)) {
     return [];
   }
 
-  return fs.readFileSync(filepath, 'utf-8')
-    .split('\n')
-    .filter(x => x?.trim() !== '')
-    .filter(x => !x.startsWith('#') && !x.startsWith('!'))
-    .map(x => x.replace(/^\//, '')) // remove "/" prefix
-    .map(x => `${x}\n${x}/**`)
-    .join('\n')
-    .split('\n');
+  return fs
+    .readFileSync(filepath, "utf-8")
+    .split("\n")
+    .filter((x) => x?.trim() !== "")
+    .filter((x) => !x.startsWith("#") && !x.startsWith("!"))
+    .map((x) => x.replace(/^\//, "")) // remove "/" prefix
+    .map((x) => `${x}\n${x}/**`)
+    .join("\n")
+    .split("\n");
 }
-

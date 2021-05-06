@@ -29,7 +29,6 @@ export interface DependencyCoordinates {
  * Represents a project dependency.
  */
 export interface Dependency extends DependencyCoordinates {
-
   /**
    * Which type of dependency this is (runtime, build-time, etc).
    */
@@ -50,32 +49,32 @@ export enum DependencyType {
   /**
    * The dependency is required for the program/library during runtime.
    */
-  RUNTIME = 'runtime',
+  RUNTIME = "runtime",
 
   /**
    * The dependency is required at runtime but expected to be installed by the
    * consumer.
    */
-  PEER = 'peer',
+  PEER = "peer",
 
   /**
    * The dependency is bundled and shipped with the module, so consumers are not
    * required to install it.
    */
-  BUNDLED = 'bundled',
+  BUNDLED = "bundled",
 
   /**
    * The dependency is required to run the `build` task.
    */
-  BUILD = 'build',
+  BUILD = "build",
 
   /**
    * The dependency is required to run the `test` task.
    */
-  TEST = 'test',
+  TEST = "test",
 
   /**
    * The dependency is required for development (e.g. IDE plugins).
    */
-  DEVENV = 'devenv',
+  DEVENV = "devenv",
 }

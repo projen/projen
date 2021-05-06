@@ -1,14 +1,14 @@
-import * as child_process from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import * as logging from './logging';
+import * as child_process from "child_process";
+import * as path from "path";
+import * as fs from "fs-extra";
+import * as logging from "./logging";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
+const decamelize = require("decamelize");
 
 export function exec(command: string, options?: child_process.ExecSyncOptions) {
   logging.verbose(command);
   return child_process.execSync(command, {
-    stdio: ['inherit', process.stderr, 'pipe'],
+    stdio: ["inherit", process.stderr, "pipe"],
     ...options,
   });
 }
@@ -16,10 +16,18 @@ export function exec(command: string, options?: child_process.ExecSyncOptions) {
 /**
  * Executes `command` and returns its value or undefined if the command failed.
  */
-export function execOrUndefined(command: string, options?: child_process.ExecSyncOptions): string | undefined {
+export function execOrUndefined(
+  command: string,
+  options?: child_process.ExecSyncOptions
+): string | undefined {
   try {
-    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'], ...options }).toString('utf-8').trim();
-    if (!value) { return undefined; } // an empty string is the same as undefined
+    const value = child_process
+      .execSync(command, { stdio: ["inherit", "pipe", "ignore"], ...options })
+      .toString("utf-8")
+      .trim();
+    if (!value) {
+      return undefined;
+    } // an empty string is the same as undefined
     return value;
   } catch {
     return undefined;
@@ -46,19 +54,23 @@ export function getFilePermissions(options: WriteFileOptions): string {
   const readonly = options.readonly ?? false;
   const executable = options.executable ?? false;
   if (readonly && executable) {
-    return '500';
+    return "500";
   } else if (readonly) {
-    return '400';
+    return "400";
   } else if (executable) {
-    return '755';
+    return "755";
   } else {
-    return '644';
+    return "644";
   }
 }
 
-export function writeFile(filePath: string, data: any, options: WriteFileOptions = {}) {
+export function writeFile(
+  filePath: string,
+  data: any,
+  options: WriteFileOptions = {}
+) {
   if (fs.existsSync(filePath)) {
-    fs.chmodSync(filePath, '600');
+    fs.chmodSync(filePath, "600");
   }
 
   fs.mkdirpSync(path.dirname(filePath));
@@ -97,25 +109,32 @@ export interface DecamelizeRecursivelyOptions {
   path?: string[];
 }
 
-export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivelyOptions): any {
+export function decamelizeKeysRecursively(
+  input: any,
+  opt?: DecamelizeRecursivelyOptions
+): any {
   const shouldAlwaysDecamelize = () => true;
   const shouldDecamelize = opt?.shouldDecamelize ?? shouldAlwaysDecamelize;
-  const separator = opt?.separator ?? '_';
+  const separator = opt?.separator ?? "_";
   const path_ = opt?.path ?? [];
   const maxDepth = opt?.maxDepth ?? 10;
 
   if (path_.length > maxDepth) {
-    throw new Error('Decamelled too deeply - check that the input has no circular references');
+    throw new Error(
+      "Decamelled too deeply - check that the input has no circular references"
+    );
   }
 
   if (Array.isArray(input)) {
-    return input.map((k, i) => decamelizeKeysRecursively(k, {
-      ...opt,
-      path: [...path_, i.toString()],
-    }));
+    return input.map((k, i) =>
+      decamelizeKeysRecursively(k, {
+        ...opt,
+        path: [...path_, i.toString()],
+      })
+    );
   }
 
-  if (typeof input === 'object' && input !== null) {
+  if (typeof input === "object" && input !== null) {
     const mappedObject: Record<string, any> = {};
     for (const [key, value] of Object.entries(input)) {
       const transformedKey = shouldDecamelize([...path_, key], value)
@@ -139,7 +158,10 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
  * @param value an environment variable
  */
 export function isTruthy(value: string | undefined): boolean {
-  return !(value === undefined || ['null', 'undefined', '0', 'false', ''].includes(value.toLocaleLowerCase()));
+  return !(
+    value === undefined ||
+    ["null", "undefined", "0", "false", ""].includes(value.toLocaleLowerCase())
+  );
 }
 
 /**
@@ -154,8 +176,12 @@ export type Obj<T> = { [key: string]: T };
  * usually want to treat them differently, so we return false in those cases.
  */
 export function isObject(x: any): x is Obj<any> {
-  return x !== null && typeof x === 'object' && !Array.isArray(x)
-    && x.constructor.name === 'Object';
+  return (
+    x !== null &&
+    typeof x === "object" &&
+    !Array.isArray(x) &&
+    x.constructor.name === "Object"
+  );
 }
 
 /**
@@ -168,7 +194,10 @@ export function isObject(x: any): x is Obj<any> {
  *
  * `undefined`s will cause a value to be deleted if destructive is enabled.
  */
-export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boolean = false) {
+export function deepMerge(
+  objects: Array<Obj<any> | undefined>,
+  destructive: boolean = false
+) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
     for (const key of Object.keys(source)) {
       const value = source[key];
@@ -185,23 +214,29 @@ export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boo
         // eventual value we assigned is `undefined`, and there are no
         // sibling concrete values alongside, so we can delete this tree.
         const output = target[key];
-        if (isObject(output) && Object.keys(output).length === 0 && destructive) {
+        if (
+          isObject(output) &&
+          Object.keys(output).length === 0 &&
+          destructive
+        ) {
           delete target[key];
         }
       } else if (value === undefined && destructive) {
         delete target[key];
-      } else if (typeof value !== 'undefined') {
+      } else if (typeof value !== "undefined") {
         target[key] = value;
       }
     }
   }
 
-  const others = objects.filter(x => x != null) as Array<Obj<any>>;
+  const others = objects.filter((x) => x != null) as Array<Obj<any>>;
 
-  if (others.length === 0) { return {}; }
+  if (others.length === 0) {
+    return {};
+  }
   const into = others.splice(0, 1)[0];
 
-  others.forEach(other => mergeOne(into, other));
+  others.forEach((other) => mergeOne(into, other));
   return into;
 }
 
@@ -217,14 +252,22 @@ export function dedupArray<T>(array: T[]): T[] {
  * Returns a sorted version of `x` or `undefined` if it is an empty array or object.
  */
 export function sorted<T>(x: T) {
-  if (x == null) { return undefined; }
+  if (x == null) {
+    return undefined;
+  }
   if (Array.isArray(x)) {
-    if (x.length === 0) { return undefined; }
+    if (x.length === 0) {
+      return undefined;
+    }
     return (x as unknown[]).sort();
-  } else if (typeof x === 'object') {
-    if (Object.keys(x).length === 0) { return undefined; }
+  } else if (typeof x === "object") {
+    if (Object.keys(x).length === 0) {
+      return undefined;
+    }
     const result: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(x).sort(([l], [r]) => l.localeCompare(r))) {
+    for (const [key, value] of Object.entries(x).sort(([l], [r]) =>
+      l.localeCompare(r)
+    )) {
       result[key] = value;
     }
     return result as T;
@@ -234,5 +277,5 @@ export function sorted<T>(x: T) {
 }
 
 export function formatAsPythonModule(name: string) {
-  return name.replace(/-/g, '_').replace(/\./g, '_');
+  return name.replace(/-/g, "_").replace(/\./g, "_");
 }

@@ -50,15 +50,13 @@ export interface TaskCommonOptions {
   readonly cwd?: string;
 }
 
-
 export enum TaskCategory {
-  BUILD = '00.build',
-  TEST = '10.test',
-  RELEASE = '20.release',
-  MAINTAIN = '30.maintain',
-  MISC = '99.misc',
+  BUILD = "00.build",
+  TEST = "10.test",
+  RELEASE = "20.release",
+  MAINTAIN = "30.maintain",
+  MISC = "99.misc",
 }
-
 
 /**
  * Specification of a single task.
@@ -119,4 +117,3 @@ export interface TaskStep extends TaskStepOptions {
    */
   readonly say?: string;
 }
-

@@ -1,10 +1,10 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
+import * as path from "path";
+import * as fs from "fs-extra";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
-const PROJEN_MODULE_ROOT = path.join(__dirname, '..');
-const PROJECT_BASE_FQN = 'projen.Project';
+const decamelize = require("decamelize");
+const PROJEN_MODULE_ROOT = path.join(__dirname, "..");
+const PROJECT_BASE_FQN = "projen.Project";
 
 type JsiiTypes = { [name: string]: JsiiType };
 
@@ -80,8 +80,10 @@ export function discover(...moduleDirs: string[]) {
   const jsii: JsiiTypes = {};
 
   const discoverJsii = (dir: string) => {
-    const jsiiFile = path.join(dir, '.jsii');
-    if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
+    const jsiiFile = path.join(dir, ".jsii");
+    if (!fs.existsSync(jsiiFile)) {
+      return;
+    } // no jsii manifest
 
     const manifest = fs.readJsonSync(jsiiFile);
     for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
@@ -94,8 +96,8 @@ export function discover(...moduleDirs: string[]) {
   for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
     discoverJsii(dir);
 
-    if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
-      const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
+    if (dir.includes("@") && fs.lstatSync(dir).isDirectory()) {
+      const childDirs = fs.readdirSync(dir).map((file) => path.join(dir, file));
       for (const child of childDirs) {
         discoverJsii(child);
       }
@@ -125,7 +127,7 @@ export function resolveProjectType(projectFqn: string) {
   }
 
   // Read Projen JSII types
-  const projenManifest = readJsiiManifest('projen');
+  const projenManifest = readJsiiManifest("projen");
   for (const [fqn, type] of Object.entries(projenManifest.types as JsiiTypes)) {
     jsii[fqn] = type;
   }
@@ -141,24 +143,28 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
   const typeinfo = jsii[fqn];
 
   // projen.web.ReactProject -> web.ReactProject
-  const typename = fqn.substring(fqn.indexOf('.') + 1);
+  const typename = fqn.substring(fqn.indexOf(".") + 1);
 
   const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
-  let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
+  let pjid =
+    typeinfo.docs?.custom?.pjid ??
+    decamelize(typename).replace(/_project$/, "");
   return {
     moduleName: typeinfo.assembly,
     typename,
     pjid,
     fqn,
-    options: discoverOptions(jsii, fqn).sort((o1, o2) => o1.name.localeCompare(o2.name)),
+    options: discoverOptions(jsii, fqn).sort((o1, o2) =>
+      o1.name.localeCompare(o2.name)
+    ),
     docs: typeinfo.docs?.summary,
     docsurl,
   } as ProjectType;
 }
 
 export function readJsiiManifest(jsiiFqn: string): any {
-  let [moduleName] = jsiiFqn.split('.');
-  if (moduleName === 'projen') {
+  let [moduleName] = jsiiFqn.split(".");
+  if (moduleName === "projen") {
     moduleName = PROJEN_MODULE_ROOT;
   }
 
@@ -172,8 +178,15 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;
 
-  if (params.length > 1 || (params.length === 1 && optionsParam?.name !== 'options')) {
-    throw new Error(`constructor for project ${fqn} must have a single "options" argument of a struct type. got ${JSON.stringify(params)}`);
+  if (
+    params.length > 1 ||
+    (params.length === 1 && optionsParam?.name !== "options")
+  ) {
+    throw new Error(
+      `constructor for project ${fqn} must have a single "options" argument of a struct type. got ${JSON.stringify(
+        params
+      )}`
+    );
   }
 
   addOptions(optionsTypeFqn);
@@ -182,7 +195,11 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
   return opts.sort((a, b) => a.switch.localeCompare(b.switch));
 
-  function addOptions(ofqn?: string, basePath: string[] = [], optional = false) {
+  function addOptions(
+    ofqn?: string,
+    basePath: string[] = [],
+    optional = false
+  ) {
     if (!ofqn) {
       return;
     }
@@ -197,29 +214,36 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       // protect against double-booking
       if (prop.name in options) {
-        throw new Error(`duplicate option "${prop.name}" in ${fqn} (already declared in ${options[prop.name].parent})`);
+        throw new Error(
+          `duplicate option "${prop.name}" in ${fqn} (already declared in ${
+            options[prop.name].parent
+          })`
+        );
       }
 
       let typeName;
       if (prop.type?.primitive) {
         typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
       } else if (prop.type?.fqn) {
-        typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
-      } else { // any other types such as collection types
-        typeName = 'unknown';
+        typeName = prop.type?.fqn.split(".").pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      } else {
+        // any other types such as collection types
+        typeName = "unknown";
       }
 
       const isOptional = optional || prop.optional;
       let defaultValue = prop.docs?.default;
 
-      if (defaultValue === 'undefined') {
+      if (defaultValue === "undefined") {
         defaultValue = undefined;
       }
 
       // if this is a mandatory option and we have a default value, it has to be JSON-parsable to the correct type
       if (!isOptional && defaultValue) {
         if (!prop.type?.primitive) {
-          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${typeName}`);
+          throw new Error(
+            `required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${typeName}`
+          );
         }
 
         checkDefaultIsParsable(prop.name, defaultValue, prop.type?.primitive);
@@ -231,11 +255,11 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         name: prop.name,
         docs: prop.docs.summary,
         type: typeName,
-        switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
+        switch: propPath.map((p) => decamelize(p).replace(/_/g, "-")).join("-"),
         default: defaultValue,
         optional: isOptional,
-        featured: prop.docs?.custom?.featured === 'true',
-        deprecated: prop.docs.stability === 'deprecated' ? true : undefined,
+        featured: prop.docs?.custom?.featured === "true",
+        deprecated: prop.docs.stability === "deprecated" ? true : undefined,
       });
     }
 
@@ -258,7 +282,7 @@ function filterUndefined(obj: any) {
 function isProjectType(jsii: JsiiTypes, fqn: string) {
   const type = jsii[fqn];
 
-  if (type.kind !== 'class') {
+  if (type.kind !== "class") {
     return false;
   }
   if (type.abstract) {
@@ -288,16 +312,19 @@ function isProjectType(jsii: JsiiTypes, fqn: string) {
 
 function checkDefaultIsParsable(prop: string, value: string, type: string) {
   // macros are pass-through
-  if (value.startsWith('$')) {
+  if (value.startsWith("$")) {
     return;
   }
   try {
     const parsed = JSON.parse(value);
-    if (typeof(parsed) !== type) {
-      throw new Error(`cannot parse @default value for mandatory option ${prop} as a ${type}: ${parsed}`);
+    if (typeof parsed !== type) {
+      throw new Error(
+        `cannot parse @default value for mandatory option ${prop} as a ${type}: ${parsed}`
+      );
     }
-
   } catch (e) {
-    throw new Error(`unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${e.message}`);
+    throw new Error(
+      `unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${e.message}`
+    );
   }
 }

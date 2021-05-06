@@ -1,50 +1,50 @@
-import { JsonFile } from '..';
-import { synthSnapshot, TestProject } from './util';
+import { JsonFile } from "..";
+import { synthSnapshot, TestProject } from "./util";
 
-test('json object can be mutated before synthesis', () => {
+test("json object can be mutated before synthesis", () => {
   const prj = new TestProject();
 
   const obj: any = {
-    hello: 'world',
+    hello: "world",
   };
 
-  new JsonFile(prj, 'my/json/file.json', { obj, marker: false });
+  new JsonFile(prj, "my/json/file.json", { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
     foo: 1234,
   };
 
-  expect(synthSnapshot(prj)['my/json/file.json']).toStrictEqual({
-    hello: 'world',
+  expect(synthSnapshot(prj)["my/json/file.json"]).toStrictEqual({
+    hello: "world",
     anotherField: { foo: 1234 },
   });
 });
 
-test('omitEmpty', () => {
+test("omitEmpty", () => {
   // GIVEN
   const p = new TestProject();
 
   // WHEN
-  new JsonFile(p, 'file.json', {
+  new JsonFile(p, "file.json", {
     omitEmpty: true,
     obj: {
       hello: 1234,
       empty: {},
       array_with_undefined: [undefined, 123, 456],
       child: {
-        with: 'hello',
+        with: "hello",
         empty: {
           subchild: {},
         },
-        empty_strings_are_not_omitted: '',
+        empty_strings_are_not_omitted: "",
         zeros_are_not_omitted: 0,
         empty_array: [],
         array_with_empty_objects: [{}, 123],
         array_with_empty_subobjects: [
           {
             i_am_empty: {},
-            i_am_not: 'hi there',
+            i_am_not: "hi there",
           },
           {
             just: 1234,
@@ -56,17 +56,17 @@ test('omitEmpty', () => {
   });
 
   // THEN
-  expect(synthSnapshot(p)['file.json']).toStrictEqual({
+  expect(synthSnapshot(p)["file.json"]).toStrictEqual({
     hello: 1234,
     array_with_undefined: [123, 456], // undefined is skipped
     child: {
-      with: 'hello',
-      empty_strings_are_not_omitted: '',
+      with: "hello",
+      empty_strings_are_not_omitted: "",
       zeros_are_not_omitted: 0,
       array_with_empty_objects: [123],
       array_with_empty_subobjects: [
         {
-          i_am_not: 'hi there',
+          i_am_not: "hi there",
         },
         {
           just: 1234,
@@ -76,14 +76,14 @@ test('omitEmpty', () => {
   });
 });
 
-test('json file can contain projen marker', () => {
+test("json file can contain projen marker", () => {
   const prj = new TestProject();
 
   const obj: any = {};
 
-  new JsonFile(prj, 'my/json/file-marker.json', { obj, marker: true });
+  new JsonFile(prj, "my/json/file-marker.json", { obj, marker: true });
 
-  const output = synthSnapshot(prj)['my/json/file-marker.json'];
+  const output = synthSnapshot(prj)["my/json/file-marker.json"];
 
-  expect(output['//']).toBe(JsonFile.PROJEN_MARKER);
+  expect(output["//"]).toBe(JsonFile.PROJEN_MARKER);
 });

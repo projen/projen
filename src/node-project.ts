@@ -1,20 +1,25 @@
-import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { GithubWorkflow } from './github';
-import { AutoMerge } from './github/auto-merge';
-import { DependabotOptions } from './github/dependabot';
-import { MergifyOptions } from './github/mergify';
-import { IgnoreFile } from './ignore-file';
-import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
-import { Jest, JestOptions } from './jest';
-import { License } from './license';
-import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
-import { Project, ProjectOptions } from './project';
-import { ProjenUpgrade } from './projen-upgrade';
-import { Publisher } from './publisher';
-import { Task, TaskCategory } from './tasks';
-import { Version } from './version';
+import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from "./common";
+import { GithubWorkflow } from "./github";
+import { AutoMerge } from "./github/auto-merge";
+import { DependabotOptions } from "./github/dependabot";
+import { MergifyOptions } from "./github/mergify";
+import { IgnoreFile } from "./ignore-file";
+import { Projenrc, ProjenrcOptions } from "./javascript/projenrc";
+import { Jest, JestOptions } from "./jest";
+import { License } from "./license";
+import {
+  NodePackage,
+  NpmTaskExecution,
+  NodePackageManager,
+  NodePackageOptions,
+} from "./node-package";
+import { Project, ProjectOptions } from "./project";
+import { ProjenUpgrade } from "./projen-upgrade";
+import { Publisher } from "./publisher";
+import { Task, TaskCategory } from "./tasks";
+import { Version } from "./version";
 
-const PROJEN_SCRIPT = 'projen';
+const PROJEN_SCRIPT = "projen";
 
 export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
@@ -30,7 +35,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - current year
    */
   readonly copyrightPeriod?: string;
-
 
   /**
    * Version of projen to install.
@@ -315,7 +319,7 @@ export enum AutoRelease {
   /**
    * Automatically bump & release a new version on a daily basis.
    */
-  DAILY
+  DAILY,
 }
 
 /**
@@ -335,12 +339,16 @@ export class NodeProject extends Project {
   /**
    * @deprecated use `package.allowLibraryDependencies`
    */
-  public get allowLibraryDependencies(): boolean { return this.package.allowLibraryDependencies; }
+  public get allowLibraryDependencies(): boolean {
+    return this.package.allowLibraryDependencies;
+  }
 
   /**
    * @deprecated use `package.entrypoint`
    */
-  public get entrypoint(): string { return this.package.entrypoint; }
+  public get entrypoint(): string {
+    return this.package.entrypoint;
+  }
 
   /**
    * Compiles the code. By default for node.js projects this task is empty.
@@ -389,12 +397,16 @@ export class NodeProject extends Project {
   /**
    * Minimum node.js version required by this package.
    */
-  public get minNodeVersion(): string | undefined { return this.package.minNodeVersion; }
+  public get minNodeVersion(): string | undefined {
+    return this.package.minNodeVersion;
+  }
 
   /**
    * Maximum node version required by this pacakge.
    */
-  public get maxNodeVersion(): string | undefined { return this.package.maxNodeVersion; }
+  public get maxNodeVersion(): string | undefined {
+    return this.package.maxNodeVersion;
+  }
 
   private readonly nodeVersion?: string;
 
@@ -418,7 +430,9 @@ export class NodeProject extends Project {
    *
    * @deprecated use `package.packageManager`
    */
-  public get packageManager(): NodePackageManager { return this.package.packageManager; }
+  public get packageManager(): NodePackageManager {
+    return this.package.packageManager;
+  }
 
   /**
    * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -435,12 +449,16 @@ export class NodeProject extends Project {
    *
    * @deprecated use `package.npmTaskExecution`
    */
-  public get npmTaskExecution(): NpmTaskExecution { return this.package.npmTaskExecution; }
+  public get npmTaskExecution(): NpmTaskExecution {
+    return this.package.npmTaskExecution;
+  }
 
   /**
    * The command to use in order to run the projen CLI.
    */
-  public get projenCommand(): string { return this.package.projenCommand; }
+  public get projenCommand(): string {
+    return this.package.projenCommand;
+  }
 
   /**
    * @deprecated use `package.addField(x, y)`
@@ -456,39 +474,47 @@ export class NodeProject extends Project {
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
-        case NodePackageManager.NPM: return 'npm run';
-        case NodePackageManager.YARN: return 'yarn run';
-        case NodePackageManager.PNPM: return 'pnpm run';
-        default: throw new Error(`unexpected package manager ${this.packageManager}`);
+        case NodePackageManager.NPM:
+          return "npm run";
+        case NodePackageManager.YARN:
+          return "yarn run";
+        case NodePackageManager.PNPM:
+          return "pnpm run";
+        default:
+          throw new Error(`unexpected package manager ${this.packageManager}`);
       }
     })();
 
-    this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
+    this.nodeVersion =
+      options.workflowNodeVersion ?? this.package.minNodeVersion;
 
     this._version = new Version(this);
 
     // add PATH for all tasks which includes the project's npm .bin list
-    this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
+    this.tasks.addEnvironment(
+      "PATH",
+      '$(npx -c "node -e \\"console.log(process.env.PATH)\\"")'
+    );
 
-    this.compileTask = this.addTask('compile', {
-      description: 'Only compile',
+    this.compileTask = this.addTask("compile", {
+      description: "Only compile",
       category: TaskCategory.BUILD,
     });
 
-    this.testCompileTask = this.addTask('test:compile', {
-      description: 'compiles the test code',
+    this.testCompileTask = this.addTask("test:compile", {
+      description: "compiles the test code",
       category: TaskCategory.TEST,
     });
 
-    this.testTask = this.addTask('test', {
-      description: 'Run tests',
+    this.testTask = this.addTask("test", {
+      description: "Run tests",
       category: TaskCategory.TEST,
     });
 
     this.testTask.spawn(this.testCompileTask);
 
-    this.buildTask = this.addTask('build', {
-      description: 'Full release build (test+compile)',
+    this.buildTask = this.addTask("build", {
+      description: "Full release build (test+compile)",
       category: TaskCategory.BUILD,
     });
 
@@ -507,7 +533,7 @@ export class NodeProject extends Project {
     this.npmRegistry = this.package.npmRegistry;
 
     if (options.npmignoreEnabled ?? true) {
-      this.npmignore = new IgnoreFile(this, '.npmignore');
+      this.npmignore = new IgnoreFile(this, ".npmignore");
     }
 
     this.addDefaultGitIgnore();
@@ -520,7 +546,9 @@ export class NodeProject extends Project {
 
     if (options.npmignore?.length) {
       if (!this.npmignore) {
-        throw new Error('.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this');
+        throw new Error(
+          '.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this'
+        );
       }
 
       for (const i of options.npmignore) {
@@ -528,14 +556,12 @@ export class NodeProject extends Project {
       }
     }
 
-
     this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
-    this.setScript('start', `${this.package.projenCommand} start`);
+    this.setScript("start", `${this.package.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.npmignore?.exclude(`/${PROJEN_DIR}`);
     this.gitignore.include(`/${PROJEN_RC}`);
-
 
     const projen = options.projenDevDependency ?? true;
     if (projen) {
@@ -544,7 +570,9 @@ export class NodeProject extends Project {
     }
 
     if (!options.defaultReleaseBranch) {
-      throw new Error('"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"');
+      throw new Error(
+        '"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"'
+      );
     }
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
@@ -561,41 +589,44 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
-      const branch = '${{ github.event.pull_request.head.ref }}';
-      const repo = '${{ github.event.pull_request.head.repo.full_name }}';
-      const buildJobId = 'build';
+      const branch = "${{ github.event.pull_request.head.ref }}";
+      const repo = "${{ github.event.pull_request.head.repo.full_name }}";
+      const buildJobId = "build";
 
-      const workflow = this.createBuildWorkflow('Build', {
+      const workflow = this.createBuildWorkflow("Build", {
         jobId: buildJobId,
         trigger: {
-          pull_request: { },
+          pull_request: {},
         },
 
-        checkoutWith: mutableBuilds ? {
-          ref: branch,
-          repository: repo,
-        } : undefined,
+        checkoutWith: mutableBuilds
+          ? {
+              ref: branch,
+              repository: repo,
+            }
+          : undefined,
 
         postSteps: [
           {
-            name: 'Commit and push changes (if any)',
+            name: "Commit and push changes (if any)",
             run: `git diff --exit-code || (git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch})`,
           },
           {
             // only if not running from a fork
-            if: '${{ github.repository == github.event.pull_request.head.repo.full_name }}',
-            name: 'Update status check',
+            if:
+              "${{ github.repository == github.event.pull_request.head.repo.full_name }}",
+            name: "Update status check",
             run: [
-              'gh api',
-              '-X POST',
-              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
+              "gh api",
+              "-X POST",
+              "/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs",
               `-F name="${buildJobId}"`,
               '-F head_sha="$(git rev-parse HEAD)"',
               '-F status="completed"',
               '-F conclusion="success"',
-            ].join(' '),
+            ].join(" "),
             env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+              GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
           },
         ],
@@ -611,10 +642,10 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
-      const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
+      const defaultReleaseBranch = options.defaultReleaseBranch ?? "main";
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
-      const trigger: { [event: string]: any } = { };
+      const trigger: { [event: string]: any } = {};
 
       if (options.releaseEveryCommit ?? true) {
         trigger.push = { branches: releaseBranches };
@@ -624,65 +655,65 @@ export class NodeProject extends Project {
         trigger.schedule = { cron: options.releaseSchedule };
       }
 
-      const artifactDirectory = options.artifactsDirectory ?? 'dist';
-      const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
-      const jobId = 'release';
+      const artifactDirectory = options.artifactsDirectory ?? "dist";
+      const getVersion = "v$(node -p \"require('./package.json').version\")";
+      const jobId = "release";
 
       const releaseSteps: any[] = [];
 
       // to avoid race conditions between two commits trying to release the same
       // version, we check if the head sha is identical to the remote sha. if
       // not, we will skip the release and just finish the build.
-      const gitRemoteStep = 'git_remote';
-      const latestCommitOutput = 'latest_commit';
+      const gitRemoteStep = "git_remote";
+      const latestCommitOutput = "latest_commit";
       const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
       releaseSteps.push({
-        name: 'Check for new commits',
+        name: "Check for new commits",
         id: gitRemoteStep,
         run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
       });
 
       releaseSteps.push({
-        name: 'Create release',
+        name: "Create release",
         if: noNewCommits,
         run: [
           `gh release create ${getVersion}`,
           `-F ${this._version.changelogFile}`,
           `-t ${getVersion}`,
-        ].join(' '),
+        ].join(" "),
         env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
         },
       });
 
       releaseSteps.push({
-        name: 'Unbump',
+        name: "Unbump",
         run: this.runTaskCommand(this._version.unbumpTask),
       });
 
       releaseSteps.push({
-        name: 'Upload artifact',
+        name: "Upload artifact",
         if: noNewCommits,
-        uses: 'actions/upload-artifact@v2.1.1',
+        uses: "actions/upload-artifact@v2.1.1",
         with: {
           name: artifactDirectory,
           path: artifactDirectory,
         },
       });
 
-      const workflow = this.createBuildWorkflow('Release', {
+      const workflow = this.createBuildWorkflow("Release", {
         jobId: jobId,
         trigger,
         env: {
-          RELEASE: 'true',
+          RELEASE: "true",
         },
         preBuildSteps: [
           {
-            name: 'Bump to next version',
+            name: "Bump to next version",
             run: this.runTaskCommand(this._version.bumpTask),
           },
-          ...options.releaseWorkflowSetupSteps ?? [],
+          ...(options.releaseWorkflowSetupSteps ?? []),
         ],
         postSteps: releaseSteps,
         image: options.workflowContainerImage,
@@ -690,7 +721,7 @@ export class NodeProject extends Project {
         checkoutWith: {
           // we must use 'fetch-depth=0' in order to fetch all tags
           // otherwise tags are not checked out
-          'fetch-depth': 0,
+          "fetch-depth": 0,
         },
       });
 
@@ -721,7 +752,9 @@ export class NodeProject extends Project {
       }
 
       if (options.releaseEveryCommit) {
-        throw new Error('"releaseEveryCommit" is not supported for APP projects');
+        throw new Error(
+          '"releaseEveryCommit" is not supported for APP projects'
+        );
       }
 
       if (options.releaseSchedule) {
@@ -735,7 +768,7 @@ export class NodeProject extends Project {
         buildJob: this.buildWorkflowJobId,
       });
 
-      this.npmignore?.exclude('/.mergify.yml');
+      this.npmignore?.exclude("/.mergify.yml");
     }
 
     if (options.dependabot ?? true) {
@@ -746,13 +779,16 @@ export class NodeProject extends Project {
     new ProjenUpgrade(this, {
       autoUpgradeSecret: options.projenUpgradeSecret,
       autoUpgradeSchedule: options.projenUpgradeSchedule,
-      labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-        ? [this.autoMerge.autoMergeLabel]
-        : [],
+      labels:
+        projenAutoMerge && this.autoMerge?.autoMergeLabel
+          ? [this.autoMerge.autoMergeLabel]
+          : [],
     });
 
     if (options.pullRequestTemplate ?? true) {
-      this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
+      this.github?.addPullRequestTemplate(
+        ...(options.pullRequestTemplateContents ?? [])
+      );
     }
 
     const projenrcJs = options.projenrcJs ?? true;
@@ -843,14 +879,14 @@ export class NodeProject extends Project {
     const install = new Array();
     if (this.nodeVersion) {
       install.push({
-        name: 'Setup Node.js',
-        uses: 'actions/setup-node@v1',
-        with: { 'node-version': this.nodeVersion },
+        name: "Setup Node.js",
+        uses: "actions/setup-node@v1",
+        with: { "node-version": this.nodeVersion },
       });
     }
 
     install.push({
-      name: 'Install dependencies',
+      name: "Install dependencies",
       run: this.package.installCommand,
     });
     return install;
@@ -926,69 +962,75 @@ export class NodeProject extends Project {
 
   private addDefaultGitIgnore() {
     this.gitignore.exclude(
-      '# Logs',
-      'logs',
-      '*.log',
-      'npm-debug.log*',
-      'yarn-debug.log*',
-      'yarn-error.log*',
-      'lerna-debug.log*',
+      "# Logs",
+      "logs",
+      "*.log",
+      "npm-debug.log*",
+      "yarn-debug.log*",
+      "yarn-error.log*",
+      "lerna-debug.log*",
 
-      '# Diagnostic reports (https://nodejs.org/api/report.html)',
-      'report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json',
+      "# Diagnostic reports (https://nodejs.org/api/report.html)",
+      "report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json",
 
-      '# Runtime data',
-      'pids',
-      '*.pid',
-      '*.seed',
-      '*.pid.lock',
+      "# Runtime data",
+      "pids",
+      "*.pid",
+      "*.seed",
+      "*.pid.lock",
 
-      '# Directory for instrumented libs generated by jscoverage/JSCover',
-      'lib-cov',
+      "# Directory for instrumented libs generated by jscoverage/JSCover",
+      "lib-cov",
 
-      '# Coverage directory used by tools like istanbul',
-      'coverage',
-      '*.lcov',
+      "# Coverage directory used by tools like istanbul",
+      "coverage",
+      "*.lcov",
 
-      '# nyc test coverage',
-      '.nyc_output',
+      "# nyc test coverage",
+      ".nyc_output",
 
-      '# Compiled binary addons (https://nodejs.org/api/addons.html)',
-      'build/Release',
+      "# Compiled binary addons (https://nodejs.org/api/addons.html)",
+      "build/Release",
 
-      '# Dependency directories',
-      'node_modules/',
-      'jspm_packages/',
+      "# Dependency directories",
+      "node_modules/",
+      "jspm_packages/",
 
-      '# TypeScript cache',
-      '*.tsbuildinfo',
+      "# TypeScript cache",
+      "*.tsbuildinfo",
 
+      "# Optional eslint cache",
+      ".eslintcache",
 
-      '# Optional eslint cache',
-      '.eslintcache',
+      "# Output of 'npm pack'",
+      "*.tgz",
 
-      '# Output of \'npm pack\'',
-      '*.tgz',
+      "# Yarn Integrity file",
+      ".yarn-integrity",
 
-      '# Yarn Integrity file',
-      '.yarn-integrity',
-
-      '# parcel-bundler cache (https://parceljs.org/)',
-      '.cache',
+      "# parcel-bundler cache (https://parceljs.org/)",
+      ".cache"
     );
   }
 
-  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): GithubWorkflow {
+  private createBuildWorkflow(
+    name: string,
+    options: NodeBuildWorkflowOptions
+  ): GithubWorkflow {
     const buildJobId = options.jobId;
 
     const github = this.github;
-    if (!github) { throw new Error('no github support'); }
+    if (!github) {
+      throw new Error("no github support");
+    }
 
     const workflow = github.addWorkflow(name);
 
     if (options.trigger) {
       if (options.trigger.issue_comment) {
-        throw new Error('"issue_comment" should not be used as a trigger due to a security issue');
+        throw new Error(
+          '"issue_comment" should not be used as a trigger due to a security issue'
+        );
       }
 
       workflow.on(options.trigger);
@@ -1001,28 +1043,35 @@ export class NodeProject extends Project {
     const condition = options.condition ? { if: options.condition } : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
-    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
+    const checkoutWith = options.checkoutWith
+      ? { with: options.checkoutWith }
+      : {};
     const postSteps = options.postSteps ?? [];
 
-    const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
-      name: 'Anti-tamper check',
-      run: 'git diff --ignore-space-at-eol --exit-code',
-    }];
+    const antitamperSteps =
+      options.antitamperDisabled || !this.antitamper
+        ? []
+        : [
+            {
+              name: "Anti-tamper check",
+              run: "git diff --ignore-space-at-eol --exit-code",
+            },
+          ];
 
     const job: any = {
-      'runs-on': 'ubuntu-latest',
-      'env': {
-        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        ...options.env ?? {},
+      "runs-on": "ubuntu-latest",
+      env: {
+        CI: "true", // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+        ...(options.env ?? {}),
       },
       ...condition,
-      'steps': [
+      steps: [
         ...preCheckoutSteps,
 
         // check out sources.
         {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
+          name: "Checkout",
+          uses: "actions/checkout@v2",
           ...checkoutWith,
         },
 
@@ -1034,11 +1083,11 @@ export class NodeProject extends Project {
 
         // sets git identity so we can push later
         {
-          name: 'Set git identity',
+          name: "Set git identity",
           run: [
             'git config user.name "Automation"',
             'git config user.email "github-actions@github.com"',
-          ].join('\n'),
+          ].join("\n"),
         },
 
         // if there are changes, creates a bump commit
@@ -1047,22 +1096,28 @@ export class NodeProject extends Project {
 
         // build (compile + test)
         {
-          name: 'Build',
+          name: "Build",
           run: this.runTaskCommand(this.buildTask),
         },
 
         // run codecov if enabled or a secret token name is passed in
         // AND jest must be configured
-        ...(options.codeCov || options.codeCovTokenSecret) && this.jest?.config ? [{
-          name: 'Upload coverage to Codecov',
-          uses: 'codecov/codecov-action@v1',
-          with: options.codeCovTokenSecret ? {
-            token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-            directory: this.jest.config.coverageDirectory,
-          } : {
-            directory: this.jest.config.coverageDirectory,
-          },
-        }] : [],
+        ...((options.codeCov || options.codeCovTokenSecret) && this.jest?.config
+          ? [
+              {
+                name: "Upload coverage to Codecov",
+                uses: "codecov/codecov-action@v1",
+                with: options.codeCovTokenSecret
+                  ? {
+                      token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+                      directory: this.jest.config.coverageDirectory,
+                    }
+                  : {
+                      directory: this.jest.config.coverageDirectory,
+                    },
+              },
+            ]
+          : []),
 
         ...postSteps,
 
@@ -1091,10 +1146,14 @@ export class NodeProject extends Project {
    */
   public runTaskCommand(task: Task) {
     switch (this.package.npmTaskExecution) {
-      case NpmTaskExecution.PROJEN: return `${this.package.projenCommand} ${task.name}`;
-      case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
+      case NpmTaskExecution.PROJEN:
+        return `${this.package.projenCommand} ${task.name}`;
+      case NpmTaskExecution.SHELL:
+        return `${this.runScriptCommand} ${task.name}`;
       default:
-        throw new Error(`invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`);
+        throw new Error(
+          `invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`
+        );
     }
   }
 }

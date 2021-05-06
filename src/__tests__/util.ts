@@ -1,20 +1,20 @@
-import * as os from 'os';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { glob } from 'glob';
-import { LogLevel, Project, ProjectOptions } from '..';
-import * as logging from '../logging';
-import { exec } from '../util';
+import * as os from "os";
+import * as path from "path";
+import * as fs from "fs-extra";
+import { glob } from "glob";
+import { LogLevel, Project, ProjectOptions } from "..";
+import * as logging from "../logging";
+import { exec } from "../util";
 
-const PROJEN_CLI = require.resolve('../../bin/projen');
+const PROJEN_CLI = require.resolve("../../bin/projen");
 
 logging.disable(); // no logging during tests
 
 export class TestProject extends Project {
-  constructor(options: Omit<ProjectOptions, 'name'> = {}) {
+  constructor(options: Omit<ProjectOptions, "name"> = {}) {
     const tmpdir = mkdtemp();
     super({
-      name: 'my-project',
+      name: "my-project",
       outdir: tmpdir,
       clobber: false,
       logging: {
@@ -25,18 +25,17 @@ export class TestProject extends Project {
   }
 
   postSynthesize() {
-    fs.writeFileSync(path.join(this.outdir, '.postsynth'), '# postsynth');
+    fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
   }
 }
 
 export function execProjenCLI(workdir: string, args: string[] = []) {
-  const command = [
-    process.execPath,
-    PROJEN_CLI,
-    ...args,
-  ];
+  const command = [process.execPath, PROJEN_CLI, ...args];
 
-  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir, stdio: 'inherit' });
+  return exec(command.map((x) => `"${x}"`).join(" "), {
+    cwd: workdir,
+    stdio: "inherit",
+  });
 }
 
 export interface SynthOutput {
@@ -63,7 +62,7 @@ afterAll((done) => {
 });
 
 export function mkdtemp() {
-  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), "projen-test-"));
   autoRemove.add(tmpdir);
   return tmpdir;
 }
@@ -71,7 +70,7 @@ export function mkdtemp() {
 export function synthSnapshot(project: Project): any {
   const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
   try {
-    process.env.PROJEN_DISABLE_POST = 'true';
+    process.env.PROJEN_DISABLE_POST = "true";
     project.synth();
     return directorySnapshot(project.outdir);
   } finally {
@@ -103,10 +102,13 @@ export interface DirectorySnapshotOptions {
   readonly excludeGlobs?: string[];
 }
 
-export function directorySnapshot(root: string, options: DirectorySnapshotOptions = { }) {
-  const output: SynthOutput = { };
+export function directorySnapshot(
+  root: string,
+  options: DirectorySnapshotOptions = {}
+) {
+  const output: SynthOutput = {};
 
-  const files = glob.sync('**', {
+  const files = glob.sync("**", {
     ignore: options.excludeGlobs ?? [],
     cwd: root,
     nodir: true,
@@ -117,10 +119,10 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
     const filePath = path.join(root, file);
 
     let content;
-    if (path.extname(filePath) === '.json') {
+    if (path.extname(filePath) === ".json") {
       content = fs.readJsonSync(filePath);
     } else {
-      content = fs.readFileSync(filePath, 'utf-8');
+      content = fs.readFileSync(filePath, "utf-8");
     }
 
     output[file] = content;

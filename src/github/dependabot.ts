@@ -1,7 +1,7 @@
-import { version } from 'yargs';
-import { Component } from '../component';
-import { YamlFile } from '../yaml';
-import { GitHub } from './github';
+import { version } from "yargs";
+import { Component } from "../component";
+import { YamlFile } from "../yaml";
+import { GitHub } from "./github";
 
 export interface DependabotOptions {
   /**
@@ -76,17 +76,17 @@ export enum DependabotScheduleInterval {
   /**
    * Runs on every weekday, Monday to Friday.
    */
-  DAILY = 'daily',
+  DAILY = "daily",
 
   /**
    * Runs once each week. By default, this is on Monday.
    */
-  WEEKLY = 'weekly',
+  WEEKLY = "weekly",
 
   /**
    * Runs once each month. This is on the first day of the month.
    */
-  MONTHLY = 'monthly'
+  MONTHLY = "monthly",
 }
 
 /**
@@ -97,29 +97,29 @@ export enum VersioningStrategy {
    * Only create pull requests to update lockfiles updates. Ignore any new
    * versions that would require package manifest changes.
    */
-  LOCKFILE_ONLY = 'lockfile-only',
+  LOCKFILE_ONLY = "lockfile-only",
 
   /**
    * - For apps, the version requirements are increased.
    * - For libraries, the range of versions is widened.
    */
-  AUTO = 'auto',
+  AUTO = "auto",
 
   /**
    * Relax the version requirement to include both the new and old version, when
    * possible.
    */
-  WIDEN = 'widen',
+  WIDEN = "widen",
 
   /**
    * Always increase the version requirement to match the new version.
    */
-  INCREASE = 'increase',
+  INCREASE = "increase",
 
   /**
    * Increase the version requirement only when required by the new version.
    */
-  INCREASE_IF_NECESSARY = 'increase-if-necessary',
+  INCREASE_IF_NECESSARY = "increase-if-necessary",
 }
 
 /**
@@ -149,35 +149,33 @@ export class Dependabot extends Component {
       version: 2,
       updates: [
         {
-          'package-ecosystem': 'npm',
-          'versioning-strategy': 'lockfile-only',
-          'directory': '/',
-          'schedule': {
-            interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
+          "package-ecosystem": "npm",
+          "versioning-strategy": "lockfile-only",
+          directory: "/",
+          schedule: {
+            interval:
+              options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
-          'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
+          ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
         },
       ],
     };
 
-    new YamlFile(project, '.github/dependabot.yml', {
+    new YamlFile(project, ".github/dependabot.yml", {
       obj: this.config,
       committed: true,
     });
 
     if (options.autoMerge ?? true) {
       github.mergify?.addRule({
-        name: 'Merge pull requests from dependabot if CI passes',
-        conditions: [
-          'author=dependabot[bot]',
-          'status-success=build',
-        ],
+        name: "Merge pull requests from dependabot if CI passes",
+        conditions: ["author=dependabot[bot]", "status-success=build"],
         actions: {
           merge: {
-            method: 'squash',
-            commit_message: 'title+body',
-            strict: 'smart',
-            strict_method: 'merge',
+            method: "squash",
+            commit_message: "title+body",
+            strict: "smart",
+            strict_method: "merge",
           },
         },
       });
@@ -188,7 +186,7 @@ export class Dependabot extends Component {
     }
 
     if (options.ignoreProjen ?? true) {
-      this.addIgnore('projen');
+      this.addIgnore("projen");
     }
   }
 
@@ -203,8 +201,8 @@ export class Dependabot extends Component {
    */
   public addIgnore(dependencyName: string, ...versions: string[]) {
     this.ignore.push({
-      'dependency-name': dependencyName,
-      'versions': () => versions.length > 0 ? version : undefined,
+      "dependency-name": dependencyName,
+      versions: () => (versions.length > 0 ? version : undefined),
     });
   }
 }

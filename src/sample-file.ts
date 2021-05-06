@@ -1,8 +1,8 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { Component } from './component';
-import { Project } from './project';
-import { writeFile } from './util';
+import * as path from "path";
+import * as fs from "fs-extra";
+import { Component } from "./component";
+import { Project } from "./project";
+import { writeFile } from "./util";
 
 /**
  * Options for the SampleFile object.
@@ -36,7 +36,11 @@ export class SampleFile extends Component {
 
   public synthesize() {
     const contents = this.options.contents;
-    this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
+    this.writeOnceFileContents(
+      this.project.outdir,
+      this.filePath,
+      contents ?? ""
+    );
   }
 
   /**
@@ -47,7 +51,11 @@ export class SampleFile extends Component {
    * @return boolean - whether a new file was written or not.
    * @private
    */
-  private writeOnceFileContents(dir: string, filename: string, contents: string) {
+  private writeOnceFileContents(
+    dir: string,
+    filename: string,
+    contents: string
+  ) {
     const fullFilename = path.join(dir, filename);
     if (fs.existsSync(fullFilename)) {
       return;

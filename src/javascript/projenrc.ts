@@ -1,9 +1,9 @@
-import { existsSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
-import { Component } from '../component';
-import { renderJavaScriptOptions } from '../javascript/render-options';
-import { NodeProject } from '../node-project';
-import { Project } from '../project';
+import { existsSync, writeFileSync } from "fs";
+import { resolve } from "path";
+import { Component } from "../component";
+import { renderJavaScriptOptions } from "../javascript/render-options";
+import { NodeProject } from "../node-project";
+import { Project } from "../project";
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.
@@ -21,7 +21,7 @@ export class Projenrc extends Component {
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
-    this.rcfile = options.filename ?? '.projenrc.js';
+    this.rcfile = options.filename ?? ".projenrc.js";
 
     // this is the task projen executes when running `projen`
     project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
@@ -40,10 +40,10 @@ export class Projenrc extends Component {
       return;
     }
 
-    const parts = bootstrap.fqn.split('.');
+    const parts = bootstrap.fqn.split(".");
     const moduleName = parts[0];
     const importName = parts[1];
-    const className = parts.slice(1).join('.');
+    const className = parts.slice(1).join(".");
 
     const js = renderJavaScriptOptions({
       comments: bootstrap.comments,
@@ -56,9 +56,11 @@ export class Projenrc extends Component {
     lines.push();
     lines.push(`const project = new ${className}(${js});`);
     lines.push();
-    lines.push('project.synth();');
+    lines.push("project.synth();");
 
-    writeFileSync(rcfile, lines.join('\n'));
-    this.project.logger.info(`Project definition file was created at ${rcfile}`);
+    writeFileSync(rcfile, lines.join("\n"));
+    this.project.logger.info(
+      `Project definition file was created at ${rcfile}`
+    );
   }
 }

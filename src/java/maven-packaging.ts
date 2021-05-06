@@ -1,7 +1,7 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { Task, TaskCategory } from '../tasks';
-import { Pom } from './pom';
+import { Component } from "../component";
+import { Project } from "../project";
+import { Task, TaskCategory } from "../tasks";
+import { Pom } from "./pom";
 
 /**
  * Options for `MavenPackage`.
@@ -44,7 +44,7 @@ export class MavenPackaging extends Component {
   constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
     super(project);
 
-    pom.addPlugin('org.apache.maven.plugins/maven-jar-plugin@3.2.0', {
+    pom.addPlugin("org.apache.maven.plugins/maven-jar-plugin@3.2.0", {
       configuration: {
         archive: {
           index: true,
@@ -57,27 +57,23 @@ export class MavenPackaging extends Component {
     });
 
     if (options.sources ?? true) {
-      pom.addPlugin('org.apache.maven.plugins/maven-source-plugin@3.2.1', {
-        executions: [
-          { id: 'attach-sources', goals: ['jar'] },
-        ],
+      pom.addPlugin("org.apache.maven.plugins/maven-source-plugin@3.2.1", {
+        executions: [{ id: "attach-sources", goals: ["jar"] }],
       });
     }
 
     if (options.javadocs ?? true) {
-      pom.addPlugin('org.apache.maven.plugins/maven-javadoc-plugin@3.2.0', {
-        executions: [
-          { id: 'attach-javadocs', goals: ['jar'] },
-        ],
+      pom.addPlugin("org.apache.maven.plugins/maven-javadoc-plugin@3.2.0", {
+        executions: [{ id: "attach-javadocs", goals: ["jar"] }],
         configuration: {
           failOnError: false,
-          show: 'protected',
+          show: "protected",
           sourceFileExcludes: { exclude: options.javadocsExclude },
           detectJavaApiLink: false, // https://stackoverflow.com/a/61884267
           additionalJOptions: {
             additionalJOption: [
-              '-J-XX:+TieredCompilation',
-              '-J-XX:TieredStopAtLevel=1',
+              "-J-XX:+TieredCompilation",
+              "-J-XX:TieredStopAtLevel=1",
             ],
           },
         },
@@ -85,17 +81,19 @@ export class MavenPackaging extends Component {
     }
 
     const env = {
-      MAVEN_OPTS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1',
+      MAVEN_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
     };
 
-    const distdir = options.distdir ?? 'dist/java';
-    this.task = project.addTask('package', {
+    const distdir = options.distdir ?? "dist/java";
+    this.task = project.addTask("package", {
       category: TaskCategory.RELEASE,
       description: `Creates a java deployment package under ${distdir}`,
       env,
     });
     this.task.exec(`mkdir -p ${distdir}`);
-    this.task.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`);
+    this.task.exec(
+      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`
+    );
 
     project.gitignore.exclude(distdir);
   }

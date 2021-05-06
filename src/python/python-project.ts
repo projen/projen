@@ -1,15 +1,14 @@
-import { Projenrc } from '../javascript';
-import { Project, ProjectOptions, ProjectType } from '../project';
-import { Pip } from './pip';
-import { Poetry } from './poetry';
-import { Pytest, PytestOptions } from './pytest';
-import { IPythonDeps } from './python-deps';
-import { IPythonEnv } from './python-env';
-import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
-import { PythonSample } from './python-sample';
-import { Setuptools } from './setuptools';
-import { Venv, VenvOptions } from './venv';
-
+import { Projenrc } from "../javascript";
+import { Project, ProjectOptions, ProjectType } from "../project";
+import { Pip } from "./pip";
+import { Poetry } from "./poetry";
+import { Pytest, PytestOptions } from "./pytest";
+import { IPythonDeps } from "./python-deps";
+import { IPythonEnv } from "./python-env";
+import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { PythonSample } from "./python-sample";
+import { Setuptools } from "./setuptools";
+import { Venv, VenvOptions } from "./venv";
 
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
@@ -17,7 +16,9 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 /**
  * Options for `PythonProject`.
  */
-export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOptions {
+export interface PythonProjectOptions
+  extends ProjectOptions,
+    PythonPackagingOptions {
   // -- required options --
 
   /**
@@ -159,7 +160,9 @@ export class PythonProject extends Project {
     super(options);
 
     if (!PYTHON_PROJECT_NAME_REGEX.test(options.name)) {
-      throw new Error('Python projects must only consist of alphanumeric characters, hyphens, and underscores.');
+      throw new Error(
+        "Python projects must only consist of alphanumeric characters, hyphens, and underscores."
+      );
     }
 
     this.moduleName = options.moduleName;
@@ -173,7 +176,7 @@ export class PythonProject extends Project {
       this.depsManager = new Pip(this);
     }
 
-    if (options.setuptools ?? (this.projectType === ProjectType.LIB)) {
+    if (options.setuptools ?? this.projectType === ProjectType.LIB) {
       this.packagingManager = new Setuptools(this, {
         version: options.version,
         description: options.description,
@@ -206,7 +209,7 @@ export class PythonProject extends Project {
         homepage: options.homepage,
         classifiers: options.classifiers,
         poetryOptions: {
-          readme: options.readme?.filename ?? 'README.md',
+          readme: options.readme?.filename ?? "README.md",
           ...options.poetryOptions,
         },
       });
@@ -216,27 +219,42 @@ export class PythonProject extends Project {
     }
 
     if (!this.envManager) {
-      throw new Error('At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry).');
+      throw new Error(
+        "At least one tool must be chosen for managing the environment (venv, conda, pipenv, or poetry)."
+      );
     }
 
     if (!this.depsManager) {
-      throw new Error('At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry).');
+      throw new Error(
+        "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry)."
+      );
     }
 
     if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error('At least one tool must be chosen for managing packaging (setuptools or poetry).');
+      throw new Error(
+        "At least one tool must be chosen for managing packaging (setuptools or poetry)."
+      );
     }
 
     if (Number(options.venv ?? true) + Number(options.poetry ?? false) > 1) {
-      throw new Error('More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)');
+      throw new Error(
+        "More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)"
+      );
     }
 
     if (Number(options.pip ?? true) + Number(options.poetry ?? false) > 1) {
-      throw new Error('More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)');
+      throw new Error(
+        "More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)"
+      );
     }
 
-    if (Number(options.setuptools ?? true) + Number(options.poetry ?? false) > 1) {
-      throw new Error('More than one component has been chosen for managing packaging (setuptools or poetry)');
+    if (
+      Number(options.setuptools ?? true) + Number(options.poetry ?? false) >
+      1
+    ) {
+      throw new Error(
+        "More than one component has been chosen for managing packaging (setuptools or poetry)"
+      );
     }
 
     if (options.pytest ?? true) {
@@ -268,132 +286,132 @@ export class PythonProject extends Project {
    */
   private addDefaultGitIgnore() {
     this.gitignore.exclude(
-      '# Byte-compiled / optimized / DLL files',
-      '__pycache__/',
-      '*.py[cod]',
-      '*$py.class',
-      '',
-      '# C extensions',
-      '*.so',
-      '',
-      '# Distribution / packaging',
-      '.Python',
-      'build/',
-      'develop-eggs/',
-      'dist/',
-      'downloads/',
-      'eggs/',
-      '.eggs/',
-      'lib/',
-      'lib64/',
-      'parts/',
-      'sdist/',
-      'var/',
-      'wheels/',
-      'share/python-wheels/',
-      '*.egg-info/',
-      '.installed.cfg',
-      '*.egg',
-      'MANIFEST',
-      '',
-      '# PyInstaller',
-      '#  Usually these files are written by a python script from a template',
-      '#  before PyInstaller builds the exe, so as to inject date/other infos into it.',
-      '*.manifest',
-      '*.spec',
-      '',
-      '# Installer logs',
-      'pip-log.txt',
-      'pip-delete-this-directory.txt',
-      '',
-      '# Unit test / coverage reports',
-      'htmlcov/',
-      '.tox/',
-      '.nox/',
-      '.coverage',
-      '.coverage.*',
-      '.cache',
-      'nosetests.xml',
-      'coverage.xml',
-      '*.cover',
-      '*.py,cover',
-      '.hypothesis/',
-      '.pytest_cache/',
-      'cover/',
-      '',
-      '# Translations',
-      '*.mo',
-      '*.pot',
-      '',
-      '# Django stuff:',
-      '*.log',
-      'local_settings.py',
-      'db.sqlite3',
-      'db.sqlite3-journal',
-      '',
-      '# Flask stuff:',
-      'instance/',
-      '.webassets-cache',
-      '',
-      '# Scrapy stuff:',
-      '.scrapy',
-      '',
-      '# Sphinx documentation',
-      'docs/_build/',
-      '',
-      '# PyBuilder',
-      '.pybuilder/',
-      'target/',
-      '',
-      '# Jupyter Notebook',
-      '.ipynb_checkpoints',
-      '',
-      '# IPython',
-      'profile_default/',
-      'ipython_config.py',
-      '',
-      '# PEP 582; used by e.g. github.com/David-OConnor/pyflow',
-      '__pypackages__/',
-      '',
-      '# Celery stuff',
-      'celerybeat-schedule',
-      'celerybeat.pid',
-      '',
-      '# SageMath parsed files',
-      '*.sage.py',
-      '',
-      '# Environments',
-      '.env',
-      '.venv',
-      'env/',
-      'venv/',
-      'ENV/',
-      'env.bak/',
-      'venv.bak/',
-      '',
-      '# Spyder project settings',
-      '.spyderproject',
-      '.spyproject',
-      '',
-      '# Rope project settings',
-      '.ropeproject',
-      '',
-      '# mkdocs documentation',
-      '/site',
-      '',
-      '# mypy',
-      '.mypy_cache/',
-      '.dmypy.json',
-      'dmypy.json',
-      '',
-      '# Pyre type checker',
-      '.pyre/',
-      '',
-      '# pytype static type analyzer',
-      '.pytype/',
-      '',
-      '# Cython debug symbols',
-      'cython_debug/',
+      "# Byte-compiled / optimized / DLL files",
+      "__pycache__/",
+      "*.py[cod]",
+      "*$py.class",
+      "",
+      "# C extensions",
+      "*.so",
+      "",
+      "# Distribution / packaging",
+      ".Python",
+      "build/",
+      "develop-eggs/",
+      "dist/",
+      "downloads/",
+      "eggs/",
+      ".eggs/",
+      "lib/",
+      "lib64/",
+      "parts/",
+      "sdist/",
+      "var/",
+      "wheels/",
+      "share/python-wheels/",
+      "*.egg-info/",
+      ".installed.cfg",
+      "*.egg",
+      "MANIFEST",
+      "",
+      "# PyInstaller",
+      "#  Usually these files are written by a python script from a template",
+      "#  before PyInstaller builds the exe, so as to inject date/other infos into it.",
+      "*.manifest",
+      "*.spec",
+      "",
+      "# Installer logs",
+      "pip-log.txt",
+      "pip-delete-this-directory.txt",
+      "",
+      "# Unit test / coverage reports",
+      "htmlcov/",
+      ".tox/",
+      ".nox/",
+      ".coverage",
+      ".coverage.*",
+      ".cache",
+      "nosetests.xml",
+      "coverage.xml",
+      "*.cover",
+      "*.py,cover",
+      ".hypothesis/",
+      ".pytest_cache/",
+      "cover/",
+      "",
+      "# Translations",
+      "*.mo",
+      "*.pot",
+      "",
+      "# Django stuff:",
+      "*.log",
+      "local_settings.py",
+      "db.sqlite3",
+      "db.sqlite3-journal",
+      "",
+      "# Flask stuff:",
+      "instance/",
+      ".webassets-cache",
+      "",
+      "# Scrapy stuff:",
+      ".scrapy",
+      "",
+      "# Sphinx documentation",
+      "docs/_build/",
+      "",
+      "# PyBuilder",
+      ".pybuilder/",
+      "target/",
+      "",
+      "# Jupyter Notebook",
+      ".ipynb_checkpoints",
+      "",
+      "# IPython",
+      "profile_default/",
+      "ipython_config.py",
+      "",
+      "# PEP 582; used by e.g. github.com/David-OConnor/pyflow",
+      "__pypackages__/",
+      "",
+      "# Celery stuff",
+      "celerybeat-schedule",
+      "celerybeat.pid",
+      "",
+      "# SageMath parsed files",
+      "*.sage.py",
+      "",
+      "# Environments",
+      ".env",
+      ".venv",
+      "env/",
+      "venv/",
+      "ENV/",
+      "env.bak/",
+      "venv.bak/",
+      "",
+      "# Spyder project settings",
+      ".spyderproject",
+      ".spyproject",
+      "",
+      "# Rope project settings",
+      ".ropeproject",
+      "",
+      "# mkdocs documentation",
+      "/site",
+      "",
+      "# mypy",
+      ".mypy_cache/",
+      ".dmypy.json",
+      "dmypy.json",
+      "",
+      "# Pyre type checker",
+      ".pyre/",
+      "",
+      "# pytype static type analyzer",
+      ".pytype/",
+      "",
+      "# Cython debug symbols",
+      "cython_debug/"
     );
   }
 

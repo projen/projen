@@ -1,10 +1,10 @@
-import * as path from 'path';
-import * as semver from 'semver';
-import { NodeProject } from './node-project';
-import { TaskCategory } from './tasks';
-import { TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
+import * as path from "path";
+import * as semver from "semver";
+import { NodeProject } from "./node-project";
+import { TaskCategory } from "./tasks";
+import { TypescriptConfig, TypescriptConfigOptions } from "./typescript-config";
 
-const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
+const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
 // Pulled from https://jestjs.io/docs/en/configuration
 export interface JestConfigOptions {
@@ -69,7 +69,7 @@ export interface JestConfigOptions {
    * Allowed values are babel (default) or v8
    * @default - "babel"
    */
-  readonly coverageProvider?: 'babel' | 'v8';
+  readonly coverageProvider?: "babel" | "v8";
 
   /**
    * A list of reporter names that Jest uses when writing coverage reports. Any istanbul reporter can be used
@@ -206,7 +206,13 @@ export interface JestConfigOptions {
    * Specifies notification mode. Requires notify: true
    * @default - failure-change
    */
-  readonly notifyMode?: 'always' | 'failure' | 'success' | 'change' | 'success-change' | 'failure-change';
+  readonly notifyMode?:
+    | "always"
+    | "failure"
+    | "success"
+    | "change"
+    | "success-change"
+    | "failure-change";
 
   /**
    * A preset that is used as a base for Jest's configuration. A preset should point to an npm module
@@ -545,7 +551,7 @@ export class Jest {
    */
   public readonly config: any;
 
-  private readonly testMatch: string[]
+  private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -559,34 +565,48 @@ export class Jest {
     this.project = project;
 
     // Jest snapshot files are generated files!
-    project.root.github?.annotateGenerated('*.snap');
+    project.root.github?.annotateGenerated("*.snap");
 
-    const jestDep = options.jestVersion ? `jest@${options.jestVersion}` : 'jest';
+    const jestDep = options.jestVersion
+      ? `jest@${options.jestVersion}`
+      : "jest";
     project.addDevDeps(jestDep);
 
     this.jestConfig = options.jestConfig;
     this.typescriptConfig = options.typescriptConfig;
 
-    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? options.ignorePatterns ?? ['/node_modules/'];
-    this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? ['/node_modules/'];
-    this.coverageReporters = this.jestConfig?.coverageReporters ?? ['json', 'lcov', 'clover'];
-    this.testMatch = this.jestConfig?.testMatch ?? ['**\/__tests__/**\/*.[jt]s?(x)', '**\/?(*.)+(spec|test).[tj]s?(x)'];
+    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
+      options.ignorePatterns ?? ["/node_modules/"];
+    this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? [
+      "/node_modules/",
+    ];
+    this.coverageReporters = this.jestConfig?.coverageReporters ?? [
+      "json",
+      "lcov",
+      "clover",
+    ];
+    this.testMatch = this.jestConfig?.testMatch ?? [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)",
+    ];
 
-    const coverageDirectory = this.jestConfig?.coverageDirectory ?? 'coverage';
+    const coverageDirectory = this.jestConfig?.coverageDirectory ?? "coverage";
 
     this.reporters = [];
 
     if (options.preserveDefaultReporters ?? true) {
-      this.reporters.unshift('default');
+      this.reporters.unshift("default");
     }
 
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
-      collectCoverage: options.coverage ?? this.jestConfig?.collectCoverage ?? true,
+      collectCoverage:
+        options.coverage ?? this.jestConfig?.collectCoverage ?? true,
       coverageReporters: this.coverageReporters,
       coverageDirectory: coverageDirectory,
-      coveragePathIgnorePatterns: this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
+      coveragePathIgnorePatterns:
+        this.jestConfig?.coveragePathIgnorePatterns ?? this.ignorePatterns,
       testPathIgnorePatterns: this.ignorePatterns,
       watchPathIgnorePatterns: this.watchIgnorePatterns,
       testMatch: this.testMatch,
@@ -597,22 +617,19 @@ export class Jest {
     if (options.junitReporting ?? true) {
       const reportsDir = DEFAULT_TEST_REPORTS_DIR;
 
-      this.addReporter([
-        'jest-junit',
-        { outputDirectory: reportsDir },
-      ]);
+      this.addReporter(["jest-junit", { outputDirectory: reportsDir }]);
 
-      project.addDevDeps('jest-junit@^12');
+      project.addDevDeps("jest-junit@^12");
 
       project.gitignore.exclude(
-        '# jest-junit artifacts',
+        "# jest-junit artifacts",
         `/${reportsDir}/`,
-        'junit.xml',
+        "junit.xml"
       );
       project.npmignore?.exclude(
-        '# jest-junit artifacts',
+        "# jest-junit artifacts",
         `/${reportsDir}/`,
-        'junit.xml',
+        "junit.xml"
       );
     }
 
@@ -632,12 +649,12 @@ export class Jest {
 
     project.addFields({ jest: this.config });
 
-    const coverageDirectoryPath = path.posix.join('/', coverageDirectory);
+    const coverageDirectoryPath = path.posix.join("/", coverageDirectory);
     project.npmignore?.exclude(coverageDirectoryPath);
     project.gitignore.exclude(coverageDirectoryPath);
 
     if (options.coverageText ?? true) {
-      this.coverageReporters.push('text');
+      this.coverageReporters.push("text");
     }
   }
 
@@ -676,14 +693,18 @@ export class Jest {
    */
   public generateTypescriptConfig(options: TypescriptConfigOptions) {
     const tsconfig = new TypescriptConfig(this.project, {
-      fileName: options.fileName ?? 'tsconfig.jest.json',
+      fileName: options.fileName ?? "tsconfig.jest.json",
       include: [
-        ...options.include ? options.include : [],
-        ...this.typescriptConfig?.include ? this.typescriptConfig?.include : [],
+        ...(options.include ? options.include : []),
+        ...(this.typescriptConfig?.include
+          ? this.typescriptConfig?.include
+          : []),
       ],
       exclude: [
-        ...options.exclude ? options.exclude : [],
-        ...this.typescriptConfig?.exclude ? this.typescriptConfig?.exclude : [],
+        ...(options.exclude ? options.exclude : []),
+        ...(this.typescriptConfig?.exclude
+          ? this.typescriptConfig?.exclude
+          : []),
       ],
       compilerOptions: {
         ...options.compilerOptions,
@@ -691,57 +712,57 @@ export class Jest {
       },
     });
 
-    this.config.preset = 'ts-jest';
+    this.config.preset = "ts-jest";
 
     // only process .ts files
     this.config.testMatch = this.jestConfig?.testMatch ?? [
-      '**/__tests__/**/*.ts?(x)',
-      '**/?(*.)+(spec|test).ts?(x)',
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)",
     ];
 
     // specify tsconfig.json
     this.config.globals = {
-      'ts-jest': {
+      "ts-jest": {
         tsconfig: tsconfig.fileName,
       },
     };
 
     // add relevant deps
-    this.project.addDevDeps(
-      '@types/jest',
-      'ts-jest',
-    );
+    this.project.addDevDeps("@types/jest", "ts-jest");
 
     return tsconfig;
   }
 
   private configureTestCommand() {
-    const jestOpts = ['--passWithNoTests', '--all'];
+    const jestOpts = ["--passWithNoTests", "--all"];
 
     // if the project has anti-tamper configured, it should be safe to always run tests
     // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
     if (this.project.antitamper) {
-      jestOpts.push('--updateSnapshot');
+      jestOpts.push("--updateSnapshot");
     }
 
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
-    if (this.project.package.minNodeVersion && semver.gte(this.project.package.minNodeVersion, '14.0.0')) {
-      jestOpts.push('--coverageProvider=v8');
+    if (
+      this.project.package.minNodeVersion &&
+      semver.gte(this.project.package.minNodeVersion, "14.0.0")
+    ) {
+      jestOpts.push("--coverageProvider=v8");
     }
 
-    this.project.testTask.exec(`jest ${jestOpts.join(' ')}`);
+    this.project.testTask.exec(`jest ${jestOpts.join(" ")}`);
 
-    this.project.addTask('test:watch', {
-      description: 'Run jest in watch mode',
+    this.project.addTask("test:watch", {
+      description: "Run jest in watch mode",
       category: TaskCategory.TEST,
-      exec: 'jest --watch',
+      exec: "jest --watch",
     });
 
-    this.project.addTask('test:update', {
-      description: 'Update jest snapshots',
+    this.project.addTask("test:update", {
+      description: "Update jest snapshots",
       category: TaskCategory.TEST,
-      exec: 'jest --updateSnapshot',
+      exec: "jest --updateSnapshot",
     });
   }
 }

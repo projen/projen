@@ -1,14 +1,21 @@
-import * as path from 'path';
-import { PROJEN_DIR, PROJEN_RC } from './common';
-import { Component } from './component';
-import { Eslint, EslintOptions } from './eslint';
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleDir } from './sample-file';
-import { Task, TaskCategory } from './tasks';
-import { TextFile } from './textfile';
-import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
-import { TypedocDocgen } from './typescript-typedoc';
-import { Projenrc, ProjenrcOptions as ProjenrcTsOptions } from './typescript/projenrc';
+import * as path from "path";
+import { PROJEN_DIR, PROJEN_RC } from "./common";
+import { Component } from "./component";
+import { Eslint, EslintOptions } from "./eslint";
+import { NodeProject, NodeProjectOptions } from "./node-project";
+import { SampleDir } from "./sample-file";
+import { Task, TaskCategory } from "./tasks";
+import { TextFile } from "./textfile";
+import {
+  TypeScriptCompilerOptions,
+  TypescriptConfig,
+  TypescriptConfigOptions,
+} from "./typescript-config";
+import { TypedocDocgen } from "./typescript-typedoc";
+import {
+  Projenrc,
+  ProjenrcOptions as ProjenrcTsOptions,
+} from "./typescript/projenrc";
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -179,21 +186,21 @@ export class TypeScriptProject extends NodeProject {
       },
     });
 
-    this.srcdir = options.srcdir ?? 'src';
-    this.libdir = options.libdir ?? 'lib';
+    this.srcdir = options.srcdir ?? "src";
+    this.libdir = options.libdir ?? "lib";
 
     this.docgen = options.docgen;
-    this.docsDirectory = options.docsDirectory ?? 'docs/';
+    this.docsDirectory = options.docsDirectory ?? "docs/";
 
-    this.compileTask.exec('tsc');
+    this.compileTask.exec("tsc");
 
-    this.watchTask = this.addTask('watch', {
-      description: 'Watch & compile in the background',
+    this.watchTask = this.addTask("watch", {
+      description: "Watch & compile in the background",
       category: TaskCategory.BUILD,
-      exec: 'tsc -w',
+      exec: "tsc -w",
     });
 
-    this.testdir = options.testdir ?? 'test';
+    this.testdir = options.testdir ?? "test";
     this.gitignore.include(`/${this.testdir}`);
     this.npmignore?.exclude(`/${this.testdir}`);
 
@@ -213,22 +220,29 @@ export class TypeScriptProject extends NodeProject {
     }
 
     if (options.package ?? true) {
-      this.packageTask = this.addTask('package', {
-        description: 'Create an npm tarball',
+      this.packageTask = this.addTask("package", {
+        description: "Create an npm tarball",
         category: TaskCategory.RELEASE,
       });
 
-      this.packageTask.exec('rm -fr dist');
-      this.packageTask.exec('mkdir -p dist/js');
+      this.packageTask.exec("rm -fr dist");
+      this.packageTask.exec("mkdir -p dist/js");
       this.packageTask.exec(`${this.package.packageManager} pack`);
-      this.packageTask.exec('mv *.tgz dist/js/');
+      this.packageTask.exec("mv *.tgz dist/js/");
 
       this.buildTask.spawn(this.packageTask);
     }
 
-    if (options.entrypointTypes || this.entrypoint !== '') {
-      const entrypointTypes = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;
-      this.package.addField('types', entrypointTypes);
+    if (options.entrypointTypes || this.entrypoint !== "") {
+      const entrypointTypes =
+        options.entrypointTypes ??
+        `${path
+          .join(
+            path.dirname(this.entrypoint),
+            path.basename(this.entrypoint, ".js")
+          )
+          .replace(/\\/g, "/")}.d.ts`;
+      this.package.addField("types", entrypointTypes);
     }
 
     const compilerOptionDefaults: TypeScriptCompilerOptions = {
@@ -237,8 +251,8 @@ export class TypeScriptProject extends NodeProject {
       experimentalDecorators: true,
       inlineSourceMap: true,
       inlineSources: true,
-      lib: ['es2018'],
-      module: 'CommonJS',
+      lib: ["es2018"],
+      module: "CommonJS",
       noEmitOnError: false,
       noFallthroughCasesInSwitch: true,
       noImplicitAny: true,
@@ -251,24 +265,23 @@ export class TypeScriptProject extends NodeProject {
       strictNullChecks: true,
       strictPropertyInitialization: true,
       stripInternal: true,
-      target: 'ES2018',
+      target: "ES2018",
     };
 
     if (!options.disableTsconfig) {
       const baseTsconfig: TypescriptConfigOptions = {
         include: [`${this.srcdir}/**/*.ts`],
-        exclude: [
-          'node_modules',
-          this.libdir,
-        ],
+        exclude: ["node_modules", this.libdir],
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
           ...compilerOptionDefaults,
         },
       };
-      this.tsconfig = new TypescriptConfig(this,
-        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+      this.tsconfig = new TypescriptConfig(
+        this,
+        mergeTsconfigOptions([baseTsconfig, options.tsconfig])
+      );
     }
 
     this.gitignore.exclude(`/${this.libdir}`);
@@ -280,19 +293,19 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.include(`/${this.libdir}/**/*.js`);
     this.npmignore?.include(`/${this.libdir}/**/*.d.ts`);
 
-    this.gitignore.exclude('/dist');
-    this.npmignore?.exclude('dist'); // jsii-pacmak expects this to be "dist" and not "/dist". otherwise it will tamper with it
+    this.gitignore.exclude("/dist");
+    this.npmignore?.exclude("dist"); // jsii-pacmak expects this to be "dist" and not "/dist". otherwise it will tamper with it
 
-    this.npmignore?.exclude('/tsconfig.json');
-    this.npmignore?.exclude('/.github');
-    this.npmignore?.exclude('/.vscode');
-    this.npmignore?.exclude('/.idea');
-    this.npmignore?.exclude('/.projenrc.js');
+    this.npmignore?.exclude("/tsconfig.json");
+    this.npmignore?.exclude("/.github");
+    this.npmignore?.exclude("/.vscode");
+    this.npmignore?.exclude("/.idea");
+    this.npmignore?.exclude("/.projenrc.js");
 
     // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
     // just run them directly from javascript.
     if (this.jest && compiledTests) {
-      this.addDevDeps('@types/jest');
+      this.addDevDeps("@types/jest");
 
       const testout = path.posix.relative(this.srcdir, this.testdir);
       const libtest = path.posix.join(this.libdir, testout);
@@ -303,49 +316,59 @@ export class TypeScriptProject extends NodeProject {
 
       const resolveSnapshotPath = (test: string, ext: string) => {
         const fullpath = test.replace(libtest, srctest);
-        return path.join(path.dirname(fullpath), '__snapshots__', path.basename(fullpath, '.js') + '.ts' + ext);
+        return path.join(
+          path.dirname(fullpath),
+          "__snapshots__",
+          path.basename(fullpath, ".js") + ".ts" + ext
+        );
       };
 
       const resolveTestPath = (snap: string, ext: string) => {
-        const filename = path.basename(snap, '.ts' + ext) + '.js';
+        const filename = path.basename(snap, ".ts" + ext) + ".js";
         const dir = path.dirname(path.dirname(snap)).replace(srctest, libtest);
         return path.join(dir, filename);
       };
 
-      const resolver = new TextFile(this, path.posix.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
+      const resolver = new TextFile(
+        this,
+        path.posix.join(PROJEN_DIR, "jest-snapshot-resolver.js")
+      );
       resolver.addLine('const path = require("path");');
       resolver.addLine(`const libtest = "${libtest}";`);
       resolver.addLine(`const srctest= "${srctest}";`);
-      resolver.addLine('module.exports = {');
-      resolver.addLine(`  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`);
+      resolver.addLine("module.exports = {");
+      resolver.addLine(
+        `  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`
+      );
       resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
-      resolver.addLine('  testPathForConsistencyCheck: path.join(\'some\', \'__tests__\', \'example.test.js\')');
-      resolver.addLine('};');
+      resolver.addLine(
+        "  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')"
+      );
+      resolver.addLine("};");
 
       this.jest.addSnapshotResolver(`./${resolver.path}`);
     }
 
     if (this.jest && !compiledTests) {
-      this.jest.addTestMatch('**\/__tests__/**\/*.ts?(x)');
-      this.jest.addTestMatch('**\/?(*.)+(spec|test).ts?(x)');
+      this.jest.addTestMatch("**/__tests__/**/*.ts?(x)");
+      this.jest.addTestMatch("**/?(*.)+(spec|test).ts?(x)");
 
       const baseTsconfig: TypescriptConfigOptions = {
-        fileName: 'tsconfig.jest.json',
+        fileName: "tsconfig.jest.json",
         include: [
           PROJEN_RC,
           `${this.srcdir}/**/*.ts`,
           `${this.testdir}/**/*.ts`,
         ],
-        exclude: [
-          'node_modules',
-        ],
+        exclude: ["node_modules"],
         compilerOptions: compilerOptionDefaults,
       };
 
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
       const tsconfig = this.jest.generateTypescriptConfig(
-        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+        mergeTsconfigOptions([baseTsconfig, options.tsconfig])
+      );
 
       // if we test before compilation, remove the lib/ directory before running
       // tests so that we get a clean slate for testing.
@@ -361,34 +384,37 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: './tsconfig.eslint.json',
+        tsconfigPath: "./tsconfig.eslint.json",
         dirs: [this.srcdir],
-        devdirs: [this.testdir, 'build-tools'],
-        fileExtensions: ['.ts', '.tsx'],
+        devdirs: [this.testdir, "build-tools"],
+        fileExtensions: [".ts", ".tsx"],
         ...options.eslintOptions,
       });
 
       const baseTsconfig = {
-        fileName: 'tsconfig.eslint.json',
+        fileName: "tsconfig.eslint.json",
         include: [
           PROJEN_RC,
           `${this.srcdir}/**/*.ts`,
           `${this.testdir}/**/*.ts`,
         ],
-        exclude: [
-          'node_modules',
-        ],
+        exclude: ["node_modules"],
         compilerOptions: compilerOptionDefaults,
       };
 
-      this.tsconfigEslint = new TypescriptConfig(this, mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+      this.tsconfigEslint = new TypescriptConfig(
+        this,
+        mergeTsconfigOptions([baseTsconfig, options.tsconfig])
+      );
     }
 
-    const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
+    const tsver = options.typescriptVersion
+      ? `@${options.typescriptVersion}`
+      : "";
 
     this.addDevDeps(
       `typescript${tsver}`,
-      `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+      `@types/node@^${this.package.minNodeVersion ?? "10.17.0"}` // install the minimum version to ensure compatibility
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
@@ -411,30 +437,30 @@ class SampleCode extends Component {
   constructor(project: TypeScriptProject) {
     super(project);
     const srcCode = [
-      'export class Hello {',
-      '  public sayHello() {',
-      '    return \'hello, world!\';',
-      '  }',
-      '}',
-    ].join('\n');
+      "export class Hello {",
+      "  public sayHello() {",
+      "    return 'hello, world!';",
+      "  }",
+      "}",
+    ].join("\n");
 
     const testCode = [
       "import { Hello } from '../src';",
-      '',
+      "",
       "test('hello', () => {",
       "  expect(new Hello().sayHello()).toBe('hello, world!');",
-      '});',
-    ].join('\n');
+      "});",
+    ].join("\n");
 
     new SampleDir(project, project.srcdir, {
       files: {
-        'index.ts': srcCode,
+        "index.ts": srcCode,
       },
     });
 
     new SampleDir(project, project.testdir, {
       files: {
-        'hello.test.ts': testCode,
+        "hello.test.ts": testCode,
       },
     });
   }
@@ -450,7 +476,7 @@ export class TypeScriptAppProject extends TypeScriptProject {
     super({
       allowLibraryDependencies: false,
       releaseWorkflow: false,
-      entrypoint: '', // "main" is not needed in typescript apps
+      entrypoint: "", // "main" is not needed in typescript apps
       package: false,
       ...options,
     });
@@ -460,34 +486,32 @@ export class TypeScriptAppProject extends TypeScriptProject {
 /**
  * @deprecated use `TypeScriptProject`
  */
-export class TypeScriptLibraryProject extends TypeScriptProject {
-};
+export class TypeScriptLibraryProject extends TypeScriptProject {}
 
 /**
  * @deprecated use TypeScriptProjectOptions
  */
-export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOptions {
-}
+export interface TypeScriptLibraryProjectOptions
+  extends TypeScriptProjectOptions {}
 
 /**
  * @internal
  */
-export function mergeTsconfigOptions(options: (TypescriptConfigOptions | undefined)[]): TypescriptConfigOptions {
+export function mergeTsconfigOptions(
+  options: (TypescriptConfigOptions | undefined)[]
+): TypescriptConfigOptions {
   const definedOptions = options.filter(Boolean) as TypescriptConfigOptions[];
-  return definedOptions.reduce<TypescriptConfigOptions>((previous, current) => ({
-    ...previous,
-    ...current,
-    include: [
-      ...previous.include ?? [],
-      ...current.include ?? [],
-    ],
-    exclude: [
-      ...previous.exclude ?? [],
-      ...current.exclude ?? [],
-    ],
-    compilerOptions: {
-      ...previous.compilerOptions,
-      ...current.compilerOptions,
-    },
-  }), { compilerOptions: {} });
+  return definedOptions.reduce<TypescriptConfigOptions>(
+    (previous, current) => ({
+      ...previous,
+      ...current,
+      include: [...(previous.include ?? []), ...(current.include ?? [])],
+      exclude: [...(previous.exclude ?? []), ...(current.exclude ?? [])],
+      compilerOptions: {
+        ...previous.compilerOptions,
+        ...current.compilerOptions,
+      },
+    }),
+    { compilerOptions: {} }
+  );
 }

@@ -1,47 +1,80 @@
-import * as os from 'os';
-import * as path from 'path';
-import * as vm from 'vm';
-import * as fs from 'fs-extra';
-import * as inquirer from 'inquirer';
-import * as yargs from 'yargs';
-import * as inventory from '../../inventory';
-import { renderJavaScriptOptions } from '../../javascript/render-options';
-import * as logging from '../../logging';
-import { NewProjectOptionHints } from '../../option-hints';
-import { exec, execOrUndefined } from '../../util';
-import { tryProcessMacro } from '../macros';
+import * as os from "os";
+import * as path from "path";
+import * as vm from "vm";
+import * as fs from "fs-extra";
+import * as inquirer from "inquirer";
+import * as yargs from "yargs";
+import * as inventory from "../../inventory";
+import { renderJavaScriptOptions } from "../../javascript/render-options";
+import * as logging from "../../logging";
+import { NewProjectOptionHints } from "../../option-hints";
+import { exec, execOrUndefined } from "../../util";
+import { tryProcessMacro } from "../macros";
 
 class Command implements yargs.CommandModule {
-  public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
-  public readonly describe = 'Creates a new projen project';
+  public readonly command = "new [PROJECT-TYPE] [OPTIONS]";
+  public readonly describe = "Creates a new projen project";
 
   public builder(args: yargs.Argv) {
-    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
-    args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
-    args.option('comments', { type: 'boolean', default: true, desc: 'Include commented out options in .projenrc.js (use --no-comments to disable)' });
-    args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
-    args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
-    args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
+    args.positional("PROJECT-TYPE", {
+      describe:
+        "optional only when --from is used and there is a single project type in the external module",
+      type: "string",
+    });
+    args.option("synth", {
+      type: "boolean",
+      default: true,
+      desc: "Synthesize after creating .projenrc.js",
+    });
+    args.option("comments", {
+      type: "boolean",
+      default: true,
+      desc:
+        "Include commented out options in .projenrc.js (use --no-comments to disable)",
+    });
+    args.option("from", {
+      type: "string",
+      alias: "f",
+      desc:
+        'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")',
+    });
+    args.example(
+      "projen new awscdk-app-ts",
+      'Creates a new project of built-in type "awscdk-app-ts"'
+    );
+    args.example(
+      "projen new --from projen-vue@^2",
+      'Creates a new project from an external module "projen-vue" with the specified version'
+    );
 
     for (const type of inventory.discover()) {
-      args.command(type.pjid, type.docs ?? '', {
-        builder: cargs => {
+      args.command(type.pjid, type.docs ?? "", {
+        builder: (cargs) => {
           cargs.showHelpOnFail(true);
 
           for (const option of type.options ?? []) {
-            if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
+            if (
+              option.type !== "string" &&
+              option.type !== "number" &&
+              option.type !== "boolean"
+            ) {
               continue; // we don't support non-primitive fields as command line options
             }
 
-            let desc = [option.docs?.replace(/\ *\.$/, '') ?? ''];
+            let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
 
             const required = !option.optional;
             let defaultValue;
 
-            if (option.default && option.default !== 'undefined') {
+            if (option.default && option.default !== "undefined") {
               if (!required) {
                 // if the field is not required, just describe the default but don't actually assign a value
-                desc.push(`[default: ${option.default.replace(/^\ *-/, '').replace(/\.$/, '').trim()}]`);
+                desc.push(
+                  `[default: ${option.default
+                    .replace(/^\ *-/, "")
+                    .replace(/\.$/, "")
+                    .trim()}]`
+                );
               } else {
                 // if the field is required and we have a @default, then assign
                 // the value here so it appears in `--help`
@@ -50,9 +83,9 @@ class Command implements yargs.CommandModule {
             }
 
             cargs.option(option.switch, {
-              group: required ? 'Required:' : 'Optional:',
+              group: required ? "Required:" : "Optional:",
               type: option.type,
-              description: desc.join(' '),
+              description: desc.join(" "),
               default: defaultValue,
               required,
             });
@@ -60,7 +93,7 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-        handler: argv => newProject(process.cwd(), type, argv),
+        handler: (argv) => newProject(process.cwd(), type, argv),
       });
     }
 
@@ -77,7 +110,7 @@ class Command implements yargs.CommandModule {
     // project type is defined but was not matched by yargs, so print the list of supported types
     if (args.projectType) {
       console.log(`Invalid project type ${args.projectType}. Supported types:`);
-      for (const pjid of inventory.discover().map(x => x.pjid)) {
+      for (const pjid of inventory.discover().map((x) => x.pjid)) {
         console.log(`  ${pjid}`);
       }
       return;
@@ -133,16 +166,20 @@ interface CreateProjectOptions {
  */
 function createProject(opts: CreateProjectOptions) {
   // Default project resolution location
-  let mod = '../../index';
+  let mod = "../../index";
 
   // External projects need to load the module from the modules directory
-  if (opts.type.moduleName !== 'projen') {
+  if (opts.type.moduleName !== "projen") {
     try {
       mod = path.dirname(
-        require.resolve(path.join(opts.type.moduleName, 'package.json'), { paths: [process.cwd()] }),
+        require.resolve(path.join(opts.type.moduleName, "package.json"), {
+          paths: [process.cwd()],
+        })
       );
     } catch (err) {
-      throw new Error(`External project module '${opts.type.moduleName}' could not be resolved.`);
+      throw new Error(
+        `External project module '${opts.type.moduleName}' could not be resolved.`
+      );
     }
   }
 
@@ -162,12 +199,11 @@ function createProject(opts: CreateProjectOptions) {
   const ctx = vm.createContext(module);
 
   process.env.PROJEN_DISABLE_POST = (!opts.post).toString();
-  vm.runInContext([
-    newProjectCode,
-    opts.synth ? 'project.synth();' : '',
-  ].join('\n'), ctx);
+  vm.runInContext(
+    [newProjectCode, opts.synth ? "project.synth();" : ""].join("\n"),
+    ctx
+  );
 }
-
 
 /**
  * Given a value from "@default", processes macros and returns a stringified
@@ -184,12 +220,15 @@ function renderDefault(value: string) {
  * @param type Project type
  * @param argv Command line switches
  */
-function commandLineToProps(type: inventory.ProjectType, argv: Record<string, unknown>): Record<string, any> {
+function commandLineToProps(
+  type: inventory.ProjectType,
+  argv: Record<string, unknown>
+): Record<string, any> {
   const props: Record<string, any> = {};
 
   // initialize props with default values
   for (const prop of type.options) {
-    if (prop.default && prop.default !== 'undefined' && !prop.optional) {
+    if (prop.default && prop.default !== "undefined" && !prop.optional) {
       props[prop.name] = renderDefault(prop.default);
     }
   }
@@ -228,36 +267,54 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
   // collect projects by looking up all .jsii modules in `node_modules`.
-  const modulesDir = path.join(baseDir, 'node_modules');
-  const modules = fs.readdirSync(modulesDir).map(file => path.join(modulesDir, file));
+  const modulesDir = path.join(baseDir, "node_modules");
+  const modules = fs
+    .readdirSync(modulesDir)
+    .map((file) => path.join(modulesDir, file));
   const projects = inventory
     .discover(...modules)
-    .filter(x => x.moduleName !== 'projen'); // filter built-in project types
+    .filter((x) => x.moduleName !== "projen"); // filter built-in project types
 
   if (projects.length < 1) {
-    throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
+    throw new Error(
+      `No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`
+    );
   }
 
   const requested = args.projectType;
-  const types = projects.map(p => p.pjid);
+  const types = projects.map((p) => p.pjid);
 
   // if user did not specify a project type but the module has more than one, we need them to tell us which one...
   if (!requested && projects.length > 1) {
-    throw new Error(`Multiple projects found after installing ${spec}: ${types.join(',')}. Please specify a project name.\nExample: npx projen new --from ${spec} ${types[0]}`);
+    throw new Error(
+      `Multiple projects found after installing ${spec}: ${types.join(
+        ","
+      )}. Please specify a project name.\nExample: npx projen new --from ${spec} ${
+        types[0]
+      }`
+    );
   }
 
   // if user did not specify a type (and we know we have only one), the select it. otherwise, search by pjid.
-  const type = !requested ? projects[0] : projects.find(p => p.pjid === requested);
+  const type = !requested
+    ? projects[0]
+    : projects.find((p) => p.pjid === requested);
   if (!type) {
-    throw new Error(`Project type ${requested} not found. Found ${types.join(',')}`);
+    throw new Error(
+      `Project type ${requested} not found. Found ${types.join(",")}`
+    );
   }
 
   for (const option of type.options ?? []) {
-    if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
+    if (
+      option.type !== "string" &&
+      option.type !== "number" &&
+      option.type !== "boolean"
+    ) {
       continue; // we don't support non-primitive fields as command line options
     }
 
-    if (option.default && option.default !== 'undefined') {
+    if (option.default && option.default !== "undefined") {
       if (!option.optional) {
         const defaultValue = renderDefault(option.default);
         args[option.name] = defaultValue;
@@ -278,7 +335,12 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
+async function newProject(
+  baseDir: string,
+  type: inventory.ProjectType,
+  args: any,
+  additionalProps?: Record<string, any>
+) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -291,13 +353,15 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     dir: baseDir,
     type,
     params: props,
-    comments: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
+    comments: args.comments
+      ? NewProjectOptionHints.FEATURED
+      : NewProjectOptionHints.NONE,
     synth: args.synth,
     post: args.post,
   });
 
   // interactive git and github setup
-  const gitFolder = path.resolve(baseDir, '.git');
+  const gitFolder = path.resolve(baseDir, ".git");
   let pushInitialToGithub = false;
 
   if (!fs.existsSync(gitFolder)) {
@@ -305,10 +369,12 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
   }
 
   if (pushInitialToGithub) {
-    exec('git add .', { cwd: baseDir });
-    exec('git commit -m \'Initial commit generated by projen\'', { cwd: baseDir });
-    exec('git branch -M main', { cwd: baseDir });
-    exec('git push --set-upstream origin main', { cwd: baseDir });
+    exec("git add .", { cwd: baseDir });
+    exec("git commit -m 'Initial commit generated by projen'", {
+      cwd: baseDir,
+    });
+    exec("git branch -M main", { cwd: baseDir });
+    exec("git push --set-upstream origin main", { cwd: baseDir });
   }
 }
 
@@ -318,20 +384,20 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
  * @returns String info for the project devDeps (e.g. foo@^1.2 or foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
  */
 function yarnAdd(baseDir: string, spec: string): string {
-  const packageJsonPath = path.join(baseDir, 'package.json');
+  const packageJsonPath = path.join(baseDir, "package.json");
   const packageJsonExisted = fs.existsSync(packageJsonPath);
   let dependencyInfo = spec;
 
   // workaround: yarn fails to extract tgz if it contains '@' in the name, so we
   // create a temp copy called pkg.tgz and install from there.
   // see: https://github.com/yarnpkg/yarn/issues/6339
-  if (spec.endsWith('.tgz') && spec.includes('@')) {
+  if (spec.endsWith(".tgz") && spec.includes("@")) {
     // if user passes in a file spec then we have to specify the project name and the package location
     // (e.g foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
-    const moduleName = spec.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
+    const moduleName = spec.split("/").slice(-1)[0].trim().split("@")[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
 
-    const packageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
-    const copy = path.join(packageDir, 'pkg.tgz');
+    const packageDir = fs.mkdtempSync(path.join(os.tmpdir(), "projen-"));
+    const copy = path.join(packageDir, "pkg.tgz");
     fs.copyFileSync(spec, copy);
 
     spec = copy;
@@ -340,7 +406,10 @@ function yarnAdd(baseDir: string, spec: string): string {
   }
 
   logging.info(`installing external module ${spec}...`);
-  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
+  exec(
+    `yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`,
+    { cwd: baseDir }
+  );
 
   // if package.json did not exist before calling yarn add, we should remove it
   // so we can start off clean.
@@ -359,12 +428,12 @@ function repoName(): string {
 }
 
 async function askAboutGit(cwd: string): Promise<boolean> {
-  logging.info('We notice that you do not have a local git repository.');
+  logging.info("We notice that you do not have a local git repository.");
   const { setUpGit } = await inquirer.prompt([
     {
-      type: 'confirm',
-      name: 'setUpGit',
-      message: 'Do you want to set that up now?',
+      type: "confirm",
+      name: "setUpGit",
+      message: "Do you want to set that up now?",
     },
   ]);
 
@@ -374,51 +443,59 @@ async function askAboutGit(cwd: string): Promise<boolean> {
     const { gh, git } = plan;
 
     if (!git && !gh) {
-      exec('git init', { cwd });
-      logging.info('Ok, we have run \'git init\' for you! Have a great day.');
+      exec("git init", { cwd });
+      logging.info("Ok, we have run 'git init' for you! Have a great day.");
     }
 
     if (git) {
       const { gitRepoURL } = await inquirer.prompt([
         {
-          type: 'input',
-          name: 'gitRepoURL',
-          message: 'What is the repo? (example: https://github.com/projen/projen)',
+          type: "input",
+          name: "gitRepoURL",
+          message:
+            "What is the repo? (example: https://github.com/projen/projen)",
         },
       ]);
 
-      exec('git init', { cwd });
+      exec("git init", { cwd });
 
       let formattedGitRepoURL = gitRepoURL;
-      if (!gitRepoURL.includes('https')) {
+      if (!gitRepoURL.includes("https")) {
         formattedGitRepoURL = `https://github.com/${gitRepoURL}`;
       }
 
       exec(`git remote add origin ${formattedGitRepoURL}`, { cwd });
 
-      logging.info(`Great! We have run 'git init' for you and set the remote to ${formattedGitRepoURL}`);
+      logging.info(
+        `Great! We have run 'git init' for you and set the remote to ${formattedGitRepoURL}`
+      );
     }
 
     if (!git && gh) {
-      logging.info('Ok! We will make you a repository on GitHub.');
+      logging.info("Ok! We will make you a repository on GitHub.");
 
-      const ghCLIPath = execOrUndefined(`${os.platform() === 'win32' ? 'where' : 'which'} gh`, { cwd });
+      const ghCLIPath = execOrUndefined(
+        `${os.platform() === "win32" ? "where" : "which"} gh`,
+        { cwd }
+      );
 
       if (!ghCLIPath) {
-        logging.warn('Looks like you do not have the GitHub CLI installed. Please go to https://cli.github.com/ to install and try again.');
+        logging.warn(
+          "Looks like you do not have the GitHub CLI installed. Please go to https://cli.github.com/ to install and try again."
+        );
       } else {
         const { gitProjectName } = await inquirer.prompt([
           {
-            type: 'input',
-            name: 'gitProjectName',
-            message: 'What would you like to name it?',
+            type: "input",
+            name: "gitProjectName",
+            message: "What would you like to name it?",
             default: repoName(),
           },
         ]);
 
         logging.info(`Wow! ${gitProjectName} is such a great name!`);
 
-        exec('git init', { cwd });
+        exec("git init", { cwd });
 
         exec(`gh repo create ${gitProjectName}`, { cwd });
         return true;
@@ -430,29 +507,29 @@ async function askAboutGit(cwd: string): Promise<boolean> {
 
 const githubPlanOptions = [
   {
-    type: 'list',
-    name: 'plan',
-    message: 'We\'ll need some more info. Please choose one:',
+    type: "list",
+    name: "plan",
+    message: "We'll need some more info. Please choose one:",
     choices: [
       {
         value: {
           git: true,
         },
-        name: 'I already have a git repository',
+        name: "I already have a git repository",
       },
       {
         value: {
           gh: true,
           git: false,
         },
-        name: 'I don\'t have a git repository and want to make one on GitHub',
+        name: "I don't have a git repository and want to make one on GitHub",
       },
       {
         value: {
           gh: false,
           git: false,
         },
-        name: 'I don\'t have a git repository and I don\'t want to use GitHub',
+        name: "I don't have a git repository and I don't want to use GitHub",
       },
     ],
   },

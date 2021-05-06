@@ -1,7 +1,7 @@
-import { Component } from '../component';
-import { SampleDir } from '../sample-file';
-import { Task, TaskCategory } from '../tasks';
-import { PythonProject } from './python-project';
+import { Component } from "../component";
+import { SampleDir } from "../sample-file";
+import { Task, TaskCategory } from "../tasks";
+import { PythonProject } from "./python-project";
 
 export interface PytestOptions {
   /**
@@ -30,40 +30,40 @@ export class Pytest extends Component {
   constructor(project: PythonProject, options: PytestOptions = {}) {
     super(project);
 
-    const version = options.version ?? '6.2.1';
+    const version = options.version ?? "6.2.1";
 
     project.addDevDependency(`pytest@${version}`);
 
-    this.testTask = project.addTask('test', {
-      description: 'Runs tests',
+    this.testTask = project.addTask("test", {
+      description: "Runs tests",
       category: TaskCategory.TEST,
       exec: [
-        'pytest',
+        "pytest",
         ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
-      ].join(' '),
+      ].join(" "),
     });
 
-    new SampleDir(project, 'tests', {
+    new SampleDir(project, "tests", {
       files: {
-        '__init__.py': '',
-        'test_example.py': [
-          'import pytest',
-          '',
+        "__init__.py": "",
+        "test_example.py": [
+          "import pytest",
+          "",
           `from ${project.moduleName}.example import hello`,
-          '',
-          '@pytest.mark.parametrize(',
+          "",
+          "@pytest.mark.parametrize(",
           '    ("name", "expected"),',
-          '    [',
+          "    [",
           '        ("A. Musing", "Hello A. Musing!"),',
           '        ("traveler", "Hello traveler!"),',
           '        ("projen developer", "Hello projen developer!"),',
-          '    ],',
-          ')',
-          'def test_hello(name, expected):',
+          "    ],",
+          ")",
+          "def test_hello(name, expected):",
           '    """Example test with parametrization."""',
-          '    assert hello(name) == expected',
-          '',
-        ].join('\n'),
+          "    assert hello(name) == expected",
+          "",
+        ].join("\n"),
       },
     });
   }

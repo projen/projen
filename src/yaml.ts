@@ -1,7 +1,7 @@
-import * as YAML from 'yaml';
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import * as YAML from "yaml";
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `JsonFile`.
@@ -23,9 +23,9 @@ export class YamlFile extends ObjectFile {
     }
 
     return [
-      ... (this.marker ? [`# ${YamlFile.PROJEN_MARKER}`] : []),
-      '',
+      ...(this.marker ? [`# ${YamlFile.PROJEN_MARKER}`] : []),
+      "",
       YAML.stringify(JSON.parse(json), { indent: 2 }),
-    ].join('\n');
+    ].join("\n");
   }
 }

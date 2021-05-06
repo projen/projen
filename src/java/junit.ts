@@ -1,11 +1,11 @@
-import { join } from 'path';
-import { Component } from '../component';
-import { Project } from '../project';
-import { SampleDir } from '../sample-file';
-import { TaskCategory } from '../tasks';
-import { Pom } from './pom';
+import { join } from "path";
+import { Component } from "../component";
+import { Project } from "../project";
+import { SampleDir } from "../sample-file";
+import { TaskCategory } from "../tasks";
+import { Pom } from "./pom";
 
-const TESTDIR = join('src', 'test', 'java');
+const TESTDIR = join("src", "test", "java");
 
 /**
  * Options for `Junit`.
@@ -38,33 +38,33 @@ export class Junit extends Component {
     super(project);
 
     const pom = options.pom;
-    const version = options.version ?? '5.7.0';
+    const version = options.version ?? "5.7.0";
 
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-api@${version}`);
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-engine@${version}`);
 
-    project.addTask('test', {
-      description: 'Runs tests',
+    project.addTask("test", {
+      description: "Runs tests",
       category: TaskCategory.TEST,
-      exec: 'mvn test',
+      exec: "mvn test",
     });
 
-    const javaPackage = options.sampleJavaPackage ?? 'org.acme';
-    const javaPackagePath = javaPackage.split('.');
+    const javaPackage = options.sampleJavaPackage ?? "org.acme";
+    const javaPackagePath = javaPackage.split(".");
     new SampleDir(project, join(TESTDIR, ...javaPackagePath), {
       files: {
-        'MyTest.java': [
+        "MyTest.java": [
           `package ${javaPackage};`,
-          '',
-          'import org.junit.jupiter.api.Test;',
-          '',
-          'public class MyTest {',
-          '  @Test',
-          '  public void testHello() {',
+          "",
+          "import org.junit.jupiter.api.Test;",
+          "",
+          "public class MyTest {",
+          "  @Test",
+          "  public void testHello() {",
           '    System.out.println("Hello, world!");',
-          '  }',
-          '}',
-        ].join('\n'),
+          "  }",
+          "}",
+        ].join("\n"),
       },
     });
   }

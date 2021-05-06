@@ -1,11 +1,11 @@
-import { SpawnOptions, spawnSync } from 'child_process';
-import { existsSync, readFileSync, statSync } from 'fs';
-import { join, resolve } from 'path';
-import { format } from 'util';
-import * as chalk from 'chalk';
-import * as logging from '../logging';
-import { TasksManifest, TaskSpec } from './model';
-import { Tasks } from './tasks';
+import { SpawnOptions, spawnSync } from "child_process";
+import { existsSync, readFileSync, statSync } from "fs";
+import { join, resolve } from "path";
+import { format } from "util";
+import * as chalk from "chalk";
+import * as logging from "../logging";
+import { TasksManifest, TaskSpec } from "./model";
+import { Tasks } from "./tasks";
 
 /**
  * The runtime component of the tasks engine.
@@ -25,8 +25,8 @@ export class TaskRuntime {
     this.workdir = resolve(workdir);
     const manifestPath = join(this.workdir, Tasks.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
-      ? JSON.parse(readFileSync(manifestPath, 'utf-8'))
-      : { tasks: { } };
+      ? JSON.parse(readFileSync(manifestPath, "utf-8"))
+      : { tasks: {} };
   }
 
   /**
@@ -40,7 +40,9 @@ export class TaskRuntime {
    * Find a task by name, or `undefined` if not found.
    */
   public tryFindTask(name: string): TaskSpec | undefined {
-    if (!this.manifest.tasks) { return undefined; }
+    if (!this.manifest.tasks) {
+      return undefined;
+    }
     return this.manifest.tasks[name];
   }
 
@@ -59,12 +61,16 @@ export class TaskRuntime {
 }
 
 class RunTask {
-  private readonly env: { [name: string]: string | undefined } = { };
+  private readonly env: { [name: string]: string | undefined } = {};
   private readonly parents: string[];
 
   private readonly workdir: string;
 
-  constructor(private readonly runtime: TaskRuntime, private readonly task: TaskSpec, parents: string[] = []) {
+  constructor(
+    private readonly runtime: TaskRuntime,
+    private readonly task: TaskSpec,
+    parents: string[] = []
+  ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
     this.parents = parents;
@@ -73,7 +79,7 @@ class RunTask {
 
     // evaluate condition
     if (!this.evalCondition(task)) {
-      this.log('condition exited with non-zero - skipping');
+      this.log("condition exited with non-zero - skipping");
       return;
     }
 
@@ -91,7 +97,13 @@ class RunTask {
         const cwd = step.cwd;
         const result = this.shell({ command, cwd });
         if (result.status !== 0) {
-          throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
+          throw new Error(
+            `Task "${
+              this.fullname
+            }" failed when executing "${command}" (cwd: ${resolve(
+              cwd ?? this.workdir
+            )})`
+          );
         }
       }
     }
@@ -113,7 +125,7 @@ class RunTask {
     this.log(`condition: ${task.condition}`);
     const result = this.shell({
       command: task.condition,
-      logprefix: 'condition: ',
+      logprefix: "condition: ",
       quiet: true,
     });
     if (result.status === 0) {
@@ -132,8 +144,8 @@ class RunTask {
    */
   private resolveEnvironment() {
     const env = {
-      ...this.runtime.manifest.env ?? {},
-      ...this.task.env ?? {},
+      ...(this.runtime.manifest.env ?? {}),
+      ...(this.task.env ?? {}),
     };
 
     const output: { [name: string]: string | undefined } = {
@@ -141,17 +153,18 @@ class RunTask {
     };
 
     for (const [key, value] of Object.entries(env ?? {})) {
-      if (value.startsWith('$(') && value.endsWith(')')) {
+      if (value.startsWith("$(") && value.endsWith(")")) {
         const query = value.substring(2, value.length - 1);
         const result = this.shellEval({ command: query });
         if (result.status !== 0) {
           const error = result.error
             ? result.error.stack
-            : result.stderr?.toString()
-            ?? 'unknown error';
-          throw new Error(`unable to evaluate environment variable ${key}=${value}: ${error}`);
+            : result.stderr?.toString() ?? "unknown error";
+          throw new Error(
+            `unable to evaluate environment variable ${key}=${value}: ${error}`
+          );
         }
-        output[key] = result.stdout.toString('utf-8').trim();
+        output[key] = result.stdout.toString("utf-8").trim();
       } else {
         output[key] = value;
       }
@@ -164,7 +177,7 @@ class RunTask {
    * Returns the "full name" of the task which includes all it's parent task names concatenated by chevrons.
    */
   private get fullname() {
-    return [...this.parents, this.task.name].join(' » ');
+    return [...this.parents, this.task.name].join(" » ");
   }
 
   private log(...args: any[]) {
@@ -190,19 +203,21 @@ class RunTask {
         log.push(`(cwd: ${options.cwd})`);
       }
 
-      this.log(log.join(' '));
+      this.log(log.join(" "));
     }
 
     const cwd = options.cwd ?? this.workdir;
     if (!existsSync(cwd) || !statSync(cwd).isDirectory()) {
-      throw new Error(`invalid workdir (cwd): ${cwd} must be an existing directory`);
+      throw new Error(
+        `invalid workdir (cwd): ${cwd} must be an existing directory`
+      );
     }
 
     return spawnSync(options.command, {
       ...options,
       cwd,
       shell: true,
-      stdio: 'inherit',
+      stdio: "inherit",
       env: this.env,
       ...options.spawnOptions,
     });
@@ -213,7 +228,7 @@ class RunTask {
       quiet: true,
       ...options,
       spawnOptions: {
-        stdio: ['inherit', 'pipe', 'inherit'],
+        stdio: ["inherit", "pipe", "inherit"],
       },
     });
   }

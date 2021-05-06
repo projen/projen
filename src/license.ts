@@ -1,6 +1,6 @@
-import * as fs from 'fs-extra';
-import { FileBase, IResolver } from './file';
-import { Project } from './project';
+import * as fs from "fs-extra";
+import { FileBase, IResolver } from "./file";
+import { Project } from "./project";
 
 export interface LicenseOptions {
   /**
@@ -22,19 +22,21 @@ export class License extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, spdx: string, options: LicenseOptions) {
-    super(project, 'LICENSE');
+    super(project, "LICENSE");
 
     const textFile = `${__dirname}/../license-text/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {
       throw new Error(`unsupported license ${spdx}`);
     }
 
-    const years = options.copyrightPeriod ?? new Date().getFullYear().toString();
-    const owner = options.copyrightOwner ?? '';
+    const years =
+      options.copyrightPeriod ?? new Date().getFullYear().toString();
+    const owner = options.copyrightOwner ?? "";
 
-    this.text = fs.readFileSync(textFile, 'utf-8')
-      .replace('[yyyy]', years)
-      .replace('[name of copyright owner]', owner);
+    this.text = fs
+      .readFileSync(textFile, "utf-8")
+      .replace("[yyyy]", years)
+      .replace("[name of copyright owner]", owner);
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {

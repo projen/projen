@@ -1,5 +1,5 @@
-import { Component } from '../component';
-import { Project } from '../project';
+import { Component } from "../component";
+import { Project } from "../project";
 
 export interface AutoMergeOptions {
   /**
@@ -35,7 +35,7 @@ export interface AutoMergeOptions {
 export class AutoMerge extends Component {
   public readonly autoMergeLabel: string;
 
-  constructor(project: Project, options: AutoMergeOptions = { }) {
+  constructor(project: Project, options: AutoMergeOptions = {}) {
     super(project);
 
     const successfulBuild = options.buildJob
@@ -44,24 +44,24 @@ export class AutoMerge extends Component {
 
     const mergeAction = {
       merge: {
-      // squash all commits into a single commit when merging
-        method: 'squash',
+        // squash all commits into a single commit when merging
+        method: "squash",
 
         // use PR title+body as the commit message
-        commit_message: 'title+body',
+        commit_message: "title+body",
 
         // update PR branch so it's up-to-date before merging
-        strict: 'smart',
-        strict_method: 'merge',
+        strict: "smart",
+        strict_method: "merge",
       },
 
-      delete_head_branch: { },
+      delete_head_branch: {},
     };
 
     const approvedReviews = options.approvedReviews ?? 1;
 
     project.github?.mergify?.addRule({
-      name: 'Automatic merge on approval and successful build',
+      name: "Automatic merge on approval and successful build",
       actions: mergeAction,
       conditions: [
         `#approved-reviews-by>=${approvedReviews}`,
@@ -70,16 +70,13 @@ export class AutoMerge extends Component {
     });
 
     // empty string means disabled.
-    const autoMergeLabel = options.autoMergeLabel ?? 'auto-merge';;
+    const autoMergeLabel = options.autoMergeLabel ?? "auto-merge";
     this.autoMergeLabel = autoMergeLabel;
     if (this.autoMergeLabel) {
       project.github?.mergify?.addRule({
         name: `Automatic merge PRs with ${autoMergeLabel} label upon successful build`,
         actions: mergeAction,
-        conditions: [
-          `label=${autoMergeLabel}`,
-          ...successfulBuild,
-        ],
+        conditions: [`label=${autoMergeLabel}`, ...successfulBuild],
       });
     }
   }

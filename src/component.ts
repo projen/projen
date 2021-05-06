@@ -1,4 +1,4 @@
-import { Project } from './project';
+import { Project } from "./project";
 
 /**
  * Represents a project component.
@@ -11,7 +11,7 @@ export class Component {
   /**
    * Called before synthesis.
    */
-  public preSynthesize() { }
+  public preSynthesize() {}
 
   /**
    * Synthesizes files to the project output directory.

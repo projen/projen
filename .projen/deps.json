@@ -51,6 +51,10 @@
       "type": "build"
     },
     {
+      "name": "eslint-config-prettier",
+      "type": "build"
+    },
+    {
       "name": "eslint-import-resolver-node",
       "type": "build"
     },
@@ -60,6 +64,10 @@
     },
     {
       "name": "eslint-plugin-import",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-prettier",
       "type": "build"
     },
     {
@@ -93,6 +101,10 @@
     },
     {
       "name": "markmac",
+      "type": "build"
+    },
+    {
+      "name": "prettier",
       "type": "build"
     },
     {

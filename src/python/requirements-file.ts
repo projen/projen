@@ -1,8 +1,8 @@
-import { Dependencies, DependencyCoordinates } from '../deps';
-import { FileBase, IResolver } from '../file';
-import { Project } from '../project';
-import { toPythonVersionRange } from '../util/semver';
-import { IPackageProvider } from './python-deps';
+import { Dependencies, DependencyCoordinates } from "../deps";
+import { FileBase, IResolver } from "../file";
+import { Project } from "../project";
+import { toPythonVersionRange } from "../util/semver";
+import { IPackageProvider } from "./python-deps";
 
 export interface RequirementsFileOptions {
   /**
@@ -20,7 +20,11 @@ export class RequirementsFile extends FileBase {
   private readonly packages = new Array<string>();
   private readonly packageProvider?: IPackageProvider;
 
-  constructor(project: Project, filePath: string, options: RequirementsFileOptions) {
+  constructor(
+    project: Project,
+    filePath: string,
+    options: RequirementsFileOptions
+  ) {
     super(project, filePath);
 
     this.packageProvider = options.packageProvider;
@@ -35,7 +39,7 @@ export class RequirementsFile extends FileBase {
    */
   public addPackages(...packages: string[]) {
     for (let pkg of packages) {
-      if (pkg.startsWith('#')) {
+      if (pkg.startsWith("#")) {
         this.packages.push(pkg);
       } else {
         const { name, version } = Dependencies.parseDependency(pkg);
@@ -59,12 +63,15 @@ export class RequirementsFile extends FileBase {
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const allPackages = [...this.packages];
     if (this.packageProvider) {
-      allPackages.push(...this.packageProvider.packages.map(dep => this.formatDependency(dep)));
+      allPackages.push(
+        ...this.packageProvider.packages.map((dep) =>
+          this.formatDependency(dep)
+        )
+      );
     }
 
-    return `${resolver.resolve([
-      `# ${FileBase.PROJEN_MARKER}`,
-      ...allPackages,
-    ]).join('\n')}\n`;
+    return `${resolver
+      .resolve([`# ${FileBase.PROJEN_MARKER}`, ...allPackages])
+      .join("\n")}\n`;
   }
 }

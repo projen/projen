@@ -1,7 +1,7 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { Task, TaskCategory } from '../tasks';
-import { Pom } from './pom';
+import { Component } from "../component";
+import { Project } from "../project";
+import { Task, TaskCategory } from "../tasks";
+import { Pom } from "./pom";
 
 /**
  * Options for `MavenCompile`.
@@ -31,19 +31,19 @@ export class MavenCompile extends Component {
   constructor(project: Project, pom: Pom, options: MavenCompileOptions = {}) {
     super(project);
 
-    project.gitignore.exclude('target');
+    project.gitignore.exclude("target");
 
-    pom.addPlugin('org.apache.maven.plugins/maven-compiler-plugin@3.8.1', {
+    pom.addPlugin("org.apache.maven.plugins/maven-compiler-plugin@3.8.1", {
       configuration: {
-        source: options.source ?? '1.8',
-        target: options.target ?? '1.8',
+        source: options.source ?? "1.8",
+        target: options.target ?? "1.8",
       },
     });
 
-    this.compileTask = project.addTask('compile', {
-      description: 'Compile the main source files',
+    this.compileTask = project.addTask("compile", {
+      description: "Compile the main source files",
       category: TaskCategory.BUILD,
-      exec: 'mvn compiler:compile',
+      exec: "mvn compiler:compile",
     });
   }
 }

@@ -1,6 +1,11 @@
-import { TaskCategory, TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
-import { Tasks } from './tasks';
-
+import {
+  TaskCategory,
+  TaskCommonOptions,
+  TaskSpec,
+  TaskStep,
+  TaskStepOptions,
+} from "./model";
+import { Tasks } from "./tasks";
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -41,7 +46,7 @@ export class Task {
   private readonly cwd?: string;
   private readonly tasks: Tasks;
 
-  constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
+  constructor(tasks: Tasks, name: string, props: TaskOptions = {}) {
     this.tasks = tasks;
     this.name = name;
     this.description = props.description;
@@ -60,8 +65,8 @@ export class Task {
   /**
    * Reset the task so it no longer has any commands.
    * @param command the first command to add to the task after it was cleared.
-  */
-  public reset(command?: string, options: TaskStepOptions = { }) {
+   */
+  public reset(command?: string, options: TaskStepOptions = {}) {
     while (this._steps.length) {
       this._steps.shift();
     }
@@ -76,7 +81,7 @@ export class Task {
    * @param command Shell command
    * @param options Options
    */
-  public exec(command: string, options: TaskStepOptions = { }) {
+  public exec(command: string, options: TaskStepOptions = {}) {
     this._steps.push({ exec: command, ...options });
   }
 
@@ -85,7 +90,7 @@ export class Task {
    * @param message Your message
    * @param options Options
    */
-  public say(message: string, options: TaskStepOptions = { }) {
+  public say(message: string, options: TaskStepOptions = {}) {
     this._steps.push({ say: message, ...options });
   }
 
@@ -181,8 +186,10 @@ export class Task {
       }
     }
 
-    const allCommands = cmd.map(c => `( ${c} )`).join(' && ');
-    const withCondition = this.condition ? `! ( ${this.condition} ) || ( ${allCommands} )` : allCommands;
+    const allCommands = cmd.map((c) => `( ${c} )`).join(" && ");
+    const withCondition = this.condition
+      ? `! ( ${this.condition} ) || ( ${allCommands} )`
+      : allCommands;
 
     const env = {
       ...this.tasks.env,
@@ -194,7 +201,7 @@ export class Task {
       lines.push(`${k}="${v}"; `);
     }
 
-    return `( ${lines.join('')} ${withCondition} )`;
+    return `( ${lines.join("")} ${withCondition} )`;
   }
 
   /**

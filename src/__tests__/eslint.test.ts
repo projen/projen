@@ -1,62 +1,62 @@
-import { Eslint, NodeProject } from '..';
-import { LogLevel } from '../logger';
-import { mkdtemp, synthSnapshot } from './util';
+import { Eslint, NodeProject } from "..";
+import { LogLevel } from "../logger";
+import { mkdtemp, synthSnapshot } from "./util";
 
-test('devdirs', () => {
+test("devdirs", () => {
   // GIVEN
   const project = new NodeProject({
     outdir: mkdtemp(),
-    name: 'test',
+    name: "test",
     logging: { level: LogLevel.OFF },
-    defaultReleaseBranch: 'master',
+    defaultReleaseBranch: "master",
   });
 
   // WHEN
   new Eslint(project, {
-    devdirs: ['foo', 'bar'],
-    dirs: ['mysrc'],
+    devdirs: ["foo", "bar"],
+    dirs: ["mysrc"],
   });
 
   // THEN
-  expect(synthSnapshot(project)['.eslintrc.json']).toMatchSnapshot();
+  expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
 });
 
-describe('prettier', () => {
-  test('snapshot', () => {
+describe("prettier", () => {
+  test("snapshot", () => {
     // GIVEN
     const project = new NodeProject({
       outdir: mkdtemp(),
-      name: 'test',
+      name: "test",
       logging: { level: LogLevel.OFF },
-      defaultReleaseBranch: 'master',
+      defaultReleaseBranch: "master",
     });
 
     // WHEN
     new Eslint(project, {
-      dirs: ['mysrc'],
+      dirs: ["mysrc"],
       prettier: true,
     });
 
     // THEN
-    expect(synthSnapshot(project)['.eslintrc.json']).toMatchSnapshot();
+    expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
   });
 
-  test('error on formatting when enabled', () => {
+  test("error on formatting when enabled", () => {
     // GIVEN
     const project = new NodeProject({
       outdir: mkdtemp(),
-      name: 'test',
+      name: "test",
       logging: { level: LogLevel.OFF },
-      defaultReleaseBranch: 'master',
+      defaultReleaseBranch: "master",
     });
 
     // WHEN
     const eslint = new Eslint(project, {
-      dirs: ['mysrc'],
+      dirs: ["mysrc"],
       prettier: true,
     });
 
     // THEN
-    expect(eslint.rules).toHaveProperty('prettier/prettier', ['error']);
+    expect(eslint.rules).toHaveProperty("prettier/prettier", ["error"]);
   });
 });

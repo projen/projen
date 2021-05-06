@@ -1,6 +1,6 @@
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `JsonFile`.
@@ -28,7 +28,7 @@ export class JsonFile extends ObjectFile {
     const sanitized = JSON.parse(json);
 
     if (this.marker) {
-      sanitized['//'] = JsonFile.PROJEN_MARKER;
+      sanitized["//"] = JsonFile.PROJEN_MARKER;
     }
 
     return `${JSON.stringify(sanitized, undefined, 2)}\n`;

@@ -1,1 +1,1 @@
-export * from './projenrc';
+export * from "./projenrc";

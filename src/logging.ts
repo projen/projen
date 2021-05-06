@@ -1,9 +1,11 @@
-import * as chalk from 'chalk';
+import * as chalk from "chalk";
 
 let enabled = true;
 
 function log(color: chalk.ChalkFunction, ...text: any[]) {
-  if (!enabled) { return; }
+  if (!enabled) {
+    return;
+  }
   console.error(`🤖 ${color(...text)}`);
 }
 

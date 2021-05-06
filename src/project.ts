@@ -1,23 +1,23 @@
-import * as path from 'path';
-import { cleanup } from './cleanup';
-import { Clobber } from './clobber';
-import { Component } from './component';
-import { Dependencies } from './deps';
-import { FileBase } from './file';
-import { GitHub, GitHubOptions } from './github';
-import { Gitpod } from './gitpod';
-import { IgnoreFile } from './ignore-file';
-import * as inventory from './inventory';
-import { resolveNewProject } from './javascript/render-options';
-import { JsonFile } from './json';
-import { Logger, LoggerOptions } from './logger';
-import { ObjectFile } from './object-file';
-import { NewProjectOptionHints } from './option-hints';
-import { SampleReadme, SampleReadmeProps } from './readme';
-import { TaskOptions } from './tasks';
-import { Tasks } from './tasks/tasks';
-import { isTruthy } from './util';
-import { VsCode, DevContainer } from './vscode';
+import * as path from "path";
+import { cleanup } from "./cleanup";
+import { Clobber } from "./clobber";
+import { Component } from "./component";
+import { Dependencies } from "./deps";
+import { FileBase } from "./file";
+import { GitHub, GitHubOptions } from "./github";
+import { Gitpod } from "./gitpod";
+import { IgnoreFile } from "./ignore-file";
+import * as inventory from "./inventory";
+import { resolveNewProject } from "./javascript/render-options";
+import { JsonFile } from "./json";
+import { Logger, LoggerOptions } from "./logger";
+import { ObjectFile } from "./object-file";
+import { NewProjectOptionHints } from "./option-hints";
+import { SampleReadme, SampleReadmeProps } from "./readme";
+import { TaskOptions } from "./tasks";
+import { Tasks } from "./tasks/tasks";
+import { isTruthy } from "./util";
+import { VsCode, DevContainer } from "./vscode";
 
 export interface ProjectOptions extends GitHubOptions {
   /**
@@ -96,7 +96,7 @@ export class Project {
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
    */
-  public static readonly DEFAULT_TASK = 'default';
+  public static readonly DEFAULT_TASK = "default";
 
   /**
    * Project name.
@@ -200,7 +200,7 @@ export class Project {
 
       outdir = path.join(options.parent.outdir, options.outdir);
     } else {
-      outdir = options.outdir ?? '.';
+      outdir = options.outdir ?? ".";
     }
 
     this.outdir = path.resolve(outdir);
@@ -212,8 +212,8 @@ export class Project {
 
     // ------------------------------------------------------------------------
 
-    this.gitignore = new IgnoreFile(this, '.gitignore');
-    this.gitignore.exclude('node_modules/'); // created by running `npx projen`
+    this.gitignore = new IgnoreFile(this, ".gitignore");
+    this.gitignore.exclude("node_modules/"); // created by running `npx projen`
 
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
@@ -227,7 +227,9 @@ export class Project {
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
-    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
+    this.devContainer = options.devContainer
+      ? new DevContainer(this)
+      : undefined;
 
     if (options.clobber ?? true) {
       new Clobber(this);
@@ -248,7 +250,9 @@ export class Project {
    */
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    return this._components.filter(isFile).sort((f1, f2) => f1.path.localeCompare(f2.path));
+    return this._components
+      .filter(isFile)
+      .sort((f1, f2) => f1.path.localeCompare(f2.path));
   }
 
   /**
@@ -258,7 +262,7 @@ export class Project {
    * @param name The task name to add
    * @param props Task properties
    */
-  public addTask(name: string, props: TaskOptions = { }) {
+  public addTask(name: string, props: TaskOptions = {}) {
     return this.tasks.addTask(name, props);
   }
 
@@ -282,7 +286,9 @@ export class Project {
    * @returns a `FileBase` or undefined if there is no file in that path
    */
   public tryFindFile(filePath: string): FileBase | undefined {
-    const absolute = path.isAbsolute(filePath) ? filePath : path.resolve(this.outdir, filePath);
+    const absolute = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(this.outdir, filePath);
     for (const file of this.files) {
       if (absolute === file.absolutePath) {
         return file;
@@ -311,7 +317,9 @@ export class Project {
     }
 
     if (!(file instanceof JsonFile)) {
-      throw new Error(`found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`);
+      throw new Error(
+        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`
+      );
     }
 
     return file;
@@ -328,7 +336,9 @@ export class Project {
     }
 
     if (!(file instanceof ObjectFile)) {
-      throw new Error(`found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`);
+      throw new Error(
+        `found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`
+      );
     }
 
     return file;
@@ -365,7 +375,7 @@ export class Project {
    */
   public synth(): void {
     const outdir = this.outdir;
-    this.logger.info('Synthesizing project...');
+    this.logger.info("Synthesizing project...");
 
     this.preSynthesize();
 
@@ -376,7 +386,7 @@ export class Project {
     // we exclude all subproject directories to ensure that when subproject.synth()
     // gets called below after cleanup(), subproject generated files are left intact
     for (const subproject of this.subprojects) {
-      this.addExcludeFromCleanup(subproject.outdir + '/**');
+      this.addExcludeFromCleanup(subproject.outdir + "/**");
     }
 
     // delete all generated files before we start synthesizing new ones
@@ -399,7 +409,7 @@ export class Project {
       this.postSynthesize();
     }
 
-    this.logger.info('Synthesis complete');
+    this.logger.info("Synthesis complete");
   }
 
   /**
@@ -437,14 +447,15 @@ export class Project {
     // check that `outdir` is exclusive
     for (const p of this.subprojects) {
       if (path.resolve(p.outdir) === path.resolve(subproject.outdir)) {
-        throw new Error(`there is already a sub-project with "outdir": ${subproject.outdir}`);
+        throw new Error(
+          `there is already a sub-project with "outdir": ${subproject.outdir}`
+        );
       }
     }
 
     this.subprojects.push(subproject);
   }
 }
-
 
 /**
  * Which type of project this is.
@@ -453,19 +464,19 @@ export enum ProjectType {
   /**
    * This module may be a either a library or an app.
    */
-  UNKNOWN = 'unknown',
+  UNKNOWN = "unknown",
 
   /**
    * This is a library, intended to be published to a package manager and
    * consumed by other projects.
    */
-  LIB = 'lib',
+  LIB = "lib",
 
   /**
    * This is an app (service, tool, website, etc). Its artifacts are intended to
    * be deployed or published for end-user consumption.
    */
-  APP = 'app'
+  APP = "app",
 }
 
 /**

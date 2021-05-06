@@ -1,5 +1,5 @@
-import { JsonFile } from './json';
-import { NodeProject } from './node-project';
+import { JsonFile } from "./json";
+import { NodeProject } from "./node-project";
 
 export interface TypescriptConfigOptions {
   /**
@@ -37,14 +37,14 @@ export enum TypeScriptModuleResolution {
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#classic
    */
-  CLASSIC = 'classic',
+  CLASSIC = "classic",
 
   /**
    * Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
    *
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
    */
-  NODE = 'node'
+  NODE = "node",
 }
 
 /**
@@ -56,29 +56,29 @@ export enum TypeScriptJsxMode {
   /**
    * Keeps the JSX as part of the output to be further consumed by another transform step (e.g. Babel).
    */
-  PRESERVE = 'preserve',
+  PRESERVE = "preserve",
 
   /**
    * Converts JSX syntax into React.createElement, does not need to go through a JSX transformation before use, and the output will have a .js file extension.
    */
-  REACT = 'react',
+  REACT = "react",
 
   /**
    * Keeps all JSX like 'preserve' mode, but output will have a .js extension.
    */
-  REACT_NATIVE = 'react-native',
+  REACT_NATIVE = "react-native",
 
   /**
    * Passes `key` separately from props and always passes `children` as props (since React 17).
    *
    * @see https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html#react-17-jsx-factories
    */
-  REACT_JSX = 'react-jsx',
+  REACT_JSX = "react-jsx",
 
   /**
    * Same as `REACT_JSX` with additional debug data.
    */
-  REACT_JSXDEV = 'react-jsxdev',
+  REACT_JSXDEV = "react-jsxdev",
 }
 
 export interface TypeScriptCompilerOptions {
@@ -330,10 +330,10 @@ export class TypescriptConfig {
   public readonly file: JsonFile;
 
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
-    const fileName = options.fileName ?? 'tsconfig.json';
+    const fileName = options.fileName ?? "tsconfig.json";
 
-    this.include = options.include ?? ['**/*.ts'];
-    this.exclude = options.exclude ?? ['node_modules'];
+    this.include = options.include ?? ["**/*.ts"];
+    this.exclude = options.exclude ?? ["node_modules"];
     this.fileName = fileName;
 
     this.compilerOptions = options.compilerOptions;

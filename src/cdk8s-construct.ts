@@ -1,4 +1,4 @@
-import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from "./construct-lib";
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
@@ -26,9 +26,9 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     const ver = options.cdk8sVersion;
 
     this.addPeerDeps(
-      'constructs@^3.2.34',
+      "constructs@^3.2.34",
       `cdk8s@^${ver}`,
-      `cdk8s-plus-17@^${ver}`,
+      `cdk8s-plus-17@^${ver}`
     );
   }
 }

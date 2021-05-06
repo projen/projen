@@ -1,15 +1,15 @@
-import * as chalk from 'chalk';
-import * as inquirer from 'inquirer';
-import { TaskCategory, TaskRuntime, TaskSpec } from '../../tasks';
+import * as chalk from "chalk";
+import * as inquirer from "inquirer";
+import { TaskCategory, TaskRuntime, TaskSpec } from "../../tasks";
 
-const EXIT_MARKER = '$exit';
+const EXIT_MARKER = "$exit";
 
 export async function showStartMenu(tasks: TaskRuntime) {
   const { command } = await inquirer.prompt([
     {
-      type: 'list',
-      name: 'command',
-      message: 'Scripts:',
+      type: "list",
+      name: "command",
+      message: "Scripts:",
       choices: renderChoices(tasks),
       pageSize: 100,
       loop: false,
@@ -24,14 +24,14 @@ export async function showStartMenu(tasks: TaskRuntime) {
 }
 
 export function printStartMenu(tasks: TaskRuntime, root?: string) {
-  if (root && root !== '.') {
+  if (root && root !== ".") {
     console.error(chalk.cyanBright.bold(`Project: ${root}`));
   }
-  console.error(chalk.cyanBright.underline('Commands:'));
+  console.error(chalk.cyanBright.underline("Commands:"));
   for (const entry of renderChoices(tasks)) {
-    if (entry.type === 'separator') {
+    if (entry.type === "separator") {
       console.error(entry.line);
-    } else if (entry.name && entry.value !== '$exit') {
+    } else if (entry.name && entry.value !== "$exit") {
       console.error(entry.name);
     }
   }
@@ -39,30 +39,30 @@ export function printStartMenu(tasks: TaskRuntime, root?: string) {
 
 function renderChoices(tasksrt: TaskRuntime) {
   const tasks = tasksrt.tasks;
-  const taskNames = tasks.map(t => t.name);
+  const taskNames = tasks.map((t) => t.name);
 
   const result = new Array();
   let category;
 
-  const width = Math.max(...taskNames.map(k => k.length));
+  const width = Math.max(...taskNames.map((k) => k.length));
 
   for (const task of tasks.sort(sortByPriority)) {
     const cat = task.category ?? TaskCategory.MISC;
     if (cat !== category) {
-      result.push(new inquirer.Separator('  '));
+      result.push(new inquirer.Separator("  "));
       result.push(new inquirer.Separator(headingForCategory(cat)));
     }
     category = cat;
     result.push({
-      name: `${task.name.padEnd(width)}   ${task.description ?? ''}`,
+      name: `${task.name.padEnd(width)}   ${task.description ?? ""}`,
       value: task.name,
       short: task.description,
     });
   }
 
-  result.push(new inquirer.Separator('  '));
+  result.push(new inquirer.Separator("  "));
   result.push({
-    name: 'EXIT',
+    name: "EXIT",
     value: EXIT_MARKER,
   });
 
@@ -71,13 +71,17 @@ function renderChoices(tasksrt: TaskRuntime) {
 
 function headingForCategory(category: TaskCategory) {
   switch (category) {
-    case TaskCategory.BUILD: return 'BUILD';
-    case TaskCategory.TEST: return 'TEST';
-    case TaskCategory.RELEASE: return 'RELEASE';
-    case TaskCategory.MAINTAIN: return 'MAINTAIN';
+    case TaskCategory.BUILD:
+      return "BUILD";
+    case TaskCategory.TEST:
+      return "TEST";
+    case TaskCategory.RELEASE:
+      return "RELEASE";
+    case TaskCategory.MAINTAIN:
+      return "MAINTAIN";
     case TaskCategory.MISC:
     default:
-      return 'MISC';
+      return "MISC";
   }
 }
 

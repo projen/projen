@@ -1,13 +1,12 @@
-import { FileBase, IResolver } from './file';
-import { Project } from './project';
-
+import { FileBase, IResolver } from "./file";
+import { Project } from "./project";
 
 export class IgnoreFile extends FileBase {
   private readonly _excludes = new Set<string>();
   private readonly _includes = new Set<string>();
 
   constructor(project: Project, filePath: string) {
-    super(project, filePath, { editGitignore: filePath !== '.gitignore' });
+    super(project, filePath, { editGitignore: filePath !== ".gitignore" });
   }
 
   /**
@@ -22,11 +21,11 @@ export class IgnoreFile extends FileBase {
   public addPatterns(...patterns: string[]) {
     for (const pattern of patterns) {
       // skip comments
-      if (pattern.startsWith('#')) {
+      if (pattern.startsWith("#")) {
         continue;
       }
 
-      if (pattern.startsWith('!')) {
+      if (pattern.startsWith("!")) {
         this._includes.add(pattern);
       } else {
         this._excludes.add(pattern);
@@ -62,8 +61,8 @@ export class IgnoreFile extends FileBase {
    */
   public include(...patterns: string[]) {
     for (let pattern of patterns) {
-      if (!pattern.startsWith('!')) {
-        pattern = '!' + pattern;
+      if (!pattern.startsWith("!")) {
+        pattern = "!" + pattern;
       }
 
       this.addPatterns(pattern);
@@ -86,6 +85,6 @@ export class IgnoreFile extends FileBase {
       lines.push(line);
     }
 
-    return `${resolver.resolve(lines).join('\n')}\n`;
+    return `${resolver.resolve(lines).join("\n")}\n`;
   }
 }

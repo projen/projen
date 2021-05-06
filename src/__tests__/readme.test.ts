@@ -1,10 +1,10 @@
-import * as logging from '../logging';
-import { synthSnapshot, TestProject } from './util';
+import * as logging from "../logging";
+import { synthSnapshot, TestProject } from "./util";
 
 logging.disable();
 
-describe('SampleReadProps', () => {
-  test('default SampleReadme', () => {
+describe("SampleReadProps", () => {
+  test("default SampleReadme", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -12,17 +12,17 @@ describe('SampleReadProps', () => {
     const output = synthSnapshot(project);
 
     // THEN
-    const upper = output['README.md'];
-    const lower = output['readme.md'];
+    const upper = output["README.md"];
+    const lower = output["readme.md"];
     expect(upper).toBeTruthy();
     expect(lower).toBeFalsy();
   });
 
-  test('customized w/ default SampleReadme', () => {
+  test("customized w/ default SampleReadme", () => {
     // GIVEN
     const project = new TestProject({
       readme: {
-        filename: 'README.md',
+        filename: "README.md",
       },
     });
 
@@ -30,17 +30,17 @@ describe('SampleReadProps', () => {
     const output = synthSnapshot(project);
 
     // THEN
-    const upper = output['README.md'];
-    const lower = output['readme.md'];
+    const upper = output["README.md"];
+    const lower = output["readme.md"];
     expect(upper).toBeTruthy();
     expect(lower).toBeFalsy();
   });
 
-  test('customized SampleReadme', () => {
+  test("customized SampleReadme", () => {
     // GIVEN
     const project = new TestProject({
       readme: {
-        filename: 'readme.md',
+        filename: "readme.md",
       },
     });
 
@@ -48,17 +48,17 @@ describe('SampleReadProps', () => {
     const output = synthSnapshot(project);
 
     // THEN
-    const upper = output['README.md'];
-    const lower = output['readme.md'];
+    const upper = output["README.md"];
+    const lower = output["readme.md"];
     expect(upper).toBeFalsy();
     expect(lower).toBeTruthy();
   });
 
-  test('SampleReadme customized contents in constructor', () => {
+  test("SampleReadme customized contents in constructor", () => {
     // GIVEN
     const project = new TestProject({
       readme: {
-        contents: 'my stuff',
+        contents: "my stuff",
       },
     });
 
@@ -66,8 +66,8 @@ describe('SampleReadProps', () => {
     const output = synthSnapshot(project);
 
     // THEN
-    const readme = output['README.md'];
+    const readme = output["README.md"];
     expect(readme).toBeTruthy();
-    expect(readme).toStrictEqual('my stuff');
+    expect(readme).toStrictEqual("my stuff");
   });
 });

@@ -1,15 +1,15 @@
-import * as INI from 'ini';
-import { IniFile } from '..';
-import { synthSnapshot, TestProject } from './util';
+import * as INI from "ini";
+import { IniFile } from "..";
+import { synthSnapshot, TestProject } from "./util";
 
-test('ini object can be mutated before synthesis', () => {
+test("ini object can be mutated before synthesis", () => {
   const prj = new TestProject();
 
   const obj: any = {
-    hello: 'world',
+    hello: "world",
   };
 
-  new IniFile(prj, 'my/ini/file.ini', { obj, marker: false });
+  new IniFile(prj, "my/ini/file.ini", { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
@@ -17,22 +17,22 @@ test('ini object can be mutated before synthesis', () => {
   };
 
   const out = synthSnapshot(prj);
-  expect(INI.parse(out['my/ini/file.ini'])).toMatchObject({
-    hello: 'world',
-    anotherField: { foo: '1234' },
+  expect(INI.parse(out["my/ini/file.ini"])).toMatchObject({
+    hello: "world",
+    anotherField: { foo: "1234" },
   });
 });
 
-test('ini file can contain projen marker', () => {
+test("ini file can contain projen marker", () => {
   const prj = new TestProject();
 
   const obj: any = {};
 
-  new IniFile(prj, 'my/ini/file-marker.ini', { obj, marker: true });
+  new IniFile(prj, "my/ini/file-marker.ini", { obj, marker: true });
 
-  const output = synthSnapshot(prj)['my/ini/file-marker.ini'];
+  const output = synthSnapshot(prj)["my/ini/file-marker.ini"];
 
-  const firstLine = output.split('\n')[0];
+  const firstLine = output.split("\n")[0];
 
   expect(firstLine).toBe(`# ${IniFile.PROJEN_MARKER}`);
 });
