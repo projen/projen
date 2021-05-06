@@ -31,7 +31,7 @@ export class Version extends Component {
       '-c "versionsort.suffix=-"', // makes sure pre-release versions are listed after the primary version
       'tag',
       '--sort="-version:refname"', // sort as versions and not lexicographically
-      '--list "v*"', // only tags that start with "v"
+      '--list="v*"', // only tags that start with "v"
     ].join(' ');
 
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
