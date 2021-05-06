@@ -47,7 +47,9 @@ export class Version extends Component {
       'standard-version@^9',
     );
 
-    project.npmignore?.exclude('/.versionrc.json');
+    project.npmignore?.addPatterns(`/${this.changelogFile}`);
+    project.npmignore?.addPatterns(`/${versionFile}`);
+    project.npmignore?.addPatterns('/.versionrc.json');
     project.gitignore.addPatterns(`/${this.changelogFile}`);
     project.gitignore.addPatterns(`/${versionFile}`);
 

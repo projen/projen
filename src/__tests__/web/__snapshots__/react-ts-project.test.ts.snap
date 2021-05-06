@@ -160,6 +160,7 @@ pull_request_rules:
 /test
 /tsconfig.json
 dist
+tsconfig.tsbuildinfo
 !/lib
 !/lib/**/*.d.ts
 !/lib/**/*.js
