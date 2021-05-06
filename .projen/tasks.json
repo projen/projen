@@ -39,7 +39,7 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "steps": [
         {
-          "exec": "git describe --tags --match=\"v*\" --first-parent --abbrev=0 > .version.tmp.json"
+          "exec": "git -c \"versionsort.suffix=-\" tag --sort=\"-version:refname\" --list \"v*\" | head -n1 > .version.tmp.json"
         },
         {
           "exec": "standard-version"

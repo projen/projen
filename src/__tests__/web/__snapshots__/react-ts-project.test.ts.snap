@@ -257,7 +257,7 @@ dist
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git describe --tags --match=\\"v*\\" --first-parent --abbrev=0 > .version.tmp.json",
+            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
             "exec": "standard-version",
