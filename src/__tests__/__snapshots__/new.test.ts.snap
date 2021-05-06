@@ -591,7 +591,7 @@ appsync/
       "json-schema": "^0.3.0",
       "projen": "^0.3.178",
       "standard-version": "^9.0.0",
-      "ts-jest": "^26.5.5",
+      "ts-jest": "^26.5.6",
       "ts-node": "^9.1.1",
       "typescript": "^3.9.5",
     },
