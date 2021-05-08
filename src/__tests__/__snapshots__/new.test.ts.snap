@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`creating project with enum-typed CLI arg 1`] = `
+"const { NodePackageManager, NodeProject } = require('projen');
+const project = new NodeProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  packageManager: NodePackageManager.NPM,
+
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+});
+project.synth();"
+`;
+
 exports[`projen new --from external 1`] = `
 Object {
   ".eslintrc.json": Object {
@@ -582,7 +599,7 @@ appsync/
       "@typescript-eslint/parser": "^4.3.0",
       "aws-cdk": "^1.95.2",
       "cdk-appsync-project": "^1.0.4",
-      "eslint": "^7.25.0",
+      "eslint": "^7.26.0",
       "eslint-import-resolver-node": "^0.3.4",
       "eslint-import-resolver-typescript": "^2.4.0",
       "eslint-plugin-import": "^2.22.1",

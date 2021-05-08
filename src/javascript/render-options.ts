@@ -90,11 +90,15 @@ export function resolveNewProject(opts: any) {
  *
  * Parameters in `params` that aren't undefined are rendered as defaults,
  * while all other parameters are rendered as commented out.
+ *
+ * Returns the printed output and a set of required imports as an object
+ * in the form { options, imports }.
  */
 export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
   const useSingleQuotes = (str: string | undefined) => str?.replace(/"(.+)"/, '\'$1\'');
+  const imports = new Set();
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -105,7 +109,20 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     if (opts.args[optionName] !== undefined) {
       const value = opts.args[optionName];
-      const js = JSON.stringify(value);
+      let js;
+      // devDeps added as an exception to allow bootstrapping projects from external modules
+      if (['string', 'number', 'boolean'].includes(option.type) || optionName === 'devDeps') {
+        js = JSON.stringify(value);
+      } else if (option.kind === 'enum') {
+        if (!option.fqn) {
+          throw new Error(`fqn field is missing from enum option ${optionName}`);
+        }
+        const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
+        js = `${parts.slice(1).join('.')}.${String(value).toUpperCase()}`; // -> web.MyEnum.VALUE
+        imports.add(parts[1]); // -> 'web'
+      } else {
+        throw new Error(`Unexpected option ${optionName} of kind: ${option.kind}`);
+      }
       renders[optionName] = `${optionName}: ${useSingleQuotes(js)},`;
       optionsWithDefaults.push(optionName);
     } else {
@@ -148,7 +165,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     result.pop();
   }
   result.push('}');
-  return result.join('\n');
+  return { renderedOptions: result.join('\n'), imports };
 }
 
 function renderCommentedOptionsByModule(renders: Record<string, string>, options: inventory.ProjectOption[]) {

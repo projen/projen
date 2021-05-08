@@ -80,6 +80,20 @@ test('projen new --no-comments', () => {
   }
 });
 
+test('creating project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
   const projectdir = join(workdir, 'my-project');

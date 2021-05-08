@@ -53,16 +53,18 @@ export class Projenrc extends Component {
     const importName = parts[1];
     const className = parts.slice(1).join('.');
 
-    const js = renderJavaScriptOptions({
+    const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
       type: bootstrap.type,
       comments: bootstrap.comments,
     });
 
+    imports.add(importName);
+
     const lines = new Array<string>();
-    lines.push(`import { ${importName} } from '${moduleName}';`);
+    lines.push(`import { ${[...imports].join(', ')} } from '${moduleName}';`);
     lines.push();
-    lines.push(`const project = new ${className}(${js});`);
+    lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();
     lines.push('project.synth();');
 
