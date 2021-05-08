@@ -108,21 +108,9 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     const optionName = option.name;
 
     if (opts.args[optionName] !== undefined) {
-      const value = opts.args[optionName];
-      let js;
-      // devDeps added as an exception to allow bootstrapping projects from external modules
-      if (['string', 'number', 'boolean'].includes(option.type) || optionName === 'devDeps') {
-        js = JSON.stringify(value);
-      } else if (option.kind === 'enum') {
-        if (!option.fqn) {
-          throw new Error(`fqn field is missing from enum option ${optionName}`);
-        }
-        const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
-        js = `${parts.slice(1).join('.')}.${String(value).toUpperCase()}`; // -> web.MyEnum.VALUE
-        imports.add(parts[1]); // -> 'web'
-      } else {
-        throw new Error(`Unexpected option ${optionName} of kind: ${option.kind}`);
-      }
+      const arg = opts.args[optionName];
+      const { js, importName } = renderArgAsJavaScript(arg, option);
+      if (importName) imports.add(importName);
       renders[optionName] = `${optionName}: ${useSingleQuotes(js)},`;
       optionsWithDefaults.push(optionName);
     } else {
@@ -204,6 +192,31 @@ function renderCommentedOptionsInOrder(renders: Record<string, string>, options:
     result.push(`${TAB}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${docstring} */`);
   }
   return result;
+}
+
+/**
+ * Renders a CLI argument as a basic JavaScript value. It must either be a
+ * string, number, boolean, or enum.
+ *
+ * Returns a string and the name of any needed imports if needed as an
+ * object in the form { js, import }.
+ */
+function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
+  // devDeps added as an exception to handle bootstrapping projects from external modules
+  if (['string', 'number', 'boolean'].includes(option.type) || option.name === 'devDeps') {
+    return { js: JSON.stringify(arg) };
+  } else if (option.kind === 'enum') {
+    if (!option.fqn) {
+      throw new Error(`fqn field is missing from enum option ${option.name}`);
+    }
+    const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
+    const enumChoice = String(arg).toUpperCase().replace('-', '_'); // custom-value -> CUSTOM_VALUE
+    const js = `${parts.slice(1).join('.')}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
+    const importName = parts[1]; // -> web
+    return { js, importName: importName };
+  } else {
+    throw new Error(`Unexpected option ${option.name} of kind: ${option.kind}`);
+  }
 }
 
 function makePadding(paddingLength: number): string {
