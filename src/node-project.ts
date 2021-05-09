@@ -565,6 +565,49 @@ export class NodeProject extends Project {
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
 
+      const updateRepo = new Array<any>();
+      const gitDiffStepId = 'git_diff';
+      const hasChangesCondName = 'has_changes';
+      const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
+      const repoFullName = 'github.event.pull_request.head.repo.full_name';
+
+      // use "git diff --exit code" to check if there were changes in the repo
+      // and create a step output that will be used in subsequent steps.
+      updateRepo.push({
+        name: 'Check for changes',
+        id: gitDiffStepId,
+        run: `git diff --exit-code || echo "::set-output name=${hasChangesCondName}::true"`,
+      });
+
+      // only if we had changes, commit them and push to the repo note that for
+      // forks, this will fail (because the workflow doesn't have permissions.
+      // this indicates to users that they need to update their branch manually.
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Commit and push changes (if changed)',
+        run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch}`,
+      });
+
+      // if we pushed changes, we need to manually update the status check so
+      // that the PR will be green (we won't get here for forks with updates
+      // because the push would have failed).
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Update status check (if changed)',
+        run: [
+          'gh api',
+          '-X POST',
+          `/repos/\${{ ${repoFullName} }}/check-runs`,
+          `-F name="${buildJobId}"`,
+          '-F head_sha="$(git rev-parse HEAD)"',
+          '-F status="completed"',
+          '-F conclusion="success"',
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      });
+
       const workflow = this.createBuildWorkflow('Build', {
         jobId: buildJobId,
         trigger: {
@@ -576,29 +619,7 @@ export class NodeProject extends Project {
           repository: repo,
         } : undefined,
 
-        postSteps: [
-          {
-            name: 'Commit and push changes (if any)',
-            run: `git diff --exit-code || (git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch})`,
-          },
-          {
-            // only if not running from a fork
-            if: '${{ github.repository == github.event.pull_request.head.repo.full_name }}',
-            name: 'Update status check',
-            run: [
-              'gh api',
-              '-X POST',
-              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
-              `-F name="${buildJobId}"`,
-              '-F head_sha="$(git rev-parse HEAD)"',
-              '-F status="completed"',
-              '-F conclusion="success"',
-            ].join(' '),
-            env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-            },
-          },
-        ],
+        postSteps: updateRepo,
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,

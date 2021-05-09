@@ -31,11 +31,15 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Commit and push changes (if any)
-        run: 'git diff --exit-code || (git add . && git commit -m "chore: self mutation"
-          && git push origin HEAD:${{ github.event.pull_request.head.ref }})'
-      - if: ${{ github.repository == github.event.pull_request.head.repo.full_name }}
-        name: Update status check
+      - name: Check for changes
+        id: git_diff
+        run: git diff --exit-code || echo "::set-output name=has_changes::true"
+      - if: steps.git_diff.outputs.has_changes
+        name: Commit and push changes (if changed)
+        run: 'git add . && git commit -m "chore: self mutation" && git push origin
+          HEAD:${{ github.event.pull_request.head.ref }}'
+      - if: steps.git_diff.outputs.has_changes
+        name: Update status check (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
           status="completed" -F conclusion="success"
