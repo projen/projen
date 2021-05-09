@@ -582,7 +582,7 @@ appsync/
       "@typescript-eslint/parser": "^4.3.0",
       "aws-cdk": "^1.95.2",
       "cdk-appsync-project": "^1.0.4",
-      "eslint": "^7.25.0",
+      "eslint": "^7.26.0",
       "eslint-import-resolver-node": "^0.3.4",
       "eslint-import-resolver-typescript": "^2.4.0",
       "eslint-plugin-import": "^2.22.1",
