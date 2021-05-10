@@ -1,3 +1,4 @@
+import { NodePackageManager } from './node-package';
 import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
 
@@ -23,14 +24,27 @@ export interface ProjenUpgradeOptions {
  * Checks for new versions of projen and creates a PR with an upgrade change.
  */
 export class ProjenUpgrade {
-  constructor(project: NodeProject, options: ProjenUpgradeOptions = { }) {
+  constructor(project: NodeProject, options: ProjenUpgradeOptions = {}) {
     const upgradeTask = project.addTask('projen:upgrade', {
       description: 'upgrades projen to the latest version',
       category: TaskCategory.MAINTAIN,
     });
 
-    upgradeTask.exec('yarn upgrade -L projen');
-    upgradeTask.exec('CI="" yarn projen');
+    switch (project.package.packageManager) {
+      case NodePackageManager.NPM:
+        upgradeTask.exec('npm update projen');
+        upgradeTask.exec('CI="" npm run projen');
+        break;
+      case NodePackageManager.YARN:
+        upgradeTask.exec('yarn upgrade -L projen');
+        upgradeTask.exec('CI="" yarn projen');
+        break;
+      case NodePackageManager.PNPM:
+        upgradeTask.exec('pnpm update -L projen');
+        upgradeTask.exec('CI="" pnpm run projen');
+        break;
+      default: throw new Error(`unexpected package manager ${project.package.packageManager}`);
+    }
 
     if (project.projenSecret) {
 

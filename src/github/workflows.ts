@@ -14,7 +14,6 @@ export class GithubWorkflow extends Component {
     this.name = name;
     this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
       obj: () => this.renderWorkflow(),
-      marker: true,
     });
   }
 

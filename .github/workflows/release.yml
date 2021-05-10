@@ -7,10 +7,11 @@ on:
       - main
   workflow_dispatch: {}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       CI: "true"
+      RELEASE: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -22,38 +23,41 @@ jobs:
           node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Synthesize project files
-        run: /bin/bash ./projen.bash
       - name: Anti-tamper check
-        run: git diff --exit-code
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name "Auto-bump"
+          git config user.name "Automation"
           git config user.email "github-actions@github.com"
       - name: Bump to next version
         run: /bin/bash ./projen.bash bump
       - name: Build
         run: /bin/bash ./projen.bash build
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          directory: coverage
-      - name: Anti-tamper check
-        run: git diff --exit-code
-      - name: Push commits
-        run: git push origin HEAD:${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin ${{ github.ref }}
+      - name: Check for new commits
+        id: git_remote
+        run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
+          github.ref }} | cut -f1)"
+      - name: Create release
+        if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: gh release create v$(node -p "require('./package.json').version") -F
+          .changelog.tmp.md -t v$(node -p "require('./package.json').version")
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Unbump
+        run: /bin/bash ./projen.bash unbump
       - name: Upload artifact
+        if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -71,7 +75,7 @@ jobs:
           NPM_REGISTRY: registry.npmjs.org
   release_maven:
     name: Release to Maven
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -91,7 +95,7 @@ jobs:
           MAVEN_STAGING_PROFILE_ID: ${{ secrets.MAVEN_STAGING_PROFILE_ID }}
   release_pypi:
     name: Release to PyPi
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain

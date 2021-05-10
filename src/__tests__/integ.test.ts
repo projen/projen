@@ -27,7 +27,7 @@ for (const projenrc of files) {
 }
 
 /**
- * Removes any non-determinstic aspects from the synthesized output.
+ * Removes any non-deterministic aspects from the synthesized output.
  * @param dir The output directory.
  */
 function sanitizeOutput(dir: string) {

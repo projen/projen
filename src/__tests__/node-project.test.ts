@@ -217,6 +217,7 @@ describe('npm publishing options', () => {
     expect(npm.npmDistTag).toStrictEqual('latest');
     expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
     expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
+    expect(npm.npmTokenSecret).toStrictEqual('NPM_TOKEN');
 
     // since these are all defaults, publishConfig is not defined.
     expect(synthSnapshot(project)['package.json'].publishConfig).toBeUndefined();
@@ -259,6 +260,7 @@ describe('npm publishing options', () => {
       npmDistTag: 'next',
       npmRegistryUrl: 'https://foo.bar',
       npmAccess: NpmAccess.PUBLIC,
+      npmTokenSecret: 'GITHUB_TOKEN',
     });
 
     // THEN
@@ -266,6 +268,7 @@ describe('npm publishing options', () => {
     expect(npm.npmRegistry).toStrictEqual('foo.bar');
     expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
+    expect(npm.npmTokenSecret).toStrictEqual('GITHUB_TOKEN');
     expect(packageJson(project).publishConfig).toStrictEqual({
       access: 'public',
       registry: 'https://foo.bar/',
@@ -325,6 +328,22 @@ test('extend github release workflow', () => {
   expect(workflow).toContain('username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}');
 });
 
+describe('scripts', () => {
+  test('removeScript will remove tasks and scripts', () => {
+    const p = new TestNodeProject();
+
+    p.addTask('chortle', { exec: 'echo "frabjous day!"' });
+    p.setScript('slithy-toves', 'gyre && gimble');
+    expect(packageJson(p).scripts).toHaveProperty('chortle');
+    expect(packageJson(p).scripts).toHaveProperty('slithy-toves');
+
+    p.removeScript('chortle');
+    p.removeScript('slithy-toves');
+    expect(packageJson(p).scripts).not.toHaveProperty('chortle');
+    expect(packageJson(p).scripts).not.toHaveProperty('slithy-toves');
+  });
+});
+
 test('buildWorkflowMutable will push changes to PR branches', () => {
   // WHEN
   const project = new TestNodeProject({
@@ -335,6 +354,60 @@ test('buildWorkflowMutable will push changes to PR branches', () => {
   const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
+});
+
+test('projenDuringBuild can be used to disable "projen synth" during build', () => {
+  const enabled = new TestNodeProject({
+    projenDuringBuild: true,
+  });
+
+  const disabled = new TestNodeProject({
+    projenDuringBuild: false,
+  });
+
+  const buildTaskEnabled = synthSnapshot(enabled)['.projen/tasks.json'].tasks.build;
+  const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
+  expect(buildTaskEnabled.steps[0].exec).toEqual('npx projen');
+  expect(buildTaskDisabled.steps).toBeUndefined();
+});
+
+test('projen synth is only executed for subprojects', () => {
+  // GIVEN
+  const root = new TestNodeProject();
+
+  // WHEN
+  new TestNodeProject({ parent: root, outdir: 'child' });
+
+  // THEN
+  const snapshot = synthSnapshot(root);
+  const rootBuildTask = snapshot['.projen/tasks.json'].tasks.build;
+  const childBuildTask = snapshot['child/.projen/tasks.json'].tasks.build;
+  expect(rootBuildTask).toStrictEqual({
+    category: '00.build',
+    description: 'Full release build (test+compile)',
+    name: 'build',
+    steps: [{ exec: 'npx projen' }],
+  });
+  expect(childBuildTask).toStrictEqual({
+    category: '00.build',
+    description: 'Full release build (test+compile)',
+    name: 'build',
+  });
+});
+
+test('enabling dependabot does not overturn mergify: false', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    dependenciesUpgrade: DependenciesUpgrade.DEPENDABOT,
+    mergify: false,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).not.toHaveProperty(['.mergify.yml']);
+  expect(snapshot).toHaveProperty(['.github/dependabot.yml']);
 });
 
 function packageJson(project: Project) {

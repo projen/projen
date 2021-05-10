@@ -13,17 +13,20 @@ import { exec, sorted, isTruthy, writeFile } from './util';
 const UNLICENSED = 'UNLICENSED';
 const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
 const DEFAULT_NPM_TAG = 'latest';
+const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
 
 export interface NodePackageOptions {
   /**
    * The "name" in package.json
    * @default - defaults to project name
+   * @featured
    */
   readonly packageName?: string;
   /**
    * The description is just a string that helps people understand the purpose of the package.
    * It can be used when searching for packages in a package manager as well.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-description
+   * @featured
    */
   readonly description?: string;
 
@@ -39,6 +42,7 @@ export interface NodePackageOptions {
    *
    * @example [ 'express', 'lodash', 'foo@^2' ]
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -56,6 +60,7 @@ export interface NodePackageOptions {
    *
    * @example [ 'typescript', '@types/express' ]
    * @default []
+   * @featured
    */
   readonly devDeps?: string[];
 
@@ -227,6 +232,8 @@ export interface NodePackageOptions {
   /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
+   * Use the `licensed` option if you want to no license to be specified.
+   *
    * @default "Apache-2.0"
    */
   readonly license?: string;
@@ -280,6 +287,13 @@ export interface NodePackageOptions {
    * `NpmAccess.PUBLIC`.
    */
   readonly npmAccess?: NpmAccess;
+
+  /**
+   * GitHub secret which contains the NPM token to use when publishing packages.
+   *
+   * @default "NPM_TOKEN"
+   */
+  readonly npmTokenSecret?: string;
 }
 
 /**
@@ -355,15 +369,20 @@ export class NodePackage extends Component {
   public readonly npmRegistry: string;
 
   /**
+   * GitHub secret which contains the NPM token to use when publishing packages.
+   */
+  public readonly npmTokenSecret: string;
+
+  /**
    * npm package access level.
    */
   public readonly npmAccess: NpmAccess;
 
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
-  private readonly scripts: Record<string, string[]> = {};
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
+  private readonly file: JsonFile;
   private _renderedDeps?: NpmDependencies;
 
   constructor(project: Project, options: NodePackageOptions = {}) {
@@ -377,13 +396,20 @@ export class NodePackage extends Component {
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
-    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl } = this.parseNpmOptions(options);
+    if (this.packageManager === NodePackageManager.YARN) {
+      project.root.github?.annotateGenerated('/yarn.lock');
+    }
+
+    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
+    this.npmTokenSecret = npmTokenSecret;
 
     this.processDeps(options);
+
+    const prev = this.readPackageJson() ?? {};
 
     // empty objects are here to preserve order for backwards compatibility
     this.manifest = {
@@ -405,9 +431,12 @@ export class NodePackage extends Component {
       engines: () => this.renderEngines(),
       main: this.entrypoint !== '' ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
-      version: '0.0.0',
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
+
+      // in release CI builds we bump the version before we run "build" so we want
+      // to preserve the version number. otherwise, we always set it to 0.0.0
+      version: this.determineVersion(prev?.version),
     };
 
     // override any scripts from options (if specified)
@@ -415,10 +444,8 @@ export class NodePackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-
-    new JsonFile(this.project, 'package.json', {
+    this.file = new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
-      marker: true,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
     });
 
@@ -543,13 +570,13 @@ export class NodePackage extends Component {
   }
 
   /**
-   * Replaces the contents of an npm package.json script.
+   * Override the contents of an npm package.json script.
    *
    * @param name The script name
    * @param command The command to execute
    */
   public setScript(name: string, command: string) {
-    this.scripts[name] = [command];
+    this.file.addOverride(`scripts.${name}`, command);
   }
 
   /**
@@ -557,16 +584,17 @@ export class NodePackage extends Component {
    * @param name The name of the script.
    */
   public removeScript(name: string) {
-    delete this.scripts[name];
+    this.file.addDeletionOverride(`scripts.${name}`);
   }
 
 
   /**
-   * Indicates if a script by the name name is defined.
+   * Indicates if a script by the given name is defined.
    * @param name The name of the script
+   * @deprecated Use `project.tasks.tryFind(name)`
    */
   public hasScript(name: string) {
-    return name in this.scripts;
+    return this.project.tasks.tryFind(name) !== undefined;
   }
 
   /**
@@ -615,9 +643,31 @@ export class NodePackage extends Component {
       }
     } catch (e) { }
 
-    exec(this.renderInstallCommand(isTruthy(process.env.CI)), { cwd: outdir });
+    exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
 
     this.resolveDepsAndWritePackageJson(outdir);
+  }
+
+  /**
+   * Returns `true` if we are running within a CI build.
+   */
+  private get isAutomatedBuild(): boolean {
+    return isTruthy(process.env.CI);
+  }
+
+  private determineVersion(currVersion?: string) {
+    if (!this.isRelaseBuild) {
+      return '0.0.0';
+    }
+
+    return currVersion ?? '0.0.0';
+  }
+
+  /**
+   * Returns `true` if this is a CI release build.
+   */
+  private get isRelaseBuild(): boolean {
+    return isTruthy(process.env.RELEASE);
   }
 
   // -------------------------------------------------------------------------------------------
@@ -647,6 +697,7 @@ export class NodePackage extends Component {
       npmAccess,
       npmRegistry: npmr.hostname,
       npmRegistryUrl: npmr.href,
+      npmTokenSecret: options.npmTokenSecret ?? DEFAULT_NPM_TOKEN_SECRET,
     };
   }
 
@@ -759,12 +810,10 @@ export class NodePackage extends Component {
     this.manifest.bundledDependencies = bundledDependencies;
 
     // nothing further to do if package.json file does not exist
-    const root = join(this.project.outdir, 'package.json');
-    if (!existsSync(root)) {
+    const pkg = this.readPackageJson();
+    if (!pkg) {
       return { devDependencies, peerDependencies, dependencies };
     }
-
-    const pkg = readJsonSync(root);
 
     const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
       for (const [name, userVersion] of Object.entries(user)) {
@@ -904,10 +953,6 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const [name, commands] of Object.entries(this.scripts)) {
-      const cmds = commands.length > 0 ? commands : ['echo "n/a"'];
-      result[name] = cmds.join(' && ');
-    }
     for (const task of this.project.tasks.all) {
       result[task.name] = this.npmScriptForTask(task);
     }
@@ -923,6 +968,15 @@ export class NodePackage extends Component {
       default:
         throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
     }
+  }
+
+  private readPackageJson() {
+    const file = join(this.project.outdir, 'package.json');
+    if (!existsSync(file)) {
+      return undefined;
+    }
+
+    return readJsonSync(file);
   }
 }
 

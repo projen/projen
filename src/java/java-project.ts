@@ -4,7 +4,7 @@ import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
 import { MavenSample } from './maven-sample';
 import { PluginOptions, Pom, PomOptions } from './pom';
-import { Projenrc as ProjenrcJava, ProjenrcCommonOptions } from './projenrc';
+import { Projenrc as ProjenrcJava, ProjenrcOptions } from './projenrc';
 
 /**
  * Options for `JavaProject`.
@@ -27,6 +27,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Additional dependencies can be added via `project.addDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -38,6 +39,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Additional dependencies can be added via `project.addTestDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly testDeps?: string[];
 
@@ -81,7 +83,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
   /**
    * Use projenrc in java.
    *
-   * This will install `projen` as a java depedency and will add a `synth` task which
+   * This will install `projen` as a java dependency and will add a `synth` task which
    * will compile & execute `main()` from `src/main/java/projenrc.java`.
    *
    * @default true
@@ -92,7 +94,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
    * Options related to projenrc in java.
    * @default - default options
    */
-  readonly projenrcJavaOptions?: ProjenrcCommonOptions;
+  readonly projenrcJavaOptions?: ProjenrcOptions;
 }
 
 /**
@@ -138,10 +140,7 @@ export class JavaProject extends Project {
     this.pom = new Pom(this, options);
 
     if (options.projenrcJava ?? true) {
-      this.projenrc = new ProjenrcJava(this, this.pom, {
-        ...options.projenrcJavaOptions,
-        initializationOptions: options,
-      });
+      this.projenrc = new ProjenrcJava(this, this.pom, options.projenrcJavaOptions);
     }
 
     const sampleJavaPackage = options.sampleJavaPackage ?? 'org.acme';

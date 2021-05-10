@@ -1,25 +1,19 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Task, TaskCategory } from './tasks';
 
-const VERSION_FILE = 'version.json';
-
-export interface VersionOptions {
-  /**
-   * The name of the release branch where the code and tags are pushed to.
-   */
-  readonly releaseBranch: string;
-}
-
 export class Version extends Component {
 
   public readonly bumpTask: Task;
+  public readonly unbumpTask: Task;
+  public readonly changelogFile: string;
 
-  constructor(project: NodeProject, options: VersionOptions) {
+  constructor(project: NodeProject) {
     super(project);
+
+    const versionFile = '.version.tmp.json';
+    this.changelogFile = '.changelog.tmp.md';
 
     // this command determines if there were any changes since the last release
     // (the top-most commit is not a bump). it is used as a condition for both
@@ -27,58 +21,54 @@ export class Version extends Component {
     const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
 
     this.bumpTask = project.addTask('bump', {
-      description: 'Commits a bump to the package version based on conventional commits',
-      category: TaskCategory.RELEASE,
-      exec: 'standard-version',
-      condition: changesSinceLastRelease,
-    });
-
-    const release = project.addTask('release', {
-      description: `Bumps version & push to ${options.releaseBranch}`,
+      description: 'Bumps version based on latest git tag and generates a changelog entry',
       category: TaskCategory.RELEASE,
       condition: changesSinceLastRelease,
     });
 
-    release.spawn(this.bumpTask);
-    release.exec(`git push --follow-tags origin ${options.releaseBranch}`);
+    const listGitTags = [
+      'git',
+      '-c "versionsort.suffix=-"', // makes sure pre-release versions are listed after the primary version
+      'tag',
+      '--sort="-version:refname"', // sort as versions and not lexicographically
+      '--list',
+      '"v*"', // only tags that start with "v"
+    ].join(' ');
+
+    this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
+    this.bumpTask.exec('standard-version');
+
+    this.unbumpTask = project.addTask('unbump', {
+      description: 'Restores version to 0.0.0',
+      category: TaskCategory.RELEASE,
+      exec: 'standard-version -r 0.0.0',
+    });
 
     project.addDevDeps(
       'standard-version@^9',
     );
 
-    project.npmignore?.exclude('/.versionrc.json');
-    project.gitignore.include(VERSION_FILE);
+    project.npmignore?.addPatterns(`/${this.changelogFile}`);
+    project.npmignore?.addPatterns(`/${versionFile}`);
+    project.npmignore?.addPatterns('/.versionrc.json');
+    project.gitignore.addPatterns(`/${this.changelogFile}`);
+    project.gitignore.addPatterns(`/${versionFile}`);
 
-    let projenCommand = project.package.projenCommand;
-    if (project.parent) {
-      projenCommand = `cd ${path.relative(project.outdir, project.root.outdir)} && ${project.package.projenCommand}`;
-    }
     new JsonFile(project, '.versionrc.json', {
       obj: {
-        packageFiles: [{ filename: VERSION_FILE, type: 'json' }],
-        bumpFiles: [{ filename: VERSION_FILE, type: 'json' }],
-        commitAll: true,
-        scripts: {
-          // run projen after release to update package.json
-          postbump: `${projenCommand} && git add .`,
+        packageFiles: [{
+          filename: versionFile,
+          type: 'plain-text',
+        }],
+        bumpFiles: ['package.json'],
+        commitAll: false,
+        infile: this.changelogFile,
+        header: '',
+        skip: {
+          commit: true,
+          tag: true,
         },
       },
     });
-  }
-
-  /**
-   * Returns the current version of the project.
-   */
-  public get currentVersion() {
-    const outdir = this.project.outdir;
-    const versionFile = `${outdir}/${VERSION_FILE}`;
-    if (!fs.existsSync(versionFile)) {
-      if (!fs.existsSync(outdir)) {
-        fs.mkdirpSync(outdir);
-      }
-      fs.writeFileSync(versionFile, JSON.stringify({ version: '0.0.0' }));
-    }
-
-    return JSON.parse(fs.readFileSync(versionFile, 'utf-8')).version;
   }
 }

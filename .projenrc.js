@@ -30,6 +30,7 @@ const project = new JsiiProject({
     'chalk',
     '@iarna/toml',
     'xmlbuilder2',
+    'ini',
   ],
 
   devDeps: [
@@ -38,6 +39,7 @@ const project = new JsiiProject({
     '@types/glob',
     '@types/inquirer',
     '@types/semver',
+    '@types/ini',
     'markmac',
     'all-contributors-cli',
   ],
@@ -47,7 +49,6 @@ const project = new JsiiProject({
   minNodeVersion: '10.17.0',
   codeCov: true,
   defaultReleaseBranch: 'main',
-  compileBeforeTest: true, // since we want to run the cli in tests
   gitpod: true,
   devContainer: true,
   // since this is projen, we need to always compile before we run
@@ -126,7 +127,7 @@ project.vscode.launchConfiguration.addConfiguration({
   ],
 });
 
-project.github.addMergifyRules({
+project.github.mergify.addRule({
   name: 'Label core contributions',
   actions: {
     label: {

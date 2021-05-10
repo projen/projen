@@ -29,7 +29,6 @@ export class Tasks extends Component {
     this._env = {};
 
     new JsonFile(project, manifestFile, {
-      marker: true,
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,
@@ -54,6 +53,29 @@ export class Tasks extends Component {
     const task = new Task(this, name, options);
     this._tasks[name] = task;
     return task;
+  }
+
+  /**
+   * Removes a task from a project.
+   *
+   * @param name The name of the task to remove.
+   *
+   * @returns The `Task` that was removed, otherwise `undefined`.
+   */
+  public removeTask(name: string): undefined | Task {
+    const dependentTasks = this.all.filter(task => task.steps.find(step => step.spawn == name));
+    if (dependentTasks.length > 0) {
+      const errList = dependentTasks.map(depTask => depTask.name).join(', ');
+      throw new Error(`Unable to remove task "${name}" because the following tasks depend on it: ${errList}`);
+    }
+
+    const task = this._tasks[name];
+    if (task) {
+      delete this._tasks[name];
+      return task;
+    } else {
+      return undefined;
+    }
   }
 
   /**

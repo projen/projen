@@ -175,7 +175,6 @@ export class Dependabot extends Component {
     new YamlFile(project, '.github/dependabot.yml', {
       obj: this.config,
       committed: true,
-      marker: true,
     });
 
     for (const i of options.ignore ?? []) {

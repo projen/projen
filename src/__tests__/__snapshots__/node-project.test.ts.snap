@@ -15,12 +15,8 @@ Array [
     "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
-    "name": "Synthesize project files",
-    "run": "npx projen",
-  },
-  Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"Auto-bump\\"
+    "run": "git config user.name \\"Automation\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
@@ -28,8 +24,22 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "name": "Commit and push changes (if any)",
-    "run": "git diff --exit-code || (git commit -am \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }})",
+    "id": "git_diff",
+    "name": "Check for changes",
+    "run": "git diff --exit-code || echo \\"::set-output name=has_changes::true\\"",
+  },
+  Object {
+    "if": "steps.git_diff.outputs.has_changes",
+    "name": "Commit and push changes (if changed)",
+    "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
+  },
+  Object {
+    "env": Object {
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+    },
+    "if": "steps.git_diff.outputs.has_changes",
+    "name": "Update status check (if changed)",
+    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
   },
 ]
 `;

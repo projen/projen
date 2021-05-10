@@ -8,7 +8,7 @@ test('json object can be mutated before synthesis', () => {
     hello: 'world',
   };
 
-  new JsonFile(prj, 'my/json/file.json', { obj });
+  new JsonFile(prj, 'my/json/file.json', { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
@@ -52,6 +52,7 @@ test('omitEmpty', () => {
         ],
       },
     },
+    marker: false,
   });
 
   // THEN

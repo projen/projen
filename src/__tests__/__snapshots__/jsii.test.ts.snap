@@ -10,10 +10,11 @@ on:
       - master
   workflow_dispatch: {}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
+      RELEASE: \\"true\\"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,34 +22,41 @@ jobs:
           fetch-depth: 0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Synthesize project files
-        run: npx projen
       - name: Anti-tamper check
-        run: git diff --exit-code
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Anti-tamper check
-        run: git diff --exit-code
-      - name: Push commits
-        run: git push origin HEAD:\${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin \${{ github.ref }}
+      - name: Check for new commits
+        id: git_remote
+        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
+          github.ref }} | cut -f1)\\"
+      - name: Create release
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
+          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+      - name: Unbump
+        run: npx projen unbump
       - name: Upload artifact
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -66,7 +74,7 @@ jobs:
           NPM_REGISTRY: registry.npmjs.org
   release_golang:
     name: Release to Go
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -98,10 +106,11 @@ on:
       - master
   workflow_dispatch: {}
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     env:
       CI: \\"true\\"
+      RELEASE: \\"true\\"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -109,34 +118,41 @@ jobs:
           fetch-depth: 0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Synthesize project files
-        run: npx projen
       - name: Anti-tamper check
-        run: git diff --exit-code
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
-          git config user.name \\"Auto-bump\\"
+          git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
         run: npx projen bump
       - name: Build
         run: npx projen build
-      - name: Anti-tamper check
-        run: git diff --exit-code
-      - name: Push commits
-        run: git push origin HEAD:\${{ github.ref }}
-      - name: Push tags
-        run: git push --follow-tags origin \${{ github.ref }}
+      - name: Check for new commits
+        id: git_remote
+        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
+          github.ref }} | cut -f1)\\"
+      - name: Create release
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
+          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+      - name: Unbump
+        run: npx projen unbump
       - name: Upload artifact
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain
@@ -154,7 +170,7 @@ jobs:
           NPM_REGISTRY: registry.npmjs.org
   release_golang:
     name: Release to Go
-    needs: build
+    needs: release
     runs-on: ubuntu-latest
     container:
       image: jsii/superchain

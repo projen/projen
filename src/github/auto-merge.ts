@@ -51,7 +51,7 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
-    project.github?.addMergifyRules({
+    project.github?.mergify?.addRule({
       name: 'Automatic merge on approval and successful build',
       actions: mergeAction,
       conditions: [

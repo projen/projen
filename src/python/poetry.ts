@@ -266,7 +266,6 @@ export class PoetryPyproject extends Component {
     super(project);
 
     this.file = new TomlFile(project, 'pyproject.toml', {
-      marker: true,
       omitEmpty: false,
       obj: {
         'build-system': {

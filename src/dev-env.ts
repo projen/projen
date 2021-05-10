@@ -1,7 +1,7 @@
 import { Task } from './tasks';
 
 /**
- * Base options for configuring a container-based development environemnt.
+ * Base options for configuring a container-based development environment.
  */
 export interface DevEnvironmentOptions {
   /**

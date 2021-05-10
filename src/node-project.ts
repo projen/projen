@@ -3,6 +3,7 @@ import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
 import { AutoUpgradeDependencies, AutoUpgradeDependenciesOptions } from './github/auto-upgrade-dependencies';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
+import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
@@ -92,6 +93,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * bumped. Requires that `version` will be undefined.
    *
    * @default - true if not a subproject
+   * @featured
    */
   readonly releaseWorkflow?: boolean;
 
@@ -132,6 +134,12 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowContainerImage?: string;
 
   /**
+   * A set of workflow steps to execute in order to setup the workflow
+   * container.
+   */
+  readonly releaseWorkflowSetupSteps?: any[];
+
+  /**
    * Automatically release to npm when new versions are introduced.
    * @default false
    */
@@ -156,13 +164,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
    */
   readonly dependenciesUpgrade?: DependenciesUpgrade;
-
-  /**
-   * Adds mergify configuration.
-   *
-   * @default true
-   */
-  readonly mergify?: boolean;
 
   /**
    * Options for mergify
@@ -202,6 +203,16 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    */
   readonly projenUpgradeSchedule?: string[];
 
+  /**
+   * Execute `projen` as the first step of the `build` task to synthesize
+   * project files. This applies both to local builds and to CI builds.
+   *
+   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
+   * synthesized project files will be persisted.
+   *
+   * @default true
+   */
+  readonly projenDuringBuild?: boolean;
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -259,6 +270,20 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
+   * .projenrc.js generation.
+   *
+   * @default true
+   */
+  readonly projenrcJs?: boolean;
+
+  /**
+   * Options for .projenrc.js
+   * @default - default options
+   */
+  readonly projenrcJsOptions?: ProjenrcOptions;
 }
 
 /**
@@ -429,6 +454,8 @@ export class NodeProject extends Project {
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
     this.projenSecret = options.projenSecret;
 
+    this._version = new Version(this);
+
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
@@ -453,6 +480,15 @@ export class NodeProject extends Project {
       description: 'Full release build (test+compile)',
       category: TaskCategory.BUILD,
     });
+
+    // first, execute projen as the first thing during build
+    if (options.projenDuringBuild ?? true) {
+      // skip for sub-projects (i.e. "parent" is defined) since synthing the
+      // root project will include the subprojects.
+      if (!this.parent) {
+        this.buildTask.exec(this.projenCommand);
+      }
+    }
 
     this.addLicense(options);
 
@@ -499,12 +535,6 @@ export class NodeProject extends Project {
       throw new Error('"defaultReleaseBranch" is temporarily a required option while we migrate its default value from "master" to "main"');
     }
 
-    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
-
-    // version is read from a committed file called version.json which is how we bump
-    this._version = new Version(this, { releaseBranch: defaultReleaseBranch });
-    this.package.addVersion(this._version.currentVersion);
-
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
     const mutableBuilds = options.mutableBuild ?? true;
 
@@ -521,8 +551,53 @@ export class NodeProject extends Project {
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
+      const buildJobId = 'build';
 
-      const { workflow, buildJobId } = this.createBuildWorkflow('Build', {
+      const updateRepo = new Array<any>();
+      const gitDiffStepId = 'git_diff';
+      const hasChangesCondName = 'has_changes';
+      const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
+      const repoFullName = 'github.event.pull_request.head.repo.full_name';
+
+      // use "git diff --exit code" to check if there were changes in the repo
+      // and create a step output that will be used in subsequent steps.
+      updateRepo.push({
+        name: 'Check for changes',
+        id: gitDiffStepId,
+        run: `git diff --exit-code || echo "::set-output name=${hasChangesCondName}::true"`,
+      });
+
+      // only if we had changes, commit them and push to the repo note that for
+      // forks, this will fail (because the workflow doesn't have permissions.
+      // this indicates to users that they need to update their branch manually.
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Commit and push changes (if changed)',
+        run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch}`,
+      });
+
+      // if we pushed changes, we need to manually update the status check so
+      // that the PR will be green (we won't get here for forks with updates
+      // because the push would have failed).
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Update status check (if changed)',
+        run: [
+          'gh api',
+          '-X POST',
+          `/repos/\${{ ${repoFullName} }}/check-runs`,
+          `-F name="${buildJobId}"`,
+          '-F head_sha="$(git rev-parse HEAD)"',
+          '-F status="completed"',
+          '-F conclusion="success"',
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      });
+
+      const workflow = this.createBuildWorkflow('Build', {
+        jobId: buildJobId,
         trigger: {
           pull_request: { },
         },
@@ -532,12 +607,7 @@ export class NodeProject extends Project {
           repository: repo,
         } : undefined,
 
-        postSteps: [
-          {
-            name: 'Commit and push changes (if any)',
-            run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
-          },
-        ],
+        postSteps: updateRepo,
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
@@ -550,6 +620,7 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+      const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
       const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
 
       const trigger: { [event: string]: any } = { };
@@ -563,29 +634,68 @@ export class NodeProject extends Project {
       }
 
       const artifactDirectory = options.artifactsDirectory ?? 'dist';
+      const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
+      const jobId = 'release';
 
-      const { workflow, buildJobId } = this.createBuildWorkflow('Release', {
+      const releaseSteps: any[] = [];
+
+      // to avoid race conditions between two commits trying to release the same
+      // version, we check if the head sha is identical to the remote sha. if
+      // not, we will skip the release and just finish the build.
+      const gitRemoteStep = 'git_remote';
+      const latestCommitOutput = 'latest_commit';
+      const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
+
+      releaseSteps.push({
+        name: 'Check for new commits',
+        id: gitRemoteStep,
+        run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
+      });
+
+      releaseSteps.push({
+        name: 'Create release',
+        if: noNewCommits,
+        run: [
+          `gh release create ${getVersion}`,
+          `-F ${this._version.changelogFile}`,
+          `-t ${getVersion}`,
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      });
+
+      releaseSteps.push({
+        name: 'Unbump',
+        run: this.runTaskCommand(this._version.unbumpTask),
+      });
+
+      releaseSteps.push({
+        name: 'Upload artifact',
+        if: noNewCommits,
+        uses: 'actions/upload-artifact@v2.1.1',
+        with: {
+          name: artifactDirectory,
+          path: artifactDirectory,
+        },
+      });
+
+      const workflow = this.createBuildWorkflow('Release', {
+        jobId: jobId,
         trigger,
-        preBuildSteps: [{
-          name: 'Bump to next version',
-          run: this.runTaskCommand(this._version.bumpTask),
-        }],
-
-        postSteps: [
+        env: {
+          RELEASE: 'true',
+        },
+        preBuildSteps: [
           {
-            name: 'Push commits',
-            run: 'git push origin HEAD:${{ github.ref }}',
+            name: 'Bump to next version',
+            run: this.runTaskCommand(this._version.bumpTask),
           },
-          {
-            name: 'Push tags',
-            run: 'git push --follow-tags origin ${{ github.ref }}',
-          },
+          ...options.releaseWorkflowSetupSteps ?? [],
         ],
-
-        artifactDirectory,
+        postSteps: releaseSteps,
         image: options.workflowContainerImage,
-        codeCov: options.codeCov ?? false,
-        codeCovTokenSecret: options.codeCovTokenSecret,
+        codeCov: false, // no code coverage needed for release
         checkoutWith: {
           // we must use 'fetch-depth=0' in order to fetch all tags
           // otherwise tags are not checked out
@@ -598,7 +708,7 @@ export class NodeProject extends Project {
       this.publisher = new Publisher(this, {
         workflow: this.releaseWorkflow,
         artifactName: artifactDirectory,
-        buildJobId,
+        buildJobId: jobId,
         jsiiReleaseVersion: options.jsiiReleaseVersion,
       });
 
@@ -606,6 +716,7 @@ export class NodeProject extends Project {
         this.publisher.publishToNpm({
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
+          npmTokenSecret: this.package.npmTokenSecret,
         });
       }
     } else {
@@ -627,7 +738,7 @@ export class NodeProject extends Project {
       }
     }
 
-    if (options.mergify ?? true) {
+    if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, { buildJob: this.buildWorkflowJobId });
       this.npmignore?.exclude('/.mergify.yml');
     }
@@ -645,6 +756,11 @@ export class NodeProject extends Project {
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
+    }
+
+    const projenrcJs = options.projenrcJs ?? true;
+    if (projenrcJs) {
+      new Projenrc(this, options.projenrcJsOptions);
     }
   }
 
@@ -740,13 +856,6 @@ export class NodeProject extends Project {
       name: 'Install dependencies',
       run: this.package.installCommand,
     });
-
-    // run "projen"
-    install.push({
-      name: 'Synthesize project files',
-      run: this.package.projenCommand,
-    });
-
     return install;
   }
 
@@ -872,8 +981,8 @@ export class NodeProject extends Project {
     );
   }
 
-  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): BuildWorkflow {
-    const buildJobId = 'build';
+  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): GithubWorkflow {
+    const buildJobId = options.jobId;
 
     const github = this.github;
     if (!github) { throw new Error('no github support'); }
@@ -900,13 +1009,14 @@ export class NodeProject extends Project {
 
     const antitamperSteps = (options.antitamperDisabled || !this.antitamper) ? [] : [{
       name: 'Anti-tamper check',
-      run: 'git diff --exit-code',
+      run: 'git diff --ignore-space-at-eol --exit-code',
     }];
 
     const job: any = {
       'runs-on': 'ubuntu-latest',
       'env': {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+        ...options.env ?? {},
       },
       ...condition,
       'steps': [
@@ -929,7 +1039,7 @@ export class NodeProject extends Project {
         {
           name: 'Set git identity',
           run: [
-            'git config user.name "Auto-bump"',
+            'git config user.name "Automation"',
             'git config user.email "github-actions@github.com"',
           ].join('\n'),
         },
@@ -957,11 +1067,11 @@ export class NodeProject extends Project {
           },
         }] : [],
 
+        ...postSteps,
+
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
         ...antitamperSteps,
-
-        ...postSteps,
       ],
     };
 
@@ -969,20 +1079,9 @@ export class NodeProject extends Project {
       job.container = { image: options.image };
     }
 
-    if (options.artifactDirectory) {
-      job.steps.push({
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
-        with: {
-          name: options.artifactDirectory,
-          path: options.artifactDirectory,
-        },
-      });
-    }
-
     workflow.addJobs({ [buildJobId]: job });
 
-    return { workflow, buildJobId };
+    return workflow;
   }
 
   /**
@@ -1003,12 +1102,12 @@ export class NodeProject extends Project {
   }
 }
 
-interface BuildWorkflow {
-  readonly workflow: GithubWorkflow;
-  readonly buildJobId: string;
-}
-
 interface NodeBuildWorkflowOptions {
+  /**
+   * The primary job id.
+   */
+  readonly jobId: string;
+
   /**
    * @default - default image
    */
@@ -1018,14 +1117,6 @@ interface NodeBuildWorkflowOptions {
    * Adds an "if" condition to the workflow.
    */
   readonly condition?: any;
-
-  /**
-   * A directory name which contains artifacts to be published (e.g. `dist`).
-   *
-   * javascript artifacts must be under the `js` subdirectory.
-   * @default undefined By default artifacts are not uploaded
-   */
-  readonly artifactDirectory?: string;
 
   /**
    * What should trigger the workflow?
@@ -1061,6 +1152,12 @@ interface NodeBuildWorkflowOptions {
    * Disables anti-tamper checks in the workflow.
    */
   readonly antitamperDisabled?: boolean;
+
+  /**
+   * Workflow environment variables.
+   * @default {}
+   */
+  readonly env?: { [name: string]: string };
 }
 
 export interface NodeWorkflowSteps {

@@ -9,18 +9,17 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "projen": "/bin/bash ./projen.bash",
-    "start": "/bin/bash ./projen.bash start",
     "clobber": "/bin/bash ./projen.bash clobber",
+    "bump": "/bin/bash ./projen.bash bump",
+    "unbump": "/bin/bash ./projen.bash unbump",
     "compile": "/bin/bash ./projen.bash compile",
     "test:compile": "/bin/bash ./projen.bash test:compile",
     "test": "/bin/bash ./projen.bash test",
     "build": "/bin/bash ./projen.bash build",
-    "bump": "/bin/bash ./projen.bash bump",
-    "release": "/bin/bash ./projen.bash release",
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "test:update": "/bin/bash ./projen.bash test:update",
     "projen:upgrade": "/bin/bash ./projen.bash projen:upgrade",
+    "default": "/bin/bash ./projen.bash default",
     "watch": "/bin/bash ./projen.bash watch",
     "package": "/bin/bash ./projen.bash package",
     "eslint": "/bin/bash ./projen.bash eslint",
@@ -28,7 +27,9 @@
     "docgen": "/bin/bash ./projen.bash docgen",
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
-    "contributors:update": "/bin/bash ./projen.bash contributors:update"
+    "contributors:update": "/bin/bash ./projen.bash contributors:update",
+    "projen": "/bin/bash ./projen.bash",
+    "start": "/bin/bash ./projen.bash start"
   },
   "author": {
     "name": "Elad Ben-Israel",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@types/fs-extra": "^8",
     "@types/glob": "^7.1.3",
+    "@types/ini": "^1.3.30",
     "@types/inquirer": "^7.3.1",
     "@types/jest": "^26.0.15",
     "@types/node": "^10.17.0",
@@ -67,6 +69,7 @@
     "decamelize": "^4.0.0",
     "fs-extra": "^9.0.1",
     "glob": "^7",
+    "ini": "^2.0.0",
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
     "xmlbuilder2": "^2.4.0",
@@ -79,6 +82,7 @@
     "decamelize",
     "fs-extra",
     "glob",
+    "ini",
     "inquirer",
     "semver",
     "xmlbuilder2",
@@ -90,7 +94,7 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.17.16",
+  "version": "0.0.0",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"

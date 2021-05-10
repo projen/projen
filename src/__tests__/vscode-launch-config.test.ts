@@ -1,3 +1,4 @@
+import { FileBase } from '../file';
 import { InternalConsoleOptions } from '../vscode/launch-config';
 import { synthSnapshot, TestProject } from './util';
 
@@ -12,8 +13,9 @@ test('empty launch configuration', () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    version: '0.2.0',
-    configurations: [],
+    '//': FileBase.PROJEN_MARKER,
+    'version': '0.2.0',
+    'configurations': [],
   });
 });
 
@@ -34,8 +36,9 @@ test('adding a launch configuration entry', () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    version: '0.2.0',
-    configurations: [
+    '//': FileBase.PROJEN_MARKER,
+    'version': '0.2.0',
+    'configurations': [
       {
         type: 'node',
         request: 'launch',
@@ -85,8 +88,9 @@ test('adding multiple launch configuration entries', () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    version: '0.2.0',
-    configurations: [
+    '//': FileBase.PROJEN_MARKER,
+    'version': '0.2.0',
+    'configurations': [
       {
         type: 'node',
         request: 'launch',

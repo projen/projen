@@ -28,6 +28,7 @@ export interface PomOptions {
    * repository. In the example given, the org.codehaus.mojo group lives within
    * the directory $M2_REPO/org/codehaus/mojo.
    * @default "org.acme"
+   * @featured
    */
   readonly groupId: string;
 
@@ -42,6 +43,7 @@ export interface PomOptions {
    * case of the above project, my-project lives in
    * $M2_REPO/org/codehaus/mojo/my-project.
    * @default "my-app"
+   * @featured
    */
   readonly artifactId: string;
 
@@ -55,6 +57,7 @@ export interface PomOptions {
    * my-project version 1.0 files live in the directory structure
    * $M2_REPO/org/codehaus/mojo/my-project/1.0.
    * @default "0.1.0"
+   * @featured
    */
   readonly version: string;
 
@@ -71,6 +74,7 @@ export interface PomOptions {
    * helpful.
    *
    * @default undefined
+   * @featured
    */
   readonly description?: string;
 
@@ -79,6 +83,7 @@ export interface PomOptions {
    * projects users, however, so that they know where the project lives.
    *
    * @default undefined
+   * @featured
    */
   readonly url?: string;
 }
@@ -143,7 +148,7 @@ export class Pom extends Component {
     this.description = options.description;
     this.url = options.url;
 
-    new XmlFile(project, this.fileName, { obj: () => this.synthPom(), marker: true });
+    new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
   }
 
   /**
