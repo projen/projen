@@ -324,6 +324,18 @@ Array [
         "type": "DependabotOptions",
       },
       Object {
+        "docs": "Define groups of stacks that should be deployed together. Projen will create deploy/diff/destroy tasks for these groups.",
+        "featured": false,
+        "name": "deployGroups",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "deployGroups",
+        ],
+        "switch": "deploy-groups",
+        "type": "unknown",
+      },
+      Object {
         "default": "[]",
         "docs": "Runtime dependencies of this module.",
         "featured": true,
