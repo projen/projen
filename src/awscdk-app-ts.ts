@@ -66,6 +66,18 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
    */
   readonly requireApproval?: CdkApprovalLevel;
 
+  /**
+   * Define groups of stacks that should be deployed together.
+   * Projen will create deploy/diff/destroy tasks for these groups.
+   *
+   * The key is the name for the task and the value is the glob pattern to use.
+   *
+   * @example
+   * {
+   *   prod: 'stacks-prod-*',
+   * }
+   */
+  readonly deployGroups?: { [groupName: string]: string };
 }
 
 /**
@@ -147,6 +159,16 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       exec: 'cdk diff',
     });
 
+    if (options.deployGroups) {
+      for (const groupName in options.deployGroups) {
+        if (Object.prototype.hasOwnProperty.call(options.deployGroups, groupName)) {
+          const globPattern = options.deployGroups[groupName];
+          this.addDeployTasks(groupName, globPattern);
+        }
+      }
+    }
+
+
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
 
@@ -202,6 +224,26 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
   private formatModuleSpec(module: string): string {
     return `${module}@${this.cdkVersion}`;
+  }
+
+  private addDeployTasks(groupName: string, globPattern: string) {
+    this.addTask(`deploy:${groupName}`, {
+      description: `Deploys stacks matching ${globPattern} of your CDK app to the AWS cloud`,
+      category: TaskCategory.RELEASE,
+      exec: `cdk deploy '${globPattern}'`,
+    });
+
+    this.addTask(`destroy:${groupName}`, {
+      description: `Destroys stacks matching ${globPattern} of your cdk app in the AWS cloud`,
+      category: TaskCategory.RELEASE,
+      exec: `cdk destroy '${globPattern}'`,
+    });
+
+    this.addTask(`diff:${groupName}`, {
+      description: `Diffs stacks matching ${globPattern} of the currently deployed app against your code`,
+      category: TaskCategory.MISC,
+      exec: `cdk diff '${globPattern}'`,
+    });
   }
 }
 
