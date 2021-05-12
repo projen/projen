@@ -1,5 +1,6 @@
 import { SpawnOptions, spawnSync } from 'child_process';
 import { existsSync, readFileSync, statSync } from 'fs';
+import { platform } from 'os';
 import { join, resolve } from 'path';
 import { format } from 'util';
 import * as chalk from 'chalk';
@@ -90,7 +91,7 @@ class RunTask {
         let command = '';
         let hasError = false;
         const cmd = step.exec.split(' ')[0];
-        if (['mkdir', 'mv', 'rm'].includes(cmd)) {
+        if (platform() == 'win32' && ['mkdir', 'mv', 'rm'].includes(cmd)) {
           command = `shx ${step.exec}`;
         } else {
           command = step.exec;
