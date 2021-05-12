@@ -145,16 +145,7 @@ export class Dependabot extends Component {
 
     const project = github.project;
 
-    if (options.autoApprove && !project.autoApprove) {
-      throw new Error('Project must have auto-approve configured in order to auto-approve dependabot PRs');
-    }
-
     this.ignore = [];
-
-    const labels = [];
-    if ((options.autoApprove ?? true) && project.autoApprove) {
-      labels.push(project.autoApprove.label);
-    }
 
     this.config = {
       version: 2,
@@ -167,7 +158,6 @@ export class Dependabot extends Component {
             interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
           'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
-          'default_labels': labels,
         },
       ],
     };

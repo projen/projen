@@ -5,13 +5,6 @@ import { TaskCategory } from './tasks';
 export interface ProjenUpgradeOptions {
 
   /**
-   * Auto approve PR's, allowing mergify to merge them.
-   *
-   * @default true
-   */
-  readonly autoApprove?: boolean;
-
-  /**
    * Customize the projenUpgrade schedule in cron expression.
    *
    * @default [ '0 6 * * *' ]
@@ -68,13 +61,6 @@ export class ProjenUpgrade {
         'title': 'chore: upgrade projen',
         'body': 'This PR upgrades projen to the latest version',
       };
-
-      if (options.autoApprove ?? true) {
-        if (!project.autoApprove) {
-          throw new Error('Project must have auto-approve configured in order to auto-approve projen upgrades');
-        }
-        withOptions.labels = project.autoApprove.label;
-      }
 
       workflow.addJobs({
         upgrade: {

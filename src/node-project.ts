@@ -1,6 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
-import { AutoUpgradeDependencies, AutoUpgradeDependenciesOptions } from './github/auto-upgrade-dependencies';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
@@ -11,6 +10,7 @@ import { Project, ProjectOptions } from './project';
 import { ProjenUpgrade } from './projen-upgrade';
 import { Publisher } from './publisher';
 import { Task, TaskCategory } from './tasks';
+import { UpgradeDependencies, UpgradeDependenciesOptions } from './upgrade-dependencies';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -355,8 +355,8 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  protected readonly buildWorkflow?: GithubWorkflow;
-  protected readonly buildWorkflowJobId?: string;
+  public readonly buildWorkflow?: GithubWorkflow;
+  public readonly buildWorkflowJobId?: string;
 
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
@@ -743,7 +743,7 @@ export class NodeProject extends Project {
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    const defaultDependenciesUpgrade = (this.projenSecret ? DependenciesUpgrade.GITHUB_ACTIONS : DependenciesUpgrade.DEPENDABOT);
+    const defaultDependenciesUpgrade = DependenciesUpgrade.GITHUB_ACTIONS;
 
     // enable by default only for root projects.
     const dependenciesUpgrade = options.dependenciesUpgrade ?? (this.parent ? undefined : defaultDependenciesUpgrade);
@@ -751,7 +751,6 @@ export class NodeProject extends Project {
 
     new ProjenUpgrade(this, {
       autoUpgradeSchedule: options.projenUpgradeSchedule,
-      autoApprove: options.projenUpgradeAutoApprove ?? true,
     });
 
     if (options.pullRequestTemplate ?? true) {
@@ -1190,7 +1189,7 @@ export class DependenciesUpgrade {
    *
    * @param options The options.
    */
-  public static githubActions(options: AutoUpgradeDependenciesOptions = {}): DependenciesUpgrade {
+  public static githubActions(options: UpgradeDependenciesOptions = {}): DependenciesUpgrade {
     return new DependenciesUpgrade('github-actions', options);
   }
 
@@ -1205,7 +1204,7 @@ export class DependenciesUpgrade {
 
   private constructor(
     private readonly type: 'github-actions' | 'dependabot' | 'disabled',
-    private readonly options?: DependabotOptions | AutoUpgradeDependenciesOptions) {
+    private readonly options?: DependabotOptions | UpgradeDependenciesOptions) {
 
   }
 
@@ -1221,7 +1220,7 @@ export class DependenciesUpgrade {
         this.bindGitHubActions(project);
         break;
       default:
-        throw new Error(`Unsupported dependency upgrade type: ${this.type}`);
+        throw new Error(`Unsupported dependency upgrade type: ${this.type}. (Supported are: 'dependabot' | 'github-actions')`);
     }
   }
 
@@ -1230,7 +1229,7 @@ export class DependenciesUpgrade {
   }
 
   private bindGitHubActions(project: NodeProject) {
-    new AutoUpgradeDependencies(project, (this.options ?? {}) as AutoUpgradeDependenciesOptions);
+    new UpgradeDependencies(project, (this.options ?? {}) as UpgradeDependenciesOptions);
   }
 
 }

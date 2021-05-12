@@ -1,7 +1,7 @@
 import * as yaml from 'yaml';
-import { NodeProject, NodeProjectOptions, LogLevel, DependenciesUpgrade } from '..';
+import { NodeProject, NodeProjectOptions, LogLevel, DependenciesUpgrade, UpgradeDependencies } from '..';
 import { DependencyType } from '../deps';
-import { AutoUpgradeDependencies, Dependabot } from '../github';
+import { Dependabot } from '../github';
 import * as logging from '../logging';
 import { NodePackage, NpmAccess } from '../node-package';
 import { Project } from '../project';
@@ -17,7 +17,7 @@ describe('dependencies upgrade', () => {
       projenSecret: 'PROJEN_SECRET',
     });
 
-    expect(project.components.filter(c => c instanceof AutoUpgradeDependencies).length).toEqual(1);
+    expect(project.components.filter(c => c instanceof UpgradeDependencies).length).toEqual(1);
 
   });
 
@@ -35,7 +35,7 @@ describe('dependencies upgrade', () => {
     });
 
     expect(project.components.filter(c => c instanceof Dependabot).length).toEqual(0);
-    expect(project.components.filter(c => c instanceof AutoUpgradeDependencies).length).toEqual(0);
+    expect(project.components.filter(c => c instanceof UpgradeDependencies).length).toEqual(0);
 
   });
 

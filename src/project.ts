@@ -5,7 +5,6 @@ import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitHub, GitHubOptions } from './github';
-import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
@@ -93,20 +92,6 @@ export interface ProjectOptions extends GitHubOptions {
    * @default undefined
    */
   readonly jsiiFqn?: string;
-
-  /**
-   * Create a github workflow for auto approval of PR's based on specific PR metadata. (see `autoApproveOptions`)
-   *
-   * @default true
-   */
-  readonly autoApprove?: boolean;
-
-  /**
-    * Options for PR auto-approvals. Only used if `autoApprove` is true.
-    *
-    * @default - default options
-    */
-  readonly autoApproveOptions?: AutoApproveOptions;
 
 }
 
@@ -197,11 +182,6 @@ export class Project {
    */
   public readonly newProject?: NewProject;
 
-  /**
-   * The auto-approve workflow configuration (if enabled).
-   */
-  public readonly autoApprove?: AutoApprove;
-
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -261,11 +241,6 @@ export class Project {
     }
 
     new SampleReadme(this, options.readme);
-
-    // enable by default only for root projects.
-    if (options.autoApprove ?? (this.parent ? false : true)) {
-      this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
-    }
 
   }
 

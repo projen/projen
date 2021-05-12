@@ -2,20 +2,6 @@ import * as path from 'path';
 import { JsonFile, Project, TextFile } from '..';
 import { TestProject } from './util';
 
-describe('auto approve', () => {
-
-  test('defaults to true', () => {
-    const project = new TestProject();
-    expect(project.autoApprove).toBeDefined();
-  });
-
-  test('can be disabled', () => {
-    const project = new TestProject({ autoApprove: false });
-    expect(project.autoApprove).toBeUndefined();
-  });
-
-});
-
 test('file paths are relative to the project outdir', () => {
   // GIVEN
   const p = new TestProject();
