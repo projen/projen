@@ -95,7 +95,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
  *   },
  *
  *   // creates PRs for projen upgrades
- *   projenSecret: 'PROJEN_GITHUB_TOKEN',
+ *   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
  *
  *   cdkVersion: '1.54.0',
  *   cdkDependencies: [
