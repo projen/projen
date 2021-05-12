@@ -133,16 +133,14 @@
         }
       ]
     },
-    "projen:upgrade": {
-      "name": "projen:upgrade",
-      "category": "30.maintain",
-      "description": "upgrades projen to the latest version",
+    "deps:upgrade": {
+      "name": "deps:upgrade",
       "steps": [
         {
-          "exec": "yarn upgrade -L projen"
+          "exec": "npm-check-updates --upgrade --target=minor"
         },
         {
-          "exec": "CI=\"\" yarn projen"
+          "exec": "yarn install --check-files"
         }
       ]
     },

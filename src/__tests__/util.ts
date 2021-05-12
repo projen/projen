@@ -36,7 +36,9 @@ export function execProjenCLI(workdir: string, args: string[] = []) {
     ...args,
   ];
 
-  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir, stdio: 'inherit' });
+  const sCommand = command.map(x => `"${x}"`).join(' ');
+  console.log(`${sCommand} [cwd:${workdir}]`);
+  return exec(sCommand, { cwd: workdir, stdio: 'inherit' });
 }
 
 export interface SynthOutput {
@@ -64,7 +66,7 @@ afterAll((done) => {
 
 export function mkdtemp() {
   const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
-  autoRemove.add(tmpdir);
+  // autoRemove.add(tmpdir);
   return tmpdir;
 }
 

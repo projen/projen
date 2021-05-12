@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { NodePackageManager } from './node-package';
+import { GithubWorkflow } from './github';
 import { NodeProject } from './node-project';
 
 /**
@@ -15,18 +15,32 @@ export interface UpgradeDependenciesOptions {
   readonly schedule?: UpgradeDependenciesSchedule;
 
   /**
-   * Auto approve PR's, allowing mergify to merge them.
+   * List of package names to exclude during the upgrade.
    *
-   * @default - true if auto-approve workflow is configured for the project, false otherwise.
+   * @default - Nothing is excluded.
    */
-  readonly autoApprove?: boolean;
+  readonly exclude?: string[];
 
   /**
-   * List of package names to ignore during the upgrade.
+   * List of package names to include during the upgrade.
    *
-   * @default - All dependencies are upgraded.
+   * @default - Everything is included.
    */
-  readonly ignore?: string[];
+  readonly include?: string[];
+
+  /**
+   * The name of the workflow that will be created.
+   *
+   * @default 'upgrade-dependencies'.
+   */
+  readonly workflowName?: string;
+
+  /**
+   * The name of the projen task that will be created.
+   *
+   * @default 'deps:upgrade'
+   */
+  readonly taskName?: string;
 
 }
 
@@ -66,34 +80,30 @@ export enum UpgradeDependenciesSchedule {
  * Upgrade node project dependencies.
  */
 export class UpgradeDependencies extends Component {
+
+  public readonly workflow?: GithubWorkflow;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
-    // first we define the local task. this is valueable on its to standardize
-    // how we upgrade dependencies for all package managers.
     project.addDevDeps('npm-check-updates');
 
-    const upgradeTask = project.addTask('deps:upgrade');
-    const ignore = options.ignore ?? [];
-    upgradeTask.exec(`npm-check-updates --timeout 120000 --upgrade --target=minor --reject '${ignore.join(',')}'`);
-    upgradeTask.exec('export CI=""');
+    // define a local task. this is valueable on its own to standardize
+    // how we upgrade dependencies for all package managers.
+    const task = project.addTask(options.taskName ?? 'deps:upgrade');
 
-    switch (project.package.packageManager) {
-      case NodePackageManager.YARN:
-        upgradeTask.exec('yarn install');
-        break;
-      case NodePackageManager.NPM:
-        upgradeTask.exec('npm install');
-        break;
-      case NodePackageManager.PNPM:
-        upgradeTask.exec('pnpm install');
-        break;
-      default:
-        throw new Error(`Usupported package manager for dependency upgrades: ${project.package.packageManager}.
-          Supported package managers are: ${NodePackageManager.YARN} | ${NodePackageManager.NPM} | ${NodePackageManager.PNPM}`);
+    const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];
+    if (options.exclude) {
+      ncuCommand.push(`--reject='${options.exclude.join(',')}'`);
+    }
+    if (options.include) {
+      ncuCommand.push(`--filter=${options.include.join(',')}`);
     }
 
-    // if github then we can also add a workflow
+    task.exec(ncuCommand.join(' '));
+    task.exec(project.package.renderInstallCommand(false));
+
+    // then we define a github workflow if possible
     if (project.github) {
 
       const schedule = options.schedule ?? UpgradeDependenciesSchedule.DAILY;
@@ -102,19 +112,20 @@ export class UpgradeDependencies extends Component {
       const patchFile = `${runnerTemp}/${patchArtifact}`;
       const branchName = 'github-actions/dependencies';
       const buildStepId = 'build';
+      const prStepId = 'create-pull-request';
       const buildConclusionOutputName = 'conclusion';
       const buildLogOutputName = 'log';
-      const upgradeDependenciesJobName = 'Upgrade & Build';
+      const workflowName = options.workflowName ?? 'upgrade-dependencies';
 
-      const upgradeWorkflow = project.github.addWorkflow('upgrade-dependencies');
+      this.workflow = project.github.addWorkflow(workflowName);
       const triggers: any = { workflow_dispatch: {} };
       if (schedule !== UpgradeDependenciesSchedule.NEVER) {
         triggers.schedule = [{ cron: this.scheduleToCron(schedule) }];
       }
-      upgradeWorkflow.on({ schedule: [{ cron: this.scheduleToCron(schedule) }], workflow_dispatch: {} });
+      this.workflow.on(triggers);
 
-      const upgradeDependencies = {
-        'name': upgradeDependenciesJobName,
+      const upgradeAndBuild = {
+        'name': 'Upgrade & Build',
         'permissions': 'read-all',
         'runs-on': 'ubuntu-latest',
         'outputs': {
@@ -129,15 +140,14 @@ export class UpgradeDependencies extends Component {
           ...project.installWorkflowSteps,
           {
             name: 'Upgrade dependencies',
-            run: project.runTaskCommand(upgradeTask),
+            run: project.runTaskCommand(task),
           },
           {
             name: 'Build',
             id: buildStepId,
             run: [
               `${project.runTaskCommand(project.buildTask)} && ${this.setOutput(buildConclusionOutputName, 'success')} || ${this.setOutput(buildConclusionOutputName, 'failure')}`,
-              `id=$(gh run view \${{ github.run_id }} | grep "${upgradeDependenciesJobName}" | grep -oP 'ID [0-9]*' | cut -d ' ' -f 2)`,
-              `${this.setOutput(buildLogOutputName, 'https://github.com/${REPO}/runs/${id}')}`,
+              `${this.setOutput(buildLogOutputName, 'https://github.com/${REPO}/actions/runs/${{ github.run_id }}')}`,
             ].join('\n'),
             env: {
               GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
@@ -146,7 +156,10 @@ export class UpgradeDependencies extends Component {
           },
           {
             name: 'Create Patch',
-            run: `git diff > ${patchFile}`,
+            run: [
+              'git add .',
+              `git diff --patch --staged > ${patchFile}`,
+            ].join('\n'),
           },
           {
             name: 'Upload patch',
@@ -156,7 +169,7 @@ export class UpgradeDependencies extends Component {
         ],
       };
 
-      const createPullRequest: any = {
+      const createPR: any = {
         'needs': 'upgrade-dependencies',
         'name': 'Create Pull Request',
         'permissions': 'write-all',
@@ -173,10 +186,11 @@ export class UpgradeDependencies extends Component {
           },
           {
             name: 'Apply patch',
-            run: `git apply ${patchFile}`,
+            run: `[ -s ${patchFile} ] && git apply ${patchFile} || echo "Empty patch. Skipping."`,
           },
           {
             name: 'Create Pull Request',
+            id: prStepId,
             uses: 'peter-evans/create-pull-request@v3',
             with: {
               'token': '${{ secrets.GITHUB_TOKEN }}',
@@ -202,8 +216,9 @@ export class UpgradeDependencies extends Component {
       };
 
       if (project.buildWorkflowJobId) {
-        createPullRequest.steps.push({
+        createPR.steps.push({
           name: 'Update status check',
+          if: `steps.${prStepId}.outputs.pull-request-url != ''`,
           run: 'curl -i --fail '
               + '-X POST '
               + '-H "Accept: application/vnd.github.v3+json" '
@@ -214,7 +229,7 @@ export class UpgradeDependencies extends Component {
                 + '"status":"completed",'
                 + '"conclusion":"\${{ needs.upgrade-dependencies.outputs.build-conclusion }}",'
                 + '"output":{'
-                  + '"title":"Created via the \'upgrade-dependencies\' workflow.",'
+                  + `"title":"Created via the ${workflowName} workflow.",`
                   + '"summary":"Build log is available here: ${{ needs.upgrade-dependencies.outputs.build-log }}"'
                 + '}'
               + '}\'',
@@ -225,9 +240,9 @@ export class UpgradeDependencies extends Component {
         });
       }
 
-      upgradeWorkflow.addJobs({
-        'upgrade-dependencies': upgradeDependencies,
-        'create-pr': createPullRequest,
+      this.workflow.addJobs({
+        'upgrade-dependencies': upgradeAndBuild,
+        'create-pr': createPR,
       });
 
     }

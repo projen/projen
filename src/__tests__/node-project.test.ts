@@ -1,45 +1,12 @@
 import * as yaml from 'yaml';
-import { NodeProject, NodeProjectOptions, LogLevel, DependenciesUpgrade, UpgradeDependencies } from '..';
+import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
-import { Dependabot } from '../github';
 import * as logging from '../logging';
 import { NodePackage, NpmAccess } from '../node-package';
 import { Project } from '../project';
 import { mkdtemp, synthSnapshot, TestProject } from './util';
 
 logging.disable();
-
-describe('dependencies upgrade', () => {
-
-  test('defaults to github actions when a projen secret is defined', () => {
-
-    const project = new TestNodeProject({
-      projenSecret: 'PROJEN_SECRET',
-    });
-
-    expect(project.components.filter(c => c instanceof UpgradeDependencies).length).toEqual(1);
-
-  });
-
-  test('default to dependabot when a projen secret is undefined', () => {
-
-    const project = new TestNodeProject({});
-    expect(project.components.filter(c => c instanceof Dependabot).length).toEqual(1);
-
-  });
-
-  test('can be disabled', () => {
-
-    const project = new TestNodeProject({
-      dependenciesUpgrade: DependenciesUpgrade.DISABLED,
-    });
-
-    expect(project.components.filter(c => c instanceof Dependabot).length).toEqual(0);
-    expect(project.components.filter(c => c instanceof UpgradeDependencies).length).toEqual(0);
-
-  });
-
-});
 
 test('license file is added by default', () => {
   // WHEN
@@ -171,7 +138,7 @@ describe('deps', () => {
     });
 
     // sanitize
-    ['jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
+    ['npm-check-updates', 'jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
     expect(pkgjson.dependencieds).toBeUndefined();
@@ -398,7 +365,7 @@ test('projen synth is only executed for subprojects', () => {
 test('enabling dependabot does not overturn mergify: false', () => {
   // WHEN
   const project = new TestNodeProject({
-    dependenciesUpgrade: DependenciesUpgrade.DEPENDABOT,
+    dependabot: true,
     mergify: false,
   });
 

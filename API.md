@@ -4,9 +4,7 @@
 
 Name|Description
 ----|-----------
-[AutoApprove](#projen-autoapprove)|Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 [AutoMerge](#projen-automerge)|Sets up mergify to merging approved pull requests.
-[AutoUpgradeDependencies](#projen-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
 [AwsCdkTypeScriptApp](#projen-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [Cdk8sTypeScriptApp](#projen-cdk8stypescriptapp)|CDK8s app in TypeScript.
@@ -15,7 +13,6 @@ Name|Description
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
 [Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
-[DependenciesUpgrade](#projen-dependenciesupgrade)|Dependencies upgrade.
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
@@ -50,13 +47,12 @@ Name|Description
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
+[UpgradeDependencies](#projen-upgradedependencies)|Upgrade node project dependencies.
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
-[github.AutoApprove](#projen-github-autoapprove)|Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
-[github.AutoUpgradeDependencies](#projen-github-autoupgradedependencies)|Upgrade node project dependencies via a GitHub workflow.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
@@ -103,9 +99,7 @@ Name|Description
 
 Name|Description
 ----|-----------
-[AutoApproveOptions](#projen-autoapproveoptions)|Options for 'AutoApprove'.
 [AutoMergeOptions](#projen-automergeoptions)|*No description*
-[AutoUpgradeDependenciesOptions](#projen-autoupgradedependenciesoptions)|Options for `AutoUpgradeDependencies`.
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
@@ -173,14 +167,13 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
-[github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
-[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)|Options for `AutoUpgradeDependencies`.
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
@@ -251,7 +244,6 @@ Name|Description
 Name|Description
 ----|-----------
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
-[AutoUpgradeDependenciesSchedule](#projen-autoupgradedependenciesschedule)|How often to check for new versions and raise pull requests for version updates.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
 [DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
@@ -268,43 +260,13 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
+[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
-[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)|How often to check for new versions and raise pull requests for version updates.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
-
-
-
-## class AutoApprove 🔹 <a id="projen-autoapprove"></a>
-
-Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new AutoApprove(project: Project, options?: AutoApproveOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
-  * **label** (<code>string</code>)  PR's assigned with this label will be auto-approved. __*Default*__: pr/auto-approve
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**label**🔹 | <code>string</code> | The configured label for auto-approvals.
 
 
 
@@ -333,30 +295,6 @@ new AutoMerge(project: Project, options?: AutoMergeOptions)
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
-
-
-
-
-## class AutoUpgradeDependencies 🔹 <a id="projen-autoupgradedependencies"></a>
-
-Upgrade node project dependencies via a GitHub workflow.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDependenciesOptions)
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
-  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
-  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
-  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
 
@@ -441,8 +379,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -493,7 +429,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -506,9 +443,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -518,6 +454,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -627,8 +564,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -679,7 +614,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -692,9 +628,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -704,6 +639,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -777,8 +713,6 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -829,7 +763,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -842,9 +777,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -854,6 +788,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -976,8 +911,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1028,7 +961,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1041,9 +975,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -1053,6 +986,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1108,8 +1042,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1160,7 +1092,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1173,9 +1106,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -1185,6 +1117,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1251,8 +1184,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1303,7 +1234,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1316,9 +1248,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -1328,6 +1259,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -1418,73 +1350,6 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 
 
-
-
-
-## class DependenciesUpgrade 🔹 <a id="projen-dependenciesupgrade"></a>
-
-Dependencies upgrade.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-*static* **DEPENDABOT**🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Use dependabot (with the default options) to upgrade dependencies.
-*static* **DISABLED**🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Disable dependency upgrades.
-*static* **GITHUB_ACTIONS**🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Use GitHub actions (with the default options) to upgrade dependencies.
-
-### Methods
-
-
-#### bind(project)🔹 <a id="projen-dependenciesupgrade-bind"></a>
-
-
-
-```ts
-bind(project: NodeProject): void
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-
-
-
-
-#### *static* dependabot(options?)🔹 <a id="projen-dependenciesupgrade-dependabot"></a>
-
-Use Dependabot (with custom options) to upgrade dependencies.
-
-```ts
-static dependabot(options?: DependabotOptions): DependenciesUpgrade
-```
-
-* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  The options.
-  * **autoApprove** (<code>boolean</code>)  Automatically approve dependabot PRs. __*Default*__: true if auto approval workflow is configured for the project, false otherwise.
-  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
-  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
-  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
-  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
-
-__Returns__:
-* <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>
-
-#### *static* githubActions(options?)🔹 <a id="projen-dependenciesupgrade-githubactions"></a>
-
-Use GitHub actions (with custom options) to upgrade dependencies.
-
-```ts
-static githubActions(options?: AutoUpgradeDependenciesOptions): DependenciesUpgrade
-```
-
-* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  The options.
-  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
-  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
-  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
-
-__Returns__:
-* <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>
 
 
 
@@ -2489,8 +2354,6 @@ new JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -2541,7 +2404,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -2554,9 +2418,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -2566,6 +2429,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -3212,6 +3076,19 @@ removeScript(name: string): void
 
 
 
+#### renderInstallCommand(frozen)🔹 <a id="projen-nodepackage-renderinstallcommand"></a>
+
+
+
+```ts
+renderInstallCommand(frozen: boolean): string
+```
+
+* **frozen** (<code>boolean</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
 
 Override the contents of an npm package.json script.
@@ -3246,8 +3123,6 @@ new NodeProject(options: NodeProjectOptions)
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -3298,7 +3173,8 @@ new NodeProject(options: NodeProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -3311,9 +3187,8 @@ new NodeProject(options: NodeProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -3323,6 +3198,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -3357,7 +3233,6 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
-**projenSecret**?🔹 | <code>string</code> | The secret this project uses for projen managed workflows.<br/>__*Optional*__
 **publisher**?🔹 | <code>[Publisher](#projen-publisher)</code> | Package publisher.<br/>__*Optional*__
 **releaseWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 
@@ -3687,8 +3562,6 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -3716,7 +3589,6 @@ Name | Type | Description
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
-**autoApprove**?🔹 | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | The auto-approve workflow configuration (if enabled).<br/>__*Optional*__
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
@@ -4406,8 +4278,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4458,7 +4328,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4471,9 +4342,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -4483,6 +4353,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -4524,8 +4395,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4576,7 +4445,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4589,9 +4459,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -4601,6 +4470,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -4642,8 +4512,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4694,7 +4562,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4707,9 +4576,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -4719,6 +4587,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -4821,6 +4690,40 @@ addInclude(pattern: string): void
 
 
 
+
+
+
+## class UpgradeDependencies 🔹 <a id="projen-upgradedependencies"></a>
+
+Upgrade node project dependencies.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
+  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
+  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **schedule** (<code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: UpgradeDependenciesSchedule.DAILY
+  * **taskName** (<code>string</code>)  The name of the projen task that will be created. __*Default*__: 'deps:upgrade'
+  * **workflowName** (<code>string</code>)  The name of the workflow that will be created. __*Default*__: 'upgrade-dependencies'.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**workflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | __*Optional*__
 
 
 
@@ -5045,38 +4948,6 @@ __Returns__:
 
 
 
-## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
-
-Configures a GitHub workflow that auto-approves PR's that are assigned with a specific label.
-
-__Submodule__: github
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new github.AutoApprove(project: Project, options?: AutoApproveOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
-  * **label** (<code>string</code>)  PR's assigned with this label will be auto-approved. __*Default*__: pr/auto-approve
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**label**🔹 | <code>string</code> | The configured label for auto-approvals.
-
-
-
 ## class AutoMerge 🔹 <a id="projen-github-automerge"></a>
 
 Sets up mergify to merging approved pull requests.
@@ -5104,32 +4975,6 @@ new github.AutoMerge(project: Project, options?: AutoMergeOptions)
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
-
-
-
-
-## class AutoUpgradeDependencies 🔹 <a id="projen-github-autoupgradedependencies"></a>
-
-Upgrade node project dependencies via a GitHub workflow.
-
-__Submodule__: github
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new github.AutoUpgradeDependencies(project: NodeProject, options?: AutoUpgradeDependenciesOptions)
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[github.AutoUpgradeDependenciesOptions](#projen-github-autoupgradedependenciesoptions)</code>)  *No description*
-  * **autoApprove** (<code>boolean</code>)  Auto approve PR's, allowing mergify to merge them. __*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
-  * **ignore** (<code>Array<string></code>)  List of package names to ignore during the upgrade. __*Default*__: Only projen itself is ignored.
-  * **schedule** (<code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code>)  Schedule to run on. __*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
 
@@ -5434,8 +5279,6 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -6093,8 +5936,6 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7007,8 +6848,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7059,7 +6898,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7072,9 +6912,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -7084,6 +6923,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -7169,8 +7009,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7221,7 +7059,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7234,9 +7073,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -7246,6 +7084,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -7359,8 +7198,6 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7411,7 +7248,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7424,9 +7262,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -7436,6 +7273,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -7517,8 +7355,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
-  * **autoApprove** (<code>boolean</code>)  Create a github workflow for auto approval of PR's based on specific PR metadata. __*Default*__: true
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Options for PR auto-approvals. __*Default*__: default options
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7569,7 +7405,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependenciesUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  Controls how dependencies are upgraded. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7582,9 +7419,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenSecret** (<code>string</code>)  This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions. __*Default*__: Projen managed workflows are disabled.
-  * **projenUpgradeAutoApprove** (<code>boolean</code>)  Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes. __*Default*__: true
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
   * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
   * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
   * **pullRequestTemplateContents** (<code>string</code>)  The contents of the pull request template. __*Default*__: default content
@@ -7594,6 +7430,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  Define a GitHub workflow for releasing from "main" when new versions are bumped. __*Default*__: true if not a subproject
   * **releaseWorkflowSetupSteps** (<code>Array<any></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **upgradeDependenciesOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description* __*Optional*__
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
@@ -7661,19 +7498,6 @@ Name | Type | Description
 
 
 
-## struct AutoApproveOptions 🔹 <a id="projen-autoapproveoptions"></a>
-
-
-Options for 'AutoApprove'.
-
-
-
-Name | Type | Description 
------|------|-------------
-**label**?🔹 | <code>string</code> | PR's assigned with this label will be auto-approved.<br/>__*Default*__: pr/auto-approve
-
-
-
 ## struct AutoMergeOptions 🔹 <a id="projen-automergeoptions"></a>
 
 
@@ -7685,21 +7509,6 @@ Name | Type | Description
 -----|------|-------------
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
-
-
-
-## struct AutoUpgradeDependenciesOptions 🔹 <a id="projen-autoupgradedependenciesoptions"></a>
-
-
-Options for `AutoUpgradeDependencies`.
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
-**ignore**?🔹 | <code>Array<string></code> | List of package names to ignore during the upgrade.<br/>__*Default*__: Only projen itself is ignored.
-**schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
 
@@ -7725,8 +7534,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7746,7 +7553,8 @@ Name | Type | Description
 **constructsVersion**?🔹 | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7796,9 +7604,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -7828,6 +7635,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -7854,8 +7662,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7869,7 +7675,8 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -7917,9 +7724,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -7944,6 +7750,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -7984,8 +7791,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7997,7 +7802,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8045,9 +7851,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -8071,6 +7876,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -8099,8 +7905,6 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?⚠️ | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8120,7 +7924,8 @@ Name | Type | Description
 **constructsVersion**?⚠️ | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8170,9 +7975,8 @@ Name | Type | Description
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?⚠️ | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?⚠️ | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?⚠️ | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?⚠️ | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -8202,6 +8006,7 @@ Name | Type | Description
 **testdir**?⚠️ | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?⚠️ | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -8230,8 +8035,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8245,7 +8048,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8295,9 +8099,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -8327,6 +8130,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -8354,8 +8158,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8369,7 +8171,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -8419,9 +8222,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -8451,6 +8253,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -9138,8 +8941,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9152,7 +8953,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9202,9 +9004,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -9234,6 +9035,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -9512,8 +9314,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9523,7 +9323,8 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9563,9 +9364,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -9582,6 +9382,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -9644,8 +9445,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -9869,8 +9668,6 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?⚠️ | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9881,7 +9678,8 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -9929,9 +9727,8 @@ Name | Type | Description
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?⚠️ | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?⚠️ | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?⚠️ | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?⚠️ | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -9955,6 +9752,7 @@ Name | Type | Description
 **testdir**?⚠️ | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?⚠️ | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -9979,8 +9777,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9991,7 +9787,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -10039,9 +9836,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -10065,6 +9861,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -10084,6 +9881,23 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
+
+
+
+## struct UpgradeDependenciesOptions 🔹 <a id="projen-upgradedependenciesoptions"></a>
+
+
+Options for `UpgradeDependencies`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
+**include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
+**schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
+**taskName**?🔹 | <code>string</code> | The name of the projen task that will be created.<br/>__*Default*__: 'deps:upgrade'
+**workflowName**?🔹 | <code>string</code> | The name of the workflow that will be created.<br/>__*Default*__: 'upgrade-dependencies'.
 
 
 
@@ -10170,19 +9984,6 @@ Name | Type | Description
 
 
 
-## struct AutoApproveOptions 🔹 <a id="projen-github-autoapproveoptions"></a>
-
-
-Options for 'AutoApprove'.
-
-
-
-Name | Type | Description 
------|------|-------------
-**label**?🔹 | <code>string</code> | PR's assigned with this label will be auto-approved.<br/>__*Default*__: pr/auto-approve
-
-
-
 ## struct AutoMergeOptions 🔹 <a id="projen-github-automergeoptions"></a>
 
 
@@ -10194,21 +9995,6 @@ Name | Type | Description
 -----|------|-------------
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
-
-
-
-## struct AutoUpgradeDependenciesOptions 🔹 <a id="projen-github-autoupgradedependenciesoptions"></a>
-
-
-Options for `AutoUpgradeDependencies`.
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoApprove**?🔹 | <code>boolean</code> | Auto approve PR's, allowing mergify to merge them.<br/>__*Default*__: true if auto-approve workflow is configured for the project, false otherwise.
-**ignore**?🔹 | <code>Array<string></code> | List of package names to ignore during the upgrade.<br/>__*Default*__: Only projen itself is ignored.
-**schedule**?🔹 | <code>[github.AutoUpgradeDependenciesSchedule](#projen-github-autoupgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: AutoUpgradeDependenciesSchedule.DAILY
 
 
 
@@ -10312,8 +10098,6 @@ Name | Type | Description
 **groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -10696,8 +10480,6 @@ Name | Type | Description
 **moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | Version of the package.
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -11019,8 +10801,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11030,7 +10810,8 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -11070,9 +10851,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -11092,6 +10872,7 @@ Name | Type | Description
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11133,8 +10914,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11145,7 +10924,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -11193,9 +10973,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -11220,6 +10999,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11272,8 +11052,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11283,7 +11061,8 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -11323,9 +11102,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -11344,6 +11122,7 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Source directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11384,8 +11163,6 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
-**autoApprove**?🔹 | <code>boolean</code> | Create a github workflow for auto approval of PR's based on specific PR metadata.<br/>__*Default*__: true
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Options for PR auto-approvals.<br/>__*Default*__: default options
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11396,7 +11173,8 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependenciesUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Controls how dependencies are upgraded.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -11444,9 +11222,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
-**projenSecret**?🔹 | <code>string</code> | This setting is a GitHub secret name which contains a GitHub Access Token with `repo` and `workflow` permissions.<br/>__*Default*__: Projen managed workflows are disabled.
-**projenUpgradeAutoApprove**?🔹 | <code>boolean</code> | Automatically approve projen upgrade PRs, causing mergify to merge them given the CI passes.<br/>__*Default*__: true
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
+**projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
 **projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
@@ -11470,6 +11247,7 @@ Name | Type | Description
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**upgradeDependenciesOptions**?🔹 | <code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code> | __*Optional*__
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11497,18 +11275,6 @@ Name | Description
 -----|-----
 **EVERY_COMMIT** 🔹|Automatically bump & release a new version for every commit to "main".
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
-
-
-## enum AutoUpgradeDependenciesSchedule 🔹 <a id="projen-autoupgradedependenciesschedule"></a>
-
-How often to check for new versions and raise pull requests for version updates.
-
-Name | Description
------|-----
-**DAILY** 🔹|At 00:00.
-**WEEKDAY** 🔹|At 00:00 on every day-of-week from Monday through Friday.
-**WEEKLY** 🔹|At 00:00 on Monday.
-**MONTHLY** 🔹|At 00:00 on day-of-month 1.
 
 
 ## enum CdkApprovalLevel 🔹 <a id="projen-cdkapprovallevel"></a>
@@ -11692,6 +11458,19 @@ Name | Description
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
 
 
+## enum UpgradeDependenciesSchedule 🔹 <a id="projen-upgradedependenciesschedule"></a>
+
+How often to check for new versions and raise pull requests for version upgrades.
+
+Name | Description
+-----|-----
+**NEVER** 🔹|Disables automatic upgrades.
+**DAILY** 🔹|At 00:00.
+**WEEKDAY** 🔹|At 00:00 on every day-of-week from Monday through Friday.
+**WEEKLY** 🔹|At 00:00 on Monday.
+**MONTHLY** 🔹|At 00:00 on day-of-month 1.
+
+
 ## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>
 
 The strategy to use when edits manifest and lock files.
@@ -11717,18 +11496,6 @@ Name | Description
 **BUILD** 🔹|The dependency is required to run the `build` task.
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
-
-
-## enum AutoUpgradeDependenciesSchedule 🔹 <a id="projen-github-autoupgradedependenciesschedule"></a>
-
-How often to check for new versions and raise pull requests for version updates.
-
-Name | Description
------|-----
-**DAILY** 🔹|At 00:00.
-**WEEKDAY** 🔹|At 00:00 on every day-of-week from Monday through Friday.
-**WEEKLY** 🔹|At 00:00 on Monday.
-**MONTHLY** 🔹|At 00:00 on day-of-month 1.
 
 
 ## enum DependabotScheduleInterval 🔹 <a id="projen-github-dependabotscheduleinterval"></a>

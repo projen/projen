@@ -7,7 +7,6 @@ import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
-import { ProjenUpgrade } from './projen-upgrade';
 import { Publisher } from './publisher';
 import { Task, TaskCategory } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions } from './upgrade-dependencies';
@@ -159,11 +158,18 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowNodeVersion?: string;
 
   /**
-   * Controls how dependencies are upgraded.
+   * Include dependabot configuration.
    *
-   * @default - DependenciesUpgrade.GITHUB_ACTIONS if a projen secret if defined on the project, DependenciesUpgrade.DEPENDABOT otherwise.
+   * @default false
    */
-  readonly dependenciesUpgrade?: DependenciesUpgrade;
+  readonly dependabot?: boolean;
+
+  /**
+   * Options for dependabot.
+   *
+   * @default - default options
+   */
+  readonly dependabotOptions?: DependabotOptions;
 
   /**
    * Options for mergify
@@ -173,28 +179,20 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
+   * Periodically submits a pull request for projen upgrades (executes `yarn
+   * projen:upgrade`).
+   *
    * This setting is a GitHub secret name which contains a GitHub Access Token
    * with `repo` and `workflow` permissions.
    *
-   * This token is used by projen to create workflows that require repository write permissions,
-   * such as dependency upgrades and auto approvals or PRs.
+   * This token is used to submit the upgrade pull request, which will likely
+   * include workflow updates.
    *
    * To create a personal access token see https://github.com/settings/tokens
    *
-   * By default, if a secret is configured, projen will periodically submit a pull request for projen upgrades (executes `yarn
-   * projen:upgrade`) so that your project is always up to date.
-   *
-   * @default - Projen managed workflows are disabled.
+   * @default - no automatic projen upgrade pull requests
    */
-  readonly projenSecret?: string;
-
-  /**
-   * Automatically approve projen upgrade PRs, causing mergify to merge them
-   * given the CI passes.
-   *
-   * @default true
-   */
-  readonly projenUpgradeAutoApprove?: boolean;
+  readonly projenUpgradeSecret?: string;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -202,6 +200,8 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
+
+  readonly upgradeDependenciesOptions?: UpgradeDependenciesOptions;
 
   /**
    * Execute `projen` as the first step of the `build` task to synthesize
@@ -426,11 +426,6 @@ export class NodeProject extends Project {
   public get projenCommand(): string { return this.package.projenCommand; }
 
   /**
-   * The secret this project uses for projen managed workflows.
-   */
-  public readonly projenSecret?: string;
-
-  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
@@ -452,7 +447,6 @@ export class NodeProject extends Project {
     })();
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
-    this.projenSecret = options.projenSecret;
 
     this._version = new Version(this);
 
@@ -743,15 +737,27 @@ export class NodeProject extends Project {
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    const defaultDependenciesUpgrade = DependenciesUpgrade.GITHUB_ACTIONS;
+    if (options.dependabot && options.upgradeDependenciesOptions) {
+      throw new Error("'dependabot' cannot be configured together with 'upgradeDependenciesOptions'");
+    }
 
-    // enable by default only for root projects.
-    const dependenciesUpgrade = options.dependenciesUpgrade ?? (this.parent ? undefined : defaultDependenciesUpgrade);
-    dependenciesUpgrade?.bind(this);
+    if (options.dependabot ?? false) {
+      // dependabot for everything except projen
+      this.github?.addDependabot(options.dependabotOptions);
 
-    new ProjenUpgrade(this, {
-      autoUpgradeSchedule: options.projenUpgradeSchedule,
-    });
+      // custom workflow since projen (most likely) needs self-mutation
+      const upgrade = new UpgradeDependencies(this, {
+        include: ['projen'],
+        workflowName: 'upgrade-projen',
+        taskName: 'projen:upgrade',
+      });
+
+      // the things we do for backwards compatiblity :)
+      upgrade.workflow?.file.addOverride('on.schedule', [{ cron: options.projenUpgradeSchedule ?? '0 6 * * *' }]);
+    } else {
+      // no dependabot, just upgrade all dependencies
+      new UpgradeDependencies(this, options.upgradeDependenciesOptions);
+    }
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
@@ -1162,74 +1168,4 @@ interface NodeBuildWorkflowOptions {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
-}
-
-/**
- * Dependencies upgrade.
- */
-export class DependenciesUpgrade {
-
-  /**
-   * Disable dependency upgrades.
-   */
-  public static readonly DISABLED: DependenciesUpgrade = new DependenciesUpgrade('disabled');
-
-  /**
-   * Use dependabot (with the default options) to upgrade dependencies.
-   */
-  public static readonly DEPENDABOT: DependenciesUpgrade = new DependenciesUpgrade('dependabot');
-
-  /**
-   * Use GitHub actions (with the default options) to upgrade dependencies.
-   */
-  public static readonly GITHUB_ACTIONS: DependenciesUpgrade = new DependenciesUpgrade('github-actions');
-
-  /**
-   * Use GitHub actions (with custom options) to upgrade dependencies.
-   *
-   * @param options The options.
-   */
-  public static githubActions(options: UpgradeDependenciesOptions = {}): DependenciesUpgrade {
-    return new DependenciesUpgrade('github-actions', options);
-  }
-
-  /**
-   * Use Dependabot (with custom options) to upgrade dependencies.
-   *
-   * @param options The options.
-   */
-  public static dependabot(options: DependabotOptions = {}): DependenciesUpgrade {
-    return new DependenciesUpgrade('dependabot', options);
-  }
-
-  private constructor(
-    private readonly type: 'github-actions' | 'dependabot' | 'disabled',
-    private readonly options?: DependabotOptions | UpgradeDependenciesOptions) {
-
-  }
-
-  public bind(project: NodeProject) {
-
-    switch (this.type) {
-      case 'disabled':
-        break;
-      case 'dependabot':
-        this.bindDependabot(project);
-        break;
-      case 'github-actions':
-        this.bindGitHubActions(project);
-        break;
-      default:
-        throw new Error(`Unsupported dependency upgrade type: ${this.type}. (Supported are: 'dependabot' | 'github-actions')`);
-    }
-  }
-
-  private bindDependabot(project: NodeProject) {
-    project.github?.addDependabot((this.options ?? {}) as DependabotOptions);
-  }
-
-  private bindGitHubActions(project: NodeProject) {
-    new UpgradeDependencies(project, (this.options ?? {}) as UpgradeDependenciesOptions);
-  }
-
 }
