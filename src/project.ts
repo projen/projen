@@ -87,12 +87,6 @@ export interface ProjectOptions extends GitHubOptions {
    */
   readonly logging?: LoggerOptions;
 
-  /**
-   * The JSII FQN (fully qualified name) of the project class.
-   * @default undefined
-   */
-  readonly jsiiFqn?: string;
-
 }
 
 /**
@@ -241,7 +235,6 @@ export class Project {
     }
 
     new SampleReadme(this, options.readme);
-
   }
 
   /**
