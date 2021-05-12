@@ -72,6 +72,7 @@
     "ini": "^2.0.0",
     "inquirer": "^7.3.3",
     "semver": "^7.3.2",
+    "shx": "^0.3.3",
     "xmlbuilder2": "^2.4.0",
     "yaml": "^1.10.0",
     "yargs": "^16.2.0"
@@ -85,6 +86,7 @@
     "ini",
     "inquirer",
     "semver",
+    "shx",
     "xmlbuilder2",
     "yaml",
     "yargs"
