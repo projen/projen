@@ -1,5 +1,3 @@
-const { DependenciesUpgrade } = require('projen');
-
 exports.options = {
   minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
@@ -13,6 +11,7 @@ exports.options = {
   dependabot: false,
   mergify: false,
   compat: false,
+  dependabot: false,
   pullRequestTemplate: false,
   keywords: [
     "cdk",
