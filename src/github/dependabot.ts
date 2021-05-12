@@ -21,14 +21,6 @@ export interface DependabotOptions {
   readonly versioningStrategy?: VersioningStrategy;
 
   /**
-   * Automatically approve dependabot PRs. This will cause mergify
-   * to auto merge them given the CI checks pass.
-   *
-   * @default - true if auto approval workflow is configured for the project, false otherwise.
-   */
-  readonly autoApprove?: boolean;
-
-  /**
    * You can use the `ignore` option to customize which dependencies are updated.
    * The ignore option supports the following options.
    * @default []
