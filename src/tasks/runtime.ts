@@ -87,10 +87,29 @@ class RunTask {
       }
 
       if (step.exec) {
-        const command = step.exec;
+        let command = '';
+        let hasError = false;
+        const cmd = step.exec.split(' ')[0];
+        if (['mkdir', 'mv', 'rm'].includes(cmd)) {
+          command = `shx ${step.exec}`;
+        } else {
+          command = step.exec;
+        }
         const cwd = step.cwd;
-        const result = this.shell({ command, cwd });
-        if (result.status !== 0) {
+        try {
+          const result = this.shell({
+            command,
+            cwd,
+          });
+          hasError = result.status !== 0;
+        } catch (e) {
+          // This is the error 'shx' will throw
+          if (e instanceof Error && e.message.startsWith('non-zero exit code:')) {
+            hasError = true;
+          }
+          throw e;
+        }
+        if (hasError) {
           throw new Error(`Task "${this.fullname}" failed when executing "${command}" (cwd: ${resolve(cwd ?? this.workdir)})`);
         }
       }
