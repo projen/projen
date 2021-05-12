@@ -86,7 +86,6 @@ export interface ProjectOptions extends GitHubOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
-
 }
 
 /**
