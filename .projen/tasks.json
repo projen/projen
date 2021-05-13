@@ -42,6 +42,9 @@
           "exec": "git -c \"versionsort.suffix=-\" tag --sort=\"-version:refname\" --list \"v*\" | head -n1 > .version.tmp.json"
         },
         {
+          "exec": "[ \"$(cat .version.tmp.json)\" == \"\" ] && echo \"v0.1.0\" > .version.tmp.json"
+        },
+        {
           "exec": "standard-version"
         }
       ],
