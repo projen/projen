@@ -46,7 +46,7 @@ test('projen new --from external', () => {
     const projectdir = createProjectDir(outdir);
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project', '--no-synth']);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -59,7 +59,6 @@ test('projen new --from external', () => {
     });
 
     expect(actual).toMatchSnapshot();
-    expect(actual['schema.graphql']).toBeDefined();
   } finally {
     removeSync(outdir);
   }

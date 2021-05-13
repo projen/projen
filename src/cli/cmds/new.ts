@@ -257,6 +257,10 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
       continue; // we don't support non-primitive fields as command line options
     }
 
+    if (args[option.name] !== undefined) {
+      continue; // do not overwrite passed arguments
+    }
+
     if (option.default && option.default !== 'undefined') {
       if (!option.optional) {
         const defaultValue = renderDefault(option.default);
