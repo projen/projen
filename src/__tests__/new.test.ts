@@ -46,7 +46,7 @@ test('projen new --from external', () => {
     const projectdir = createProjectDir(outdir);
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project', '--no-synth']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2']);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -59,6 +59,31 @@ test('projen new --from external', () => {
     });
 
     expect(actual).toMatchSnapshot();
+    expect(actual['schema.graphql']).toBeDefined();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('options are not overwritten when creating external projects', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    // execute `projen new --from cdk-appsync-project` in the project directory
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-synth', '--cdk-version', '1.63.0']);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    expect(actual['.projenrc.js']).toContain('cdkVersion: \'1.63.0\'');
   } finally {
     removeSync(outdir);
   }
