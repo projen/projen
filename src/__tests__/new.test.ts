@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 import { join } from 'path';
 import { mkdirSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
-import { directorySnapshot, execProjenCLI, mkdtemp, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
@@ -47,6 +47,10 @@ test('projen new --from external', () => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
     execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2']);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
