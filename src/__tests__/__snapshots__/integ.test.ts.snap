@@ -855,7 +855,7 @@ tsconfig.tsbuildinfo
             "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
-            "exec": "[ \\"$(cat .version.tmp.json)\\" == \\"\\" ] && echo \\"v0.1.0\\" > .version.tmp.json",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" == \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
@@ -2047,7 +2047,7 @@ tsconfig.tsbuildinfo
             "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
-            "exec": "[ \\"$(cat .version.tmp.json)\\" == \\"\\" ] && echo \\"v0.1.0\\" > .version.tmp.json",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" == \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
@@ -3367,7 +3367,7 @@ tsconfig.tsbuildinfo
             "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
-            "exec": "[ \\"$(cat .version.tmp.json)\\" == \\"\\" ] && echo \\"v0.1.0\\" > .version.tmp.json",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" == \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
@@ -4458,7 +4458,7 @@ junit.xml
             "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
-            "exec": "[ \\"$(cat .version.tmp.json)\\" == \\"\\" ] && echo \\"v0.1.0\\" > .version.tmp.json",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" == \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
