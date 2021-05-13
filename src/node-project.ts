@@ -301,6 +301,15 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * The initial version of the repo. The first release will bump over this
+   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
+   * bump is minor or patch).
+   *
+   * @default "v0.1.0"
+   */
+  readonly initialVersion?: string;
 }
 
 /**
@@ -465,7 +474,9 @@ export class NodeProject extends Project {
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
-    this._version = new Version(this);
+    this._version = new Version(this, {
+      initialVersion: options.initialVersion,
+    });
 
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
