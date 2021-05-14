@@ -49,7 +49,7 @@ export class Version extends Component {
     const initialVersion = options.initialVersion ?? 'v0.1.0';
 
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
-    this.bumpTask.exec(`if [ "$(cat ${versionFile})" == "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
+    this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
     this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {
