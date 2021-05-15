@@ -241,6 +241,7 @@ Object {
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/release.yml             	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.github/workflows/upgrade-projen.yml      	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/                                  	linguist-generated
@@ -418,13 +419,12 @@ on:
   schedule:
     - cron: 0 0 * * *
 jobs:
-  upgrade-dependencies:
-    name: Upgrade & Build
+  upgrade:
+    name: Upgrade
     permissions: read-all
     runs-on: ubuntu-latest
     outputs:
-      build-conclusion: \${{ steps.build.outputs.conclusion }}
-      build-log: \${{ steps.build.outputs.log }}
+      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -435,29 +435,23 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
-        run: npx projen deps:upgrade
+        run: npx projen upgrade-dependencies
       - name: Build
         id: build
-        run: >-
-          npx projen build && echo \\"::set-output name=conclusion::success\\" ||
-          echo \\"::set-output name=conclusion::failure\\"
-
-          echo \\"::set-output name=log::https://github.com/\${REPO}/actions/runs/\${{ github.run_id }}\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
+        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
+          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > \${{ runner.temp }}/dependencies.patch
+          git diff --patch --staged > \${{ runner.temp }}/upgrade.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: dependencies.patch
-          path: \${{ runner.temp }}/dependencies.patch
-  create-pr:
-    needs: upgrade-dependencies
+          name: upgrade.patch
+          path: \${{ runner.temp }}/upgrade.patch
+  pr:
     name: Create Pull Request
+    needs: upgrade
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -466,31 +460,22 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: dependencies.patch
+          name: upgrade.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/dependencies.patch ] && git apply \${{ runner.temp
-          }}/dependencies.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/upgrade.patch ] && git apply \${{ runner.temp
+          }}/upgrade.patch || echo \\"Empty patch. Skipping.\\"'
       - name: Create Pull Request
-        id: create-pull-request
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: Upgrade dependencies
-          branch: github-actions/dependencies
-          title: \\"chore(deps): Upgrade dependencies\\"
+          commit-message: upgrade
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            Upgrade dependencies.
-
-
-            Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.
-
-            > See https://github.com/peter-evans/create-pull-request/issues/48
-
-
-            In order to validate it, build was executed during the creation of this PR instead.
-
-            > See \${{ needs.upgrade-dependencies.outputs.build-log }}
+            See https://github.com/\${{ github.event.repository.full_name
+            }}/actions/runs/\${{ github.run_id }}
 
 
             ------
@@ -498,19 +483,105 @@ jobs:
 
             *Automatically created by projen via GitHubActions*
       - name: Update status check
-        if: steps.create-pull-request.outputs.pull-request-url != ''
+        if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
           \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${REPO}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/dependencies\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade-dependencies.outputs.build-conclusion
-          }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created via the upgrade-dependencies
-          workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Build log is available here: \${{
-          needs.upgrade-dependencies.outputs.build-log }}\\\\\\"}}'\\"
+          https://api.github.com/repos/\${{ github.event.repository.full_name
+          }}/check-runs -d
+          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-dependenci\\\\
+          es\\\\\\",\\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
+          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
+          via the upgrade-dependencies workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
+          https://github.com/\${{ github.event.repository.full_name
+          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
+",
+  ".github/workflows/upgrade-projen.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+
+name: upgrade-projen
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: 0 6 * * *
+jobs:
+  upgrade:
+    name: Upgrade
+    permissions: read-all
+    runs-on: ubuntu-latest
+    outputs:
+      conclusion: \${{ steps.build.outputs.conclusion }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.0.0
+      - name: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
+      - name: Upgrade dependencies
+        run: npx projen upgrade-projen
+      - name: Build
+        id: build
+        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
+          \\"::set-output name=conclusion::failure\\"
+      - name: Create Patch
+        run: |-
+          git add .
+          git diff --patch --staged > \${{ runner.temp }}/upgrade.patch
+      - name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: upgrade.patch
+          path: \${{ runner.temp }}/upgrade.patch
+  pr:
+    name: Create Pull Request
+    needs: upgrade
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: upgrade.patch
+          path: \${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s \${{ runner.temp }}/upgrade.patch ] && git apply \${{ runner.temp
+          }}/upgrade.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+          commit-message: upgrade
+          branch: github-actions/upgrade-projen
+          title: \\"chore(deps): upgrade-projen\\"
+          body: >-
+            See https://github.com/\${{ github.event.repository.full_name
+            }}/actions/runs/\${{ github.run_id }}
+
+
+            ------
+
+
+            *Automatically created by projen via GitHubActions*
+      - name: Update status check
+        if: steps.create-pr.outputs.pull-request-url != ''
+        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
+          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
+          https://api.github.com/repos/\${{ github.event.repository.full_name
+          }}/check-runs -d
+          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-projen\\\\\\",\\\\
+          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
+          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
+          via the upgrade-projen workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
+          https://github.com/\${{ github.event.repository.full_name
+          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 *.lcov
@@ -555,6 +626,7 @@ yarn-error.log*
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
 !/.github/workflows/upgrade-dependencies.yml
+!/.github/workflows/upgrade-projen.yml
 !/.mergify.yml
 !/.npmignore
 !/.projen/deps.json
@@ -679,6 +751,10 @@ tsconfig.tsbuildinfo
       },
       Object {
         "name": "json-schema",
+        "type": "build",
+      },
+      Object {
+        "name": "npm-check-updates",
         "type": "build",
       },
       Object {
@@ -965,17 +1041,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "deps:upgrade": Object {
-        "name": "deps:upgrade",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-        ],
-      },
       "docgen": Object {
         "category": "20.release",
         "description": "Generate API.md from .jsii manifest",
@@ -1065,6 +1130,28 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "upgrade-dependencies": Object {
+        "name": "upgrade-dependencies",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+        ],
+      },
+      "upgrade-projen": Object {
+        "name": "upgrade-projen",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --filter=projen",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+        ],
+      },
       "watch": Object {
         "category": "00.build",
         "description": "Watch & compile in the background",
@@ -1096,7 +1183,7 @@ const project = new ConstructLibraryAws({
   },
 
   // creates PRs for projen upgrades
-  projenSecret: 'PROJEN_GITHUB_TOKEN',
+  projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
   cdkVersion: '1.75.0',
   cdkDependencies: [
@@ -1516,7 +1603,6 @@ project.synth();
       "compat": "npx projen compat",
       "compile": "npx projen compile",
       "default": "npx projen default",
-      "deps:upgrade": "npx projen deps:upgrade",
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
@@ -1527,6 +1613,8 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
+      "upgrade-dependencies": "npx projen upgrade-dependencies",
+      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "stability": "stable",
@@ -1870,13 +1958,12 @@ on:
   schedule:
     - cron: 0 0 * * *
 jobs:
-  upgrade-dependencies:
-    name: Upgrade & Build
+  upgrade:
+    name: Upgrade
     permissions: read-all
     runs-on: ubuntu-latest
     outputs:
-      build-conclusion: \${{ steps.build.outputs.conclusion }}
-      build-log: \${{ steps.build.outputs.log }}
+      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -1887,29 +1974,23 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
-        run: npx projen deps:upgrade
+        run: npx projen upgrade-dependencies
       - name: Build
         id: build
-        run: >-
-          npx projen build && echo \\"::set-output name=conclusion::success\\" ||
-          echo \\"::set-output name=conclusion::failure\\"
-
-          echo \\"::set-output name=log::https://github.com/\${REPO}/actions/runs/\${{ github.run_id }}\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
+        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
+          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > \${{ runner.temp }}/dependencies.patch
+          git diff --patch --staged > \${{ runner.temp }}/upgrade.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: dependencies.patch
-          path: \${{ runner.temp }}/dependencies.patch
-  create-pr:
-    needs: upgrade-dependencies
+          name: upgrade.patch
+          path: \${{ runner.temp }}/upgrade.patch
+  pr:
     name: Create Pull Request
+    needs: upgrade
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -1918,31 +1999,22 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: dependencies.patch
+          name: upgrade.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/dependencies.patch ] && git apply \${{ runner.temp
-          }}/dependencies.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/upgrade.patch ] && git apply \${{ runner.temp
+          }}/upgrade.patch || echo \\"Empty patch. Skipping.\\"'
       - name: Create Pull Request
-        id: create-pull-request
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: Upgrade dependencies
-          branch: github-actions/dependencies
-          title: \\"chore(deps): Upgrade dependencies\\"
+          commit-message: upgrade
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            Upgrade dependencies.
-
-
-            Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.
-
-            > See https://github.com/peter-evans/create-pull-request/issues/48
-
-
-            In order to validate it, build was executed during the creation of this PR instead.
-
-            > See \${{ needs.upgrade-dependencies.outputs.build-log }}
+            See https://github.com/\${{ github.event.repository.full_name
+            }}/actions/runs/\${{ github.run_id }}
 
 
             ------
@@ -2112,6 +2184,10 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "npm-check-updates",
+        "type": "build",
+      },
+      Object {
         "name": "projen",
         "type": "build",
         "version": "^999.999.999",
@@ -2250,17 +2326,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "deps:upgrade": Object {
-        "name": "deps:upgrade",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-        ],
-      },
       "docgen": Object {
         "category": "20.release",
         "description": "Generate API.md from .jsii manifest",
@@ -2350,6 +2415,28 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "standard-version -r 0.0.0",
+          },
+        ],
+      },
+      "upgrade-dependencies": Object {
+        "name": "upgrade-dependencies",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+        ],
+      },
+      "upgrade-projen": Object {
+        "name": "upgrade-projen",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --filter=projen",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
         ],
       },
@@ -2689,9 +2776,7 @@ common.fixup(project);
 
 project.synth();
 ",
-  "cdk8s.common.js": "const { DependenciesUpgrade } = require('projen');
-
-exports.options = {
+  "cdk8s.common.js": "exports.options = {
   minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
@@ -2704,6 +2789,7 @@ exports.options = {
   dependabot: false,
   mergify: false,
   compat: false,
+  dependabot: false,
   pullRequestTemplate: false,
   keywords: [
     \\"cdk\\",
@@ -2928,7 +3014,6 @@ project.synth();
       "compat": "npx projen compat",
       "compile": "npx projen compile",
       "default": "npx projen default",
-      "deps:upgrade": "npx projen deps:upgrade",
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
@@ -2939,6 +3024,8 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
+      "upgrade-dependencies": "npx projen upgrade-dependencies",
+      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "stability": "experimental",
@@ -3284,13 +3371,12 @@ on:
   schedule:
     - cron: 0 0 * * *
 jobs:
-  upgrade-dependencies:
-    name: Upgrade & Build
+  upgrade:
+    name: Upgrade
     permissions: read-all
     runs-on: ubuntu-latest
     outputs:
-      build-conclusion: \${{ steps.build.outputs.conclusion }}
-      build-log: \${{ steps.build.outputs.log }}
+      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -3301,29 +3387,23 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
-        run: npx projen deps:upgrade
+        run: npx projen upgrade-dependencies
       - name: Build
         id: build
-        run: >-
-          npx projen build && echo \\"::set-output name=conclusion::success\\" ||
-          echo \\"::set-output name=conclusion::failure\\"
-
-          echo \\"::set-output name=log::https://github.com/\${REPO}/actions/runs/\${{ github.run_id }}\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
+        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
+          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > \${{ runner.temp }}/dependencies.patch
+          git diff --patch --staged > \${{ runner.temp }}/upgrade.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: dependencies.patch
-          path: \${{ runner.temp }}/dependencies.patch
-  create-pr:
-    needs: upgrade-dependencies
+          name: upgrade.patch
+          path: \${{ runner.temp }}/upgrade.patch
+  pr:
     name: Create Pull Request
+    needs: upgrade
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -3332,31 +3412,22 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: dependencies.patch
+          name: upgrade.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/dependencies.patch ] && git apply \${{ runner.temp
-          }}/dependencies.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/upgrade.patch ] && git apply \${{ runner.temp
+          }}/upgrade.patch || echo \\"Empty patch. Skipping.\\"'
       - name: Create Pull Request
-        id: create-pull-request
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: Upgrade dependencies
-          branch: github-actions/dependencies
-          title: \\"chore(deps): Upgrade dependencies\\"
+          commit-message: upgrade
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            Upgrade dependencies.
-
-
-            Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.
-
-            > See https://github.com/peter-evans/create-pull-request/issues/48
-
-
-            In order to validate it, build was executed during the creation of this PR instead.
-
-            > See \${{ needs.upgrade-dependencies.outputs.build-log }}
+            See https://github.com/\${{ github.event.repository.full_name
+            }}/actions/runs/\${{ github.run_id }}
 
 
             ------
@@ -3487,6 +3558,10 @@ tsconfig.tsbuildinfo
       },
       Object {
         "name": "json-schema",
+        "type": "build",
+      },
+      Object {
+        "name": "npm-check-updates",
         "type": "build",
       },
       Object {
@@ -3643,17 +3718,6 @@ tsconfig.tsbuildinfo
           },
         ],
       },
-      "deps:upgrade": Object {
-        "name": "deps:upgrade",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-        ],
-      },
       "eslint": Object {
         "category": "10.test",
         "description": "Runs eslint against the codebase",
@@ -3742,6 +3806,28 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "standard-version -r 0.0.0",
+          },
+        ],
+      },
+      "upgrade-dependencies": Object {
+        "name": "upgrade-dependencies",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+        ],
+      },
+      "upgrade-projen": Object {
+        "name": "upgrade-projen",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --filter=projen",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
         ],
       },
@@ -4063,9 +4149,7 @@ common.fixup(project);
 
 project.synth();
 ",
-  "cdk8s.common.js": "const { DependenciesUpgrade } = require('projen');
-
-exports.options = {
+  "cdk8s.common.js": "exports.options = {
   minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
@@ -4078,6 +4162,7 @@ exports.options = {
   dependabot: false,
   mergify: false,
   compat: false,
+  dependabot: false,
   pullRequestTemplate: false,
   keywords: [
     \\"cdk\\",
@@ -4276,7 +4361,6 @@ project.synth();
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
       "default": "npx projen default",
-      "deps:upgrade": "npx projen deps:upgrade",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
@@ -4286,6 +4370,8 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
+      "upgrade-dependencies": "npx projen upgrade-dependencies",
+      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "types": "lib/index.d.ts",
@@ -4527,42 +4613,35 @@ on:
   schedule:
     - cron: 0 0 * * *
 jobs:
-  upgrade-dependencies:
-    name: Upgrade & Build
+  upgrade:
+    name: Upgrade
     permissions: read-all
     runs-on: ubuntu-latest
     outputs:
-      build-conclusion: \${{ steps.build.outputs.conclusion }}
-      build-log: \${{ steps.build.outputs.log }}
+      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
-        run: npx projen deps:upgrade
+        run: npx projen upgrade-dependencies
       - name: Build
         id: build
-        run: >-
-          npx projen build && echo \\"::set-output name=conclusion::success\\" ||
-          echo \\"::set-output name=conclusion::failure\\"
-
-          echo \\"::set-output name=log::https://github.com/\${REPO}/actions/runs/\${{ github.run_id }}\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
+        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
+          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > \${{ runner.temp }}/dependencies.patch
+          git diff --patch --staged > \${{ runner.temp }}/upgrade.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: dependencies.patch
-          path: \${{ runner.temp }}/dependencies.patch
-  create-pr:
-    needs: upgrade-dependencies
+          name: upgrade.patch
+          path: \${{ runner.temp }}/upgrade.patch
+  pr:
     name: Create Pull Request
+    needs: upgrade
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -4571,31 +4650,22 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: dependencies.patch
+          name: upgrade.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/dependencies.patch ] && git apply \${{ runner.temp
-          }}/dependencies.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/upgrade.patch ] && git apply \${{ runner.temp
+          }}/upgrade.patch || echo \\"Empty patch. Skipping.\\"'
       - name: Create Pull Request
-        id: create-pull-request
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: Upgrade dependencies
-          branch: github-actions/dependencies
-          title: \\"chore(deps): Upgrade dependencies\\"
+          commit-message: upgrade
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            Upgrade dependencies.
-
-
-            Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.
-
-            > See https://github.com/peter-evans/create-pull-request/issues/48
-
-
-            In order to validate it, build was executed during the creation of this PR instead.
-
-            > See \${{ needs.upgrade-dependencies.outputs.build-log }}
+            See https://github.com/\${{ github.event.repository.full_name
+            }}/actions/runs/\${{ github.run_id }}
 
 
             ------
@@ -4603,19 +4673,19 @@ jobs:
 
             *Automatically created by projen via GitHubActions*
       - name: Update status check
-        if: steps.create-pull-request.outputs.pull-request-url != ''
+        if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
           \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${REPO}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/dependencies\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade-dependencies.outputs.build-conclusion
-          }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created via the upgrade-dependencies
-          workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Build log is available here: \${{
-          needs.upgrade-dependencies.outputs.build-log }}\\\\\\"}}'\\"
+          https://api.github.com/repos/\${{ github.event.repository.full_name
+          }}/check-runs -d
+          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-dependenci\\\\
+          es\\\\\\",\\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
+          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
+          via the upgrade-dependencies workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
+          https://github.com/\${{ github.event.repository.full_name
+          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-          REPO: \${{ github.event.repository.full_name }}
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 *.lcov
@@ -4698,6 +4768,10 @@ junit.xml
         "name": "jest-junit",
         "type": "build",
         "version": "^12",
+      },
+      Object {
+        "name": "npm-check-updates",
+        "type": "build",
       },
       Object {
         "name": "npm-check-updates",
@@ -4795,17 +4869,6 @@ junit.xml
           },
         ],
       },
-      "deps:upgrade": Object {
-        "name": "deps:upgrade",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor",
-          },
-          Object {
-            "exec": "pnpm i",
-          },
-        ],
-      },
       "test": Object {
         "category": "10.test",
         "description": "Run tests",
@@ -4851,6 +4914,28 @@ junit.xml
         "steps": Array [
           Object {
             "exec": "standard-version -r 0.0.0",
+          },
+        ],
+      },
+      "upgrade-dependencies": Object {
+        "name": "upgrade-dependencies",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "pnpm i",
+          },
+        ],
+      },
+      "upgrade-projen": Object {
+        "name": "upgrade-projen",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --filter=projen",
+          },
+          Object {
+            "exec": "pnpm i",
           },
         ],
       },
@@ -5150,7 +5235,6 @@ project.synth();
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
       "default": "npx projen default",
-      "deps:upgrade": "npx projen deps:upgrade",
       "projen": "npx projen",
       "start": "npx projen start",
       "test": "npx projen test",
@@ -5158,6 +5242,8 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
+      "upgrade-dependencies": "npx projen upgrade-dependencies",
+      "upgrade-projen": "npx projen upgrade-projen",
     },
     "version": "0.0.0",
   },

@@ -1,11 +1,27 @@
 import { Component } from './component';
 import { GithubWorkflow } from './github';
 import { NodeProject } from './node-project';
+import { Task } from './tasks';
+
+function context(value: string) {
+  return `\${{ ${value} }}`;
+}
+
+function setOutput(name: string, value: string) {
+  return `echo "::set-output name=${name}::${value}"`;
+}
+
+const RUNNER_TEMP = context('runner.temp');
+const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
+const REPO = context('github.event.repository.full_name');
+const RUN_ID = context('github.run_id');
+const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
+const UBUNTU_LATEST = 'ubuntu-latest';
 
 /**
- * Options for `UpgradeDependencies`.
+ * Options for `UpgradeDependencies.workflowOptions`.
  */
-export interface UpgradeDependenciesOptions {
+export interface UpgradeDependenciesWorkflowOptions {
 
   /**
    * Schedule to run on.
@@ -13,6 +29,27 @@ export interface UpgradeDependenciesOptions {
    * @default UpgradeDependenciesSchedule.DAILY
    */
   readonly schedule?: UpgradeDependenciesSchedule;
+
+  /**
+   * Which secret to use when creating the PR.
+   *
+   * @default - default github token.
+   */
+  readonly secret?: string;
+
+  /**
+   * Execute 'build' after the upgrade.
+   *
+   * @default true
+   */
+  readonly rebuild?: boolean;
+
+}
+
+/**
+ * Options for `UpgradeDependencies`.
+ */
+export interface UpgradeDependenciesOptions {
 
   /**
    * List of package names to exclude during the upgrade.
@@ -29,50 +66,75 @@ export interface UpgradeDependenciesOptions {
   readonly include?: string[];
 
   /**
-   * The name of the workflow that will be created.
+   * Include a github workflow for creating PR's that upgrades the
+   * required dependencies.
+   *
+   * @default - true for root projects, false for sub-projects.
+   */
+  readonly workflow?: boolean;
+
+  /**
+   * Options for the github workflow. Only applies if `workflow` is true.
+   *
+   * @default - default options.
+   */
+  readonly workflowOptions?: UpgradeDependenciesWorkflowOptions;
+
+  /**
+   * The name of the task that will be created.
+   * This will also be the workflow name.
    *
    * @default 'upgrade-dependencies'.
    */
-  readonly workflowName?: string;
+  readonly taskName?: string;
 
   /**
-   * The name of the projen task that will be created.
+   * Whether or not to ignore projen upgrades.
    *
-   * @default 'deps:upgrade'
+   * @default true
    */
-  readonly taskName?: string;
+  readonly ignoreProjen?: boolean;
 
 }
 
 /**
  * How often to check for new versions and raise pull requests for version upgrades.
  */
-export enum UpgradeDependenciesSchedule {
+export class UpgradeDependenciesSchedule {
 
   /**
    * Disables automatic upgrades.
    */
-  NEVER = 'never',
+  public static readonly NEVER = new UpgradeDependenciesSchedule([]);
 
   /**
    * At 00:00.
    */
-  DAILY = 'daily',
+  public static readonly DAILY = new UpgradeDependenciesSchedule(['0 0 * * *']);
 
   /**
    * At 00:00 on every day-of-week from Monday through Friday.
    */
-  WEEKDAY = 'weekday',
+  public static readonly WEEKDAY = new UpgradeDependenciesSchedule(['0 0 * * 1-5']);
 
   /**
    * At 00:00 on Monday.
    */
-  WEEKLY = 'weekly',
+  public static readonly WEEKLY = new UpgradeDependenciesSchedule(['0 0 * * 1']);
 
   /**
    * At 00:00 on day-of-month 1.
    */
-  MONTHLY = 'monthly'
+  public static readonly MONTHLY = new UpgradeDependenciesSchedule(['0 0 1 * *']);
+
+  /**
+   * Create a schedule from a raw cron expression.
+   */
+  public static expressions(cron: string[]) {
+    return new UpgradeDependenciesSchedule(cron);
+  }
+
+  private constructor(public readonly cron: string[]) {}
 }
 
 
@@ -81,20 +143,30 @@ export enum UpgradeDependenciesSchedule {
  */
 export class UpgradeDependencies extends Component {
 
+  /**
+   * The workflow that executes the upgrade.
+   */
   public readonly workflow?: GithubWorkflow;
+
+  private readonly options: UpgradeDependenciesOptions;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
+    this.options = options;
+
     project.addDevDeps('npm-check-updates');
 
-    // define a local task. this is valueable on its own to standardize
-    // how we upgrade dependencies for all package managers.
-    const task = project.addTask(options.taskName ?? 'deps:upgrade');
+    const taskName = options.taskName ?? 'upgrade-dependencies';
+    const task = project.addTask(taskName);
 
+    const exclude = options.exclude ?? [];
+    if (options.ignoreProjen ?? true) {
+      exclude.push('projen');
+    }
     const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];
-    if (options.exclude) {
-      ncuCommand.push(`--reject='${options.exclude.join(',')}'`);
+    if (exclude.length > 0) {
+      ncuCommand.push(`--reject='${exclude.join(',')}'`);
     }
     if (options.include) {
       ncuCommand.push(`--filter=${options.include.join(',')}`);
@@ -103,170 +175,186 @@ export class UpgradeDependencies extends Component {
     task.exec(ncuCommand.join(' '));
     task.exec(project.package.renderInstallCommand(false));
 
-    // then we define a github workflow if possible
-    if (project.github) {
+    if (project.github && (options.workflow ?? true)) {
 
-      const schedule = options.schedule ?? UpgradeDependenciesSchedule.DAILY;
-      const runnerTemp = '${{ runner.temp }}';
-      const patchArtifact = 'dependencies.patch';
-      const patchFile = `${runnerTemp}/${patchArtifact}`;
-      const branchName = 'github-actions/dependencies';
-      const buildStepId = 'build';
-      const prStepId = 'create-pull-request';
-      const buildConclusionOutputName = 'conclusion';
-      const buildLogOutputName = 'log';
-      const workflowName = options.workflowName ?? 'upgrade-dependencies';
+      const schedule = options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
-      this.workflow = project.github.addWorkflow(workflowName);
+      this.workflow = project.github.addWorkflow(taskName);
       const triggers: any = { workflow_dispatch: {} };
-      if (schedule !== UpgradeDependenciesSchedule.NEVER) {
-        triggers.schedule = [{ cron: this.scheduleToCron(schedule) }];
+      if (schedule.cron) {
+        triggers.schedule = schedule.cron.map(e => ({ cron: e }));
       }
       this.workflow.on(triggers);
 
-      const upgradeAndBuild = {
-        'name': 'Upgrade & Build',
-        'permissions': 'read-all',
-        'runs-on': 'ubuntu-latest',
-        'outputs': {
-          'build-conclusion': `\${{ steps.${buildStepId}.outputs.${buildConclusionOutputName} }}`,
-          'build-log': `\${{ steps.${buildStepId}.outputs.${buildLogOutputName} }}`,
-        },
-        'steps': [
-          {
-            name: 'Checkout',
-            uses: 'actions/checkout@v2',
-          },
-          ...project.installWorkflowSteps,
-          {
-            name: 'Upgrade dependencies',
-            run: project.runTaskCommand(task),
-          },
-          {
-            name: 'Build',
-            id: buildStepId,
-            run: [
-              `${project.runTaskCommand(project.buildTask)} && ${this.setOutput(buildConclusionOutputName, 'success')} || ${this.setOutput(buildConclusionOutputName, 'failure')}`,
-              `${this.setOutput(buildLogOutputName, 'https://github.com/${REPO}/actions/runs/${{ github.run_id }}')}`,
-            ].join('\n'),
-            env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-              REPO: '${{ github.event.repository.full_name }}',
-            },
-          },
-          {
-            name: 'Create Patch',
-            run: [
-              'git add .',
-              `git diff --patch --staged > ${patchFile}`,
-            ].join('\n'),
-          },
-          {
-            name: 'Upload patch',
-            uses: 'actions/upload-artifact@v2',
-            with: { name: patchArtifact, path: patchFile },
-          },
-        ],
-      };
+      const upgrade = this.createUpgrade(task);
+      const pr = this.createPr(upgrade);
 
-      const createPR: any = {
-        'needs': 'upgrade-dependencies',
-        'name': 'Create Pull Request',
-        'permissions': 'write-all',
-        'runs-on': 'ubuntu-latest',
-        'steps': [
-          {
-            name: 'Checkout',
-            uses: 'actions/checkout@v2',
-          },
-          {
-            name: 'Download patch',
-            uses: 'actions/download-artifact@v2',
-            with: { name: patchArtifact, path: runnerTemp },
-          },
-          {
-            name: 'Apply patch',
-            run: `[ -s ${patchFile} ] && git apply ${patchFile} || echo "Empty patch. Skipping."`,
-          },
-          {
-            name: 'Create Pull Request',
-            id: prStepId,
-            uses: 'peter-evans/create-pull-request@v3',
-            with: {
-              'token': '${{ secrets.GITHUB_TOKEN }}',
-              'commit-message': 'Upgrade dependencies',
-              'branch': branchName,
-              'title': 'chore(deps): Upgrade dependencies',
-              'body': [
-                'Upgrade dependencies.',
-                '',
-                "Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.",
-                '> See https://github.com/peter-evans/create-pull-request/issues/48',
-                '',
-                'In order to validate it, build was executed during the creation of this PR instead.',
-                '> See ${{ needs.upgrade-dependencies.outputs.build-log }}',
-                '',
-                '------',
-                '',
-                '*Automatically created by projen via GitHubActions*',
-              ].join('\n'),
-            },
-          },
-        ],
-      };
+      const jobs: any = {};
+      jobs[upgrade.jobId] = upgrade.job;
+      jobs[pr.jobId] = pr.job;
 
-      if (project.buildWorkflowJobId) {
-        createPR.steps.push({
-          name: 'Update status check',
-          if: `steps.${prStepId}.outputs.pull-request-url != ''`,
-          run: 'curl -i --fail '
-              + '-X POST '
-              + '-H "Accept: application/vnd.github.v3+json" '
-              + '-H "Authorization: token ${GITHUB_TOKEN}" https://api.github.com/repos/${REPO}/check-runs '
-              + '-d \'{'
-                + `"name":"${project.buildWorkflowJobId}",`
-                + `"head_sha":"${branchName}",`
-                + '"status":"completed",'
-                + '"conclusion":"\${{ needs.upgrade-dependencies.outputs.build-conclusion }}",'
-                + '"output":{'
-                  + `"title":"Created via the ${workflowName} workflow.",`
-                  + '"summary":"Build log is available here: ${{ needs.upgrade-dependencies.outputs.build-log }}"'
-                + '}'
-              + '}\'',
-          env: {
-            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-            REPO: '${{ github.event.repository.full_name }}',
-          },
-        });
-      }
+      this.workflow.addJobs(jobs);
+    }
+  }
 
-      this.workflow.addJobs({
-        'upgrade-dependencies': upgradeAndBuild,
-        'create-pr': createPR,
+  private createUpgrade(task: Task): Upgrade {
+
+    const project = this.project as NodeProject;
+
+    const build = this.options.workflowOptions?.rebuild ?? true;
+    const patchFile = 'upgrade.patch';
+    const buildStepId = 'build';
+    const conclusion = 'conclusion';
+    const patchPath = `${RUNNER_TEMP}/${patchFile}`;
+
+    const outputs: any = {};
+    const steps: any[] = [
+      {
+        name: 'Checkout',
+        uses: 'actions/checkout@v2',
+      },
+      ...project.installWorkflowSteps,
+      {
+        name: 'Upgrade dependencies',
+        run: project.runTaskCommand(task),
+      },
+    ];
+
+    if (build) {
+      steps.push({
+        name: 'Build',
+        id: buildStepId,
+        run: `${project.runTaskCommand(project.buildTask)} && ${setOutput(conclusion, 'success')} || ${setOutput(conclusion, 'failure')}`,
       });
-
+      outputs[conclusion] = context(`steps.${buildStepId}.outputs.${conclusion}`);
     }
 
+    steps.push(
+      {
+        name: 'Create Patch',
+        run: [
+          'git add .',
+          `git diff --patch --staged > ${patchPath}`,
+        ].join('\n'),
+      },
+      {
+        name: 'Upload patch',
+        uses: 'actions/upload-artifact@v2',
+        with: { name: patchFile, path: patchPath },
+      },
+    );
 
+    return {
+      job: {
+        'name': 'Upgrade',
+        'permissions': 'read-all',
+        'runs-on': UBUNTU_LATEST,
+        'outputs': outputs,
+        'steps': steps,
+      },
+      jobId: 'upgrade',
+      patchFile: patchFile,
+      patchPath: patchPath,
+      build: build,
+      buildConclusionOutput: conclusion,
+    };
   }
 
-  private setOutput(name: string, value: string) {
-    return `echo "::set-output name=${name}::${value}"`;
-  }
+  private createPr(upgrade: Upgrade): PR {
 
-  private scheduleToCron(schedule: UpgradeDependenciesSchedule): string {
-
-    switch (schedule) {
-      case UpgradeDependenciesSchedule.DAILY:
-        return '0 0 * * *';
-      case UpgradeDependenciesSchedule.WEEKDAY:
-        return '0 0 * * 1-5';
-      case UpgradeDependenciesSchedule.WEEKLY:
-        return '0 0 * * 1';
-      case UpgradeDependenciesSchedule.MONTHLY:
-        return '0 0 1 * *';
-      default:
-        throw new Error(`Unsupported schedule: ${schedule}`);
+    if (!this.workflow) {
+      throw new Error('Workflow must be defined to create a PR job');
     }
+
+    const project = this.project as NodeProject;
+    const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
+    const workflowName = this.workflow.name;
+    const branchName = `github-actions/${workflowName}`;
+    const prStepId = 'create-pr';
+
+    const steps: any[] = [
+      {
+        name: 'Checkout',
+        uses: 'actions/checkout@v2',
+      },
+      {
+        name: 'Download patch',
+        uses: 'actions/download-artifact@v2',
+        with: { name: upgrade.patchFile, path: RUNNER_TEMP },
+      },
+      {
+        name: 'Apply patch',
+        run: `[ -s ${upgrade.patchPath} ] && git apply ${upgrade.patchPath} || echo "Empty patch. Skipping."`,
+      },
+      {
+        name: 'Create Pull Request',
+        id: prStepId,
+        uses: 'peter-evans/create-pull-request@v3',
+        with: {
+          // the pr can modify workflow files, so we need to use the custom
+          // secret if one is configured.
+          'token': customToken ?? DEFAULT_TOKEN,
+          'commit-message': 'upgrade',
+          'branch': branchName,
+          'title': `chore(deps): ${workflowName}`,
+          'body': [
+            `See ${RUN_URL}`,
+            '',
+            '------',
+            '',
+            '*Automatically created by projen via GitHubActions*',
+          ].join('\n'),
+        },
+      },
+    ];
+
+    if (project.buildWorkflowJobId && upgrade.build) {
+
+      const body = {
+        name: project.buildWorkflowJobId,
+        head_sha: branchName,
+        status: 'completed',
+        conclusion: context(`needs.${upgrade.jobId}.outputs.${upgrade.buildConclusionOutput}`),
+        output: {
+          title: `Created via the ${workflowName} workflow.`,
+          summary: `Action run URL: ${RUN_URL}`,
+        },
+      };
+      steps.push({
+        name: 'Update status check',
+        if: `steps.${prStepId}.outputs.pull-request-url != \'\'`,
+        run: 'curl -i --fail '
+                + '-X POST '
+                + '-H "Accept: application/vnd.github.v3+json" '
+                + `-H "Authorization: token \${GITHUB_TOKEN}" https://api.github.com/repos/${REPO}/check-runs `
+                + `-d '${JSON.stringify(body)}'`,
+        env: { GITHUB_TOKEN: DEFAULT_TOKEN },
+      });
+    }
+
+    return {
+      job: {
+        'name': 'Create Pull Request',
+        'needs': upgrade.jobId,
+        'permissions': 'write-all',
+        'runs-on': UBUNTU_LATEST,
+        'steps': steps,
+      },
+      jobId: 'pr',
+    };
   }
+}
+
+interface Upgrade {
+  readonly job: any;
+  readonly jobId: string;
+  readonly patchFile: string;
+  readonly patchPath: string;
+  readonly build: boolean;
+  readonly buildConclusionOutput: string;
+}
+
+interface PR {
+  readonly job: any;
+  readonly jobId: string;
 }

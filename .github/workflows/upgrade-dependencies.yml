@@ -6,13 +6,12 @@ on:
   schedule:
     - cron: 0 0 * * *
 jobs:
-  upgrade-dependencies:
-    name: Upgrade & Build
+  upgrade:
+    name: Upgrade
     permissions: read-all
     runs-on: ubuntu-latest
     outputs:
-      build-conclusion: ${{ steps.build.outputs.conclusion }}
-      build-log: ${{ steps.build.outputs.log }}
+      conclusion: ${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,30 +22,24 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
-        run: /bin/bash ./projen.bash deps:upgrade
+        run: /bin/bash ./projen.bash upgrade-dependencies
       - name: Build
         id: build
-        run: >-
-          /bin/bash ./projen.bash build && echo "::set-output
+        run: /bin/bash ./projen.bash build && echo "::set-output
           name=conclusion::success" || echo "::set-output
           name=conclusion::failure"
-
-          echo "::set-output name=log::https://github.com/${REPO}/actions/runs/${{ github.run_id }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.event.repository.full_name }}
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > ${{ runner.temp }}/dependencies.patch
+          git diff --patch --staged > ${{ runner.temp }}/upgrade.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: dependencies.patch
-          path: ${{ runner.temp }}/dependencies.patch
-  create-pr:
-    needs: upgrade-dependencies
+          name: upgrade.patch
+          path: ${{ runner.temp }}/upgrade.patch
+  pr:
     name: Create Pull Request
+    needs: upgrade
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -55,31 +48,22 @@ jobs:
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: dependencies.patch
+          name: upgrade.patch
           path: ${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s ${{ runner.temp }}/dependencies.patch ] && git apply ${{ runner.temp
-          }}/dependencies.patch || echo "Empty patch. Skipping."'
+        run: '[ -s ${{ runner.temp }}/upgrade.patch ] && git apply ${{ runner.temp
+          }}/upgrade.patch || echo "Empty patch. Skipping."'
       - name: Create Pull Request
-        id: create-pull-request
+        id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Upgrade dependencies
-          branch: github-actions/dependencies
-          title: "chore(deps): Upgrade dependencies"
+          commit-message: upgrade
+          branch: github-actions/upgrade-dependencies
+          title: "chore(deps): upgrade-dependencies"
           body: >-
-            Upgrade dependencies.
-
-
-            Since this PR was created with a GitHub Action, the build workflow wasn't triggered on it.
-
-            > See https://github.com/peter-evans/create-pull-request/issues/48
-
-
-            In order to validate it, build was executed during the creation of this PR instead.
-
-            > See ${{ needs.upgrade-dependencies.outputs.build-log }}
+            See https://github.com/${{ github.event.repository.full_name
+            }}/actions/runs/${{ github.run_id }}
 
 
             ------
@@ -87,16 +71,16 @@ jobs:
 
             *Automatically created by projen via GitHubActions*
       - name: Update status check
-        if: steps.create-pull-request.outputs.pull-request-url != ''
+        if: steps.create-pr.outputs.pull-request-url != ''
         run: "curl -i --fail -X POST -H \"Accept: application/vnd.github.v3+json\" -H
           \"Authorization: token ${GITHUB_TOKEN}\"
-          https://api.github.com/repos/${REPO}/check-runs -d
-          '{\"name\":\"build\",\"head_sha\":\"github-actions/dependencies\",\"s\
-          tatus\":\"completed\",\"conclusion\":\"${{
-          needs.upgrade-dependencies.outputs.build-conclusion
-          }}\",\"output\":{\"title\":\"Created via the upgrade-dependencies
-          workflow.\",\"summary\":\"Build log is available here: ${{
-          needs.upgrade-dependencies.outputs.build-log }}\"}}'"
+          https://api.github.com/repos/${{ github.event.repository.full_name
+          }}/check-runs -d
+          '{\"name\":\"build\",\"head_sha\":\"github-actions/upgrade-dependenci\
+          es\",\"status\":\"completed\",\"conclusion\":\"${{
+          needs.upgrade.outputs.conclusion }}\",\"output\":{\"title\":\"Created
+          via the upgrade-dependencies workflow.\",\"summary\":\"Action run URL:
+          https://github.com/${{ github.event.repository.full_name
+          }}/actions/runs/${{ github.run_id }}\"}}'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.event.repository.full_name }}

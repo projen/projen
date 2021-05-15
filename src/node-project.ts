@@ -9,7 +9,7 @@ import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions }
 import { Project, ProjectOptions } from './project';
 import { Publisher } from './publisher';
 import { Task, TaskCategory } from './tasks';
-import { UpgradeDependencies, UpgradeDependenciesOptions } from './upgrade-dependencies';
+import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -160,6 +160,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Include dependabot configuration.
    *
+   * @deprecated - use `dependenciesUpgrade: DependenciesUpgrade.dependabot`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -167,9 +168,17 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Options for dependabot.
    *
+   * @deprecated - use `dependenciesUpgrade: DependenciesUpgrade.dependabot`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
+
+  /**
+   * How to handle dependency upgrades.
+   *
+   * @default - DependenciesUpgrade.GITHUB_ACTIONS
+   */
+  readonly dependenciesUpgrade?: DependenciesUpgrade;
 
   /**
    * Options for mergify
@@ -200,8 +209,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
-
-  readonly upgradeDependenciesOptions?: UpgradeDependenciesOptions;
 
   /**
    * Execute `projen` as the first step of the `build` task to synthesize
@@ -737,26 +744,25 @@ export class NodeProject extends Project {
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    if (options.dependabot && options.upgradeDependenciesOptions) {
-      throw new Error("'dependabot' cannot be configured together with 'upgradeDependenciesOptions'");
+    if (options.dependabot && options.dependenciesUpgrade) {
+      throw new Error("'dependabot' cannot be configured together with 'dependenciesUpgrade'");
     }
 
-    if (options.dependabot ?? false) {
-      // dependabot for everything except projen
-      this.github?.addDependabot(options.dependabotOptions);
+    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgrade.dependabot() : DependenciesUpgrade.githubActions();
+    const dependenciesUpgrade = options.dependenciesUpgrade ?? defaultDependenciesUpgrade;
+    dependenciesUpgrade.bind(this);
 
-      // custom workflow since projen (most likely) needs self-mutation
-      const upgrade = new UpgradeDependencies(this, {
+    if (dependenciesUpgrade.ignoresProjen) {
+      new UpgradeDependencies(this, {
         include: ['projen'],
-        workflowName: 'upgrade-projen',
-        taskName: 'projen:upgrade',
+        taskName: 'upgrade-projen',
+        ignoreProjen: false,
+        workflow: !!options.projenUpgradeSecret,
+        workflowOptions: {
+          schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          secret: options.projenUpgradeSecret,
+        },
       });
-
-      // the things we do for backwards compatiblity :)
-      upgrade.workflow?.file.addOverride('on.schedule', [{ cron: options.projenUpgradeSchedule ?? '0 6 * * *' }]);
-    } else {
-      // no dependabot, just upgrade all dependencies
-      new UpgradeDependencies(this, options.upgradeDependenciesOptions);
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -1168,4 +1174,47 @@ interface NodeBuildWorkflowOptions {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
+}
+
+/**
+ * Dependencies upgrade mechanism.
+ */
+export class DependenciesUpgrade {
+
+  /**
+   * Disable.
+   */
+  public static readonly NONE = new DependenciesUpgrade((_: NodeProject) => ({}), true);
+
+  /**
+   * Upgrade via dependabot.
+   */
+  public static dependabot(options: DependabotOptions = {}) {
+    return new DependenciesUpgrade((project: NodeProject) => {
+      project.github?.addDependabot(options);
+    }, options.ignoreProjen);
+  }
+
+  /**
+   * Upgrade via github actions.
+   */
+  public static githubActions(options: UpgradeDependenciesOptions = {}) {
+    return new DependenciesUpgrade((project: NodeProject) => {
+      new UpgradeDependencies(project, options);
+    }, options.ignoreProjen);
+  }
+
+  private constructor(
+    private readonly binder: (project: NodeProject) => void,
+    private readonly _ignoresProjen?: boolean) {}
+
+  public get ignoresProjen(): boolean {
+    // we ignore projen by default because it requires 'workflow' permissions to run.
+    // nor depenedabot nor the default github token has those permissions.
+    return this._ignoresProjen ?? true;
+  }
+
+  public bind(project: NodeProject) {
+    this.binder(project);
+  }
 }

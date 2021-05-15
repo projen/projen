@@ -20,7 +20,9 @@ test('custom options', () => {
     projenUpgradeSecret: 'PROJEN_SECRET',
   });
   new UpgradeDependencies(project, {
-    schedule: UpgradeDependenciesSchedule.MONTHLY,
+    workflowOptions: {
+      schedule: UpgradeDependenciesSchedule.MONTHLY,
+    },
   });
 
   const snapshot = synthSnapshot(project);

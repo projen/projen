@@ -3,7 +3,7 @@ import { YamlFile } from '../yaml';
 import { GitHub } from './github';
 
 export class GithubWorkflow extends Component {
-  private readonly name: string;
+  public readonly name: string;
   private events: { [event: string]: any } = { };
   private jobs: { [jobid: string]: any } = { };
   public readonly file: YamlFile;
