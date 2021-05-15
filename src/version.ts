@@ -48,8 +48,8 @@ export class Version extends Component {
     // this is the version used if a tag with a "v" prefix cannot be found in the repo.
     const initialVersion = options.initialVersion ?? 'v0.1.0';
 
-    this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
-    this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
+    this.bumpTask.exec(`echo "{\n  \\"version\\": \\"$(${listGitTags} | head -n1)\\"\n}" > ${versionFile}`);
+    this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "{\n  \\"version\\": \\"${initialVersion}\\"\n}" > ${versionFile}; fi`);
     this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {
@@ -72,9 +72,9 @@ export class Version extends Component {
       obj: {
         packageFiles: [{
           filename: versionFile,
-          type: 'plain-text',
+          type: 'json',
         }],
-        bumpFiles: ['package.json'],
+        bumpFiles: ['.version.tmp.json'],
         commitAll: false,
         infile: this.changelogFile,
         header: '',

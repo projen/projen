@@ -2,11 +2,11 @@
   "packageFiles": [
     {
       "filename": ".version.tmp.json",
-      "type": "plain-text"
+      "type": "json"
     }
   ],
   "bumpFiles": [
-    "package.json"
+    ".version.tmp.json"
   ],
   "commitAll": false,
   "infile": ".changelog.tmp.md",
