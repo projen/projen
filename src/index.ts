@@ -33,7 +33,6 @@ export * from './version';
 export * from './yaml';
 export * from './xmlfile';
 export * from './publisher';
-export * from './github';
 export * from './source-code';
 export * from './upgrade-dependencies';
 
