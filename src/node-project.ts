@@ -657,7 +657,7 @@ export class NodeProject extends Project {
       }
 
       const artifactDirectory = options.artifactsDirectory ?? 'dist';
-      const getVersion = '$(cat .version.tmp.json | jq -r \'.version\')';
+      const getVersion = '$(node -p \"require(\'./.version.tmp.json\').version\")';
       const jobId = 'release';
 
       const releaseSteps: any[] = [];

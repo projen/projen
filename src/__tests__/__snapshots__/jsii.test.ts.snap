@@ -38,8 +38,9 @@ jobs:
           github.ref }} | cut -f1)\\"
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        run: gh release create $(cat .version.tmp.json | jq -r '.version') -F
-          .changelog.tmp.md -t $(cat .version.tmp.json | jq -r '.version')
+        run: gh release create $(node -p \\"require('./.version.tmp.json').version\\") -F
+          .changelog.tmp.md -t $(node -p
+          \\"require('./.version.tmp.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
@@ -134,8 +135,9 @@ jobs:
           github.ref }} | cut -f1)\\"
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        run: gh release create $(cat .version.tmp.json | jq -r '.version') -F
-          .changelog.tmp.md -t $(cat .version.tmp.json | jq -r '.version')
+        run: gh release create $(node -p \\"require('./.version.tmp.json').version\\") -F
+          .changelog.tmp.md -t $(node -p
+          \\"require('./.version.tmp.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Unbump
