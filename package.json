@@ -19,7 +19,6 @@
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "test:update": "/bin/bash ./projen.bash test:update",
     "upgrade-dependencies": "/bin/bash ./projen.bash upgrade-dependencies",
-    "upgrade-projen": "/bin/bash ./projen.bash upgrade-projen",
     "default": "/bin/bash ./projen.bash default",
     "watch": "/bin/bash ./projen.bash watch",
     "package": "/bin/bash ./projen.bash package",

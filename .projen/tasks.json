@@ -144,17 +144,6 @@
         }
       ]
     },
-    "upgrade-projen": {
-      "name": "upgrade-projen",
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --filter=projen"
-        },
-        {
-          "exec": "yarn install --check-files"
-        }
-      ]
-    },
     "default": {
       "name": "default",
       "steps": [

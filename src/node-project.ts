@@ -744,7 +744,7 @@ export class NodeProject extends Project {
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    if (options.dependabot && options.dependenciesUpgrade) {
+    if (options.dependabot !== undefined && options.dependenciesUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'dependenciesUpgrade'");
     }
 
@@ -752,7 +752,7 @@ export class NodeProject extends Project {
     const dependenciesUpgrade = options.dependenciesUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
-    if (dependenciesUpgrade.ignoresProjen) {
+    if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
