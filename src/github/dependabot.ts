@@ -21,6 +21,12 @@ export interface DependabotOptions {
   readonly versioningStrategy?: VersioningStrategy;
 
   /**
+   * Automatically merge dependabot PRs if build CI build passes.
+   * @default true
+   */
+  readonly autoMerge?: boolean;
+
+  /**
    * You can use the `ignore` option to customize which dependencies are updated.
    * The ignore option supports the following options.
    * @default []
@@ -158,6 +164,24 @@ export class Dependabot extends Component {
       obj: this.config,
       committed: true,
     });
+
+    if (options.autoMerge ?? true) {
+      github.mergify?.addRule({
+        name: 'Merge pull requests from dependabot if CI passes',
+        conditions: [
+          'author=dependabot[bot]',
+          'status-success=build',
+        ],
+        actions: {
+          merge: {
+            method: 'squash',
+            commit_message: 'title+body',
+            strict: 'smart',
+            strict_method: 'merge',
+          },
+        },
+      });
+    }
 
     for (const i of options.ignore ?? []) {
       this.addIgnore(i.dependencyName, ...(i.versions ?? []));

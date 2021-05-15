@@ -38,6 +38,13 @@ export interface UpgradeDependenciesWorkflowOptions {
   readonly secret?: string;
 
   /**
+   * Labels to apply on the PR.
+   *
+   * @default - no labels.
+   */
+  readonly labels?: string[];
+
+  /**
    * Execute 'build' after the upgrade.
    *
    * @default true
@@ -169,7 +176,7 @@ export class UpgradeDependencies extends Component {
       ncuCommand.push(`--reject='${exclude.join(',')}'`);
     }
     if (options.include) {
-      ncuCommand.push(`--filter=${options.include.join(',')}`);
+      ncuCommand.push(`--filter='${options.include.join(',')}'`);
     }
 
     task.exec(ncuCommand.join(' '));
@@ -297,6 +304,7 @@ export class UpgradeDependencies extends Component {
           'commit-message': 'upgrade',
           'branch': branchName,
           'title': `chore(deps): ${workflowName}`,
+          'labels': this.options.workflowOptions?.labels ?? [],
           'body': [
             `See ${RUN_URL}`,
             '',

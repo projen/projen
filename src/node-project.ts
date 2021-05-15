@@ -178,7 +178,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    *
    * @default - DependenciesUpgrade.GITHUB_ACTIONS
    */
-  readonly dependenciesUpgrade?: DependenciesUpgrade;
+  readonly depsUpgrade?: DependenciesUpgrade;
 
   /**
    * Options for mergify
@@ -186,6 +186,15 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - default options
    */
   readonly mergifyOptions?: MergifyOptions;
+
+  /**
+   * Automatically merge PRs that build successfully and have this label.
+   *
+   * To disable, set this value to an empty string.
+   *
+   * @default "auto-merge"
+   */
+  readonly mergifyAutoMergeLabel?: string;
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
@@ -202,6 +211,14 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - no automatic projen upgrade pull requests
    */
   readonly projenUpgradeSecret?: string;
+
+  /**
+   * Automatically merge projen upgrade PRs when build passes.
+   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   *
+   * @default - "true" if mergify auto-merge is enabled (default)
+   */
+  readonly projenUpgradeAutoMerge?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -740,19 +757,25 @@ export class NodeProject extends Project {
     }
 
     if (this.github?.mergify) {
-      this.autoMerge = new AutoMerge(this, { buildJob: this.buildWorkflowJobId });
+      this.autoMerge = new AutoMerge(this, {
+        buildJob: this.buildWorkflowJobId,
+        autoMergeLabel: options.mergifyAutoMergeLabel,
+      });
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    if (options.dependabot !== undefined && options.dependenciesUpgrade) {
+    if (options.dependabot !== undefined && options.depsUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'dependenciesUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgrade.dependabot() : DependenciesUpgrade.githubActions();
-    const dependenciesUpgrade = options.dependenciesUpgrade ?? defaultDependenciesUpgrade;
+    const defaultDependenciesUpgrade = (options.dependabot ?? true) ? DependenciesUpgrade.dependabot() : DependenciesUpgrade.githubActions();
+    const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
     if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
+
+      const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
+
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
@@ -761,6 +784,9 @@ export class NodeProject extends Project {
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           secret: options.projenUpgradeSecret,
+          labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
+            ? [this.autoMerge.autoMergeLabel]
+            : [],
         },
       });
     }

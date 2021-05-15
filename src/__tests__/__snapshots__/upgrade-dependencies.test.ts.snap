@@ -59,6 +59,7 @@ jobs:
           commit-message: upgrade
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
+          labels: []
           body: >-
             See https://github.com/\${{ github.repository }}/actions/runs/\${{
             github.run_id }}
@@ -143,6 +144,7 @@ jobs:
           commit-message: upgrade
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
+          labels: []
           body: >-
             See https://github.com/\${{ github.repository }}/actions/runs/\${{
             github.run_id }}

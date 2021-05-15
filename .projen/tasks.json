@@ -133,17 +133,6 @@
         }
       ]
     },
-    "upgrade-dependencies": {
-      "name": "upgrade-dependencies",
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
-        },
-        {
-          "exec": "yarn install --check-files"
-        }
-      ]
-    },
     "default": {
       "name": "default",
       "steps": [
