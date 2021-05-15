@@ -271,14 +271,10 @@ pull_request_rules:
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "echo \\"{
-  \\\\\\"version\\\\\\": \\\\\\"$(git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1)\\\\\\"
-}\\" > .version.tmp.json",
+            "exec": "echo \\"{\\\\\\"version\\\\\\": \\\\\\"$(git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1)\\\\\\"}\\" > .version.tmp.json",
           },
           Object {
-            "exec": "if [ \\"$(cat .version.tmp.json)\\" = \\"\\" ]; then echo \\"{
-  \\\\\\"version\\\\\\": \\\\\\"v0.1.0\\\\\\"
-}\\" > .version.tmp.json; fi",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" = \\"\\" ]; then echo \\"{\\\\\\"version\\\\\\": \\\\\\"v0.1.0\\\\\\"}\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
