@@ -4,7 +4,6 @@
 
 Name|Description
 ----|-----------
-[AutoMerge](#projen-automerge)|Sets up mergify to merging approved pull requests.
 [AwsCdkConstructLibrary](#projen-awscdkconstructlibrary)|AWS CDK construct library project.
 [AwsCdkTypeScriptApp](#projen-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [Cdk8sTypeScriptApp](#projen-cdk8stypescriptapp)|CDK8s app in TypeScript.
@@ -12,15 +11,12 @@ Name|Description
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
-[Dependabot](#projen-dependabot)|Defines dependabot configuration for node projects.
 [DependenciesUpgrade](#projen-dependenciesupgrade)|Dependencies upgrade mechanism.
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
 [Eslint](#projen-eslint)|*No description*
 [FileBase](#projen-filebase)|*No description*
-[GitHub](#projen-github)|*No description*
-[GithubWorkflow](#projen-githubworkflow)|*No description*
 [Gitpod](#projen-gitpod)|The Gitpod component which emits .gitpod.yml.
 [IgnoreFile](#projen-ignorefile)|*No description*
 [IniFile](#projen-inifile)|Represents an INI file.
@@ -30,13 +26,11 @@ Name|Description
 [License](#projen-license)|*No description*
 [Logger](#projen-logger)|Project-level logging utilities.
 [Makefile](#projen-makefile)|Minimal Makefile.
-[Mergify](#projen-mergify)|*No description*
 [NodePackage](#projen-nodepackage)|Represents the npm `package.json` file.
 [NodeProject](#projen-nodeproject)|Node.js project.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
 [Publisher](#projen-publisher)|Implements GitHub jobs for publishing modules to package managers.
-[PullRequestTemplate](#projen-pullrequesttemplate)|Template for GitHub pull requests.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
@@ -101,7 +95,6 @@ Name|Description
 
 Name|Description
 ----|-----------
-[AutoMergeOptions](#projen-automergeoptions)|*No description*
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
@@ -110,8 +103,6 @@ Name|Description
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
-[DependabotIgnore](#projen-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
-[DependabotOptions](#projen-dependabotoptions)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environment.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
@@ -123,7 +114,6 @@ Name|Description
 [EslintOptions](#projen-eslintoptions)|*No description*
 [EslintOverride](#projen-eslintoverride)|eslint rules override.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
-[GitHubOptions](#projen-githuboptions)|*No description*
 [GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
@@ -146,8 +136,6 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
-[MergifyOptions](#projen-mergifyoptions)|*No description*
-[MergifyRule](#projen-mergifyrule)|*No description*
 [NewProject](#projen-newproject)|Information passed from `projen new` to the project object when the project is first created.
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
@@ -156,7 +144,6 @@ Name|Description
 [PeerDependencyOptions](#projen-peerdependencyoptions)|*No description*
 [ProjectOptions](#projen-projectoptions)|*No description*
 [PublisherOptions](#projen-publisheroptions)|Options for `Publisher`.
-[PullRequestTemplateOptions](#projen-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
@@ -248,7 +235,6 @@ Name|Description
 ----|-----------
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
 [CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
-[DependabotScheduleInterval](#projen-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
 [GitpodOnOpen](#projen-gitpodonopen)|What to do when a service on a port is detected.
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
@@ -263,50 +249,11 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
-[VersioningStrategy](#projen-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
-
-
-
-## class AutoMerge 🔹 <a id="projen-automerge"></a>
-
-Sets up mergify to merging approved pull requests.
-
-If `buildJob` is specified, the specified GitHub workflow job ID is required
-to succeed in order for the PR to be merged.
-
-`approvedReviews` specified the number of code review approvals required for
-the PR to be merged.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new AutoMerge(project: Project, options?: AutoMergeOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
-  * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
-  * **autoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
-  * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**autoMergeLabel**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -1315,61 +1262,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 
 
-## class Dependabot 🔹 <a id="projen-dependabot"></a>
-
-Defines dependabot configuration for node projects.
-
-Since module versions are managed in projen, the versioning strategy will be
-configured to "lockfile-only" which means that only updates that can be done
-on the lockfile itself will be proposed.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new Dependabot(github: GitHub, options?: DependabotOptions)
-```
-
-* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
-* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
-  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
-  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
-  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
-  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
-  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**config**🔹 | <code>any</code> | The raw dependabot configuration.
-
-### Methods
-
-
-#### addIgnore(dependencyName, ...versions)🔹 <a id="projen-dependabot-addignore"></a>
-
-Ignores a dependency from automatic updates.
-
-```ts
-addIgnore(dependencyName: string, ...versions: string[]): void
-```
-
-* **dependencyName** (<code>string</code>)  Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
-* **versions** (<code>string</code>)  Use to ignore specific versions or ranges of versions.
-
-
-
-
-
-
 ## class DependenciesUpgrade 🔹 <a id="projen-dependenciesupgrade"></a>
 
 Dependencies upgrade mechanism.
@@ -1801,7 +1693,7 @@ allowDevDeps(pattern: string): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [PullRequestTemplate](#projen-pullrequesttemplate), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -1861,159 +1753,6 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
-
-
-
-## class GitHub 🔹 <a id="projen-github"></a>
-
-
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new GitHub(project: Project, options: GitHubOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
-  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
-
-### Methods
-
-
-#### addDependabot(options?)🔹 <a id="projen-github-adddependabot"></a>
-
-
-
-```ts
-addDependabot(options?: DependabotOptions): Dependabot
-```
-
-* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
-  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
-  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
-  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
-  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
-  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
-
-__Returns__:
-* <code>[github.Dependabot](#projen-github-dependabot)</code>
-
-#### addPullRequestTemplate(...content)🔹 <a id="projen-github-addpullrequesttemplate"></a>
-
-
-
-```ts
-addPullRequestTemplate(...content: string[]): PullRequestTemplate
-```
-
-* **content** (<code>string</code>)  *No description*
-
-__Returns__:
-* <code>[github.PullRequestTemplate](#projen-github-pullrequesttemplate)</code>
-
-#### addWorkflow(name)🔹 <a id="projen-github-addworkflow"></a>
-
-
-
-```ts
-addWorkflow(name: string): GithubWorkflow
-```
-
-* **name** (<code>string</code>)  *No description*
-
-__Returns__:
-* <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
-
-#### annotateGenerated(glob)🔹 <a id="projen-github-annotategenerated"></a>
-
-Marks the provided file(s) as being generated.
-
-This is achieved using the
-github-linguist attributes. Generated files do not count against the
-repository statistics and language breakdown.
-
-```ts
-annotateGenerated(glob: string): void
-```
-
-* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
-
-
-
-## class GithubWorkflow 🔹 <a id="projen-githubworkflow"></a>
-
-
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new GithubWorkflow(github: GitHub, name: string)
-```
-
-* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
-* **name** (<code>string</code>)  *No description*
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-
-### Methods
-
-
-#### addJobs(jobs)🔹 <a id="projen-githubworkflow-addjobs"></a>
-
-
-
-```ts
-addJobs(jobs: Map<string, any>): void
-```
-
-* **jobs** (<code>Map<string, any></code>)  *No description*
-
-
-
-
-#### on(events)🔹 <a id="projen-githubworkflow-on"></a>
-
-
-
-```ts
-on(events: Map<string, any>): void
-```
-
-* **events** (<code>Map<string, any></code>)  *No description*
-
-
-
 
 
 
@@ -2864,47 +2603,6 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
-
-
-
-## class Mergify 🔹 <a id="projen-mergify"></a>
-
-
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new Mergify(github: GitHub, options?: MergifyOptions)
-```
-
-* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
-* **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
-  * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
-
-
-### Methods
-
-
-#### addRule(rule)🔹 <a id="projen-mergify-addrule"></a>
-
-
-
-```ts
-addRule(rule: MergifyRule): void
-```
-
-* **rule** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
-  * **actions** (<code>Map<string, any></code>)  *No description* 
-  * **conditions** (<code>Array<string></code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
-
-
-
 
 
 
@@ -3963,28 +3661,6 @@ publishToPyPi(options: JsiiReleasePyPi): void
   * **twineUsernameSecret** (<code>string</code>)  The GitHub secret which contains PyPI user name. __*Default*__: "TWINE_USERNAME"
 
 
-
-
-
-
-## class PullRequestTemplate 🔹 <a id="projen-pullrequesttemplate"></a>
-
-Template for GitHub pull requests.
-
-__Extends__: [TextFile](#projen-textfile)
-
-### Initializer
-
-
-
-
-```ts
-new PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOptions)
-```
-
-* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
-* **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
-  * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
 
 
 
@@ -7638,21 +7314,6 @@ Name | Type | Description
 
 
 
-## struct AutoMergeOptions 🔹 <a id="projen-automergeoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
-**autoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
-**buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
-
-
-
 ## struct AwsCdkConstructLibraryOptions 🔹 <a id="projen-awscdkconstructlibraryoptions"></a>
 
 
@@ -8423,39 +8084,6 @@ Name | Type | Description
 
 
 
-## struct DependabotIgnore 🔹 <a id="projen-dependabotignore"></a>
-
-
-You can use the `ignore` option to customize which dependencies are updated.
-
-The ignore option supports the following options.
-
-
-
-Name | Type | Description 
------|------|-------------
-**dependencyName**🔹 | <code>string</code> | Use to ignore updates for dependencies with matching names, optionally using `*` to match zero or more characters.
-**versions**?🔹 | <code>Array<string></code> | Use to ignore specific versions or ranges of versions.<br/>__*Optional*__
-
-
-
-## struct DependabotOptions 🔹 <a id="projen-dependabotoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoMerge**?🔹 | <code>boolean</code> | Automatically merge dependabot PRs if build CI build passes.<br/>__*Default*__: true
-**ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
-**ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
-**scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
-**versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
-
-
-
 ## struct DevEnvironmentOptions 🔹 <a id="projen-devenvironmentoptions"></a>
 
 
@@ -8628,19 +8256,6 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
-
-
-
-## struct GitHubOptions 🔹 <a id="projen-githuboptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 
 
 
@@ -9353,34 +8968,6 @@ Name | Type | Description
 
 
 
-## struct MergifyOptions 🔹 <a id="projen-mergifyoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
-
-
-
-## struct MergifyRule 🔹 <a id="projen-mergifyrule"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**actions**🔹 | <code>Map<string, any></code> | <span></span>
-**conditions**🔹 | <code>Array<string></code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-
-
-
 ## struct NewProject 🔹 <a id="projen-newproject"></a>
 
 
@@ -9619,19 +9206,6 @@ Name | Type | Description
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The github workflow to add release jobs to.
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
-
-
-
-## struct PullRequestTemplateOptions 🔹 <a id="projen-pullrequesttemplateoptions"></a>
-
-
-Options for `PullRequestTemplate`.
-
-
-
-Name | Type | Description 
------|------|-------------
-**lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
 
 
 
@@ -11458,17 +11032,6 @@ Name | Description
 **BROADENING** 🔹|Requires approval when IAM statements or traffic rules are added;
 
 
-## enum DependabotScheduleInterval 🔹 <a id="projen-dependabotscheduleinterval"></a>
-
-How often to check for new versions and raise pull requests for version updates.
-
-Name | Description
------|-----
-**DAILY** 🔹|Runs on every weekday, Monday to Friday.
-**WEEKLY** 🔹|Runs once each week.
-**MONTHLY** 🔹|Runs once each month.
-
-
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
 
 Network protocol for port mapping.
@@ -11626,19 +11189,6 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
-
-
-## enum VersioningStrategy 🔹 <a id="projen-versioningstrategy"></a>
-
-The strategy to use when edits manifest and lock files.
-
-Name | Description
------|-----
-**LOCKFILE_ONLY** 🔹|Only create pull requests to update lockfiles updates.
-**AUTO** 🔹|- For apps, the version requirements are increased.
-**WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
-**INCREASE** 🔹|Always increase the version requirement to match the new version.
-**INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
 
 
 ## enum DependencyType 🔹 <a id="projen-deps-dependencytype"></a>
