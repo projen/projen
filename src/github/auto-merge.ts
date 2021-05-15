@@ -82,15 +82,5 @@ export class AutoMerge extends Component {
         ],
       });
     }
-
-    project.github?.mergify?.addRule({
-      name: 'Automatic merge on approval and successful build',
-      actions: mergeAction,
-      conditions: [
-        `#approved-reviews-by>=${approvedReviews}`,
-        ...successfulBuild,
-      ],
-    });
-
   }
 }
