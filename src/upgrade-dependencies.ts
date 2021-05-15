@@ -210,9 +210,6 @@ export class UpgradeDependencies extends Component {
     const outputs: any = {};
     const steps: any[] = [
       {
-        uses: 'hmarr/debug-action@v2',
-      },
-      {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
@@ -276,9 +273,6 @@ export class UpgradeDependencies extends Component {
     const prStepId = 'create-pr';
 
     const steps: any[] = [
-      {
-        uses: 'hmarr/debug-action@v2',
-      },
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',

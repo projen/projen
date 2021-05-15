@@ -426,7 +426,6 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -456,7 +455,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -513,7 +511,6 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -543,7 +540,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -1967,7 +1963,6 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -1997,7 +1992,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -3382,7 +3376,6 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -3412,7 +3405,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -4626,7 +4618,6 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
@@ -4652,7 +4643,6 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
