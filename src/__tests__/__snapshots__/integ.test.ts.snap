@@ -426,6 +426,7 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -455,6 +456,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -474,8 +476,8 @@ jobs:
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            See https://github.com/\${{ github.event.repository.full_name
-            }}/actions/runs/\${{ github.run_id }}
+            See https://github.com/\${{ github.repository }}/actions/runs/\${{
+            github.run_id }}
 
 
             ------
@@ -486,14 +488,13 @@ jobs:
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
           \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.event.repository.full_name
-          }}/check-runs -d
+          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
           '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-dependenci\\\\
           es\\\\\\",\\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
           needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
           via the upgrade-dependencies workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.event.repository.full_name
-          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
+          https://github.com/\${{ github.repository }}/actions/runs/\${{
+          github.run_id }}\\\\\\"}}'\\"
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
@@ -512,6 +513,7 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -541,6 +543,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -560,8 +563,8 @@ jobs:
           branch: github-actions/upgrade-projen
           title: \\"chore(deps): upgrade-projen\\"
           body: >-
-            See https://github.com/\${{ github.event.repository.full_name
-            }}/actions/runs/\${{ github.run_id }}
+            See https://github.com/\${{ github.repository }}/actions/runs/\${{
+            github.run_id }}
 
 
             ------
@@ -572,14 +575,13 @@ jobs:
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
           \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.event.repository.full_name
-          }}/check-runs -d
+          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
           '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-projen\\\\\\",\\\\
           \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
           needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
           via the upgrade-projen workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.event.repository.full_name
-          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
+          https://github.com/\${{ github.repository }}/actions/runs/\${{
+          github.run_id }}\\\\\\"}}'\\"
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
@@ -1965,6 +1967,7 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -1994,6 +1997,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -2013,8 +2017,8 @@ jobs:
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            See https://github.com/\${{ github.event.repository.full_name
-            }}/actions/runs/\${{ github.run_id }}
+            See https://github.com/\${{ github.repository }}/actions/runs/\${{
+            github.run_id }}
 
 
             ------
@@ -3378,6 +3382,7 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
@@ -3407,6 +3412,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -3426,8 +3432,8 @@ jobs:
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            See https://github.com/\${{ github.event.repository.full_name
-            }}/actions/runs/\${{ github.run_id }}
+            See https://github.com/\${{ github.repository }}/actions/runs/\${{
+            github.run_id }}
 
 
             ------
@@ -4620,6 +4626,7 @@ jobs:
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install dependencies
@@ -4645,6 +4652,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2
       - name: Checkout
         uses: actions/checkout@v2
       - name: Download patch
@@ -4664,8 +4672,8 @@ jobs:
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
           body: >-
-            See https://github.com/\${{ github.event.repository.full_name
-            }}/actions/runs/\${{ github.run_id }}
+            See https://github.com/\${{ github.repository }}/actions/runs/\${{
+            github.run_id }}
 
 
             ------
@@ -4676,14 +4684,13 @@ jobs:
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
           \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.event.repository.full_name
-          }}/check-runs -d
+          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
           '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-dependenci\\\\
           es\\\\\\",\\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
           needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
           via the upgrade-dependencies workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.event.repository.full_name
-          }}/actions/runs/\${{ github.run_id }}\\\\\\"}}'\\"
+          https://github.com/\${{ github.repository }}/actions/runs/\${{
+          github.run_id }}\\\\\\"}}'\\"
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",

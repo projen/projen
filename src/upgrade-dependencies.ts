@@ -13,7 +13,7 @@ function setOutput(name: string, value: string) {
 
 const RUNNER_TEMP = context('runner.temp');
 const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
-const REPO = context('github.event.repository.full_name');
+const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const UBUNTU_LATEST = 'ubuntu-latest';
@@ -210,6 +210,9 @@ export class UpgradeDependencies extends Component {
     const outputs: any = {};
     const steps: any[] = [
       {
+        uses: 'hmarr/debug-action@v2',
+      },
+      {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
@@ -273,6 +276,9 @@ export class UpgradeDependencies extends Component {
     const prStepId = 'create-pr';
 
     const steps: any[] = [
+      {
+        uses: 'hmarr/debug-action@v2',
+      },
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
