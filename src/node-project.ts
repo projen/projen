@@ -160,7 +160,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Include dependabot configuration.
    *
-   * @deprecated - use `dependenciesUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -168,7 +168,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Options for dependabot.
    *
-   * @deprecated - use `dependenciesUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;

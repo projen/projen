@@ -33,7 +33,6 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-
   public readonly autoMergeLabel: string;
 
   constructor(project: Project, options: AutoMergeOptions = { }) {
