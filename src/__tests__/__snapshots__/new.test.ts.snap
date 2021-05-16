@@ -525,7 +525,7 @@ tsconfig.tsbuildinfo
             "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
           },
           Object {
-            "exec": "if [ \\"$(cat .version.tmp.json)\\" == \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
+            "exec": "if [ \\"$(cat .version.tmp.json)\\" = \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
           },
           Object {
             "exec": "standard-version",
@@ -976,7 +976,7 @@ project.synth();",
       "eslint": "^7.26.0",
       "eslint-import-resolver-node": "^0.3.4",
       "eslint-import-resolver-typescript": "^2.4.0",
-      "eslint-plugin-import": "^2.23.0",
+      "eslint-plugin-import": "^2.23.2",
       "jest": "^26.6.3",
       "jest-junit": "^12",
       "json-schema": "^0.3.0",
