@@ -38,7 +38,8 @@ jobs:
   pr:
     name: Create Pull Request
     needs: upgrade
-    permissions: write-all
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -123,7 +124,8 @@ jobs:
   pr:
     name: Create Pull Request
     needs: upgrade
-    permissions: write-all
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

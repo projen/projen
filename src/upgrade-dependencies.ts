@@ -133,7 +133,7 @@ export class UpgradeDependencies extends Component {
     workflow.on(triggers);
 
     const upgrade = this.createUpgrade(task);
-    const pr = this.createPr(upgrade);
+    const pr = this.createPr(workflow, upgrade);
 
     const jobs: any = {};
     jobs[upgrade.jobId] = upgrade.job;
@@ -209,14 +209,10 @@ export class UpgradeDependencies extends Component {
     };
   }
 
-  private createPr(upgrade: Upgrade): PR {
-
-    if (!this.workflow) {
-      throw new Error('Workflow must be defined to create a PR job');
-    }
+  private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
 
     const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
-    const workflowName = this.workflow.name;
+    const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 

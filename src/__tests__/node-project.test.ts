@@ -227,7 +227,7 @@ describe('deps upgrade', () => {
   test('throws when depracated dependabot is configued with dependenciesUpgrade', () => {
     expect(() => {
       new TestNodeProject({ dependabot: true, depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow() });
-    }).toThrow("'dependabot' cannot be configured together with 'dependenciesUpgrade'");
+    }).toThrow("'dependabot' cannot be configured together with 'depsUpgrade'");
   });
 
 });
