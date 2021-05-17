@@ -153,6 +153,7 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
@@ -384,6 +385,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -569,6 +571,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -719,6 +722,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -917,6 +921,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -1048,6 +1053,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -1190,6 +1196,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -2153,6 +2160,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -2868,6 +2876,7 @@ new NodeProject(options: NodeProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4000,6 +4009,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4117,6 +4127,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4234,6 +4245,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4375,10 +4387,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: NodeProject)
+new Version(project: NodeProject, options: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
 
 
 
@@ -6543,6 +6557,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -6704,6 +6719,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -6893,6 +6909,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7050,6 +7067,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7200,6 +7218,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7321,6 +7340,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7448,6 +7468,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7572,6 +7593,7 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7696,6 +7718,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7819,6 +7842,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8555,6 +8579,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8889,6 +8914,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9236,6 +9262,7 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9345,6 +9372,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9423,6 +9451,19 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
+
+
+
+## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 
 
 
@@ -10344,6 +10385,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10464,6 +10506,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10595,6 +10638,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10713,6 +10757,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"

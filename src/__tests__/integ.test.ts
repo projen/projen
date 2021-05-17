@@ -1,10 +1,8 @@
 import { join, dirname, basename } from 'path';
-import { chmodSync, copySync, readJsonSync, writeJsonSync } from 'fs-extra';
+import { copySync } from 'fs-extra';
 import { glob } from 'glob';
-import { mkdtemp, directorySnapshot, execProjenCLI } from './util';
+import { mkdtemp, directorySnapshot, execProjenCLI, sanitizeOutput } from './util';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const projenVersion = require('../../package.json').version;
 const samples = join(__dirname, '..', '..', 'src', '__tests__', 'integration');
 const files = glob.sync('**/*.projenrc.js', { cwd: samples });
 
@@ -24,33 +22,4 @@ for (const projenrc of files) {
 
     expect(directorySnapshot(workdir, { excludeGlobs: ['node_modules/**'] })).toMatchSnapshot();
   });
-}
-
-/**
- * Removes any non-deterministic aspects from the synthesized output.
- * @param dir The output directory.
- */
-function sanitizeOutput(dir: string) {
-  const filepath = join(dir, 'package.json');
-  const pkg = readJsonSync(filepath);
-  const prev = pkg.devDependencies.projen;
-  if (!prev) {
-    throw new Error(`expecting "${filepath}" to include a devDependency on "projen"`);
-  }
-
-  // replace the current projen version with 999.999.999 for deterministic output.
-  // this will preserve any semantic version requirements (e.g. "^", "~", etc).
-  pkg.devDependencies.projen = prev.replace(projenVersion, '999.999.999');
-  writeJsonSync(filepath, pkg);
-
-  // we will also patch deps.json so that all projen deps will be set to 999.999.999
-  const depsPath = join(dir, '.projen', 'deps.json');
-  const deps = readJsonSync(depsPath);
-  for (const dep of deps.dependencies) {
-    if (dep.name === 'projen') {
-      dep.version = dep.version.replace(projenVersion, '999.999.999');
-    }
-  }
-  chmodSync(depsPath, '777');
-  writeJsonSync(depsPath, deps);
 }

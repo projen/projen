@@ -31,6 +31,7 @@ const project = new JsiiProject({
     '@iarna/toml',
     'xmlbuilder2',
     'ini',
+    'shx',
   ],
 
   devDeps: [
