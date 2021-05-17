@@ -151,6 +151,11 @@ export class UpgradeDependencies extends Component {
     const conclusion = 'conclusion';
     const patchPath = `${RUNNER_TEMP}/${patchFile}`;
 
+    // thats all we should need at this stage since all we do is clone.
+    // note that this also prevents new code that is introduced in the upgrade
+    // to have write access to anything, in case its somehow executed. (for example during build)
+    const permissions: any = { contents: 'read' };
+
     const outputs: any = {};
     const steps: any[] = [
       {
@@ -191,12 +196,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         'name': 'Upgrade',
-
-        // this has to be read only since it might run 'build', which will
-        // execute newly introducded code due dependency upgrades.
-        // so we don't want that new code to have write permissions.
-        'permissions': 'read-all',
-
+        'permissions': permissions,
         'runs-on': UBUNTU_LATEST,
         'outputs': outputs,
         'steps': steps,
@@ -215,6 +215,9 @@ export class UpgradeDependencies extends Component {
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
+
+    // necessary to create pr's.
+    const permissions: any = { 'contents': 'write', 'pull-requests': 'write' };
 
     const steps: any[] = [
       {
@@ -241,7 +244,7 @@ export class UpgradeDependencies extends Component {
           'commit-message': 'upgrade',
           'branch': branchName,
           'title': `chore(deps): ${workflowName}`,
-          'labels': this.options.workflowOptions?.labels ?? [],
+          'labels': this.options.workflowOptions?.labels?.join(',') ?? '',
           'body': [
             `See ${RUN_URL}`,
             '',
@@ -275,15 +278,16 @@ export class UpgradeDependencies extends Component {
                 + `-d '${JSON.stringify(body)}'`,
         env: { GITHUB_TOKEN: DEFAULT_TOKEN },
       });
+
+      // necessary to update status checks
+      permissions.checks = 'write';
     }
 
     return {
       job: {
         'name': 'Create Pull Request',
         'needs': upgrade.jobId,
-        'permissions': {
-          'pull-requests': 'write',
-        },
+        'permissions': permissions,
         'runs-on': UBUNTU_LATEST,
         'steps': steps,
       },

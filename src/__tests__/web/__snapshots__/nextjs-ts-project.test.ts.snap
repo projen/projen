@@ -74,7 +74,8 @@ on:
 jobs:
   upgrade:
     name: Upgrade
-    permissions: read-all
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
@@ -106,7 +107,9 @@ jobs:
     name: Create Pull Request
     needs: upgrade
     permissions:
+      contents: write
       pull-requests: write
+      checks: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -127,7 +130,7 @@ jobs:
           commit-message: upgrade
           branch: github-actions/upgrade-dependencies
           title: \\"chore(deps): upgrade-dependencies\\"
-          labels: []
+          labels: \\"\\"
           body: >-
             See https://github.com/\${{ github.repository }}/actions/runs/\${{
             github.run_id }}
