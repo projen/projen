@@ -11,7 +11,6 @@ Name|Description
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
-[DependenciesUpgrade](#projen-dependenciesupgrade)|Dependencies upgrade mechanism.
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
@@ -42,8 +41,6 @@ Name|Description
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
-[UpgradeDependencies](#projen-upgradedependencies)|Upgrade node project dependencies.
-[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
@@ -156,8 +153,7 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
-[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
-[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)|Options for `UpgradeDependencies.workflowOptions`.
+[VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
@@ -386,10 +382,10 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -572,10 +568,10 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -722,10 +718,10 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -921,10 +917,10 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -1053,10 +1049,10 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -1196,10 +1192,10 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -1259,75 +1255,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
 
-
-
-
-## class DependenciesUpgrade 🔹 <a id="projen-dependenciesupgrade"></a>
-
-Dependencies upgrade mechanism.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**ignoresProjen**🔹 | <code>boolean</code> | <span></span>
-*static* **NONE**🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | Disable.
-
-### Methods
-
-
-#### bind(project)🔹 <a id="projen-dependenciesupgrade-bind"></a>
-
-
-
-```ts
-bind(project: NodeProject): void
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-
-
-
-
-#### *static* dependabot(options?)🔹 <a id="projen-dependenciesupgrade-dependabot"></a>
-
-Upgrade via dependabot.
-
-```ts
-static dependabot(options?: DependabotOptions): DependenciesUpgrade
-```
-
-* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
-  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
-  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
-  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
-  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
-  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
-
-__Returns__:
-* <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>
-
-#### *static* githubActions(options?)🔹 <a id="projen-dependenciesupgrade-githubactions"></a>
-
-Upgrade via github actions.
-
-```ts
-static githubActions(options?: UpgradeDependenciesOptions): DependenciesUpgrade
-```
-
-* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
-  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
-  * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
-  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
-  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: 'upgrade-dependencies'.
-  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies. __*Default*__: true for root projects, false for sub-projects.
-  * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
-
-__Returns__:
-* <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>
 
 
 
@@ -2229,10 +2156,10 @@ new JsiiProject(options: JsiiProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -2862,19 +2789,6 @@ removeScript(name: string): void
 
 
 
-#### renderInstallCommand(frozen)🔹 <a id="projen-nodepackage-renderinstallcommand"></a>
-
-
-
-```ts
-renderInstallCommand(frozen: boolean): string
-```
-
-* **frozen** (<code>boolean</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
 #### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
 
 Override the contents of an npm package.json script.
@@ -2958,10 +2872,10 @@ new NodeProject(options: NodeProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4091,10 +4005,10 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4209,10 +4123,10 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4327,10 +4241,10 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4460,77 +4374,6 @@ addInclude(pattern: string): void
 
 
 
-## class UpgradeDependencies 🔹 <a id="projen-upgradedependencies"></a>
-
-Upgrade node project dependencies.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptions)
-```
-
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
-  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
-  * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
-  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
-  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: 'upgrade-dependencies'.
-  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies. __*Default*__: true for root projects, false for sub-projects.
-  * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**workflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The workflow that executes the upgrade.<br/>__*Optional*__
-
-
-
-## class UpgradeDependenciesSchedule 🔹 <a id="projen-upgradedependenciesschedule"></a>
-
-How often to check for new versions and raise pull requests for version upgrades.
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**cron**🔹 | <code>Array<string></code> | <span></span>
-*static* **DAILY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00.
-*static* **MONTHLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on day-of-month 1.
-*static* **NEVER**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Disables automatic upgrades.
-*static* **WEEKDAY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on every day-of-week from Monday through Friday.
-*static* **WEEKLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on Monday.
-
-### Methods
-
-
-#### *static* expressions(cron)🔹 <a id="projen-upgradedependenciesschedule-expressions"></a>
-
-Create a schedule from a raw cron expression.
-
-```ts
-static expressions(cron: Array<string>): UpgradeDependenciesSchedule
-```
-
-* **cron** (<code>Array<string></code>)  *No description*
-
-__Returns__:
-* <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code>
-
-
-
 ## class Version 🔹 <a id="projen-version"></a>
 
 
@@ -4543,10 +4386,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: NodeProject)
+new Version(project: NodeProject, options: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
 
 
 
@@ -4973,7 +4818,6 @@ new github.GithubWorkflow(github: GitHub, name: string)
 Name | Type | Description 
 -----|------|-------------
 **file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -6709,10 +6553,10 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -6871,10 +6715,10 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7061,10 +6905,10 @@ new web.ReactProject(options: ReactProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7219,10 +7063,10 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7355,10 +7199,9 @@ Name | Type | Description
 **constructsVersion**?🔹 | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7374,6 +7217,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7478,10 +7322,9 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7495,6 +7338,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7606,10 +7450,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7623,6 +7466,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7729,10 +7573,9 @@ Name | Type | Description
 **constructsVersion**?⚠️ | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7748,6 +7591,7 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7854,10 +7698,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7873,6 +7716,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7978,10 +7822,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7997,6 +7840,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8715,10 +8559,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8734,6 +8577,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9058,10 +8902,9 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9069,6 +8912,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9400,10 +9244,9 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?⚠️ | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9417,6 +9260,7 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9510,10 +9354,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9527,6 +9370,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9608,37 +9452,16 @@ Name | Type | Description
 
 
 
-## struct UpgradeDependenciesOptions 🔹 <a id="projen-upgradedependenciesoptions"></a>
-
-
-Options for `UpgradeDependencies`.
+## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
 
 
 
-Name | Type | Description 
------|------|-------------
-**exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
-**ignoreProjen**?🔹 | <code>boolean</code> | Whether or not to ignore projen upgrades.<br/>__*Default*__: true
-**include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
-**taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: 'upgrade-dependencies'.
-**workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies.<br/>__*Default*__: true for root projects, false for sub-projects.
-**workflowOptions**?🔹 | <code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
-
-
-
-## struct UpgradeDependenciesWorkflowOptions 🔹 <a id="projen-upgradedependenciesworkflowoptions"></a>
-
-
-Options for `UpgradeDependencies.workflowOptions`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
-**rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
-**schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
-**secret**?🔹 | <code>string</code> | Which secret to use when creating the PR.<br/>__*Default*__: default github token.
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 
 
 
@@ -10550,10 +10373,9 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10561,6 +10383,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10665,10 +10488,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10682,6 +10504,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10803,10 +10626,9 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10814,6 +10636,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10916,10 +10739,9 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
-**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgrade](#projen-dependenciesupgrade)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10933,6 +10755,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"

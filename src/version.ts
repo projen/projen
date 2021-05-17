@@ -3,13 +3,23 @@ import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 import { Task, TaskCategory } from './tasks';
 
-export class Version extends Component {
+export interface VersionOptions {
+  /**
+   * The initial version of the repo. The first release will bump over this
+   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
+   * bump is minor or patch).
+   *
+   * @default "v0.1.0"
+   */
+  readonly initialVersion?: string;
+}
 
+export class Version extends Component {
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;
   public readonly changelogFile: string;
 
-  constructor(project: NodeProject) {
+  constructor(project: NodeProject, options: VersionOptions) {
     super(project);
 
     const versionFile = '.version.tmp.json';
@@ -35,7 +45,11 @@ export class Version extends Component {
       '"v*"', // only tags that start with "v"
     ].join(' ');
 
+    // this is the version used if a tag with a "v" prefix cannot be found in the repo.
+    const initialVersion = options.initialVersion ?? 'v0.1.0';
+
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
+    this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
     this.bumpTask.exec('standard-version');
 
     this.unbumpTask = project.addTask('unbump', {

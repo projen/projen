@@ -138,6 +138,10 @@
       "type": "bundled"
     },
     {
+      "name": "shx",
+      "type": "bundled"
+    },
+    {
       "name": "xmlbuilder2",
       "type": "bundled"
     },
