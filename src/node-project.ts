@@ -178,7 +178,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    *
    * @default - DependenciesUpgrade.GITHUB_ACTIONS
    */
-  readonly depsUpgrade?: DependenciesUpgrade;
+  readonly depsUpgrade?: DependenciesUpgradeMechanism;
 
   /**
    * Options for mergify
@@ -765,10 +765,11 @@ export class NodeProject extends Project {
     }
 
     if (options.dependabot !== undefined && options.depsUpgrade) {
-      throw new Error("'dependabot' cannot be configured together with 'dependenciesUpgrade'");
+      throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? true) ? DependenciesUpgrade.dependabot() : DependenciesUpgrade.githubActions();
+    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow();
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
@@ -1205,27 +1206,27 @@ export interface NodeWorkflowSteps {
 /**
  * Dependencies upgrade mechanism.
  */
-export class DependenciesUpgrade {
+export class DependenciesUpgradeMechanism {
 
   /**
    * Disable.
    */
-  public static readonly NONE = new DependenciesUpgrade((_: NodeProject) => ({}), true);
+  public static readonly NONE = new DependenciesUpgradeMechanism((_: NodeProject) => ({}), true);
 
   /**
    * Upgrade via dependabot.
    */
   public static dependabot(options: DependabotOptions = {}) {
-    return new DependenciesUpgrade((project: NodeProject) => {
+    return new DependenciesUpgradeMechanism((project: NodeProject) => {
       project.github?.addDependabot(options);
     }, options.ignoreProjen);
   }
 
   /**
-   * Upgrade via github actions.
+   * Upgrade via a custom github workflow.
    */
-  public static githubActions(options: UpgradeDependenciesOptions = {}) {
-    return new DependenciesUpgrade((project: NodeProject) => {
+  public static githubWorkflow(options: UpgradeDependenciesOptions = {}) {
+    return new DependenciesUpgradeMechanism((project: NodeProject) => {
       new UpgradeDependencies(project, options);
     }, options.ignoreProjen);
   }

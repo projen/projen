@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { GithubWorkflow } from './github';
+import { GitHub, GithubWorkflow } from './github';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -17,41 +17,6 @@ const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const UBUNTU_LATEST = 'ubuntu-latest';
-
-/**
- * Options for `UpgradeDependencies.workflowOptions`.
- */
-export interface UpgradeDependenciesWorkflowOptions {
-
-  /**
-   * Schedule to run on.
-   *
-   * @default UpgradeDependenciesSchedule.DAILY
-   */
-  readonly schedule?: UpgradeDependenciesSchedule;
-
-  /**
-   * Which secret to use when creating the PR.
-   *
-   * @default - default github token.
-   */
-  readonly secret?: string;
-
-  /**
-   * Labels to apply on the PR.
-   *
-   * @default - no labels.
-   */
-  readonly labels?: string[];
-
-  /**
-   * Execute 'build' after the upgrade.
-   *
-   * @default true
-   */
-  readonly rebuild?: boolean;
-
-}
 
 /**
  * Options for `UpgradeDependencies`.
@@ -74,7 +39,10 @@ export interface UpgradeDependenciesOptions {
 
   /**
    * Include a github workflow for creating PR's that upgrades the
-   * required dependencies.
+   * required dependencies, either by manual dispatch, or by a schedule.
+   *
+   * If this is `false`, only a local projen task is created, which can be executed manually to
+   * upgrade the dependencies.
    *
    * @default - true for root projects, false for sub-projects.
    */
@@ -91,7 +59,7 @@ export interface UpgradeDependenciesOptions {
    * The name of the task that will be created.
    * This will also be the workflow name.
    *
-   * @default 'upgrade-dependencies'.
+   * @default "upgrade-dependencies".
    */
   readonly taskName?: string;
 
@@ -105,47 +73,6 @@ export interface UpgradeDependenciesOptions {
 }
 
 /**
- * How often to check for new versions and raise pull requests for version upgrades.
- */
-export class UpgradeDependenciesSchedule {
-
-  /**
-   * Disables automatic upgrades.
-   */
-  public static readonly NEVER = new UpgradeDependenciesSchedule([]);
-
-  /**
-   * At 00:00.
-   */
-  public static readonly DAILY = new UpgradeDependenciesSchedule(['0 0 * * *']);
-
-  /**
-   * At 00:00 on every day-of-week from Monday through Friday.
-   */
-  public static readonly WEEKDAY = new UpgradeDependenciesSchedule(['0 0 * * 1-5']);
-
-  /**
-   * At 00:00 on Monday.
-   */
-  public static readonly WEEKLY = new UpgradeDependenciesSchedule(['0 0 * * 1']);
-
-  /**
-   * At 00:00 on day-of-month 1.
-   */
-  public static readonly MONTHLY = new UpgradeDependenciesSchedule(['0 0 1 * *']);
-
-  /**
-   * Create a schedule from a raw cron expression.
-   */
-  public static expressions(cron: string[]) {
-    return new UpgradeDependenciesSchedule(cron);
-  }
-
-  private constructor(public readonly cron: string[]) {}
-}
-
-
-/**
  * Upgrade node project dependencies.
  */
 export class UpgradeDependencies extends Component {
@@ -157,56 +84,66 @@ export class UpgradeDependencies extends Component {
 
   private readonly options: UpgradeDependenciesOptions;
 
+  private readonly _project: NodeProject;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
+    this._project = project;
     this.options = options;
 
-    project.addDevDeps('npm-check-updates');
+    project.addDevDeps('npm-check-updates@^11');
 
-    const taskName = options.taskName ?? 'upgrade-dependencies';
-    const task = project.addTask(taskName);
+    const task = this.createTask();
 
-    const exclude = options.exclude ?? [];
-    if (options.ignoreProjen ?? true) {
+    if (project.github && (options.workflow ?? true)) {
+      this.workflow = this.createWorkflow(task, project.github);
+    }
+  }
+
+  private createTask(): Task {
+    const taskName = this.options.taskName ?? 'upgrade-dependencies';
+    const task = this._project.addTask(taskName);
+
+    const exclude = this.options.exclude ?? [];
+    if (this.options.ignoreProjen ?? true) {
       exclude.push('projen');
     }
     const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];
     if (exclude.length > 0) {
       ncuCommand.push(`--reject='${exclude.join(',')}'`);
     }
-    if (options.include) {
-      ncuCommand.push(`--filter='${options.include.join(',')}'`);
+    if (this.options.include) {
+      ncuCommand.push(`--filter='${this.options.include.join(',')}'`);
     }
 
     task.exec(ncuCommand.join(' '));
-    task.exec(project.package.renderInstallCommand(false));
+    task.exec(this._project.package.renderInstallCommand(false));
+    return task;
+  }
 
-    if (project.github && (options.workflow ?? true)) {
+  private createWorkflow(task: Task, github: GitHub): GithubWorkflow {
+    const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
-      const schedule = options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
-
-      this.workflow = project.github.addWorkflow(taskName);
-      const triggers: any = { workflow_dispatch: {} };
-      if (schedule.cron) {
-        triggers.schedule = schedule.cron.map(e => ({ cron: e }));
-      }
-      this.workflow.on(triggers);
-
-      const upgrade = this.createUpgrade(task);
-      const pr = this.createPr(upgrade);
-
-      const jobs: any = {};
-      jobs[upgrade.jobId] = upgrade.job;
-      jobs[pr.jobId] = pr.job;
-
-      this.workflow.addJobs(jobs);
+    const workflow = github.addWorkflow(task.name);
+    const triggers: any = { workflow_dispatch: {} };
+    if (schedule.cron) {
+      triggers.schedule = schedule.cron.map(e => ({ cron: e }));
     }
+    workflow.on(triggers);
+
+    const upgrade = this.createUpgrade(task);
+    const pr = this.createPr(upgrade);
+
+    const jobs: any = {};
+    jobs[upgrade.jobId] = upgrade.job;
+    jobs[pr.jobId] = pr.job;
+
+    workflow.addJobs(jobs);
+    return workflow;
   }
 
   private createUpgrade(task: Task): Upgrade {
-
-    const project = this.project as NodeProject;
 
     const build = this.options.workflowOptions?.rebuild ?? true;
     const patchFile = 'upgrade.patch';
@@ -220,10 +157,10 @@ export class UpgradeDependencies extends Component {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
-      ...project.installWorkflowSteps,
+      ...this._project.installWorkflowSteps,
       {
         name: 'Upgrade dependencies',
-        run: project.runTaskCommand(task),
+        run: this._project.runTaskCommand(task),
       },
     ];
 
@@ -231,7 +168,7 @@ export class UpgradeDependencies extends Component {
       steps.push({
         name: 'Build',
         id: buildStepId,
-        run: `${project.runTaskCommand(project.buildTask)} && ${setOutput(conclusion, 'success')} || ${setOutput(conclusion, 'failure')}`,
+        run: `${this._project.runTaskCommand(this._project.buildTask)} && ${setOutput(conclusion, 'success')} || ${setOutput(conclusion, 'failure')}`,
       });
       outputs[conclusion] = context(`steps.${buildStepId}.outputs.${conclusion}`);
     }
@@ -254,7 +191,12 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         'name': 'Upgrade',
+
+        // this has to be read only since it might run 'build', which will
+        // execute newly introducded code due dependency upgrades.
+        // so we don't want that new code to have write permissions.
         'permissions': 'read-all',
+
         'runs-on': UBUNTU_LATEST,
         'outputs': outputs,
         'steps': steps,
@@ -273,7 +215,6 @@ export class UpgradeDependencies extends Component {
       throw new Error('Workflow must be defined to create a PR job');
     }
 
-    const project = this.project as NodeProject;
     const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
     const workflowName = this.workflow.name;
     const branchName = `github-actions/${workflowName}`;
@@ -316,10 +257,10 @@ export class UpgradeDependencies extends Component {
       },
     ];
 
-    if (project.buildWorkflowJobId && upgrade.build) {
+    if (this._project.buildWorkflowJobId && upgrade.build) {
 
       const body = {
-        name: project.buildWorkflowJobId,
+        name: this._project.buildWorkflowJobId,
         head_sha: branchName,
         status: 'completed',
         conclusion: context(`needs.${upgrade.jobId}.outputs.${upgrade.buildConclusionOutput}`),
@@ -344,7 +285,9 @@ export class UpgradeDependencies extends Component {
       job: {
         'name': 'Create Pull Request',
         'needs': upgrade.jobId,
-        'permissions': 'write-all',
+        'permissions': {
+          'pull-requests': 'write',
+        },
         'runs-on': UBUNTU_LATEST,
         'steps': steps,
       },
@@ -365,4 +308,95 @@ interface Upgrade {
 interface PR {
   readonly job: any;
   readonly jobId: string;
+}
+
+/**
+ * Options for `UpgradeDependencies.workflowOptions`.
+ */
+export interface UpgradeDependenciesWorkflowOptions {
+
+  /**
+   * Schedule to run on.
+   *
+   * @default UpgradeDependenciesSchedule.DAILY
+   */
+  readonly schedule?: UpgradeDependenciesSchedule;
+
+  /**
+   * Which secret to use when creating the PR.
+   *
+   * When using the default github token, PR's created by this workflow
+   * will not trigger any subsequent workflows (i.e the build workflow).
+   * This is why this workflow also runs 'build' by default, and manually updates
+   * the status check of the PR.
+   *
+   * If you pass a token that has the `workflow` permissions, you can skip running
+   * build in this workflow by specifying `rebuild: false`.
+   *
+   * @see https://github.com/peter-evans/create-pull-request/issues/48
+   * @default - default github token.
+   */
+  readonly secret?: string;
+
+  /**
+   * Labels to apply on the PR.
+   *
+   * @default [] no labels.
+   */
+  readonly labels?: string[];
+
+  /**
+   * Execute 'build' after the upgrade.
+   *
+   * When true, the workflow will run the project build task after the dependency upgrade.
+   * This means that the PR created will include any changes caused by the `build` command,
+   * (e.g project synth changes, test snapshots)
+   *
+   * This is necessary when using the default github token.
+   *
+   * @see `secret` for more details.
+   * @default true
+   */
+  readonly rebuild?: boolean;
+
+}
+
+/**
+ * How often to check for new versions and raise pull requests for version upgrades.
+ */
+export class UpgradeDependenciesSchedule {
+
+  /**
+   * Disables automatic upgrades.
+   */
+  public static readonly NEVER = new UpgradeDependenciesSchedule([]);
+
+  /**
+   * At 00:00.
+   */
+  public static readonly DAILY = new UpgradeDependenciesSchedule(['0 0 * * *']);
+
+  /**
+   * At 00:00 on every day-of-week from Monday through Friday.
+   */
+  public static readonly WEEKDAY = new UpgradeDependenciesSchedule(['0 0 * * 1-5']);
+
+  /**
+   * At 00:00 on Monday.
+   */
+  public static readonly WEEKLY = new UpgradeDependenciesSchedule(['0 0 * * 1']);
+
+  /**
+   * At 00:00 on day-of-month 1.
+   */
+  public static readonly MONTHLY = new UpgradeDependenciesSchedule(['0 0 1 * *']);
+
+  /**
+   * Create a schedule from a raw cron expression.
+   */
+  public static expressions(cron: string[]) {
+    return new UpgradeDependenciesSchedule(cron);
+  }
+
+  private constructor(public readonly cron: string[]) {}
 }
