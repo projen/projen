@@ -428,6 +428,9 @@ pull_request_rules:
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -440,6 +443,9 @@ pull_request_rules:
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",
