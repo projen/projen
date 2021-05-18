@@ -414,24 +414,30 @@ pull_request_rules:
         ],
       },
       "upgrade-dependencies": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-dependencies",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "CI=0 npx projen",
+            "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-projen",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "CI=0 npx projen",
+            "exec": "npx projen",
           },
         ],
       },

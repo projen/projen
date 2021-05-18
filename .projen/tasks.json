@@ -138,12 +138,15 @@
     },
     "upgrade-dependencies": {
       "name": "upgrade-dependencies",
+      "env": {
+        "CI": "0"
+      },
       "steps": [
         {
           "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
         },
         {
-          "exec": "CI=0 /bin/bash ./projen.bash"
+          "exec": "/bin/bash ./projen.bash"
         }
       ]
     },

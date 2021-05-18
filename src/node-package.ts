@@ -716,7 +716,7 @@ export class NodePackage extends Component {
     this.addEngine('node', nodeVersion);
   }
 
-  public renderInstallCommand(frozen: boolean) {
+  private renderInstallCommand(frozen: boolean) {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
         return [

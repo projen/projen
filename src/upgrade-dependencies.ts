@@ -103,7 +103,11 @@ export class UpgradeDependencies extends Component {
 
   private createTask(): Task {
     const taskName = this.options.taskName ?? 'upgrade-dependencies';
-    const task = this._project.addTask(taskName);
+    const task = this._project.addTask(taskName, {
+      // this task should not run in CI mode because its designed to
+      // update package.json and lock files.
+      env: { CI: '0' },
+    });
 
     const exclude = this.options.exclude ?? [];
     if (this.options.ignoreProjen ?? true) {
@@ -118,10 +122,7 @@ export class UpgradeDependencies extends Component {
     }
 
     task.exec(ncuCommand.join(' '));
-
-    // we use projen to install the dependencies and thus update the lock file,
-    // so we need to make it think its not running inside CI.
-    task.exec(`CI=0 ${this._project.projenCommand}`);
+    task.exec(this._project.projenCommand);
 
     return task;
   }
