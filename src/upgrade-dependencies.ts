@@ -118,6 +118,11 @@ export class UpgradeDependencies extends Component {
     }
 
     task.exec(ncuCommand.join(' '));
+
+    // run projen before the installation since projen itself
+    // can revert some upgrades made by ncu
+    // (for example https://github.com/cdklabs/cdk-triggers/blob/main/.projenrc.js#L6)
+    task.exec(`${this._project.projenCommand} --no-post`);
     task.exec(this._project.package.renderInstallCommand(false));
     return task;
   }
