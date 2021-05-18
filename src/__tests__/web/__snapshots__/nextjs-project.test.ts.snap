@@ -187,19 +187,34 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: upgrade
-          branch: github-actions/upgrade-dependencies
-          title: \\"chore(deps): upgrade-dependencies\\"
-          labels: \\"\\"
-          body: >-
-            See https://github.com/\${{ github.repository }}/actions/runs/\${{
-            github.run_id }}
+          commit-message: >-
+            chore(deps): upgrade-dependencies
+
+
+            Upgrades project dependencies. See details in [workflow run].
+
+
+            [Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
 
 
             ------
 
 
-            *Automatically created by projen via GitHubActions*
+            *Automatically created by projen via the \\"upgrade-dependencies\\" workflow*
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade-dependencies\\"
+          labels: \\"\\"
+          body: >-
+            Upgrades project dependencies. See details in [workflow run].
+
+
+            [Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+
+
+            ------
+
+
+            *Automatically created by projen via the \\"upgrade-dependencies\\" workflow*
       - name: Update status check
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H

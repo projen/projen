@@ -232,6 +232,17 @@ export class UpgradeDependencies extends Component {
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 
+    const title = `chore(deps): ${workflowName}`;
+    const description = [
+      'Upgrades project dependencies. See details in [workflow run].',
+      '',
+      `[Workflow Run]: ${RUN_URL}`,
+      '',
+      '------',
+      '',
+      `*Automatically created by projen via the "${workflow.name}" workflow*`,
+    ].join('\n');
+
     const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
@@ -254,17 +265,11 @@ export class UpgradeDependencies extends Component {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.
           'token': customToken ?? DEFAULT_TOKEN,
-          'commit-message': 'upgrade',
+          'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
-          'title': `chore(deps): ${workflowName}`,
+          'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') ?? '',
-          'body': [
-            `See ${RUN_URL}`,
-            '',
-            '------',
-            '',
-            '*Automatically created by projen via GitHubActions*',
-          ].join('\n'),
+          'body': description,
         },
       },
     ];
