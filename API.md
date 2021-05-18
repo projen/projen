@@ -2870,19 +2870,6 @@ removeScript(name: string): void
 
 
 
-#### renderInstallCommand(frozen)🔹 <a id="projen-nodepackage-renderinstallcommand"></a>
-
-
-
-```ts
-renderInstallCommand(frozen: boolean): string
-```
-
-* **frozen** (<code>boolean</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
 #### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
 
 Override the contents of an npm package.json script.

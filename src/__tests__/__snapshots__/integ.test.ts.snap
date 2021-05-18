@@ -1155,24 +1155,30 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "upgrade-dependencies": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-dependencies",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-projen",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
@@ -2452,24 +2458,30 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "upgrade-dependencies": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-dependencies",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-projen",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
@@ -3852,24 +3864,30 @@ tsconfig.tsbuildinfo
         ],
       },
       "upgrade-dependencies": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-dependencies",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-projen",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "yarn install --check-files",
+            "exec": "npx projen",
           },
         ],
       },
@@ -4980,24 +4998,30 @@ junit.xml
         ],
       },
       "upgrade-dependencies": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-dependencies",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "env": Object {
+          "CI": "0",
+        },
         "name": "upgrade-projen",
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "npx projen",
           },
         ],
       },
