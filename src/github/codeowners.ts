@@ -14,9 +14,7 @@ export interface CodeOwnersProps {
 export class CodeOwners extends TextFile {
   constructor(github: GitHub, props: CodeOwnersProps = { }) {
     super(github.project, '.github/CODEOWNERS', {
-      lines: (props.lines && props.lines?.length > 0)
-        ? props.lines
-        : ['Replace me'],
+      lines: props?.lines,
     });
 
   }
