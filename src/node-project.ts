@@ -1,5 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
+import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
@@ -1047,7 +1047,7 @@ export class NodeProject extends Project {
     }
 
     workflow.on({
-      workflow_dispatch: {}, // allow manual triggering
+      workflowDispatch: {}, // allow manual triggering
     });
 
     const condition = options.condition ? { if: options.condition } : {};
@@ -1061,14 +1061,14 @@ export class NodeProject extends Project {
       run: 'git diff --ignore-space-at-eol --exit-code',
     }];
 
-    const job: any = {
-      'runs-on': 'ubuntu-latest',
-      'env': {
+    const job: Mutable<workflows.Job> = {
+      runsOn: 'ubuntu-latest',
+      env: {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
         ...options.env ?? {},
       },
       ...condition,
-      'steps': [
+      steps: [
         ...preCheckoutSteps,
 
         // check out sources.
@@ -1256,3 +1256,5 @@ export class DependenciesUpgradeMechanism {
     this.binder(project);
   }
 }
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };

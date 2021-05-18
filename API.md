@@ -4984,10 +4984,10 @@ Name | Type | Description
 
 
 ```ts
-addJobs(jobs: Map<string, any>): void
+addJobs(jobs: Map<string, Job>): void
 ```
 
-* **jobs** (<code>Map<string, any></code>)  *No description*
+* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  *No description*
 
 
 
@@ -4997,10 +4997,40 @@ addJobs(jobs: Map<string, any>): void
 
 
 ```ts
-on(events: Map<string, any>): void
+on(events: Triggers): void
 ```
 
-* **events** (<code>Map<string, any></code>)  *No description*
+* **events** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  *No description*
+  * **checkRun** (<code>[github.workflows.CheckRunOptions](#projen-github-workflows-checkrunoptions)</code>)  Runs your workflow anytime the check_run event occurs. __*Optional*__
+  * **checkSuite** (<code>[github.workflows.CheckSuiteOptions](#projen-github-workflows-checksuiteoptions)</code>)  Runs your workflow anytime the check_suite event occurs. __*Optional*__
+  * **create** (<code>[github.workflows.CreateOptions](#projen-github-workflows-createoptions)</code>)  Runs your workflow anytime someone creates a branch or tag, which triggers the create event. __*Optional*__
+  * **delete** (<code>[github.workflows.DeleteOptions](#projen-github-workflows-deleteoptions)</code>)  Runs your workflow anytime someone deletes a branch or tag, which triggers the delete event. __*Optional*__
+  * **deployment** (<code>[github.workflows.DeploymentOptions](#projen-github-workflows-deploymentoptions)</code>)  Runs your workflow anytime someone creates a deployment, which triggers the deployment event. __*Optional*__
+  * **deploymentStatus** (<code>[github.workflows.DeploymentStatusOptions](#projen-github-workflows-deploymentstatusoptions)</code>)  Runs your workflow anytime a third party provides a deployment status, which triggers the deployment_status event. __*Optional*__
+  * **fork** (<code>[github.workflows.ForkOptions](#projen-github-workflows-forkoptions)</code>)  Runs your workflow anytime when someone forks a repository, which triggers the fork event. __*Optional*__
+  * **gollum** (<code>[github.workflows.GollumOptions](#projen-github-workflows-gollumoptions)</code>)  Runs your workflow when someone creates or updates a Wiki page, which triggers the gollum event. __*Optional*__
+  * **issueComment** (<code>[github.workflows.IssueCommentOptions](#projen-github-workflows-issuecommentoptions)</code>)  Runs your workflow anytime the issue_comment event occurs. __*Optional*__
+  * **issues** (<code>[github.workflows.IssuesOptions](#projen-github-workflows-issuesoptions)</code>)  Runs your workflow anytime the issues event occurs. __*Optional*__
+  * **label** (<code>[github.workflows.LabelOptions](#projen-github-workflows-labeloptions)</code>)  Runs your workflow anytime the label event occurs. __*Optional*__
+  * **milestone** (<code>[github.workflows.MilestoneOptions](#projen-github-workflows-milestoneoptions)</code>)  Runs your workflow anytime the milestone event occurs. __*Optional*__
+  * **pageBuild** (<code>[github.workflows.PageBuildOptions](#projen-github-workflows-pagebuildoptions)</code>)  Runs your workflow anytime someone pushes to a GitHub Pages-enabled branch, which triggers the page_build event. __*Optional*__
+  * **project** (<code>[github.workflows.ProjectOptions](#projen-github-workflows-projectoptions)</code>)  Runs your workflow anytime the project event occurs. __*Optional*__
+  * **projectCard** (<code>[github.workflows.ProjectCardOptions](#projen-github-workflows-projectcardoptions)</code>)  Runs your workflow anytime the project_card event occurs. __*Optional*__
+  * **projectColumn** (<code>[github.workflows.ProjectColumnOptions](#projen-github-workflows-projectcolumnoptions)</code>)  Runs your workflow anytime the project_column event occurs. __*Optional*__
+  * **public** (<code>[github.workflows.PublicOptions](#projen-github-workflows-publicoptions)</code>)  Runs your workflow anytime someone makes a private repository public, which triggers the public event. __*Optional*__
+  * **pullRequest** (<code>[github.workflows.PullRequestOptions](#projen-github-workflows-pullrequestoptions)</code>)  Runs your workflow anytime the pull_request event occurs. __*Optional*__
+  * **pullRequestReview** (<code>[github.workflows.PullRequestReviewOptions](#projen-github-workflows-pullrequestreviewoptions)</code>)  Runs your workflow anytime the pull_request_review event occurs. __*Optional*__
+  * **pullRequestReviewComment** (<code>[github.workflows.PullRequestReviewCommentOptions](#projen-github-workflows-pullrequestreviewcommentoptions)</code>)  Runs your workflow anytime a comment on a pull request's unified diff is modified, which triggers the pull_request_review_comment event. __*Optional*__
+  * **pullRequestTarget** (<code>[github.workflows.PullRequestTargetOptions](#projen-github-workflows-pullrequesttargetoptions)</code>)  This event runs in the context of the base of the pull request, rather than in the merge commit as the pull_request event does. __*Optional*__
+  * **push** (<code>[github.workflows.PushOptions](#projen-github-workflows-pushoptions)</code>)  Runs your workflow when someone pushes to a repository branch, which triggers the push event. __*Optional*__
+  * **registryPackage** (<code>[github.workflows.RegistryPackageOptions](#projen-github-workflows-registrypackageoptions)</code>)  Runs your workflow anytime a package is published or updated. __*Optional*__
+  * **release** (<code>[github.workflows.ReleaseOptions](#projen-github-workflows-releaseoptions)</code>)  Runs your workflow anytime the release event occurs. __*Optional*__
+  * **repositoryDispatch** (<code>[github.workflows.RepositoryDispatchOptions](#projen-github-workflows-repositorydispatchoptions)</code>)  You can use the GitHub API to trigger a webhook event called repository_dispatch when you want to trigger a workflow for activity that happens outside of GitHub. __*Optional*__
+  * **schedule** (<code>Array<[github.workflows.CronScheduleOptions](#projen-github-workflows-cronscheduleoptions)></code>)  You can schedule a workflow to run at specific UTC times using POSIX cron syntax. __*Optional*__
+  * **status** (<code>[github.workflows.StatusOptions](#projen-github-workflows-statusoptions)</code>)  Runs your workflow anytime the status of a Git commit changes, which triggers the status event. __*Optional*__
+  * **watch** (<code>[github.workflows.WatchOptions](#projen-github-workflows-watchoptions)</code>)  Runs your workflow anytime the watch event occurs. __*Optional*__
+  * **workflowDispatch** (<code>[github.workflows.WorkflowDispatchOptions](#projen-github-workflows-workflowdispatchoptions)</code>)  You can configure custom-defined input properties, default input values, and required inputs for the event directly in your workflow. __*Optional*__
+  * **workflowRun** (<code>[github.workflows.WorkflowRunOptions](#projen-github-workflows-workflowrunoptions)</code>)  This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow. __*Optional*__
 
 
 

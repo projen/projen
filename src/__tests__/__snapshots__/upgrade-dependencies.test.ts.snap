@@ -11,9 +11,9 @@ on:
 jobs:
   upgrade:
     name: Upgrade
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-    runs-on: ubuntu-latest
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
@@ -39,11 +39,11 @@ jobs:
   pr:
     name: Create Pull Request
     needs: upgrade
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       checks: write
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -100,9 +100,9 @@ on:
 jobs:
   upgrade:
     name: Upgrade
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-    runs-on: ubuntu-latest
     outputs:
       conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
@@ -128,11 +128,11 @@ jobs:
   pr:
     name: Create Pull Request
     needs: upgrade
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       checks: write
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2

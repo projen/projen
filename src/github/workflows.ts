@@ -1,12 +1,18 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import decamelize = require('decamelize');
+
 import { Component } from '../component';
 import { YamlFile } from '../yaml';
 import { GitHub } from './github';
 
+import * as workflows from './workflows-model';
+
 export class GithubWorkflow extends Component {
   public readonly name: string;
-  private events: { [event: string]: any } = { };
-  private jobs: { [jobid: string]: any } = { };
   public readonly file: YamlFile;
+
+  private events: workflows.Triggers = { };
+  private jobs: Record<string, workflows.Job> = { };
 
   constructor(github: GitHub, name: string) {
     super(github.project);
@@ -17,14 +23,14 @@ export class GithubWorkflow extends Component {
     });
   }
 
-  public on(events: { [event: string]: any }) {
+  public on(events: workflows.Triggers) {
     this.events = {
       ...this.events,
       ...events,
     };
   }
 
-  public addJobs(jobs: { [jobid: string]: any }) {
+  public addJobs(jobs: Record<string, workflows.Job>) {
     this.jobs = {
       ...this.jobs,
       ...jobs,
@@ -34,8 +40,129 @@ export class GithubWorkflow extends Component {
   private renderWorkflow() {
     return {
       name: this.name,
-      on: this.events,
-      jobs: this.jobs,
+      on: snakeCaseKeys(this.events),
+      jobs: renderJobs(this.jobs),
     };
   }
+}
+
+function snakeCaseKeys<T = unknown>(obj: T): T {
+  if (typeof obj !== 'object' || obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(snakeCaseKeys) as any;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (let [k, v] of Object.entries(obj)) {
+    if (typeof v === 'object' && v != null) {
+      v = snakeCaseKeys(v);
+    }
+    result[decamelize(k)] = v;
+  }
+  return result as any;
+}
+
+function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
+  if (typeof obj !== 'object' || obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    if (recursive) {
+      obj = obj.map((v) => kebabCaseKeys(v, recursive)) as any;
+    }
+    return obj;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (let [k, v] of Object.entries(obj)) {
+    if (recursive) {
+      v = kebabCaseKeys(v, recursive);
+    }
+    result[decamelize(k).replace(/_/mg, '-')] = v;
+  }
+  return result as any;
+}
+
+function renderJobs(jobs: Record<string, workflows.Job>) {
+  const result: Record<string, unknown> = {};
+  for (const [name, job] of Object.entries(jobs)) {
+    result[name] = renderJob(job);
+  }
+  return result;
+
+  /** @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions */
+  function renderJob(job: workflows.Job) {
+    return {
+      'name': job.name,
+      'needs': arrayOrScalar(job.needs),
+      'runs-on': job.runsOn,
+      'permissions': kebabCaseKeys(job.permissions),
+      'environment': job.environment,
+      'concurrency': job.concurrency,
+      'outputs': renderJobOutputs(job.outputs),
+      'env': job.env,
+      'defaults': kebabCaseKeys(job.defaults),
+      'if': job.if,
+      'steps': kebabCaseKeys(job.steps, false),
+      'timeout-minutes': job.timeoutMinutes,
+      'strategy': renderJobStrategy(job.strategy),
+      'continue-on-error': job.continueOnError,
+      'container': job.container,
+      'services': job.services,
+    };
+  }
+
+  function renderJobOutputs(output: workflows.Job['outputs']) {
+    if (output == null) {
+      return undefined;
+    }
+
+    const rendered: Record<string, string> = {};
+    for (const [name, { stepId, outputName }] of Object.entries(output)) {
+      rendered[name] = `\${{ steps.${stepId}.outputs.${outputName} }}`;
+    }
+    return rendered;
+  }
+
+  function renderJobStrategy(strategy: workflows.Job['strategy']) {
+    if (strategy == null) {
+      return undefined;
+    }
+
+    const rendered: Record<string, unknown> = {
+      'max-parallel': strategy.maxParallel,
+      'fail-fast': strategy.failFast,
+    };
+
+    if (strategy.matrix) {
+      const matrix: Record<string, unknown> = {
+        include: strategy.matrix.include,
+        exclude: strategy.matrix.exclude,
+      };
+      for (const [key, values] of Object.entries(strategy.matrix.domain ?? {})) {
+        if (key in matrix) {
+          // A domain key was set to `include`, or `exclude`:
+          throw new Error(`Illegal job strategy matrix key: ${key}`);
+        }
+        matrix[key] = values;
+      }
+      rendered.matrix = matrix;
+    }
+
+    return rendered;
+  }
+}
+
+function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
+  if (arr == null || arr.length === 0) {
+    return arr;
+  }
+  if (arr.length === 1) {
+    return arr[0];
+  }
+  return arr;
 }
