@@ -442,6 +442,9 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -454,6 +457,9 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",

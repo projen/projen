@@ -1175,6 +1175,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -1187,6 +1190,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",
@@ -2478,6 +2484,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -2490,6 +2499,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",
@@ -3884,6 +3896,9 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -3896,6 +3911,9 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",
@@ -5023,6 +5041,9 @@ junit.xml
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "pnpm i",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -5035,6 +5056,9 @@ junit.xml
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "pnpm i",
           },
           Object {
             "exec": "npx projen",

@@ -122,6 +122,11 @@ export class UpgradeDependencies extends Component {
     }
 
     task.exec(ncuCommand.join(' '));
+
+    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
+    task.exec(this._project.package.installAndUpdateLockfileCommand);
+
+    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
 
     return task;

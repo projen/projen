@@ -146,6 +146,9 @@
           "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
         },
         {
+          "exec": "yarn install --check-files"
+        },
+        {
           "exec": "/bin/bash ./projen.bash"
         }
       ]
