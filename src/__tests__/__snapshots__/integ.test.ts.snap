@@ -262,7 +262,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      statuses: write
+      checks: write
       contents: write
     env:
       CI: \\"true\\"
@@ -4594,7 +4594,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      statuses: write
+      checks: write
       contents: write
     env:
       CI: \\"true\\"
