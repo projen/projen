@@ -1,16 +1,15 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { GithubWorkflow } from './github';
-import { AutoMerge } from './github/auto-merge';
-import { DependabotOptions } from './github/dependabot';
+import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
+import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
-import { ProjenUpgrade } from './projen-upgrade';
 import { Publisher } from './publisher';
 import { Task, TaskCategory } from './tasks';
+import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -93,6 +92,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * bumped. Requires that `version` will be undefined.
    *
    * @default - true if not a subproject
+   * @featured
    */
   readonly releaseWorkflow?: boolean;
 
@@ -160,23 +160,25 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Include dependabot configuration.
    *
-   * @default true
+   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
+   * @default false
    */
   readonly dependabot?: boolean;
 
   /**
    * Options for dependabot.
    *
+   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * Adds mergify configuration.
+   * How to handle dependency upgrades.
    *
-   * @default true
+   * @default - DependenciesUpgrade.GITHUB_ACTIONS
    */
-  readonly mergify?: boolean;
+  readonly depsUpgrade?: DependenciesUpgradeMechanism;
 
   /**
    * Options for mergify
@@ -292,6 +294,29 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
+   * .projenrc.js generation.
+   *
+   * @default true
+   */
+  readonly projenrcJs?: boolean;
+
+  /**
+   * Options for .projenrc.js
+   * @default - default options
+   */
+  readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * The initial version of the repo. The first release will bump over this
+   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
+   * bump is minor or patch).
+   *
+   * @default "v0.1.0"
+   */
+  readonly initialVersion?: string;
 }
 
 /**
@@ -363,8 +388,8 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  protected readonly buildWorkflow?: GithubWorkflow;
-  protected readonly buildWorkflowJobId?: string;
+  public readonly buildWorkflow?: GithubWorkflow;
+  public readonly buildWorkflowJobId?: string;
 
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
@@ -456,7 +481,9 @@ export class NodeProject extends Project {
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
-    this._version = new Version(this);
+    this._version = new Version(this, {
+      initialVersion: options.initialVersion,
+    });
 
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
@@ -527,7 +554,6 @@ export class NodeProject extends Project {
     this.npmignore?.exclude(`/${PROJEN_DIR}`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
-
     const projen = options.projenDevDependency ?? true;
     if (projen) {
       const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
@@ -556,6 +582,49 @@ export class NodeProject extends Project {
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
 
+      const updateRepo = new Array<any>();
+      const gitDiffStepId = 'git_diff';
+      const hasChangesCondName = 'has_changes';
+      const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
+      const repoFullName = 'github.event.pull_request.head.repo.full_name';
+
+      // use "git diff --exit code" to check if there were changes in the repo
+      // and create a step output that will be used in subsequent steps.
+      updateRepo.push({
+        name: 'Check for changes',
+        id: gitDiffStepId,
+        run: `git diff --exit-code || echo "::set-output name=${hasChangesCondName}::true"`,
+      });
+
+      // only if we had changes, commit them and push to the repo note that for
+      // forks, this will fail (because the workflow doesn't have permissions.
+      // this indicates to users that they need to update their branch manually.
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Commit and push changes (if changed)',
+        run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch}`,
+      });
+
+      // if we pushed changes, we need to manually update the status check so
+      // that the PR will be green (we won't get here for forks with updates
+      // because the push would have failed).
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Update status check (if changed)',
+        run: [
+          'gh api',
+          '-X POST',
+          `/repos/\${{ ${repoFullName} }}/check-runs`,
+          `-F name="${buildJobId}"`,
+          '-F head_sha="$(git rev-parse HEAD)"',
+          '-F status="completed"',
+          '-F conclusion="success"',
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
+      });
+
       const workflow = this.createBuildWorkflow('Build', {
         jobId: buildJobId,
         trigger: {
@@ -567,29 +636,7 @@ export class NodeProject extends Project {
           repository: repo,
         } : undefined,
 
-        postSteps: [
-          {
-            name: 'Commit and push changes (if any)',
-            run: `git diff --exit-code || (git commit -am "chore: self mutation" && git push origin HEAD:${branch})`,
-          },
-          {
-            // only if not running from a fork
-            if: '${{ github.repository == github.event.pull_request.head.repo.full_name }}',
-            name: 'Update status check',
-            run: [
-              'gh api',
-              '-X POST',
-              '/repos/${{ github.event.pull_request.head.repo.full_name }}/check-runs',
-              `-F name="${buildJobId}"`,
-              '-F head_sha="$(git rev-parse HEAD)"',
-              '-F status="completed"',
-              '-F conclusion="success"',
-            ].join(' '),
-            env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-            },
-          },
-        ],
+        postSteps: updateRepo,
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         image: options.workflowContainerImage,
@@ -720,30 +767,49 @@ export class NodeProject extends Project {
       }
     }
 
-    if (options.mergify ?? true) {
+    if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
-        autoMergeLabel: options.mergifyAutoMergeLabel,
         buildJob: this.buildWorkflowJobId,
+        autoMergeLabel: options.mergifyAutoMergeLabel,
       });
-
       this.npmignore?.exclude('/.mergify.yml');
     }
 
-    if (options.dependabot ?? true) {
-      this.github?.addDependabot(options.dependabotOptions);
+    if (options.dependabot !== undefined && options.depsUpgrade) {
+      throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
-    new ProjenUpgrade(this, {
-      autoUpgradeSecret: options.projenUpgradeSecret,
-      autoUpgradeSchedule: options.projenUpgradeSchedule,
-      labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-        ? [this.autoMerge.autoMergeLabel]
-        : [],
-    });
+    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow();
+    const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
+    dependenciesUpgrade.bind(this);
+
+    if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
+
+      const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
+
+      new UpgradeDependencies(this, {
+        include: ['projen'],
+        taskName: 'upgrade-projen',
+        ignoreProjen: false,
+        workflow: !!options.projenUpgradeSecret,
+        workflowOptions: {
+          schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          secret: options.projenUpgradeSecret,
+          labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
+            ? [this.autoMerge.autoMergeLabel]
+            : [],
+        },
+      });
+    }
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
+    }
+
+    const projenrcJs = options.projenrcJs ?? true;
+    if (projenrcJs) {
+      new Projenrc(this, options.projenrcJsOptions);
     }
   }
 
@@ -1146,6 +1212,49 @@ interface NodeBuildWorkflowOptions {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
+}
+
+/**
+ * Dependencies upgrade mechanism.
+ */
+export class DependenciesUpgradeMechanism {
+
+  /**
+   * Disable.
+   */
+  public static readonly NONE = new DependenciesUpgradeMechanism((_: NodeProject) => ({}), true);
+
+  /**
+   * Upgrade via dependabot.
+   */
+  public static dependabot(options: DependabotOptions = {}) {
+    return new DependenciesUpgradeMechanism((project: NodeProject) => {
+      project.github?.addDependabot(options);
+    }, options.ignoreProjen);
+  }
+
+  /**
+   * Upgrade via a custom github workflow.
+   */
+  public static githubWorkflow(options: UpgradeDependenciesOptions = {}) {
+    return new DependenciesUpgradeMechanism((project: NodeProject) => {
+      new UpgradeDependencies(project, options);
+    }, options.ignoreProjen);
+  }
+
+  private constructor(
+    private readonly binder: (project: NodeProject) => void,
+    private readonly _ignoresProjen?: boolean) {}
+
+  public get ignoresProjen(): boolean {
+    // we ignore projen by default because it requires 'workflow' permissions to run.
+    // nor depenedabot nor the default github token has those permissions.
+    return this._ignoresProjen ?? true;
+  }
+
+  public bind(project: NodeProject) {
+    this.binder(project);
+  }
 }
 
 type Mutable<T> = { -readonly [P in keyof T]: T[P] };

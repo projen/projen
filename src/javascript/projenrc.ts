@@ -1,0 +1,64 @@
+import { existsSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
+import { Component } from '../component';
+import { renderJavaScriptOptions } from '../javascript/render-options';
+import { NodeProject } from '../node-project';
+import { Project } from '../project';
+export interface ProjenrcOptions {
+  /**
+   * The name of the projenrc file.
+   * @default ".projenrc.js"
+   */
+  readonly filename?: string;
+}
+
+/**
+ * Sets up a javascript project to use TypeScript for projenrc.
+ */
+export class Projenrc extends Component {
+  private readonly rcfile: string;
+
+  constructor(project: Project, options: ProjenrcOptions = {}) {
+    super(project);
+
+    this.rcfile = options.filename ?? '.projenrc.js';
+
+    // this is the task projen executes when running `projen`
+    project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
+
+    this.generateProjenrc();
+  }
+
+  private generateProjenrc() {
+    const rcfile = resolve(this.project.outdir, this.rcfile);
+    if (existsSync(rcfile)) {
+      return; // already exists
+    }
+
+    const bootstrap = this.project.newProject;
+    if (!bootstrap) {
+      return;
+    }
+
+    const parts = bootstrap.fqn.split('.');
+    const moduleName = parts[0];
+    const importName = parts[1];
+    const className = parts.slice(1).join('.');
+
+    const js = renderJavaScriptOptions({
+      comments: bootstrap.comments,
+      args: bootstrap.args,
+      type: bootstrap.type,
+    });
+
+    const lines = new Array<string>();
+    lines.push(`const { ${importName} } = require('${moduleName}');`);
+    lines.push();
+    lines.push(`const project = new ${className}(${js});`);
+    lines.push();
+    lines.push('project.synth();');
+
+    writeFileSync(rcfile, lines.join('\n'));
+    this.project.logger.info(`Project definition file was created at ${rcfile}`);
+  }
+}

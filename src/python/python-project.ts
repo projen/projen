@@ -1,3 +1,4 @@
+import { Projenrc } from '../javascript';
 import { Project, ProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
 import { Poetry } from './poetry';
@@ -38,6 +39,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Additional dependencies can be added via `project.addDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -49,6 +51,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Additional dependencies can be added via `project.addDevDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly devDeps?: string[];
 
@@ -58,6 +61,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use pip with a requirements.txt file to track project dependencies.
    *
    * @default true
+   * @featured
    */
   readonly pip?: boolean;
 
@@ -65,6 +69,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
    * @default true
+   * @featured
    */
   readonly venv?: boolean;
 
@@ -78,6 +83,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use setuptools with a setup.py script for packaging and publishing.
    *
    * @default - true if the project type is library
+   * @featured
    */
   readonly setuptools?: boolean;
 
@@ -86,6 +92,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * (optional) packaging/publishing.
    *
    * @default false
+   * @featured
    */
   readonly poetry?: boolean;
 
@@ -94,6 +101,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
   /**
    * Include pytest tests.
    * @default true
+   * @featured
    */
   readonly pytest?: boolean;
 
@@ -248,6 +256,10 @@ export class PythonProject extends Project {
     }
 
     this.addDefaultGitIgnore();
+
+    // python currently only supports projenrc in java (would be great to
+    // support .projenrc.py of course).
+    new Projenrc(this);
   }
 
   /**

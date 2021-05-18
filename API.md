@@ -11,6 +11,7 @@ Name|Description
 [ConstructLibrary](#projen-constructlibrary)|A multi-language library for CDK constructs.
 [ConstructLibraryAws](#projen-constructlibraryaws)|*No description*
 [ConstructLibraryCdk8s](#projen-constructlibrarycdk8s)|CDK8s construct library project.
+[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)|Dependencies upgrade mechanism.
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
@@ -41,6 +42,8 @@ Name|Description
 [TypeScriptLibraryProject](#projen-typescriptlibraryproject)|*No description*
 [TypeScriptProject](#projen-typescriptproject)|TypeScript project.
 [TypescriptConfig](#projen-typescriptconfig)|*No description*
+[UpgradeDependencies](#projen-upgradedependencies)|Upgrade node project dependencies.
+[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
@@ -58,6 +61,7 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
@@ -71,6 +75,7 @@ Name|Description
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
+[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
 [vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
@@ -131,6 +136,7 @@ Name|Description
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
+[NewProject](#projen-newproject)|Information passed from `projen new` to the project object when the project is first created.
 [NodePackageOptions](#projen-nodepackageoptions)|*No description*
 [NodeProjectOptions](#projen-nodeprojectoptions)|*No description*
 [NodeWorkflowSteps](#projen-nodeworkflowsteps)|*No description*
@@ -150,6 +156,9 @@ Name|Description
 [TypeScriptLibraryProjectOptions](#projen-typescriptlibraryprojectoptions)|*No description*
 [TypeScriptProjectOptions](#projen-typescriptprojectoptions)|*No description*
 [TypescriptConfigOptions](#projen-typescriptconfigoptions)|*No description*
+[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
+[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)|Options for `UpgradeDependencies.workflowOptions`.
+[VersionOptions](#projen-versionoptions)|*No description*
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
@@ -158,6 +167,7 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
+[github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.GithubWorkflow.CheckRunOptions](#projen-github-githubworkflow-checkrunoptions)|Check run options.
 [github.GithubWorkflow.CheckSuiteOptions](#projen-github-githubworkflow-checksuiteoptions)|Check suite options.
 [github.GithubWorkflow.ContainerCredentials](#projen-github-githubworkflow-containercredentials)|Credentials to use to authenticate to Docker registries.
@@ -210,8 +220,8 @@ Name|Description
 [java.PluginExecution](#projen-java-pluginexecution)|Plugin execution definition.
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
-[java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)|Options for `Projenrc`.
-[java.ProjenrcOptions](#projen-java-projenrcoptions)|*No description*
+[java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
+[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
@@ -228,6 +238,7 @@ Name|Description
 [tasks.TaskStep](#projen-tasks-taskstep)|A single step within a task.
 [tasks.TaskStepOptions](#projen-tasks-taskstepoptions)|Options for task steps.
 [tasks.TasksManifest](#projen-tasks-tasksmanifest)|Schema for `tasks.json`.
+[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)|*No description*
 [vscode.DevContainerOptions](#projen-vscode-devcontaineroptions)|Constructor options for the DevContainer component.
 [vscode.Presentation](#projen-vscode-presentation)|VSCode launch configuration Presentation interface "using the order, group, and hidden attributes in the presentation object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.ServerReadyAction](#projen-vscode-serverreadyaction)|VSCode launch configuration ServerReadyAction interface "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -272,6 +283,7 @@ Name|Description
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [LogLevel](#projen-loglevel)|Logging verbosity.
+[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [NodePackageManager](#projen-nodepackagemanager)|The node package manager to use.
 [NpmAccess](#projen-npmaccess)|Npm package access level.
 [NpmTaskExecution](#projen-npmtaskexecution)|*No description*
@@ -366,11 +378,11 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -417,13 +429,14 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -431,6 +444,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -455,6 +470,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -480,6 +497,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:. __*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 
 
 
@@ -489,7 +507,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 Name | Type | Description 
 -----|------|-------------
 **cdkDependenciesAsDeps**🔹 | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies).
-**version**🔹 | <code>string</code> | The target CDK version for this library.
+**cdkVersion**🔹 | <code>string</code> | The target CDK version for this library.
+**version**⚠️ | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -546,11 +565,11 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -597,13 +616,14 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -611,6 +631,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -635,6 +657,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -692,11 +716,11 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 ```
 
 * **options** (<code>[Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -743,13 +767,14 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -757,6 +782,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -781,6 +808,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -887,11 +916,11 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -938,13 +967,14 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -952,6 +982,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -976,6 +1008,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -1015,11 +1049,11 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -1066,13 +1100,14 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -1080,6 +1115,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -1104,6 +1141,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -1129,6 +1168,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:. __*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 
 
 
@@ -1153,11 +1193,11 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -1204,13 +1244,14 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -1218,6 +1259,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -1242,6 +1285,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -1263,6 +1308,75 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
 
+
+
+
+## class DependenciesUpgradeMechanism 🔹 <a id="projen-dependenciesupgrademechanism"></a>
+
+Dependencies upgrade mechanism.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**ignoresProjen**🔹 | <code>boolean</code> | <span></span>
+*static* **NONE**🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | Disable.
+
+### Methods
+
+
+#### bind(project)🔹 <a id="projen-dependenciesupgrademechanism-bind"></a>
+
+
+
+```ts
+bind(project: NodeProject): void
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+
+
+
+
+#### *static* dependabot(options?)🔹 <a id="projen-dependenciesupgrademechanism-dependabot"></a>
+
+Upgrade via dependabot.
+
+```ts
+static dependabot(options?: DependabotOptions): DependenciesUpgradeMechanism
+```
+
+* **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
+  * **autoMerge** (<code>boolean</code>)  Automatically merge dependabot PRs if build CI build passes. __*Default*__: true
+  * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
+  * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+__Returns__:
+* <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>
+
+#### *static* githubWorkflow(options?)🔹 <a id="projen-dependenciesupgrademechanism-githubworkflow"></a>
+
+Upgrade via a custom github workflow.
+
+```ts
+static githubWorkflow(options?: UpgradeDependenciesOptions): DependenciesUpgradeMechanism
+```
+
+* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
+  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
+  * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
+  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
+  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
+  * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
+
+__Returns__:
+* <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>
 
 
 
@@ -1549,6 +1663,7 @@ new Eslint(project: NodeProject, options: EslintOptions)
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
 
 
@@ -1603,6 +1718,19 @@ addRules(rules: Map<string, any>): void
 ```
 
 * **rules** (<code>Map<string, any></code>)  *No description*
+
+
+
+
+#### allowDevDeps(pattern)🔹 <a id="projen-eslint-allowdevdeps"></a>
+
+Add a glob file pattern which allows importing dev dependencies.
+
+```ts
+allowDevDeps(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  glob pattern.
 
 
 
@@ -2099,11 +2227,11 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -2150,13 +2278,14 @@ new JsiiProject(options: JsiiProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -2164,6 +2293,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -2188,6 +2319,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -2811,11 +2944,11 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -2862,13 +2995,14 @@ new NodeProject(options: NodeProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -2876,6 +3010,8 @@ new NodeProject(options: NodeProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -3249,11 +3385,11 @@ new Project(options: ProjectOptions)
 ```
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3280,7 +3416,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN of the project type (if known).<br/>__*Optional*__
+**newProject**?🔹 | <code>[NewProject](#projen-newproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 **vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
@@ -3365,6 +3501,19 @@ preSynthesize(): void
 
 
 
+
+#### removeTask(name)🔹 <a id="projen-project-removetask"></a>
+
+Removes a task from a project.
+
+```ts
+removeTask(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task to remove.
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
 
 #### synth()🔹 <a id="projen-project-synth"></a>
 
@@ -3929,11 +4078,11 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3980,13 +4129,14 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -3994,6 +4144,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -4018,6 +4170,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -4043,11 +4197,11 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4094,13 +4248,14 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4108,6 +4263,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -4132,6 +4289,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -4157,11 +4316,11 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4208,13 +4367,14 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4222,6 +4382,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -4246,6 +4408,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -4268,6 +4432,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
 **packageTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
+**tsconfigEslint**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
 
 
@@ -4305,6 +4470,106 @@ Name | Type | Description
 **fileName**🔹 | <code>string</code> | <span></span>
 **include**🔹 | <code>Array<string></code> | <span></span>
 
+### Methods
+
+
+#### addExclude(pattern)🔹 <a id="projen-typescriptconfig-addexclude"></a>
+
+
+
+```ts
+addExclude(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addInclude(pattern)🔹 <a id="projen-typescriptconfig-addinclude"></a>
+
+
+
+```ts
+addInclude(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
+
+
+## class UpgradeDependencies 🔹 <a id="projen-upgradedependencies"></a>
+
+Upgrade node project dependencies.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
+  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
+  * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
+  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
+  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
+  * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**workflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The workflow that executes the upgrade.<br/>__*Optional*__
+
+
+
+## class UpgradeDependenciesSchedule 🔹 <a id="projen-upgradedependenciesschedule"></a>
+
+How often to check for new versions and raise pull requests for version upgrades.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cron**🔹 | <code>Array<string></code> | <span></span>
+*static* **DAILY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00.
+*static* **MONTHLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on day-of-month 1.
+*static* **NEVER**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Disables automatic upgrades.
+*static* **WEEKDAY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on every day-of-week from Monday through Friday.
+*static* **WEEKLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on Monday.
+
+### Methods
+
+
+#### *static* expressions(cron)🔹 <a id="projen-upgradedependenciesschedule-expressions"></a>
+
+Create a schedule from a raw cron expression.
+
+```ts
+static expressions(cron: Array<string>): UpgradeDependenciesSchedule
+```
+
+* **cron** (<code>Array<string></code>)  *No description*
+
+__Returns__:
+* <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code>
+
 
 
 ## class Version 🔹 <a id="projen-version"></a>
@@ -4319,10 +4584,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: NodeProject)
+new Version(project: NodeProject, options: VersionOptions)
 ```
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
 
 
 
@@ -4639,11 +4906,21 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.GitHub(project: Project)
+new github.GitHub(project: Project, options: GitHubOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
 
 ### Methods
 
@@ -4665,22 +4942,6 @@ addDependabot(options?: DependabotOptions): Dependabot
 
 __Returns__:
 * <code>[github.Dependabot](#projen-github-dependabot)</code>
-
-#### addMergifyRules(...rules)🔹 <a id="projen-github-github-addmergifyrules"></a>
-
-
-
-```ts
-addMergifyRules(...rules: MergifyRule[]): void
-```
-
-* **rules** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
-  * **actions** (<code>Map<string, any></code>)  *No description* 
-  * **conditions** (<code>Array<string></code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
-
-
-
 
 #### addPullRequestTemplate(...content)🔹 <a id="projen-github-github-addpullrequesttemplate"></a>
 
@@ -4707,6 +4968,23 @@ addWorkflow(name: string): GithubWorkflow
 
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
+
+#### annotateGenerated(glob)🔹 <a id="projen-github-github-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
+
+
+
 
 
 
@@ -4738,6 +5016,7 @@ new github.GithubWorkflow(github: GitHub, name: string)
 Name | Type | Description 
 -----|------|-------------
 **file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -4885,11 +5164,11 @@ new java.JavaProject(options: JavaProjectOptions)
 ```
 
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4908,7 +5187,7 @@ new java.JavaProject(options: JavaProjectOptions)
   * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
   * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
   * **projenrcJava** (<code>boolean</code>)  Use projenrc in java. __*Default*__: true
-  * **projenrcJavaOptions** (<code>[java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
+  * **projenrcJavaOptions** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
   * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
   * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
@@ -5234,7 +5513,6 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
   * **className** (<code>string</code>)  The name of the Java class which contains the `main()` method for projen. __*Default*__: "projenrc"
   * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
   * **testScope** (<code>boolean</code>)  Defines projenrc under the test scope instead of the main scope, which is reserved to the app. __*Default*__: true
-  * **initializationOptions** (<code>Map<string, any></code>)  Project initialization options. __*Optional*__
 
 
 
@@ -5244,6 +5522,30 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **className**🔹 | <code>string</code> | The name of the java class that includes the projen entrypoint.
+
+
+
+## class Projenrc 🔹 <a id="projen-javascript-projenrc"></a>
+
+Sets up a javascript project to use TypeScript for projenrc.
+
+__Submodule__: javascript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
+  * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
+
 
 
 
@@ -5518,11 +5820,11 @@ new python.PythonProject(options: PythonProjectOptions)
 ```
 
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6150,6 +6452,19 @@ addTask(name: string, options?: TaskOptions): Task
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
 
+#### removeTask(name)🔹 <a id="projen-tasks-tasks-removetask"></a>
+
+Removes a task from a project.
+
+```ts
+removeTask(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task to remove.
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
 #### tryFind(name)🔹 <a id="projen-tasks-tasks-tryfind"></a>
 
 Finds a task by name.
@@ -6164,6 +6479,30 @@ tryFind(name: string): Task
 
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
+
+
+
+## class Projenrc 🔹 <a id="projen-typescript-projenrc"></a>
+
+Sets up a typescript project to use TypeScript for projenrc.
+
+__Submodule__: typescript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
+```
+
+* **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  *No description*
+* **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
+  * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
+
 
 
 
@@ -6392,11 +6731,11 @@ new web.NextJsProject(options: NextJsProjectOptions)
 * **options** (<code>[web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6443,13 +6782,14 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -6457,6 +6797,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -6552,11 +6894,11 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 * **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6603,13 +6945,14 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -6617,6 +6960,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -6641,6 +6986,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -6738,11 +7085,11 @@ new web.ReactProject(options: ReactProjectOptions)
 ```
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6789,13 +7136,14 @@ new web.ReactProject(options: ReactProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -6803,6 +7151,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -6894,11 +7244,11 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 ```
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **jsiiFqn** (<code>string</code>)  The JSII FQN (fully qualified name) of the project class. __*Default*__: undefined
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6945,13 +7295,14 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: true
+  * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **mergify** (<code>boolean</code>)  Adds mergify configuration. __*Default*__: true
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -6959,6 +7310,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically merge projen upgrade PRs when build passes. __*Default*__: "true" if mergify auto-merge is enabled (default)
   * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
   * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
@@ -6983,6 +7336,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
   * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
+  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
@@ -7074,11 +7429,13 @@ Name | Type | Description
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
+**constructsVersion**?🔹 | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7094,9 +7451,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7104,7 +7461,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7132,6 +7489,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **publishToGo**?🔹 | <code>[JsiiGoTarget](#projen-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
 **publishToNuget**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | Publish to NuGet.<br/>__*Default*__: no publishing
@@ -7195,9 +7556,10 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7211,9 +7573,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7221,7 +7583,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7249,6 +7611,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -7319,9 +7685,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7335,9 +7702,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7345,7 +7712,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7373,6 +7740,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -7435,11 +7806,13 @@ Name | Type | Description
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
+**constructsVersion**?⚠️ | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7455,9 +7828,9 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?⚠️ | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?⚠️ | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7465,7 +7838,7 @@ Name | Type | Description
 **licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7493,6 +7866,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?⚠️ | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?⚠️ | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **publishToGo**?⚠️ | <code>[JsiiGoTarget](#projen-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?⚠️ | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
 **publishToNuget**?⚠️ | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | Publish to NuGet.<br/>__*Default*__: no publishing
@@ -7558,9 +7935,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7576,9 +7954,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7586,7 +7964,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7614,6 +7992,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **publishToGo**?🔹 | <code>[JsiiGoTarget](#projen-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
 **publishToNuget**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | Publish to NuGet.<br/>__*Default*__: no publishing
@@ -7678,9 +8060,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -7696,9 +8079,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -7706,7 +8089,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -7734,6 +8117,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **publishToGo**?🔹 | <code>[JsiiGoTarget](#projen-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
 **publishToNuget**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | Publish to NuGet.<br/>__*Default*__: no publishing
@@ -7920,6 +8307,7 @@ Name | Type | Description
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
 **lintProjenRc**?🔹 | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
 
 
@@ -8410,9 +8798,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8428,9 +8817,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -8438,7 +8827,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -8466,6 +8855,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **publishToGo**?🔹 | <code>[JsiiGoTarget](#projen-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[JsiiJavaTarget](#projen-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
 **publishToNuget**?🔹 | <code>[JsiiDotNetTarget](#projen-jsiidotnettarget)</code> | Publish to NuGet.<br/>__*Default*__: no publishing
@@ -8659,6 +9052,24 @@ Name | Type | Description
 
 
 
+## struct NewProject 🔹 <a id="projen-newproject"></a>
+
+
+Information passed from `projen new` to the project object when the project is first created.
+
+It is used to generate projenrc files in various languages.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
+**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out options.
+**fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
+**type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
+
+
+
 ## struct NodePackageOptions 🔹 <a id="projen-nodepackageoptions"></a>
 
 
@@ -8731,9 +9142,10 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8741,16 +9153,16 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -8777,6 +9189,8 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -8855,8 +9269,8 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
@@ -9071,9 +9485,10 @@ Name | Type | Description
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9087,9 +9502,9 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?⚠️ | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?⚠️ | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -9097,7 +9512,7 @@ Name | Type | Description
 **licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?⚠️ | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -9125,6 +9540,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?⚠️ | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?⚠️ | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?⚠️ | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -9177,9 +9596,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9193,9 +9613,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -9203,7 +9623,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -9231,6 +9651,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -9268,6 +9692,53 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | Filters results from the "include" option.<br/>__*Default*__: node_modules is excluded by default
 **fileName**?🔹 | <code>string</code> | __*Default*__: "tsconfig.json"
 **include**?🔹 | <code>Array<string></code> | Specifies a list of glob patterns that match TypeScript files to be included in compilation.<br/>__*Default*__: all .ts files recursively
+
+
+
+## struct UpgradeDependenciesOptions 🔹 <a id="projen-upgradedependenciesoptions"></a>
+
+
+Options for `UpgradeDependencies`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
+**ignoreProjen**?🔹 | <code>boolean</code> | Whether or not to ignore projen upgrades.<br/>__*Default*__: true
+**include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
+**taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade-dependencies".
+**workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
+**workflowOptions**?🔹 | <code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
+
+
+
+## struct UpgradeDependenciesWorkflowOptions 🔹 <a id="projen-upgradedependenciesworkflowoptions"></a>
+
+
+Options for `UpgradeDependencies.workflowOptions`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: [] no labels.
+**rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
+**schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
+**secret**?🔹 | <code>string</code> | Which secret to use when creating the PR.<br/>__*Default*__: default github token.
+
+
+
+## struct VersionOptions 🔹 <a id="projen-versionoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 
 
 
@@ -9399,6 +9870,19 @@ Name | Type | Description
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
 **versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+## struct GitHubOptions 🔹 <a id="projen-github-githuboptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 
 
 
@@ -10012,17 +10496,17 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
 **junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
-**projenrcJavaOptions**?🔹 | <code>[java.ProjenrcCommonOptions](#projen-java-projenrccommonoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
+**projenrcJavaOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
@@ -10136,7 +10620,7 @@ Name | Type | Description
 
 
 
-## struct ProjenrcCommonOptions 🔹 <a id="projen-java-projenrccommonoptions"></a>
+## struct ProjenrcOptions 🔹 <a id="projen-java-projenrcoptions"></a>
 
 
 Options for `Projenrc`.
@@ -10151,7 +10635,7 @@ Name | Type | Description
 
 
 
-## struct ProjenrcOptions 🔹 <a id="projen-java-projenrcoptions"></a>
+## struct ProjenrcOptions 🔹 <a id="projen-javascript-projenrcoptions"></a>
 
 
 
@@ -10160,10 +10644,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**className**?🔹 | <code>string</code> | The name of the Java class which contains the `main()` method for projen.<br/>__*Default*__: "projenrc"
-**initializationOptions**?🔹 | <code>Map<string, any></code> | Project initialization options.<br/>__*Optional*__
-**projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
-**testScope**?🔹 | <code>boolean</code> | Defines projenrc under the test scope instead of the main scope, which is reserved to the app.<br/>__*Default*__: true
+**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
 
 
 
@@ -10397,9 +10878,9 @@ Name | Type | Description
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
@@ -10573,6 +11054,19 @@ Name | Type | Description
 
 
 
+## struct ProjenrcOptions 🔹 <a id="projen-typescript-projenrcoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
+
+
+
 ## struct DevContainerOptions 🔹 <a id="projen-vscode-devcontaineroptions"></a>
 
 
@@ -10705,9 +11199,10 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10715,16 +11210,16 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -10751,6 +11246,8 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -10818,9 +11315,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10834,9 +11332,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -10844,7 +11342,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -10872,6 +11370,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -10952,9 +11454,10 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10962,16 +11465,16 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -10998,6 +11501,8 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -11063,9 +11568,10 @@ Name | Type | Description
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
-**dependabot**?🔹 | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: true
-**dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
+**dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
+**dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -11079,9 +11585,9 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
-**jsiiFqn**?🔹 | <code>string</code> | The JSII FQN (fully qualified name) of the project class.<br/>__*Default*__: undefined
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -11089,7 +11595,7 @@ Name | Type | Description
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
-**mergify**?🔹 | <code>boolean</code> | Adds mergify configuration.<br/>__*Default*__: true
+**mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
@@ -11117,6 +11623,10 @@ Name | Type | Description
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
 **projenVersion**?🔹 | <code>string</code> | Version of projen to install.<br/>__*Default*__: Defaults to the latest version.
+**projenrcJs**?🔹 | <code>boolean</code> | Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation.<br/>__*Default*__: true
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
+**projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -11245,6 +11755,17 @@ Name | Description
 **INFO** 🔹|
 **DEBUG** 🔹|
 **VERBOSE** 🔹|
+
+
+## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
+
+Choices for how to display commented out options in projenrc files.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
 
 
 ## enum NodePackageManager 🔹 <a id="projen-nodepackagemanager"></a>

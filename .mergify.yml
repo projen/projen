@@ -23,16 +23,6 @@ pull_request_rules:
     conditions:
       - label=auto-merge
       - status-success=build
-  - name: Merge pull requests from dependabot if CI passes
-    conditions:
-      - author=dependabot[bot]
-      - status-success=build
-    actions:
-      merge:
-        method: squash
-        commit_message: title+body
-        strict: smart
-        strict_method: merge
   - name: Label core contributions
     actions:
       label:

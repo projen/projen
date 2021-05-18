@@ -33,10 +33,11 @@ yarn-debug.log*
 yarn-error.log*
 !/.devcontainer.json
 !/.eslintrc.json
-!/.github/dependabot.yml
+!/.gitattributes
 !/.github/pull_request_template.md
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
+!/.github/workflows/upgrade-dependencies.yml
 !/.gitpod.yml
 !/.markdownlint.json
 !/.mergify.yml

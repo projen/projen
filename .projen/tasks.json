@@ -39,7 +39,10 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "steps": [
         {
-          "exec": "git describe --tags --match=\"v*\" --first-parent --abbrev=0 > .version.tmp.json"
+          "exec": "git -c \"versionsort.suffix=-\" tag --sort=\"-version:refname\" --list \"v*\" | head -n1 > .version.tmp.json"
+        },
+        {
+          "exec": "if [ \"$(cat .version.tmp.json)\" = \"\" ]; then echo \"v0.1.0\" > .version.tmp.json; fi"
         },
         {
           "exec": "standard-version"
@@ -133,16 +136,25 @@
         }
       ]
     },
-    "projen:upgrade": {
-      "name": "projen:upgrade",
-      "category": "30.maintain",
-      "description": "upgrades projen to the latest version",
+    "upgrade-dependencies": {
+      "name": "upgrade-dependencies",
+      "env": {
+        "CI": "0"
+      },
       "steps": [
         {
-          "exec": "yarn upgrade -L projen"
+          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
         },
         {
-          "exec": "CI=\"\" yarn projen"
+          "exec": "/bin/bash ./projen.bash"
+        }
+      ]
+    },
+    "default": {
+      "name": "default",
+      "steps": [
+        {
+          "exec": "node .projenrc.js"
         }
       ]
     },

@@ -19,12 +19,14 @@ export interface NodePackageOptions {
   /**
    * The "name" in package.json
    * @default - defaults to project name
+   * @featured
    */
   readonly packageName?: string;
   /**
    * The description is just a string that helps people understand the purpose of the package.
    * It can be used when searching for packages in a package manager as well.
    * See https://classic.yarnpkg.com/en/docs/package-json/#toc-description
+   * @featured
    */
   readonly description?: string;
 
@@ -40,6 +42,7 @@ export interface NodePackageOptions {
    *
    * @example [ 'express', 'lodash', 'foo@^2' ]
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -57,6 +60,7 @@ export interface NodePackageOptions {
    *
    * @example [ 'typescript', '@types/express' ]
    * @default []
+   * @featured
    */
   readonly devDeps?: string[];
 
@@ -228,6 +232,8 @@ export interface NodePackageOptions {
   /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
+   * Use the `licensed` option if you want to no license to be specified.
+   *
    * @default "Apache-2.0"
    */
   readonly license?: string;
@@ -389,6 +395,10 @@ export class NodePackage extends Component {
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
+
+    if (this.packageManager === NodePackageManager.YARN) {
+      project.root.github?.annotateGenerated('/yarn.lock');
+    }
 
     const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;

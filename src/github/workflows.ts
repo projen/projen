@@ -6,10 +6,11 @@ import { YamlFile } from '../yaml';
 import { GitHub } from './github';
 
 export class GithubWorkflow extends Component {
-  private readonly name: string;
+  public readonly name: string;
+  public readonly file: YamlFile;
+
   private events: GithubWorkflow.Triggers = { };
   private jobs: Record<string, GithubWorkflow.Job> = { };
-  public readonly file: YamlFile;
 
   constructor(github: GitHub, name: string) {
     super(github.project);
