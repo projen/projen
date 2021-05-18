@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { GitHub, GithubWorkflow } from './github';
+import { GitHub, GithubWorkflow, workflows } from './github';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -131,16 +131,16 @@ export class UpgradeDependencies extends Component {
     const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
     const workflow = github.addWorkflow(task.name);
-    const triggers: any = { workflow_dispatch: {} };
-    if (schedule.cron) {
-      triggers.schedule = schedule.cron.map(e => ({ cron: e }));
-    }
+    const triggers: workflows.Triggers = {
+      workflowDispatch: {},
+      schedule: schedule.cron ? schedule.cron.map(e => ({ cron: e })) : undefined,
+    };
     workflow.on(triggers);
 
     const upgrade = this.createUpgrade(task);
     const pr = this.createPr(workflow, upgrade);
 
-    const jobs: any = {};
+    const jobs: Record<string, workflows.Job> = {};
     jobs[upgrade.jobId] = upgrade.job;
     jobs[pr.jobId] = pr.job;
 
@@ -159,10 +159,12 @@ export class UpgradeDependencies extends Component {
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
     // to have write access to anything, in case its somehow executed. (for example during build)
-    const permissions: any = { contents: 'read' };
+    const permissions: workflows.JobPermissions = {
+      contents: workflows.JobPermission.READ,
+    };
 
-    const outputs: any = {};
-    const steps: any[] = [
+    const outputs: Record<string, workflows.JobStepOutput> = {};
+    const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
@@ -180,7 +182,11 @@ export class UpgradeDependencies extends Component {
         id: buildStepId,
         run: `${this._project.runTaskCommand(this._project.buildTask)} && ${setOutput(conclusion, 'success')} || ${setOutput(conclusion, 'failure')}`,
       });
-      outputs[conclusion] = context(`steps.${buildStepId}.outputs.${conclusion}`);
+
+      outputs[conclusion] = {
+        stepId: buildStepId,
+        outputName: conclusion,
+      };
     }
 
     steps.push(
@@ -200,11 +206,11 @@ export class UpgradeDependencies extends Component {
 
     return {
       job: {
-        'name': 'Upgrade',
-        'permissions': permissions,
-        'runs-on': UBUNTU_LATEST,
-        'outputs': outputs,
-        'steps': steps,
+        name: 'Upgrade',
+        permissions: permissions,
+        runsOn: UBUNTU_LATEST,
+        outputs: outputs,
+        steps: steps,
       },
       jobId: 'upgrade',
       patchFile: patchFile,
@@ -221,10 +227,7 @@ export class UpgradeDependencies extends Component {
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 
-    // necessary to create pr's.
-    const permissions: any = { 'contents': 'write', 'pull-requests': 'write' };
-
-    const steps: any[] = [
+    const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
@@ -261,8 +264,8 @@ export class UpgradeDependencies extends Component {
       },
     ];
 
+    let writeChecksPermission = false;
     if (this._project.buildWorkflowJobId && upgrade.build) {
-
       const body = {
         name: this._project.buildWorkflowJobId,
         head_sha: branchName,
@@ -285,16 +288,20 @@ export class UpgradeDependencies extends Component {
       });
 
       // necessary to update status checks
-      permissions.checks = 'write';
+      writeChecksPermission = true;
     }
 
     return {
       job: {
-        'name': 'Create Pull Request',
-        'needs': upgrade.jobId,
-        'permissions': permissions,
-        'runs-on': UBUNTU_LATEST,
-        'steps': steps,
+        name: 'Create Pull Request',
+        needs: [upgrade.jobId],
+        permissions: {
+          contents: workflows.JobPermission.WRITE,
+          pullRequests: workflows.JobPermission.WRITE,
+          checks: writeChecksPermission ? workflows.JobPermission.WRITE : undefined,
+        },
+        runsOn: UBUNTU_LATEST,
+        steps: steps,
       },
       jobId: 'pr',
     };
@@ -302,7 +309,7 @@ export class UpgradeDependencies extends Component {
 }
 
 interface Upgrade {
-  readonly job: any;
+  readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
   readonly patchPath: string;
@@ -311,7 +318,7 @@ interface Upgrade {
 }
 
 interface PR {
-  readonly job: any;
+  readonly job: workflows.Job;
   readonly jobId: string;
 }
 

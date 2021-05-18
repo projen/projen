@@ -1,5 +1,5 @@
-import { NodeProject, UpgradeDependencies, UpgradeDependenciesSchedule } from '..';
-import { NodeProjectOptions } from '../node-project';
+import { NodeProject, UpgradeDependenciesSchedule } from '..';
+import { DependenciesUpgradeMechanism, NodeProjectOptions } from '../node-project';
 import { mkdtemp, synthSnapshot } from './util';
 
 test('default options', () => {
@@ -7,7 +7,6 @@ test('default options', () => {
   const project = createProject({
     projenUpgradeSecret: 'PROJEN_SECRET',
   });
-  new UpgradeDependencies(project);
 
   const snapshot = synthSnapshot(project);
   expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
@@ -18,11 +17,11 @@ test('custom options', () => {
 
   const project = createProject({
     projenUpgradeSecret: 'PROJEN_SECRET',
-  });
-  new UpgradeDependencies(project, {
-    workflowOptions: {
-      schedule: UpgradeDependenciesSchedule.MONTHLY,
-    },
+    depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+      workflowOptions: {
+        schedule: UpgradeDependenciesSchedule.MONTHLY,
+      },
+    }),
   });
 
   const snapshot = synthSnapshot(project);
