@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { FileBase } from '../file';
 import { Project } from '../project';
+import { CodeOwners } from './codeowners';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { Mergify } from './mergify';
 import { PullRequestTemplate } from './pr-template';
@@ -52,6 +53,10 @@ export class GitHub extends Component {
 
   public addDependabot(options?: DependabotOptions) {
     return new Dependabot(this, options);
+  }
+
+  public addCodeOwners(...content: string[]) {
+    return new CodeOwners(this, { lines: content });
   }
 
   /**
