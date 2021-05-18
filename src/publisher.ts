@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { GithubWorkflow } from './github';
+import { JobPermission } from './github/workflows-model';
 import { Project } from './project';
 
 const JSII_RELEASE_VERSION = 'latest';
@@ -65,6 +66,7 @@ export class Publisher extends Component {
     const npmTokenSecret = options.npmTokenSecret ?? 'NPM_TOKEN';
     this.workflow.addJobs({
       release_npm: {
+        permissions: { contents: JobPermission.READ },
         name: 'Release to NPM',
         needs: [this.buildJobId],
         runsOn: 'ubuntu-latest',
@@ -96,6 +98,7 @@ export class Publisher extends Component {
     this.workflow.addJobs({
       release_nuget: {
         name: 'Release to Nuget',
+        permissions: { contents: JobPermission.READ },
         needs: [this.buildJobId],
         runsOn: 'ubuntu-latest',
         container: {
@@ -129,6 +132,7 @@ export class Publisher extends Component {
     this.workflow.addJobs({
       release_maven: {
         name: 'Release to Maven',
+        permissions: { contents: JobPermission.READ },
         needs: [this.buildJobId],
         runsOn: 'ubuntu-latest',
         container: {
@@ -165,6 +169,7 @@ export class Publisher extends Component {
     this.workflow.addJobs({
       release_pypi: {
         name: 'Release to PyPi',
+        permissions: { contents: JobPermission.READ },
         needs: [this.buildJobId],
         runsOn: 'ubuntu-latest',
         container: {
@@ -195,6 +200,7 @@ export class Publisher extends Component {
     this.workflow.addJobs({
       release_golang: {
         name: 'Release to Go',
+        permissions: { contents: JobPermission.READ },
         needs: [this.buildJobId],
         runsOn: 'ubuntu-latest',
         container: {

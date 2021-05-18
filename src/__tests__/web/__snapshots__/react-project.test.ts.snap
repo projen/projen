@@ -26,6 +26,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+      contents: write
     env:
       CI: \\"true\\"
     steps:
@@ -68,6 +71,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: \\"true\\"
       RELEASE: \\"true\\"
