@@ -119,11 +119,10 @@ export class UpgradeDependencies extends Component {
 
     task.exec(ncuCommand.join(' '));
 
-    // run projen before the installation since projen itself
-    // can revert some upgrades made by ncu
-    // (for example https://github.com/cdklabs/cdk-triggers/blob/main/.projenrc.js#L6)
-    task.exec(`${this._project.projenCommand} --no-post`);
-    task.exec(this._project.package.renderInstallCommand(false));
+    // we use projen to install the dependencies and thus update the lock file,
+    // so we need to make it think its not running inside CI.
+    task.exec(`CI=0 ${this._project.projenCommand}`);
+
     return task;
   }
 

@@ -1161,10 +1161,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -1175,10 +1172,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -2464,10 +2458,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -2478,10 +2469,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -3870,10 +3858,7 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -3884,10 +3869,7 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "yarn install --check-files",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -5004,10 +4986,7 @@ junit.xml
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "pnpm i",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
@@ -5018,10 +4997,7 @@ junit.xml
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
           },
           Object {
-            "exec": "npx projen --no-post",
-          },
-          Object {
-            "exec": "pnpm i",
+            "exec": "CI=0 npx projen",
           },
         ],
       },
