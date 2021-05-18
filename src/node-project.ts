@@ -632,7 +632,7 @@ export class NodeProject extends Project {
           pull_request: { },
         },
         permissions: {
-          statuses: JobPermission.WRITE,
+          checks: JobPermission.WRITE,
           contents: JobPermission.WRITE,
         },
         checkoutWith: mutableBuilds ? {
