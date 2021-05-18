@@ -3,6 +3,7 @@ import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
 import * as logging from '../logging';
 import { NodePackage, NpmAccess } from '../node-package';
+import { DependenciesUpgradeMechanism } from '../node-project';
 import { Project } from '../project';
 import { mkdtemp, synthSnapshot, TestProject } from './util';
 
@@ -138,7 +139,7 @@ describe('deps', () => {
     });
 
     // sanitize
-    ['jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
+    ['npm-check-updates', 'jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
     expect(pkgjson.dependencieds).toBeUndefined();
@@ -167,6 +168,68 @@ describe('deps', () => {
       'hey',
     ]);
   });
+});
+
+describe('deps upgrade', () => {
+
+  test('default - with projen secret', () => {
+    const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
+  });
+
+  test('default - no projen secret', () => {
+    const project = new TestNodeProject();
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+  });
+
+  test('dependabot - with projen secret', () => {
+    const project = new TestNodeProject({
+      depsUpgrade: DependenciesUpgradeMechanism.dependabot(),
+      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+    });
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/dependabot.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
+  });
+
+  test('dependabot - no projen secret', () => {
+    const project = new TestNodeProject({
+      depsUpgrade: DependenciesUpgradeMechanism.dependabot(),
+    });
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/dependabot.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+  });
+
+  test('github actions - with projen secret', () => {
+    const project = new TestNodeProject({
+      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
+      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+    });
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
+  });
+
+  test('github actions - no projen secret', () => {
+    const project = new TestNodeProject({
+      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
+    });
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+  });
+
+  test('throws when depracated dependabot is configued with dependenciesUpgrade', () => {
+    expect(() => {
+      new TestNodeProject({ dependabot: true, depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow() });
+    }).toThrow("'dependabot' cannot be configured together with 'depsUpgrade'");
+  });
+
 });
 
 describe('npm publishing options', () => {

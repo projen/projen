@@ -18,7 +18,7 @@
     "build": "/bin/bash ./projen.bash build",
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "test:update": "/bin/bash ./projen.bash test:update",
-    "projen:upgrade": "/bin/bash ./projen.bash projen:upgrade",
+    "upgrade-dependencies": "/bin/bash ./projen.bash upgrade-dependencies",
     "default": "/bin/bash ./projen.bash default",
     "watch": "/bin/bash ./projen.bash watch",
     "package": "/bin/bash ./projen.bash package",
@@ -60,6 +60,7 @@
     "jsii-pacmak": "^1.18.0",
     "json-schema": "^0.2.5",
     "markmac": "^0.1.23",
+    "npm-check-updates": "^11",
     "standard-version": "^9",
     "typescript": "^3.9.5"
   },
