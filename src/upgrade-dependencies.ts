@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { GitHub, GithubWorkflow } from './github';
+import { GitHub, GithubWorkflow, workflows } from './github';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -131,7 +131,7 @@ export class UpgradeDependencies extends Component {
     const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
     const workflow = github.addWorkflow(task.name);
-    const triggers: GithubWorkflow.Triggers = {
+    const triggers: workflows.Triggers = {
       workflowDispatch: {},
       schedule: schedule.cron ? schedule.cron.map(e => ({ cron: e })) : undefined,
     };
@@ -140,7 +140,7 @@ export class UpgradeDependencies extends Component {
     const upgrade = this.createUpgrade(task);
     const pr = this.createPr(workflow, upgrade);
 
-    const jobs: Record<string, GithubWorkflow.Job> = {};
+    const jobs: Record<string, workflows.Job> = {};
     jobs[upgrade.jobId] = upgrade.job;
     jobs[pr.jobId] = pr.job;
 
@@ -159,10 +159,12 @@ export class UpgradeDependencies extends Component {
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
     // to have write access to anything, in case its somehow executed. (for example during build)
-    const permissions: GithubWorkflow.JobPermissions = { contents: GithubWorkflow.JobPermission.WRITE };
+    const permissions: workflows.JobPermissions = {
+      contents: workflows.JobPermission.READ,
+    };
 
-    const outputs: Record<string, GithubWorkflow.JobStepOutput> = {};
-    const steps: GithubWorkflow.JobStep[] = [
+    const outputs: Record<string, workflows.JobStepOutput> = {};
+    const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
@@ -225,7 +227,7 @@ export class UpgradeDependencies extends Component {
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 
-    const steps: GithubWorkflow.JobStep[] = [
+    const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
@@ -294,9 +296,9 @@ export class UpgradeDependencies extends Component {
         name: 'Create Pull Request',
         needs: [upgrade.jobId],
         permissions: {
-          contents: GithubWorkflow.JobPermission.WRITE,
-          pullRequests: GithubWorkflow.JobPermission.WRITE,
-          checks: writeChecksPermission ? GithubWorkflow.JobPermission.WRITE : undefined,
+          contents: workflows.JobPermission.WRITE,
+          pullRequests: workflows.JobPermission.WRITE,
+          checks: writeChecksPermission ? workflows.JobPermission.WRITE : undefined,
         },
         runsOn: UBUNTU_LATEST,
         steps: steps,
@@ -307,7 +309,7 @@ export class UpgradeDependencies extends Component {
 }
 
 interface Upgrade {
-  readonly job: GithubWorkflow.Job;
+  readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
   readonly patchPath: string;
@@ -316,7 +318,7 @@ interface Upgrade {
 }
 
 interface PR {
-  readonly job: GithubWorkflow.Job;
+  readonly job: workflows.Job;
   readonly jobId: string;
 }
 

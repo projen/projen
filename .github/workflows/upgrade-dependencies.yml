@@ -10,7 +10,7 @@ jobs:
     name: Upgrade
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     outputs:
       conclusion: ${{ steps.build.outputs.conclusion }}
     steps:

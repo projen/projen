@@ -1,5 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
-import { AutoMerge, DependabotOptions, GithubWorkflow } from './github';
+import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
 import { MergifyOptions } from './github/mergify';
 import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
@@ -1061,7 +1061,7 @@ export class NodeProject extends Project {
       run: 'git diff --ignore-space-at-eol --exit-code',
     }];
 
-    const job: Mutable<GithubWorkflow.Job> = {
+    const job: Mutable<workflows.Job> = {
       runsOn: 'ubuntu-latest',
       env: {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
