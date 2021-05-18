@@ -261,6 +261,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
     env:
       CI: \\"true\\"
     steps:
@@ -309,6 +312,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: \\"true\\"
       RELEASE: \\"true\\"
@@ -359,6 +364,8 @@ jobs:
     name: Release to NPM
     needs: release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -377,6 +384,8 @@ jobs:
     name: Release to Maven
     needs: release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -397,6 +406,8 @@ jobs:
     name: Release to PyPi
     needs: release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -4582,6 +4593,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
     env:
       CI: \\"true\\"
     steps:
@@ -4624,6 +4638,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: \\"true\\"
       RELEASE: \\"true\\"
