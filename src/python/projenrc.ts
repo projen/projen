@@ -107,7 +107,7 @@ function renderPythonOptions(indent: number, initOptions?: Record<string, any>):
     lines.push(`${toPythonProperty(name)}=${toPythonValue(value)},`);
   }
 
-  return lines.join(`\n${' '.repeat((indent + 1) * 4)}`).concat('\n)');
+  return lines.join(`\n${' '.repeat((indent + 1) * 4)}`).concat('\n');
 }
 
 function toPythonProperty(prop: string) {
