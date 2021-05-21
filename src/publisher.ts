@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { GithubWorkflow } from './github';
+import { JobPermission } from './github/workflows-model';
 import { Project } from './project';
 
 const JSII_RELEASE_VERSION = 'latest';
@@ -65,21 +66,22 @@ export class Publisher extends Component {
     const npmTokenSecret = options.npmTokenSecret ?? 'NPM_TOKEN';
     this.workflow.addJobs({
       release_npm: {
-        'name': 'Release to NPM',
-        'needs': this.buildJobId,
-        'runs-on': 'ubuntu-latest',
-        'container': {
+        permissions: { contents: JobPermission.READ },
+        name: 'Release to NPM',
+        needs: [this.buildJobId],
+        runsOn: 'ubuntu-latest',
+        container: {
           image: 'jsii/superchain',
         },
-        'steps': [
+        steps: [
           this.renderDownloadArtifactStep(),
           {
             name: 'Release',
             run: this.renderJsiiReleaseCommand('jsii-release-npm'),
             env: {
               NPM_TOKEN: `\${{ secrets.${npmTokenSecret} }}`,
-              NPM_DIST_TAG: options.distTag,
-              NPM_REGISTRY: options.registry,
+              NPM_DIST_TAG: options.distTag!,
+              NPM_REGISTRY: options.registry!,
             },
           },
         ],
@@ -95,13 +97,14 @@ export class Publisher extends Component {
     const nugetApiKeySecret = options.nugetApiKeySecret ?? 'NUGET_API_KEY';
     this.workflow.addJobs({
       release_nuget: {
-        'name': 'Release to Nuget',
-        'needs': this.buildJobId,
-        'runs-on': 'ubuntu-latest',
-        'container': {
+        name: 'Release to Nuget',
+        permissions: { contents: JobPermission.READ },
+        needs: [this.buildJobId],
+        runsOn: 'ubuntu-latest',
+        container: {
           image: 'jsii/superchain',
         },
-        'steps': [
+        steps: [
           this.renderDownloadArtifactStep(),
           {
             name: 'Release',
@@ -128,21 +131,22 @@ export class Publisher extends Component {
 
     this.workflow.addJobs({
       release_maven: {
-        'name': 'Release to Maven',
-        'needs': this.buildJobId,
-        'runs-on': 'ubuntu-latest',
-        'container': {
+        name: 'Release to Maven',
+        permissions: { contents: JobPermission.READ },
+        needs: [this.buildJobId],
+        runsOn: 'ubuntu-latest',
+        container: {
           image: 'jsii/superchain',
         },
-        'steps': [
+        steps: [
           this.renderDownloadArtifactStep(),
           {
             name: 'Release',
             run: this.renderJsiiReleaseCommand('jsii-release-maven'),
             env: {
-              MAVEN_ENDPOINT: options.mavenEndpoint,
-              MAVEN_SERVER_ID: options.mavenServerId,
-              MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
+              MAVEN_ENDPOINT: options.mavenEndpoint!,
+              MAVEN_SERVER_ID: options.mavenServerId!,
+              MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl!,
               MAVEN_GPG_PRIVATE_KEY: `\${{ secrets.${mavenGpgPrivateKeySecret} }}`,
               MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: `\${{ secrets.${mavenGpgPrivateKeyPassphrase} }}`,
               MAVEN_PASSWORD: `\${{ secrets.${mavenPassword} }}`,
@@ -164,13 +168,14 @@ export class Publisher extends Component {
     const twinePassword = options.twinePasswordSecret ?? 'TWINE_PASSWORD';
     this.workflow.addJobs({
       release_pypi: {
-        'name': 'Release to PyPi',
-        'needs': this.buildJobId,
-        'runs-on': 'ubuntu-latest',
-        'container': {
+        name: 'Release to PyPi',
+        permissions: { contents: JobPermission.READ },
+        needs: [this.buildJobId],
+        runsOn: 'ubuntu-latest',
+        container: {
           image: 'jsii/superchain',
         },
-        'steps': [
+        steps: [
           this.renderDownloadArtifactStep(),
           {
             name: 'Release',
@@ -194,24 +199,25 @@ export class Publisher extends Component {
     const githubTokenSecret = options.githubTokenSecret ?? 'GO_GITHUB_TOKEN';
     this.workflow.addJobs({
       release_golang: {
-        'name': 'Release to Go',
-        'needs': this.buildJobId,
-        'runs-on': 'ubuntu-latest',
-        'container': {
+        name: 'Release to Go',
+        permissions: { contents: JobPermission.READ },
+        needs: [this.buildJobId],
+        runsOn: 'ubuntu-latest',
+        container: {
           image: 'jsii/superchain',
         },
-        'steps': [
+        steps: [
           this.renderDownloadArtifactStep(),
           {
             name: 'Release',
             run: this.renderJsiiReleaseCommand('jsii-release-golang'),
             env: {
-              GITHUB_REPO: options.githubRepo,
+              GITHUB_REPO: options.githubRepo!,
               GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
-              GIT_BRANCH: options.gitBranch,
+              GIT_BRANCH: options.gitBranch!,
               GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
               GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
-              GIT_COMMIT_MESSAGE: options.gitCommitMessage,
+              GIT_COMMIT_MESSAGE: options.gitCommitMessage!,
             },
           },
         ],

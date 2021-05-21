@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 import { join } from 'path';
 import { mkdirSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
-import { directorySnapshot, execProjenCLI, mkdtemp, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
@@ -46,7 +46,11 @@ test('projen new --from external', () => {
     const projectdir = createProjectDir(outdir);
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2']);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -60,6 +64,30 @@ test('projen new --from external', () => {
 
     expect(actual).toMatchSnapshot();
     expect(actual['schema.graphql']).toBeDefined();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('options are not overwritten when creating external projects', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    // execute `projen new --from cdk-appsync-project` in the project directory
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-synth', '--cdk-version', '1.63.0']);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    expect(actual['.projenrc.js']).toContain('cdkVersion: \'1.63.0\'');
   } finally {
     removeSync(outdir);
   }

@@ -622,6 +622,13 @@ export class NodePackage extends Component {
     return this.renderInstallCommand(true);
   }
 
+  /**
+   * Renders `yarn install` or `npm install` with lockfile update (not frozen)
+   */
+  public get installAndUpdateLockfileCommand() {
+    return this.renderInstallCommand(false);
+  }
+
   // ---------------------------------------------------------------------------------------
 
   public preSynthesize() {
