@@ -62,7 +62,6 @@ export class Projenrc extends Component {
     const jsiiFqn = bootstrap.fqn;
     const jsiiManifest = readJsiiManifest(jsiiFqn);
     const jsiiType = jsiiManifest.types[jsiiFqn];
-    const pythonTarget = jsiiManifest.targets.python;
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
       this.project.logger.warn('cannot determine jsii type for project options');
@@ -83,9 +82,21 @@ export class Projenrc extends Component {
     // const openBlock = (line: string = '') => { emit(line + ' {'); indent++; };
     // const closeBlock = () => { indent--; emit('}'); };
 
-    emit(toPythonImport(pythonTarget.module, jsiiType));
+    const optionFqns: Record<string, string> = {};
+    for (const option of bootstrap.type.options) {
+      if (option.fqn) {
+        optionFqns[option.name] = option.fqn;
+      }
+    }
+
+    const { renderedOptions, imports } = renderPythonOptions(indent, optionFqns, bootstrap.args);
+
+    emit(toPythonImport(jsiiFqn));
+    for (const fqn of imports) {
+      emit(toPythonImport(fqn));
+    }
     emit();
-    emit(`project = ${jsiiType.name}(${renderPythonOptions(indent, bootstrap.args)});`);
+    emit(`project = ${jsiiType.name}(${renderedOptions});`);
     emit();
     emit('project.synth();');
 
@@ -96,31 +107,40 @@ export class Projenrc extends Component {
   }
 }
 
-function renderPythonOptions(indent: number, initOptions?: Record<string, any>): string {
-  if (!initOptions || Object.keys(initOptions).length === 0) {
-    return ''; // no options
+function renderPythonOptions(indent: number, optionFqns: Record<string, string>, initOptions?: Record<string, any>) {
+  const imports = new Set<string>();
+  if (!initOptions || Object.keys(initOptions).length === 0) { // no options
+    return { renderedOptions: '', imports };
   }
 
   const lines = [''];
 
   for (const [name, value] of Object.entries(initOptions)) {
-    lines.push(`${toPythonProperty(name)}=${toPythonValue(value)},`);
+    lines.push(`${toPythonProperty(name)}=${toPythonValue(value, name, optionFqns)},`);
   }
 
-  return lines.join(`\n${' '.repeat((indent + 1) * 4)}`).concat('\n');
+  const renderedOptions = lines.join(`\n${' '.repeat((indent + 1) * 4)}`).concat('\n');
+  return { renderedOptions, imports };
 }
 
 function toPythonProperty(prop: string) {
   return decamelize(prop);
 }
 
-function toPythonValue(value: any) {
+function toPythonValue(value: any, name: string, optionFqns: Record<string, string>) {
   if (typeof value === 'boolean') {
     return value ? 'True' : 'False';
   } else if (typeof value === 'number') {
     return JSON.stringify(value);
   } else if (typeof value === 'string') {
-    return JSON.stringify(value);
+    if (optionFqns[name] !== undefined) {
+      const parts = optionFqns[name].split('.');
+      const base = parts[parts.length - 1];
+      const choice = String(value).toUpperCase();
+      return `${base}.${choice}`;
+    } else {
+      return JSON.stringify(value);
+    }
   } else if (value === undefined || value === null) {
     return 'None';
   } else {
@@ -128,8 +148,8 @@ function toPythonValue(value: any) {
   }
 }
 
-function toPythonImport(moduleName: string, jsiiType: any) {
-  const parts = [moduleName, jsiiType.namespace, jsiiType.name].filter(x => x);
+function toPythonImport(fqn: string) {
+  const parts = fqn.split('.');
   if (parts.length === 1) {
     return `import ${parts[0]}`;
   } else {

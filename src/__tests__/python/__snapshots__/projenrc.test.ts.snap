@@ -19,6 +19,7 @@ project = PythonProject(
     undefined_arg=None,
     null_arg=None,
     object_arg={\\"foo\\":\\"bar\\"},
+    project_type=ProjectType.LIB,
 );
 
 project.synth();"

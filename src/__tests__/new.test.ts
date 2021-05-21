@@ -108,7 +108,7 @@ test('projen new --no-comments', () => {
   }
 });
 
-test('creating project with enum-typed CLI arg', () => {
+test('creating node project with enum-typed CLI arg', () => {
   const outdir = mkdtemp();
   try {
     const projectdir = createProjectDir(outdir);
@@ -116,6 +116,20 @@ test('creating project with enum-typed CLI arg', () => {
     execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating python project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'python', '--project-type', 'lib', '--projenrc-python', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.py'];
     expect(projenrc).toMatchSnapshot();
   } finally {
     removeSync(outdir);
