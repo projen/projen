@@ -4,9 +4,10 @@ import * as vm from 'vm';
 import * as fs from 'fs-extra';
 import * as inquirer from 'inquirer';
 import * as yargs from 'yargs';
-import { PROJEN_RC } from '../../common';
 import * as inventory from '../../inventory';
+import { renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
+import { NewProjectOptionHints } from '../../option-hints';
 import { exec, execOrUndefined } from '../../util';
 import { tryProcessMacro } from '../macros';
 
@@ -106,7 +107,7 @@ interface CreateProjectOptions {
   /**
    * Should we render commented-out default options in .projerc.js file?
    */
-  comments: boolean;
+  comments: NewProjectOptionHints;
 
   /**
    * Should we call `project.synth()` or instantiate the project (could still
@@ -147,8 +148,14 @@ function createProject(opts: CreateProjectOptions) {
 
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
-  opts.params.jsiiFqn = JSON.stringify(opts.type.fqn);
-  const newProjectCode = `const project = new ${opts.type.typename}(${renderParams(opts)});`;
+  const js = renderJavaScriptOptions({
+    bootstrap: true,
+    comments: opts.comments,
+    type: opts.type,
+    args: opts.params,
+  });
+
+  const newProjectCode = `const project = new ${opts.type.typename}(${js});`;
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const module = require(mod);
@@ -159,112 +166,8 @@ function createProject(opts: CreateProjectOptions) {
     newProjectCode,
     opts.synth ? 'project.synth();' : '',
   ].join('\n'), ctx);
-
-  const configPath = path.join(opts.dir, PROJEN_RC);
-  if (fs.existsSync(configPath)) {
-    logging.error(`Directory ${opts.dir} already contains ${PROJEN_RC}`);
-    process.exit(1);
-  }
-
-  const [importName] = opts.type.typename.split('.');
-
-  const lines = [
-    `const { ${importName} } = require('${opts.type.moduleName}');`,
-    '',
-    newProjectCode,
-    '',
-    'project.synth();',
-    '',
-  ];
-
-  fs.writeFileSync(configPath, lines.join('\n'));
-  logging.info(`Created ${PROJEN_RC} for ${opts.type.typename}`);
 }
 
-function makePadding(paddingLength: number): string {
-  return ' '.repeat(paddingLength);
-}
-
-/**
- * Prints all parameters that can be used in a project type, alongside their descriptions.
- *
- * Parameters in `params` that aren't undefined are rendered as defaults,
- * while all other parameters are rendered as commented out.
- *
- * @param type Project type
- * @param params Object with parameter default values
- * @param comments Whether to include optional parameters in commented out form
- */
-function renderParams(opts: CreateProjectOptions) {
-  // preprocessing
-  const renders: Record<string, string> = {};
-  const optionsWithDefaults: string[] = [];
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {}; // only options without defaults
-
-  for (const option of opts.type.options) {
-    if (option.deprecated) {
-      continue;
-    }
-
-    const optionName = option.name;
-
-    // skip the JSII FQN option
-    if (optionName === 'jsiiFqn') {
-      continue;
-    }
-
-    let paramRender;
-    if (opts.params[optionName] !== undefined) {
-      paramRender = `${optionName}: ${opts.params[optionName]},`;
-      optionsWithDefaults.push(optionName);
-    } else {
-      const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      paramRender = `// ${optionName}: ${defaultValue?.replace(/"(.+)"/, '\'$1\'')},`; // single quotes
-
-      const parentModule = option.parent;
-      optionsByModule[parentModule] = optionsByModule[parentModule] ?? [];
-      optionsByModule[parentModule].push(option);
-    }
-    renders[optionName] = paramRender;
-  }
-
-  // alphabetize
-  const marginSize = Math.max(...Object.values(renders).map(str => str.length));
-  optionsWithDefaults.sort();
-  for (const parentModule in optionsByModule) {
-    optionsByModule[parentModule].sort((o1, o2) => o1.name.localeCompare(o2.name));
-  }
-
-  // generate rendering
-  const tab = makePadding(2);
-  const result: string[] = [];
-  result.push('{');
-
-  // render options with defaults
-  for (const optionName of optionsWithDefaults) {
-    result.push(`${tab}${renders[optionName]}`);
-  }
-  if (result.length > 1) {
-    result.push('');
-  }
-
-  // render options without defaults
-  if (opts.comments) {
-    for (const [moduleName, options] of Object.entries(optionsByModule).sort()) {
-      result.push(`${tab}/* ${moduleName} */`);
-      for (const option of options) {
-        const paramRender = renders[option.name];
-        result.push(`${tab}${paramRender}${makePadding(marginSize - paramRender.length + 2)}/* ${option.docs} */`);
-      }
-      result.push('');
-    }
-  }
-  if (result[result.length - 1] === '') {
-    result.pop();
-  }
-  result.push('}');
-  return result.join('\n');
-}
 
 /**
  * Given a value from "@default", processes macros and returns a stringified
@@ -302,14 +205,7 @@ function commandLineToProps(type: inventory.ProjectType, argv: Record<string, un
             break;
           }
           if (queue.length === 0) {
-            let val = value;
-
-            // if this is a string, then single quote it
-            if (val && typeof(val) === 'string') {
-              val = JSON.stringify(val).replace(/"(.+)"/, '\'$1\'');
-            }
-
-            curr[p] = val;
+            curr[p] = value;
           } else {
             curr[p] = curr[p] ?? {};
             curr = curr[p];
@@ -361,6 +257,10 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
       continue; // we don't support non-primitive fields as command line options
     }
 
+    if (args[option.name] !== undefined) {
+      continue; // do not overwrite passed arguments
+    }
+
     if (option.default && option.default !== 'undefined') {
       if (!option.optional) {
         const defaultValue = renderDefault(option.default);
@@ -372,7 +272,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   await newProject(baseDir, type, args, {
-    devDeps: JSON.stringify([specDependencyInfo]),
+    devDeps: [specDependencyInfo],
   });
 }
 
@@ -382,7 +282,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, string>) {
+async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(type, args);
 
@@ -395,7 +295,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     dir: baseDir,
     type,
     params: props,
-    comments: args.comments,
+    comments: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
     synth: args.synth,
     post: args.post,
   });
@@ -434,9 +334,10 @@ function yarnAdd(baseDir: string, spec: string): string {
     // (e.g foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
     const moduleName = spec.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
 
-    const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
-    const copy = path.join(tmpdir, 'pkg.tgz');
+    const packageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
+    const copy = path.join(packageDir, 'pkg.tgz');
     fs.copyFileSync(spec, copy);
+
     spec = copy;
 
     dependencyInfo = `${moduleName}@${spec}`;

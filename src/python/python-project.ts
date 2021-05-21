@@ -1,6 +1,8 @@
+import { Projenrc as ProjenrcJavaScript } from '../javascript';
 import { Project, ProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
 import { Poetry } from './poetry';
+import { Projenrc as ProjenrcPython, ProjenrcOptions } from './projenrc';
 import { Pytest, PytestOptions } from './pytest';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
@@ -38,6 +40,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Additional dependencies can be added via `project.addDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly deps?: string[];
 
@@ -49,6 +52,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Additional dependencies can be added via `project.addDevDependency()`.
    *
    * @default []
+   * @featured
    */
   readonly devDeps?: string[];
 
@@ -58,6 +62,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use pip with a requirements.txt file to track project dependencies.
    *
    * @default true
+   * @featured
    */
   readonly pip?: boolean;
 
@@ -65,6 +70,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
    * @default true
+   * @featured
    */
   readonly venv?: boolean;
 
@@ -78,6 +84,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * Use setuptools with a setup.py script for packaging and publishing.
    *
    * @default - true if the project type is library
+   * @featured
    */
   readonly setuptools?: boolean;
 
@@ -86,6 +93,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * (optional) packaging/publishing.
    *
    * @default false
+   * @featured
    */
   readonly poetry?: boolean;
 
@@ -94,6 +102,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
   /**
    * Include pytest tests.
    * @default true
+   * @featured
    */
   readonly pytest?: boolean;
 
@@ -108,6 +117,22 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
    * @default true
    */
   readonly sample?: boolean;
+
+  /**
+   * Use projenrc in python.
+   *
+   * This will install `projen` as a python dependency and will add a `synth`
+   * task which will run `.projenrc.py`.
+   *
+   * @default false
+   */
+  readonly projenrcPython?: boolean;
+
+  /**
+    * Options related to projenrc in python.
+    * @default - default options
+    */
+  readonly projenrcPythonOptions?: ProjenrcOptions;
 }
 
 /**
@@ -156,6 +181,12 @@ export class PythonProject extends Project {
 
     this.moduleName = options.moduleName;
     this.version = options.version;
+
+    if (options.projenrcPython ?? false) {
+      new ProjenrcPython(this, options.projenrcPythonOptions);
+    } else {
+      new ProjenrcJavaScript(this);
+    }
 
     if (options.venv ?? true) {
       this.envManager = new Venv(this);

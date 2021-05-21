@@ -12,6 +12,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: \\"true\\"
       RELEASE: \\"true\\"
@@ -58,8 +60,8 @@ jobs:
     name: Release to NPM
     needs: release
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -72,12 +74,14 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
+    container:
+      image: jsii/superchain
   release_golang:
     name: Release to Go
     needs: release
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -93,6 +97,8 @@ jobs:
           GIT_USER_NAME: custom user
           GIT_USER_EMAIL: custom@email.com
           GIT_COMMIT_MESSAGE: custom commit message
+    container:
+      image: jsii/superchain
 "
 `;
 
@@ -108,6 +114,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: \\"true\\"
       RELEASE: \\"true\\"
@@ -154,8 +162,8 @@ jobs:
     name: Release to NPM
     needs: release
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -168,12 +176,14 @@ jobs:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
+    container:
+      image: jsii/superchain
   release_golang:
     name: Release to Go
     needs: release
     runs-on: ubuntu-latest
-    container:
-      image: jsii/superchain
+    permissions:
+      contents: read
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -186,5 +196,7 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GO_GITHUB_TOKEN }}
           GIT_USER_NAME: GitHub Actions
           GIT_USER_EMAIL: github-actions@github.com
+    container:
+      image: jsii/superchain
 "
 `;

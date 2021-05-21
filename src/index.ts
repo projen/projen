@@ -20,6 +20,7 @@ export * from './makefile';
 export * from './node-package';
 export * from './node-project';
 export * from './object-file';
+export * from './option-hints';
 export * from './project';
 export * from './readme';
 export * from './sample-file';
@@ -27,11 +28,13 @@ export * from './semver';
 export * from './textfile';
 export * from './toml';
 export * from './typescript';
+export * from './typescript-config';
 export * from './version';
 export * from './yaml';
 export * from './xmlfile';
 export * from './publisher';
 export * from './source-code';
+export * from './upgrade-dependencies';
 
 // export submobules
 export * as tasks from './tasks';
@@ -41,3 +44,5 @@ export * as vscode from './vscode';
 export * as deps from './deps';
 export * as java from './java';
 export * as python from './python';
+export * as typescript from './typescript/index'; // <-- we also have typescript.ts
+export * as javascript from './javascript';

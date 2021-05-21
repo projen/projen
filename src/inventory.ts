@@ -18,6 +18,7 @@ export interface ProjectOption {
   default?: string;
   optional?: boolean;
   deprecated?: boolean;
+  featured?: boolean;
 }
 
 export interface ProjectType {
@@ -51,6 +52,7 @@ interface JsiiType {
       default?: string;
       deprecated?: string;
       stability?: string;
+      custom?: { [name: string]: string };
     };
     optional?: boolean;
     type?: {
@@ -102,28 +104,66 @@ export function discover(...moduleDirs: string[]) {
 
   const result = new Array<ProjectType>();
 
-  for (const [fqn, typeinfo] of Object.entries(jsii)) {
-    if (!isProjectType(jsii, fqn)) {
+  for (const fqn of Object.keys(jsii)) {
+    const p = toProjectType(jsii, fqn);
+    if (!p) {
       continue;
     }
 
-    // projen.web.ReactProject -> web.ReactProject
-    const typename = fqn.substring(fqn.indexOf('.') + 1);
-
-    const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
-    let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
-    result.push({
-      moduleName: typeinfo.assembly,
-      typename,
-      pjid,
-      fqn,
-      options: discoverOptions(jsii, fqn).sort((o1, o2) => o1.name.localeCompare(o2.name)),
-      docs: typeinfo.docs?.summary,
-      docsurl,
-    });
+    result.push(p);
   }
 
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
+}
+
+export function resolveProjectType(projectFqn: string) {
+  const manifest = readJsiiManifest(projectFqn);
+
+  const jsii: JsiiTypes = {};
+  for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
+    jsii[fqn] = type;
+  }
+
+  // Read Projen JSII types
+  const projenManifest = readJsiiManifest('projen');
+  for (const [fqn, type] of Object.entries(projenManifest.types as JsiiTypes)) {
+    jsii[fqn] = type;
+  }
+
+  return toProjectType(jsii, projectFqn);
+}
+
+function toProjectType(jsii: JsiiTypes, fqn: string) {
+  if (!isProjectType(jsii, fqn)) {
+    return undefined;
+  }
+
+  const typeinfo = jsii[fqn];
+
+  // projen.web.ReactProject -> web.ReactProject
+  const typename = fqn.substring(fqn.indexOf('.') + 1);
+
+  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+  let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
+  return {
+    moduleName: typeinfo.assembly,
+    typename,
+    pjid,
+    fqn,
+    options: discoverOptions(jsii, fqn).sort((o1, o2) => o1.name.localeCompare(o2.name)),
+    docs: typeinfo.docs?.summary,
+    docsurl,
+  } as ProjectType;
+}
+
+export function readJsiiManifest(jsiiFqn: string): any {
+  let [moduleName] = jsiiFqn.split('.');
+  if (moduleName === 'projen') {
+    moduleName = PROJEN_MODULE_ROOT;
+  }
+
+  const jsiiManifestFile = require.resolve(`${moduleName}/.jsii`);
+  return fs.readJsonSync(jsiiManifestFile);
 }
 
 function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
@@ -194,6 +234,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
+        featured: prop.docs?.custom?.featured === 'true',
         deprecated: prop.docs.stability === 'deprecated' ? true : undefined,
       });
     }

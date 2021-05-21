@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import { NodeProject } from './node-project';
 import { TaskCategory } from './tasks';
-import { TypescriptConfig, TypescriptConfigOptions } from './typescript';
+import { TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 
@@ -557,6 +557,9 @@ export class Jest {
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
+
+    // Jest snapshot files are generated files!
+    project.root.github?.annotateGenerated('*.snap');
 
     const jestDep = options.jestVersion ? `jest@${options.jestVersion}` : 'jest';
     project.addDevDeps(jestDep);

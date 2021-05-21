@@ -4,23 +4,27 @@ import { Clobber } from './clobber';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
-import { GitHub } from './github';
+import { GitHub, GitHubOptions } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
+import * as inventory from './inventory';
+import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
+import { NewProjectOptionHints } from './option-hints';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
-export interface ProjectOptions {
+export interface ProjectOptions extends GitHubOptions {
   /**
    * This is the name of your project.
    *
    * @default $BASEDIR
+   * @featured
    */
   readonly name: string;
 
@@ -73,6 +77,7 @@ export interface ProjectOptions {
   /**
    * Which type of project this is (library/app).
    * @default ProjectType.UNKNOWN
+   * @featured
    */
   readonly projectType?: ProjectType;
 
@@ -81,12 +86,6 @@ export interface ProjectOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
-
-  /**
-   * The JSII FQN (fully qualified name) of the project class.
-   * @default undefined
-   */
-  readonly jsiiFqn?: string;
 }
 
 /**
@@ -170,9 +169,11 @@ export class Project {
   public readonly logger: Logger;
 
   /**
-   * The JSII FQN of the project type (if known).
+   * The options used when this project is bootstrapped via `projen new`. It
+   * includes the original set of options passed to the CLI and also the JSII
+   * FQN of the project type.
    */
-  public readonly jsiiFqn?: string;
+  public readonly newProject?: NewProject;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -180,11 +181,7 @@ export class Project {
   private readonly excludeFromCleanup: string[];
 
   constructor(options: ProjectOptions) {
-    // https://github.com/aws/jsii/issues/2406
-    process.stdout.write = (...args: any) => process.stderr.write.apply(process.stderr, args);
-
-    this.jsiiFqn = options.jsiiFqn;
-    delete (options as any).jsiiFqn; // remove so it's not included in projenrc
+    this.newProject = resolveNewProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
@@ -226,7 +223,7 @@ export class Project {
     this.logger = new Logger(this, options.logging);
 
     // we only allow these global services to be used in root projects
-    this.github = !this.parent ? new GitHub(this) : undefined;
+    this.github = !this.parent ? new GitHub(this, options) : undefined;
     this.vscode = !this.parent ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
@@ -263,6 +260,17 @@ export class Project {
    */
   public addTask(name: string, props: TaskOptions = { }) {
     return this.tasks.addTask(name, props);
+  }
+
+  /**
+   * Removes a task from a project.
+   *
+   * @param name The name of the task to remove.
+   *
+   * @returns The `Task` that was removed, otherwise `undefined`.
+   */
+  public removeTask(name: string) {
+    return this.tasks.removeTask(name);
   }
 
   /**
@@ -458,4 +466,31 @@ export enum ProjectType {
    * be deployed or published for end-user consumption.
    */
   APP = 'app'
+}
+
+/**
+ * Information passed from `projen new` to the project object when the project
+ * is first created. It is used to generate projenrc files in various languages.
+ */
+export interface NewProject {
+  /**
+   * The JSII FQN of the project type.
+   */
+  readonly fqn: string;
+
+  /**
+   * Initial arguments passed to `projen new`.
+   */
+  readonly args: Record<string, any>;
+
+  /**
+   * Project metadata.
+   */
+  readonly type: inventory.ProjectType;
+
+  /**
+   * Include commented out options.
+   * @default NewProjectOptionHints.FEATURED
+   */
+  readonly comments: NewProjectOptionHints;
 }

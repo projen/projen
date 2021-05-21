@@ -1,15 +1,16 @@
 import { dirname, join } from 'path';
-import { existsSync, mkdirpSync, readJsonSync, writeFileSync } from 'fs-extra';
+import { existsSync, mkdirpSync, writeFileSync } from 'fs-extra';
 import { PROJEN_VERSION } from '../common';
 import { Component } from '../component';
 import { DependencyType } from '../deps';
+import { readJsiiManifest } from '../inventory';
 import { Project } from '../project';
 import { Pom } from './pom';
 
 /**
  * Options for `Projenrc`.
  */
-export interface ProjenrcCommonOptions {
+export interface ProjenrcOptions {
   /**
    * The name of the Java class which contains the `main()` method for projen.
    * @default "projenrc"
@@ -35,13 +36,6 @@ export interface ProjenrcCommonOptions {
    * @default true
    */
   readonly testScope?: boolean;
-}
-
-export interface ProjenrcOptions extends ProjenrcCommonOptions {
-  /**
-   * Project initialization options.
-   */
-  readonly initializationOptions?: { [name: string]: any };
 }
 
 /**
@@ -82,22 +76,17 @@ export class Projenrc extends Component {
     defaultTask.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
 
     // if this is a new project, generate a skeleton for projenrc.java
-    this.generateProjenrc(options.initializationOptions);
+    this.generateProjenrc();
   }
 
-  private generateProjenrc(initOptions?: Record<string, any>) {
-    if (!this.project.jsiiFqn) {
-      return; // cannot generate projenrc without the FQN of the project type.
+  private generateProjenrc() {
+    const bootstrap = this.project.newProject;
+    if (!bootstrap) {
+      return;
     }
-
-    let [moduleName] = this.project.jsiiFqn.split('.');
-    if (moduleName === 'projen') {
-      moduleName = '../..';
-    }
-
-    const jsiiManifestFile = require.resolve(`${moduleName}/.jsii`);
-    const jsiiManifest = readJsonSync(jsiiManifestFile);
-    const jsiiType = jsiiManifest.types[this.project.jsiiFqn];
+    const jsiiFqn = bootstrap.fqn;
+    const jsiiManifest = readJsiiManifest(jsiiFqn);
+    const jsiiType = jsiiManifest.types[jsiiFqn];
     const javaTarget = jsiiManifest.targets.java;
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
@@ -145,13 +134,15 @@ export class Projenrc extends Component {
     emit();
     openBlock(`public class ${javaClass}`);
     openBlock('public static void main(String[] args)');
-    emit(`${jsiiType.name} project = new ${jsiiType.name}(${renderJavaOptions(indent, jsiiOptionsType.name, initOptions)});`);
+    emit(`${jsiiType.name} project = new ${jsiiType.name}(${renderJavaOptions(indent, jsiiOptionsType.name, bootstrap.args)});`);
     emit('project.synth();');
     closeBlock();
     closeBlock();
 
     mkdirpSync(dirname(javaFile));
     writeFileSync(javaFile, lines.join('\n'));
+
+    this.project.logger.info(`Project definition file was created at ${javaFile}`);
   }
 }
 

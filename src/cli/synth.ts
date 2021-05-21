@@ -85,13 +85,14 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   }
 
   function watchLoop() {
-    if (!fs.existsSync(rcfile)) {
-      throw new Error(`--watch is only supported for projects with "${rcfile}"`);
-    }
+    logging.info(`Watching for changes in ${workdir}...`);
+    const watch = fs.watch(workdir, { recursive: true });
+    watch.on('change', event => {
+      // we only care about "change" events
+      if (event !== 'change') {
+        return;
+      }
 
-    logging.info(`Watching for changes in ${rcfile}...`);
-    const watch = fs.watch(rcfile);
-    watch.on('change', () => {
       process.stdout.write('\x1Bc'); // clear screen
       watch.close();
       trySynth()
