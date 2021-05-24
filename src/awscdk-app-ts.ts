@@ -178,7 +178,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       this.tsconfig.exclude.push('cdk.out');
     }
 
-    this.addDevDeps('ts-node');
+    this.addDevDeps('ts-node@9');
 
     new JsonFile(this, 'cdk.json', {
       obj: this.cdkConfig,
