@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`creating java project with enum-typed CLI arg 1`] = `
+"import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
+import org.projen.ProjectType;
+
+public class projenrc {
+    public static void main(String[] args) {
+        JavaProject project = new JavaProject(JavaProjectOptions.builder()
+            .artifactId(\\"my-app\\")
+            .groupId(\\"org.acme\\")
+            .name(\\"my-project\\")
+            .version(\\"0.1.0\\")
+            .projectType(ProjectType.LIB)
+            .projenrcJava(true)
+            .build());
+        project.synth();
+    }
+}"
+`;
+
+exports[`creating node project with enum-typed CLI arg 1`] = `
+"const { NodePackageManager, NodeProject } = require('projen');
+const project = new NodeProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  packageManager: NodePackageManager.NPM,
+
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+});
+project.synth();"
+`;
+
+exports[`creating python project with enum-typed CLI arg 1`] = `
+"from projen.python import PythonProject
+from projen import ProjectType
+
+project = PythonProject(
+    author_email=\\"my@user.email.com\\",
+    author_name=\\"My User Name\\",
+    module_name=\\"my_project\\",
+    name=\\"my-project\\",
+    version=\\"0.1.0\\",
+    project_type=ProjectType.LIB,
+    projenrc_python=True,
+);
+
+project.synth();"
+`;
+
 exports[`projen new --from external 1`] = `
 Object {
   ".eslintrc.json": Object {

@@ -29,8 +29,8 @@ class Command implements yargs.CommandModule {
           cargs.showHelpOnFail(true);
 
           for (const option of type.options ?? []) {
-            if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
-              continue; // we don't support non-primitive fields as command line options
+            if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean' && option.kind !== 'enum') {
+              continue; // we only support primitive and enum fields as command line options
             }
 
             let desc = [option.docs?.replace(/\ *\.$/, '') ?? ''];
@@ -49,9 +49,11 @@ class Command implements yargs.CommandModule {
               }
             }
 
+            const argType = option.kind === 'enum' ? 'string' : option.type;
+
             cargs.option(option.switch, {
               group: required ? 'Required:' : 'Optional:',
-              type: option.type,
+              type: (argType as 'string' | 'boolean' | 'number'),
               description: desc.join(' '),
               default: defaultValue,
               required,
@@ -148,14 +150,14 @@ function createProject(opts: CreateProjectOptions) {
 
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
-  const js = renderJavaScriptOptions({
+  const { renderedOptions } = renderJavaScriptOptions({
     bootstrap: true,
     comments: opts.comments,
     type: opts.type,
     args: opts.params,
   });
 
-  const newProjectCode = `const project = new ${opts.type.typename}(${js});`;
+  const newProjectCode = `const project = new ${opts.type.typename}(${renderedOptions});`;
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const module = require(mod);

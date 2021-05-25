@@ -108,6 +108,48 @@ test('projen new --no-comments', () => {
   }
 });
 
+test('creating node project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating python project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'python', '--project-type', 'lib', '--projenrc-python', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.py'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating java project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'java', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
   const projectdir = join(workdir, 'my-project');

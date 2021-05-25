@@ -1,4 +1,5 @@
 import { renderProjenNewOptions } from '../../javascript/render-options';
+import { ProjectType } from '../../project';
 import { Projenrc } from '../../python/projenrc';
 import { synthSnapshot, TestProject } from '../util';
 
@@ -37,6 +38,7 @@ test('javascript values are translated to python', () => {
     undefinedArg: undefined,
     nullArg: null,
     objectArg: { foo: 'bar' },
+    projectType: ProjectType.LIB,
   }));
 
   // WHEN
