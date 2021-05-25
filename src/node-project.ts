@@ -798,6 +798,7 @@ export class NodeProject extends Project {
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
+        pullRequestTitle: 'upgrade projen',
         ignoreProjen: false,
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {

@@ -64,6 +64,13 @@ export interface UpgradeDependenciesOptions {
   readonly taskName?: string;
 
   /**
+   * Title of the pull request to use (should be all lower-case).
+   *
+   * @default "upgrade dependencies"
+   */
+  readonly pullRequestTitle?: string;
+
+  /**
    * Whether or not to ignore projen upgrades.
    *
    * @default true
@@ -86,11 +93,14 @@ export class UpgradeDependencies extends Component {
 
   private readonly _project: NodeProject;
 
+  private readonly pullRequestTitle: string;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
+    this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
 
     project.addDevDeps('npm-check-updates@^11');
 
@@ -107,6 +117,7 @@ export class UpgradeDependencies extends Component {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
       env: { CI: '0' },
+      description: this.pullRequestTitle,
     });
 
     const exclude = this.options.exclude ?? [];
@@ -232,7 +243,7 @@ export class UpgradeDependencies extends Component {
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 
-    const title = `chore(deps): ${workflowName}`;
+    const title = `chore(deps): ${this.pullRequestTitle}`;
     const description = [
       'Upgrades project dependencies. See details in [workflow run].',
       '',
