@@ -63,7 +63,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: >-
-            chore(deps): upgrade-dependencies
+            chore(deps): upgrade dependencies
 
 
             Upgrades project dependencies. See details in [workflow run].
@@ -77,7 +77,7 @@ jobs:
 
             *Automatically created by projen via the "upgrade-dependencies" workflow*
           branch: github-actions/upgrade-dependencies
-          title: "chore(deps): upgrade-dependencies"
+          title: "chore(deps): upgrade dependencies"
           labels: ""
           body: >-
             Upgrades project dependencies. See details in [workflow run].

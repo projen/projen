@@ -138,6 +138,7 @@
     },
     "upgrade-dependencies": {
       "name": "upgrade-dependencies",
+      "description": "upgrade dependencies",
       "env": {
         "CI": "0"
       },
