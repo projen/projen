@@ -136,6 +136,20 @@ test('creating python project with enum-typed CLI arg', () => {
   }
 });
 
+test('creating java project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'java', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
 function createProjectDir(workdir: string) {
   // create project under "my-project" so that basedir is deterministic
   const projectdir = join(workdir, 'my-project');

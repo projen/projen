@@ -10,6 +10,7 @@ project.synth();"
 
 exports[`javascript values are translated to python 1`] = `
 "from projen.python import PythonProject
+from projen import ProjectType
 
 project = PythonProject(
     string_arg=\\"hello\\",

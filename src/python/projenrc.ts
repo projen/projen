@@ -116,7 +116,9 @@ function renderPythonOptions(indent: number, optionFqns: Record<string, string>,
   const lines = [''];
 
   for (const [name, value] of Object.entries(initOptions)) {
-    lines.push(`${toPythonProperty(name)}=${toPythonValue(value, name, optionFqns)},`);
+    const { pythonValue, importName } = toPythonValue(value, name, optionFqns);
+    if (importName) imports.add(importName);
+    lines.push(`${toPythonProperty(name)}=${pythonValue},`);
   }
 
   const renderedOptions = lines.join(`\n${' '.repeat((indent + 1) * 4)}`).concat('\n');
@@ -129,22 +131,22 @@ function toPythonProperty(prop: string) {
 
 function toPythonValue(value: any, name: string, optionFqns: Record<string, string>) {
   if (typeof value === 'boolean') {
-    return value ? 'True' : 'False';
+    return { pythonValue: value ? 'True' : 'False' };
   } else if (typeof value === 'number') {
-    return JSON.stringify(value);
+    return { pythonValue: JSON.stringify(value) };
   } else if (typeof value === 'string') {
     if (optionFqns[name] !== undefined) {
       const parts = optionFqns[name].split('.');
       const base = parts[parts.length - 1];
       const choice = String(value).toUpperCase();
-      return `${base}.${choice}`;
+      return { pythonValue: `${base}.${choice}`, importName: optionFqns[name] };
     } else {
-      return JSON.stringify(value);
+      return { pythonValue: JSON.stringify(value) };
     }
   } else if (value === undefined || value === null) {
-    return 'None';
+    return { pythonValue: 'None' };
   } else {
-    return JSON.stringify(value);
+    return { pythonValue: JSON.stringify(value) };
   }
 }
 
