@@ -186,7 +186,7 @@ function toJavaValue(value: any, name: string, optionFqns: Record<string, string
   if (typeof value === 'string' && optionFqns[name] !== undefined) {
     const parts = optionFqns[name].split('.');
     const base = parts[parts.length - 1];
-    const choice = String(value).toUpperCase();
+    const choice = String(value).toUpperCase().replace('-', '_');
     return { javaValue: `${base}.${choice}`, importName: optionFqns[name] };
   } else {
     return { javaValue: JSON.stringify(value) };
