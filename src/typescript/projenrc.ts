@@ -31,7 +31,7 @@ export class Projenrc extends Component {
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
-    project.addDevDeps('ts-node');
+    project.addDevDeps('ts-node@^9');
     project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `ts-node ${this.rcfile}` });
 
     this.generateProjenrc();
@@ -53,16 +53,18 @@ export class Projenrc extends Component {
     const importName = parts[1];
     const className = parts.slice(1).join('.');
 
-    const js = renderJavaScriptOptions({
+    const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
       type: bootstrap.type,
       comments: bootstrap.comments,
     });
 
+    imports.add(importName);
+
     const lines = new Array<string>();
-    lines.push(`import { ${importName} } from '${moduleName}';`);
+    lines.push(`import { ${[...imports].sort().join(', ')} } from '${moduleName}';`);
     lines.push();
-    lines.push(`const project = new ${className}(${js});`);
+    lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();
     lines.push('project.synth();');
 

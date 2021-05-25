@@ -11,8 +11,10 @@ type JsiiTypes = { [name: string]: JsiiType };
 export interface ProjectOption {
   path: string[];
   name: string;
+  fqn?: string;
   switch: string;
   type: string;
+  kind?: string;
   parent: string;
   docs?: string;
   default?: string;
@@ -201,10 +203,12 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       }
 
       let typeName;
+      let jsiiKind;
       if (prop.type?.primitive) {
         typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
       } else if (prop.type?.fqn) {
         typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+        jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
       } else { // any other types such as collection types
         typeName = 'unknown';
       }
@@ -229,8 +233,10 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         path: propPath,
         parent: struct.name,
         name: prop.name,
+        fqn: prop.type?.fqn,
         docs: prop.docs.summary,
         type: typeName,
+        kind: jsiiKind,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,

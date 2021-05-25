@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`creating java project with enum-typed CLI arg 1`] = `
+"import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
+import org.projen.ProjectType;
+
+public class projenrc {
+    public static void main(String[] args) {
+        JavaProject project = new JavaProject(JavaProjectOptions.builder()
+            .artifactId(\\"my-app\\")
+            .groupId(\\"org.acme\\")
+            .name(\\"my-project\\")
+            .version(\\"0.1.0\\")
+            .projectType(ProjectType.LIB)
+            .projenrcJava(true)
+            .build());
+        project.synth();
+    }
+}"
+`;
+
+exports[`creating node project with enum-typed CLI arg 1`] = `
+"const { NodePackageManager, NodeProject } = require('projen');
+const project = new NodeProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  packageManager: NodePackageManager.NPM,
+
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                       /* Build dependencies for this module. */
+  // packageName: undefined,            /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
+});
+project.synth();"
+`;
+
+exports[`creating python project with enum-typed CLI arg 1`] = `
+"from projen.python import PythonProject
+from projen import ProjectType
+
+project = PythonProject(
+    author_email=\\"my@user.email.com\\",
+    author_name=\\"My User Name\\",
+    module_name=\\"my_project\\",
+    name=\\"my-project\\",
+    version=\\"0.1.0\\",
+    project_type=ProjectType.LIB,
+    projenrc_python=True,
+);
+
+project.synth();"
+`;
+
 exports[`projen new --from external 1`] = `
 Object {
   ".eslintrc.json": Object {
@@ -982,25 +1036,25 @@ project.synth();",
       "cdk-appsync-transformer": "1.77.15",
     },
     "devDependencies": Object {
-      "@types/jest": "^26.0.23",
+      "@types/jest": "*",
       "@types/node": "^10.17.0",
-      "@typescript-eslint/eslint-plugin": "^4.24.0",
-      "@typescript-eslint/parser": "^4.24.0",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
       "aws-cdk": "^1.95.2",
       "cdk-appsync-project": "1.1.2",
-      "eslint": "^7.26.0",
-      "eslint-import-resolver-node": "^0.3.4",
-      "eslint-import-resolver-typescript": "^2.4.0",
-      "eslint-plugin-import": "^2.23.2",
-      "jest": "^26.6.3",
+      "eslint": "*",
+      "eslint-import-resolver-node": "*",
+      "eslint-import-resolver-typescript": "*",
+      "eslint-plugin-import": "*",
+      "jest": "*",
       "jest-junit": "^12",
-      "json-schema": "^0.3.0",
+      "json-schema": "*",
       "npm-check-updates": "^11",
       "projen": "^999.999.999",
       "standard-version": "^9",
-      "ts-jest": "^26.5.6",
-      "ts-node": "^9.1.1",
-      "typescript": "^4.2.4",
+      "ts-jest": "*",
+      "ts-node": "*",
+      "typescript": "*",
     },
     "jest": Object {
       "clearMocks": true,
@@ -1043,6 +1097,7 @@ project.synth();",
     },
     "license": "Apache-2.0",
     "name": "my-project",
+    "peerDependencies": Object {},
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",
