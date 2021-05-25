@@ -1,4 +1,4 @@
-import { NodeConfig } from '../../javascript/node-config';
+import { NpmConfig } from '../../javascript/npm-config';
 import { LogLevel } from '../../logger';
 import { NodeProject, NodeProjectOptions } from '../../node-project';
 import { mkdtemp, synthSnapshot } from '../util';
@@ -9,10 +9,10 @@ test('registry is handled correctly', () => {
     defaultReleaseBranch: 'main',
   });
 
-  const npmrc = new NodeConfig(prj, {
+  const npmrc = new NpmConfig(prj, {
     registry: 'https://my.registry.com/mirror',
   });
-  npmrc.configureRegistry('@company', 'https://my.registry.com/private');
+  npmrc.addRegistry('https://my.registry.com/private', '@company');
 
   const out = synthSnapshot(prj);
   expect(out['.npmrc']).toMatchSnapshot();
@@ -24,8 +24,24 @@ test('default registry is used correctly', () => {
     defaultReleaseBranch: 'main',
   });
 
-  const npmrc = new NodeConfig(prj);
-  npmrc.configureRegistry('@company', 'https://my.registry.com/private');
+  const npmrc = new NpmConfig(prj);
+  npmrc.addRegistry('https://my.registry.com/private', '@company');
+
+  const out = synthSnapshot(prj);
+  expect(out['.npmrc']).toMatchSnapshot();
+});
+
+test('override default registry via setter', () => {
+  const prj = new TestNodeProject({
+    name: 'test-project',
+    defaultReleaseBranch: 'main',
+  });
+
+  const npmrc = new NpmConfig(prj, {
+    registry: 'https://my.registry.com/mirror',
+  });
+  npmrc.addRegistry('https://my.registry.com/mirror2');
+  npmrc.addRegistry('https://my.registry.com/private', '@company');
 
   const out = synthSnapshot(prj);
   expect(out['.npmrc']).toMatchSnapshot();
@@ -37,7 +53,7 @@ test('generic prop is set correctly', () => {
     defaultReleaseBranch: 'main',
   });
 
-  const npmrc = new NodeConfig(prj);
+  const npmrc = new NpmConfig(prj);
   npmrc.addConfig('key', 'value');
 
   const out = synthSnapshot(prj);

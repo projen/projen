@@ -3,11 +3,13 @@ import { IniFile } from '../ini';
 import { NodeProject } from '../node-project';
 
 /**
- * Options to configure the local NodeJS config
+ * Options to configure the local NPM config
  */
-export interface NodeConfigOptions {
+export interface NpmConfigOptions {
   /**
    * URL of the registry mirror to use
+   *
+   * You can change this or add scoped registries using the addRegistry method
    *
    * @default - use npmjs default registry
    */
@@ -15,9 +17,9 @@ export interface NodeConfigOptions {
 }
 
 /**
- * File representing the local NodeJS config in .npmrc
+ * File representing the local NPM config in .npmrc
  */
-export class NodeConfig extends Component {
+export class NpmConfig extends Component {
 
   /**
    * The config object. This object can be mutated until the project is
@@ -25,26 +27,24 @@ export class NodeConfig extends Component {
    */
   private readonly config: any = {};
 
-  constructor(project: NodeProject, options: NodeConfigOptions = {}) {
+  constructor(project: NodeProject, options: NpmConfigOptions = {}) {
     super(project);
 
     new IniFile(project, '.npmrc', { obj: this.config });
 
     if (options.registry) {
-      this.addConfig('registry', options.registry);
+      this.addRegistry(options.registry);
     }
   }
 
   /**
    * configure a scoped registry
    *
-   * @param scope the scope the registry is used for
    * @param url the URL of the registry to use
+   * @param scope the scope the registry is used for; leave empty for the default registry
    */
-  public configureRegistry(scope: string, url: string) {
-    if (scope) {
-      this.addConfig(`${scope}:registry`, url);
-    }
+  public addRegistry(url: string, scope?: string) {
+    this.addConfig(scope ? `${scope}:registry` : 'registry', url);
   }
 
   /**
