@@ -46,7 +46,7 @@ test('projen new --from external', () => {
     const projectdir = createProjectDir(outdir);
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-post']);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.

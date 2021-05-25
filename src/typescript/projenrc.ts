@@ -31,7 +31,7 @@ export class Projenrc extends Component {
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
-    project.addDevDeps('ts-node');
+    project.addDevDeps('ts-node@^9');
     project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `ts-node ${this.rcfile}` });
 
     this.generateProjenrc();
