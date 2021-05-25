@@ -57,10 +57,6 @@ export abstract class ObjectFile extends FileBase {
   constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
 
-    if (!options.obj) {
-      throw new Error('"obj" cannot be undefined');
-    }
-
     this.obj = options.obj ?? {};
     this.marker = options.marker ?? true;
     this.omitEmpty = options.omitEmpty ?? false;
