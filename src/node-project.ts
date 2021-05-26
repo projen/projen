@@ -190,11 +190,9 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-   * Automatically merge PRs that build successfully and have this label.
-   *
-   * To disable, set this value to an empty string.
-   *
-   * @default "auto-merge"
+   * DEPRECATED
+   * @deprecated use the `autoApproveEnabled` instead.
+   * @default ''
    */
   readonly mergifyAutoMergeLabel?: string;
 
@@ -216,7 +214,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
 
   /**
    * Automatically merge projen upgrade PRs when build passes.
-   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   * Auto-approves the pull request which mergify will then merge.
    *
    * @default - "true" if mergify auto-merge is enabled (default)
    */
@@ -323,6 +321,9 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
    * Sets up a Github workflow that automatically approves PRs that meet a certain
    * criteria. See `autoApproveOptions` for the default criteria and change them.
+   *
+   * When enabled in combination with `mergify`, pull requests can be auto-approved
+   * and auto-merged. This is applied for the dependency upgrade PRs set up by projen.
    *
    * @default false
    */
@@ -788,16 +789,25 @@ export class NodeProject extends Project {
       }
     }
 
+    if (options.mergifyAutoMergeLabel) {
+      throw new Error('"mergifyAutoMergeLabel" is no longer supported. ' +
+        'Use "autoApproveEnabled" and "autoApproveOptions" instead.');
+    }
+
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         buildJob: this.buildWorkflowJobId,
-        autoMergeLabel: options.mergifyAutoMergeLabel,
       });
       this.npmignore?.exclude('/.mergify.yml');
     }
 
     if (options.dependabot !== undefined && options.depsUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
+    }
+
+    let autoApprove: AutoApprove | undefined;
+    if (options.autoApproveEnabled) {
+      autoApprove = new AutoApprove(this, options.autoApproveOptions);
     }
 
     const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
@@ -818,9 +828,7 @@ export class NodeProject extends Project {
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-            ? [this.autoMerge.autoMergeLabel]
-            : [],
+          labels: (projenAutoMerge && autoApprove?.label) ? [autoApprove.label] : [],
         },
       });
     }
@@ -832,10 +840,6 @@ export class NodeProject extends Project {
     const projenrcJs = options.projenrcJs ?? true;
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
-    }
-
-    if (options.autoApproveEnabled) {
-      new AutoApprove(this, options.autoApproveOptions);
     }
   }
 

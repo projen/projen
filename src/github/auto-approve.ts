@@ -32,18 +32,20 @@ export interface AutoApproveOptions {
  * Auto approve pull requests that meet a criteria
  */
 export class AutoApprove extends Component {
+  public readonly label: string;
+
   constructor(project: NodeProject, options: AutoApproveOptions = {}) {
     super(project);
+
+    this.label = options.label ?? 'auto-approve';
+    const usernames = options.allowedUsernames ?? ['github-bot'];
+    const secret = options.secret ?? 'GITHUB_TOKEN';
 
     if (!project.github) {
       return;
     }
 
-    const label = options.label ?? 'auto-approve';
-    const usernames = options.allowedUsernames ?? ['github-bot'];
-    const secret = options.secret ?? 'GITHUB_TOKEN';
-
-    let condition = `contains(github.event.pull_request.labels.*.name, '${label}')`;
+    let condition = `contains(github.event.pull_request.labels.*.name, '${this.label}')`;
     if (usernames.length > 0) {
       condition += ' && (';
       condition += usernames.map(u => `github.event.pull_request.login == '${u}'`).join(' || ');
