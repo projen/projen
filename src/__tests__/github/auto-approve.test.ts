@@ -13,6 +13,20 @@ describe('auto-approve', () => {
     expect(snapshot['.github/workflows/auto-approve.yml']).toBeDefined();
     expect(snapshot['.github/workflows/auto-approve.yml']).toMatchSnapshot();
   });
+
+  test('configure options', () => {
+    const project = createProject();
+
+    new AutoApprove(project, {
+      secret: 'MY_SECRET',
+      label: 'my-approve',
+      allowedUsernames: ['bot-1', 'bot-2'],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot['.github/workflows/auto-approve.yml']).toMatchSnapshot();
+  });
 });
 
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;

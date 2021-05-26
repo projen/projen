@@ -59,7 +59,7 @@ export class AutoApprove extends Component {
       steps: [{
         uses: 'hmarr/auto-approve-action@v2.1.0',
         with: {
-          'github-token': `"\${{ secrets.${secret} }}"`,
+          'github-token': `\${{ secrets.${secret} }}`,
         },
       }],
     };
