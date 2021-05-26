@@ -387,6 +387,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -574,6 +576,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -725,6 +729,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -925,6 +931,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1058,6 +1066,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1202,6 +1212,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -2237,6 +2249,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -2955,6 +2969,8 @@ new NodeProject(options: NodeProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4089,6 +4105,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4208,6 +4226,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4327,6 +4347,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -6799,6 +6821,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -6962,6 +6986,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7153,6 +7179,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7312,6 +7340,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7435,6 +7465,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7565,6 +7597,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7696,6 +7730,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7812,6 +7848,8 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?⚠️ | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7944,6 +7982,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8069,6 +8109,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8829,6 +8871,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9176,6 +9220,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9518,6 +9564,8 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?⚠️ | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9629,6 +9677,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -10716,6 +10766,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -10831,6 +10883,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -10971,6 +11025,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11084,6 +11140,8 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject

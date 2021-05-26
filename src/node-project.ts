@@ -1,5 +1,6 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
+import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
@@ -318,6 +319,19 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "v0.1.0"
    */
   readonly initialVersion?: string;
+
+  /**
+   * Sets up a Github workflow that automatically approves PRs that meet a certain
+   * criteria. See `autoApproveOptions` for the default criteria and change them.
+   *
+   * @default false
+   */
+  readonly autoApproveEnabled?: boolean;
+
+  /**
+   * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
+   */
+  readonly autoApproveOptions?: AutoApproveOptions;
 }
 
 /**
@@ -818,6 +832,10 @@ export class NodeProject extends Project {
     const projenrcJs = options.projenrcJs ?? true;
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
+    }
+
+    if (options.autoApproveEnabled) {
+      new AutoApprove(this, options.autoApproveOptions);
     }
   }
 
