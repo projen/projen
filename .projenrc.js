@@ -154,7 +154,7 @@ setup.spawn(project.buildTask);
 project.devContainer.addTasks(setup);
 
 project.addTask('contributors:update', {
-  exec: 'all-contributors check | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
+  exec: 'all-contributors check | sed -n "2p" | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
 });
 
 project.synth();
