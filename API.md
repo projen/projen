@@ -48,6 +48,7 @@ Name|Description
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
+[github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
@@ -165,6 +166,7 @@ Name|Description
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
+[github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
@@ -4756,6 +4758,32 @@ static parseDependency(spec: string): DependencyCoordinates
 
 __Returns__:
 * <code>[deps.DependencyCoordinates](#projen-deps-dependencycoordinates)</code>
+
+
+
+## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
+
+Auto approve pull requests that meet a criteria.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.AutoApprove(project: NodeProject, options?: AutoApproveOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
+  * **allowedUsernames** (<code>Array<string></code>)  Only pull requests authored by these Github usernames will be auto-approved. __*Default*__: ['github-bot']
+  * **label** (<code>string</code>)  Only pull requests with this label will be auto-approved. __*Default*__: 'auto-approve'
+  * **secret** (<code>string</code>)  A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. __*Optional*__
+
 
 
 
@@ -9838,6 +9866,21 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **dependencies**🔹 | <code>Array<[deps.Dependency](#projen-deps-dependency)></code> | All dependencies of this module.
+
+
+
+## struct AutoApproveOptions 🔹 <a id="projen-github-autoapproveoptions"></a>
+
+
+Options for 'AutoApprove'.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**allowedUsernames**?🔹 | <code>Array<string></code> | Only pull requests authored by these Github usernames will be auto-approved.<br/>__*Default*__: ['github-bot']
+**label**?🔹 | <code>string</code> | Only pull requests with this label will be auto-approved.<br/>__*Default*__: 'auto-approve'
+**secret**?🔹 | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.<br/>__*Optional*__
 
 
 
