@@ -1,5 +1,5 @@
+import { Project } from '..';
 import { Component } from '../component';
-import { NodeProject } from '../node-project';
 import { GithubWorkflow } from './workflows';
 import { Job, JobPermission } from './workflows-model';
 
@@ -34,7 +34,7 @@ export interface AutoApproveOptions {
 export class AutoApprove extends Component {
   public readonly label: string;
 
-  constructor(project: NodeProject, options: AutoApproveOptions = {}) {
+  constructor(project: Project, options: AutoApproveOptions = {}) {
     super(project);
 
     this.label = options.label ?? 'auto-approve';

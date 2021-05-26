@@ -1,6 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
-import { AutoApprove, AutoApproveOptions } from './github/auto-approve';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
@@ -310,22 +309,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default "v0.1.0"
    */
   readonly initialVersion?: string;
-
-  /**
-   * Sets up a Github workflow that automatically approves PRs that meet a certain
-   * criteria. See `autoApproveOptions` for the default criteria and change them.
-   *
-   * When enabled in combination with `mergify`, pull requests can be auto-approved
-   * and auto-merged. This is applied for the dependency upgrade PRs set up by projen.
-   *
-   * @default false
-   */
-  readonly autoApproveEnabled?: boolean;
-
-  /**
-   * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
-   */
-  readonly autoApproveOptions?: AutoApproveOptions;
 }
 
 /**
@@ -793,11 +776,6 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    let autoApprove: AutoApprove | undefined;
-    if (options.autoApproveEnabled) {
-      autoApprove = new AutoApprove(this, options.autoApproveOptions);
-    }
-
     const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
       : DependenciesUpgradeMechanism.githubWorkflow();
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
@@ -816,7 +794,7 @@ export class NodeProject extends Project {
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && autoApprove?.label) ? [autoApprove.label] : undefined,
+          labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
         },
       });
     }

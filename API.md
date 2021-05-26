@@ -343,6 +343,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -387,8 +389,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -531,6 +531,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -575,8 +577,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -683,6 +683,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -727,8 +729,6 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -884,6 +884,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -928,8 +930,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1018,6 +1018,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1062,8 +1064,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1163,6 +1163,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1207,8 +1209,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -2199,6 +2199,8 @@ new JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -2243,8 +2245,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -2918,6 +2918,8 @@ new NodeProject(options: NodeProjectOptions)
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -2962,8 +2964,6 @@ new NodeProject(options: NodeProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -3360,6 +3360,8 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -3386,6 +3388,7 @@ Name | Type | Description
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
+**autoApprove**?🔹 | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | Auto approve set up for this project.<br/>__*Optional*__
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
@@ -4053,6 +4056,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4097,8 +4102,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4173,6 +4176,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4217,8 +4222,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4293,6 +4296,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4337,8 +4342,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4786,10 +4789,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.AutoApprove(project: NodeProject, options?: AutoApproveOptions)
+new github.AutoApprove(project: Project, options?: AutoApproveOptions)
 ```
 
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
   * **allowedUsernames** (<code>Array<string></code>)  Only pull requests authored by these Github usernames will be auto-approved. __*Default*__: ['github-bot']
   * **label** (<code>string</code>)  Only pull requests with this label will be auto-approved. __*Default*__: 'auto-approve'
@@ -5168,6 +5171,8 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -5852,6 +5857,8 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -6765,6 +6772,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -6809,8 +6818,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -6929,6 +6936,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -6973,8 +6982,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7121,6 +7128,8 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7165,8 +7174,6 @@ new web.ReactProject(options: ReactProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7281,6 +7288,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7325,8 +7334,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **autoApproveEnabled** (<code>boolean</code>)  Sets up a Github workflow that automatically approves PRs that meet a certain criteria. __*Default*__: false
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Configure the 'auto approve' workflow. __*Optional*__
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -9331,6 +9338,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -10022,6 +10031,8 @@ Name | Type | Description
 **groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -10417,6 +10428,8 @@ Name | Type | Description
 **moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | Version of the package.
+**autoApproveEnabled**?🔹 | <code>boolean</code> | Sets up a Github workflow that automatically approves PRs that meet a certain criteria.<br/>__*Default*__: false
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Configure the 'auto approve' workflow.<br/>__*Optional*__
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []

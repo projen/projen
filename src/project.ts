@@ -4,7 +4,7 @@ import { Clobber } from './clobber';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
-import { GitHub, GitHubOptions } from './github';
+import { AutoApprove, AutoApproveOptions, GitHub, GitHubOptions } from './github';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
@@ -86,6 +86,22 @@ export interface ProjectOptions extends GitHubOptions {
    * @default {}
    */
   readonly logging?: LoggerOptions;
+
+  /**
+   * Sets up a Github workflow that automatically approves PRs that meet a certain
+   * criteria. See `autoApproveOptions` for the default criteria and change them.
+   *
+   * When enabled in combination with `mergify`, pull requests can be auto-approved
+   * and auto-merged. This is applied for the dependency upgrade PRs set up by projen.
+   *
+   * @default false
+   */
+  readonly autoApproveEnabled?: boolean;
+
+  /**
+    * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
+    */
+  readonly autoApproveOptions?: AutoApproveOptions;
 }
 
 /**
@@ -175,6 +191,11 @@ export class Project {
    */
   public readonly newProject?: NewProject;
 
+  /**
+   * Auto approve set up for this project.
+   */
+  public readonly autoApprove?: AutoApprove;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -234,6 +255,10 @@ export class Project {
     }
 
     new SampleReadme(this, options.readme);
+
+    if (options.autoApproveEnabled) {
+      this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
+    }
   }
 
   /**
