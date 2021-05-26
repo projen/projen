@@ -190,13 +190,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-   * DEPRECATED
-   * @deprecated use the `autoApproveEnabled` instead.
-   * @default ''
-   */
-  readonly mergifyAutoMergeLabel?: string;
-
-  /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
    * projen:upgrade`).
    *
@@ -789,11 +782,6 @@ export class NodeProject extends Project {
       }
     }
 
-    if (options.mergifyAutoMergeLabel) {
-      throw new Error('"mergifyAutoMergeLabel" is no longer supported. ' +
-        'Use "autoApproveEnabled" and "autoApproveOptions" instead.');
-    }
-
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         buildJob: this.buildWorkflowJobId,
@@ -828,7 +816,7 @@ export class NodeProject extends Project {
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && autoApprove?.label) ? [autoApprove.label] : [],
+          labels: (projenAutoMerge && autoApprove?.label) ? [autoApprove.label] : undefined,
         },
       });
     }
