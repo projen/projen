@@ -24,6 +24,8 @@ export interface AutoApproveOptions {
    * with write permissions for the `pull_request` scope.
    *
    * This token is used to approve pull requests.
+   *
+   * @default 'GITHUB_TOKEN' https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
    */
   readonly secret?: string;
 }

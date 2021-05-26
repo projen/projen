@@ -4796,7 +4796,7 @@ new github.AutoApprove(project: Project, options?: AutoApproveOptions)
 * **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
   * **allowedUsernames** (<code>Array<string></code>)  Only pull requests authored by these Github usernames will be auto-approved. __*Default*__: ['github-bot']
   * **label** (<code>string</code>)  Only pull requests with this label will be auto-approved. __*Default*__: 'auto-approve'
-  * **secret** (<code>string</code>)  A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. __*Optional*__
+  * **secret** (<code>string</code>)  A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. __*Default*__: 'GITHUB_TOKEN' https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
 
 
 
@@ -9913,7 +9913,7 @@ Name | Type | Description
 -----|------|-------------
 **allowedUsernames**?🔹 | <code>Array<string></code> | Only pull requests authored by these Github usernames will be auto-approved.<br/>__*Default*__: ['github-bot']
 **label**?🔹 | <code>string</code> | Only pull requests with this label will be auto-approved.<br/>__*Default*__: 'auto-approve'
-**secret**?🔹 | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.<br/>__*Optional*__
+**secret**?🔹 | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.<br/>__*Default*__: 'GITHUB_TOKEN' https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
 
 
 
