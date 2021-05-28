@@ -234,7 +234,6 @@ export class Project {
     }
 
     new SampleReadme(this, options.readme);
-
   }
 
   /**

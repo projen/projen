@@ -266,7 +266,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    */
   readonly pullRequestTemplateContents?: string;
 
-
   /**
    * Additional entries to .gitignore
    */

@@ -148,7 +148,6 @@ project.gitpod.addCustomTask({
   command: 'npx projen build',
 });
 
-
 const setup = project.addTask('devenv:setup');
 setup.exec('yarn install');
 setup.spawn(project.buildTask);
