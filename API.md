@@ -61,6 +61,7 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[javascript.NpmConfig](#projen-javascript-npmconfig)|File representing the local NPM config in .npmrc.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
@@ -181,6 +182,7 @@ Name|Description
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
+[javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
@@ -5489,6 +5491,61 @@ Name | Type | Description
 
 
 
+## class NpmConfig 🔹 <a id="projen-javascript-npmconfig"></a>
+
+File representing the local NPM config in .npmrc.
+
+__Submodule__: javascript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new javascript.NpmConfig(project: NodeProject, options?: NpmConfigOptions)
+```
+
+* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
+* **options** (<code>[javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)</code>)  *No description*
+  * **registry** (<code>string</code>)  URL of the registry mirror to use. __*Default*__: use npmjs default registry
+
+
+### Methods
+
+
+#### addConfig(name, value)🔹 <a id="projen-javascript-npmconfig-addconfig"></a>
+
+configure a generic property.
+
+```ts
+addConfig(name: string, value: string): void
+```
+
+* **name** (<code>string</code>)  the name of the property.
+* **value** (<code>string</code>)  the value of the property.
+
+
+
+
+#### addRegistry(url, scope?)🔹 <a id="projen-javascript-npmconfig-addregistry"></a>
+
+configure a scoped registry.
+
+```ts
+addRegistry(url: string, scope?: string): void
+```
+
+* **url** (<code>string</code>)  the URL of the registry to use.
+* **scope** (<code>string</code>)  the scope the registry is used for;
+
+
+
+
+
+
 ## class Projenrc 🔹 <a id="projen-javascript-projenrc"></a>
 
 Sets up a javascript project to use TypeScript for projenrc.
@@ -10099,6 +10156,19 @@ Name | Type | Description
 **className**?🔹 | <code>string</code> | The name of the Java class which contains the `main()` method for projen.<br/>__*Default*__: "projenrc"
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
 **testScope**?🔹 | <code>boolean</code> | Defines projenrc under the test scope instead of the main scope, which is reserved to the app.<br/>__*Default*__: true
+
+
+
+## struct NpmConfigOptions 🔹 <a id="projen-javascript-npmconfigoptions"></a>
+
+
+Options to configure the local NPM config.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**registry**?🔹 | <code>string</code> | URL of the registry mirror to use.<br/>__*Default*__: use npmjs default registry
 
 
 
