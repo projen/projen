@@ -1,5 +1,6 @@
 export * from './pip';
 export * from './poetry';
+export * from './projenrc';
 export * from './pytest';
 export * from './python-env';
 export * from './python-deps';

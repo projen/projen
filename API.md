@@ -66,6 +66,7 @@ Name|Description
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
+[python.Projenrc](#projen-python-projenrc)|Allows writing projenrc files in python.
 [python.Pytest](#projen-python-pytest)|*No description*
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
@@ -186,6 +187,7 @@ Name|Description
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
 [python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
+[python.ProjenrcOptions](#projen-python-projenrcoptions)|Options for `Projenrc`.
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
 [python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)|*No description*
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
@@ -225,6 +227,7 @@ Name|Description
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
+[IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
@@ -1337,6 +1340,7 @@ static githubWorkflow(options?: UpgradeDependenciesOptions): DependenciesUpgrade
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
@@ -2683,6 +2687,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**🔹 | <code>boolean</code> | Allow project to take library dependencies.
 **entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
+**installAndUpdateLockfileCommand**🔹 | <code>string</code> | Renders `yarn install` or `npm install` with lockfile update (not frozen).
 **installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
 **manifest**⚠️ | <code>any</code> | <span></span>
 **npmAccess**🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | npm package access level.
@@ -4492,6 +4497,7 @@ new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptio
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
@@ -5776,6 +5782,34 @@ Name | Type | Description
 
 
 
+## class Projenrc 🔹 <a id="projen-python-projenrc"></a>
+
+Allows writing projenrc files in python.
+
+This will install `projen` as a Python dependency and will add a
+`synth` task which will run `.projenrc.py`.
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Projenrc(project: Project, options?: ProjenrcOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  *No description*
+  * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.py"
+  * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
+
+
+
+
 ## class Pytest 🔹 <a id="projen-python-pytest"></a>
 
 
@@ -5852,6 +5886,8 @@ new python.PythonProject(options: PythonProjectOptions)
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: false
+  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
@@ -8586,6 +8622,27 @@ addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeCon
 
 
 
+## interface IResolvable 🔹 <a id="projen-iresolvable"></a>
+
+
+
+### Methods
+
+
+#### toJSON()🔹 <a id="projen-iresolvable-tojson"></a>
+
+Resolves and returns content.
+
+```ts
+toJSON(): any
+```
+
+
+__Returns__:
+* <code>any</code>
+
+
+
 ## interface IResolver 🔹 <a id="projen-iresolver"></a>
 
 
@@ -9729,6 +9786,7 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
 **ignoreProjen**?🔹 | <code>boolean</code> | Whether or not to ignore projen upgrades.<br/>__*Default*__: true
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
+**pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade-dependencies".
 **workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
 **workflowOptions**?🔹 | <code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
@@ -10306,6 +10364,20 @@ Name | Type | Description
 
 
 
+## struct ProjenrcOptions 🔹 <a id="projen-python-projenrcoptions"></a>
+
+
+Options for `Projenrc`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.py"
+**projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
+
+
+
 ## struct PytestOptions 🔹 <a id="projen-python-pytestoptions"></a>
 
 
@@ -10373,6 +10445,8 @@ Name | Type | Description
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: false
+**projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }

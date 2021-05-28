@@ -138,12 +138,16 @@
     },
     "upgrade-dependencies": {
       "name": "upgrade-dependencies",
+      "description": "upgrade dependencies",
       "env": {
         "CI": "0"
       },
       "steps": [
         {
           "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "yarn install --check-files"
         },
         {
           "exec": "/bin/bash ./projen.bash"
@@ -237,7 +241,7 @@
       "name": "contributors:update",
       "steps": [
         {
-          "exec": "all-contributors check | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
+          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     }

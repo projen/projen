@@ -46,7 +46,7 @@ test('projen new --from external', () => {
     const projectdir = createProjectDir(outdir);
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-post']);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -103,6 +103,48 @@ test('projen new --no-comments', () => {
     const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
     expect(projenrc).toBeDefined();
     expect(projenrc).not.toMatch('//');
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating node project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating python project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'python', '--project-type', 'lib', '--projenrc-python', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['.projenrc.py'];
+    expect(projenrc).toMatchSnapshot();
+  } finally {
+    removeSync(outdir);
+  }
+});
+
+test('creating java project with enum-typed CLI arg', () => {
+  const outdir = mkdtemp();
+  try {
+    const projectdir = createProjectDir(outdir);
+
+    execProjenCLI(projectdir, ['new', 'java', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
+    expect(projenrc).toMatchSnapshot();
   } finally {
     removeSync(outdir);
   }

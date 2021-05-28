@@ -64,6 +64,13 @@ export interface UpgradeDependenciesOptions {
   readonly taskName?: string;
 
   /**
+   * Title of the pull request to use (should be all lower-case).
+   *
+   * @default "upgrade dependencies"
+   */
+  readonly pullRequestTitle?: string;
+
+  /**
    * Whether or not to ignore projen upgrades.
    *
    * @default true
@@ -86,11 +93,14 @@ export class UpgradeDependencies extends Component {
 
   private readonly _project: NodeProject;
 
+  private readonly pullRequestTitle: string;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
+    this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
 
     project.addDevDeps('npm-check-updates@^11');
 
@@ -107,6 +117,7 @@ export class UpgradeDependencies extends Component {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
       env: { CI: '0' },
+      description: this.pullRequestTitle,
     });
 
     const exclude = this.options.exclude ?? [];
@@ -122,6 +133,11 @@ export class UpgradeDependencies extends Component {
     }
 
     task.exec(ncuCommand.join(' '));
+
+    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
+    task.exec(this._project.package.installAndUpdateLockfileCommand);
+
+    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
 
     return task;
@@ -227,6 +243,17 @@ export class UpgradeDependencies extends Component {
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
 
+    const title = `chore(deps): ${this.pullRequestTitle}`;
+    const description = [
+      'Upgrades project dependencies. See details in [workflow run].',
+      '',
+      `[Workflow Run]: ${RUN_URL}`,
+      '',
+      '------',
+      '',
+      `*Automatically created by projen via the "${workflow.name}" workflow*`,
+    ].join('\n');
+
     const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
@@ -249,17 +276,11 @@ export class UpgradeDependencies extends Component {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.
           'token': customToken ?? DEFAULT_TOKEN,
-          'commit-message': 'upgrade',
+          'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
-          'title': `chore(deps): ${workflowName}`,
+          'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') ?? '',
-          'body': [
-            `See ${RUN_URL}`,
-            '',
-            '------',
-            '',
-            '*Automatically created by projen via GitHubActions*',
-          ].join('\n'),
+          'body': description,
         },
       },
     ];

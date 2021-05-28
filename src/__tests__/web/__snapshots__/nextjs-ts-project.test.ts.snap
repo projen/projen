@@ -29,6 +29,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
     env:
       CI: \\"true\\"
     steps:
@@ -127,19 +130,34 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: \${{ secrets.GITHUB_TOKEN }}
-          commit-message: upgrade
-          branch: github-actions/upgrade-dependencies
-          title: \\"chore(deps): upgrade-dependencies\\"
-          labels: \\"\\"
-          body: >-
-            See https://github.com/\${{ github.repository }}/actions/runs/\${{
-            github.run_id }}
+          commit-message: >-
+            chore(deps): upgrade dependencies
+
+
+            Upgrades project dependencies. See details in [workflow run].
+
+
+            [Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
 
 
             ------
 
 
-            *Automatically created by projen via GitHubActions*
+            *Automatically created by projen via the \\"upgrade-dependencies\\" workflow*
+          branch: github-actions/upgrade-dependencies
+          title: \\"chore(deps): upgrade dependencies\\"
+          labels: \\"\\"
+          body: >-
+            Upgrades project dependencies. See details in [workflow run].
+
+
+            [Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+
+
+            ------
+
+
+            *Automatically created by projen via the \\"upgrade-dependencies\\" workflow*
       - name: Update status check
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
@@ -430,6 +448,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "upgrade-dependencies": Object {
+        "description": "upgrade dependencies",
         "env": Object {
           "CI": "0",
         },
@@ -439,11 +458,15 @@ tsconfig.tsbuildinfo
             "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
           },
           Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
       },
       "upgrade-projen": Object {
+        "description": "upgrade projen",
         "env": Object {
           "CI": "0",
         },
@@ -451,6 +474,9 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
           },
           Object {
             "exec": "npx projen",

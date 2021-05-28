@@ -38,13 +38,19 @@ export interface Job {
   readonly needs?: string[];
 
   /**
-   * You can modify the default permissions granted to the GITHUB_TOKEN,
-   * adding or removing access as required, so that you only allow the minimum
-   * required access.
+   * You can modify the default permissions granted to the GITHUB_TOKEN, adding
+   * or removing access as required, so that you only allow the minimum required
+   * access.
+   *
+   * Use `{ contents: READ }` if your job only needs to clone code.
+   *
+   * This is intentionally a required field since it is required in order to
+   * allow workflows to run in GitHub repositories with restricted default
+   * access.
    *
    * @see https://docs.github.com/en/actions/reference/authentication-in-a-workflow#permissions-for-the-github_token
    */
-  readonly permissions?: JobPermissions;
+  readonly permissions: JobPermissions;
 
   /**
    * The environment that the job references. All environment protection rules

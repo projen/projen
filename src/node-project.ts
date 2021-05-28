@@ -1,6 +1,7 @@
 import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
 import { MergifyOptions } from './github/mergify';
+import { JobPermission } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
@@ -638,7 +639,10 @@ export class NodeProject extends Project {
         trigger: {
           pull_request: { },
         },
-
+        permissions: {
+          checks: JobPermission.WRITE,
+          contents: JobPermission.WRITE,
+        },
         checkoutWith: mutableBuilds ? {
           ref: branch,
           repository: repo,
@@ -723,6 +727,9 @@ export class NodeProject extends Project {
         env: {
           RELEASE: 'true',
         },
+        permissions: {
+          contents: JobPermission.WRITE,
+        },
         preBuildSteps: [
           {
             name: 'Bump to next version',
@@ -799,6 +806,7 @@ export class NodeProject extends Project {
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
+        pullRequestTitle: 'upgrade projen',
         ignoreProjen: false,
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {
@@ -1079,6 +1087,7 @@ export class NodeProject extends Project {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
         ...options.env ?? {},
       },
+      permissions: options.permissions,
       ...condition,
       steps: [
         ...preCheckoutSteps,
@@ -1219,6 +1228,11 @@ interface NodeBuildWorkflowOptions {
    * @default {}
    */
   readonly env?: { [name: string]: string };
+
+  /**
+   * Permissions for the build job.
+   */
+  readonly permissions: workflows.JobPermissions;
 }
 
 export interface NodeWorkflowSteps {

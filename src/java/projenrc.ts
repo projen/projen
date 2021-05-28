@@ -124,17 +124,29 @@ export class Projenrc extends Component {
     const openBlock = (line: string = '') => { emit(line + ' {'); indent++; };
     const closeBlock = () => { indent--; emit('}'); };
 
+    const optionFqns: Record<string, string> = {};
+    for (const option of bootstrap.type.options) {
+      if (option.fqn) {
+        optionFqns[option.name] = toJavaFullTypeName(jsiiManifest.types[option.fqn]);
+      }
+    }
+
     if (javaPackage.length > 0) {
       emit(`package ${javaPackage.join('.')};`);
       emit();
     }
 
+    const { renderedOptions, imports } = renderJavaOptions(2, jsiiOptionsType.name, optionFqns, bootstrap.args);
+
     emit(`import ${javaTarget.package}.${toJavaFullTypeName(jsiiType)};`);
     emit(`import ${javaTarget.package}.${toJavaFullTypeName(jsiiOptionsType)};`);
+    for (const optionTypeName of imports) {
+      emit(`import ${javaTarget.package}.${optionTypeName};`);
+    }
     emit();
     openBlock(`public class ${javaClass}`);
     openBlock('public static void main(String[] args)');
-    emit(`${jsiiType.name} project = new ${jsiiType.name}(${renderJavaOptions(indent, jsiiOptionsType.name, bootstrap.args)});`);
+    emit(`${jsiiType.name} project = new ${jsiiType.name}(${renderedOptions});`);
     emit('project.synth();');
     closeBlock();
     closeBlock();
@@ -146,28 +158,39 @@ export class Projenrc extends Component {
   }
 }
 
-function renderJavaOptions(indent: number, optionsTypeName: string, initOptions?: Record<string, any>): string {
+function renderJavaOptions(indent: number, optionsTypeName: string, optionFqns: Record<string, string>, initOptions?: Record<string, any>) {
+  const imports = new Set<string>();
   if (!initOptions || Object.keys(initOptions).length === 0) {
-    return ''; // no options
+    return { renderedOptions: '', imports }; // no options
   }
 
   const lines = [`${optionsTypeName}.builder()`];
 
   for (const [name, value] of Object.entries(initOptions)) {
-    lines.push(`.${toJavaProperty(name)}(${toJavaValue(value)})`);
+    const { javaValue, importName } = toJavaValue(value, name, optionFqns);
+    if (importName) imports.add(importName);
+    lines.push(`.${toJavaProperty(name)}(${javaValue})`);
   }
 
   lines.push('.build()');
 
-  return lines.join(`\n${' '.repeat((indent + 1) * 4)}`);
+  const renderedOptions = lines.join(`\n${' '.repeat((indent + 1) * 4)}`);
+  return { renderedOptions, imports };
 }
 
 function toJavaProperty(prop: string) {
   return prop;
 }
 
-function toJavaValue(value: any) {
-  return JSON.stringify(value);
+function toJavaValue(value: any, name: string, optionFqns: Record<string, string>) {
+  if (typeof value === 'string' && optionFqns[name] !== undefined) {
+    const parts = optionFqns[name].split('.');
+    const base = parts[parts.length - 1];
+    const choice = String(value).toUpperCase().replace('-', '_');
+    return { javaValue: `${base}.${choice}`, importName: optionFqns[name] };
+  } else {
+    return { javaValue: JSON.stringify(value) };
+  }
 }
 
 function toJavaFullTypeName(jsiiType: any) {

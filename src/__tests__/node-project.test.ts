@@ -1,6 +1,7 @@
 import * as yaml from 'yaml';
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
+import { JobPermission } from '../github/workflows-model';
 import * as logging from '../logging';
 import { NodePackage, NpmAccess } from '../node-package';
 import { DependenciesUpgradeMechanism } from '../node-project';
@@ -330,6 +331,9 @@ test('extend github release workflow', () => {
 
   project.releaseWorkflow?.addJobs({
     publish_docker_hub: {
+      permissions: {
+        contents: JobPermission.READ,
+      },
       runsOn: 'ubuntu-latest',
       env: {
         CI: 'true',

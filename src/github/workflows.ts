@@ -31,6 +31,14 @@ export class GithubWorkflow extends Component {
   }
 
   public addJobs(jobs: Record<string, workflows.Job>) {
+    // verify that job has a "permissions" statement to ensure workflow can
+    // operate in repos with default tokens set to readonly
+    for (const [id, job] of Object.entries(jobs)) {
+      if (!job.permissions) {
+        throw new Error(`${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`);
+      }
+    }
+
     this.jobs = {
       ...this.jobs,
       ...jobs,

@@ -154,3 +154,10 @@ export interface ResolveOptions {
    */
   readonly args?: any[];
 }
+
+export interface IResolvable {
+  /**
+   * Resolves and returns content.
+   */
+  toJSON(): any;
+}
