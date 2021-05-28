@@ -27,6 +27,18 @@ describe('auto-approve', () => {
 
     expect(snapshot['.github/workflows/auto-approve.yml']).toMatchSnapshot();
   });
+
+  test('all users', () => {
+    const project = createProject();
+
+    new AutoApprove(project, {
+      allowedUsernames: [],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot['.github/workflows/auto-approve.yml']).toMatchSnapshot();
+  });
 });
 
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
