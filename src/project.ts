@@ -88,19 +88,9 @@ export interface ProjectOptions extends GitHubOptions {
   readonly logging?: LoggerOptions;
 
   /**
-   * Sets up a Github workflow that automatically approves PRs that meet a certain
-   * criteria. See `autoApproveOptions` for the default criteria and change them.
-   *
-   * When enabled in combination with `mergify`, pull requests can be auto-approved
-   * and auto-merged. This is applied for the dependency upgrade PRs set up by projen.
-   *
-   * @default false
+   * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
+   * @default - auto approve is disabled
    */
-  readonly autoApproveEnabled?: boolean;
-
-  /**
-    * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
-    */
   readonly autoApproveOptions?: AutoApproveOptions;
 }
 
@@ -256,7 +246,7 @@ export class Project {
 
     new SampleReadme(this, options.readme);
 
-    if (options.autoApproveEnabled) {
+    if (options.autoApproveOptions) {
       this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
     }
   }

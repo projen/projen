@@ -6,7 +6,9 @@ describe('auto-approve', () => {
   test('default', () => {
     const project = createProject();
 
-    new AutoApprove(project);
+    new AutoApprove(project, {
+      secret: 'MY_SECRET',
+    });
 
     const snapshot = synthSnapshot(project);
 
@@ -32,6 +34,7 @@ describe('auto-approve', () => {
     const project = createProject();
 
     new AutoApprove(project, {
+      secret: 'MY_SECRET',
       allowedUsernames: [],
     });
 

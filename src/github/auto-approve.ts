@@ -25,9 +25,11 @@ export interface AutoApproveOptions {
    *
    * This token is used to approve pull requests.
    *
-   * @default 'GITHUB_TOKEN' https://docs.github.com/en/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+   * Github forbids an identity to approve its own pull request.
+   * Hence, this cannot be the default secret
+   * {@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow 'GITHUB_TOKEN' }.
    */
-  readonly secret?: string;
+  readonly secret: string;
 }
 
 /**
@@ -36,15 +38,14 @@ export interface AutoApproveOptions {
 export class AutoApprove extends Component {
   public readonly label: string;
 
-  constructor(project: Project, options: AutoApproveOptions = {}) {
+  constructor(project: Project, options: AutoApproveOptions) {
     super(project);
 
     this.label = options.label ?? 'auto-approve';
     const usernames = options.allowedUsernames ?? ['github-bot'];
-    const secret = options.secret ?? 'GITHUB_TOKEN';
 
     if (!project.github) {
-      return;
+      throw new Error('auto approval supported only for Github projects');
     }
 
     let condition = `contains(github.event.pull_request.labels.*.name, '${this.label}')`;
@@ -63,7 +64,7 @@ export class AutoApprove extends Component {
       steps: [{
         uses: 'hmarr/auto-approve-action@v2.1.0',
         with: {
-          'github-token': `\${{ secrets.${secret} }}`,
+          'github-token': `\${{ secrets.${options.secret} }}`,
         },
       }],
     };

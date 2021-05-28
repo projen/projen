@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         with:
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: \${{ secrets.MY_SECRET }}
 "
 `;
 
@@ -70,10 +70,10 @@ jobs:
     permissions:
       pull-requests: write
     if: contains(github.event.pull_request.labels.*.name, 'auto-approve') &&
-      (github.event.pull_request.login == 'github-actions')
+      (github.event.pull_request.login == 'github-bot')
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         with:
-          github-token: \${{ secrets.GITHUB_TOKEN }}
+          github-token: \${{ secrets.MY_SECRET }}
 "
 `;

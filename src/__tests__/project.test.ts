@@ -61,7 +61,9 @@ test('findFile() will also look up files in subprojects', () => {
 test('autoApprove is configured', () => {
   // WHEN
   const p = new TestProject({
-    autoApproveEnabled: true,
+    autoApproveOptions: {
+      secret: 'MY_SECRET',
+    },
   });
 
   // THEN
