@@ -71,6 +71,16 @@ const project = new JsiiProject({
     module: 'projen',
   },
 
+  codeOwners: {
+    owners: [{
+      owners: [
+        'asd',
+        'asdasdasdasd'
+      ],
+      patterns: '*'
+    }]
+  }
+
   // Disabled due to cycles between main module and submodules
   // publishToGo: {
   //   moduleName: 'github.com/projen/projen-go',
@@ -147,6 +157,7 @@ project.gitpod.addCustomTask({
   prebuild: 'bash ./projen.bash',
   command: 'npx projen build',
 });
+
 
 const setup = project.addTask('devenv:setup');
 setup.exec('yarn install');

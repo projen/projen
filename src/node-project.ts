@@ -266,13 +266,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    */
   readonly pullRequestTemplateContents?: string;
 
-  /**
-   * The contents of the CODEOWNERS file
-   *
-   * @default undefined
-   *
-   */
-  readonly codeOwnersContents?: string;
 
   /**
    * Additional entries to .gitignore
@@ -821,10 +814,6 @@ export class NodeProject extends Project {
 
     if (options.pullRequestTemplate ?? true) {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
-    }
-
-    if (!!options.codeOwnersContents) {
-      this.github?.addCodeOwners(...options.codeOwnersContents ?? []);
     }
 
     const projenrcJs = options.projenrcJs ?? true;

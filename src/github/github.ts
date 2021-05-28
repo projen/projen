@@ -1,8 +1,8 @@
 import { Component } from '../component';
 import { FileBase } from '../file';
 import { Project } from '../project';
-import { CodeOwners } from './codeowners';
 import { Dependabot, DependabotOptions } from './dependabot';
+import {CodeOwners, Owner } from './codeowners'
 import { Mergify } from './mergify';
 import { PullRequestTemplate } from './pr-template';
 import { GithubWorkflow } from './workflows';
@@ -14,6 +14,8 @@ export interface GitHubOptions {
    * @default true
    */
   readonly mergify?: boolean;
+
+  readonly codeOwners?: Owner[]
 }
 
 export class GitHub extends Component {
@@ -38,6 +40,16 @@ export class GitHub extends Component {
     // The .gitattributes file itself is generated
     this.annotateGenerated(`/${this.gitattributes.path}`);
 
+    if (!! options.codeOwners) {
+      const asd = new CodeOwners(this, {
+        owners: options.codeOwners
+      })
+      asd.ownerFile()
+    }
+
+    
+    
+
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this);
     }
@@ -55,9 +67,6 @@ export class GitHub extends Component {
     return new Dependabot(this, options);
   }
 
-  public addCodeOwners(...content: string[]) {
-    return new CodeOwners(this, { lines: content });
-  }
 
   /**
    * Marks the provided file(s) as being generated. This is achieved using the
