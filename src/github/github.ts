@@ -1,8 +1,8 @@
 import { Component } from '../component';
 import { FileBase } from '../file';
 import { Project } from '../project';
+import { CodeOwners, CodeOwnersProps } from './codeowners';
 import { Dependabot, DependabotOptions } from './dependabot';
-import {CodeOwners, CodeOwnersProps } from './codeowners'
 import { Mergify } from './mergify';
 import { PullRequestTemplate } from './pr-template';
 import { GithubWorkflow } from './workflows';
@@ -15,7 +15,13 @@ export interface GitHubOptions {
    */
   readonly mergify?: boolean;
 
-  readonly codeOwners?: CodeOwnersProps
+  /**
+   * Code Owners options
+   *
+   * @default undefined
+   */
+
+  readonly codeOwners?: CodeOwnersProps;
 }
 
 export class GitHub extends Component {
@@ -24,6 +30,10 @@ export class GitHub extends Component {
    * was not enabled when creating the repository.
    */
   public readonly mergify?: Mergify;
+
+  /**
+   * The Code Owners configured on this repo, undefined if no options were given.
+   */
 
   public readonly codeOwners?: CodeOwners;
 
@@ -43,8 +53,8 @@ export class GitHub extends Component {
     this.annotateGenerated(`/${this.gitattributes.path}`);
 
     if (!! options.codeOwners) {
-      this.codeOwners = new CodeOwners(this, options.codeOwners)
-      this.codeOwners.ownerFile()
+      this.codeOwners = new CodeOwners(this, options.codeOwners);
+      this.codeOwners.ownerFile();
     }
 
     if (options.mergify ?? true) {

@@ -9,14 +9,14 @@ export interface Owner {
 }
 
 export interface CodeOwnersProps {
-  readonly owners?: Owner[]
+  readonly owners?: Owner[];
 }
 export class CodeOwners extends Component {
   private owners: string[] = [];
 
   constructor(github: GitHub, options: CodeOwnersProps) {
     super(github.project);
-    options.owners?.forEach(this.addOwners.bind(this));  
+    options.owners?.forEach(this.addOwners.bind(this));
   }
 
   public addOwners(owner: Owner) {
@@ -25,7 +25,7 @@ export class CodeOwners extends Component {
 
   public ownerFile() {
     new TextFile(this.project, '.github/CODEOWNERS', {
-      lines: this.owners
-    })
+      lines: this.owners,
+    });
   }
 }

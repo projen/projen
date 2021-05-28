@@ -342,7 +342,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -530,7 +530,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 ```
 
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -682,7 +682,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 ```
 
 * **options** (<code>[Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -883,7 +883,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -1017,7 +1017,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 ```
 
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -1162,7 +1162,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 ```
 
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -2198,7 +2198,7 @@ new JsiiProject(options: JsiiProjectOptions)
 ```
 
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -2917,7 +2917,7 @@ new NodeProject(options: NodeProjectOptions)
 ```
 
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -3359,7 +3359,7 @@ new Project(options: ProjectOptions)
 ```
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -4053,7 +4053,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -4173,7 +4173,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -4293,7 +4293,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 ```
 
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -4839,12 +4839,12 @@ new github.CodeOwners(github: GitHub, options: CodeOwnersProps)
 ### Methods
 
 
-#### addOwner(owner)🔹 <a id="projen-github-codeowners-addowner"></a>
+#### addOwners(owner)🔹 <a id="projen-github-codeowners-addowners"></a>
 
 
 
 ```ts
-addOwner(owner: Owner): void
+addOwners(owner: Owner): void
 ```
 
 * **owner** (<code>[github.Owner](#projen-github-owner)</code>)  *No description*
@@ -4944,7 +4944,7 @@ new github.GitHub(project: Project, options: GitHubOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
 
 
@@ -4954,6 +4954,7 @@ new github.GitHub(project: Project, options: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**codeOwners**?🔹 | <code>[github.CodeOwners](#projen-github-codeowners)</code> | The Code Owners configured on this repo, undefined if no options were given.<br/>__*Optional*__
 **mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
 
 ### Methods
@@ -5198,7 +5199,7 @@ new java.JavaProject(options: JavaProjectOptions)
 ```
 
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -5883,7 +5884,7 @@ new python.PythonProject(options: PythonProjectOptions)
 ```
 
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -6797,7 +6798,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
 * **options** (<code>[web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -6961,7 +6962,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 * **options** (<code>[web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)</code>)  *No description*
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -7153,7 +7154,7 @@ new web.ReactProject(options: ReactProjectOptions)
 ```
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -7313,7 +7314,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 ```
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
-  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  *No description* __*Optional*__
+  * **codeOwners** (<code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code>)  Code Owners options. __*Default*__: undefined
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
@@ -7496,7 +7497,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
@@ -7623,7 +7624,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -7754,7 +7755,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -7876,7 +7877,7 @@ Name | Type | Description
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?⚠️ | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?⚠️ | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
@@ -8004,7 +8005,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
@@ -8130,7 +8131,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
@@ -8890,7 +8891,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
@@ -9238,7 +9239,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
@@ -9366,7 +9367,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
@@ -9582,7 +9583,7 @@ Name | Type | Description
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?⚠️ | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?⚠️ | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -9694,7 +9695,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -9998,7 +9999,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 
 
@@ -10072,7 +10073,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
@@ -10469,7 +10470,7 @@ Name | Type | Description
 **version**🔹 | <code>string</code> | Version of the package.
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -10797,7 +10798,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
@@ -10913,7 +10914,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -11054,7 +11055,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
@@ -11168,7 +11169,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | __*Optional*__
+**codeOwners**?🔹 | <code>[github.CodeOwnersProps](#projen-github-codeownersprops)</code> | Code Owners options.<br/>__*Default*__: undefined
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
