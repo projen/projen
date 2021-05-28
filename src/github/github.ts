@@ -25,6 +25,8 @@ export class GitHub extends Component {
    */
   public readonly mergify?: Mergify;
 
+  public readonly codeOwners?: CodeOwners;
+
   /**
    * The .gitattributes file for this repository.
    */
@@ -41,11 +43,9 @@ export class GitHub extends Component {
     this.annotateGenerated(`/${this.gitattributes.path}`);
 
     if (!! options.codeOwners) {
-      new CodeOwners(this, options.codeOwners )
+      this.codeOwners = new CodeOwners(this, options.codeOwners)
+      this.codeOwners.ownerFile()
     }
-
-    
-    
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this);

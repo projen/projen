@@ -16,11 +16,10 @@ export class CodeOwners extends Component {
 
   constructor(github: GitHub, options: CodeOwnersProps) {
     super(github.project);
-    options.owners?.forEach(this.addOwner.bind(this));  
-    this.ownerFile()
+    options.owners?.forEach(this.addOwners.bind(this));  
   }
 
-  public addOwner(owner: Owner) {
+  public addOwners(owner: Owner) {
     this.owners.push(`${owner.patterns} ${owner.owners?.join(' ')}`);
   }
 
