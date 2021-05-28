@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { FileBase } from '../file';
 import { Project } from '../project';
 import { Dependabot, DependabotOptions } from './dependabot';
-import {CodeOwners, Owner } from './codeowners'
+import {CodeOwners, CodeOwnersProps } from './codeowners'
 import { Mergify } from './mergify';
 import { PullRequestTemplate } from './pr-template';
 import { GithubWorkflow } from './workflows';
@@ -15,7 +15,7 @@ export interface GitHubOptions {
    */
   readonly mergify?: boolean;
 
-  readonly codeOwners?: Owner[]
+  readonly codeOwners?: CodeOwnersProps
 }
 
 export class GitHub extends Component {
@@ -41,10 +41,7 @@ export class GitHub extends Component {
     this.annotateGenerated(`/${this.gitattributes.path}`);
 
     if (!! options.codeOwners) {
-      const asd = new CodeOwners(this, {
-        owners: options.codeOwners
-      })
-      asd.ownerFile()
+      new CodeOwners(this, options.codeOwners )
     }
 
     

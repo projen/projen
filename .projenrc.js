@@ -71,16 +71,6 @@ const project = new JsiiProject({
     module: 'projen',
   },
 
-  codeOwners: {
-    owners: [{
-      owners: [
-        'asd',
-        'asdasdasdasd'
-      ],
-      patterns: '*'
-    }]
-  }
-
   // Disabled due to cycles between main module and submodules
   // publishToGo: {
   //   moduleName: 'github.com/projen/projen-go',
