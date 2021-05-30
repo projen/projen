@@ -21,6 +21,7 @@ async function main() {
   ya.option('watch', { type: 'boolean', default: false, desc: 'Keep running and resynthesize when projenrc changes', alias: 'w' });
   ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
   ya.options('rc', { desc: 'path to .projenrc.js file', default: DEFAULT_RC, type: 'string' });
+  ya.completion();
   ya.help();
 
   // do not use the default yargs '--version' implementation since it is
