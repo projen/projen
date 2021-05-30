@@ -4,24 +4,15 @@ import { Project } from './project';
 
 export interface LicenseOptions {
   /**
-   * Copyright owner
-   *
-   * @default ""
+   * SPDX license type.
    */
-  readonly copyrightOwner?: string;
-
-  /**
-   * Period of license (e.g. "1998-2023")
-   *
-   * @default - current year (e.g. "2020")
-   */
-  readonly copyrightPeriod?: string;
+  readonly spdx: string;
 }
 
 export class License extends FileBase {
   private readonly text: string;
 
-  constructor(project: Project, spdx: string, options: LicenseOptions) {
+  constructor(project: Project, spdx: string) {
     super(project, 'LICENSE');
 
     const textFile = `${__dirname}/../license-text/${spdx}.txt`;
@@ -29,12 +20,7 @@ export class License extends FileBase {
       throw new Error(`unsupported license ${spdx}`);
     }
 
-    const years = options.copyrightPeriod ?? new Date().getFullYear().toString();
-    const owner = options.copyrightOwner ?? '';
-
-    this.text = fs.readFileSync(textFile, 'utf-8')
-      .replace('[yyyy]', years)
-      .replace('[name of copyright owner]', owner);
+    this.text = fs.readFileSync(textFile, 'utf-8');
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
