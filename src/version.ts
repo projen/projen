@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { JsonFile } from './json';
-import { NodeProject } from './node-project';
+import { Project } from './project';
 import { Task, TaskCategory } from './tasks';
 
 export interface VersionOptions {
@@ -12,6 +12,13 @@ export interface VersionOptions {
    * @default "v0.1.0"
    */
   readonly initialVersion?: string;
+
+  /**
+   * The command to use to execute `standard-version`.
+   *
+   * @default "npx standard-version@^9"
+   */
+  readonly standardVersionCommand?: string;
 }
 
 export class Version extends Component {
@@ -19,7 +26,7 @@ export class Version extends Component {
   public readonly unbumpTask: Task;
   public readonly changelogFile: string;
 
-  constructor(project: NodeProject, options: VersionOptions) {
+  constructor(project: Project, options: VersionOptions) {
     super(project);
 
     const versionFile = '.version.tmp.json';
@@ -47,27 +54,24 @@ export class Version extends Component {
 
     // this is the version used if a tag with a "v" prefix cannot be found in the repo.
     const initialVersion = options.initialVersion ?? 'v0.1.0';
+    const standardVersionCommand = options.standardVersionCommand ?? 'npx standard-version@^9';
 
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
     this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
-    this.bumpTask.exec('standard-version');
+    this.bumpTask.exec(standardVersionCommand);
+    this.bumpTask.exec(`rm -f ${versionFile}`);
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
       category: TaskCategory.RELEASE,
-      exec: 'standard-version -r 0.0.0',
+      exec: `${standardVersionCommand} -r 0.0.0`,
     });
 
-    project.addDevDeps(
-      'standard-version@^9',
-    );
+    project.addGitIgnore(`/${this.changelogFile}`);
+    project.addGitIgnore(`/${versionFile}`);
+    project.addPackageIgnore(`/${this.changelogFile}`);
 
-    project.npmignore?.addPatterns(`/${this.changelogFile}`);
-    project.npmignore?.addPatterns(`/${versionFile}`);
-    project.npmignore?.addPatterns('/.versionrc.json');
-    project.gitignore.addPatterns(`/${this.changelogFile}`);
-    project.gitignore.addPatterns(`/${versionFile}`);
-
+    project.addPackageIgnore('/.versionrc.json');
     new JsonFile(project, '.versionrc.json', {
       obj: {
         packageFiles: [{
