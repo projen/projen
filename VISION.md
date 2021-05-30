@@ -61,4 +61,4 @@ inside projen components.
 - [ ] Components: re-think/re-factor how components and projects interact to allow more modular and composable usage.
 - [ ] Discoverability of external components/modules through the CLI
 - [ ] Support projenrc in YAML (fully declarative, if one desires)
-- [ ] CLI bash completion
+- [x] CLI bash completion

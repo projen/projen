@@ -148,6 +148,15 @@ $ yarn start
 The `build` command is the same command that's executed in your CI builds. It
 typically compiles, lints, tests and packages your module for distribution.
 
+### Shell Completions
+If installed as a global package, `projen` includes rich shell tab-completion support. To enable this in your shell, run:
+```shell
+# Bash
+projen completion >> ~/.bashrc
+
+# ZSH
+projen completion >> ~/.zshrc
+```
 ## Features
 
 Some examples for features built-in to project types:
