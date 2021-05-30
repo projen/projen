@@ -2372,13 +2372,13 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new License(project: Project, spdx: string, options: LicenseOptions)
+new License(project: Project, options: LicenseOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **spdx** (<code>string</code>)  *No description*
 * **options** (<code>[LicenseOptions](#projen-licenseoptions)</code>)  *No description*
-  * **copyrightOwner** (<code>string</code>)  Copyright owner. __*Default*__: ""
+  * **spdx** (<code>string</code>)  License type (SPDX). 
+  * **copyrightOwner** (<code>string</code>)  Copyright owner. __*Default*__: -
   * **copyrightPeriod** (<code>string</code>)  Period of license (e.g. "1998-2023"). __*Default*__: current year (e.g. "2020")
 
 
@@ -9087,7 +9087,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**copyrightOwner**?🔹 | <code>string</code> | Copyright owner.<br/>__*Default*__: ""
+**spdx**🔹 | <code>string</code> | License type (SPDX).
+**copyrightOwner**?🔹 | <code>string</code> | Copyright owner.<br/>__*Default*__: -
 **copyrightPeriod**?🔹 | <code>string</code> | Period of license (e.g. "1998-2023").<br/>__*Default*__: current year (e.g. "2020")
 
 

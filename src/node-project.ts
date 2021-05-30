@@ -977,7 +977,8 @@ export class NodeProject extends Project {
 
   private addLicense(options: NodeProjectOptions) {
     if (this.package.license) {
-      new License(this, this.package.license, {
+      new License(this, {
+        spdx: this.package.license,
         copyrightOwner: options.copyrightOwner ?? options.authorName,
         copyrightPeriod: options.copyrightPeriod,
       });
