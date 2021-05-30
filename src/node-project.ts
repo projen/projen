@@ -17,6 +17,21 @@ const PROJEN_SCRIPT = 'projen';
 
 export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   /**
+   * License copyright owner.
+   *
+   * @default - defaults to the value of authorName or "" if `authorName` is undefined.
+   */
+  readonly copyrightOwner?: string;
+
+  /**
+   * The copyright years to put in the LICENSE file.
+   *
+   * @default - current year
+   */
+  readonly copyrightPeriod?: string;
+
+
+  /**
    * Version of projen to install.
    *
    * @default - Defaults to the latest version.
@@ -505,7 +520,7 @@ export class NodeProject extends Project {
       }
     }
 
-    this.addLicense();
+    this.addLicense(options);
 
     this.npmDistTag = this.package.npmDistTag;
     this.npmRegistry = this.package.npmRegistry;
@@ -960,9 +975,12 @@ export class NodeProject extends Project {
     return this.package.addBundledDeps(...deps);
   }
 
-  private addLicense() {
+  private addLicense(options: NodeProjectOptions) {
     if (this.package.license) {
-      new License(this, this.package.license);
+      new License(this, this.package.license, {
+        copyrightOwner: options.copyrightOwner ?? options.authorName,
+        copyrightPeriod: options.copyrightPeriod,
+      });
     }
   }
 
