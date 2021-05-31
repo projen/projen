@@ -1,6 +1,4 @@
 import { TaskCategory, TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
-import { Tasks } from './tasks';
-
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -39,10 +37,8 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
-  private readonly tasks: Tasks;
 
-  constructor(tasks: Tasks, name: string, props: TaskOptions = { }) {
-    this.tasks = tasks;
+  constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
     this.description = props.description;
     this.category = props.category;
@@ -78,6 +74,21 @@ export class Task {
    */
   public exec(command: string, options: TaskStepOptions = { }) {
     this._steps.push({ exec: command, ...options });
+  }
+
+  /**
+   * Execute a builtin task.
+   *
+   * Builtin tasks are programs bundled as part of projen itself and used as
+   * helpers for various components.
+   *
+   * In the future we should support built-in tasks from external modules.
+   *
+   * @param name The name of the builtin task to execute (e.g.
+   * `release/resolve-version`).
+   */
+  public builtin(name: string) {
+    this._steps.push({ builtin: name });
   }
 
   /**
@@ -156,45 +167,6 @@ export class Task {
    */
   public get steps() {
     return [...this._steps];
-  }
-
-  /**
-   * Renders this task as a single shell command.
-   */
-  public toShellCommand(): string {
-    const cmd = new Array<string>();
-
-    for (const step of this.steps) {
-      if (step.name) {
-        cmd.push(`echo ${step.name}`);
-      }
-      if (step.exec) {
-        cmd.push(step.exec);
-      }
-      if (step.spawn) {
-        const subtask = this.tasks.tryFind(step.spawn);
-        if (!subtask) {
-          throw new Error(`unable to resolve subtask ${step.spawn}`);
-        }
-
-        cmd.push(`( ${subtask.toShellCommand()} )`);
-      }
-    }
-
-    const allCommands = cmd.map(c => `( ${c} )`).join(' && ');
-    const withCondition = this.condition ? `! ( ${this.condition} ) || ( ${allCommands} )` : allCommands;
-
-    const env = {
-      ...this.tasks.env,
-      ...this._env,
-    };
-
-    const lines = new Array<string>();
-    for (const [k, v] of Object.entries(env)) {
-      lines.push(`${k}="${v}"; `);
-    }
-
-    return `( ${lines.join('')} ${withCondition} )`;
   }
 
   /**

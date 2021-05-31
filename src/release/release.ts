@@ -80,6 +80,13 @@ export interface ReleaseProjectOptions {
   readonly initialVersion?: string;
 
   /**
+   * Bump as a pre-release (e.g. "beta", "alpha", "pre").
+   *
+   * @default - normal semantic versions
+   */
+  readonly prerelease?: string;
+
+  /**
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
@@ -99,6 +106,13 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * build is complete.
    */
   readonly task: Task;
+
+  /**
+   * A name of a .json file to set the `version` field in after a bump.
+   *
+   * @example "package.json"
+   */
+  readonly versionJson: string;
 }
 
 /**
@@ -131,6 +145,8 @@ export class Release extends Component {
 
     this.version = new Version(project, {
       initialVersion: options.initialVersion,
+      prerelease: options.prerelease,
+      versionJson: options.versionJson,
     });
 
     this.workflow = this.createWorkflow(options);

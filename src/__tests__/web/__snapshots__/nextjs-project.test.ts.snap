@@ -241,7 +241,6 @@ jobs:
 .yarn-integrity
 /.changelog.tmp.md
 /.next/
-/.version.tmp.json
 build/Release
 coverage
 jspm_packages/
@@ -302,7 +301,6 @@ pull_request_rules:
 /.next/
 /.projen
 /.projenrc.js
-/.version.tmp.json
 /.versionrc.json
 /postcss.config.json
 /tailwind.config.json
@@ -376,13 +374,15 @@ pull_request_rules:
         "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
+        "env": Object {
+          "INITIAL_VERSION": "v0.1.0",
+          "OUTFILE": "package.json",
+          "PRERELEASE": "",
+        },
         "name": "bump",
         "steps": Array [
           Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
-          },
-          Object {
-            "exec": "if [ \\"$(cat .version.tmp.json)\\" = \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
+            "builtin": "release/resolve-version",
           },
           Object {
             "exec": "npx standard-version@^9",
@@ -515,8 +515,8 @@ pull_request_rules:
     "infile": ".changelog.tmp.md",
     "packageFiles": Array [
       Object {
-        "filename": ".version.tmp.json",
-        "type": "plain-text",
+        "filename": "package.json",
+        "type": "json",
       },
     ],
     "skip": Object {

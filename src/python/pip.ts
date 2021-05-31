@@ -1,7 +1,6 @@
 import { Component } from '../component';
 import { Dependency, DependencyType } from '../deps';
-import { Task, TaskCategory } from '../tasks';
-import { exec } from '../util';
+import { Task, TaskCategory, TaskRuntime } from '../tasks';
 import { IPackageProvider, IPythonDeps } from './python-deps';
 import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';
@@ -55,7 +54,9 @@ export class Pip extends Component implements IPythonDeps {
    */
   public installDependencies() {
     this.project.logger.info('Installing dependencies...');
-    exec(this.installTask.toShellCommand(), { cwd: this.project.outdir });
+
+    const runtime = new TaskRuntime(this.project.outdir);
+    runtime.runTask(this.installTask.name);
   }
 }
 
