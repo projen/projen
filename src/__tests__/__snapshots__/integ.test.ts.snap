@@ -1029,7 +1029,6 @@ tsconfig.tsbuildinfo
         "env": Object {
           "INITIAL_VERSION": "v0.1.0",
           "OUTFILE": "package.json",
-          "PRERELEASE": "",
         },
         "name": "bump",
         "steps": Array [
@@ -1189,10 +1188,15 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "unbump": Object {
         "category": "20.release",
         "description": "Restores version to 0.0.0",
+        "env": Object {
+          "INITIAL_VERSION": "v0.1.0",
+          "OUTFILE": "package.json",
+          "RESET": 1,
+        },
         "name": "unbump",
         "steps": Array [
           Object {
-            "exec": "npx standard-version@^9 -r 0.0.0",
+            "builtin": "release/resolve-version",
           },
         ],
       },
@@ -4895,7 +4899,6 @@ junit.xml
         "env": Object {
           "INITIAL_VERSION": "v0.1.0",
           "OUTFILE": "package.json",
-          "PRERELEASE": "",
         },
         "name": "bump",
         "steps": Array [
@@ -4994,10 +4997,15 @@ junit.xml
       "unbump": Object {
         "category": "20.release",
         "description": "Restores version to 0.0.0",
+        "env": Object {
+          "INITIAL_VERSION": "v0.1.0",
+          "OUTFILE": "package.json",
+          "RESET": 1,
+        },
         "name": "unbump",
         "steps": Array [
           Object {
-            "exec": "npx standard-version@^9 -r 0.0.0",
+            "builtin": "release/resolve-version",
           },
         ],
       },

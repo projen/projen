@@ -209,6 +209,21 @@ export class Release extends Component {
     // run post-build steps
     steps.push(...this.postBuildSteps);
 
+    // revert the bump so anti-tamper will not fail
+    steps.push({
+      name: 'Unbump',
+      run: this.project.runTaskCommand(this.version.unbumpTask),
+    });
+
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    if (this.antitamper) {
+      steps.push({
+        name: 'Anti-tamper check',
+        run: 'git diff --ignore-space-at-eol --exit-code',
+      });
+    }
+
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
     steps.push({
@@ -231,12 +246,6 @@ export class Release extends Component {
       },
     });
 
-    // TODO: do we really need to unbump?
-    steps.push({
-      name: 'Unbump',
-      run: this.project.runTaskCommand(this.version.unbumpTask),
-    });
-
     steps.push({
       name: 'Upload artifact',
       if: noNewCommits,
@@ -247,14 +256,6 @@ export class Release extends Component {
       },
     });
 
-    // anti-tamper check (fails if there were changes to committed files)
-    // this will identify any non-committed files generated during build (e.g. test snapshots)
-    if (this.antitamper) {
-      steps.push({
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      });
-    }
 
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
