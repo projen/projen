@@ -48,16 +48,20 @@ export class Version extends Component {
     // (the top-most commit is not a bump). it is used as a condition for both
     // the `bump` and the `release` tasks.
     const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
+    const builtinEnv: any = {
+      OUTFILE: versionJson,
+      INITIAL_VERSION: options.initialVersion ?? 'v0.1.0',
+    };
+
+    if (options.prerelease) {
+      builtinEnv.PRERELEASE = options.prerelease;
+    }
 
     this.bumpTask = project.addTask('bump', {
       description: 'Bumps version based on latest git tag and generates a changelog entry',
       category: TaskCategory.RELEASE,
       condition: changesSinceLastRelease,
-      env: {
-        OUTFILE: versionJson,
-        INITIAL_VERSION: options.initialVersion ?? 'v0.1.0',
-        PRERELEASE: options.prerelease ?? '',
-      },
+      env: builtinEnv,
     });
 
 
@@ -71,8 +75,12 @@ export class Version extends Component {
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
       category: TaskCategory.RELEASE,
-      exec: `${standardVersion} -r 0.0.0`,
+      env: {
+        OUTFILE: versionJson,
+      },
     });
+
+    this.unbumpTask.builtin('release/reset-version');
 
     project.addGitIgnore(`/${this.changelogFile}`);
     project.addPackageIgnore(`/${this.changelogFile}`);
