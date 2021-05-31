@@ -285,6 +285,7 @@ pull_request_rules:
 /.mergify.yml
 /.projen
 /.projenrc.js
+/.version.tmp.json
 /.versionrc.json
 /build
 ",
@@ -372,9 +373,6 @@ pull_request_rules:
           },
           Object {
             "exec": "npx standard-version@^9",
-          },
-          Object {
-            "exec": "rm -f .version.tmp.json",
           },
         ],
       },

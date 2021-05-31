@@ -722,6 +722,7 @@ pull_request_rules:
 /.mergify.yml
 /.projen
 /.projenrc.js
+/.version.tmp.json
 /.versionrc.json
 /.vscode
 /coverage
@@ -1037,9 +1038,6 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "npx standard-version@^9",
-          },
-          Object {
-            "exec": "rm -f .version.tmp.json",
           },
         ],
       },
@@ -4828,6 +4826,7 @@ pull_request_rules:
 /.mergify.yml
 /.projen
 /.projenrc.js
+/.version.tmp.json
 /.versionrc.json
 /coverage
 /test-reports/
@@ -4905,9 +4904,6 @@ junit.xml
           },
           Object {
             "exec": "npx standard-version@^9",
-          },
-          Object {
-            "exec": "rm -f .version.tmp.json",
           },
         ],
       },

@@ -4642,6 +4642,7 @@ Name | Type | Description
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **changelogFile**🔹 | <code>string</code> | <span></span>
 **unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+*static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
 
 
 

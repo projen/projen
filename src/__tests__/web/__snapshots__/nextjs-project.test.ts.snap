@@ -302,6 +302,7 @@ pull_request_rules:
 /.next/
 /.projen
 /.projenrc.js
+/.version.tmp.json
 /.versionrc.json
 /postcss.config.json
 /tailwind.config.json
@@ -385,9 +386,6 @@ pull_request_rules:
           },
           Object {
             "exec": "npx standard-version@^9",
-          },
-          Object {
-            "exec": "rm -f .version.tmp.json",
           },
         ],
       },

@@ -57,7 +57,6 @@ export class Version extends Component {
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
     this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
     this.bumpTask.exec(standardVersion);
-    this.bumpTask.exec(`rm -f ${versionFile}`);
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
@@ -68,7 +67,7 @@ export class Version extends Component {
     project.addGitIgnore(`/${this.changelogFile}`);
     project.addGitIgnore(`/${versionFile}`);
     project.addPackageIgnore(`/${this.changelogFile}`);
-
+    project.addPackageIgnore(`/${versionFile}`);
     project.addPackageIgnore('/.versionrc.json');
     new JsonFile(project, '.versionrc.json', {
       obj: {

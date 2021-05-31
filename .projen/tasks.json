@@ -122,9 +122,6 @@
         },
         {
           "exec": "npx standard-version@^9"
-        },
-        {
-          "exec": "rm -f .version.tmp.json"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
