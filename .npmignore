@@ -6,7 +6,6 @@
 /.mergify.yml
 /.projen
 /.projenrc.js
-/.version.tmp.json
 /.versionrc.json
 /.vscode
 /coverage

@@ -50,7 +50,7 @@ export class Tasks extends Component {
    * @param options Task options.
    */
   public addTask(name: string, options: TaskOptions = {}) {
-    const task = new Task(this, name, options);
+    const task = new Task(name, options);
     this._tasks[name] = task;
     return task;
   }
