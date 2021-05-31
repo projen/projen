@@ -3756,7 +3756,8 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 * **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
 * **dir** (<code>string</code>)  directory to add files to.
 * **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
-  * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
+  * **files** (<code>Map<string, string></code>)  The files to render into the directory. __*Optional*__
+  * **source** (<code>string</code>)  A path to a directory to copy files from, starting with the name of the module which contains the directory. __*Optional*__
 
 
 ### Methods
@@ -9543,7 +9544,8 @@ SampleDir options.
 
 Name | Type | Description 
 -----|------|-------------
-**files**🔹 | <code>Map<string, string></code> | The files to render into the directory.
+**files**?🔹 | <code>Map<string, string></code> | The files to render into the directory.<br/>__*Optional*__
+**source**?🔹 | <code>string</code> | A path to a directory to copy files from, starting with the name of the module which contains the directory.<br/>__*Optional*__
 
 
 

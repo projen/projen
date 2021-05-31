@@ -73,7 +73,8 @@ export function synthSnapshot(project: Project): any {
   try {
     process.env.PROJEN_DISABLE_POST = 'true';
     project.synth();
-    return directorySnapshot(project.outdir);
+    const ignoreExts = ['png', 'ico'];
+    return directorySnapshot(project.outdir, { excludeGlobs: ignoreExts.map(ext => `**/*.${ext}`) });
   } finally {
     fs.removeSync(project.outdir);
 

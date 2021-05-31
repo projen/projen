@@ -1,8 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as glob from 'glob';
 import { Component } from './component';
 import { Project } from './project';
-import { writeFile } from './util';
+import { getFilePermissions, writeFile } from './util';
 
 /**
  * Options for the SampleFile object.
@@ -54,41 +55,12 @@ export class SampleFile extends Component {
     if (this.options.contents) {
       contents = this.options.contents;
     } else if (this.options.source) {
-      const source = this.resolveSourcePath(this.options.source);
+      const source = resolveSourcePath(this.options.source);
       if (fs.existsSync(source)) {
         contents = fs.readFileSync(source);
       }
     }
     this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
-  }
-
-  /**
-   * A helper function that resolves the path to a raw file based on
-   * projen's current runtime environment.
-   *
-   * @param relativeSource - a relative path to a file in a module, starting with the module name
-   * @returns an absolute path
-   */
-  private resolveSourcePath(relativeSource: string) {
-    // at runtime, __dirname usually looks like /path/to/third-party-lib/node_modules/projen/lib
-    // unless you are testing/developing projen, where it might look like /path/to/projen/lib
-    const parts = __dirname.split('/');
-
-    if (parts.indexOf('node_modules') === -1) { // projen development
-      return path.join(__dirname, '..', '..', relativeSource);
-    } else { // using projen as a dependency
-      const base = parts.slice(0, parts.lastIndexOf('node_modules') + 1).join('/'); // /path/to/third-party-lib/node_modules
-      const hostModule = parts[parts.lastIndexOf('node_modules') - 1]; // the module that the current project type belongs to (e.g. projen-vue-bootstrap)
-      const sourceModule = relativeSource.split('/')[0]; // the module that we are expecting to find the raw file in (e.g. projen-vue)
-
-      if (sourceModule !== hostModule) {
-        return path.join(base, relativeSource);
-      } else {
-        // when the host and source modules are the same, we want to avoid looking
-        // for the raw file at /path/to/third-party-lib/node_modules/third-party-lib/path/to/asset.png
-        return path.join(base, '..', '..', relativeSource);
-      }
-    }
   }
 
   /**
@@ -113,9 +85,17 @@ export class SampleFile extends Component {
  */
 export interface SampleDirOptions {
   /**
-   * The files to render into the directory
+   * The files to render into the directory. These files get added after
+   * any files from `source` if that option is specified (replacing if names
+   * overlap).
    */
-  readonly files: { [fileName: string]: string };
+  readonly files?: { [fileName: string]: string };
+
+  /**
+   * A path to a directory to copy files from, starting with the name of the
+   * module which contains the directory.
+   */
+  readonly source?: string;
 }
 
 /**
@@ -133,6 +113,10 @@ export class SampleDir extends Component {
    */
   constructor(project: Project, dir: string, options: SampleDirOptions) {
     super(project);
+    if (!options.files && !options.source) {
+      throw new Error('Must specify at least one of \'files\' or \'source\'.');
+    }
+
     this.dir = dir;
     this.options = options;
   }
@@ -143,8 +127,55 @@ export class SampleDir extends Component {
       return;
     }
 
+    if (this.options.source) {
+      const basedir = resolveSourcePath(this.options.source);
+      const files = glob.sync('**', {
+        cwd: basedir,
+        nodir: true,
+        dot: true,
+      }); // returns relative file paths with POSIX separators
+
+      for (const file of files) {
+        const sourcePath = path.join(basedir, file);
+        const targetPath = path.join(fullOutdir, file);
+
+        fs.mkdirpSync(path.dirname(targetPath));
+        fs.copyFileSync(sourcePath, targetPath);
+        fs.chmodSync(targetPath, getFilePermissions({ readonly: false, executable: false }));
+      }
+    }
+
     for (const filename in this.options.files) {
       writeFile(path.join(fullOutdir, filename), this.options.files[filename]);
+    }
+  }
+}
+
+/**
+ * A helper function that resolves the path to a raw file based on
+ * projen's current runtime environment.
+ *
+ * @param relativeSource - a relative path to a file in a module, starting with the module name
+ * @returns an absolute path
+ */
+function resolveSourcePath(relativeSource: string) {
+  // at runtime, __dirname usually looks like /path/to/third-party-lib/node_modules/projen/lib
+  // unless you are testing/developing projen, where it might look like /path/to/projen/lib
+  const parts = __dirname.split('/');
+
+  if (parts.indexOf('node_modules') === -1) { // projen development
+    return path.join(__dirname, '..', '..', relativeSource);
+  } else { // using projen as a dependency
+    const base = parts.slice(0, parts.lastIndexOf('node_modules') + 1).join('/'); // /path/to/third-party-lib/node_modules
+    const hostModule = parts[parts.lastIndexOf('node_modules') - 1]; // the module that the current project type belongs to (e.g. projen-vue-bootstrap)
+    const sourceModule = relativeSource.split('/')[0]; // the module that we are expecting to find the raw file in (e.g. projen-vue)
+
+    if (sourceModule !== hostModule) {
+      return path.join(base, relativeSource);
+    } else {
+      // when the host and source modules are the same, we want to avoid looking
+      // for the raw file at /path/to/third-party-lib/node_modules/third-party-lib/path/to/asset.png
+      return path.join(base, '..', '..', relativeSource);
     }
   }
 }
