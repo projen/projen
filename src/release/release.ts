@@ -162,7 +162,6 @@ export class Release extends Component {
   private createWorkflow(options: ReleaseOptions): GithubWorkflow {
     const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
     const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
-    const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -209,6 +208,15 @@ export class Release extends Component {
     // run post-build steps
     steps.push(...this.postBuildSteps);
 
+    // create a backup of the version JSON file (e.g. package.json) because we
+    // are going to revert the bump and we need the version number in order to
+    // create the github release.
+    const versionJsonBackup = `${options.versionJson}.bak.json`;
+    steps.push({
+      name: 'Backup version file',
+      run: `cp -f ${options.versionJson} ${versionJsonBackup}`,
+    });
+
     // revert the bump so anti-tamper will not fail
     steps.push({
       name: 'Unbump',
@@ -233,6 +241,7 @@ export class Release extends Component {
     });
 
     // create a github release
+    const getVersion = `v$(node -p \"require(\'./${versionJsonBackup}\').version\")`;
     steps.push({
       name: 'Create release',
       if: noNewCommits,

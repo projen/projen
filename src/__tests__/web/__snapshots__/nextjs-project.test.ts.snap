@@ -101,6 +101,8 @@ jobs:
         run: npx projen bump
       - name: build
         run: npx projen build
+      - name: Backup version file
+        run: cp -f package.json package.json.bak.json
       - name: Unbump
         run: npx projen unbump
       - name: Anti-tamper check
