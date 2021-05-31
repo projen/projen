@@ -32,6 +32,10 @@ jobs:
         run: npx projen bump
       - name: build
         run: npx projen build
+      - name: Unbump
+        run: npx projen unbump
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
@@ -42,16 +46,12 @@ jobs:
           .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-      - name: Unbump
-        run: npx projen unbump
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
@@ -132,6 +132,10 @@ jobs:
         run: npx projen bump
       - name: build
         run: npx projen build
+      - name: Unbump
+        run: npx projen unbump
+      - name: Anti-tamper check
+        run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
@@ -142,16 +146,12 @@ jobs:
           .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-      - name: Unbump
-        run: npx projen unbump
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
           path: dist
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
     container:
       image: jsii/superchain
   release_npm:
