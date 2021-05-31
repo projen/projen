@@ -5,6 +5,8 @@ import { Publisher } from '../publisher';
 import { Task } from '../tasks';
 import { Version } from '../version';
 
+const BUILD_JOBID = 'release';
+
 /**
  * Options for `Release`.
  */
@@ -117,6 +119,7 @@ export class Release extends Component {
   private readonly version: Version;
   private readonly postBuildSteps: workflows.JobStep[];
   private readonly antitamper: boolean;
+  private readonly artifactDirectory: string;
 
   constructor(project: Project, options: ReleaseOptions) {
     super(project);
@@ -124,29 +127,26 @@ export class Release extends Component {
     this.task = options.task;
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.antitamper = options.antitamper ?? true;
+    this.artifactDirectory = options.artifactsDirectory ?? 'dist';
 
     this.version = new Version(project, {
       initialVersion: options.initialVersion,
     });
 
+    this.workflow = this.createWorkflow(options);
+
+    this.publisher = new Publisher(project, {
+      workflow: this.workflow,
+      artifactName: this.artifactDirectory,
+      buildJobId: BUILD_JOBID,
+      jsiiReleaseVersion: options.jsiiReleaseVersion,
+    });
+  }
+
+  private createWorkflow(options: ReleaseOptions): GithubWorkflow {
     const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
     const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
-
-    const trigger: { [event: string]: any } = { };
-
-    if (options.releaseEveryCommit ?? true) {
-      trigger.push = { branches: releaseBranches };
-    }
-
-    if (options.releaseSchedule) {
-      trigger.schedule = { cron: options.releaseSchedule };
-    }
-
-    const artifactDirectory = options.artifactsDirectory ?? 'dist';
     const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
-    const jobId = 'release';
-
-    const releaseSteps: workflows.JobStep[] = [];
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -155,13 +155,54 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
-    releaseSteps.push({
+    const steps = new Array<workflows.JobStep>();
+
+    // check out sources.
+    steps.push({
+      name: 'Checkout',
+      uses: 'actions/checkout@v2',
+      with: {
+        // we must use 'fetch-depth=0' in order to fetch all tags
+        // otherwise tags are not checked out
+        'fetch-depth': 0,
+      },
+    });
+
+    // sets git identity so we can push later
+    steps.push({
+      name: 'Set git identity',
+      run: [
+        'git config user.name "Automation"',
+        'git config user.email "github-actions@github.com"',
+      ].join('\n'),
+    });
+
+    steps.push(...options.releaseWorkflowSetupSteps ?? []);
+
+    steps.push({
+      name: 'Bump to next version',
+      run: this.project.runTaskCommand(this.version.bumpTask),
+    });
+
+    // run the main build task
+    steps.push({
+      name: this.task.name,
+      run: this.project.runTaskCommand(this.task),
+    });
+
+    // run post-build steps
+    steps.push(...this.postBuildSteps);
+
+    // check if new commits were pushed to the repo while we were building.
+    // if new commits have been pushed, we will cancel this release
+    steps.push({
       name: 'Check for new commits',
       id: gitRemoteStep,
       run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
 
-    releaseSteps.push({
+    // create a github release
+    steps.push({
       name: 'Create release',
       if: noNewCommits,
       run: [
@@ -174,169 +215,59 @@ export class Release extends Component {
       },
     });
 
-    releaseSteps.push({
+    // TODO: do we really need to unbump?
+    steps.push({
       name: 'Unbump',
-      run: project.runTaskCommand(this.version.unbumpTask),
+      run: this.project.runTaskCommand(this.version.unbumpTask),
     });
 
-    releaseSteps.push({
+    steps.push({
       name: 'Upload artifact',
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
-        name: artifactDirectory,
-        path: artifactDirectory,
+        name: this.artifactDirectory,
+        path: this.artifactDirectory,
       },
     });
 
-    const workflow = this.createBuildWorkflow('Release', {
-      jobId: jobId,
-      trigger,
-      env: {
-        RELEASE: 'true',
-      },
-      permissions: {
-        contents: workflows.JobPermission.WRITE,
-      },
-      preBuildSteps: [
-        ...options.releaseWorkflowSetupSteps ?? [],
-        {
-          name: 'Bump to next version',
-          run: project.runTaskCommand(this.version.bumpTask),
-        },
-      ],
-      postSteps: [
-        ...this.postBuildSteps,
-        ...releaseSteps,
-      ],
-      image: options.workflowContainerImage,
-      checkoutWith: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-    });
-
-    this.workflow = workflow;
-
-    this.publisher = new Publisher(project, {
-      workflow: workflow,
-      artifactName: artifactDirectory,
-      buildJobId: jobId,
-      jsiiReleaseVersion: options.jsiiReleaseVersion,
-    });
-  }
-
-  private createBuildWorkflow(name: string, options: NodeBuildWorkflowOptions): GithubWorkflow {
-    const buildJobId = options.jobId;
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    if (this.antitamper) {
+      steps.push({
+        name: 'Anti-tamper check',
+        run: 'git diff --ignore-space-at-eol --exit-code',
+      });
+    }
 
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
-    const workflow = github.addWorkflow(name);
+    const workflow = github.addWorkflow('Release');
 
-    if (options.trigger) {
-      if (options.trigger.issue_comment) {
-        throw new Error('"issue_comment" should not be used as a trigger due to a security issue');
-      }
-
-      workflow.on(options.trigger);
-    }
-
+    // determine release triggers
     workflow.on({
+      schedule: options.releaseSchedule ? [{ cron: options.releaseSchedule }] : undefined,
+      push: (options.releaseEveryCommit ?? true) ? { branches: releaseBranches } : undefined,
       workflowDispatch: {}, // allow manual triggering
     });
 
-    const preSteps = options.preBuildSteps ?? [];
-    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
-    const postSteps = options.postSteps ?? [];
-
-    const antitamperSteps = !this.antitamper ? [] : [{
-      name: 'Anti-tamper check',
-      run: 'git diff --ignore-space-at-eol --exit-code',
-    }];
-
-    const job: Mutable<workflows.Job> = {
-      runsOn: 'ubuntu-latest',
-      env: {
-        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        ...options.env ?? {},
+    // add main build job
+    workflow.addJobs({
+      [BUILD_JOBID]: {
+        runsOn: 'ubuntu-latest',
+        container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
+        env: {
+          CI: 'true',
+          RELEASE: 'true',
+        },
+        permissions: {
+          contents: workflows.JobPermission.WRITE,
+        },
+        steps: steps,
       },
-      permissions: options.permissions,
-      steps: [
-        // check out sources.
-        {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
-          ...checkoutWith,
-        },
-
-        // sets git identity so we can push later
-        {
-          name: 'Set git identity',
-          run: [
-            'git config user.name "Automation"',
-            'git config user.email "github-actions@github.com"',
-          ].join('\n'),
-        },
-
-        ...preSteps,
-
-        // run the main release task
-        {
-          name: this.task.name,
-          run: this.project.runTaskCommand(this.task),
-        },
-
-        ...postSteps,
-
-        // anti-tamper check (fails if there were changes to committed files)
-        // this will identify any non-committed files generated during build (e.g. test snapshots)
-        ...antitamperSteps,
-      ],
-    };
-
-    if (options.image) {
-      job.container = { image: options.image };
-    }
-
-    workflow.addJobs({ [buildJobId]: job });
+    });
 
     return workflow;
   }
 }
-interface NodeBuildWorkflowOptions {
-  /**
-   * The primary job id.
-   */
-  readonly jobId: string;
-
-  /**
-   * @default - default image
-   */
-  readonly image?: string;
-
-  /**
-   * What should trigger the workflow?
-   *
-   * @default - by default workflows can only be triggered by manually.
-   */
-  readonly trigger?: { [event: string]: any };
-
-  readonly preBuildSteps?: workflows.JobStep[];
-  readonly postSteps?: workflows.JobStep[];
-  readonly checkoutWith?: { [key: string]: any };
-
-  /**
-   * Workflow environment variables.
-   * @default {}
-   */
-  readonly env?: { [name: string]: string };
-
-  /**
-   * Permissions for the build job.
-   */
-  readonly permissions: workflows.JobPermissions;
-}
-
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };
