@@ -1,5 +1,3 @@
-// import * as path from 'path';
-// import * as fs from 'fs-extra';
 import { LogLevel, Project, ProjectOptions } from '..';
 import { SampleFile } from '../sample-file';
 import { mkdtemp, synthSnapshot } from './util';
@@ -39,7 +37,5 @@ export class TestProject extends Project {
       },
       ...options,
     });
-
-    // new SampleFile(this, 'logo.svg', { source: 'logo/projen.svg' });
   }
 }
