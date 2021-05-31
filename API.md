@@ -4631,7 +4631,6 @@ new Version(project: Project, options: VersionOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
-  * **standardVersionCommand** (<code>string</code>)  The command to use to execute `standard-version`. __*Default*__: "npx standard-version
 
 
 
@@ -9947,7 +9946,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
-**standardVersionCommand**?🔹 | <code>string</code> | The command to use to execute `standard-version`.<br/>__*Default*__: "npx standard-version
 
 
 

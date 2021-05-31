@@ -325,6 +325,11 @@ pull_request_rules:
         "version": "^1.2.3",
       },
       Object {
+        "name": "standard-version",
+        "type": "build",
+        "version": "^9",
+      },
+      Object {
         "name": "autoprefixer",
         "type": "runtime",
       },
@@ -739,6 +744,7 @@ pull_request_rules:
     "devDependencies": Object {
       "npm-check-updates": "^11",
       "projen": "^1.2.3",
+      "standard-version": "^9",
     },
     "engines": Object {
       "node": ">= 12.13.0",

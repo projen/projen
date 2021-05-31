@@ -61,6 +61,7 @@
     "json-schema": "^0.3.0",
     "markmac": "^0.1.37",
     "npm-check-updates": "^11",
+    "standard-version": "^9",
     "typescript": "^3.9.9"
   },
   "dependencies": {

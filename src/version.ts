@@ -12,16 +12,11 @@ export interface VersionOptions {
    * @default "v0.1.0"
    */
   readonly initialVersion?: string;
-
-  /**
-   * The command to use to execute `standard-version`.
-   *
-   * @default "npx standard-version@^9"
-   */
-  readonly standardVersionCommand?: string;
 }
 
 export class Version extends Component {
+  public static readonly STANDARD_VERSION = 'standard-version@^9';
+
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;
   public readonly changelogFile: string;
@@ -54,17 +49,20 @@ export class Version extends Component {
 
     // this is the version used if a tag with a "v" prefix cannot be found in the repo.
     const initialVersion = options.initialVersion ?? 'v0.1.0';
-    const standardVersionCommand = options.standardVersionCommand ?? 'npx standard-version@^9';
+
+    // run `standard-version` through npx so it can be executed from
+    // node_modules if installed or install on-demand for other project types.
+    const standardVersion = `npx ${Version.STANDARD_VERSION}`;
 
     this.bumpTask.exec(`${listGitTags} | head -n1 > ${versionFile}`);
     this.bumpTask.exec(`if [ "$(cat ${versionFile})" = "" ]; then echo "${initialVersion}" > ${versionFile}; fi`);
-    this.bumpTask.exec(standardVersionCommand);
+    this.bumpTask.exec(standardVersion);
     this.bumpTask.exec(`rm -f ${versionFile}`);
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
       category: TaskCategory.RELEASE,
-      exec: `${standardVersionCommand} -r 0.0.0`,
+      exec: `${standardVersion} -r 0.0.0`,
     });
 
     project.addGitIgnore(`/${this.changelogFile}`);

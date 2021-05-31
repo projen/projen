@@ -829,6 +829,11 @@ tsconfig.tsbuildinfo
         "version": "^999.999.999",
       },
       Object {
+        "name": "standard-version",
+        "type": "build",
+        "version": "^9",
+      },
+      Object {
         "name": "ts-jest",
         "type": "build",
       },
@@ -1578,6 +1583,7 @@ project.synth();
       "json-schema": "*",
       "npm-check-updates": "^11",
       "projen": "^999.999.999",
+      "standard-version": "^9",
       "ts-jest": "*",
       "typescript": "*",
     },
@@ -4859,6 +4865,11 @@ junit.xml
         "version": "^999.999.999",
       },
       Object {
+        "name": "standard-version",
+        "type": "build",
+        "version": "^9",
+      },
+      Object {
         "name": "esbuild",
         "type": "runtime",
       },
@@ -5282,6 +5293,7 @@ project.synth();
       "jest-junit": "^12",
       "npm-check-updates": "^11",
       "projen": "^999.999.999",
+      "standard-version": "^9",
     },
     "jest": Object {
       "clearMocks": true,

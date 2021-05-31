@@ -12,6 +12,7 @@ import { Publisher } from './publisher';
 import { Release, ReleaseProjectOptions } from './release';
 import { Task, TaskCategory } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
+import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
@@ -583,6 +584,8 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+      this.addDevDeps(Version.STANDARD_VERSION);
+
       this.release = new Release(this, {
         task: this.buildTask,
         ...options,
