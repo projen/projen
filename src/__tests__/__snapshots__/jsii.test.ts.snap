@@ -32,6 +32,8 @@ jobs:
         run: npx projen bump
       - name: build
         run: npx projen build
+      - name: Backup version file
+        run: cp -f package.json package.json.bak.json
       - name: Unbump
         run: npx projen unbump
       - name: Anti-tamper check
@@ -42,8 +44,9 @@ jobs:
           github.ref }} | cut -f1)\\"
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+        run: gh release create v$(node -p \\"require('./package.json.bak.json').version\\")
+          -F .changelog.tmp.md -t v$(node -p
+          \\"require('./package.json.bak.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifact
@@ -132,6 +135,8 @@ jobs:
         run: npx projen bump
       - name: build
         run: npx projen build
+      - name: Backup version file
+        run: cp -f package.json package.json.bak.json
       - name: Unbump
         run: npx projen unbump
       - name: Anti-tamper check
@@ -142,8 +147,9 @@ jobs:
           github.ref }} | cut -f1)\\"
       - name: Create release
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        run: gh release create v$(node -p \\"require('./package.json').version\\") -F
-          .changelog.tmp.md -t v$(node -p \\"require('./package.json').version\\")
+        run: gh release create v$(node -p \\"require('./package.json.bak.json').version\\")
+          -F .changelog.tmp.md -t v$(node -p
+          \\"require('./package.json.bak.json').version\\")
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifact
