@@ -291,6 +291,31 @@ test('"condition" can be used to define a command that will determine if a task 
   });
 });
 
+test('"builtin" can be used to execute builtin commands', () => {
+  const p = new TestProject();
+  const task = p.addTask('foo', {
+    condition: 'false',
+  });
+
+  task.builtin('my/builtin');
+  task.builtin('your/builtin');
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      foo: {
+        name: 'foo',
+        condition: 'false',
+        steps: [
+          { builtin: 'my/builtin' },
+          { builtin: 'your/builtin' },
+        ],
+      },
+    },
+  });
+
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest['//'];
