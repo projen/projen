@@ -3794,9 +3794,10 @@ new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
-* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **filePath** (<code>string</code>)  - the relative path in the project to put the file.
 * **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
-  * **contents** (<code>string</code>)  The contents of the file to write. 
+  * **contents** (<code>string</code>)  The contents of the file to write. __*Optional*__
+  * **source** (<code>string</code>)  A path to a file to copy the contents from (does not need to be a text file), starting with the name of the module which contains the file. __*Optional*__
 
 
 ### Methods
@@ -9555,7 +9556,8 @@ Options for the SampleFile object.
 
 Name | Type | Description 
 -----|------|-------------
-**contents**🔹 | <code>string</code> | The contents of the file to write.
+**contents**?🔹 | <code>string</code> | The contents of the file to write.<br/>__*Optional*__
+**source**?🔹 | <code>string</code> | A path to a file to copy the contents from (does not need to be a text file), starting with the name of the module which contains the file.<br/>__*Optional*__
 
 
 
