@@ -260,7 +260,7 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
-        with: { name: upgrade.patchFile, path: upgrade.patchFile },
+        with: { name: upgrade.patchFile },
       },
       {
         name: 'Apply patch',
