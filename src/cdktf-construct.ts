@@ -3,7 +3,8 @@ import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
-   *
+   * @default "0.4.0"
+   * @featured
    */
   readonly cdktfVersion: string;
 }
