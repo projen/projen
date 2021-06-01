@@ -3013,7 +3013,7 @@ Name | Type | Description
 **buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
 **compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
 **entrypoint**⚠️ | <code>string</code> | <span></span>
-**installWorkflowSteps**🔹 | <code>Array<any></code> | <span></span>
+**installWorkflowSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
 **npmDistTag**⚠️ | <code>string</code> | <span></span>
 **npmRegistry**⚠️ | <code>string</code> | <span></span>
