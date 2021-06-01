@@ -64,7 +64,6 @@
     "standard-version": "^9",
     "typescript": "^3.9.9"
   },
-  "peerDependencies": {},
   "dependencies": {
     "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.1",
