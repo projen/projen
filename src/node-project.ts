@@ -637,6 +637,8 @@ export class NodeProject extends Project {
       ? DependenciesUpgradeMechanism.dependabot()
       : DependenciesUpgradeMechanism.githubWorkflow({
         workflowOptions: options.workflowContainerImage ? {
+          // if projen secret is defined, use it (otherwise default to GITHUB_TOKEN).
+          secret: options.projenUpgradeSecret,
           container: {
             image: options.workflowContainerImage,
           },
