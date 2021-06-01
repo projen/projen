@@ -118,5 +118,19 @@ export interface TaskStep extends TaskStepOptions {
    * @default - don't say anything
    */
   readonly say?: string;
+
+  /**
+   * The name of a built-in task to execute.
+   *
+   * Built-in tasks are node.js programs baked into the projen module and as
+   * component runtime helpers.
+   *
+   * The name is a path relative to the projen lib/ directory (without the .task.js extension).
+   * For example, if your built in builtin task is under `src/release/resolve-version.task.ts`,
+   * then this would be `release/resolve-version`.
+   *
+   * @default - do not execute a builtin task
+   */
+  readonly builtin?: string;
 }
 

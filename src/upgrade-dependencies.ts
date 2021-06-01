@@ -223,6 +223,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Upgrade',
+        container: this.options.workflowOptions?.container,
         permissions: permissions,
         runsOn: UBUNTU_LATEST,
         outputs: outputs,
@@ -392,6 +393,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    */
   readonly rebuild?: boolean;
 
+  /**
+   * Job container options.
+   *
+   * @default - defaults
+   */
+  readonly container?: workflows.ContainerOptions;
 }
 
 /**

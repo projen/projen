@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
+import { PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -14,7 +15,7 @@ import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
 import { NewProjectOptionHints } from './option-hints';
 import { SampleReadme, SampleReadmeProps } from './readme';
-import { TaskOptions } from './tasks';
+import { Task, TaskOptions } from './tasks';
 import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
@@ -366,6 +367,35 @@ export class Project {
    */
   public addExcludeFromCleanup(...globs: string[]) {
     this.excludeFromCleanup.push(...globs);
+  }
+
+  /**
+   * Returns the shell command to execute in order to run a task.
+   *
+   * By default, this is `npx projen@<version> <task>`
+   *
+   * @param task The task for which the command is required
+   */
+  public runTaskCommand(task: Task) {
+    return `npx projen@${PROJEN_VERSION} ${task.name}`;
+  }
+
+  /**
+   * Exclude these files from the bundled package. Implemented by project types based on the
+   * packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+   *
+   * @param _pattern The glob pattern to exclude
+   */
+  public addPackageIgnore(_pattern: string) {
+    // nothing to do at the abstract level
+  }
+
+  /**
+   * Adds a .gitignore pattern.
+   * @param pattern The glob pattern to ignore.
+   */
+  public addGitIgnore(pattern: string) {
+    this.gitignore.addPatterns(pattern);
   }
 
   /**

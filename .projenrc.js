@@ -88,8 +88,8 @@ new TextFile(project, 'projen.bash', {
     `# ${TextFile.PROJEN_MARKER}`,
     'set -euo pipefail',
     'if [ ! -f lib/cli/index.js ]; then',
-    '  echo "compiling the cli..."',
-    `  ${project.compileTask.toShellCommand()}`,
+    '  echo "bootstrapping..."',
+    '  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies',
     'fi',
     'exec bin/projen $@',
   ],
@@ -154,7 +154,7 @@ setup.spawn(project.buildTask);
 project.devContainer.addTasks(setup);
 
 project.addTask('contributors:update', {
-  exec: 'all-contributors check | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
+  exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\[bot\]" | xargs -n1 -I{} all-contributors add {} code',
 });
 
 project.synth();

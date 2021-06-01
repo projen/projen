@@ -1,8 +1,8 @@
 {
   "packageFiles": [
     {
-      "filename": ".version.tmp.json",
-      "type": "plain-text"
+      "filename": "package.json",
+      "type": "json"
     }
   ],
   "bumpFiles": [

@@ -186,6 +186,19 @@ describe('say', () => {
 
 });
 
+test('builtin tasks are scripts embedded inside projen', () => {
+  const p = new TestProject();
+  const task = p.addTask('boom');
+  task.builtin('__tests__/tasks/fixtures/builtin-example');
+  p.synth();
+
+  const lines = executeTask(p, 'boom');
+  expect(lines).toStrictEqual([
+    'hello, I am a builtin task',
+    'second line',
+  ]);
+});
+
 function executeTask(p: Project, taskName: string) {
   p.synth();
 

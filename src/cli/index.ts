@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import * as yargs from 'yargs';
-import { PROJEN_RC } from '../common';
+import { PROJEN_RC, PROJEN_VERSION } from '../common';
 import { TaskRuntime } from '../tasks';
 import { synth } from './synth';
 import { discoverTaskCommands } from './tasks';
@@ -21,8 +21,13 @@ async function main() {
   ya.option('watch', { type: 'boolean', default: false, desc: 'Keep running and resynthesize when projenrc changes', alias: 'w' });
   ya.options('debug', { type: 'boolean', default: false, desc: 'Debug logs' });
   ya.options('rc', { desc: 'path to .projenrc.js file', default: DEFAULT_RC, type: 'string' });
-  ya.version(false);
+  ya.completion();
   ya.help();
+
+  // do not use the default yargs '--version' implementation since it is
+  // global by default (it appears on all subcommands)
+  ya.version(false);
+  ya.option('version', { type: 'boolean', description: 'Show version number', global: false });
 
   const args = ya.argv;
 
@@ -32,6 +37,10 @@ async function main() {
 
   // no command means synthesize
   if (args._.length === 0) {
+    if (args.version) {
+      console.log(PROJEN_VERSION);
+      process.exit(0);
+    }
     await synth(runtime, {
       post: args.post as boolean,
       watch: args.watch as boolean,

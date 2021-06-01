@@ -152,12 +152,6 @@ export interface NodePackageOptions {
   readonly scripts?: { [name: string]: string };
 
   /**
-   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
-   * @default NpmTaskExecution.PROJEN
-   */
-  readonly npmTaskExecution?: NpmTaskExecution;
-
-  /**
    * The shell command to use in order to run the projen CLI.
    *
    * Can be used to customize in special environments.
@@ -312,11 +306,6 @@ export class NodePackage extends Component {
   public readonly entrypoint: string;
 
   /**
-   * Determines how tasks are executed when invoked as npm scripts (yarn/npm/pnpm run xyz).
-   */
-  public readonly npmTaskExecution: NpmTaskExecution;
-
-  /**
    * The command to use in order to run the projen CLI.
    */
   public readonly projenCommand: string;
@@ -389,7 +378,6 @@ export class NodePackage extends Component {
     super(project);
 
     this.packageName = options.packageName ?? project.name;
-    this.npmTaskExecution = options.npmTaskExecution ?? NpmTaskExecution.PROJEN;
     this.projenCommand = options.projenCommand ?? 'npx projen';
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
@@ -969,12 +957,7 @@ export class NodePackage extends Component {
 
 
   private npmScriptForTask(task: Task) {
-    switch (this.npmTaskExecution) {
-      case NpmTaskExecution.PROJEN: return `${this.projenCommand} ${task.name}`;
-      case NpmTaskExecution.SHELL: return task.toShellCommand();
-      default:
-        throw new Error(`invalid npmTaskExecution mode: ${this.npmTaskExecution}`);
-    }
+    return `${this.projenCommand} ${task.name}`;
   }
 
   private readPackageJson() {
@@ -985,30 +968,6 @@ export class NodePackage extends Component {
 
     return readJsonSync(file);
   }
-}
-
-export enum NpmTaskExecution {
-  /**
-   * `package.json` scripts invoke to the projen CLI.
-   *
-   * @example
-   *
-   * scripts: {
-   *   "compile": "projen compile"
-   * }
-   */
-  PROJEN = 'projen',
-
-  /**
-   * Task is implemented directly as a shell script within `package.json`.
-   *
-   * @example
-   *
-   * scripts: {
-   *   "compile": "tsc"
-   * }
-   */
-  SHELL = 'shell'
 }
 
 export interface PeerDependencyOptions {

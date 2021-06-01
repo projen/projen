@@ -13,7 +13,7 @@ export interface NpmConfigOptions {
    *
    * @default - use npmjs default registry
    */
-  registry?: string;
+  readonly registry?: string;
 }
 
 /**

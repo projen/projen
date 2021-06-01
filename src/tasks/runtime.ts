@@ -1,7 +1,7 @@
 import { SpawnOptions, spawnSync } from 'child_process';
 import { existsSync, readFileSync, statSync } from 'fs';
 import { platform } from 'os';
-import { join, resolve } from 'path';
+import { dirname, join, resolve } from 'path';
 import { format } from 'util';
 import * as chalk from 'chalk';
 import * as logging from '../logging';
@@ -87,14 +87,20 @@ class RunTask {
         this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
       }
 
-      if (step.exec) {
+      const execs = step.exec ? [step.exec] : [];
+
+      if (step.builtin) {
+        execs.push(this.renderBuiltin(step.builtin));
+      }
+
+      for (const exec of execs) {
         let command = '';
         let hasError = false;
-        const cmd = step.exec.split(' ')[0];
+        const cmd = exec.split(' ')[0];
         if (platform() == 'win32' && ['mkdir', 'mv', 'rm'].includes(cmd)) {
-          command = `shx ${step.exec}`;
+          command = `shx ${exec}`;
         } else {
-          command = step.exec;
+          command = exec;
         }
         const cwd = step.cwd;
         try {
@@ -236,6 +242,12 @@ class RunTask {
         stdio: ['inherit', 'pipe', 'inherit'],
       },
     });
+  }
+
+  private renderBuiltin(builtin: string) {
+    const moduleRoot = dirname(require.resolve('../../package.json'));
+    const program = require.resolve(join(moduleRoot, 'lib', `${builtin}.task.js`));
+    return `${process.execPath} ${program}`;
   }
 }
 

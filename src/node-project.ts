@@ -6,16 +6,17 @@ import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
-import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
+import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
 import { Publisher } from './publisher';
+import { Release, ReleaseProjectOptions } from './release';
 import { Task, TaskCategory } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
-export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
+export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -44,17 +45,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default true
    */
   readonly projenDevDependency?: boolean;
-
-  /**
-   * The name of the main release branch.
-   *
-   * NOTE: this field is temporarily required as we migrate the default value
-   * from "master" to "main". Shortly, it will be made optional with "main" as
-   * the default.
-   *
-   * @default "main"
-   */
-  readonly defaultReleaseBranch: string;
 
   /**
    * Define a GitHub workflow for building PRs.
@@ -98,28 +88,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly releaseWorkflow?: boolean;
 
   /**
-   * Automatically release new versions every commit to one of branches in `releaseBranches`.
-   * @default true
-   */
-  readonly releaseEveryCommit?: boolean;
-
-  /**
-   * CRON schedule to trigger new releases.
-   *
-   * @default - no scheduled releases
-   */
-  readonly releaseSchedule?: string;
-
-  /**
-   * Branches which trigger a release.
-   *
-   * Default value is based on defaultReleaseBranch.
-   *
-   * @default [ "main" ]
-   */
-  readonly releaseBranches?: string[];
-
-  /**
    * Workflow steps to use in order to bootstrap this repo.
    *
    * @default "yarn install --frozen-lockfile && yarn projen"
@@ -127,29 +95,10 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly workflowBootstrapSteps?: any[];
 
   /**
-   * Container image to use for GitHub workflows.
-   *
-   * @default - default image
-   */
-  readonly workflowContainerImage?: string;
-
-  /**
-   * A set of workflow steps to execute in order to setup the workflow
-   * container.
-   */
-  readonly releaseWorkflowSetupSteps?: any[];
-
-  /**
    * Automatically release to npm when new versions are introduced.
    * @default false
    */
   readonly releaseToNpm?: boolean;
-
-  /**
-   * Checks that after build there are no modified files on git.
-   * @default true
-   */
-  readonly antitamper?: boolean;
 
   /**
    * The node version to use in GitHub workflows.
@@ -275,19 +224,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
   readonly jestOptions?: JestOptions;
 
   /**
-   * Version requirement of `jsii-release` which is used to publish modules to npm.
-   * @default "latest"
-   */
-  readonly jsiiReleaseVersion?: string;
-
-  /**
-   * A directory which will contain artifacts to be published to npm.
-   *
-   * @default "dist"
-   */
-  readonly artifactsDirectory?: string;
-
-  /**
    * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
    * .projenrc.js generation.
    *
@@ -300,15 +236,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions {
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
-
-  /**
-   * The initial version of the repo. The first release will bump over this
-   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
-   * bump is minor or patch).
-   *
-   * @default "v0.1.0"
-   */
-  readonly initialVersion?: string;
 }
 
 /**
@@ -375,7 +302,6 @@ export class NodeProject extends Project {
    */
   public readonly autoMerge?: AutoMerge;
 
-  private readonly _version: Version;
 
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
@@ -385,14 +311,22 @@ export class NodeProject extends Project {
 
   /**
    * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
+   * @deprecated use `release.workflow`
    */
   public readonly releaseWorkflow?: GithubWorkflow;
 
   /**
    * Package publisher. This will be `undefined` if the project does not have a
    * release workflow.
+   *
+   * @deprecated use `release.publisher`.
    */
   public readonly publisher?: Publisher;
+
+  /**
+   * Release management.
+   */
+  public readonly release?: Release;
 
   /**
    * Minimum node.js version required by this package.
@@ -439,13 +373,6 @@ export class NodeProject extends Project {
   public readonly jest?: Jest;
 
   /**
-   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
-   *
-   * @deprecated use `package.npmTaskExecution`
-   */
-  public get npmTaskExecution(): NpmTaskExecution { return this.package.npmTaskExecution; }
-
-  /**
    * The command to use in order to run the projen CLI.
    */
   public get projenCommand(): string { return this.package.projenCommand; }
@@ -457,10 +384,13 @@ export class NodeProject extends Project {
     return this.package.manifest;
   }
 
+  private readonly workflowBootstrapSteps: workflows.JobStep[];
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
+    this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -473,9 +403,6 @@ export class NodeProject extends Project {
 
     this.nodeVersion = options.workflowNodeVersion ?? this.package.minNodeVersion;
 
-    this._version = new Version(this, {
-      initialVersion: options.initialVersion,
-    });
 
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
@@ -644,103 +571,23 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
-      const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
-      const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
+      this.addDevDeps(Version.STANDARD_VERSION);
 
-      const trigger: { [event: string]: any } = { };
-
-      if (options.releaseEveryCommit ?? true) {
-        trigger.push = { branches: releaseBranches };
-      }
-
-      if (options.releaseSchedule) {
-        trigger.schedule = { cron: options.releaseSchedule };
-      }
-
-      const artifactDirectory = options.artifactsDirectory ?? 'dist';
-      const getVersion = 'v$(node -p \"require(\'./package.json\').version\")';
-      const jobId = 'release';
-
-      const releaseSteps: any[] = [];
-
-      // to avoid race conditions between two commits trying to release the same
-      // version, we check if the head sha is identical to the remote sha. if
-      // not, we will skip the release and just finish the build.
-      const gitRemoteStep = 'git_remote';
-      const latestCommitOutput = 'latest_commit';
-      const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
-
-      releaseSteps.push({
-        name: 'Check for new commits',
-        id: gitRemoteStep,
-        run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
-      });
-
-      releaseSteps.push({
-        name: 'Create release',
-        if: noNewCommits,
-        run: [
-          `gh release create ${getVersion}`,
-          `-F ${this._version.changelogFile}`,
-          `-t ${getVersion}`,
-        ].join(' '),
-        env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-        },
-      });
-
-      releaseSteps.push({
-        name: 'Unbump',
-        run: this.runTaskCommand(this._version.unbumpTask),
-      });
-
-      releaseSteps.push({
-        name: 'Upload artifact',
-        if: noNewCommits,
-        uses: 'actions/upload-artifact@v2.1.1',
-        with: {
-          name: artifactDirectory,
-          path: artifactDirectory,
-        },
-      });
-
-      const workflow = this.createBuildWorkflow('Release', {
-        jobId: jobId,
-        trigger,
-        env: {
-          RELEASE: 'true',
-        },
-        permissions: {
-          contents: JobPermission.WRITE,
-        },
-        preBuildSteps: [
-          {
-            name: 'Bump to next version',
-            run: this.runTaskCommand(this._version.bumpTask),
-          },
+      this.release = new Release(this, {
+        versionJson: 'package.json', // this is where "version" is set after bump
+        task: this.buildTask,
+        ...options,
+        releaseWorkflowSetupSteps: [
+          ...this.installWorkflowSteps,
           ...options.releaseWorkflowSetupSteps ?? [],
         ],
-        postSteps: releaseSteps,
-        image: options.workflowContainerImage,
-        codeCov: false, // no code coverage needed for release
-        checkoutWith: {
-          // we must use 'fetch-depth=0' in order to fetch all tags
-          // otherwise tags are not checked out
-          'fetch-depth': 0,
-        },
       });
 
-      this.releaseWorkflow = workflow;
-
-      this.publisher = new Publisher(this, {
-        workflow: this.releaseWorkflow,
-        artifactName: artifactDirectory,
-        buildJobId: jobId,
-        jsiiReleaseVersion: options.jsiiReleaseVersion,
-      });
+      this.releaseWorkflow = this.release.workflow;
+      this.publisher = this.release.publisher;
 
       if (options.releaseToNpm ?? false) {
-        this.publisher.publishToNpm({
+        this.release.publisher.publishToNpm({
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
@@ -776,8 +623,16 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
-      : DependenciesUpgradeMechanism.githubWorkflow();
+    const defaultDependenciesUpgrade = (options.dependabot ?? false)
+      ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow({
+        workflowOptions: options.workflowContainerImage ? {
+          container: {
+            image: options.workflowContainerImage,
+          },
+        } : undefined,
+      });
+
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
@@ -793,6 +648,7 @@ export class NodeProject extends Project {
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
         },
@@ -887,8 +743,12 @@ export class NodeProject extends Project {
     this.package.addKeywords(...keywords);
   }
 
-  public get installWorkflowSteps(): any[] {
-    const install = new Array();
+  public get installWorkflowSteps(): workflows.JobStep[] {
+    const install = new Array<workflows.JobStep>();
+
+    // first run the workflow bootstrap steps
+    install.push(...this.workflowBootstrapSteps);
+
     if (this.nodeVersion) {
       install.push({
         name: 'Setup Node.js',
@@ -901,6 +761,7 @@ export class NodeProject extends Project {
       name: 'Install dependencies',
       run: this.package.installCommand,
     });
+
     return install;
   }
 
@@ -963,9 +824,14 @@ export class NodeProject extends Project {
     return this.package.addBundledDeps(...deps);
   }
 
+  public addPackageIgnore(pattern: string) {
+    this.npmignore?.addPatterns(pattern);
+  }
+
   private addLicense(options: NodeProjectOptions) {
     if (this.package.license) {
-      new License(this, this.package.license, {
+      new License(this, {
+        spdx: this.package.license,
         copyrightOwner: options.copyrightOwner ?? options.authorName,
         copyrightPeriod: options.copyrightPeriod,
       });
@@ -1131,20 +997,15 @@ export class NodeProject extends Project {
   }
 
   /**
-   * Returns the shell command to execute in order to run a task. If
-   * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
-   * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
-   * TASK`).
-   *
-   * @param task The task for which the command is required
-   */
+ * Returns the shell command to execute in order to run a task. If
+ * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
+ * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
+ * TASK`).
+ *
+ * @param task The task for which the command is required
+ */
   public runTaskCommand(task: Task) {
-    switch (this.package.npmTaskExecution) {
-      case NpmTaskExecution.PROJEN: return `${this.package.projenCommand} ${task.name}`;
-      case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
-      default:
-        throw new Error(`invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`);
-    }
+    return `${this.package.projenCommand} ${task.name}`;
   }
 }
 

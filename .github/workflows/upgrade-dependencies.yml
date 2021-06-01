@@ -38,6 +38,8 @@ jobs:
         with:
           name: upgrade.patch
           path: ${{ runner.temp }}/upgrade.patch
+    container:
+      image: jsii/superchain
   pr:
     name: Create Pull Request
     needs: upgrade
