@@ -315,6 +315,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Create Pull Request',
+        container: this.options.workflowOptions?.container,
         needs: [upgrade.jobId],
         permissions: {
           contents: workflows.JobPermission.WRITE,
@@ -392,6 +393,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    */
   readonly rebuild?: boolean;
 
+  /**
+   * Job container options.
+   *
+   * @default - defaults
+   */
+  readonly container?: workflows.ContainerOptions;
 }
 
 /**

@@ -9934,6 +9934,7 @@ Options for `UpgradeDependencies.workflowOptions`.
 
 Name | Type | Description 
 -----|------|-------------
+**container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: [] no labels.
 **rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
 **schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
