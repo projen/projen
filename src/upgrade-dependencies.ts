@@ -11,7 +11,6 @@ function setOutput(name: string, value: string) {
   return `echo "::set-output name=${name}::${value}"`;
 }
 
-const RUNNER_TEMP = context('runner.temp');
 const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
@@ -167,10 +166,9 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
-    const patchFile = 'upgrade.patch';
+    const patchFile = '.upgrade.tmp.patch';
     const buildStepId = 'build';
     const conclusion = 'conclusion';
-    const patchPath = `${RUNNER_TEMP}/${patchFile}`;
 
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
@@ -210,13 +208,13 @@ export class UpgradeDependencies extends Component {
         name: 'Create Patch',
         run: [
           'git add .',
-          `git diff --patch --staged > ${patchPath}`,
+          `git diff --patch --staged > ${patchFile}`,
         ].join('\n'),
       },
       {
         name: 'Upload patch',
         uses: 'actions/upload-artifact@v2',
-        with: { name: patchFile, path: patchPath },
+        with: { name: patchFile, path: patchFile },
       },
     );
 
@@ -231,7 +229,6 @@ export class UpgradeDependencies extends Component {
       },
       jobId: 'upgrade',
       patchFile: patchFile,
-      patchPath: patchPath,
       build: build,
       buildConclusionOutput: conclusion,
     };
@@ -263,11 +260,11 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
-        with: { name: upgrade.patchFile, path: RUNNER_TEMP },
+        with: { name: upgrade.patchFile, path: upgrade.patchFile },
       },
       {
         name: 'Apply patch',
-        run: `[ -s ${upgrade.patchPath} ] && git apply ${upgrade.patchPath} || echo "Empty patch. Skipping."`,
+        run: `[ -s ${upgrade.patchFile} ] && git apply ${upgrade.patchFile} || echo "Empty patch. Skipping."`,
       },
       {
         name: 'Create Pull Request',
@@ -334,7 +331,6 @@ interface Upgrade {
   readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
-  readonly patchPath: string;
   readonly build: boolean;
   readonly buildConclusionOutput: string;
 }
