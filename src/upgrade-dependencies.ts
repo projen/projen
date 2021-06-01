@@ -223,6 +223,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Upgrade',
+        container: this.options.workflowOptions?.container,
         permissions: permissions,
         runsOn: UBUNTU_LATEST,
         outputs: outputs,
@@ -315,7 +316,6 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Create Pull Request',
-        container: this.options.workflowOptions?.container,
         needs: [upgrade.jobId],
         permissions: {
           contents: workflows.JobPermission.WRITE,
