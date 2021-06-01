@@ -88,7 +88,7 @@ export interface ProjectOptions extends GitHubOptions {
   readonly logging?: LoggerOptions;
 
   /**
-   * Configure the 'auto approve' workflow. See `autoApproveEnabled` to enable this workflow.
+   * Enable and configure the 'auto approve' workflow.
    * @default - auto approve is disabled
    */
   readonly autoApproveOptions?: AutoApproveOptions;
