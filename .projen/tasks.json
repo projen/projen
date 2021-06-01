@@ -113,12 +113,13 @@
       "name": "bump",
       "category": "20.release",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "env": {
+        "OUTFILE": "package.json",
+        "INITIAL_VERSION": "v0.1.0"
+      },
       "steps": [
         {
-          "exec": "git -c \"versionsort.suffix=-\" tag --sort=\"-version:refname\" --list \"v*\" | head -n1 > .version.tmp.json"
-        },
-        {
-          "exec": "if [ \"$(cat .version.tmp.json)\" = \"\" ]; then echo \"v0.1.0\" > .version.tmp.json; fi"
+          "builtin": "release/resolve-version"
         },
         {
           "exec": "npx standard-version@^9"
@@ -130,9 +131,12 @@
       "name": "unbump",
       "category": "20.release",
       "description": "Restores version to 0.0.0",
+      "env": {
+        "OUTFILE": "package.json"
+      },
       "steps": [
         {
-          "exec": "npx standard-version@^9 -r 0.0.0"
+          "builtin": "release/reset-version"
         }
       ]
     },

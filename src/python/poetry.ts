@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { DependencyType } from '../deps';
-import { Task, TaskCategory } from '../tasks';
+import { Task, TaskCategory, TaskRuntime } from '../tasks';
 import { TomlFile } from '../toml';
 import { exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';
@@ -141,7 +141,8 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
    */
   public installDependencies() {
     this.project.logger.info('Installing dependencies...');
-    exec(this.installTask.toShellCommand(), { cwd: this.project.outdir });
+    const runtime = new TaskRuntime(this.project.outdir);
+    runtime.runTask(this.installTask.name);
   }
 }
 

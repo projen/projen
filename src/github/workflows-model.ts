@@ -249,7 +249,7 @@ export interface JobStep {
    * is a key/value pair. Input parameters are set as environment variables.
    * The variable is prefixed with INPUT_ and converted to upper case.
    */
-  readonly with?: Record<string, string>;
+  readonly with?: Record<string, any>;
 
   /**
    * Sets environment variables for steps to use in the runner environment.

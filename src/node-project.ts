@@ -6,7 +6,7 @@ import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
-import { NodePackage, NpmTaskExecution, NodePackageManager, NodePackageOptions } from './node-package';
+import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Project, ProjectOptions } from './project';
 import { Publisher } from './publisher';
 import { Release, ReleaseProjectOptions } from './release';
@@ -382,13 +382,6 @@ export class NodeProject extends Project {
   public readonly jest?: Jest;
 
   /**
-   * Determines how tasks are executed when invoked as npm scripts (yarn/npm run xyz).
-   *
-   * @deprecated use `package.npmTaskExecution`
-   */
-  public get npmTaskExecution(): NpmTaskExecution { return this.package.npmTaskExecution; }
-
-  /**
    * The command to use in order to run the projen CLI.
    */
   public get projenCommand(): string { return this.package.projenCommand; }
@@ -587,6 +580,7 @@ export class NodeProject extends Project {
       this.addDevDeps(Version.STANDARD_VERSION);
 
       this.release = new Release(this, {
+        versionJson: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
         ...options,
         releaseWorkflowSetupSteps: [
@@ -636,8 +630,16 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
-      : DependenciesUpgradeMechanism.githubWorkflow();
+    const defaultDependenciesUpgrade = (options.dependabot ?? false)
+      ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow({
+        workflowOptions: options.workflowContainerImage ? {
+          container: {
+            image: options.workflowContainerImage,
+          },
+        } : undefined,
+      });
+
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
@@ -653,6 +655,7 @@ export class NodeProject extends Project {
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
             ? [this.autoMerge.autoMergeLabel]
@@ -1006,12 +1009,7 @@ export class NodeProject extends Project {
  * @param task The task for which the command is required
  */
   public runTaskCommand(task: Task) {
-    switch (this.package.npmTaskExecution) {
-      case NpmTaskExecution.PROJEN: return `${this.package.projenCommand} ${task.name}`;
-      case NpmTaskExecution.SHELL: return `${this.runScriptCommand} ${task.name}`;
-      default:
-        throw new Error(`invalid npmTaskExecution mode: ${this.package.npmTaskExecution}`);
-    }
+    return `${this.package.projenCommand} ${task.name}`;
   }
 }
 
