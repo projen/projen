@@ -2,6 +2,7 @@ export * from './awscdk-app-ts';
 export * from './awscdk-construct';
 export * from './cdk8s-app-ts';
 export * from './cdk8s-construct';
+export * from './cdktf-construct';
 export * from './component';
 export * from './construct-lib';
 export * from './dev-env';
