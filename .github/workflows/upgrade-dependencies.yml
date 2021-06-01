@@ -38,6 +38,8 @@ jobs:
         with:
           name: upgrade.patch
           path: ${{ runner.temp }}/upgrade.patch
+    container:
+      image: jsii/superchain
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -103,5 +105,3 @@ jobs:
           github.run_id }}\"}}'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain
