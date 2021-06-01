@@ -393,10 +393,13 @@ export class NodeProject extends Project {
     return this.package.manifest;
   }
 
+  private readonly workflowBootstrapSteps: workflows.JobStep[];
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
+    this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -752,8 +755,12 @@ export class NodeProject extends Project {
     this.package.addKeywords(...keywords);
   }
 
-  public get installWorkflowSteps(): any[] {
-    const install = new Array();
+  public get installWorkflowSteps(): workflows.JobStep[] {
+    const install = new Array<workflows.JobStep>();
+
+    // first run the workflow bootstrap steps
+    install.push(...this.workflowBootstrapSteps);
+
     if (this.nodeVersion) {
       install.push({
         name: 'Setup Node.js',
@@ -766,6 +773,7 @@ export class NodeProject extends Project {
       name: 'Install dependencies',
       run: this.package.installCommand,
     });
+
     return install;
   }
 
