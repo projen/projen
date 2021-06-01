@@ -103,3 +103,5 @@ jobs:
           github.run_id }}\"}}'"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    container:
+      image: jsii/superchain

@@ -630,8 +630,16 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
-      : DependenciesUpgradeMechanism.githubWorkflow();
+    const defaultDependenciesUpgrade = (options.dependabot ?? false)
+      ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow({
+        workflowOptions: options.workflowContainerImage ? {
+          container: {
+            image: options.workflowContainerImage,
+          },
+        } : undefined,
+      });
+
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
@@ -647,6 +655,7 @@ export class NodeProject extends Project {
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
             ? [this.autoMerge.autoMergeLabel]
