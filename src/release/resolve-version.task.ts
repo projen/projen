@@ -42,6 +42,8 @@ async function main() {
     tags = tags.filter(x => new RegExp(`-${pre}\.[0-9]+$`).test(x));
   }
 
+  tags = tags.filter(x => x);
+
   // if a pre-release tag is used, then add it to the initial version
   const initialWithPre = pre ? `${initial}-${pre}.0` : initial;
   let latest = tags.length ? tags[0] : initialWithPre;
