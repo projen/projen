@@ -69,6 +69,13 @@ export function mkdtemp() {
 }
 
 export function synthSnapshot(project: Project): any {
+  const synthed = Symbol.for('synthed');
+  if (synthed in project) {
+    throw new Error('duplicate synth()');
+  }
+
+  (project as any)[synthed] = true;
+
   const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
   try {
     process.env.PROJEN_DISABLE_POST = 'true';

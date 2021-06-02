@@ -8,20 +8,11 @@ import { Task, TaskCategory } from './tasks';
  */
 export interface VersionOptions {
   /**
-   * The initial version of the repo. The first release will bump over this
-   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
-   * bump is minor or patch).
-   *
-   * @default "v0.1.0"
-   */
-  readonly initialVersion?: string;
-
-  /**
    * A name of a .json file to set the `version` field in after a bump.
    *
    * @example "package.json"
    */
-  readonly versionJson: string;
+  readonly versionFile: string;
 
   /**
    * Bump the version as a pre-release tag.
@@ -41,7 +32,7 @@ export class Version extends Component {
   constructor(project: Project, options: VersionOptions) {
     super(project);
 
-    const versionJson = options.versionJson;
+    const versionFile = options.versionFile;
     this.changelogFile = '.changelog.tmp.md';
 
     // this command determines if there were any changes since the last release
@@ -49,8 +40,7 @@ export class Version extends Component {
     // the `bump` and the `release` tasks.
     const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
     const builtinEnv: any = {
-      OUTFILE: versionJson,
-      INITIAL_VERSION: options.initialVersion ?? 'v0.1.0',
+      OUTFILE: versionFile,
     };
 
     if (options.prerelease) {
@@ -76,7 +66,7 @@ export class Version extends Component {
       description: 'Restores version to 0.0.0',
       category: TaskCategory.RELEASE,
       env: {
-        OUTFILE: versionJson,
+        OUTFILE: versionFile,
       },
     });
 
@@ -88,10 +78,10 @@ export class Version extends Component {
     new JsonFile(project, '.versionrc.json', {
       obj: {
         packageFiles: [{
-          filename: versionJson,
+          filename: versionFile,
           type: 'json',
         }],
-        bumpFiles: [options.versionJson],
+        bumpFiles: [options.versionFile],
         commitAll: false,
         infile: this.changelogFile,
         prerelease: options.prerelease,

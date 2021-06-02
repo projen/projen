@@ -329,7 +329,7 @@ describe('npm publishing options', () => {
 test('extend github release workflow', () => {
   const project = new TestNodeProject();
 
-  project.releaseWorkflow?.addJobs({
+  project.release?.addJobs({
     publish_docker_hub: {
       permissions: {
         contents: JobPermission.READ,
@@ -363,18 +363,25 @@ test('extend github release workflow', () => {
 });
 
 describe('scripts', () => {
+  test('addTask and setScript', () => {
+    const p = new TestNodeProject();
+    p.addTask('chortle', { exec: 'echo "frabjous day!"' });
+    p.setScript('slithy-toves', 'gyre && gimble');
+    const pkg = packageJson(p);
+    expect(pkg.scripts).toHaveProperty('chortle');
+    expect(pkg.scripts).toHaveProperty('slithy-toves');
+  });
+
   test('removeScript will remove tasks and scripts', () => {
     const p = new TestNodeProject();
 
     p.addTask('chortle', { exec: 'echo "frabjous day!"' });
     p.setScript('slithy-toves', 'gyre && gimble');
-    expect(packageJson(p).scripts).toHaveProperty('chortle');
-    expect(packageJson(p).scripts).toHaveProperty('slithy-toves');
-
     p.removeScript('chortle');
     p.removeScript('slithy-toves');
-    expect(packageJson(p).scripts).not.toHaveProperty('chortle');
-    expect(packageJson(p).scripts).not.toHaveProperty('slithy-toves');
+    const pkg = packageJson(p);
+    expect(pkg.scripts).not.toHaveProperty('chortle');
+    expect(pkg.scripts).not.toHaveProperty('slithy-toves');
   });
 });
 

@@ -198,8 +198,9 @@ Name|Description
 [python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
-[release.ReleaseOptions](#projen-release-releaseoptions)|*No description*
-[release.ReleaseProjectOptions](#projen-release-releaseprojectoptions)|Options for `Release`.
+[release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
+[release.ReleaseOptions](#projen-release-releaseoptions)|Options for `Release`.
+[release.ReleaseProjectOptions](#projen-release-releaseprojectoptions)|Project options for release.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
 [tasks.TaskOptions](#projen-tasks-taskoptions)|*No description*
 [tasks.TaskSpec](#projen-tasks-taskspec)|Specification of a single task.
@@ -387,18 +388,16 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -410,6 +409,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -575,18 +575,16 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -598,6 +596,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -727,18 +726,16 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -750,6 +747,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -928,18 +926,16 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -951,6 +947,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -1062,18 +1059,16 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1085,6 +1080,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -1207,18 +1203,16 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1230,6 +1224,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -1346,18 +1341,16 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -1369,6 +1362,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -2382,18 +2376,16 @@ new JsiiProject(options: JsiiProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -2405,6 +2397,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -3099,18 +3092,16 @@ new NodeProject(options: NodeProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -3122,6 +3113,7 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -3173,7 +3165,6 @@ Name | Type | Description
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **publisher**?⚠️ | <code>[Publisher](#projen-publisher)</code> | Package publisher.<br/>__*Optional*__
 **release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
-**releaseWorkflow**?⚠️ | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release GitHub workflow.<br/>__*Optional*__
 
 ### Methods
 
@@ -3314,6 +3305,18 @@ addPeerDeps(...deps: string[]): void
 ```
 
 * **deps** (<code>string</code>)  Names modules to install.
+
+
+
+
+#### addRelease()🔹 <a id="projen-nodeproject-addrelease"></a>
+
+
+
+```ts
+addRelease(): void
+```
+
 
 
 
@@ -3753,7 +3756,6 @@ __Returns__:
 
 Implements GitHub jobs for publishing modules to package managers.
 
-kw
 Under the hood, it uses https://github.com/aws/jsii-release
 
 __Extends__: [Component](#projen-component)
@@ -3771,7 +3773,6 @@ new Publisher(project: Project, options: PublisherOptions)
 * **options** (<code>[PublisherOptions](#projen-publisheroptions)</code>)  *No description*
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
-  * **workflow** (<code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>)  The github workflow to add release jobs to. 
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
 
 
@@ -3784,17 +3785,16 @@ Name | Type | Description
 **artifactName**🔹 | <code>string</code> | <span></span>
 **buildJobId**🔹 | <code>string</code> | <span></span>
 **jsiiReleaseVersion**🔹 | <code>string</code> | <span></span>
-**workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | <span></span>
 
 ### Methods
 
 
-#### publishToGo(options)🔹 <a id="projen-publisher-publishtogo"></a>
+#### publishToGo(options?)🔹 <a id="projen-publisher-publishtogo"></a>
 
 Adds a go publishing job.
 
 ```ts
-publishToGo(options: JsiiReleaseGo): void
+publishToGo(options?: JsiiReleaseGo): void
 ```
 
 * **options** (<code>[JsiiReleaseGo](#projen-jsiireleasego)</code>)  Options.
@@ -3808,12 +3808,12 @@ publishToGo(options: JsiiReleaseGo): void
 
 
 
-#### publishToMaven(options)🔹 <a id="projen-publisher-publishtomaven"></a>
+#### publishToMaven(options?)🔹 <a id="projen-publisher-publishtomaven"></a>
 
 Publishes artifacts from `java/**` to Maven.
 
 ```ts
-publishToMaven(options: JsiiReleaseMaven): void
+publishToMaven(options?: JsiiReleaseMaven): void
 ```
 
 * **options** (<code>[JsiiReleaseMaven](#projen-jsiireleasemaven)</code>)  Options.
@@ -3829,12 +3829,12 @@ publishToMaven(options: JsiiReleaseMaven): void
 
 
 
-#### publishToNpm(options)🔹 <a id="projen-publisher-publishtonpm"></a>
+#### publishToNpm(options?)🔹 <a id="projen-publisher-publishtonpm"></a>
 
 Publishes artifacts from `js/**` to npm.
 
 ```ts
-publishToNpm(options: JsiiReleaseNpm): void
+publishToNpm(options?: JsiiReleaseNpm): void
 ```
 
 * **options** (<code>[JsiiReleaseNpm](#projen-jsiireleasenpm)</code>)  Options.
@@ -3845,12 +3845,12 @@ publishToNpm(options: JsiiReleaseNpm): void
 
 
 
-#### publishToNuget(options)🔹 <a id="projen-publisher-publishtonuget"></a>
+#### publishToNuget(options?)🔹 <a id="projen-publisher-publishtonuget"></a>
 
 Publishes artifacts from `dotnet/**` to NuGet Gallery.
 
 ```ts
-publishToNuget(options: JsiiReleaseNuget): void
+publishToNuget(options?: JsiiReleaseNuget): void
 ```
 
 * **options** (<code>[JsiiReleaseNuget](#projen-jsiireleasenuget)</code>)  Options.
@@ -3859,12 +3859,12 @@ publishToNuget(options: JsiiReleaseNuget): void
 
 
 
-#### publishToPyPi(options)🔹 <a id="projen-publisher-publishtopypi"></a>
+#### publishToPyPi(options?)🔹 <a id="projen-publisher-publishtopypi"></a>
 
 Publishes wheel artifacts from `python` to PyPI.
 
 ```ts
-publishToPyPi(options: JsiiReleasePyPi): void
+publishToPyPi(options?: JsiiReleasePyPi): void
 ```
 
 * **options** (<code>[JsiiReleasePyPi](#projen-jsiireleasepypi)</code>)  Options.
@@ -3874,6 +3874,18 @@ publishToPyPi(options: JsiiReleasePyPi): void
 
 
 
+
+#### render()🔹 <a id="projen-publisher-render"></a>
+
+Renders a set of workflow jobs for all the publishers.
+
+```ts
+render(): Map<string, Job>
+```
+
+
+__Returns__:
+* <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>
 
 
 
@@ -4294,18 +4306,16 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4317,6 +4327,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4414,18 +4425,16 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4437,6 +4446,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4534,18 +4544,16 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -4557,6 +4565,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4767,8 +4776,7 @@ new Version(project: Project, options: VersionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **versionJson** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
+  * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
   * **prerelease** (<code>string</code>)  Bump the version as a pre-release tag. __*Default*__: normal releases
 
 
@@ -6390,6 +6398,8 @@ setupEnvironment(): void
 
 Manages releases (currently through GitHub workflows).
 
+By default, no branches are released. To add branches, call `addBranch()`.
+
 __Submodule__: release
 
 __Extends__: [Component](#projen-component)
@@ -6405,20 +6415,20 @@ new release.Release(project: Project, options: ReleaseOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[release.ReleaseOptions](#projen-release-releaseoptions)</code>)  *No description*
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task to execute in order to create the release artifacts. 
-  * **versionJson** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **majorVersion** (<code>number</code>)  Major version to release from this branch. __*Default*__: Major version is not enforced.
+  * **workflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
 
 
 
@@ -6427,8 +6437,55 @@ new release.Release(project: Project, options: ReleaseOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**publisher**🔹 | <code>[Publisher](#projen-publisher)</code> | The publisher - responsible for publishing jobs in the workflow.
-**workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The release workflow.
+**publisher**🔹 | <code>[Publisher](#projen-publisher)</code> | Package publisher.
+
+### Methods
+
+
+#### addBranch(branch, options)🔹 <a id="projen-release-release-addbranch"></a>
+
+Adds a release branch.
+
+It is a git branch from which releases are published. If a project has more than one release
+branch, we require that `majorVersion` is also specified for the primary branch in order to
+ensure branches always release the correct version.
+
+```ts
+addBranch(branch: string, options: BranchOptions): void
+```
+
+* **branch** (<code>string</code>)  The branch to monitor (e.g. `main`, `v2.x`).
+* **options** (<code>[release.BranchOptions](#projen-release-branchoptions)</code>)  Branch definition.
+  * **majorVersion** (<code>number</code>)  The major versions released from this branch. 
+  * **workflowName** (<code>string</code>)  The name of the release workflow. __*Default*__: "release-BRANCH"
+
+
+
+
+#### addJobs(jobs)🔹 <a id="projen-release-release-addjobs"></a>
+
+Adds jobs to all release workflows.
+
+```ts
+addJobs(jobs: Map<string, Job>): void
+```
+
+* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
+
+
+
+
+#### preSynthesize()🔹 <a id="projen-release-release-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
 
 
 
@@ -7090,18 +7147,16 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7113,6 +7168,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -7254,18 +7310,16 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7277,6 +7331,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -7446,18 +7501,16 @@ new web.ReactProject(options: ReactProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7469,6 +7522,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -7606,18 +7660,16 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
   * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **initialVersion** (<code>string</code>)  The initial version of the repo. __*Default*__: "v0.1.0"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump as a pre-release (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Array<string></code>)  Branches which trigger a release. __*Default*__: [ "main" ]
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
@@ -7629,6 +7681,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **majorVersion** (<code>number</code>)  The major version number (e.g. 1, 2, 3) released from the default release branch. __*Default*__: allow any major version from the default branch.
   * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -7772,7 +7825,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7781,6 +7833,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -7823,7 +7876,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -7895,7 +7947,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -7904,6 +7955,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -7941,7 +7993,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8025,7 +8076,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8034,6 +8084,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -8071,7 +8122,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8152,7 +8202,6 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8161,6 +8210,7 @@ Name | Type | Description
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?⚠️ | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -8203,7 +8253,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8279,7 +8328,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8288,6 +8336,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -8330,7 +8379,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8406,7 +8454,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8415,6 +8462,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -8457,7 +8505,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8532,7 +8579,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -8541,6 +8587,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -8583,7 +8630,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -9292,7 +9338,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9301,6 +9346,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -9343,7 +9389,6 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -9629,7 +9674,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9637,6 +9681,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -9671,7 +9716,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -9766,7 +9810,6 @@ Name | Type | Description
 -----|------|-------------
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
-**workflow**🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The github workflow to add release jobs to.
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
 
 
@@ -9979,7 +10022,6 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?⚠️ | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -9988,6 +10030,7 @@ Name | Type | Description
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?⚠️ | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -10025,7 +10068,6 @@ Name | Type | Description
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?⚠️ | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -10091,7 +10133,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -10100,6 +10141,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -10137,7 +10179,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -10219,8 +10260,7 @@ Options for `Version`.
 
 Name | Type | Description 
 -----|------|-------------
-**versionJson**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
+**versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 **prerelease**?🔹 | <code>string</code> | Bump the version as a pre-release tag.<br/>__*Default*__: normal releases
 
 
@@ -10914,33 +10954,21 @@ Name | Type | Description
 
 
 
-## struct ReleaseOptions 🔹 <a id="projen-release-releaseoptions"></a>
+## struct BranchOptions 🔹 <a id="projen-release-branchoptions"></a>
 
 
-
+Options for a release branch.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
-**task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task to execute in order to create the release artifacts.
-**versionJson**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
-**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
-**jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
-**postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
-**prerelease**?🔹 | <code>string</code> | Bump as a pre-release (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
-**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
-**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
-**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**majorVersion**🔹 | <code>number</code> | The major versions released from this branch.
+**workflowName**?🔹 | <code>string</code> | The name of the release workflow.<br/>__*Default*__: "release-BRANCH"
 
 
 
-## struct ReleaseProjectOptions 🔹 <a id="projen-release-releaseprojectoptions"></a>
+## struct ReleaseOptions 🔹 <a id="projen-release-releaseoptions"></a>
 
 
 Options for `Release`.
@@ -10949,14 +10977,37 @@ Options for `Release`.
 
 Name | Type | Description 
 -----|------|-------------
-**defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
+**branch**🔹 | <code>string</code> | The default branch name to release from.
+**task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task to execute in order to create the release artifacts.
+**versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
+**jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**majorVersion**?🔹 | <code>number</code> | Major version to release from this branch.<br/>__*Default*__: Major version is not enforced.
+**postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
+**prerelease**?🔹 | <code>string</code> | Bump as a pre-release (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
+**releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
+
+
+
+## struct ReleaseProjectOptions 🔹 <a id="projen-release-releaseprojectoptions"></a>
+
+
+Project options for release.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump as a pre-release (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
@@ -11224,7 +11275,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11232,6 +11282,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -11266,7 +11317,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11347,7 +11397,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11356,6 +11405,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -11393,7 +11443,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11481,7 +11530,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11489,6 +11537,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -11523,7 +11572,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11602,7 +11650,6 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
-**initialVersion**?🔹 | <code>string</code> | The initial version of the repo.<br/>__*Default*__: "v0.1.0"
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11611,6 +11658,7 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**majorVersion**?🔹 | <code>number</code> | The major version number (e.g. 1, 2, 3) released from the default release branch.<br/>__*Default*__: allow any major version from the default branch.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
@@ -11648,7 +11696,6 @@ Name | Type | Description
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**releaseBranches**?🔹 | <code>Array<string></code> | Branches which trigger a release.<br/>__*Default*__: [ "main" ]
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false

@@ -114,8 +114,7 @@
       "category": "20.release",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
-        "OUTFILE": "package.json",
-        "INITIAL_VERSION": "v0.1.0"
+        "OUTFILE": "package.json"
       },
       "steps": [
         {

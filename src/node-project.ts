@@ -88,6 +88,29 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly releaseWorkflow?: boolean;
 
   /**
+   * The name of the main release branch.
+   *
+   * @default "main"
+   */
+  readonly defaultReleaseBranch: string;
+
+  /**
+   * The major version number (e.g. 1, 2, 3) released from the default release
+   * branch.
+   *
+   * If not specified, we select the latest version tag to bump. If specified,
+   * we only select the latest version from that release line. If there is still
+   * no version of that line in the repo, we default to `NN.0.0` as the latest
+   * version and bump that.
+   *
+   * This field is required if additional release branches are added via
+   * `release.addBranch()`.
+   *
+   * @default - allow any major version from the default branch.
+   */
+  readonly majorVersion?: number;
+
+  /**
    * Workflow steps to use in order to bootstrap this repo.
    *
    * @default "yarn install --frozen-lockfile && yarn projen"
@@ -317,12 +340,6 @@ export class NodeProject extends Project {
    */
   public readonly buildWorkflow?: GithubWorkflow;
   public readonly buildWorkflowJobId?: string;
-
-  /**
-   * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
-   * @deprecated use `release.workflow`
-   */
-  public readonly releaseWorkflow?: GithubWorkflow;
 
   /**
    * Package publisher. This will be `undefined` if the project does not have a
@@ -580,19 +597,24 @@ export class NodeProject extends Project {
     }
 
     if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+      if ('releaseBranches' in options) {
+        throw new Error('"releaseBranches" is no longer supported. Use project.addRelease() instead');
+      }
+
       this.addDevDeps(Version.STANDARD_VERSION);
 
       this.release = new Release(this, {
-        versionJson: 'package.json', // this is where "version" is set after bump
+        versionFile: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
         ...options,
         releaseWorkflowSetupSteps: [
           ...this.installWorkflowSteps,
           ...options.releaseWorkflowSetupSteps ?? [],
         ],
+        branch: options.defaultReleaseBranch ?? 'main',
+        majorVersion: options.majorVersion,
       });
 
-      this.releaseWorkflow = this.release.workflow;
       this.publisher = this.release.publisher;
 
       if (options.releaseToNpm ?? false) {
@@ -602,14 +624,11 @@ export class NodeProject extends Project {
           npmTokenSecret: this.package.npmTokenSecret,
         });
       }
+
     } else {
       // validate that no release options are selected if the release workflow is disabled.
       if (options.releaseToNpm) {
         throw new Error('"releaseToNpm" is not supported for APP projects');
-      }
-
-      if (options.releaseBranches) {
-        throw new Error('"releaseBranches" is not supported for APP projects');
       }
 
       if (options.releaseEveryCommit) {
@@ -755,6 +774,10 @@ export class NodeProject extends Project {
    */
   public addKeywords(...keywords: string[]) {
     this.package.addKeywords(...keywords);
+  }
+
+  public addRelease() {
+
   }
 
   public get installWorkflowSteps(): workflows.JobStep[] {

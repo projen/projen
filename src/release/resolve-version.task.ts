@@ -4,9 +4,9 @@
 //
 // Environment variables:
 //
-//  OUTFILE: the name of the JSON output file (the "version" field will be updated with the latest version)
+//  OUTFILE: (required) the name of the JSON output file (the "version" field will be updated with the latest version)
 //  PRERELEASE: a prerelease tag to use (e.g. "beta").
-//  INITIAL_VERSION: the initial version in case there are no tags (defaults to "v0.1.0")
+//  MAJOR: major version number NN to filter (tags are filtered by "vNN." prefix). if not specified, the last major version is selected
 //
 
 import { pathExists, readFile, writeFile } from 'fs-extra';
@@ -15,11 +15,15 @@ import { execOrUndefined } from '../util';
 async function main() {
   const outfile = process.env.OUTFILE;
   const pre = process.env.PRERELEASE;
-  const initial = process.env.INITIAL_VERSION ?? 'v0.1.0';
+  const major = process.env.MAJOR;
+  const initial = `v${major}.0.0`;
 
   if (!outfile) {
     throw new Error('OUTFILE is required');
   }
+
+  // filter only tags for this major version if specified (start  with "vNN.").
+  const prefix = major ? `v${major}.*` : 'v*';
 
   const listGitTags = [
     'git',
@@ -27,7 +31,7 @@ async function main() {
     'tag',
     '--sort="-version:refname"', // sort as versions and not lexicographically
     '--list',
-    '"v*"', // only tags that start with "v"
+    `"${prefix}"`,
   ].join(' ');
 
   const stdout = execOrUndefined(listGitTags) ?? '';

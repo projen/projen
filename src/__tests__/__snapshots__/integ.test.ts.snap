@@ -1034,7 +1034,6 @@ tsconfig.tsbuildinfo
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
-          "INITIAL_VERSION": "v0.1.0",
           "OUTFILE": "package.json",
         },
         "name": "bump",
@@ -4907,7 +4906,6 @@ junit.xml
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
-          "INITIAL_VERSION": "v0.1.0",
           "OUTFILE": "package.json",
         },
         "name": "bump",
