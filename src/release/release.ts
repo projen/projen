@@ -51,13 +51,6 @@ export interface ReleaseProjectOptions {
   readonly jsiiReleaseVersion?: string;
 
   /**
-   * Bump as a pre-release (e.g. "beta", "alpha", "pre").
-   *
-   * @default - normal semantic versions
-   */
-  readonly prerelease?: string;
-
-  /**
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
@@ -68,6 +61,23 @@ export interface ReleaseProjectOptions {
    * @default true
    */
   readonly antitamper?: boolean;
+
+  /**
+   * Major version to release from the default branch.
+   *
+   * If this is specified, we bump the latest version of this major version line.
+   * If not specified, we bump the global latest version.
+   *
+   * @default - Major version is not enforced.
+   */
+  readonly majorVersion?: number;
+
+  /**
+    * Bump as a pre-release (e.g. "beta", "alpha", "pre").
+    *
+    * @default - normal semantic versions
+    */
+  readonly prerelease?: string;
 }
 
 /**
@@ -97,16 +107,6 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * You can add additional branches using `addBranch()`.
    */
   readonly branch: string;
-
-  /**
-   * Major version to release from this branch.
-   *
-   * If this is specified, we bump the latest version of this major version line.
-   * If not specified, we bump the global latest version.
-   *
-   * @default - Major version is not enforced.
-   */
-  readonly majorVersion?: number;
 
   /**
    * The name of the default release workflow.
@@ -154,7 +154,6 @@ export class Release extends Component {
     this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      prerelease: options.prerelease,
       versionFile: options.versionFile,
     });
 
@@ -167,6 +166,7 @@ export class Release extends Component {
     // add the default branch
     this.defaultBranch = {
       name: options.branch,
+      prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       workflowName: options.workflowName ?? 'Release',
     };
@@ -257,14 +257,20 @@ export class Release extends Component {
 
     steps.push(...this.preBuildSteps ?? []);
 
-    const env = (branch.majorVersion !== undefined)
-      ? { MAJOR: branch.majorVersion.toString() }
-      : undefined;
+    const env: Record<string, string> = {};
+
+    if (branch.majorVersion !== undefined) {
+      env.MAJOR = branch.majorVersion.toString();
+    }
+
+    if (branch.prerelease) {
+      env.PRERELEASE = branch.prerelease;
+    }
 
     steps.push({
       name: 'Bump to next version',
       run: this.project.runTaskCommand(this.version.bumpTask),
-      env: env,
+      env: Object.keys(env).length ? env : undefined,
     });
 
     // run the main build task
@@ -376,6 +382,13 @@ export interface BranchOptions {
    * The major versions released from this branch.
    */
   readonly majorVersion: number;
+
+  /**
+   * Bump the version as a pre-release tag.
+   *
+   * @default - normal releases
+   */
+  readonly prerelease?: string;
 }
 
 interface ReleaseBranch extends Partial<BranchOptions> {

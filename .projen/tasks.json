@@ -114,14 +114,12 @@
       "category": "20.release",
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
-        "OUTFILE": "package.json"
+        "OUTFILE": "package.json",
+        "CHANGELOG": ".changelog.tmp.md"
       },
       "steps": [
         {
-          "builtin": "release/resolve-version"
-        },
-        {
-          "exec": "npx standard-version@^9"
+          "builtin": "release/bump-version"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -131,7 +129,8 @@
       "category": "20.release",
       "description": "Restores version to 0.0.0",
       "env": {
-        "OUTFILE": "package.json"
+        "OUTFILE": "package.json",
+        "CHANGELOG": ".changelog.tmp.md"
       },
       "steps": [
         {
