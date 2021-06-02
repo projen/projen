@@ -776,10 +776,6 @@ export class NodeProject extends Project {
     this.package.addKeywords(...keywords);
   }
 
-  public addRelease() {
-
-  }
-
   public get installWorkflowSteps(): workflows.JobStep[] {
     const install = new Array<workflows.JobStep>();
 

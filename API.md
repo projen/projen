@@ -3309,18 +3309,6 @@ addPeerDeps(...deps: string[]): void
 
 
 
-#### addRelease()🔹 <a id="projen-nodeproject-addrelease"></a>
-
-
-
-```ts
-addRelease(): void
-```
-
-
-
-
-
 #### addTestCommand(...commands)⚠️ <a id="projen-nodeproject-addtestcommand"></a>
 
 DEPRECATED.
