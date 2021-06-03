@@ -138,15 +138,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-   * Automatically merge PRs that build successfully and have this label.
-   *
-   * To disable, set this value to an empty string.
-   *
-   * @default "auto-merge"
-   */
-  readonly mergifyAutoMergeLabel?: string;
-
-  /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
    * projen:upgrade`).
    *
@@ -164,7 +155,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
 
   /**
    * Automatically merge projen upgrade PRs when build passes.
-   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   * Auto-approves the pull request which mergify will then merge.
    *
    * @default - "true" if mergify auto-merge is enabled (default)
    */
@@ -624,7 +615,6 @@ export class NodeProject extends Project {
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         buildJob: this.buildWorkflowJobId,
-        autoMergeLabel: options.mergifyAutoMergeLabel,
       });
       this.npmignore?.exclude('/.mergify.yml');
     }
@@ -662,9 +652,7 @@ export class NodeProject extends Project {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-            ? [this.autoMerge.autoMergeLabel]
-            : [],
+          labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
         },
       });
     }

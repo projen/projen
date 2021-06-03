@@ -49,6 +49,7 @@ Name|Description
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
+[github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
@@ -169,6 +170,7 @@ Name|Description
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
+[github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
@@ -347,6 +349,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -410,7 +413,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -535,6 +537,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -598,7 +601,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -687,6 +689,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -750,7 +753,6 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -888,6 +890,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[ConstructLibraryOptions](#projen-constructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -951,7 +954,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1022,6 +1024,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1085,7 +1088,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1167,6 +1169,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1230,7 +1233,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -1306,6 +1308,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 * **options** (<code>[ConstructLibraryCdktfOptions](#projen-constructlibrarycdktfoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -1369,7 +1372,6 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -2342,6 +2344,7 @@ new JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[JsiiProjectOptions](#projen-jsiiprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -2405,7 +2408,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -3059,6 +3061,7 @@ new NodeProject(options: NodeProjectOptions)
 * **options** (<code>[NodeProjectOptions](#projen-nodeprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -3122,7 +3125,6 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -3517,6 +3519,7 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -3543,6 +3546,7 @@ Name | Type | Description
 **projectType**🔹 | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | <span></span>
+**autoApprove**?🔹 | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | Auto approve set up for this project.<br/>__*Optional*__
 **devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
@@ -4254,6 +4258,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4317,7 +4322,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -4374,6 +4378,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4437,7 +4442,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -4494,6 +4498,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -4557,7 +4562,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -4976,6 +4980,40 @@ __Returns__:
 
 
 
+## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
+
+Auto approve pull requests that meet a criteria.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.AutoApprove(project: Project, options: AutoApproveOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  *No description*
+  * **secret** (<code>string</code>)  A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope. 
+  * **allowedUsernames** (<code>Array<string></code>)  Only pull requests authored by these Github usernames will be auto-approved. __*Default*__: ['github-bot']
+  * **label** (<code>string</code>)  Only pull requests with this label will be auto-approved. __*Default*__: 'auto-approve'
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**label**🔹 | <code>string</code> | <span></span>
+
+
+
 ## class AutoMerge 🔹 <a id="projen-github-automerge"></a>
 
 Sets up mergify to merging approved pull requests.
@@ -5002,17 +5040,8 @@ new github.AutoMerge(project: Project, options?: AutoMergeOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
-  * **autoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**autoMergeLabel**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -5347,6 +5376,7 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -6086,6 +6116,7 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7050,6 +7081,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7113,7 +7145,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -7214,6 +7245,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7277,7 +7309,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -7406,6 +7437,7 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7469,7 +7501,6 @@ new web.ReactProject(options: ReactProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -7566,6 +7597,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
@@ -7629,7 +7661,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyAutoMergeLabel** (<code>string</code>)  Automatically merge PRs that build successfully and have this label. __*Default*__: "auto-merge"
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
@@ -7734,6 +7765,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7783,7 +7815,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -7865,6 +7896,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -7906,7 +7938,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -7997,6 +8028,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8036,7 +8068,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -8114,6 +8145,7 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8163,7 +8195,6 @@ Name | Type | Description
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -8247,6 +8278,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8290,7 +8322,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -8374,6 +8405,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8417,7 +8449,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -8500,6 +8531,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -8543,7 +8575,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -9261,6 +9292,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9303,7 +9335,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -9609,6 +9640,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9639,7 +9671,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -9743,6 +9774,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -9952,6 +9984,7 @@ Name | Type | Description
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -9990,7 +10023,6 @@ Name | Type | Description
 **logging**?⚠️ | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?⚠️ | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -10064,6 +10096,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -10102,7 +10135,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -10203,7 +10235,7 @@ Options for `UpgradeDependencies.workflowOptions`.
 Name | Type | Description 
 -----|------|-------------
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
-**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: [] no labels.
+**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
 **rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
 **schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
 **secret**?🔹 | <code>string</code> | Which secret to use when creating the PR.<br/>__*Default*__: default github token.
@@ -10308,6 +10340,21 @@ Name | Type | Description
 
 
 
+## struct AutoApproveOptions 🔹 <a id="projen-github-autoapproveoptions"></a>
+
+
+Options for 'AutoApprove'.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**secret**🔹 | <code>string</code> | A GitHub secret name which contains a GitHub Access Token with write permissions for the `pull_request` scope.
+**allowedUsernames**?🔹 | <code>Array<string></code> | Only pull requests authored by these Github usernames will be auto-approved.<br/>__*Default*__: ['github-bot']
+**label**?🔹 | <code>string</code> | Only pull requests with this label will be auto-approved.<br/>__*Default*__: 'auto-approve'
+
+
+
 ## struct AutoMergeOptions 🔹 <a id="projen-github-automergeoptions"></a>
 
 
@@ -10318,7 +10365,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
-**autoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
 
 
@@ -10423,6 +10469,7 @@ Name | Type | Description
 **groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -10831,6 +10878,7 @@ Name | Type | Description
 **moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | Version of the package.
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -11204,6 +11252,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11234,7 +11283,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -11320,6 +11368,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11358,7 +11407,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -11461,6 +11509,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11491,7 +11540,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
@@ -11575,6 +11623,7 @@ Name | Type | Description
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
@@ -11613,7 +11662,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyAutoMergeLabel**?🔹 | <code>string</code> | Automatically merge PRs that build successfully and have this label.<br/>__*Default*__: "auto-merge"
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
