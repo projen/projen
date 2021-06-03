@@ -4,6 +4,7 @@ import * as fs from 'fs-extra';
 import { glob } from 'glob';
 import { LogLevel, Project, ProjectOptions } from '..';
 import * as logging from '../logging';
+import { Task } from '../tasks';
 import { exec } from '../util';
 
 const PROJEN_CLI = require.resolve('../../bin/projen');
@@ -22,6 +23,12 @@ export class TestProject extends Project {
       },
       ...options,
     });
+  }
+
+  // override runTaskCommand in tests since the default includes the version
+  // number and that will break regresion tests.
+  public runTaskCommand(task: Task) {
+    return `projen ${task.name}`;
   }
 
   postSynthesize() {

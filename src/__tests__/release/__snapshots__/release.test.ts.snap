@@ -35,15 +35,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"10\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -90,15 +90,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"2\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -145,15 +145,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"1\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -259,15 +259,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"4\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -338,15 +338,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"0\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -468,15 +468,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"0\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -532,13 +532,13 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -635,15 +635,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"0\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -695,13 +695,13 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -856,15 +856,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"3\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -911,16 +911,16 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"4\\"
           PRERELEASE: pre
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -967,15 +967,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"1\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
@@ -1080,15 +1080,15 @@ jobs:
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Bump to next version
-        run: npx projen@0.0.0 bump
+        run: projen bump
         env:
           MAJOR: \\"10\\"
       - name: release
-        run: npx projen@0.0.0 release
+        run: projen release
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
-        run: npx projen@0.0.0 unbump
+        run: projen unbump
       - name: Anti-tamper check
         run: git diff --ignore-space-at-eol --exit-code
       - name: Check for new commits
