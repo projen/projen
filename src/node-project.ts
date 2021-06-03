@@ -79,13 +79,20 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly codeCovTokenSecret?: string;
 
   /**
-   * Define a GitHub workflow for releasing from "main" when new versions are
-   * bumped. Requires that `version` will be undefined.
+   * DEPRECATED: renamed to `release`.
    *
    * @default - true if not a subproject
-   * @featured
+   * @deprecated see `release`.
    */
   readonly releaseWorkflow?: boolean;
+
+  /**
+   * Add release management to this project.
+   *
+   * @default - true (false for subprojects)
+   * @featured
+   */
+  readonly release?: boolean;
 
   /**
    * The name of the main release branch.
@@ -93,22 +100,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    * @default "main"
    */
   readonly defaultReleaseBranch: string;
-
-  /**
-   * The major version number (e.g. 1, 2, 3) released from the default release
-   * branch.
-   *
-   * If not specified, we select the latest version tag to bump. If specified,
-   * we only select the latest version from that release line. If there is still
-   * no version of that line in the repo, we default to `NN.0.0` as the latest
-   * version and bump that.
-   *
-   * This field is required if additional release branches are added via
-   * `release.addBranch()`.
-   *
-   * @default - allow any major version from the default branch.
-   */
-  readonly majorVersion?: number;
 
   /**
    * Workflow steps to use in order to bootstrap this repo.
@@ -596,7 +587,8 @@ export class NodeProject extends Project {
       this.buildWorkflowJobId = buildJobId;
     }
 
-    if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+    const release = options.release ?? options.releaseWorkflow ?? (this.parent ? false : true);
+    if (release) {
       if ('releaseBranches' in options) {
         throw new Error('"releaseBranches" is no longer supported. Use project.addRelease() instead');
       }

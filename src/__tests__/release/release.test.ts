@@ -30,7 +30,7 @@ test('with major version filter', () => {
     versionFile: 'version.json',
     branch: '10.x',
     majorVersion: 10,
-    workflowName: 'release',
+    releaseWorkflowName: 'release',
   });
 
   // THEN
@@ -182,4 +182,25 @@ test('majorVersion can be 0', () => {
   // THEN
   const outdir = synthSnapshot(project);
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+});
+
+test('prerelease can be specified per branch', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('release');
+
+  // WHEN
+  const release = new Release(project, {
+    task: task,
+    versionFile: 'goo.json',
+    branch: 'main',
+    majorVersion: 0,
+  });
+
+  release.addBranch('10.x', { majorVersion: 10, prerelease: 'pre' });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+  expect(outdir['.github/workflows/release.10.x.yml']).toMatchSnapshot();
 });

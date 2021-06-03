@@ -73,11 +73,19 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
-    * Bump as a pre-release (e.g. "beta", "alpha", "pre").
+    * Bump versions from the default branch as pre-releases (e.g. "beta",
+    * "alpha", "pre").
     *
     * @default - normal semantic versions
     */
   readonly prerelease?: string;
+
+  /**
+   * The name of the default release workflow.
+   *
+   * @default "Release"
+   */
+  readonly releaseWorkflowName?: string;
 }
 
 /**
@@ -107,12 +115,6 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * You can add additional branches using `addBranch()`.
    */
   readonly branch: string;
-
-  /**
-   * The name of the default release workflow.
-   * @default "Release"
-   */
-  readonly workflowName?: string;
 }
 
 /**
@@ -168,7 +170,7 @@ export class Release extends Component {
       name: options.branch,
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
-      workflowName: options.workflowName ?? 'Release',
+      workflowName: options.releaseWorkflowName ?? 'Release',
     };
 
     this.branches.push(this.defaultBranch);
