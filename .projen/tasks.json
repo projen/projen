@@ -73,6 +73,9 @@
       "description": "Full release build (test+compile)",
       "steps": [
         {
+          "exec": "/bin/bash ./projen.bash"
+        },
+        {
           "spawn": "compile"
         },
         {
@@ -85,31 +88,6 @@
           "spawn": "readme-macros"
         }
       ]
-    },
-    "bump": {
-      "name": "bump",
-      "category": "20.release",
-      "description": "Commits a bump to the package version based on conventional commits",
-      "steps": [
-        {
-          "exec": "standard-version"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
-    },
-    "release": {
-      "name": "release",
-      "category": "20.release",
-      "description": "Bumps version & push to main",
-      "steps": [
-        {
-          "spawn": "bump"
-        },
-        {
-          "exec": "git push --follow-tags origin main"
-        }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
     "test:watch": {
       "name": "test:watch",
@@ -131,16 +109,60 @@
         }
       ]
     },
-    "projen:upgrade": {
-      "name": "projen:upgrade",
-      "category": "30.maintain",
-      "description": "upgrades projen to the latest version",
+    "bump": {
+      "name": "bump",
+      "category": "20.release",
+      "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "env": {
+        "OUTFILE": "package.json",
+        "INITIAL_VERSION": "v0.1.0"
+      },
       "steps": [
         {
-          "exec": "yarn upgrade -L projen"
+          "builtin": "release/resolve-version"
         },
         {
-          "exec": "CI=\"\" yarn projen"
+          "exec": "npx standard-version@^9"
+        }
+      ],
+      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
+    "unbump": {
+      "name": "unbump",
+      "category": "20.release",
+      "description": "Restores version to 0.0.0",
+      "env": {
+        "OUTFILE": "package.json"
+      },
+      "steps": [
+        {
+          "builtin": "release/reset-version"
+        }
+      ]
+    },
+    "upgrade-dependencies": {
+      "name": "upgrade-dependencies",
+      "description": "upgrade dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "/bin/bash ./projen.bash"
+        }
+      ]
+    },
+    "default": {
+      "name": "default",
+      "steps": [
+        {
+          "exec": "node .projenrc.js"
         }
       ]
     },
