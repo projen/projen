@@ -11,6 +11,7 @@ function setOutput(name: string, value: string) {
   return `echo "::set-output name=${name}::${value}"`;
 }
 
+const RUNNER_TEMP = context('runner.temp');
 const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
@@ -260,11 +261,11 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
-        with: { name: upgrade.patchFile, path: upgrade.patchFile },
+        with: { name: upgrade.patchFile, path: RUNNER_TEMP },
       },
       {
         name: 'Apply patch',
-        run: `[ -s ${upgrade.patchFile} ] && git apply ${upgrade.patchFile} || echo "Empty patch. Skipping."`,
+        run: `[ -s ${RUNNER_TEMP}/${upgrade.patchFile} ] && git apply ${RUNNER_TEMP}/${upgrade.patchFile} || echo "Empty patch. Skipping."`,
       },
       {
         name: 'Create Pull Request',
