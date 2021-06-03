@@ -191,6 +191,10 @@ export class Release extends Component {
     };
 
     this.branches.push(this.defaultBranch);
+
+    for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
+      this.addBranch(name, opts);
+    }
   }
 
   /**

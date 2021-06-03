@@ -589,22 +589,18 @@ export class NodeProject extends Project {
 
     const release = options.release ?? options.releaseWorkflow ?? (this.parent ? false : true);
     if (release) {
-      if ('releaseBranches' in options) {
-        throw new Error('"releaseBranches" is no longer supported. Use project.addRelease() instead');
-      }
-
       this.addDevDeps(Version.STANDARD_VERSION);
 
       this.release = new Release(this, {
         versionFile: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
+        branch: options.defaultReleaseBranch ?? 'main',
         ...options,
+
         releaseWorkflowSetupSteps: [
           ...this.installWorkflowSteps,
           ...options.releaseWorkflowSetupSteps ?? [],
         ],
-        branch: options.defaultReleaseBranch ?? 'main',
-        majorVersion: options.majorVersion,
       });
 
       this.publisher = this.release.publisher;
