@@ -278,7 +278,7 @@ export class UpgradeDependencies extends Component {
           'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
           'title': title,
-          'labels': this.options.workflowOptions?.labels?.join(',') ?? '',
+          'labels': this.options.workflowOptions?.labels?.join(',') ?? undefined,
           'body': description,
         },
       },
@@ -372,7 +372,7 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * Labels to apply on the PR.
    *
-   * @default [] no labels.
+   * @default - no labels.
    */
   readonly labels?: string[];
 
