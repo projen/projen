@@ -278,7 +278,7 @@ export class UpgradeDependencies extends Component {
           'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
           'title': title,
-          'labels': this.options.workflowOptions?.labels?.join(',') ?? undefined,
+          'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
         },
       },
