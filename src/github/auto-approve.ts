@@ -73,7 +73,7 @@ export class AutoApprove extends Component {
 
     const workflow = new GithubWorkflow(project.github, 'auto-approve');
     workflow.on({
-      pullRequest: {
+      pullRequestTarget: {
         types: ['labeled', 'opened', 'synchronize', 'reopened', 'ready_for_review'],
       },
     });
