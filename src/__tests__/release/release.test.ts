@@ -204,3 +204,39 @@ test('prerelease can be specified per branch', () => {
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
   expect(outdir['.github/workflows/release.10.x.yml']).toMatchSnapshot();
 });
+
+test('releaseBranches can be use to define additional branches', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('release');
+
+  // WHEN
+  new Release(project, {
+    task: task,
+    versionFile: 'goo.json',
+    branch: 'main',
+    majorVersion: 1,
+    releaseBranches: {
+      '3.x': { majorVersion: 3 },
+      'next': { majorVersion: 4, prerelease: 'pre' },
+    },
+  });
+
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
+
+test('releaseBranches as an array throws an error since type was changed', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('release');
+
+  // WHEN
+  expect(() => new Release(project, {
+    task: task,
+    versionFile: 'goo.json',
+    branch: 'main',
+    majorVersion: 1,
+    releaseBranches: ['10.x', '2.x'] as any,
+  })).toThrow(/\"releaseBranches\" is no longer an array. See type annotations/);
+});

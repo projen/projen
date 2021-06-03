@@ -86,6 +86,19 @@ export interface ReleaseProjectOptions {
    * @default "Release"
    */
   readonly releaseWorkflowName?: string;
+
+  /**
+   * Defines additional release branches. A workflow will be created for each
+   * release branch which will publish releases from commits in this branch.
+   * Each release branch _must_ be assigned a major version number which is used
+   * to enforce that versions published from that branch always use that major
+   * version. If multiple branches are used, the `majorVersion` field must also
+   * be provided for the default branch.
+   *
+   * @default - no additional branches are used for release. you can use
+   * `addBranch()` to add additional branches.
+   */
+  readonly releaseBranches?: { [name: string]: BranchOptions };
 }
 
 /**
@@ -144,6 +157,10 @@ export class Release extends Component {
 
   constructor(project: Project, options: ReleaseOptions) {
     super(project);
+
+    if (Array.isArray(options.releaseBranches)) {
+      throw new Error('"releaseBranches" is no longer an array. See type annotations');
+    }
 
     this.task = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
