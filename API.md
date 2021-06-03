@@ -394,6 +394,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -583,6 +584,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -736,6 +738,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -938,6 +941,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -1073,6 +1077,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -1219,6 +1224,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -1359,6 +1365,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -2396,6 +2403,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -3114,6 +3122,7 @@ new NodeProject(options: NodeProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -4318,6 +4327,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -4439,6 +4449,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -4560,6 +4571,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -6432,6 +6444,7 @@ new release.Release(project: Project, options: ReleaseOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -7165,6 +7178,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -7330,6 +7344,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -7523,6 +7538,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -7684,6 +7700,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
@@ -7897,6 +7914,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8016,6 +8034,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8147,6 +8166,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8280,6 +8300,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?⚠️ | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?⚠️ | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8408,6 +8429,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8536,6 +8558,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -8663,6 +8686,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -9424,6 +9448,7 @@ Name | Type | Description
 **python**?⚠️ | <code>[JsiiPythonTarget](#projen-jsiipythontarget)</code> | __*Optional*__
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -9753,6 +9778,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -10107,6 +10133,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?⚠️ | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?⚠️ | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?⚠️ | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?⚠️ | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -10220,6 +10247,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11028,6 +11056,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
@@ -11051,6 +11080,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
@@ -11362,6 +11392,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11490,6 +11521,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11621,6 +11653,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
@@ -11747,6 +11780,7 @@ Name | Type | Description
 **pullRequestTemplateContents**?🔹 | <code>string</code> | The contents of the pull request template.<br/>__*Default*__: default content
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
+**releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
