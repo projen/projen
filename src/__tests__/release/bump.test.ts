@@ -7,6 +7,7 @@ import * as logging from '../../logging';
 import { bump, BumpOptions } from '../../release/bump-version';
 
 logging.disable();
+jest.setTimeout(1000 * 60 * 5); // 5min
 
 const today = (new Date()).toISOString().replace(/T.*/, '');
 
