@@ -7,51 +7,48 @@ on:
       - main
   workflow_dispatch: {}
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     env:
       CI: "true"
-      RELEASE: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Set git identity
-        run: |-
-          git config user.name "Automation"
-          git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
+      - name: Synthesize project files
+        run: /bin/bash ./projen.bash
+      - name: Anti-tamper check
+        run: git diff --exit-code
+      - name: Set git identity
+        run: |-
+          git config user.name "Auto-bump"
+          git config user.email "github-actions@github.com"
       - name: Bump to next version
         run: /bin/bash ./projen.bash bump
-      - name: build
+      - name: Build
         run: /bin/bash ./projen.bash build
-      - name: Backup version file
-        run: cp -f package.json package.json.bak.json
-      - name: Unbump
-        run: /bin/bash ./projen.bash unbump
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          directory: coverage
       - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
-      - name: Check for new commits
-        id: git_remote
-        run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
-          github.ref }} | cut -f1)"
-      - name: Create release
-        if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
-        run: gh release create v$(node -p "require('./package.json.bak.json').version")
-          -F .changelog.tmp.md -t v$(node -p
-          "require('./package.json.bak.json').version")
+        run: git diff --exit-code
+      - name: Push commits
+        run: git push origin $BRANCH
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref }}
+      - name: Push tags
+        run: git push --follow-tags origin $BRANCH
+        env:
+          BRANCH: ${{ github.ref }}
       - name: Upload artifact
-        if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
           name: dist
@@ -60,10 +57,10 @@ jobs:
       image: jsii/superchain
   release_npm:
     name: Release to NPM
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    container:
+      image: jsii/superchain
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -76,14 +73,12 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
-    container:
-      image: jsii/superchain
   release_maven:
     name: Release to Maven
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    container:
+      image: jsii/superchain
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -98,14 +93,12 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_STAGING_PROFILE_ID: ${{ secrets.MAVEN_STAGING_PROFILE_ID }}
-    container:
-      image: jsii/superchain
   release_pypi:
     name: Release to PyPi
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    container:
+      image: jsii/superchain
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -117,5 +110,3 @@ jobs:
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
-    container:
-      image: jsii/superchain
