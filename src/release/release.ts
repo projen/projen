@@ -8,7 +8,7 @@ import { Version } from '../version';
 const BUILD_JOBID = 'release';
 
 /**
- * Options for `Release`.
+ * Project options for release.
  */
 export interface ReleaseProjectOptions {
   /**
@@ -23,26 +23,6 @@ export interface ReleaseProjectOptions {
     * @default - no scheduled releases
     */
   readonly releaseSchedule?: string;
-
-  /**
-   * The name of the main release branch.
-   *
-   * NOTE: this field is temporarily required as we migrate the default value
-   * from "master" to "main". Shortly, it will be made optional with "main" as
-   * the default.
-   *
-   * @default "main"
-   */
-  readonly defaultReleaseBranch: string;
-
-  /**
-   * Branches which trigger a release.
-   *
-   * Default value is based on defaultReleaseBranch.
-   *
-   * @default [ "main" ]
-   */
-  readonly releaseBranches?: string[];
 
   /**
    * A directory which will contain artifacts to be published to npm.
@@ -71,22 +51,6 @@ export interface ReleaseProjectOptions {
   readonly jsiiReleaseVersion?: string;
 
   /**
-   * The initial version of the repo. The first release will bump over this
-   * version, so it will be v0.1.1 or v0.2.0 (depending on whether the first
-   * bump is minor or patch).
-   *
-   * @default "v0.1.0"
-   */
-  readonly initialVersion?: string;
-
-  /**
-   * Bump as a pre-release (e.g. "beta", "alpha", "pre").
-   *
-   * @default - normal semantic versions
-   */
-  readonly prerelease?: string;
-
-  /**
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
@@ -97,8 +61,49 @@ export interface ReleaseProjectOptions {
    * @default true
    */
   readonly antitamper?: boolean;
+
+  /**
+   * Major version to release from the default branch.
+   *
+   * If this is specified, we bump the latest version of this major version line.
+   * If not specified, we bump the global latest version.
+   *
+   * @default - Major version is not enforced.
+   */
+  readonly majorVersion?: number;
+
+  /**
+    * Bump versions from the default branch as pre-releases (e.g. "beta",
+    * "alpha", "pre").
+    *
+    * @default - normal semantic versions
+    */
+  readonly prerelease?: string;
+
+  /**
+   * The name of the default release workflow.
+   *
+   * @default "Release"
+   */
+  readonly releaseWorkflowName?: string;
+
+  /**
+   * Defines additional release branches. A workflow will be created for each
+   * release branch which will publish releases from commits in this branch.
+   * Each release branch _must_ be assigned a major version number which is used
+   * to enforce that versions published from that branch always use that major
+   * version. If multiple branches are used, the `majorVersion` field must also
+   * be provided for the default branch.
+   *
+   * @default - no additional branches are used for release. you can use
+   * `addBranch()` to add additional branches.
+   */
+  readonly releaseBranches?: { [name: string]: BranchOptions };
 }
 
+/**
+ * Options for `Release`.
+ */
 export interface ReleaseOptions extends ReleaseProjectOptions {
   /**
    * The task to execute in order to create the release artifacts. Artifacts are
@@ -112,56 +117,137 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    *
    * @example "package.json"
    */
-  readonly versionJson: string;
+  readonly versionFile: string;
+
+  /**
+   * The default branch name to release from.
+   *
+   * Use `majorVersion` to restrict this branch to only publish releases with a
+   * specific major version.
+   *
+   * You can add additional branches using `addBranch()`.
+   */
+  readonly branch: string;
 }
 
 /**
  * Manages releases (currently through GitHub workflows).
+ *
+ * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
   /**
-   * The publisher - responsible for publishing jobs in the workflow.
+   * Package publisher.
    */
   public readonly publisher: Publisher;
-
-  /**
-   * The release workflow.
-   */
-  public readonly workflow: GithubWorkflow;
 
   private readonly task: Task;
   private readonly version: Version;
   private readonly postBuildSteps: workflows.JobStep[];
   private readonly antitamper: boolean;
   private readonly artifactDirectory: string;
+  private readonly versionFile: string;
+  private readonly releaseSchedule?: string;
+  private readonly releaseEveryCommit: boolean;
+  private readonly preBuildSteps: workflows.JobStep[];
+  private readonly containerImage?: string;
+  private readonly branches = new Array<ReleaseBranch>();
+  private readonly jobs: Record<string, workflows.Job> = {};
+  private readonly defaultBranch: ReleaseBranch;
 
   constructor(project: Project, options: ReleaseOptions) {
     super(project);
 
+    if (Array.isArray(options.releaseBranches)) {
+      throw new Error('"releaseBranches" is no longer an array. See type annotations');
+    }
+
     this.task = options.task;
+    this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.antitamper = options.antitamper ?? true;
     this.artifactDirectory = options.artifactsDirectory ?? 'dist';
+    this.versionFile = options.versionFile;
+    this.releaseSchedule = options.releaseSchedule;
+    this.releaseEveryCommit = options.releaseEveryCommit ?? true;
+    this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      initialVersion: options.initialVersion,
-      prerelease: options.prerelease,
-      versionJson: options.versionJson,
+      versionFile: options.versionFile,
     });
 
-    this.workflow = this.createWorkflow(options);
-
     this.publisher = new Publisher(project, {
-      workflow: this.workflow,
       artifactName: this.artifactDirectory,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
+
+    // add the default branch
+    this.defaultBranch = {
+      name: options.branch,
+      prerelease: options.prerelease,
+      majorVersion: options.majorVersion,
+      workflowName: options.releaseWorkflowName ?? 'Release',
+    };
+
+    this.branches.push(this.defaultBranch);
+
+    for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
+      this.addBranch(name, opts);
+    }
   }
 
-  private createWorkflow(options: ReleaseOptions): GithubWorkflow {
-    const defaultReleaseBranch = options.defaultReleaseBranch ?? 'main';
-    const releaseBranches = options.releaseBranches ?? [defaultReleaseBranch];
+  /**
+   * Adds a release branch.
+   *
+   * It is a git branch from which releases are published. If a project has more than one release
+   * branch, we require that `majorVersion` is also specified for the primary branch in order to
+   * ensure branches always release the correct version.
+   *
+   * @param branch The branch to monitor (e.g. `main`, `v2.x`)
+   * @param options Branch definition
+   */
+  public addBranch(branch: string, options: BranchOptions) {
+    if (this.branches.find(b => b.name === branch)) {
+      throw new Error(`The release branch ${branch} is already defined`);
+    }
+
+    // if we add a branch, we require that the default branch will also define a
+    // major version.
+    if (this.defaultBranch.majorVersion === undefined) {
+      throw new Error('you must specify "majorVersion" for the default branch when adding multiple release branches');
+    }
+
+    this.branches.push({
+      name: branch,
+      ...options,
+    });
+  }
+
+  /**
+   * Adds jobs to all release workflows.
+   * @param jobs The jobs to add (name => job)
+   */
+  public addJobs(jobs: Record<string, workflows.Job>) {
+    for (const [name, job] of Object.entries(jobs)) {
+      this.jobs[name] = job;
+    }
+  }
+
+  // render a workflow per branch and all the jobs to it
+  public preSynthesize() {
+    for (const branch of this.branches) {
+      const workflow = this.createWorkflow(branch);
+      workflow.addJobs(this.publisher.render());
+      workflow.addJobs(this.jobs);
+    }
+  }
+
+  private createWorkflow(branch: ReleaseBranch): GithubWorkflow {
+    const github = this.project.github;
+    if (!github) { throw new Error('no github support'); }
+
+    const workflowName = branch.workflowName ?? `release-${branch.name}`;
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -192,11 +278,22 @@ export class Release extends Component {
       ].join('\n'),
     });
 
-    steps.push(...options.releaseWorkflowSetupSteps ?? []);
+    steps.push(...this.preBuildSteps ?? []);
+
+    const env: Record<string, string> = {};
+
+    if (branch.majorVersion !== undefined) {
+      env.MAJOR = branch.majorVersion.toString();
+    }
+
+    if (branch.prerelease) {
+      env.PRERELEASE = branch.prerelease;
+    }
 
     steps.push({
       name: 'Bump to next version',
       run: this.project.runTaskCommand(this.version.bumpTask),
+      env: Object.keys(env).length ? env : undefined,
     });
 
     // run the main build task
@@ -211,10 +308,10 @@ export class Release extends Component {
     // create a backup of the version JSON file (e.g. package.json) because we
     // are going to revert the bump and we need the version number in order to
     // create the github release.
-    const versionJsonBackup = `${options.versionJson}.bak.json`;
+    const versionJsonBackup = `${this.versionFile}.bak.json`;
     steps.push({
       name: 'Backup version file',
-      run: `cp -f ${options.versionJson} ${versionJsonBackup}`,
+      run: `cp -f ${this.versionFile} ${versionJsonBackup}`,
     });
 
     // revert the bump so anti-tamper will not fail
@@ -265,16 +362,12 @@ export class Release extends Component {
       },
     });
 
-
-    const github = this.project.github;
-    if (!github) { throw new Error('no github support'); }
-
-    const workflow = github.addWorkflow('Release');
+    const workflow = github.addWorkflow(workflowName);
 
     // determine release triggers
     workflow.on({
-      schedule: options.releaseSchedule ? [{ cron: options.releaseSchedule }] : undefined,
-      push: (options.releaseEveryCommit ?? true) ? { branches: releaseBranches } : undefined,
+      schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
+      push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
       workflowDispatch: {}, // allow manual triggering
     });
 
@@ -282,7 +375,7 @@ export class Release extends Component {
     workflow.addJobs({
       [BUILD_JOBID]: {
         runsOn: 'ubuntu-latest',
-        container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
+        container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {
           CI: 'true',
           RELEASE: 'true',
@@ -296,4 +389,31 @@ export class Release extends Component {
 
     return workflow;
   }
+}
+
+/**
+ * Options for a release branch.
+ */
+export interface BranchOptions {
+  /**
+   * The name of the release workflow.
+   * @default "release-BRANCH"
+   */
+  readonly workflowName?: string;
+
+  /**
+   * The major versions released from this branch.
+   */
+  readonly majorVersion: number;
+
+  /**
+   * Bump the version as a pre-release tag.
+   *
+   * @default - normal releases
+   */
+  readonly prerelease?: string;
+}
+
+interface ReleaseBranch extends Partial<BranchOptions> {
+  readonly name: string;
 }

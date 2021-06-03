@@ -1,5 +1,5 @@
 import { Component } from './component';
-import { GithubWorkflow } from './github';
+import { workflows } from './github';
 import { JobPermission } from './github/workflows-model';
 import { Project } from './project';
 
@@ -9,11 +9,6 @@ const JSII_RELEASE_VERSION = 'latest';
  * Options for `Publisher`.
  */
 export interface PublisherOptions {
-  /**
-   * The github workflow to add release jobs to.
-   */
-  readonly workflow: GithubWorkflow;
-
   /**
    * The job ID that produces the build artifacts. All publish jobs will take a dependency on this job.
    */
@@ -40,189 +35,187 @@ export interface PublisherOptions {
 
 /**
  * Implements GitHub jobs for publishing modules to package managers.
- *kw
+ *
  * Under the hood, it uses https://github.com/aws/jsii-release
  */
 export class Publisher extends Component {
-  public readonly workflow: GithubWorkflow;
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
 
+  // the jobs to add to the release workflow
+  private readonly jobs: { [name: string]: workflows.Job } = {};
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
-    this.workflow = options.workflow;
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
   }
 
   /**
+   * Renders a set of workflow jobs for all the publishers.
+   * @returns GitHub workflow jobs
+   */
+  public render(): Record<string, workflows.Job> {
+    return { ...this.jobs };
+  }
+
+  /**
    * Publishes artifacts from `js/**` to npm.
    * @param options Options
    */
-  public publishToNpm(options: JsiiReleaseNpm) {
+  public publishToNpm(options: JsiiReleaseNpm = {}) {
     const npmTokenSecret = options.npmTokenSecret ?? 'NPM_TOKEN';
-    this.workflow.addJobs({
-      release_npm: {
-        permissions: { contents: JobPermission.READ },
-        name: 'Release to NPM',
-        needs: [this.buildJobId],
-        runsOn: 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          this.renderDownloadArtifactStep(),
-          {
-            name: 'Release',
-            run: this.renderJsiiReleaseCommand('jsii-release-npm'),
-            env: {
-              NPM_TOKEN: `\${{ secrets.${npmTokenSecret} }}`,
-              NPM_DIST_TAG: options.distTag!,
-              NPM_REGISTRY: options.registry!,
-            },
-          },
-        ],
+    this.jobs.release_npm = {
+      permissions: { contents: JobPermission.READ },
+      name: 'Release to NPM',
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: {
+        image: 'jsii/superchain',
       },
-    });
+      steps: [
+        this.renderDownloadArtifactStep(),
+        {
+          name: 'Release',
+          run: this.renderJsiiReleaseCommand('jsii-release-npm'),
+          env: {
+            NPM_TOKEN: `\${{ secrets.${npmTokenSecret} }}`,
+            NPM_DIST_TAG: options.distTag!,
+            NPM_REGISTRY: options.registry!,
+          },
+        },
+      ],
+    };
   }
 
   /**
    * Publishes artifacts from `dotnet/**` to NuGet Gallery.
    * @param options Options
    */
-  public publishToNuget(options: JsiiReleaseNuget) {
+  public publishToNuget(options: JsiiReleaseNuget = {}) {
     const nugetApiKeySecret = options.nugetApiKeySecret ?? 'NUGET_API_KEY';
-    this.workflow.addJobs({
-      release_nuget: {
-        name: 'Release to Nuget',
-        permissions: { contents: JobPermission.READ },
-        needs: [this.buildJobId],
-        runsOn: 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          this.renderDownloadArtifactStep(),
-          {
-            name: 'Release',
-            run: this.renderJsiiReleaseCommand('jsii-release-nuget'),
-            env: {
-              NUGET_API_KEY: `\${{ secrets.${nugetApiKeySecret} }}`,
-            },
-          },
-        ],
+    this.jobs.release_nuget = {
+      name: 'Release to Nuget',
+      permissions: { contents: JobPermission.READ },
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: {
+        image: 'jsii/superchain',
       },
-    });
+      steps: [
+        this.renderDownloadArtifactStep(),
+        {
+          name: 'Release',
+          run: this.renderJsiiReleaseCommand('jsii-release-nuget'),
+          env: {
+            NUGET_API_KEY: `\${{ secrets.${nugetApiKeySecret} }}`,
+          },
+        },
+      ],
+    };
   }
 
   /**
    * Publishes artifacts from `java/**` to Maven.
    * @param options Options
    */
-  public publishToMaven(options: JsiiReleaseMaven) {
+  public publishToMaven(options: JsiiReleaseMaven = {}) {
     const mavenGpgPrivateKeySecret = options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY';
     const mavenGpgPrivateKeyPassphrase = options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE';
     const mavenUsername = options.mavenUsername ?? 'MAVEN_USERNAME';
     const mavenPassword = options.mavenPassword ?? 'MAVEN_PASSWORD';
     const mavenStagingProfileId = options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID';
-
-    this.workflow.addJobs({
-      release_maven: {
-        name: 'Release to Maven',
-        permissions: { contents: JobPermission.READ },
-        needs: [this.buildJobId],
-        runsOn: 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          this.renderDownloadArtifactStep(),
-          {
-            name: 'Release',
-            run: this.renderJsiiReleaseCommand('jsii-release-maven'),
-            env: {
-              MAVEN_ENDPOINT: options.mavenEndpoint!,
-              MAVEN_SERVER_ID: options.mavenServerId!,
-              MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl!,
-              MAVEN_GPG_PRIVATE_KEY: `\${{ secrets.${mavenGpgPrivateKeySecret} }}`,
-              MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: `\${{ secrets.${mavenGpgPrivateKeyPassphrase} }}`,
-              MAVEN_PASSWORD: `\${{ secrets.${mavenPassword} }}`,
-              MAVEN_USERNAME: `\${{ secrets.${mavenUsername} }}`,
-              MAVEN_STAGING_PROFILE_ID: `\${{ secrets.${mavenStagingProfileId} }}`,
-            },
-          },
-        ],
+    this.jobs.release_maven = {
+      name: 'Release to Maven',
+      permissions: { contents: JobPermission.READ },
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: {
+        image: 'jsii/superchain',
       },
-    });
+      steps: [
+        this.renderDownloadArtifactStep(),
+        {
+          name: 'Release',
+          run: this.renderJsiiReleaseCommand('jsii-release-maven'),
+          env: {
+            MAVEN_ENDPOINT: options.mavenEndpoint!,
+            MAVEN_SERVER_ID: options.mavenServerId!,
+            MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl!,
+            MAVEN_GPG_PRIVATE_KEY: `\${{ secrets.${mavenGpgPrivateKeySecret} }}`,
+            MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: `\${{ secrets.${mavenGpgPrivateKeyPassphrase} }}`,
+            MAVEN_PASSWORD: `\${{ secrets.${mavenPassword} }}`,
+            MAVEN_USERNAME: `\${{ secrets.${mavenUsername} }}`,
+            MAVEN_STAGING_PROFILE_ID: `\${{ secrets.${mavenStagingProfileId} }}`,
+          },
+        },
+      ],
+    };
   }
 
   /**
    * Publishes wheel artifacts from `python` to PyPI.
    * @param options Options
    */
-  public publishToPyPi(options: JsiiReleasePyPi) {
+  public publishToPyPi(options: JsiiReleasePyPi = {}) {
     const twineUsername = options.twineUsernameSecret ?? 'TWINE_USERNAME';
     const twinePassword = options.twinePasswordSecret ?? 'TWINE_PASSWORD';
-    this.workflow.addJobs({
-      release_pypi: {
-        name: 'Release to PyPi',
-        permissions: { contents: JobPermission.READ },
-        needs: [this.buildJobId],
-        runsOn: 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          this.renderDownloadArtifactStep(),
-          {
-            name: 'Release',
-            run: this.renderJsiiReleaseCommand('jsii-release-pypi'),
-            env: {
-              TWINE_USERNAME: `\${{ secrets.${twineUsername} }}`,
-              TWINE_PASSWORD: `\${{ secrets.${twinePassword} }}`,
-              ...(options.twineRegistryUrl && { TWINE_REPOSITORY_URL: options.twineRegistryUrl }),
-            },
-          },
-        ],
+    this.jobs.release_pypi = {
+      name: 'Release to PyPi',
+      permissions: { contents: JobPermission.READ },
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: {
+        image: 'jsii/superchain',
       },
-    });
+      steps: [
+        this.renderDownloadArtifactStep(),
+        {
+          name: 'Release',
+          run: this.renderJsiiReleaseCommand('jsii-release-pypi'),
+          env: {
+            TWINE_USERNAME: `\${{ secrets.${twineUsername} }}`,
+            TWINE_PASSWORD: `\${{ secrets.${twinePassword} }}`,
+            ...(options.twineRegistryUrl && { TWINE_REPOSITORY_URL: options.twineRegistryUrl }),
+          },
+        },
+      ],
+    };
   }
 
   /**
    * Adds a go publishing job.
    * @param options Options
    */
-  public publishToGo(options: JsiiReleaseGo) {
+  public publishToGo(options: JsiiReleaseGo = {}) {
     const githubTokenSecret = options.githubTokenSecret ?? 'GO_GITHUB_TOKEN';
-    this.workflow.addJobs({
-      release_golang: {
-        name: 'Release to Go',
-        permissions: { contents: JobPermission.READ },
-        needs: [this.buildJobId],
-        runsOn: 'ubuntu-latest',
-        container: {
-          image: 'jsii/superchain',
-        },
-        steps: [
-          this.renderDownloadArtifactStep(),
-          {
-            name: 'Release',
-            run: this.renderJsiiReleaseCommand('jsii-release-golang'),
-            env: {
-              GITHUB_REPO: options.githubRepo!,
-              GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
-              GIT_BRANCH: options.gitBranch!,
-              GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
-              GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
-              GIT_COMMIT_MESSAGE: options.gitCommitMessage!,
-            },
-          },
-        ],
+    this.jobs.release_golang = {
+      name: 'Release to Go',
+      permissions: { contents: JobPermission.READ },
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: {
+        image: 'jsii/superchain',
       },
-    });
+      steps: [
+        this.renderDownloadArtifactStep(),
+        {
+          name: 'Release',
+          run: this.renderJsiiReleaseCommand('jsii-release-golang'),
+          env: {
+            GITHUB_REPO: options.githubRepo!,
+            GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
+            GIT_BRANCH: options.gitBranch!,
+            GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
+            GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
+            GIT_COMMIT_MESSAGE: options.gitCommitMessage!,
+          },
+        },
+      ],
+    };
   }
 
   private renderJsiiReleaseCommand(subcommand: string) {
