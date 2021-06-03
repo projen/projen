@@ -32,12 +32,12 @@ jobs:
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > ${{ runner.temp }}/upgrade.patch
+          git diff --patch --staged > .upgrade.tmp.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: upgrade.patch
-          path: ${{ runner.temp }}/upgrade.patch
+          name: .upgrade.tmp.patch
+          path: .upgrade.tmp.patch
     container:
       image: jsii/superchain
   pr:

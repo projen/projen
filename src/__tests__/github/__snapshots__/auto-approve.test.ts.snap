@@ -5,7 +5,7 @@ exports[`auto-approve all users 1`] = `
 
 name: auto-approve
 on:
-  pull_request:
+  pull_request_target:
     types:
       - labeled
       - opened
@@ -30,7 +30,7 @@ exports[`auto-approve configure options 1`] = `
 
 name: auto-approve
 on:
-  pull_request:
+  pull_request_target:
     types:
       - labeled
       - opened
@@ -57,7 +57,7 @@ exports[`auto-approve default 1`] = `
 
 name: auto-approve
 on:
-  pull_request:
+  pull_request_target:
     types:
       - labeled
       - opened
