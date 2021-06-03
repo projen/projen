@@ -73,6 +73,16 @@ export class AutoApprove extends Component {
 
     const workflow = new GithubWorkflow(project.github, 'auto-approve');
     workflow.on({
+      // The 'pull request' event gives the workflow 'read-only' permissions on some
+      // pull requests (such as the ones from dependabot) when using the `GITHUB_TOKEN`
+      // security token. This prevents the workflow from approving these pull requests.
+      // Github has placed this guard so as to prevent security attacks by simply opening
+      // a pull request and triggering a workflow on a commit that was not vetted to make
+      // unintended changes to the repository.
+      //
+      // Instead use the 'pull request target' event here that gives the Github workflow
+      // 'read-write' permissions. This is safe because, this event, unlike the 'pull request'
+      // event references the BASE commit of the pull request and not the HEAD commit.
       pullRequestTarget: {
         types: ['labeled', 'opened', 'synchronize', 'reopened', 'ready_for_review'],
       },
