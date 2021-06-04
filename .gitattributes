@@ -12,7 +12,7 @@
 /.markdownlint.json                        	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /.projen/jest-snapshot-resolver.js         	linguist-generated
 /.vscode/launch.json                       	linguist-generated
 /LICENSE                                   	linguist-generated

@@ -244,7 +244,7 @@ Object {
 /.github/workflows/upgrade-projen.yml      	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -1996,7 +1996,7 @@ Object {
 /.gitattributes                            	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -3390,7 +3390,7 @@ Object {
 /.gitattributes                            	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -4523,7 +4523,7 @@ Object {
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
