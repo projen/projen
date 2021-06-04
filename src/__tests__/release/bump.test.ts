@@ -111,9 +111,9 @@ async function testBump(opts: { options?: Partial<BumpOptions>; commits?: { mess
 
   // init a git repository
   git('init');
-  git('config --global user.email "you@example.com"');
-  git('config --global user.name "Your Name"');
-  git('config --global commit.gpgsign false');
+  git('config user.email "you@example.com"');
+  git('config user.name "Your Name"');
+  git('config commit.gpgsign false');
 
   const commit = async (message: string) => {
     await writeFile(join(workdir, 'dummy.txt'), message);
