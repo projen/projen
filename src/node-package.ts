@@ -617,6 +617,36 @@ export class NodePackage extends Component {
     return this.renderInstallCommand(false);
   }
 
+  public renderUpgradePackagesCommand(exclude: string[], include?: string[]): string {
+
+    const project = this.project;
+    function upgradePackages(command: string) {
+      return () => `${command} ${project.deps.all
+        .map(d => d.name)
+        .filter(d => include ? include.includes(d) : true)
+        .filter(d => !exclude.includes(d))
+        .join(' ')}`;
+    }
+
+    let lazy = undefined;
+    switch (this.packageManager) {
+      case NodePackageManager.YARN:
+        lazy = upgradePackages('yarn upgrade');
+        break;
+      case NodePackageManager.NPM:
+        lazy = upgradePackages('npm update');
+        break;
+      case NodePackageManager.PNPM:
+        lazy = upgradePackages('pnpm update');
+        break;
+      default:
+        throw new Error(`unexpected package manager ${this.packageManager}`);
+    }
+
+    return lazy as unknown as string;
+
+  }
+
   // ---------------------------------------------------------------------------------------
 
   public preSynthesize() {

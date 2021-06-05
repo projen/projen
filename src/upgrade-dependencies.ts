@@ -137,6 +137,9 @@ export class UpgradeDependencies extends Component {
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     task.exec(this._project.package.installAndUpdateLockfileCommand);
 
+    // run upgrade command to upgrade transitive deps as well
+    task.exec(this._project.package.renderUpgradePackagesCommand(exclude, this.options.include));
+
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
 
