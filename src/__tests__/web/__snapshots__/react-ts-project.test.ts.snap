@@ -10,7 +10,7 @@ Object {
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /react-app-env.d.ts                        	linguist-generated
@@ -388,6 +388,9 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           Object {
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/node @types/react @types/react-dom npm-check-updates npm-check-updates typescript react react-dom react-scripts web-vitals",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -404,6 +407,9 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "yarn install --check-files",
+          },
+          Object {
+            "exec": "yarn upgrade projen",
           },
           Object {
             "exec": "npx projen",

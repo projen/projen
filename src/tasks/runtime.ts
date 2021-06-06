@@ -78,7 +78,12 @@ class RunTask {
       return;
     }
 
-    for (const step of task.steps ?? []) {
+    if (!task.steps || task.steps.length === 0) {
+      logging.verbose(this.fmtLog('No actions have been specified for this task.'));
+      return;
+    }
+
+    for (const step of task.steps) {
       if (step.say) {
         logging.info(this.fmtLog(step.say));
       }

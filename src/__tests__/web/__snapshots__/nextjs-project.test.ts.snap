@@ -11,7 +11,7 @@ Object {
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
+/.projen/**                                	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /postcss.config.json                       	linguist-generated
@@ -469,6 +469,9 @@ pull_request_rules:
             "exec": "yarn install --check-files",
           },
           Object {
+            "exec": "yarn upgrade npm-check-updates npm-check-updates standard-version autoprefixer next postcss react react-dom tailwindcss",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -485,6 +488,9 @@ pull_request_rules:
           },
           Object {
             "exec": "yarn install --check-files",
+          },
+          Object {
+            "exec": "yarn upgrade projen",
           },
           Object {
             "exec": "npx projen",

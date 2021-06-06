@@ -3045,6 +3045,20 @@ removeScript(name: string): void
 
 
 
+#### renderUpgradePackagesCommand(exclude, include?)🔹 <a id="projen-nodepackage-renderupgradepackagescommand"></a>
+
+Render a package manager specific command to upgrade all requested dependencies.
+
+```ts
+renderUpgradePackagesCommand(exclude: Array<string>, include?: Array<string>): string
+```
+
+* **exclude** (<code>Array<string></code>)  *No description*
+* **include** (<code>Array<string></code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### setScript(name, command)🔹 <a id="projen-nodepackage-setscript"></a>
 
 Override the contents of an npm package.json script.
