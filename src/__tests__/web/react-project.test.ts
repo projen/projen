@@ -17,7 +17,7 @@ test('rewire creates config-overrides.js', () => {
       'module.prop5': 'one',
     },
   });
-  const snapshot = synthSnapshot(p)['.projen/config-overrides.js'];
+  const snapshot = synthSnapshot(p)['.projen/react-config-overrides.js'];
   expect(snapshot).toMatchSnapshot();
 });
 

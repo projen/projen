@@ -191,10 +191,11 @@ export class ReactComponent extends Component {
 
     if (rewire) {
 
+      const overridesPath = '.projen/react-config-overrides.js';
       project.addDevDeps('react-app-rewired');
-      project.addFields({ 'config-overrides-path': '.projen/config-overrides' });
+      project.addFields({ 'config-overrides-path': overridesPath });
 
-      const configOverrides = new SourceCode(this.project, '.projen/config-overrides.js');
+      const configOverrides = new SourceCode(this.project, overridesPath);
       configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
       configOverrides.line('/**');
       configOverrides.line(' * Override CRA configuration without needing to eject.');
