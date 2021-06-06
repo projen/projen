@@ -413,6 +413,9 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           Object {
+            "exec": "yarn upgrade @types/node @types/react @types/react-dom npm-check-updates npm-check-updates typescript autoprefixer next postcss react react-dom tailwindcss",
+          },
+          Object {
             "exec": "npx projen",
           },
         ],
@@ -429,6 +432,9 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "yarn install --check-files",
+          },
+          Object {
+            "exec": "yarn upgrade projen",
           },
           Object {
             "exec": "npx projen",
