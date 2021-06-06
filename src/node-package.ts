@@ -624,11 +624,20 @@ export class NodePackage extends Component {
 
     const project = this.project;
     function upgradePackages(command: string) {
-      return () => `${command} ${project.deps.all
-        .map(d => d.name)
-        .filter(d => include ? include.includes(d) : true)
-        .filter(d => !exclude.includes(d))
-        .join(' ')}`;
+      return () => {
+        if (exclude.length === 0 && !include) {
+          // request to upgrade all packages
+          // separated for asthetic reasons.
+          return command;
+        }
+
+        // filter by exclude and include.
+        return `${command} ${project.deps.all
+          .map(d => d.name)
+          .filter(d => include ? include.includes(d) : true)
+          .filter(d => !exclude.includes(d))
+          .join(' ')}`;
+      };
     }
 
     let lazy = undefined;
