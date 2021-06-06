@@ -2,14 +2,51 @@ import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
+import { SourceCode } from '../source-code';
 import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
 
-export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions { }
+export interface ReactRewireOptions {
+  /**
+   * Rewire webpack configuration.
+   *
+   * Use this property to override webpack configuration properties provided
+   * by create-react-app, without needing to eject.
+   *
+   * This property will create a `config-overrides.js` file in your root directory,
+   * which will contain the desired rewiring code.
+   *
+   * To **override** the configuration, you can provide simple key value pairs.
+   * Keys take the form of js code directives that traverse to the desired property.
+   * Values should be JSON serializable objects.
+   *
+   * For example, the following config:
+   *
+   * ```json
+   * rewire: { "module.unknownContextCritical": false }
+   * ```
+   *
+   * Will translate to the following `config-overrides.js` file:
+   *
+   * ```js
+   * module.exports = function override(config, env) {
+   *   config.module.unknownContextCritical = false;
+   * }
+   * ```
+   *
+   * @default - No rewired config.
+   *
+   * @see https://webpack.js.org/configuration/
+   * @see https://github.com/timarney/react-app-rewired
+   */
+  readonly rewire?: { [key: string]: any };
+}
 
-export interface ReactProjectOptions extends NodeProjectOptions {
+export interface ReactTypeScriptProjectOptions extends TypeScriptProjectOptions, ReactRewireOptions {}
+
+export interface ReactProjectOptions extends NodeProjectOptions, ReactRewireOptions {
   /**
    * Source directory.
    *
@@ -43,7 +80,7 @@ export class ReactProject extends NodeProject {
 
     this.srcdir = options.srcdir ?? 'src';
 
-    new ReactComponent(this, { typescript: false });
+    new ReactComponent(this, { typescript: false, rewire: options.rewire });
 
     // generate sample code in `src` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
@@ -110,7 +147,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
 
     this.srcdir = options.srcdir ?? 'src';
 
-    new ReactComponent(this, { typescript: true });
+    new ReactComponent(this, { typescript: true, rewire: options.rewire });
 
     this.reactTypeDef = new ReactTypeDef(this, 'react-app-env.d.ts');
 
@@ -124,7 +161,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
   }
 }
 
-export interface ReactComponentOptions {
+export interface ReactComponentOptions extends ReactRewireOptions {
   /**
    * Whether to apply options specific for TypeScript React projects.
    *
@@ -150,29 +187,55 @@ export class ReactComponent extends Component {
       project.addDevDeps('@types/jest', '@types/node', '@types/react', '@types/react-dom');
     }
 
+    const rewire = options.rewire ?? false;
+
+    if (rewire) {
+
+      const overridesPath = '.projen/react-config-overrides.js';
+      project.addDevDeps('react-app-rewired');
+      project.addFields({ 'config-overrides-path': overridesPath });
+
+      const configOverrides = new SourceCode(this.project, overridesPath);
+      configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
+      configOverrides.line('/**');
+      configOverrides.line(' * Override CRA configuration without needing to eject.');
+      configOverrides.line(' *');
+      configOverrides.line(' * @see https://www.npmjs.com/package/react-app-rewired');
+      configOverrides.line(' */');
+      configOverrides.open('module.exports = function override(config, env) {');
+      for (const [key, value] of Object.entries(rewire)) {
+        configOverrides.line(`config.${key} = ${JSON.stringify(value)};`);
+      }
+      configOverrides.line('return config;');
+      configOverrides.close('};');
+    }
+
+    const reactScripts = rewire ? 'react-app-rewired' : 'react-scripts';
+
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask('dev', {
       description: 'Starts the react application',
       category: TaskCategory.BUILD,
-      exec: 'react-scripts start',
+      exec: `${reactScripts} start`,
     });
 
     project.addTask('build', {
       description: 'Creates an optimized production build of your React application',
       category: TaskCategory.BUILD,
-      exec: 'react-scripts build',
+      exec: `${reactScripts} build`,
     });
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',
       category: TaskCategory.MISC,
+      // eject is not necessary to rewire
       exec: 'react-scripts eject',
     });
 
     project.addTask('test', {
       description: 'Runs tests',
       category: TaskCategory.TEST,
-      exec: 'react-scripts test',
+      exec: `${reactScripts} test`,
     });
 
     project.npmignore?.exclude('# Build', '/build');

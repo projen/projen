@@ -222,6 +222,7 @@ Name|Description
 [web.PostCssOptions](#projen-web-postcssoptions)|*No description*
 [web.ReactComponentOptions](#projen-web-reactcomponentoptions)|*No description*
 [web.ReactProjectOptions](#projen-web-reactprojectoptions)|*No description*
+[web.ReactRewireOptions](#projen-web-reactrewireoptions)|*No description*
 [web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)|*No description*
 [web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)|*No description*
 [web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)|*No description*
@@ -7512,6 +7513,7 @@ new web.ReactComponent(project: NodeProject, options: ReactComponentOptions)
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[web.ReactComponentOptions](#projen-web-reactcomponentoptions)</code>)  *No description*
+  * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
   * **typescript** (<code>boolean</code>)  Whether to apply options specific for TypeScript React projects. __*Default*__: false
 
 
@@ -7621,6 +7623,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+  * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Source directory. __*Default*__: "src"
 
@@ -7799,6 +7802,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
   * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Optional*__
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
+  * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
 
 
 
@@ -11630,6 +11634,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **typescript**?🔹 | <code>boolean</code> | Whether to apply options specific for TypeScript React projects.<br/>__*Default*__: false
 
 
@@ -11724,6 +11729,7 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Source directory.<br/>__*Default*__: "src"
@@ -11731,6 +11737,19 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct ReactRewireOptions 🔹 <a id="projen-web-reactrewireoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 
 
 
@@ -11851,6 +11870,7 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
