@@ -923,11 +923,11 @@ exports[`rewire creates config-overrides.js 1`] = `
  * @see https://www.npmjs.com/package/react-app-rewired
  */
 module.exports = function override(config, env) {
-  config.module.prop1 = false
-  config.module.prop2 = 5
-  config.module.prop3 = [1,2]
-  config.module.prop4 = {\\"one\\":2}
-  config.module.prop5 = \\"one\\"
-  return config
-}"
+  config.module.prop1 = false;
+  config.module.prop2 = 5;
+  config.module.prop3 = [1,2];
+  config.module.prop4 = {\\"one\\":2};
+  config.module.prop5 = \\"one\\";
+  return config;
+};"
 `;

@@ -187,10 +187,14 @@ export class ReactComponent extends Component {
       project.addDevDeps('@types/jest', '@types/node', '@types/react', '@types/react-dom');
     }
 
-    const rewire = options.rewire;
+    const rewire = options.rewire ?? false;
 
     if (rewire) {
-      const configOverrides = new SourceCode(this.project, 'config-overrides.js');
+
+      project.addDevDeps('react-app-rewired');
+      project.addFields({ 'config-overrides-path': '.projen/config-overrides' });
+
+      const configOverrides = new SourceCode(this.project, '.projen/config-overrides.js');
       configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
       configOverrides.line('/**');
       configOverrides.line(' * Override CRA configuration without needing to eject.');
@@ -199,10 +203,10 @@ export class ReactComponent extends Component {
       configOverrides.line(' */');
       configOverrides.open('module.exports = function override(config, env) {');
       for (const [key, value] of Object.entries(rewire)) {
-        configOverrides.line(`config.${key} = ${JSON.stringify(value)}`);
+        configOverrides.line(`config.${key} = ${JSON.stringify(value)};`);
       }
-      configOverrides.line('return config');
-      configOverrides.close('}');
+      configOverrides.line('return config;');
+      configOverrides.close('};');
     }
 
     const reactScripts = rewire ? 'react-app-rewired' : 'react-scripts';

@@ -17,7 +17,7 @@ test('rewire creates config-overrides.js', () => {
       'module.prop5': 'one',
     },
   });
-  const snapshot = synthSnapshot(p)['config-overrides.js'];
+  const snapshot = synthSnapshot(p)['.projen/config-overrides.js'];
   expect(snapshot).toMatchSnapshot();
 });
 
@@ -38,6 +38,14 @@ test('rewire replaces react-scripts', () => {
   assertExec('test', 'react-app-rewired test');
   assertExec('dev', 'react-app-rewired start');
   assertExec('eject', 'react-scripts eject');
+});
+
+test('rewire add a dependency on react-app-rewired', () => {
+  const p = new TestReactProject({
+    rewire: { 'module.prop1': false },
+  });
+
+  expect(p.deps.getDependency('react-app-rewired')).toBeDefined();
 });
 
 class TestReactProject extends ReactProject {
