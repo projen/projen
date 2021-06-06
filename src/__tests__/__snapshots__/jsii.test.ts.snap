@@ -57,6 +57,26 @@ jobs:
           path: dist
     container:
       image: jsii/superchain
+  release_npm:
+    name: Release to NPM
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Release
+        run: npx -p jsii-release@latest jsii-release-npm
+        env:
+          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
+          NPM_DIST_TAG: latest
+          NPM_REGISTRY: registry.npmjs.org
+    container:
+      image: jsii/superchain
   release_golang:
     name: Release to Go
     needs: release
@@ -138,6 +158,26 @@ jobs:
         with:
           name: dist
           path: dist
+    container:
+      image: jsii/superchain
+  release_npm:
+    name: Release to NPM
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Release
+        run: npx -p jsii-release@latest jsii-release-npm
+        env:
+          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
+          NPM_DIST_TAG: latest
+          NPM_REGISTRY: registry.npmjs.org
     container:
       image: jsii/superchain
   release_golang:

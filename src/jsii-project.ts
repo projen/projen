@@ -147,6 +147,7 @@ export class JsiiProject extends TypeScriptProject {
       releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       repository: options.repositoryUrl,
       authorName: options.author,
+      releaseToNpm: true, // release to npm by default
       ...options,
       disableTsconfig: true, // jsii generates its own tsconfig.json
       authorEmail,
