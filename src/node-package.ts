@@ -617,6 +617,9 @@ export class NodePackage extends Component {
     return this.renderInstallCommand(false);
   }
 
+  /**
+   * Render a package manager specific command to upgrade all requested dependencies.
+   */
   public renderUpgradePackagesCommand(exclude: string[], include?: string[]): string {
 
     const project = this.project;
@@ -643,6 +646,8 @@ export class NodePackage extends Component {
         throw new Error(`unexpected package manager ${this.packageManager}`);
     }
 
+    // return a lazy function so that dependencies include ones that were
+    // added post project instantiation (i.e using project.addDeps)
     return lazy as unknown as string;
 
   }
