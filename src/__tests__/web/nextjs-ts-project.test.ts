@@ -9,8 +9,9 @@ test('defaults', () => {
 
 test('tailwind enabled', () => {
   const p = new TestNextJsTypeScriptProject();
-  expect(synthSnapshot(p)['tailwind.config.json']).toBeDefined();
-  expect(synthSnapshot(p)['postcss.config.json']).toBeDefined();
+  const out = synthSnapshot(p);
+  expect(out['tailwind.config.json']).toBeDefined();
+  expect(out['postcss.config.json']).toBeDefined();
 });
 
 class TestNextJsTypeScriptProject extends NextJsTypeScriptProject {

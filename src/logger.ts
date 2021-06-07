@@ -3,6 +3,8 @@ import { Component } from './component';
 import { Project } from './project';
 import { isTruthy } from './util';
 
+const ICON = '✨';
+
 /**
  * Options for logging utilities.
  */
@@ -59,7 +61,7 @@ export class Logger extends Component {
     if (level <= maxLevel) {
       const color = this.colorForLogLevel(level);
       const prefix = this.usePrefix ? `[${this.project.name}] ` : '';
-      console.error(`🤖 ${prefix}${color(...text)}`);
+      console.error(`${ICON} ${prefix}${color(...text)}`);
     }
   }
 

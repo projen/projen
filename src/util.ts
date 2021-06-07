@@ -14,6 +14,17 @@ export function exec(command: string, options?: child_process.ExecSyncOptions) {
 }
 
 /**
+ * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
+ */
+export function execCapture(command: string, options?: child_process.ExecSyncOptions) {
+  logging.verbose(command);
+  return child_process.execSync(command, {
+    stdio: ['inherit', 'pipe', 'inherit'],
+    ...options,
+  });
+}
+
+/**
  * Executes `command` and returns its value or undefined if the command failed.
  */
 export function execOrUndefined(command: string, options?: child_process.ExecSyncOptions): string | undefined {
