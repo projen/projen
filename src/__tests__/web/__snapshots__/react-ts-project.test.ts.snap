@@ -257,10 +257,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "build",
         "version": "^10.17.0",
       },
       Object {
@@ -270,11 +266,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/react-dom",
         "type": "build",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^11",
       },
       Object {
         "name": "npm-check-updates",
@@ -388,7 +379,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/node @types/react @types/react-dom npm-check-updates npm-check-updates typescript react react-dom react-scripts web-vitals",
+            "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom npm-check-updates typescript react react-dom react-scripts web-vitals",
           },
           Object {
             "exec": "npx projen",

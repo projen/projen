@@ -302,11 +302,6 @@ pull_request_rules:
         "version": "^11",
       },
       Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^11",
-      },
-      Object {
         "name": "projen",
         "type": "build",
         "version": "^1.2.3",
@@ -469,7 +464,7 @@ pull_request_rules:
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade npm-check-updates npm-check-updates standard-version autoprefixer next postcss react react-dom tailwindcss",
+            "exec": "yarn upgrade npm-check-updates standard-version autoprefixer next postcss react react-dom tailwindcss",
           },
           Object {
             "exec": "npx projen",
