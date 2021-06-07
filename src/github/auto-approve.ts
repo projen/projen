@@ -44,7 +44,7 @@ export class AutoApprove extends Component {
     super(project);
 
     this.label = options.label ?? 'auto-approve';
-    const usernames = options.allowedUsernames ?? ['github-bot'];
+    const usernames = options.allowedUsernames ?? ['github-actions[bot]'];
 
     if (!project.github) {
       throw new Error('auto approval supported only for Github projects');
@@ -53,7 +53,7 @@ export class AutoApprove extends Component {
     let condition = `contains(github.event.pull_request.labels.*.name, '${this.label}')`;
     if (usernames.length > 0) {
       condition += ' && (';
-      condition += usernames.map(u => `github.event.pull_request.login == '${u}'`).join(' || ');
+      condition += usernames.map(u => `github.event.pull_request.user.login == '${u}'`).join(' || ');
       condition += ')';
     }
 
