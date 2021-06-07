@@ -9,12 +9,10 @@ import { bump, BumpOptions } from '../../release/bump-version';
 logging.disable();
 jest.setTimeout(1000 * 60 * 5); // 5min
 
-const today = (new Date()).toISOString().replace(/T.*/, '');
-
 test('first release', async () => {
   const result = await testBump();
   expect(result.version).toStrictEqual('0.0.0');
-  expect(result.changelog.includes(`## 0.0.0 (${today})`)).toBeTruthy();
+  expect(result.changelog).toMatch(/.*## 0\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 0.0.0 (2021-01-01)
 });
 
 test('first release, with major', async () => {
@@ -22,7 +20,7 @@ test('first release, with major', async () => {
     options: { majorVersion: 2 },
   });
   expect(result.version).toStrictEqual('2.0.0');
-  expect(result.changelog.includes(`## 2.0.0 (${today})`)).toBeTruthy();
+  expect(result.changelog).toMatch(/.*## 2\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 2.0.0 (2021-01-01)
 });
 
 test('first release, with new major', async () => {
