@@ -6,6 +6,7 @@
 /.mergify.yml
 /.projen
 /.projenrc.js
+/.versionrc.json
 /.vscode
 /coverage
 /lib/__tests__
