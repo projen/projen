@@ -69,6 +69,19 @@ test('deps.all returns all the dependencies', () => {
   expect(p.deps.all).toMatchSnapshot();
 });
 
+test('can be overridden', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency('depy@^7', DependencyType.PEER);
+  p.deps.addDependency('depy@^9', DependencyType.PEER);
+
+  // THEN
+  expect(p.deps.getDependency('depy').version).toEqual('^9');
+  expect(depsManifest(p)).toMatchSnapshot();
+});
+
 describe('removeDependency()', () => {
   test('can be used to remove a dependency', () => {
     // GIVEN

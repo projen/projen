@@ -111,7 +111,14 @@ export class Dependencies extends Component {
       metadata,
     };
 
-    this._deps.push(dep);
+    const existingDepIndex = this.tryGetDependencyIndex(dep.name, type);
+
+    if (existingDepIndex !== -1) {
+      this.project.logger.debug(`overriding existing ${dep.type}-dep ${dep.name}`);
+      this._deps[existingDepIndex] = dep;
+    } else {
+      this._deps.push(dep);
+    }
 
     return dep;
   }

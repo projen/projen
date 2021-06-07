@@ -184,7 +184,7 @@ export class ReactComponent extends Component {
     project.addDeps('react', 'react-dom', 'react-scripts@^4.0.0', 'web-vitals');
     project.addDevDeps('@testing-library/jest-dom', '@testing-library/react', '@testing-library/user-event');
     if (this.typescript) {
-      project.addDevDeps('@types/jest', '@types/node', '@types/react', '@types/react-dom');
+      project.addDevDeps('@types/jest', '@types/react', '@types/react-dom');
     }
 
     const rewire = options.rewire ?? false;
