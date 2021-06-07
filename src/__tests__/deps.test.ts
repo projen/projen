@@ -69,17 +69,42 @@ test('deps.all returns all the dependencies', () => {
   expect(p.deps.all).toMatchSnapshot();
 });
 
-test('can be overridden', () => {
+test('duplicates are ignored', () => {
   // GIVEN
   const p = new TestProject();
 
   // WHEN
-  p.deps.addDependency('depy@^7', DependencyType.PEER);
+  p.deps.addDependency('depy', DependencyType.PEER);
+  p.deps.addDependency('depy', DependencyType.PEER);
+
+  // THEN
+  expect(p.deps.getDependency('depy')).toBeDefined();
+  expect(p.deps.all.length).toEqual(1);
+  expect(depsManifest(p)).toMatchSnapshot();
+});
+
+test('can be overridden with more specific version', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency('depy', DependencyType.PEER);
   p.deps.addDependency('depy@^9', DependencyType.PEER);
 
   // THEN
   expect(p.deps.getDependency('depy').version).toEqual('^9');
   expect(depsManifest(p)).toMatchSnapshot();
+});
+
+test('cannot be overridden with different version', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency('depy@^7', DependencyType.PEER);
+
+  // THEN
+  expect(() => p.deps.addDependency('depy@^9', DependencyType.PEER)).toThrow(/\"depy\" is already specified with different version: \^7/);
 });
 
 describe('removeDependency()', () => {
