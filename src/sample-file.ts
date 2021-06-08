@@ -159,23 +159,16 @@ export class SampleDir extends Component {
  * @returns an absolute path
  */
 function resolveSourcePath(relativeSource: string) {
-  // at runtime, __dirname usually looks like /path/to/third-party-lib/node_modules/projen/lib
-  // unless you are testing/developing projen, where it might look like /path/to/projen/lib
-  const parts = __dirname.split('/');
+  const [pkgName, ...rest] = relativeSource.split('/');
+  const currModule = path.dirname(require.main?.filename!);
 
-  if (parts.indexOf('node_modules') === -1) { // projen development
-    return path.join(__dirname, '..', '..', relativeSource);
-  } else { // using projen as a dependency
-    const base = parts.slice(0, parts.lastIndexOf('node_modules') + 1).join('/'); // /path/to/third-party-lib/node_modules
-    const hostModule = parts[parts.lastIndexOf('node_modules') - 1]; // the module that the current project type belongs to (e.g. projen-vue-bootstrap)
-    const sourceModule = relativeSource.split('/')[0]; // the module that we are expecting to find the raw file in (e.g. projen-vue)
-
-    if (sourceModule !== hostModule) {
-      return path.join(base, relativeSource);
-    } else {
-      // when the host and source modules are the same, we want to avoid looking
-      // for the raw file at /path/to/third-party-lib/node_modules/third-party-lib/path/to/asset.png
-      return path.join(base, '..', '..', relativeSource);
-    }
+  let basedir;
+  const currPkg = path.basename(currModule);
+  if (pkgName === currPkg) {
+    basedir = currModule;
+  } else {
+    const pathToPkg = require.resolve(pkgName, { paths: [currModule] });
+    basedir = path.resolve(pathToPkg, '..', '..');
   }
+  return path.join(basedir, rest.join('/'));
 }
