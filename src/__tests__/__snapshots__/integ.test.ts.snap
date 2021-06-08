@@ -4503,10 +4503,7 @@ test('hello', () => {
       "stripInternal": true,
       "target": "ES2018",
     },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-    ],
+    "exclude": Array [],
     "include": Array [
       "src/**/*.ts",
     ],

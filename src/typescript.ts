@@ -257,11 +257,6 @@ export class TypeScriptProject extends NodeProject {
     if (!options.disableTsconfig) {
       const baseTsconfig: TypescriptConfigOptions = {
         include: [`${this.srcdir}/**/*.ts`],
-        exclude: [
-          'node_modules',
-          // support collocated sources and compiled files
-          ...(this.srcdir !== this.libdir ? [this.libdir] : []),
-        ],
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
@@ -269,17 +264,17 @@ export class TypeScriptProject extends NodeProject {
         },
       };
 
-      if (this.srcdir === this.libdir) {
-        // collocated sources/compiled
-        this.gitignore.exclude(`/${this.libdir}/**/*.js`);
-        this.gitignore.exclude(`/${this.libdir}/**/*.d.ts`);
-      } else {
-        // separated sources/compiled
-        baseTsconfig.exclude?.push(this.libdir);
-        this.gitignore.exclude(`/${this.libdir}`);
-      }
       this.tsconfig = new TypescriptConfig(this,
         mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+    }
+
+    if (this.srcdir !== this.libdir) {
+      // separated, can ignore the entire libdir
+      this.gitignore.exclude(`/${this.libdir}`);
+    } else {
+      // collocated, can only ignore the compiled output
+      this.gitignore.exclude(`/${this.libdir}/**/*.js`);
+      this.gitignore.exclude(`/${this.libdir}/**/*.d.ts`);
     }
 
     this.npmignore?.include(`/${this.libdir}`);
