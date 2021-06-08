@@ -109,3 +109,20 @@ test('tsconfig prop is propagated to eslint and jest tsconfigs', () => {
     }),
   }));
 });
+
+test('sources and compiled output can be collocated', () => {
+
+  const prj = new TypeScriptProject({
+    name: 'test',
+    outdir: mkdtemp(),
+    defaultReleaseBranch: 'test',
+    libdir: 'lib',
+    srcdir: 'lib',
+  });
+
+  expect(prj.tsconfig?.exclude).not.toContain('/lib');
+
+  const snapshot = synthSnapshot(prj)['.gitignore'];
+  expect(snapshot).toMatchSnapshot();
+
+});
