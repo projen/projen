@@ -976,10 +976,7 @@ export default function Home() {
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-    ],
+    "exclude": Array [],
     "include": Array [
       "pages/**/*.ts",
       "**/*.ts",

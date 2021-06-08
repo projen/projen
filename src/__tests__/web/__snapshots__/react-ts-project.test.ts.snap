@@ -919,10 +919,7 @@ import '@testing-library/jest-dom';
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-    ],
+    "exclude": Array [],
     "include": Array [
       "src/**/*.ts",
       "src",
