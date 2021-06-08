@@ -115,14 +115,11 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "OUTFILE": "package.json",
-        "INITIAL_VERSION": "v0.1.0"
+        "CHANGELOG": ".changelog.tmp.md"
       },
       "steps": [
         {
-          "builtin": "release/resolve-version"
-        },
-        {
-          "exec": "npx standard-version@^9"
+          "builtin": "release/bump-version"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -132,7 +129,8 @@
       "category": "20.release",
       "description": "Restores version to 0.0.0",
       "env": {
-        "OUTFILE": "package.json"
+        "OUTFILE": "package.json",
+        "CHANGELOG": ".changelog.tmp.md"
       },
       "steps": [
         {
@@ -152,6 +150,9 @@
         },
         {
           "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @types/fs-extra @types/glob @types/ini @types/inquirer @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema markmac npm-check-updates standard-version typescript @iarna/toml chalk decamelize fs-extra glob ini inquirer semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "/bin/bash ./projen.bash"

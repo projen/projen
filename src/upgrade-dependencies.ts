@@ -137,6 +137,9 @@ export class UpgradeDependencies extends Component {
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     task.exec(this._project.package.installAndUpdateLockfileCommand);
 
+    // run upgrade command to upgrade transitive deps as well
+    task.exec(this._project.package.renderUpgradePackagesCommand(exclude, this.options.include));
+
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
 
@@ -167,10 +170,9 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
-    const patchFile = 'upgrade.patch';
+    const patchFile = '.upgrade.tmp.patch';
     const buildStepId = 'build';
     const conclusion = 'conclusion';
-    const patchPath = `${RUNNER_TEMP}/${patchFile}`;
 
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
@@ -210,19 +212,20 @@ export class UpgradeDependencies extends Component {
         name: 'Create Patch',
         run: [
           'git add .',
-          `git diff --patch --staged > ${patchPath}`,
+          `git diff --patch --staged > ${patchFile}`,
         ].join('\n'),
       },
       {
         name: 'Upload patch',
         uses: 'actions/upload-artifact@v2',
-        with: { name: patchFile, path: patchPath },
+        with: { name: patchFile, path: patchFile },
       },
     );
 
     return {
       job: {
         name: 'Upgrade',
+        container: this.options.workflowOptions?.container,
         permissions: permissions,
         runsOn: UBUNTU_LATEST,
         outputs: outputs,
@@ -230,7 +233,6 @@ export class UpgradeDependencies extends Component {
       },
       jobId: 'upgrade',
       patchFile: patchFile,
-      patchPath: patchPath,
       build: build,
       buildConclusionOutput: conclusion,
     };
@@ -266,7 +268,7 @@ export class UpgradeDependencies extends Component {
       },
       {
         name: 'Apply patch',
-        run: `[ -s ${upgrade.patchPath} ] && git apply ${upgrade.patchPath} || echo "Empty patch. Skipping."`,
+        run: `[ -s ${RUNNER_TEMP}/${upgrade.patchFile} ] && git apply ${RUNNER_TEMP}/${upgrade.patchFile} || echo "Empty patch. Skipping."`,
       },
       {
         name: 'Create Pull Request',
@@ -279,7 +281,7 @@ export class UpgradeDependencies extends Component {
           'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
           'title': title,
-          'labels': this.options.workflowOptions?.labels?.join(',') ?? '',
+          'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
         },
       },
@@ -333,7 +335,6 @@ interface Upgrade {
   readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
-  readonly patchPath: string;
   readonly build: boolean;
   readonly buildConclusionOutput: string;
 }
@@ -374,7 +375,7 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * Labels to apply on the PR.
    *
-   * @default [] no labels.
+   * @default - no labels.
    */
   readonly labels?: string[];
 
@@ -392,6 +393,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    */
   readonly rebuild?: boolean;
 
+  /**
+   * Job container options.
+   *
+   * @default - defaults
+   */
+  readonly container?: workflows.ContainerOptions;
 }
 
 /**

@@ -79,10 +79,11 @@ describe('dev environment docker options', () => {
 
 
     // THEN
-    const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+    const outdir = synthSnapshot(project);
+    const gitpodSnapshot = outdir[GITPOD_FILE];
     expect(gitpodSnapshot).toContain('image: jsii/superchain');
 
-    const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+    const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
       '//': FileBase.PROJEN_MARKER,
       'image': 'jsii/uberchain',
@@ -101,11 +102,12 @@ describe('dev environment docker options', () => {
     project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromFile('Dockerfile'));
 
     // THEN
-    const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+    const outdir = synthSnapshot(project);
+    const gitpodSnapshot = outdir[GITPOD_FILE];
     expect(gitpodSnapshot).toContain('image:');
     expect(gitpodSnapshot).toContain('file: .gitpod.Dockerfile');
 
-    const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+    const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
       '//': FileBase.PROJEN_MARKER,
       'build': { dockerfile: 'Dockerfile' },
@@ -127,11 +129,12 @@ describe('dev environment tasks', () => {
     project.devContainer?.addTasks(task);
 
     // THEN
-    const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+    const outdir = synthSnapshot(project);
+    const gitpodSnapshot = outdir[GITPOD_FILE];
     expect(gitpodSnapshot).toContain('command');
     expect(gitpodSnapshot).toContain('gitpod-test');
 
-    const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+    const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot.postCreateCommand).toContain('gitpod-test');
   });
 
@@ -172,11 +175,12 @@ test('dev environment ports', () => {
   project.devContainer?.addPorts('8080', '3000');
 
   // THEN
-  const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+  const outdir = synthSnapshot(project);
+  const gitpodSnapshot = outdir[GITPOD_FILE];
   expect(gitpodSnapshot).toContain('port: "8080"');
   expect(gitpodSnapshot).toContain('port: 3000-3999');
 
-  const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+  const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
     '//': FileBase.PROJEN_MARKER,
     'forwardPorts': ['8080', '3000'],
@@ -220,11 +224,12 @@ test('dev environment vscode extensions', () => {
   project.devContainer?.addVscodeExtensions('dbaeumer.vscode-eslint');
 
   // THEN
-  const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
+  const outdir = synthSnapshot(project);
+  const gitpodSnapshot = outdir[GITPOD_FILE];
   expect(gitpodSnapshot).toContain('extensions:');
   expect(gitpodSnapshot).toContain('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
 
-  const devContainerSnapshot = synthSnapshot(project)[DEVCONTAINER_FILE];
+  const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
     '//': FileBase.PROJEN_MARKER,
     'extensions': ['dbaeumer.vscode-eslint'],

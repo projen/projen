@@ -189,7 +189,7 @@ export class PythonProject extends Project {
     }
 
     if (options.venv ?? true) {
-      this.envManager = new Venv(this);
+      this.envManager = new Venv(this, options.venvOptions);
     }
 
     if (options.pip ?? true) {

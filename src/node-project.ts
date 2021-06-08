@@ -79,13 +79,27 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly codeCovTokenSecret?: string;
 
   /**
-   * Define a GitHub workflow for releasing from "main" when new versions are
-   * bumped. Requires that `version` will be undefined.
+   * DEPRECATED: renamed to `release`.
    *
    * @default - true if not a subproject
-   * @featured
+   * @deprecated see `release`.
    */
   readonly releaseWorkflow?: boolean;
+
+  /**
+   * Add release management to this project.
+   *
+   * @default - true (false for subprojects)
+   * @featured
+   */
+  readonly release?: boolean;
+
+  /**
+   * The name of the main release branch.
+   *
+   * @default "main"
+   */
+  readonly defaultReleaseBranch: string;
 
   /**
    * Workflow steps to use in order to bootstrap this repo.
@@ -138,15 +152,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly mergifyOptions?: MergifyOptions;
 
   /**
-   * Automatically merge PRs that build successfully and have this label.
-   *
-   * To disable, set this value to an empty string.
-   *
-   * @default "auto-merge"
-   */
-  readonly mergifyAutoMergeLabel?: string;
-
-  /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
    * projen:upgrade`).
    *
@@ -164,7 +169,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
 
   /**
    * Automatically merge projen upgrade PRs when build passes.
-   * Applies the `mergifyAutoMergeLabel` to the PR if enabled.
+   * Auto-approves the pull request which mergify will then merge.
    *
    * @default - "true" if mergify auto-merge is enabled (default)
    */
@@ -319,12 +324,6 @@ export class NodeProject extends Project {
   public readonly buildWorkflowJobId?: string;
 
   /**
-   * The release GitHub workflow. `undefined` if `releaseWorkflow` is disabled.
-   * @deprecated use `release.workflow`
-   */
-  public readonly releaseWorkflow?: GithubWorkflow;
-
-  /**
    * Package publisher. This will be `undefined` if the project does not have a
    * release workflow.
    *
@@ -393,10 +392,13 @@ export class NodeProject extends Project {
     return this.package.manifest;
   }
 
+  private readonly workflowBootstrapSteps: workflows.JobStep[];
+
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
+    this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -576,20 +578,22 @@ export class NodeProject extends Project {
       this.buildWorkflowJobId = buildJobId;
     }
 
-    if (options.releaseWorkflow ?? (this.parent ? false : true)) {
+    const release = options.release ?? options.releaseWorkflow ?? (this.parent ? false : true);
+    if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
 
       this.release = new Release(this, {
-        versionJson: 'package.json', // this is where "version" is set after bump
+        versionFile: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
+        branch: options.defaultReleaseBranch ?? 'main',
         ...options,
+
         releaseWorkflowSetupSteps: [
           ...this.installWorkflowSteps,
           ...options.releaseWorkflowSetupSteps ?? [],
         ],
       });
 
-      this.releaseWorkflow = this.release.workflow;
       this.publisher = this.release.publisher;
 
       if (options.releaseToNpm ?? false) {
@@ -599,14 +603,11 @@ export class NodeProject extends Project {
           npmTokenSecret: this.package.npmTokenSecret,
         });
       }
+
     } else {
       // validate that no release options are selected if the release workflow is disabled.
       if (options.releaseToNpm) {
         throw new Error('"releaseToNpm" is not supported for APP projects');
-      }
-
-      if (options.releaseBranches) {
-        throw new Error('"releaseBranches" is not supported for APP projects');
       }
 
       if (options.releaseEveryCommit) {
@@ -621,7 +622,6 @@ export class NodeProject extends Project {
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
         buildJob: this.buildWorkflowJobId,
-        autoMergeLabel: options.mergifyAutoMergeLabel,
       });
       this.npmignore?.exclude('/.mergify.yml');
     }
@@ -630,8 +630,18 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false) ? DependenciesUpgradeMechanism.dependabot()
-      : DependenciesUpgradeMechanism.githubWorkflow();
+    const defaultDependenciesUpgrade = (options.dependabot ?? false)
+      ? DependenciesUpgradeMechanism.dependabot()
+      : DependenciesUpgradeMechanism.githubWorkflow({
+        workflowOptions: options.workflowContainerImage ? {
+          // if projen secret is defined, use it (otherwise default to GITHUB_TOKEN).
+          secret: options.projenUpgradeSecret,
+          container: {
+            image: options.workflowContainerImage,
+          },
+        } : undefined,
+      });
+
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
@@ -647,10 +657,9 @@ export class NodeProject extends Project {
         workflow: !!options.projenUpgradeSecret,
         workflowOptions: {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && this.autoMerge?.autoMergeLabel)
-            ? [this.autoMerge.autoMergeLabel]
-            : [],
+          labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
         },
       });
     }
@@ -743,8 +752,12 @@ export class NodeProject extends Project {
     this.package.addKeywords(...keywords);
   }
 
-  public get installWorkflowSteps(): any[] {
-    const install = new Array();
+  public get installWorkflowSteps(): workflows.JobStep[] {
+    const install = new Array<workflows.JobStep>();
+
+    // first run the workflow bootstrap steps
+    install.push(...this.workflowBootstrapSteps);
+
     if (this.nodeVersion) {
       install.push({
         name: 'Setup Node.js',
@@ -757,6 +770,7 @@ export class NodeProject extends Project {
       name: 'Install dependencies',
       run: this.package.installCommand,
     });
+
     return install;
   }
 

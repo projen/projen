@@ -132,6 +132,50 @@ describe('publish to go', () => {
     expect(output['.github/workflows/release.yml']).toMatchSnapshot();
   });
 
+  test('release to npm undefined', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      defaultReleaseBranch: 'main',
+    });
+
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/release.yml']).toContain('release_npm');
+  });
+
+  test('release to npm true', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      defaultReleaseBranch: 'main',
+      releaseToNpm: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/release.yml']).toContain('release_npm');
+  });
+
+  test('release to npm false', () => {
+    const project = new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      defaultReleaseBranch: 'main',
+      releaseToNpm: false,
+    });
+
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/release.yml']).not.toContain('release_npm');
+  });
+
   test('customizations', () => {
     const project = new TestJsiiProject({
       authorAddress: 'https://foo.bar',

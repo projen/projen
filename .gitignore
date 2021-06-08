@@ -45,7 +45,6 @@ yarn-error.log*
 !/.projen/jest-snapshot-resolver.js
 !/.projen/tasks.json
 !/.projenrc.js
-!/.versionrc.json
 !/.vscode/launch.json
 !/API.md
 !/LICENSE
