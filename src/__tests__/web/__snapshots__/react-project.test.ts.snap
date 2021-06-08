@@ -332,9 +332,12 @@ pull_request_rules:
     "tasks": Object {
       "build": Object {
         "category": "00.build",
-        "description": "Creates an optimized production build of your React application",
+        "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
+          Object {
+            "exec": "npx projen",
+          },
           Object {
             "exec": "react-scripts build",
           },
@@ -390,11 +393,14 @@ pull_request_rules:
       },
       "test": Object {
         "category": "10.test",
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "react-scripts test",
+            "spawn": "test:compile",
+          },
+          Object {
+            "exec": "react-scripts test --watchAll=false",
           },
         ],
       },
