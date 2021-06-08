@@ -732,16 +732,22 @@ export class Jest {
 
     this.project.testTask.exec(`jest ${jestOpts.join(' ')}`);
 
-    this.project.addTask('test:watch', {
-      description: 'Run jest in watch mode',
-      category: TaskCategory.TEST,
-      exec: 'jest --watch',
-    });
+    const testWatch = this.project.tasks.tryFind('test:watch');
+    if (!testWatch) {
+      this.project.addTask('test:watch', {
+        description: 'Run jest in watch mode',
+        category: TaskCategory.TEST,
+        exec: 'jest --watch',
+      });
+    }
 
-    this.project.addTask('test:update', {
-      description: 'Update jest snapshots',
-      category: TaskCategory.TEST,
-      exec: 'jest --updateSnapshot',
-    });
+    const testUpdate = this.project.tasks.tryFind('test:update');
+    if (!testUpdate) {
+      this.project.addTask('test:update', {
+        description: 'Update jest snapshots',
+        category: TaskCategory.TEST,
+        exec: 'jest --updateSnapshot',
+      });
+    }
   }
 }
