@@ -168,24 +168,35 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly projenUpgradeSecret?: string;
 
   /**
-   * Automatically merge projen upgrade PRs when build passes.
-   * Auto-approves the pull request which mergify will then merge.
+   * Automatically approve projen upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
    *
-   * Only applies if `autoApproveOptions` are defined.
+   * Throw if set to true but `autoApproveOptions` are not defined.
    *
-   * @default - true
+   * @default false
+   * @deprecated use `autoApproveProjenUpgrades`.
    */
   readonly projenUpgradeAutoMerge?: boolean;
 
   /**
-   * Automatically merge deps upgrade PRs when build passes.
-   * Auto-approves the pull request which mergify will then merge.
+   * Automatically approve projen upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
    *
-   * Only applies if `autoApproveOptions` are defined.
+   * Throw if set to true but `autoApproveOptions` are not defined.
+   *
+   * @default false
+   */
+  readonly autoApproveProjenUpgrades?: boolean;
+
+  /**
+   * Automatically approve deps upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
+   *
+   * Throw if set to true but `autoApproveOptions` are not defined.
    *
    * @default - true
    */
-  readonly depsUpgradeAutoMerge?: boolean;
+  readonly autoApproveUpgrades?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -642,11 +653,25 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
-    const depsAutoMerge = options.projenUpgradeAutoMerge ?? true;
-    const depsAutoMergeLabel = (depsAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
+    if (options.projenUpgradeAutoMerge !== undefined && options.autoApproveProjenUpgrades !== undefined) {
+      throw new Error("'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'");
+    }
+
+    const projenAutoApprove = options.autoApproveProjenUpgrades ?? (options.projenUpgradeAutoMerge ?? false);
+    const depsAutoApprove = options.autoApproveUpgrades ?? false;
+
+    if (projenAutoApprove && !this.autoApprove) {
+      throw new Error('Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`');
+    }
+
+    if (depsAutoApprove && !this.autoApprove) {
+      throw new Error('Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`');
+    }
+
+    const autoApproveLabel = (condition: boolean) => (condition && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
 
     const defaultDependenciesUpgrade = (options.dependabot ?? false)
-      ? DependenciesUpgradeMechanism.dependabot({ labels: depsAutoMergeLabel })
+      ? DependenciesUpgradeMechanism.dependabot({ labels: autoApproveLabel(depsAutoApprove) })
       : DependenciesUpgradeMechanism.githubWorkflow({
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
@@ -656,7 +681,7 @@ export class NodeProject extends Project {
           container: options.workflowContainerImage ? {
             image: options.workflowContainerImage,
           } : undefined,
-          labels: depsAutoMergeLabel,
+          labels: autoApproveLabel(depsAutoApprove),
         },
       });
 
@@ -664,8 +689,6 @@ export class NodeProject extends Project {
     dependenciesUpgrade.bind(this);
 
     if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
-
-      const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
 
       new UpgradeDependencies(this, {
         include: ['projen'],
@@ -677,7 +700,7 @@ export class NodeProject extends Project {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
+          labels: autoApproveLabel(projenAutoApprove),
         },
       });
     }

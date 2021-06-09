@@ -172,31 +172,47 @@ describe('deps', () => {
   });
 });
 
+test('throw when \'autoApproveProjenUpgrades\' is used with \'projenUpgradeAutoMerge\'', () => {
+  expect(() => {
+    new TestNodeProject({ autoApproveProjenUpgrades: true, projenUpgradeAutoMerge: true });
+  }).toThrow("'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'");
+});
+
 describe('deps upgrade', () => {
 
-  test('workflow can be auto merged', () => {
+  test('throws when trying to auto approve projen but auto approve is not defined', () => {
+    const message = 'Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`';
+    expect(() => { new TestNodeProject({ autoApproveProjenUpgrades: true }); }).toThrow(message);
+    expect(() => { new TestNodeProject({ projenUpgradeAutoMerge: true }); }).toThrow(message);
+  });
+
+  test('throws when trying to auto approve deps but auto approve is not defined', () => {
+    expect(() => {
+      new TestNodeProject({ autoApproveUpgrades: true });
+    }).toThrow('Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`');
+  });
+
+  test('workflow can be auto approved', () => {
     const project = new TestNodeProject({
-      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
       autoApproveOptions: {
         allowedUsernames: ['dummy'],
         secret: 'dummy',
       },
-      depsUpgradeAutoMerge: true,
+      autoApproveUpgrades: true,
     });
 
     const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-dependencies.yml']);
     expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
-  test('dependabot can be auto merged', () => {
+  test('dependabot can be auto approved', () => {
     const project = new TestNodeProject({
-      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
       dependabot: true,
       autoApproveOptions: {
         allowedUsernames: ['dummy'],
         secret: 'dummy',
       },
-      depsUpgradeAutoMerge: true,
+      autoApproveUpgrades: true,
     });
 
     const snapshot = yaml.parse(synthSnapshot(project)['.github/dependabot.yml']);

@@ -155,7 +155,7 @@ export class Dependabot extends Component {
             interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
           'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
-          'labels': options.labels ?? [],
+          'labels': options.labels ? options.labels : undefined,
         },
       ],
     };
