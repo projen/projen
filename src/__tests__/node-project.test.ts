@@ -174,6 +174,35 @@ describe('deps', () => {
 
 describe('deps upgrade', () => {
 
+  test('workflow can be auto merged', () => {
+    const project = new TestNodeProject({
+      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+      autoApproveOptions: {
+        allowedUsernames: ['dummy'],
+        secret: 'dummy',
+      },
+      depsUpgradeAutoMerge: true,
+    });
+
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-dependencies.yml']);
+    expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
+  });
+
+  test('dependabot can be auto merged', () => {
+    const project = new TestNodeProject({
+      projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
+      dependabot: true,
+      autoApproveOptions: {
+        allowedUsernames: ['dummy'],
+        secret: 'dummy',
+      },
+      depsUpgradeAutoMerge: true,
+    });
+
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/dependabot.yml']);
+    expect(snapshot.updates[0].labels).toStrictEqual(['auto-approve']);
+  });
+
   test('default - with projen secret', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
     const snapshot = synthSnapshot(project);

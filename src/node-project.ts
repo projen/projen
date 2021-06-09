@@ -171,9 +171,21 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    * Automatically merge projen upgrade PRs when build passes.
    * Auto-approves the pull request which mergify will then merge.
    *
-   * @default - "true" if mergify auto-merge is enabled (default)
+   * Only applies if `autoApproveOptions` are defined.
+   *
+   * @default - true
    */
   readonly projenUpgradeAutoMerge?: boolean;
+
+  /**
+   * Automatically merge deps upgrade PRs when build passes.
+   * Auto-approves the pull request which mergify will then merge.
+   *
+   * Only applies if `autoApproveOptions` are defined.
+   *
+   * @default - true
+   */
+  readonly depsUpgradeAutoMerge?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -630,8 +642,11 @@ export class NodeProject extends Project {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
+    const depsAutoMerge = options.projenUpgradeAutoMerge ?? true;
+    const depsAutoMergeLabel = (depsAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
+
     const defaultDependenciesUpgrade = (options.dependabot ?? false)
-      ? DependenciesUpgradeMechanism.dependabot()
+      ? DependenciesUpgradeMechanism.dependabot({ labels: depsAutoMergeLabel })
       : DependenciesUpgradeMechanism.githubWorkflow({
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
@@ -641,6 +656,7 @@ export class NodeProject extends Project {
           container: options.workflowContainerImage ? {
             image: options.workflowContainerImage,
           } : undefined,
+          labels: depsAutoMergeLabel,
         },
       });
 
