@@ -5,6 +5,7 @@ import { GitHub } from './github';
 /**
  * The Mergify conditional operators that can be used are: `or` and `and`.
  * Note: The number of nested conditions is limited to 3.
+ * @see https://docs.mergify.io/conditions/#combining-conditions-with-operators
  */
 export interface MergifyConditionalOperator {
   readonly or?: MergifyCondition[];
@@ -22,7 +23,7 @@ export interface MergifyRule {
   /**
    * A list of Conditions string that must match against the
    * pull request for the rule to be applied.
-   * @see https://docs.mergify.io/conditions/#combining-conditions-with-operators
+   * @see https://docs.mergify.io/conditions/#conditions
    */
   readonly conditions: MergifyCondition[];
   /**
