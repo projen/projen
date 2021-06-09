@@ -6,6 +6,7 @@ import * as logging from '../logging';
 import { NodePackage, NpmAccess } from '../node-package';
 import { DependenciesUpgradeMechanism } from '../node-project';
 import { Project } from '../project';
+import { Tasks } from '../tasks';
 import { mkdtemp, synthSnapshot, TestProject } from './util';
 
 logging.disable();
@@ -177,7 +178,11 @@ describe('deps upgrade', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+
+    // make sure yarn upgrade all deps, including projen.
+    const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
+    expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual('yarn upgrade');
   });
 
   test('default - no projen secret', () => {
