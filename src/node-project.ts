@@ -124,7 +124,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * Include dependabot configuration.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -132,7 +132,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * Options for dependabot.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
@@ -140,7 +140,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * How to handle dependency upgrades.
    *
-   * @default - DependenciesUpgrade.GITHUB_ACTIONS
+   * @default - DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
    */
   readonly depsUpgrade?: DependenciesUpgradeMechanism;
 
