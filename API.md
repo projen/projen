@@ -412,7 +412,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -602,7 +602,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -756,7 +756,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -959,7 +959,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1095,7 +1095,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1242,7 +1242,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -1383,7 +1383,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -2421,7 +2421,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -3154,7 +3154,7 @@ new NodeProject(options: NodeProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4361,7 +4361,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4483,7 +4483,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -4605,7 +4605,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7239,7 +7239,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7405,7 +7405,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7600,7 +7600,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7763,7 +7763,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
   * **dependabot** (<code>boolean</code>)  Include dependabot configuration. __*Default*__: false
   * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+  * **depsUpgrade** (<code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code>)  How to handle dependency upgrades. __*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
@@ -7896,7 +7896,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8023,7 +8023,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8155,7 +8155,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8282,7 +8282,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8411,7 +8411,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8540,7 +8540,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -8668,7 +8668,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9430,7 +9430,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -9777,7 +9777,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10123,7 +10123,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?⚠️ | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?⚠️ | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?⚠️ | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10237,7 +10237,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -11408,7 +11408,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -11527,7 +11527,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -11670,7 +11670,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -11801,7 +11801,7 @@ Name | Type | Description
 **dependabot**?⚠️ | <code>boolean</code> | Include dependabot configuration.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
-**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgrade.GITHUB_ACTIONS
+**depsUpgrade**?🔹 | <code>[DependenciesUpgradeMechanism](#projen-dependenciesupgrademechanism)</code> | How to handle dependency upgrades.<br/>__*Default*__: DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
