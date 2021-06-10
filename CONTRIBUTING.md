@@ -68,20 +68,30 @@ and formatting errors whenever possible while saving a document.
 When your local version of projen builds successfully, you can test it to create
 a new project by going into another directory and invoking the binary directly:
 
+First, tell yarn to create a link from your local development copy:
+
 ```console
 $ cd /path/to/local/projen
 $ yarn link
-$ cd/
+```
 
-# existing project
-$ cd /my/other/project
-$ yarn link projen
+Now, to create new projects:
 
-# new project
+```console
 $ mkdir /my/new/project
 $ cd /my/new/project
-$ /path/to/local/projen/bin/projen new TYPE
-$ yarn link projen # !IMPORTANT
+$ yarn link projen
+$ npx projen new TYPE
+$ yarn link projen # <-- important to run this again
+```
+
+If you already have an existing project and you want to test a new projen
+feature against it:
+
+```console
+$ cd /my/other/project
+$ yarn link projen
+$ npx projen
 ```
 
 From now on, running `npx projen` (or `pj`) in this directory will use the local
