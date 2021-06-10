@@ -67,7 +67,7 @@ export abstract class FileBase extends Component {
     super(project);
 
     if ((options.committed ?? true) && filePath !== '.gitattributes') {
-      project.root.github?.annotateGenerated(`/${filePath}`);
+      project.root.annotateGenerated(`/${filePath}`);
     }
 
     this.readonly = options.readonly ?? true;

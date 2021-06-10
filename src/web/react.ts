@@ -221,11 +221,7 @@ export class ReactComponent extends Component {
       exec: `${reactScripts} start`,
     });
 
-    project.addTask('build', {
-      description: 'Creates an optimized production build of your React application',
-      category: TaskCategory.BUILD,
-      exec: `${reactScripts} build`,
-    });
+    project.buildTask.exec(`${reactScripts} build`);
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',
@@ -234,11 +230,10 @@ export class ReactComponent extends Component {
       exec: 'react-scripts eject',
     });
 
-    project.addTask('test', {
-      description: 'Runs tests',
-      category: TaskCategory.TEST,
-      exec: `${reactScripts} test`,
-    });
+    project.testTask.exec(`${reactScripts} test --watchAll=false`);
+
+    const testWatch = project.tasks.tryFind('test:watch');
+    testWatch?.reset(`${reactScripts} test`);
 
     project.npmignore?.exclude('# Build', '/build');
     project.gitignore.exclude('# Build', '/build');

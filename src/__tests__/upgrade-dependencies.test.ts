@@ -6,7 +6,6 @@ import { mkdtemp, synthSnapshot } from './util';
 test('upgrades command includes all dependencies', () => {
 
   const project = createProject({
-    projenUpgradeSecret: 'PROJEN_SECRET',
     deps: ['some-dep'],
   });
 
@@ -19,9 +18,7 @@ test('upgrades command includes all dependencies', () => {
 
 test('upgrades command includes dependencies added post instantiation', () => {
 
-  const project = createProject({
-    projenUpgradeSecret: 'PROJEN_SECRET',
-  });
+  const project = createProject({});
 
   project.addDeps('some-dep');
 

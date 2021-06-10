@@ -238,11 +238,7 @@ export class NextComponent extends Component {
       exec: 'next dev',
     });
 
-    project.addTask('build', {
-      description: 'Creates an optimized production build of your Next.js application',
-      category: TaskCategory.BUILD,
-      exec: 'next build',
-    });
+    project.buildTask.exec('next build');
 
     project.addTask('export', {
       description: 'Exports the application for production deployment',

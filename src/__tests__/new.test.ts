@@ -2,15 +2,14 @@
 // and compare against a golden snapshot.
 import { execSync } from 'child_process';
 import { join } from 'path';
-import { mkdirSync, removeSync } from 'fs-extra';
+import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
+import { execCapture } from '../util';
 import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
-    const outdir = mkdtemp();
-    try {
-      const projectdir = createProjectDir(outdir);
+    withProjectDir(projectdir => {
 
       // execute `projen new PJID --no-synth` in the project directory
       execProjenCLI(projectdir, ['new', '--no-synth', type.pjid]);
@@ -21,10 +20,9 @@ for (const type of inventory.discover()) {
           '.git/**',
         ],
       });
+
       expect(actual).toMatchSnapshot();
-    } finally {
-      removeSync(outdir);
-    }
+    });
   });
 }
 
@@ -41,9 +39,7 @@ test('post-synthesis option disabled', () => {
 });
 
 test('projen new --from external', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
+  withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
     execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-post']);
@@ -64,15 +60,12 @@ test('projen new --from external', () => {
 
     expect(actual).toMatchSnapshot();
     expect(actual['schema.graphql']).toBeDefined();
-  } finally {
-    removeSync(outdir);
-  }
+
+  });
 });
 
 test('options are not overwritten when creating external projects', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
+  withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
     execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-synth', '--cdk-version', '1.63.0']);
@@ -88,77 +81,93 @@ test('options are not overwritten when creating external projects', () => {
     });
 
     expect(actual['.projenrc.js']).toContain('cdkVersion: \'1.63.0\'');
-  } finally {
-    removeSync(outdir);
-  }
+  });
 });
 
 test('projen new --no-comments', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
-
+  withProjectDir(projectdir => {
     execProjenCLI(projectdir, ['new', 'node', '--no-comments', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
     expect(projenrc).toBeDefined();
     expect(projenrc).not.toMatch('//');
-  } finally {
-    removeSync(outdir);
-  }
+  });
 });
 
 test('creating node project with enum-typed CLI arg', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
-
+  withProjectDir(projectdir => {
     execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
     expect(projenrc).toMatchSnapshot();
-  } finally {
-    removeSync(outdir);
-  }
+  });
 });
 
 test('creating python project with enum-typed CLI arg', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
-
+  withProjectDir(projectdir => {
     execProjenCLI(projectdir, ['new', 'python', '--project-type', 'lib', '--projenrc-python', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['.projenrc.py'];
     expect(projenrc).toMatchSnapshot();
-  } finally {
-    removeSync(outdir);
-  }
+  });
 });
 
 test('creating java project with enum-typed CLI arg', () => {
-  const outdir = mkdtemp();
-  try {
-    const projectdir = createProjectDir(outdir);
-
+  withProjectDir(projectdir => {
     execProjenCLI(projectdir, ['new', 'java', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
     expect(projenrc).toMatchSnapshot();
+  });
+});
+
+describe('git', () => {
+  test('--git (default) will initialize a git repo and create a commit', () => {
+    withProjectDir(projectdir => {
+      execProjenCLI(projectdir, ['new', 'project']);
+      expect(execCapture('git log', { cwd: projectdir }).toString('utf8').includes('chore: project created with projen')).toBeTruthy();
+    });
+  });
+
+  test('--no-git will not create a git repo', () => {
+    withProjectDir(projectdir => {
+      execProjenCLI(projectdir, ['new', 'project', '--no-git']);
+      expect(pathExistsSync(join(projectdir, '.git'))).toBeFalsy();
+    }, { git: false });
+  });
+});
+
+test('--no-git wont create a git repository', () => {
+  withProjectDir(projectdir => {
+    execProjenCLI(projectdir, ['new', 'project', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
+
+    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
+    expect(projenrc).toMatchSnapshot();
+  }, { git: false });
+});
+
+function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
+  const outdir = mkdtemp();
+  try {
+    // create project under "my-project" so that basedir is deterministic
+    const projectdir = join(outdir, 'my-project');
+    mkdirSync(projectdir);
+
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    if (options.git ?? true) {
+      shell('git init');
+      shell('git remote add origin git@boom.com:foo/bar.git');
+      shell('git config user.name "My User Name"');
+      shell('git config user.email "my@user.email.com"');
+    } else if (process.env.CI) {
+      // if "git" is set to "false", we still want to make sure global user is defined
+      // (relevant in CI context)
+      shell('git config user.name || git config --global user.name "My User Name"');
+      shell('git config user.email || git config --global user.email "my@user.email.com"');
+    }
+
+    code(projectdir);
   } finally {
     removeSync(outdir);
   }
-});
-
-function createProjectDir(workdir: string) {
-  // create project under "my-project" so that basedir is deterministic
-  const projectdir = join(workdir, 'my-project');
-  mkdirSync(projectdir);
-
-  const git = (command: string) => execSync(`git ${command}`, { cwd: projectdir });
-  git('init');
-  git('remote add origin git@boom.com:foo/bar.git');
-  git('config user.name "My User Name"');
-  git('config user.email "my@user.email.com"');
-  return projectdir;
 }

@@ -8,9 +8,12 @@ Object {
 /.github/pull_request_template.md          	linguist-generated
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /next-env.d.ts                             	linguist-generated
 /package.json                              	linguist-generated
@@ -273,7 +276,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "typescript",
@@ -313,9 +315,18 @@ tsconfig.tsbuildinfo
     "tasks": Object {
       "build": Object {
         "category": "00.build",
-        "description": "Creates an optimized production build of your Next.js application",
+        "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
+          Object {
+            "exec": "npx projen",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "compile",
+          },
           Object {
             "exec": "next build",
           },
@@ -670,7 +681,7 @@ tsconfig.tsbuildinfo
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "typescript": "*",
     },
     "engines": Object {
@@ -967,10 +978,7 @@ export default function Home() {
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-    ],
+    "exclude": Array [],
     "include": Array [
       "pages/**/*.ts",
       "**/*.ts",

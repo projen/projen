@@ -257,21 +257,26 @@ export class TypeScriptProject extends NodeProject {
     if (!options.disableTsconfig) {
       const baseTsconfig: TypescriptConfigOptions = {
         include: [`${this.srcdir}/**/*.ts`],
-        exclude: [
-          'node_modules',
-          this.libdir,
-        ],
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
           ...compilerOptionDefaults,
         },
       };
+
       this.tsconfig = new TypescriptConfig(this,
         mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
     }
 
-    this.gitignore.exclude(`/${this.libdir}`);
+    if (this.srcdir !== this.libdir) {
+      // separated, can ignore the entire libdir
+      this.gitignore.exclude(`/${this.libdir}`);
+    } else {
+      // collocated, can only ignore the compiled output
+      this.gitignore.exclude(`/${this.libdir}/**/*.js`);
+      this.gitignore.exclude(`/${this.libdir}/**/*.d.ts`);
+    }
+
     this.npmignore?.include(`/${this.libdir}`);
 
     this.gitignore.include(`/${this.srcdir}`);

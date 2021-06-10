@@ -9,9 +9,12 @@ Object {
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/release.yml             	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /postcss.config.json                       	linguist-generated
@@ -304,7 +307,6 @@ pull_request_rules:
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "standard-version",
@@ -345,9 +347,12 @@ pull_request_rules:
     "tasks": Object {
       "build": Object {
         "category": "00.build",
-        "description": "Creates an optimized production build of your Next.js application",
+        "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
+          Object {
+            "exec": "npx projen",
+          },
           Object {
             "exec": "next build",
           },
@@ -711,7 +716,7 @@ pull_request_rules:
     },
     "devDependencies": Object {
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "standard-version": "^9",
     },
     "engines": Object {

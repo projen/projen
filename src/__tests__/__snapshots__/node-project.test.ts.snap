@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`buildWorkflowMutable will push changes to PR branches 1`] = `
+exports[`mutableBuild will push changes to PR branches 1`] = `
 Array [
   Object {
     "name": "Checkout",

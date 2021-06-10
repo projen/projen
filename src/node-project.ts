@@ -1,4 +1,4 @@
-import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
+import { PROJEN_DIR, PROJEN_RC } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission } from './github/workflows-model';
@@ -124,7 +124,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * Include dependabot configuration.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -132,7 +132,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * Options for dependabot.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgrade.dependabot`
+   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
@@ -140,7 +140,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * How to handle dependency upgrades.
    *
-   * @default - DependenciesUpgrade.GITHUB_ACTIONS
+   * @default - DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
    */
   readonly depsUpgrade?: DependenciesUpgradeMechanism;
 
@@ -168,12 +168,35 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly projenUpgradeSecret?: string;
 
   /**
-   * Automatically merge projen upgrade PRs when build passes.
-   * Auto-approves the pull request which mergify will then merge.
+   * Automatically approve projen upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
    *
-   * @default - "true" if mergify auto-merge is enabled (default)
+   * Throw if set to true but `autoApproveOptions` are not defined.
+   *
+   * @default false
+   * @deprecated use `autoApproveProjenUpgrades`.
    */
   readonly projenUpgradeAutoMerge?: boolean;
+
+  /**
+   * Automatically approve projen upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
+   *
+   * Throw if set to true but `autoApproveOptions` are not defined.
+   *
+   * @default false
+   */
+  readonly autoApproveProjenUpgrades?: boolean;
+
+  /**
+   * Automatically approve deps upgrade PRs, allowing them to be
+   * merged by mergify (if configued).
+   *
+   * Throw if set to true but `autoApproveOptions` are not defined.
+   *
+   * @default - true
+   */
+  readonly autoApproveUpgrades?: boolean;
 
   /**
    * Customize the projenUpgrade schedule in cron expression.
@@ -483,8 +506,8 @@ export class NodeProject extends Project {
 
     const projen = options.projenDevDependency ?? true;
     if (projen) {
-      const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
-      this.addDevDeps(`projen@${projenVersion}`);
+      const postfix = options.projenVersion ? `@${options.projenVersion}` : '';
+      this.addDevDeps(`projen${postfix}`);
     }
 
     if (!options.defaultReleaseBranch) {
@@ -621,33 +644,51 @@ export class NodeProject extends Project {
 
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
+        mergify: this.github?.mergify,
         buildJob: this.buildWorkflowJobId,
       });
-      this.npmignore?.exclude('/.mergify.yml');
     }
 
     if (options.dependabot !== undefined && options.depsUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
+    if (options.projenUpgradeAutoMerge !== undefined && options.autoApproveProjenUpgrades !== undefined) {
+      throw new Error("'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'");
+    }
+
+    const projenAutoApprove = options.autoApproveProjenUpgrades ?? (options.projenUpgradeAutoMerge ?? false);
+    const depsAutoApprove = options.autoApproveUpgrades ?? false;
+
+    if (projenAutoApprove && !this.autoApprove) {
+      throw new Error('Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`');
+    }
+
+    if (depsAutoApprove && !this.autoApprove) {
+      throw new Error('Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`');
+    }
+
+    const autoApproveLabel = (condition: boolean) => (condition && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
+
     const defaultDependenciesUpgrade = (options.dependabot ?? false)
-      ? DependenciesUpgradeMechanism.dependabot()
+      ? DependenciesUpgradeMechanism.dependabot({ labels: autoApproveLabel(depsAutoApprove) })
       : DependenciesUpgradeMechanism.githubWorkflow({
-        workflowOptions: options.workflowContainerImage ? {
+        // if projen secret is defined we can also upgrade projen here.
+        ignoreProjen: !options.projenUpgradeSecret,
+        workflowOptions: {
           // if projen secret is defined, use it (otherwise default to GITHUB_TOKEN).
           secret: options.projenUpgradeSecret,
-          container: {
+          container: options.workflowContainerImage ? {
             image: options.workflowContainerImage,
-          },
-        } : undefined,
+          } : undefined,
+          labels: autoApproveLabel(depsAutoApprove),
+        },
       });
 
     const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
     dependenciesUpgrade.bind(this);
 
     if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
-
-      const projenAutoMerge = options.projenUpgradeAutoMerge ?? true;
 
       new UpgradeDependencies(this, {
         include: ['projen'],
@@ -659,7 +700,7 @@ export class NodeProject extends Project {
           schedule: UpgradeDependenciesSchedule.expressions(options.projenUpgradeSchedule ?? ['0 6 * * *']),
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
-          labels: (projenAutoMerge && this.autoApprove?.label) ? [this.autoApprove.label] : undefined,
+          labels: autoApproveLabel(projenAutoApprove),
         },
       });
     }

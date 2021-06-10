@@ -8,9 +8,12 @@ Object {
 /.github/pull_request_template.md          	linguist-generated
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /react-app-env.d.ts                        	linguist-generated
@@ -275,7 +278,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "typescript",
@@ -309,9 +311,18 @@ tsconfig.tsbuildinfo
     "tasks": Object {
       "build": Object {
         "category": "00.build",
-        "description": "Creates an optimized production build of your React application",
+        "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
+          Object {
+            "exec": "npx projen",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "compile",
+          },
           Object {
             "exec": "react-scripts build",
           },
@@ -352,11 +363,14 @@ tsconfig.tsbuildinfo
       },
       "test": Object {
         "category": "10.test",
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "react-scripts test",
+            "spawn": "test:compile",
+          },
+          Object {
+            "exec": "react-scripts test --watchAll=false",
           },
         ],
       },
@@ -653,7 +667,7 @@ tsconfig.tsbuildinfo
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "typescript": "^4.0.3",
     },
     "eslintConfig": Object {
@@ -929,10 +943,7 @@ import '@testing-library/jest-dom';
       "stripInternal": true,
       "target": "es5",
     },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-    ],
+    "exclude": Array [],
     "include": Array [
       "src/**/*.ts",
       "src",
