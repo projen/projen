@@ -8,10 +8,6 @@ const project = new JsiiProject({
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
 
-  // this will cause PR builds to auto update the
-  // branch with changes to generated files (experimental)
-  buildWorkflowMutable: true,
-
   pullRequestTemplateContents: [
     '---',
     'By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.',
@@ -76,9 +72,6 @@ const project = new JsiiProject({
   //   moduleName: 'github.com/projen/projen-go',
   // },
 });
-
-// temporary until https://github.com/aws/jsii/pull/2492 is resolved
-// project.packageTask.exec('echo $(node -p "require(\'./version.json\').version") > dist/go/projen/version');
 
 // this script is what we use as the projen command in this project
 // it will compile the project if needed and then run the cli.

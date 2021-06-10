@@ -435,7 +435,7 @@ describe('scripts', () => {
   });
 });
 
-test('buildWorkflowMutable will push changes to PR branches', () => {
+test('mutableBuild will push changes to PR branches', () => {
   // WHEN
   const project = new TestNodeProject({
     mutableBuild: true,
