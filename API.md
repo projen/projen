@@ -176,6 +176,7 @@ Name|Description
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
+[github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -5448,9 +5449,9 @@ addRule(rule: MergifyRule): void
 ```
 
 * **rule** (<code>[github.MergifyRule](#projen-github-mergifyrule)</code>)  *No description*
-  * **actions** (<code>Map<string, any></code>)  *No description* 
-  * **conditions** (<code>Array<string></code>)  *No description* 
-  * **name** (<code>string</code>)  *No description* 
+  * **actions** (<code>Map<string, any></code>)  A dictionary made of Actions that will be executed on the matching pull requests. 
+  * **conditions** (<code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code>)  A list of Conditions string that must match against the pull request for the rule to be applied. 
+  * **name** (<code>string</code>)  The name of the rule. 
 
 
 
@@ -10652,6 +10653,22 @@ Name | Type | Description
 
 
 
+## struct MergifyConditionalOperator 🔹 <a id="projen-github-mergifyconditionaloperator"></a>
+
+
+The Mergify conditional operators that can be used are: `or` and `and`.
+
+Note: The number of nested conditions is limited to 3.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**and**?🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | __*Optional*__
+**or**?🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | __*Optional*__
+
+
+
 ## struct MergifyOptions 🔹 <a id="projen-github-mergifyoptions"></a>
 
 
@@ -10674,9 +10691,9 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**actions**🔹 | <code>Map<string, any></code> | <span></span>
-**conditions**🔹 | <code>Array<string></code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
+**actions**🔹 | <code>Map<string, any></code> | A dictionary made of Actions that will be executed on the matching pull requests.
+**conditions**🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | A list of Conditions string that must match against the pull request for the rule to be applied.
+**name**🔹 | <code>string</code> | The name of the rule.
 
 
 
