@@ -559,7 +559,7 @@ export class Jest {
     this.project = project;
 
     // Jest snapshot files are generated files!
-    project.root.github?.annotateGenerated('*.snap');
+    project.root.annotateGenerated('*.snap');
 
     const jestDep = options.jestVersion ? `jest@${options.jestVersion}` : 'jest';
     project.addDevDeps(jestDep);

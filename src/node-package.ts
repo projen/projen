@@ -385,7 +385,7 @@ export class NodePackage extends Component {
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
 
     if (this.packageManager === NodePackageManager.YARN) {
-      project.root.github?.annotateGenerated('/yarn.lock');
+      project.root.annotateGenerated('/yarn.lock');
     }
 
     const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
