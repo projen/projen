@@ -164,7 +164,7 @@ export function sanitizeOutput(dir: string) {
   const depsPath = path.join(dir, '.projen', 'deps.json');
   const deps = fs.readJsonSync(depsPath);
   for (const dep of deps.dependencies) {
-    if (dep.name === 'projen') {
+    if (dep.name === 'projen' && dep.version) {
       dep.version = dep.version.replace(/\d+\.\d+\.\d+/, '999.999.999');
     }
   }

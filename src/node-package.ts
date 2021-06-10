@@ -1,6 +1,6 @@
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { parse as urlparse } from 'url';
-import { accessSync, constants, existsSync, lstatSync, readdirSync, readJsonSync, unlinkSync } from 'fs-extra';
+import { accessSync, constants, existsSync, readdirSync, readJsonSync } from 'fs-extra';
 import * as semver from 'semver';
 import { resolve as resolveJson } from './_resolve';
 import { Component } from './component';
@@ -672,15 +672,6 @@ export class NodePackage extends Component {
     super.postSynthesize();
 
     const outdir = this.project.outdir;
-
-    // now we run `yarn install`, but before we do that, remove the
-    // `node_modules/projen` symlink so that yarn won't hate us.
-    const projenModule = resolve('node_modules', 'projen');
-    try {
-      if (lstatSync(projenModule).isSymbolicLink()) {
-        unlinkSync(projenModule);
-      }
-    } catch (e) { }
 
     exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
 

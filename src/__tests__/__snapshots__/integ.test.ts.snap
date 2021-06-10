@@ -706,7 +706,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -1427,7 +1426,7 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "standard-version": "^9",
       "ts-jest": "*",
       "typescript": "*",
@@ -2133,7 +2132,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "ts-jest",
@@ -2836,7 +2834,7 @@ project.synth();
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
     },
@@ -3498,7 +3496,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "ts-jest",
@@ -4192,7 +4189,7 @@ project.synth();
       "jest-junit": "^12",
       "json-schema": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
     },
@@ -4696,7 +4693,6 @@ junit.xml
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -5112,7 +5108,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^12",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "standard-version": "^9",
     },
     "jest": Object {

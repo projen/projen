@@ -307,7 +307,6 @@ pull_request_rules:
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "standard-version",
@@ -717,7 +716,7 @@ pull_request_rules:
     },
     "devDependencies": Object {
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "standard-version": "^9",
     },
     "engines": Object {

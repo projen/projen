@@ -1,4 +1,4 @@
-import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from './common';
+import { PROJEN_DIR, PROJEN_RC } from './common';
 import { AutoMerge, DependabotOptions, GithubWorkflow, workflows } from './github';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission } from './github/workflows-model';
@@ -506,8 +506,8 @@ export class NodeProject extends Project {
 
     const projen = options.projenDevDependency ?? true;
     if (projen) {
-      const projenVersion = options.projenVersion ?? `^${PROJEN_VERSION}`;
-      this.addDevDeps(`projen@${projenVersion}`);
+      const postfix = options.projenVersion ? `@${options.projenVersion}` : '';
+      this.addDevDeps(`projen${postfix}`);
     }
 
     if (!options.defaultReleaseBranch) {
