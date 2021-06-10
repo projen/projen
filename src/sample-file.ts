@@ -15,10 +15,8 @@ export interface SampleFileOptions {
   readonly contents?: string;
 
   /**
-   * A path to a file to copy the contents from (does not need to be a text file),
-   * starting with the name of the module which contains the file.
-   *
-   * @example 'my-lib/assets/logo.svg'
+   * Absolute path to a file to copy the contents from (does not need to be
+   * a text file)
    */
   readonly source?: string;
 }
@@ -55,9 +53,8 @@ export class SampleFile extends Component {
     if (this.options.contents) {
       contents = this.options.contents;
     } else if (this.options.source) {
-      const source = resolveSourcePath(this.options.source);
-      if (fs.existsSync(source)) {
-        contents = fs.readFileSync(source);
+      if (fs.existsSync(this.options.source)) {
+        contents = fs.readFileSync(this.options.source);
       }
     }
     this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
@@ -92,8 +89,7 @@ export interface SampleDirOptions {
   readonly files?: { [fileName: string]: string };
 
   /**
-   * A path to a directory to copy files from, starting with the name of the
-   * module which contains the directory.
+   * Absolute path to a directory to copy files from
    */
   readonly source?: string;
 }
@@ -128,7 +124,7 @@ export class SampleDir extends Component {
     }
 
     if (this.options.source) {
-      const basedir = resolveSourcePath(this.options.source);
+      const basedir = this.options.source;
       const files = glob.sync('**', {
         cwd: basedir,
         nodir: true,
@@ -149,26 +145,4 @@ export class SampleDir extends Component {
       writeFile(path.join(fullOutdir, filename), this.options.files[filename]);
     }
   }
-}
-
-/**
- * A helper function that resolves the path to a raw file based on
- * projen's current runtime environment.
- *
- * @param relativeSource - a relative path to a file in a module, starting with the module name
- * @returns an absolute path
- */
-function resolveSourcePath(relativeSource: string) {
-  const [pkgName, ...rest] = relativeSource.split('/');
-  const currModule = path.dirname(require.main?.filename!);
-
-  let basedir;
-  const currPkg = path.basename(currModule);
-  if (pkgName === currPkg) {
-    basedir = currModule;
-  } else {
-    const pathToPkg = require.resolve(pkgName, { paths: [currModule] });
-    basedir = path.resolve(pathToPkg, '..', '..');
-  }
-  return path.join(basedir, rest.join('/'));
 }

@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { LogLevel, Project, ProjectOptions } from '..';
 import { SampleFile } from '../sample-file';
 import { mkdtemp, synthSnapshot } from './util';
@@ -19,7 +20,7 @@ test('sample file from source', () => {
   const project = new TestProject();
 
   // WHEN
-  new SampleFile(project, 'logo.svg', { source: 'projen/logo/projen.svg' });
+  new SampleFile(project, 'logo.svg', { source: path.resolve(__dirname, '..', '..', 'logo', 'projen.svg') });
 
   // THEN
   expect(synthSnapshot(project)['logo.svg']).toMatch('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
