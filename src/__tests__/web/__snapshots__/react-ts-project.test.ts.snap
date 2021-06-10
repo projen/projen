@@ -278,7 +278,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "typescript",
@@ -668,7 +667,7 @@ tsconfig.tsbuildinfo
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "typescript": "^4.0.3",
     },
     "eslintConfig": Object {
