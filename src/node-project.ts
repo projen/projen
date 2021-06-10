@@ -644,9 +644,9 @@ export class NodeProject extends Project {
 
     if (this.github?.mergify) {
       this.autoMerge = new AutoMerge(this, {
+        mergify: this.github?.mergify,
         buildJob: this.buildWorkflowJobId,
       });
-      this.npmignore?.exclude('/.mergify.yml');
     }
 
     if (options.dependabot !== undefined && options.depsUpgrade) {

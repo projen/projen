@@ -1,7 +1,13 @@
 import { Component } from '../component';
 import { Project } from '../project';
+import { Mergify } from './mergify';
 
 export interface AutoMergeOptions {
+  /**
+   * The mergify component.
+   */
+  readonly mergify: Mergify;
+
   /**
    * The GitHub job ID of the build workflow.
    */
@@ -24,8 +30,10 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-  constructor(project: Project, options: AutoMergeOptions = { }) {
+  constructor(project: Project, options: AutoMergeOptions) {
     super(project);
+
+    const mergify = options.mergify;
 
     const successfulBuild = options.buildJob
       ? [`status-success=${options.buildJob}`]
@@ -49,7 +57,7 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
-    project.github?.mergify?.addRule({
+    mergify.addRule({
       name: 'Automatic merge on approval and successful build',
       actions: mergeAction,
       conditions: [
@@ -57,5 +65,7 @@ export class AutoMerge extends Component {
         ...successfulBuild,
       ],
     });
+
+    this.project.addPackageIgnore('/.mergify.yml');
   }
 }

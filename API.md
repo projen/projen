@@ -49,6 +49,7 @@ Name|Description
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
+[git.GitAttributesFile](#projen-git-gitattributesfile)|Assign attributes to file names in a git repository.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -1887,7 +1888,7 @@ allowDevDeps(pattern: string): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [git.GitAttributesFile](#projen-git-gitattributesfile), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -3590,6 +3591,7 @@ Name | Type | Description
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
 **deps**🔹 | <code>[deps.Dependencies](#projen-deps-dependencies)</code> | Project dependencies.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
+**gitattributes**🔹 | <code>[git.GitAttributesFile](#projen-git-gitattributesfile)</code> | The .gitattributes file for this repository.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.
 **name**🔹 | <code>string</code> | Project name.
@@ -3686,6 +3688,23 @@ addTip(message: string): void
 ```
 
 * **message** (<code>string</code>)  The message.
+
+
+
+
+#### annotateGenerated(glob)🔹 <a id="projen-project-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
 
 
 
@@ -5050,6 +5069,58 @@ __Returns__:
 
 
 
+## class GitAttributesFile 🔹 <a id="projen-git-gitattributesfile"></a>
+
+Assign attributes to file names in a git repository.
+
+__Submodule__: git
+
+__Extends__: [FileBase](#projen-filebase)
+
+### Initializer
+
+
+
+
+```ts
+new git.GitAttributesFile(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+### Methods
+
+
+#### addAttributes(glob, ...attributes)🔹 <a id="projen-git-gitattributesfile-addattributes"></a>
+
+Maps a set of attributes to a set of files.
+
+```ts
+addAttributes(glob: string, ...attributes: string[]): void
+```
+
+* **glob** (<code>string</code>)  Glob pattern to match files in the repo.
+* **attributes** (<code>string</code>)  Attributes to assign to these files.
+
+
+
+
+#### protected synthesizeContent(_)🔹 <a id="projen-git-gitattributesfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
 
 Auto approve pull requests that meet a criteria.
@@ -5104,11 +5175,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.AutoMerge(project: Project, options?: AutoMergeOptions)
+new github.AutoMerge(project: Project, options: AutoMergeOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
+  * **mergify** (<code>[github.Mergify](#projen-github-mergify)</code>)  The mergify component. 
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
 
@@ -5186,7 +5258,7 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.GitHub(project: Project, options: GitHubOptions)
+new github.GitHub(project: Project, options?: GitHubOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
@@ -5248,23 +5320,6 @@ addWorkflow(name: string): GithubWorkflow
 
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
-
-#### annotateGenerated(glob)🔹 <a id="projen-github-github-annotategenerated"></a>
-
-Marks the provided file(s) as being generated.
-
-This is achieved using the
-github-linguist attributes. Generated files do not count against the
-repository statistics and language breakdown.
-
-```ts
-annotateGenerated(glob: string): void
-```
-
-* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
 
 
 
@@ -10545,6 +10600,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**mergify**🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The mergify component.
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
 
