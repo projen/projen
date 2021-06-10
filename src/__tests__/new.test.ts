@@ -153,12 +153,17 @@ function withProjectDir(code: (workdir: string) => void, options: { git?: boolea
     const projectdir = join(outdir, 'my-project');
     mkdirSync(projectdir);
 
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
     if (options.git ?? true) {
-      const git = (command: string) => execSync(`git ${command}`, { cwd: projectdir });
-      git('init');
-      git('remote add origin git@boom.com:foo/bar.git');
-      git('config user.name "My User Name"');
-      git('config user.email "my@user.email.com"');
+      shell('git init');
+      shell('git remote add origin git@boom.com:foo/bar.git');
+      shell('git config user.name "My User Name"');
+      shell('git config user.email "my@user.email.com"');
+    } else if (process.env.CI) {
+      // if "git" is set to "false", we still want to make sure global user is defined
+      // (relevant in CI context)
+      shell('git config user.name || git config --global user.name "My User Name"');
+      shell('git config user.email || git config --global user.email "my@user.email.com"');
     }
 
     code(projectdir);
