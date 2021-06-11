@@ -20,7 +20,7 @@ export interface SampleFileOptions {
    *
    * If your project is Typescript-based and has configured `testdir` to be a
    * subdirectory of `src`, sample files should outside of the `src` directory,
-   * otherwise the assets may not be copied. For example:
+   * otherwise they may not be copied. For example:
    * ```
    * new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
    * ```
@@ -104,7 +104,7 @@ export interface SampleDirOptions {
    *
    * If your project is typescript-based and has configured `testdir` to be a
    * subdirectory of `src`, sample files should outside of the `src` directory
-   * because the assets will not be copied. For example:
+   * otherwise they may not be copied. For example:
    * ```
    * new SampleDir(this, 'public', { source: path.join(__dirname, '..', 'sample-assets') });
    * ```
