@@ -9,10 +9,18 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.0.0-beta.10"
+   * @default "^1.0.0-beta.10"
    * @featured
    */
   readonly cdk8sVersion: string;
+
+  /**
+   * constructs verion
+   *
+   * @default "^3.2.34"
+   */
+
+  readonly constructsVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK8s.
@@ -23,6 +31,16 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default false
    */
   readonly cdk8sVersionPinning?: boolean;
+
+  /**
+   * Use pinned version instead of caret version for constructs.
+   *
+   * You can use this to prevent yarn to mix versions for your consructs package and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly constructsVersionPinning?: boolean;
 
   /**
    * The CDK8s app's entrypoint (relative to the source directory, which is
@@ -49,6 +67,11 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
   public readonly cdk8sVersion: string;
 
   /**
+   * The constructs version this app is using.
+   */
+  public readonly constructsVersion: string;
+
+  /**
    * The CDK8s app entrypoint
    */
   public readonly appEntrypoint: string;
@@ -73,15 +96,25 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
 
+    if (options.constructsVersion) {
+      this.constructsVersion = options.constructsVersionPinning ? options.constructsVersion: `^${options.constructsVersion}`;
+    } else {
+      this.constructsVersion = '^3.2.34';
+    }
+
+
     // CLI
     this.addDeps(
       `cdk8s@${this.cdk8sVersion}`,
-      'constructs@^3.2.34',
+      `constructs@${this.constructsVersion}`,
       `cdk8s-plus-17@${this.cdk8sVersion}`,
     );
     this.addDevDeps(
       'ts-node@^9',
       `cdk8s-cli@${this.cdk8sVersion}`,
+      `cdk8s@${this.cdk8sVersion}`,
+      `constructs@${this.constructsVersion}`,
+      `cdk8s-plus-17@${this.cdk8sVersion}`,
     );
 
     const synth = this.addTask('synth', {
