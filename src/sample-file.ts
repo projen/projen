@@ -143,7 +143,6 @@ export class SampleDir extends Component {
 
     if (this.options.source) {
       const basedir = this.options.source;
-      console.log(basedir);
       const files = glob.sync('**', {
         cwd: basedir,
         nodir: true,
