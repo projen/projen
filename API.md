@@ -3982,7 +3982,7 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 * **dir** (<code>string</code>)  directory to add files to.
 * **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
   * **files** (<code>Map<string, string></code>)  The files to render into the directory. __*Optional*__
-  * **source** (<code>string</code>)  A path to a directory to copy files from, starting with the name of the module which contains the directory. __*Optional*__
+  * **source** (<code>string</code>)  Absolute path to a directory to copy files from (does not need to be all text files). __*Optional*__
 
 
 ### Methods
@@ -4023,7 +4023,7 @@ new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 * **filePath** (<code>string</code>)  - the relative path in the project to put the file.
 * **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
   * **contents** (<code>string</code>)  The contents of the file to write. __*Optional*__
-  * **source** (<code>string</code>)  A path to a file to copy the contents from (does not need to be a text file), starting with the name of the module which contains the file. __*Optional*__
+  * **source** (<code>string</code>)  Absolute path to a file to copy the contents from (does not need to be a text file). __*Optional*__
 
 
 ### Methods
@@ -10076,7 +10076,7 @@ SampleDir options.
 Name | Type | Description 
 -----|------|-------------
 **files**?🔹 | <code>Map<string, string></code> | The files to render into the directory.<br/>__*Optional*__
-**source**?🔹 | <code>string</code> | A path to a directory to copy files from, starting with the name of the module which contains the directory.<br/>__*Optional*__
+**source**?🔹 | <code>string</code> | Absolute path to a directory to copy files from (does not need to be all text files).<br/>__*Optional*__
 
 
 
@@ -10090,7 +10090,7 @@ Options for the SampleFile object.
 Name | Type | Description 
 -----|------|-------------
 **contents**?🔹 | <code>string</code> | The contents of the file to write.<br/>__*Optional*__
-**source**?🔹 | <code>string</code> | A path to a file to copy the contents from (does not need to be a text file), starting with the name of the module which contains the file.<br/>__*Optional*__
+**source**?🔹 | <code>string</code> | Absolute path to a file to copy the contents from (does not need to be a text file).<br/>__*Optional*__
 
 
 

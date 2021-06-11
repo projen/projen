@@ -16,7 +16,14 @@ export interface SampleFileOptions {
 
   /**
    * Absolute path to a file to copy the contents from (does not need to be
-   * a text file)
+   * a text file).
+   *
+   * If your project is Typescript-based and has configured `testdir` to be a
+   * subdirectory of `src`, sample files should outside of the `src` directory,
+   * otherwise the assets may not be copied. For example:
+   * ```
+   * new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
+   * ```
    */
   readonly source?: string;
 }
@@ -55,6 +62,9 @@ export class SampleFile extends Component {
     } else if (this.options.source) {
       if (fs.existsSync(this.options.source)) {
         contents = fs.readFileSync(this.options.source);
+      } else {
+        this.project.logger.error(`Could not find sample file expected at path: ${this.options.source}. Skipping...`);
+        return;
       }
     }
     this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
@@ -89,7 +99,15 @@ export interface SampleDirOptions {
   readonly files?: { [fileName: string]: string };
 
   /**
-   * Absolute path to a directory to copy files from
+   * Absolute path to a directory to copy files from (does not need to be all
+   * text files).
+   *
+   * If your project is typescript-based and has configured `testdir` to be a
+   * subdirectory of `src`, sample files should outside of the `src` directory
+   * because the assets will not be copied. For example:
+   * ```
+   * new SampleDir(this, 'public', { source: path.join(__dirname, '..', 'sample-assets') });
+   * ```
    */
   readonly source?: string;
 }
@@ -125,6 +143,7 @@ export class SampleDir extends Component {
 
     if (this.options.source) {
       const basedir = this.options.source;
+      console.log(basedir);
       const files = glob.sync('**', {
         cwd: basedir,
         nodir: true,

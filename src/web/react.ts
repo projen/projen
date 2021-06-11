@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
@@ -88,7 +89,7 @@ export class ReactProject extends NodeProject {
         fileExt: 'jsx',
         srcdir: this.srcdir,
       });
-      new SampleDir(this, 'public', { source: 'projen/src/web/react-assets' });
+      new SampleDir(this, 'public', { source: path.join(__dirname, '..', '..', 'samples', 'react-assets') });
     }
   }
 }
@@ -158,7 +159,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         fileExt: 'tsx',
         srcdir: this.srcdir,
       });
-      new SampleDir(this, 'public', { source: 'projen/src/web/react-assets' });
+      new SampleDir(this, 'public', { source: path.join(__dirname, '..', '..', 'samples', 'react-assets') });
     }
   }
 }
