@@ -2,8 +2,8 @@ import { ConstructLibraryCdk8s, ConstructLibraryCdk8sOptions } from '../cdk8s-co
 import { LogLevel } from '../logger';
 import { synthSnapshot, mkdtemp } from './util';
 
-test ('test if cdk8s synth is possible', () => {
-  const project = new TestCdk8sAppConstructsProject({
+test ('constructs version defined', () => {
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -26,7 +26,7 @@ test ('test if cdk8s synth is possible', () => {
 });
 
 test ('constructs version undefined', () => {
-  const project = new TestCdk8sAppConstructsProject({
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -48,7 +48,7 @@ test ('constructs version undefined', () => {
 });
 
 test ('constructs version pinning', () => {
-  const project = new TestCdk8sAppConstructsProject({
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -71,7 +71,7 @@ test ('constructs version pinning', () => {
 
 });
 
-class TestCdk8sAppConstructsProject extends ConstructLibraryCdk8s {
+class TestCdk8sConstructsProject extends ConstructLibraryCdk8s {
   constructor(options: ConstructLibraryCdk8sOptions) {
     super({
       outdir: mkdtemp(),
