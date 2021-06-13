@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { workflows } from './github';
-import { JobPermission } from './github/workflows-model';
+import { JobPermission, JobPermissions } from './github/workflows-model';
 import { Project } from './project';
 
 const JSII_RELEASE_VERSION = 'latest';
@@ -68,8 +68,15 @@ export class Publisher extends Component {
    */
   public publishToNpm(options: JsiiReleaseNpm = {}) {
     const npmTokenSecret = options.npmTokenSecret ?? 'NPM_TOKEN';
+    const isGitHubPackages = options.registry?.startsWith('npm.pkg.github.com');
+
+    const permissions: JobPermissions = {
+      contents: JobPermission.READ,
+      packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+    };
+
     this.jobs.release_npm = {
-      permissions: { contents: JobPermission.READ },
+      permissions: permissions,
       name: 'Release to NPM',
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
