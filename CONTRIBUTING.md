@@ -81,7 +81,8 @@ Now, to create new projects:
 $ mkdir /my/new/project
 $ cd /my/new/project
 $ yarn link projen
-$ npx projen new TYPE
+$ alias pj="node_modules/projen/bin/projen"
+$ pj new TYPE
 $ yarn link projen # <-- important to run this again
 ```
 
@@ -91,11 +92,11 @@ feature against it:
 ```console
 $ cd /my/other/project
 $ yarn link projen
-$ npx projen
+$ pj
 ```
 
-From now on, running `npx projen` (or `pj`) in this directory will use the local
-development version of projen instead of the latest one from npm.
+From now on, running `pj` in this session will use the local development version of 
+projen instead of the latest one from npm.
 
 ```console
 $ yarn unlink projen
