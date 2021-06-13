@@ -306,7 +306,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
     git('init');
     git('add .');
-    git('commit --allow-empty -m \'chore: project created with projen\'');
+    git('commit --allow-empty -m "chore: project created with projen"');
     git('branch -M main');
   }
 }
