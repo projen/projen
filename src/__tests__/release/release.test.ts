@@ -240,3 +240,23 @@ test('releaseBranches as an array throws an error since type was changed', () =>
     releaseBranches: ['10.x', '2.x'] as any,
   })).toThrow(/\"releaseBranches\" is no longer an array. See type annotations/);
 });
+
+test('github packages are supported by npm', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('release');
+  const release = new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry: 'npm.pkg.github.com',
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
