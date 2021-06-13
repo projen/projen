@@ -525,7 +525,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
-          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           NPM_REGISTRY: npm.pkg.github.com
     container:
       image: jsii/superchain
