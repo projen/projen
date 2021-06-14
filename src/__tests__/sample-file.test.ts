@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { LogLevel, Project, ProjectOptions } from '..';
-import { SampleFile } from '../sample-file';
+import { SampleDir, SampleFile } from '../sample-file';
 import { mkdtemp, synthSnapshot } from './util';
 
 
@@ -24,6 +24,57 @@ test('sample file from source', () => {
 
   // THEN
   expect(synthSnapshot(project)['logo.svg']).toMatch('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
+});
+
+test('sample directory from files', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new SampleDir(project, 'public', {
+    files: {
+      'foo.txt': 'Hello world!',
+      'bar.txt': 'Test test test',
+    },
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['public/foo.txt']).toMatch('Hello world!');
+  expect(snapshot['public/bar.txt']).toMatch('Test test test');
+});
+
+test('sample directory from source', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new SampleDir(project, 'public', { source: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react') });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['public/robots.txt'].length).toBeGreaterThan(0);
+  expect(snapshot['public/index.html'].length).toBeGreaterThan(0);
+  expect(Object.keys(snapshot['public/manifest.json']).length).toBeGreaterThan(0);
+});
+
+test('sample directory from source with overwritten files', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new SampleDir(project, 'public', {
+    files: {
+      'index.html': '<!doctype html><body>Hello world!</body>',
+    },
+    source: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react'),
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['public/index.html']).toMatch('<!doctype html><body>Hello world!</body>');
+  expect(snapshot['public/robots.txt'].length).toBeGreaterThan(0);
+  expect(Object.keys(snapshot['public/manifest.json']).length).toBeGreaterThan(0);
 });
 
 export class TestProject extends Project {
