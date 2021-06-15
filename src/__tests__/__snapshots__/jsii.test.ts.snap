@@ -22,8 +22,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -127,8 +125,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"

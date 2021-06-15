@@ -6,10 +6,13 @@ Array [
     "name": "Checkout",
     "uses": "actions/checkout@v2",
     "with": Object {
-      "fetch-depth": 0,
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
     },
+  },
+  Object {
+    "name": "Install dependencies",
+    "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
     "name": "Set git identity",
@@ -17,11 +20,7 @@ Array [
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
-    "name": "Install dependencies",
-    "run": "yarn install --check-files --frozen-lockfile",
-  },
-  Object {
-    "name": "build",
+    "name": "Build",
     "run": "npx projen build",
   },
   Object {

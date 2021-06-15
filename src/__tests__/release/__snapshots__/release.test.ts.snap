@@ -33,8 +33,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -42,25 +40,9 @@ jobs:
       - name: Bump to next version
         run: projen bump
         env:
-          MAJOR: \\"1\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
-          MAJOR: \\"2\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
           MAJOR: \\"10\\"
       - name: release
         run: projen release
-      - name: Backup version file
-        run: cp -f version.json version.json.bak.json
-      - name: Unbump
-        run: projen unbump
-      - name: Backup version file
-        run: cp -f version.json version.json.bak.json
-      - name: Unbump
-        run: projen unbump
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
@@ -106,8 +88,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -115,17 +95,9 @@ jobs:
       - name: Bump to next version
         run: projen bump
         env:
-          MAJOR: \\"1\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
           MAJOR: \\"2\\"
       - name: release
         run: projen release
-      - name: Backup version file
-        run: cp -f version.json version.json.bak.json
-      - name: Unbump
-        run: projen unbump
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
@@ -171,8 +143,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -290,8 +260,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -299,17 +267,9 @@ jobs:
       - name: Bump to next version
         run: projen bump
         env:
-          MAJOR: \\"0\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
           MAJOR: \\"4\\"
       - name: release
         run: projen release
-      - name: Backup version file
-        run: cp -f version.json version.json.bak.json
-      - name: Unbump
-        run: projen unbump
       - name: Backup version file
         run: cp -f version.json version.json.bak.json
       - name: Unbump
@@ -379,8 +339,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -520,8 +478,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -645,8 +601,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -714,8 +668,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -819,8 +771,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -881,8 +831,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -1047,8 +995,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -1056,17 +1002,9 @@ jobs:
       - name: Bump to next version
         run: projen bump
         env:
-          MAJOR: \\"1\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
           MAJOR: \\"3\\"
       - name: release
         run: projen release
-      - name: Backup version file
-        run: cp -f goo.json goo.json.bak.json
-      - name: Unbump
-        run: projen unbump
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
@@ -1112,8 +1050,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -1121,26 +1057,10 @@ jobs:
       - name: Bump to next version
         run: projen bump
         env:
-          MAJOR: \\"1\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
-          MAJOR: \\"3\\"
-      - name: Bump to next version
-        run: projen bump
-        env:
           MAJOR: \\"4\\"
           PRERELEASE: pre
       - name: release
         run: projen release
-      - name: Backup version file
-        run: cp -f goo.json goo.json.bak.json
-      - name: Unbump
-        run: projen unbump
-      - name: Backup version file
-        run: cp -f goo.json goo.json.bak.json
-      - name: Unbump
-        run: projen unbump
       - name: Backup version file
         run: cp -f goo.json goo.json.bak.json
       - name: Unbump
@@ -1186,8 +1106,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
@@ -1304,8 +1222,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Anti-tamper check
-        run: git diff --ignore-space-at-eol --exit-code
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
