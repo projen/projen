@@ -11,13 +11,13 @@ Array [
     },
   },
   Object {
-    "name": "Install dependencies",
-    "run": "yarn install --check-files --frozen-lockfile",
-  },
-  Object {
     "name": "Set git identity",
     "run": "git config user.name \\"Automation\\"
 git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "name": "Install dependencies",
+    "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
     "name": "Build",
