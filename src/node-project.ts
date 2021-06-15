@@ -1,7 +1,7 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, NodeWorkflow, NodeWorkflowOptions, workflows } from './github';
+import { AutoMerge, DependabotOptions, GenericWorkflow, GenericWorkflowOptions } from './github';
 import { MergifyOptions } from './github/mergify';
-import { JobPermission } from './github/workflows-model';
+import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
 import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
@@ -343,7 +343,7 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  public readonly buildWorkflow?: NodeWorkflow;
+  public readonly buildWorkflow?: GenericWorkflow;
   public readonly buildWorkflowJobId?: string;
 
   /**
@@ -415,7 +415,7 @@ export class NodeProject extends Project {
     return this.package.manifest;
   }
 
-  private readonly workflowBootstrapSteps: workflows.JobStep[];
+  private readonly workflowBootstrapSteps: JobStep[];
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -532,7 +532,7 @@ export class NodeProject extends Project {
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
 
-      const postSteps = new Array<any>();
+      const postBuildSteps = new Array<any>();
       const gitDiffStepId = 'git_diff';
       const hasChangesCondName = 'has_changes';
       const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
@@ -541,7 +541,7 @@ export class NodeProject extends Project {
       // run codecov if enabled or a secret token name is passed in
       // AND jest must be configured
       if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
-        postSteps.push({
+        postBuildSteps.push({
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
           with: options.codeCovTokenSecret ? {
@@ -555,7 +555,7 @@ export class NodeProject extends Project {
 
       // use "git diff --exit code" to check if there were changes in the repo
       // and create a step output that will be used in subsequent steps.
-      postSteps.push({
+      postBuildSteps.push({
         name: 'Check for changes',
         id: gitDiffStepId,
         run: `git diff --exit-code || echo "::set-output name=${hasChangesCondName}::true"`,
@@ -564,7 +564,7 @@ export class NodeProject extends Project {
       // only if we had changes, commit them and push to the repo note that for
       // forks, this will fail (because the workflow doesn't have permissions.
       // this indicates to users that they need to update their branch manually.
-      postSteps.push({
+      postBuildSteps.push({
         if: hasChanges,
         name: 'Commit and push changes (if changed)',
         run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch}`,
@@ -573,7 +573,7 @@ export class NodeProject extends Project {
       // if we pushed changes, we need to manually update the status check so
       // that the PR will be green (we won't get here for forks with updates
       // because the push would have failed).
-      postSteps.push({
+      postBuildSteps.push({
         if: hasChanges,
         name: 'Update status check (if changed)',
         run: [
@@ -609,7 +609,7 @@ export class NodeProject extends Project {
 
         task: this.buildTask,
 
-        postSteps,
+        postBuildSteps,
 
         antitamperDisabled: mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
         container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
@@ -811,8 +811,8 @@ export class NodeProject extends Project {
     this.package.addKeywords(...keywords);
   }
 
-  public get installWorkflowSteps(): workflows.JobStep[] {
-    const install = new Array<workflows.JobStep>();
+  public get installWorkflowSteps(): JobStep[] {
+    const install = new Array<JobStep>();
 
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
@@ -960,11 +960,23 @@ export class NodeProject extends Project {
     );
   }
 
-  private createBuildWorkflow(options: NodeWorkflowOptions): NodeWorkflow {
+  private createBuildWorkflow(options: NodeWorkflowOptions): GenericWorkflow {
     const github = this.github;
     if (!github) { throw new Error('no github support'); }
 
-    return new NodeWorkflow(github, options);
+    const project = github.project as NodeProject;
+    return new GenericWorkflow(github, {
+      ...options,
+      env: {
+        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+        ...options.env ?? {},
+      },
+      antitamperDisabled: options.antitamperDisabled || !project.antitamper,
+      buildStep: {
+        name: options.task.name,
+        run: project.runTaskCommand(options.task),
+      },
+    });
   }
 
   /**
@@ -1027,3 +1039,5 @@ export class DependenciesUpgradeMechanism {
     this.binder(project);
   }
 }
+
+export type NodeWorkflowOptions = Omit<GenericWorkflowOptions, 'buildStep'>;

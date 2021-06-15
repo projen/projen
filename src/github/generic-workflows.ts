@@ -1,4 +1,3 @@
-import { NodeProject } from '../node-project';
 import { Task } from '../tasks';
 import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';
@@ -38,14 +37,25 @@ export interface GenericWorkflowOptions {
   readonly artifactsDirectory?: string;
 
   /**
-   * What should trigger the workflow?
+   * The triggers for the workflow.
    *
    * @default - by default workflows can only be triggered by manually.
    */
   readonly trigger?: Triggers;
 
-  readonly preCheckoutSteps?: JobStep[];
+  /**
+   * Initial steps to run before the source code checkout.
+   */
+  readonly initialSteps?: JobStep[];
+
+  /**
+   * Override for the `with` property of the source code checkout step.
+   */
   readonly checkoutWith?: Record<string, any>;
+
+  /**
+   * Steps to run before the main build step.
+   */
   readonly preBuildSteps?: JobStep[];
 
   /**
@@ -59,12 +69,20 @@ export interface GenericWorkflowOptions {
    */
   readonly buildStep?: JobStep;
 
-  readonly postSteps?: JobStep[];
+  /**
+   * Steps to run after the main build step.
+   */
+  readonly postBuildSteps?: JobStep[];
 
   /**
    * Disables anti-tamper checks in the workflow.
    */
   readonly antitamperDisabled?: boolean;
+
+  /**
+   * Job steps to run as the last .
+   */
+  readonly finalSteps?: JobStep[];
 
   /**
    * Workflow environment variables.
@@ -83,8 +101,14 @@ export interface GenericWorkflowOptions {
  */
 export class GenericWorkflow extends GithubWorkflow {
   public static readonly DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
-  public static readonly DEFAULT_JOB_ID = 'workflow';
+  public static readonly DEFAULT_JOB_ID = 'build';
   public static readonly UBUNTU_LATEST = 'ubuntu-latest';
+  public static getMainStep(options: GenericWorkflowOptions) {
+    return options.buildStep ?? {
+      name: options.task.name,
+      run: `projen ${options.task.name}`,
+    };
+  }
 
   readonly github: GitHub;
   readonly jobId: string;
@@ -93,17 +117,10 @@ export class GenericWorkflow extends GithubWorkflow {
     super(github, options.name);
     this.jobId = options.jobId ?? GenericWorkflow.DEFAULT_JOB_ID;
     this.github = github;
-    this.definedWorkflow(options);
+    this.createWorkflow(options);
   }
 
-  protected getMainStep(options: GenericWorkflowOptions) {
-    return options.buildStep ?? {
-      name: options.task.name,
-      run: `projen ${options.task.name}`,
-    };
-  }
-
-  protected definedWorkflow(options: GenericWorkflowOptions) {
+  protected createWorkflow(options: GenericWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -117,15 +134,27 @@ export class GenericWorkflow extends GithubWorkflow {
       workflowDispatch: {}, // allow manual triggering
     });
 
-    const preCheckoutSteps = options.preCheckoutSteps ?? [];
-    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
+    const initialSteps = options.initialSteps ?? [];
     const preBuildSteps = options.preBuildSteps ?? [];
-    const postSteps = options.postSteps ?? [];
+    const postBuildSteps = options.postBuildSteps ?? [];
+    const finalSteps = options.finalSteps ?? [];
 
     const antitamperSteps = options.antitamperDisabled ? [] : [{
       name: 'Anti-tamper check',
       run: 'git diff --ignore-space-at-eol --exit-code',
     }];
+
+    if (options.artifactsDirectory) {
+      finalSteps.push({
+        name: 'Upload artifact',
+        uses: 'actions/upload-artifact@v2.1.1',
+        if: 'always()',
+        with: {
+          name: options.artifactsDirectory,
+          path: options.artifactsDirectory,
+        },
+      });
+    }
 
     const job: Mutable<Job> = {
       runsOn: GenericWorkflow.UBUNTU_LATEST,
@@ -134,13 +163,18 @@ export class GenericWorkflow extends GithubWorkflow {
       permissions: options.permissions,
       if: options.condition,
       steps: [
-        ...preCheckoutSteps,
+        ...initialSteps,
 
         // check out sources.
         {
           name: 'Checkout',
           uses: 'actions/checkout@v2',
-          ...checkoutWith,
+          with: {
+            // we must use 'fetch-depth=0' in order to fetch all tags
+            // otherwise tags are not checked out
+            'fetch-depth': 0,
+            ...options.checkoutWith ?? {},
+          },
         },
 
         // perform an anti-tamper check immediately after we run projen.
@@ -159,60 +193,22 @@ export class GenericWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        this.getMainStep(options),
+        GenericWorkflow.getMainStep(options),
 
-        ...postSteps,
+        ...postBuildSteps,
 
         // anti-tamper check (fails if there were changes to committed files)
         // this will identify any non-committed files generated during build (e.g. test snapshots)
         ...antitamperSteps,
+
+        ...finalSteps,
       ],
     };
-
-    if (options.artifactsDirectory) {
-      job.steps.push({
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
-        if: 'always()',
-        with: {
-          name: options.artifactsDirectory,
-          path: options.artifactsDirectory,
-        },
-      });
-    }
 
     this.addJobs({ [this.jobId]: job });
 
     return this;
   }
-}
-
-export type NodeWorkflowOptions = Omit<GenericWorkflowOptions, 'buildStep'>;
-
-/**
- * A GitHub generic workflow for Node.js projects.
- */
-export class NodeWorkflow extends GenericWorkflow {
-
-  readonly project: NodeProject;
-
-  constructor(github: GitHub, options: NodeWorkflowOptions) {
-    const project = github.project as NodeProject;
-    super(github, {
-      ...options,
-      env: {
-        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        ...options.env ?? {},
-      },
-      antitamperDisabled: options.antitamperDisabled || !project.antitamper,
-      buildStep: {
-        name: options.task.name,
-        run: project.runTaskCommand(options.task),
-      },
-    });
-    this.project = project;
-  }
-
 }
 
 type Mutable<T> = { -readonly [P in keyof T]: T[P] };

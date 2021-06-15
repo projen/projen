@@ -1,11 +1,10 @@
 import { Component } from '../component';
-import { workflows, GithubWorkflow } from '../github';
+import { GenericWorkflow } from '../github';
+import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Publisher } from '../publisher';
 import { Task } from '../tasks';
 import { Version } from '../version';
-
-const BUILD_JOBID = 'release';
 
 /**
  * Project options for release.
@@ -35,7 +34,7 @@ export interface ReleaseProjectOptions {
    * A set of workflow steps to execute in order to setup the workflow
    * container.
    */
-  readonly releaseWorkflowSetupSteps?: workflows.JobStep[];
+  readonly releaseWorkflowSetupSteps?: JobStep[];
 
   /**
    * Container image to use for GitHub workflows.
@@ -54,7 +53,7 @@ export interface ReleaseProjectOptions {
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
-  readonly postBuildSteps?: workflows.JobStep[];
+  readonly postBuildSteps?: JobStep[];
 
   /**
    * Checks that after build there are no modified files on git.
@@ -136,6 +135,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
+  public static readonly BUILD_JOBID = 'release';
   /**
    * Package publisher.
    */
@@ -143,16 +143,16 @@ export class Release extends Component {
 
   private readonly task: Task;
   private readonly version: Version;
-  private readonly postBuildSteps: workflows.JobStep[];
+  private readonly postBuildSteps: JobStep[];
   private readonly antitamper: boolean;
-  private readonly artifactDirectory: string;
+  private readonly artifactsDirectory: string;
   private readonly versionFile: string;
   private readonly releaseSchedule?: string;
   private readonly releaseEveryCommit: boolean;
-  private readonly preBuildSteps: workflows.JobStep[];
+  private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
   private readonly branches = new Array<ReleaseBranch>();
-  private readonly jobs: Record<string, workflows.Job> = {};
+  private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
 
   constructor(project: Project, options: ReleaseOptions) {
@@ -166,7 +166,7 @@ export class Release extends Component {
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.antitamper = options.antitamper ?? true;
-    this.artifactDirectory = options.artifactsDirectory ?? 'dist';
+    this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
     this.releaseSchedule = options.releaseSchedule;
     this.releaseEveryCommit = options.releaseEveryCommit ?? true;
@@ -177,8 +177,8 @@ export class Release extends Component {
     });
 
     this.publisher = new Publisher(project, {
-      artifactName: this.artifactDirectory,
-      buildJobId: BUILD_JOBID,
+      artifactName: this.artifactsDirectory,
+      buildJobId: Release.BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
 
@@ -228,7 +228,7 @@ export class Release extends Component {
    * Adds jobs to all release workflows.
    * @param jobs The jobs to add (name => job)
    */
-  public addJobs(jobs: Record<string, workflows.Job>) {
+  public addJobs(jobs: Record<string, Job>) {
     for (const [name, job] of Object.entries(jobs)) {
       this.jobs[name] = job;
     }
@@ -243,7 +243,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): GithubWorkflow {
+  private createWorkflow(branch: ReleaseBranch): GenericWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -256,29 +256,7 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
-    const steps = new Array<workflows.JobStep>();
-
-    // check out sources.
-    steps.push({
-      name: 'Checkout',
-      uses: 'actions/checkout@v2',
-      with: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-    });
-
-    // sets git identity so we can push later
-    steps.push({
-      name: 'Set git identity',
-      run: [
-        'git config user.name "Automation"',
-        'git config user.email "github-actions@github.com"',
-      ].join('\n'),
-    });
-
-    steps.push(...this.preBuildSteps ?? []);
+    const preBuildSteps = this.preBuildSteps ?? [];
 
     const env: Record<string, string> = {};
 
@@ -290,48 +268,34 @@ export class Release extends Component {
       env.PRERELEASE = branch.prerelease;
     }
 
-    steps.push({
+    preBuildSteps.push({
       name: 'Bump to next version',
       run: this.project.runTaskCommand(this.version.bumpTask),
       env: Object.keys(env).length ? env : undefined,
     });
 
-    // run the main build task
-    steps.push({
-      name: this.task.name,
-      run: this.project.runTaskCommand(this.task),
-    });
-
-    // run post-build steps
-    steps.push(...this.postBuildSteps);
+    const postBuildSteps = this.postBuildSteps;
 
     // create a backup of the version JSON file (e.g. package.json) because we
     // are going to revert the bump and we need the version number in order to
     // create the github release.
     const versionJsonBackup = `${this.versionFile}.bak.json`;
-    steps.push({
+    postBuildSteps.push({
       name: 'Backup version file',
       run: `cp -f ${this.versionFile} ${versionJsonBackup}`,
     });
 
     // revert the bump so anti-tamper will not fail
-    steps.push({
+    postBuildSteps.push({
       name: 'Unbump',
       run: this.project.runTaskCommand(this.version.unbumpTask),
     });
 
-    // anti-tamper check (fails if there were changes to committed files)
-    // this will identify any non-committed files generated during build (e.g. test snapshots)
-    if (this.antitamper) {
-      steps.push({
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      });
-    }
+    const finalSteps = new Array<JobStep>();
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
-    steps.push({
+    finalSteps.push({
       name: 'Check for new commits',
       id: gitRemoteStep,
       run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
@@ -339,7 +303,7 @@ export class Release extends Component {
 
     // create a github release
     const getVersion = `v$(node -p \"require(\'./${versionJsonBackup}\').version\")`;
-    steps.push({
+    finalSteps.push({
       name: 'Create release',
       if: noNewCommits,
       run: [
@@ -352,42 +316,41 @@ export class Release extends Component {
       },
     });
 
-    steps.push({
+    finalSteps.push({
       name: 'Upload artifact',
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
-        name: this.artifactDirectory,
-        path: this.artifactDirectory,
+        name: this.artifactsDirectory,
+        path: this.artifactsDirectory,
       },
     });
 
-    const workflow = github.addWorkflow(workflowName);
-
-    // determine release triggers
-    workflow.on({
-      schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-      push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
-      workflowDispatch: {}, // allow manual triggering
-    });
-
-    // add main build job
-    workflow.addJobs({
-      [BUILD_JOBID]: {
-        runsOn: 'ubuntu-latest',
-        container: this.containerImage ? { image: this.containerImage } : undefined,
-        env: {
-          CI: 'true',
-          RELEASE: 'true',
-        },
-        permissions: {
-          contents: workflows.JobPermission.WRITE,
-        },
-        steps: steps,
+    return new GenericWorkflow(github, {
+      name: workflowName,
+      jobId: Release.BUILD_JOBID,
+      trigger: {
+        schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
+        push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
       },
+      container: this.containerImage ? { image: this.containerImage } : undefined,
+      env: {
+        CI: 'true',
+        RELEASE: 'true',
+      },
+      permissions: {
+        contents: JobPermission.WRITE,
+      },
+      antitamperDisabled: !this.antitamper,
+      preBuildSteps,
+      task: this.task,
+      buildStep: {
+        name: this.task.name,
+        run: this.project.runTaskCommand(this.task),
+      },
+      postBuildSteps,
+      finalSteps,
     });
-
-    return workflow;
   }
 }
 
