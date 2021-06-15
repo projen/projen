@@ -7,7 +7,7 @@ function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
-export interface GenericWorkflowOptions {
+export interface GenericGitHubWorkflowOptions {
   /**
    * The workflow name.
    */
@@ -99,11 +99,12 @@ export interface GenericWorkflowOptions {
 /**
  * A GitHub generic workflow.
  */
-export class GenericWorkflow extends GithubWorkflow {
+export class GenericGitHubWorkflow extends GithubWorkflow {
   public static readonly DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
   public static readonly DEFAULT_JOB_ID = 'build';
   public static readonly UBUNTU_LATEST = 'ubuntu-latest';
-  public static getMainStep(options: GenericWorkflowOptions) {
+
+  public static getMainStep(options: GenericGitHubWorkflowOptions) {
     return options.buildStep ?? {
       name: options.task.name,
       run: `projen ${options.task.name}`,
@@ -113,14 +114,14 @@ export class GenericWorkflow extends GithubWorkflow {
   readonly github: GitHub;
   readonly jobId: string;
 
-  constructor(github: GitHub, options: GenericWorkflowOptions) {
+  constructor(github: GitHub, options: GenericGitHubWorkflowOptions) {
     super(github, options.name);
-    this.jobId = options.jobId ?? GenericWorkflow.DEFAULT_JOB_ID;
+    this.jobId = options.jobId ?? GenericGitHubWorkflow.DEFAULT_JOB_ID;
     this.github = github;
     this.createWorkflow(options);
   }
 
-  protected createWorkflow(options: GenericWorkflowOptions) {
+  protected createWorkflow(options: GenericGitHubWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -135,6 +136,7 @@ export class GenericWorkflow extends GithubWorkflow {
     });
 
     const initialSteps = options.initialSteps ?? [];
+    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
     const finalSteps = options.finalSteps ?? [];
@@ -157,7 +159,7 @@ export class GenericWorkflow extends GithubWorkflow {
     }
 
     const job: Mutable<Job> = {
-      runsOn: GenericWorkflow.UBUNTU_LATEST,
+      runsOn: GenericGitHubWorkflow.UBUNTU_LATEST,
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -169,12 +171,7 @@ export class GenericWorkflow extends GithubWorkflow {
         {
           name: 'Checkout',
           uses: 'actions/checkout@v2',
-          with: {
-            // we must use 'fetch-depth=0' in order to fetch all tags
-            // otherwise tags are not checked out
-            'fetch-depth': 0,
-            ...options.checkoutWith ?? {},
-          },
+          ...checkoutWith,
         },
 
         // perform an anti-tamper check immediately after we run projen.
@@ -193,7 +190,7 @@ export class GenericWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        GenericWorkflow.getMainStep(options),
+        GenericGitHubWorkflow.getMainStep(options),
 
         ...postBuildSteps,
 

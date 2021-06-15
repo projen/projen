@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { GenericWorkflow } from '../github';
+import { GenericGitHubWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Publisher } from '../publisher';
@@ -243,7 +243,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): GenericWorkflow {
+  private createWorkflow(branch: ReleaseBranch): GenericGitHubWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -256,7 +256,7 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
-    const preBuildSteps = this.preBuildSteps ?? [];
+    const preBuildSteps = new Array<JobStep>(...this.preBuildSteps);
 
     const env: Record<string, string> = {};
 
@@ -274,7 +274,7 @@ export class Release extends Component {
       env: Object.keys(env).length ? env : undefined,
     });
 
-    const postBuildSteps = this.postBuildSteps;
+    const postBuildSteps = new Array<JobStep>(...this.postBuildSteps);
 
     // create a backup of the version JSON file (e.g. package.json) because we
     // are going to revert the bump and we need the version number in order to
@@ -292,6 +292,15 @@ export class Release extends Component {
     });
 
     const finalSteps = new Array<JobStep>();
+
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    if (this.antitamper) {
+      finalSteps.push({
+        name: 'Anti-tamper check',
+        run: 'git diff --ignore-space-at-eol --exit-code',
+      });
+    }
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
@@ -326,7 +335,7 @@ export class Release extends Component {
       },
     });
 
-    return new GenericWorkflow(github, {
+    return new GenericGitHubWorkflow(github, {
       name: workflowName,
       jobId: Release.BUILD_JOBID,
       trigger: {
@@ -341,7 +350,12 @@ export class Release extends Component {
       permissions: {
         contents: JobPermission.WRITE,
       },
-      antitamperDisabled: !this.antitamper,
+      checkoutWith: {
+        // we must use 'fetch-depth=0' in order to fetch all tags
+        // otherwise tags are not checked out
+        'fetch-depth': 0,
+      },
+      antitamperDisabled: true,
       preBuildSteps,
       task: this.task,
       buildStep: {
