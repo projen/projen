@@ -20,7 +20,7 @@ test('sample file from source', () => {
   const project = new TestProject();
 
   // WHEN
-  new SampleFile(project, 'logo.svg', { source: path.resolve(__dirname, '..', '..', 'logo', 'projen.svg') });
+  new SampleFile(project, 'logo.svg', { sourcePath: path.resolve(__dirname, '..', '..', 'logo', 'projen.svg') });
 
   // THEN
   expect(synthSnapshot(project)['logo.svg']).toMatch('<?xml version="1.0" encoding="UTF-8" standalone="no"?>');
@@ -49,7 +49,7 @@ test('sample directory from source', () => {
   const project = new TestProject();
 
   // WHEN
-  new SampleDir(project, 'public', { source: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react') });
+  new SampleDir(project, 'public', { sourceDir: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react') });
 
   // THEN
   const snapshot = synthSnapshot(project);
@@ -67,7 +67,7 @@ test('sample directory from source with overwritten files', () => {
     files: {
       'index.html': '<!doctype html><body>Hello world!</body>',
     },
-    source: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react'),
+    sourceDir: path.resolve(__dirname, '..', '..', 'assets', 'web', 'react'),
   });
 
   // THEN

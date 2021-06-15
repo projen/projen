@@ -25,7 +25,7 @@ export interface SampleFileOptions {
    * new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
    * ```
    */
-  readonly source?: string;
+  readonly sourcePath?: string;
 }
 
 /**
@@ -45,10 +45,10 @@ export class SampleFile extends Component {
   constructor(project: Project, filePath: string, options: SampleFileOptions) {
     super(project);
 
-    if (options.contents && options.source) {
+    if (options.contents && options.sourcePath) {
       throw new Error('Cannot specify both \'contents\' and \'source\' fields.');
     }
-    if (!options.contents && !options.source) {
+    if (!options.contents && !options.sourcePath) {
       throw new Error('Must specify at least one of \'contents\' or \'source\'.');
     }
     this.filePath = filePath;
@@ -59,13 +59,8 @@ export class SampleFile extends Component {
     let contents;
     if (this.options.contents) {
       contents = this.options.contents;
-    } else if (this.options.source) {
-      if (fs.existsSync(this.options.source)) {
-        contents = fs.readFileSync(this.options.source);
-      } else {
-        this.project.logger.error(`Could not find sample file expected at path: ${this.options.source}. Skipping...`);
-        return;
-      }
+    } else if (this.options.sourcePath) {
+      contents = fs.readFileSync(this.options.sourcePath);
     }
     this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
   }
@@ -99,8 +94,8 @@ export interface SampleDirOptions {
   readonly files?: { [fileName: string]: string };
 
   /**
-   * Absolute path to a directory to copy files from (does not need to be all
-   * text files).
+   * Absolute path to a directory to copy files from (does not need to be text
+   * files).
    *
    * If your project is typescript-based and has configured `testdir` to be a
    * subdirectory of `src`, sample files should outside of the `src` directory
@@ -109,7 +104,7 @@ export interface SampleDirOptions {
    * new SampleDir(this, 'public', { source: path.join(__dirname, '..', 'sample-assets') });
    * ```
    */
-  readonly source?: string;
+  readonly sourceDir?: string;
 }
 
 /**
@@ -127,7 +122,7 @@ export class SampleDir extends Component {
    */
   constructor(project: Project, dir: string, options: SampleDirOptions) {
     super(project);
-    if (!options.files && !options.source) {
+    if (!options.files && !options.sourceDir) {
       throw new Error('Must specify at least one of \'files\' or \'source\'.');
     }
 
@@ -141,8 +136,8 @@ export class SampleDir extends Component {
       return;
     }
 
-    if (this.options.source) {
-      const basedir = this.options.source;
+    if (this.options.sourceDir) {
+      const basedir = this.options.sourceDir;
       const files = glob.sync('**', {
         cwd: basedir,
         nodir: true,

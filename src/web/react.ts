@@ -89,7 +89,7 @@ export class ReactProject extends NodeProject {
         fileExt: 'jsx',
         srcdir: this.srcdir,
       });
-      new SampleDir(this, 'public', { source: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
+      new SampleDir(this, 'public', { sourceDir: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
     }
   }
 }
@@ -159,7 +159,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         fileExt: 'tsx',
         srcdir: this.srcdir,
       });
-      new SampleDir(this, 'public', { source: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
+      new SampleDir(this, 'public', { sourceDir: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
     }
   }
 }
