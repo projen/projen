@@ -1482,7 +1482,7 @@ exports[`projen new cdk8s-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { Cdk8sTypeScriptApp } = require('projen');
 const project = new Cdk8sTypeScriptApp({
-  cdk8sVersion: '1.0.0-beta.10',
+  cdk8sVersion: '^1.0.0-beta.10',
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
@@ -1503,7 +1503,7 @@ Object {
 const project = new ConstructLibraryCdk8s({
   author: 'My User Name',
   authorAddress: 'my@user.email.com',
-  cdk8sVersion: '1.0.0-beta.10',
+  cdk8sVersion: '^1.0.0-beta.10',
   defaultReleaseBranch: 'main',
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',

@@ -1,9 +1,10 @@
 import { Component } from './component';
 import { workflows } from './github';
-import { JobPermission } from './github/workflows-model';
+import { JobPermission, JobPermissions } from './github/workflows-model';
 import { Project } from './project';
 
 const JSII_RELEASE_VERSION = 'latest';
+const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 
 /**
  * Options for `Publisher`.
@@ -67,9 +68,18 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNpm(options: JsiiReleaseNpm = {}) {
-    const npmTokenSecret = options.npmTokenSecret ?? 'NPM_TOKEN';
+    const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
+
+    // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
+    const npmTokenSecret = options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN');
+
+    const permissions: JobPermissions = {
+      contents: JobPermission.READ,
+      packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+    };
+
     this.jobs.release_npm = {
-      permissions: { contents: JobPermission.READ },
+      permissions: permissions,
       name: 'Release to NPM',
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
@@ -259,13 +269,20 @@ export interface JsiiReleaseNpm {
   /**
    * The domain name of the npm package registry.
    *
+   * To publish to GitHub Packages, set this value to `"npm.pkg.github.com"`. In
+   * this if `npmTokenSecret` is not specified, it will default to
+   * `GITHUB_TOKEN` which means that you will be able to publish to the
+   * repository's package store. In this case, make sure `repositoryUrl` is
+   * correctly defined.
+   *
    * @default "registry.npmjs.org"
+   * @example "npm.pkg.github.com"
    */
   readonly registry?: string;
 
   /**
    * GitHub secret which contains the NPM token to use when publishing packages.
-   * @default "NPM_TOKEN"
+   * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
 }
