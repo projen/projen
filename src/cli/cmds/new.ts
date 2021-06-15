@@ -11,11 +11,11 @@ import { exec } from '../../util';
 import { tryProcessMacro } from '../macros';
 
 class Command implements yargs.CommandModule {
-  public readonly command = 'new [PROJECT-TYPE] [OPTIONS]';
+  public readonly command = 'new [PROJECT-TYPE-NAME] [OPTIONS]';
   public readonly describe = 'Creates a new projen project';
 
   public builder(args: yargs.Argv) {
-    args.positional('PROJECT-TYPE', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
+    args.positional('PROJECT-TYPE-NAME', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     args.option('comments', { type: 'boolean', default: true, desc: 'Include commented out options in .projenrc.js (use --no-comments to disable)' });
     args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
@@ -77,7 +77,7 @@ class Command implements yargs.CommandModule {
     }
 
     // project type is defined but was not matched by yargs, so print the list of supported types
-    if (args.projectType) {
+    if (args.projectTypeName) {
       console.log(`Invalid project type ${args.projectType}. Supported types:`);
       for (const pjid of inventory.discover().map(x => x.pjid)) {
         console.log(`  ${pjid}`);
@@ -240,7 +240,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
   }
 
-  const requested = args.projectType;
+  const requested = args.projectTypeName;
   const types = projects.map(p => p.pjid);
 
   // if user did not specify a project type but the module has more than one, we need them to tell us which one...
