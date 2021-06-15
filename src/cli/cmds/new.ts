@@ -227,6 +227,8 @@ function commandLineToProps(type: inventory.ProjectType, argv: Record<string, un
  * @param args Command line arguments (incl. project type)
  */
 async function newProjectFromModule(baseDir: string, spec: string, args: any) {
+  // install projen if it isn't already installed or linked
+  exec(`yarn list --depth=0 --pattern projen || yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev projen`, { cwd: baseDir });
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
   // collect projects by looking up all .jsii modules in `node_modules`.
