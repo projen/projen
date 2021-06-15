@@ -53,8 +53,9 @@ Name|Description
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
+[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)|A GitHub generic workflow.
 [github.GitHub](#projen-github-github)|*No description*
-[github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
+[github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [java.JavaProject](#projen-java-javaproject)|Java project.
@@ -175,6 +176,7 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
+[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)|*No description*
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -3236,7 +3238,7 @@ Name | Type | Description
 **testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
 **testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
-**buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
@@ -5260,6 +5262,118 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 
 
+## class GenericGitHubWorkflow 🔹 <a id="projen-github-genericgithubworkflow"></a>
+
+A GitHub generic workflow.
+
+__Submodule__: github
+
+__Extends__: [github.GithubWorkflow](#projen-github-githubworkflow)
+
+### Initializer
+
+
+
+
+```ts
+new github.GenericGitHubWorkflow(github: GitHub, options: GenericGitHubWorkflowOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  The workflow name. 
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
+  * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
+  * **antitamperDisabled** (<code>boolean</code>)  Disables anti-tamper checks in the workflow. __*Optional*__
+  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). __*Default*__: undefined
+  * **buildStep** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  Main build step used in the workflow. __*Default*__: {run: `projen ${task.name}`}
+  * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Optional*__
+  * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
+  * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
+  * **finalSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Job steps to run as the last . __*Optional*__
+  * **initialSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Optional*__
+  * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "workflow"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run after the main build step. __*Optional*__
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Optional*__
+  * **trigger** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**github**🔹 | <code>[github.GitHub](#projen-github-github)</code> | <span></span>
+**jobId**🔹 | <code>string</code> | <span></span>
+*static* **DEFAULT_JOB_ID**🔹 | <code>string</code> | <span></span>
+*static* **DEFAULT_TOKEN**🔹 | <code>string</code> | <span></span>
+*static* **UBUNTU_LATEST**🔹 | <code>string</code> | <span></span>
+
+### Methods
+
+
+#### protected createWorkflow(options)🔹 <a id="projen-github-genericgithubworkflow-createworkflow"></a>
+
+
+
+```ts
+protected createWorkflow(options: GenericGitHubWorkflowOptions): GenericGitHubWorkflow
+```
+
+* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  The workflow name. 
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
+  * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
+  * **antitamperDisabled** (<code>boolean</code>)  Disables anti-tamper checks in the workflow. __*Optional*__
+  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). __*Default*__: undefined
+  * **buildStep** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  Main build step used in the workflow. __*Default*__: {run: `projen ${task.name}`}
+  * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Optional*__
+  * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
+  * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
+  * **finalSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Job steps to run as the last . __*Optional*__
+  * **initialSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Optional*__
+  * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "workflow"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run after the main build step. __*Optional*__
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Optional*__
+  * **trigger** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
+
+__Returns__:
+* <code>[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)</code>
+
+#### *static* getMainStep(options)🔹 <a id="projen-github-genericgithubworkflow-getmainstep"></a>
+
+
+
+```ts
+static getMainStep(options: GenericGitHubWorkflowOptions): JobStep
+```
+
+* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  The workflow name. 
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
+  * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
+  * **antitamperDisabled** (<code>boolean</code>)  Disables anti-tamper checks in the workflow. __*Optional*__
+  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). __*Default*__: undefined
+  * **buildStep** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  Main build step used in the workflow. __*Default*__: {run: `projen ${task.name}`}
+  * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Optional*__
+  * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
+  * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
+  * **finalSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Job steps to run as the last . __*Optional*__
+  * **initialSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Optional*__
+  * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "workflow"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run after the main build step. __*Optional*__
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Optional*__
+  * **trigger** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
+
+__Returns__:
+* <code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>
+
+
+
 ## class GitHub 🔹 <a id="projen-github-github"></a>
 
 
@@ -5341,7 +5455,9 @@ __Returns__:
 
 ## class GithubWorkflow 🔹 <a id="projen-github-githubworkflow"></a>
 
+Workflow for GitHub.
 
+A workflow is a configurable automated process made up of one or more jobs.
 
 __Submodule__: github
 
@@ -6603,6 +6719,7 @@ new release.Release(project: Project, options: ReleaseOptions)
 Name | Type | Description 
 -----|------|-------------
 **publisher**🔹 | <code>[Publisher](#projen-publisher)</code> | Package publisher.
+*static* **BUILD_JOBID**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -10657,6 +10774,34 @@ Name | Type | Description
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
 **scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
 **versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+## struct GenericGitHubWorkflowOptions 🔹 <a id="projen-github-genericgithubworkflowoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The workflow name.
+**permissions**🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions for the build job.
+**task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The main task to be executed.
+**antitamperDisabled**?🔹 | <code>boolean</code> | Disables anti-tamper checks in the workflow.<br/>__*Optional*__
+**artifactsDirectory**?🔹 | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`).<br/>__*Default*__: undefined
+**buildStep**?🔹 | <code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code> | Main build step used in the workflow.<br/>__*Default*__: {run: `projen ${task.name}`}
+**checkoutWith**?🔹 | <code>Map<string, any></code> | Override for the `with` property of the source code checkout step.<br/>__*Optional*__
+**condition**?🔹 | <code>string</code> | Adds an 'if' condition to the workflow.<br/>__*Optional*__
+**container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
+**env**?🔹 | <code>Map<string, string></code> | Workflow environment variables.<br/>__*Default*__: {}
+**finalSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Job steps to run as the last .<br/>__*Optional*__
+**initialSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Optional*__
+**jobId**?🔹 | <code>string</code> | The primary job id.<br/>__*Default*__: "workflow"
+**postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run after the main build step.<br/>__*Optional*__
+**preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Optional*__
+**trigger**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
 
 
 
