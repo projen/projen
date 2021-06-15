@@ -8,9 +8,12 @@ Object {
 /.github/pull_request_template.md          	linguist-generated
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /react-app-env.d.ts                        	linguist-generated
@@ -275,7 +278,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "typescript",
@@ -665,7 +667,7 @@ tsconfig.tsbuildinfo
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "typescript": "^4.0.3",
     },
     "eslintConfig": Object {

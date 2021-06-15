@@ -241,9 +241,12 @@ Object {
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/release.yml             	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -703,7 +706,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -1424,7 +1426,7 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "standard-version": "^9",
       "ts-jest": "*",
       "typescript": "*",
@@ -1866,8 +1868,11 @@ Object {
 /.eslintrc.json                            	linguist-generated
 /.gitattributes                            	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -2127,7 +2132,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "ts-jest",
@@ -2830,7 +2834,7 @@ project.synth();
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
     },
@@ -3261,8 +3265,11 @@ Object {
 /.eslintrc.json                            	linguist-generated
 /.gitattributes                            	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
@@ -3489,7 +3496,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "ts-jest",
@@ -4183,7 +4189,7 @@ project.synth();
       "jest-junit": "^12",
       "json-schema": "*",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
     },
@@ -4391,9 +4397,12 @@ Object {
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/release.yml             	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated",
   ".github/pull_request_template.md": "Fixes #",
@@ -4684,7 +4693,6 @@ junit.xml
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^999.999.999",
       },
       Object {
         "name": "standard-version",
@@ -5100,7 +5108,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^12",
       "npm-check-updates": "^11",
-      "projen": "^999.999.999",
+      "projen": "*",
       "standard-version": "^9",
     },
     "jest": Object {

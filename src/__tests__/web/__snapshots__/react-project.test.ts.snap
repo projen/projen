@@ -9,9 +9,12 @@ Object {
 /.github/workflows/build.yml               	linguist-generated
 /.github/workflows/release.yml             	linguist-generated
 /.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
 /.mergify.yml                              	linguist-generated
 /.npmignore                                	linguist-generated
 /.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
 /LICENSE                                   	linguist-generated
 /package.json                              	linguist-generated
 /yarn.lock                                 	linguist-generated",
@@ -298,7 +301,6 @@ pull_request_rules:
       Object {
         "name": "projen",
         "type": "build",
-        "version": "^1.2.3",
       },
       Object {
         "name": "standard-version",
@@ -697,7 +699,7 @@ pull_request_rules:
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
       "npm-check-updates": "^11",
-      "projen": "^1.2.3",
+      "projen": "*",
       "standard-version": "^9",
     },
     "eslintConfig": Object {

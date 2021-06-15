@@ -68,25 +68,38 @@ and formatting errors whenever possible while saving a document.
 When your local version of projen builds successfully, you can test it to create
 a new project by going into another directory and invoking the binary directly:
 
+First, tell yarn to create a link from your local development copy:
+
 ```console
-$ pwd
-/path/to/projen
-$ cd ..
-$ mkdir testing
-$ cd testing
-$ ../projen/bin/projen new <project-type>
+$ cd /path/to/local/projen
+$ yarn link
 ```
 
-Running `npx projen` in an existing projen-based project will by default run the
-version of projen that is installed by npm, so to override this and synthesize
-using your locally built projen, run:
+Now, to create new projects:
 
 ```console
-$ pwd
-/path/to/root/of/some/project
-$ rm -rf node_modules/projen && ../path/to/projen/bin/projen
-Synthesizing project ...
-...
+$ mkdir /my/new/project
+$ cd /my/new/project
+$ yarn link projen
+$ alias pj="node_modules/projen/bin/projen"
+$ pj new TYPE
+$ yarn link projen # <-- important to run this again
+```
+
+If you already have an existing project and you want to test a new projen
+feature against it:
+
+```console
+$ cd /my/other/project
+$ yarn link projen
+$ pj
+```
+
+From now on, running `pj` in this session will use the local development version of 
+projen instead of the latest one from npm.
+
+```console
+$ yarn unlink projen
 ```
 
 ### Version bumping

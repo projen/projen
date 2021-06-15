@@ -172,7 +172,52 @@ describe('deps', () => {
   });
 });
 
+test('throw when \'autoApproveProjenUpgrades\' is used with \'projenUpgradeAutoMerge\'', () => {
+  expect(() => {
+    new TestNodeProject({ autoApproveProjenUpgrades: true, projenUpgradeAutoMerge: true });
+  }).toThrow("'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'");
+});
+
 describe('deps upgrade', () => {
+
+  test('throws when trying to auto approve projen but auto approve is not defined', () => {
+    const message = 'Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`';
+    expect(() => { new TestNodeProject({ autoApproveProjenUpgrades: true }); }).toThrow(message);
+    expect(() => { new TestNodeProject({ projenUpgradeAutoMerge: true }); }).toThrow(message);
+  });
+
+  test('throws when trying to auto approve deps but auto approve is not defined', () => {
+    expect(() => {
+      new TestNodeProject({ autoApproveUpgrades: true });
+    }).toThrow('Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`');
+  });
+
+  test('workflow can be auto approved', () => {
+    const project = new TestNodeProject({
+      autoApproveOptions: {
+        allowedUsernames: ['dummy'],
+        secret: 'dummy',
+      },
+      autoApproveUpgrades: true,
+    });
+
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-dependencies.yml']);
+    expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
+  });
+
+  test('dependabot can be auto approved', () => {
+    const project = new TestNodeProject({
+      dependabot: true,
+      autoApproveOptions: {
+        allowedUsernames: ['dummy'],
+        secret: 'dummy',
+      },
+      autoApproveUpgrades: true,
+    });
+
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/dependabot.yml']);
+    expect(snapshot.updates[0].labels).toStrictEqual(['auto-approve']);
+  });
 
   test('default - with projen secret', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
@@ -390,7 +435,7 @@ describe('scripts', () => {
   });
 });
 
-test('buildWorkflowMutable will push changes to PR branches', () => {
+test('mutableBuild will push changes to PR branches', () => {
   // WHEN
   const project = new TestNodeProject({
     mutableBuild: true,

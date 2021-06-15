@@ -1,46 +1,23 @@
-import { Cdk8sTypeScriptAppOptions, Cdk8sTypeScriptApp } from '../cdk8s-app-ts';
+import { ConstructLibraryCdk8s, ConstructLibraryCdk8sOptions } from '../cdk8s-construct';
 import { LogLevel } from '../logger';
 import { synthSnapshot, mkdtemp } from './util';
 
-test ('test if cdk8s synth is possible', () => {
-  const project = new TestCdk8sAppProject({
+test ('constructs version defined', () => {
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
     releaseWorkflow: true,
     constructsVersion: '3.3.75',
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
   });
 
   const output = synthSnapshot(project);
 
 
-  // expect a synth script
-  expect(output['package.json'].scripts.synth).toContain(
-    'npx projen synth',
-  );
-
-  // expect a synth task
-  expect(output['.projen/tasks.json'].tasks.synth.steps).toStrictEqual([{
-    exec: 'cdk8s synth',
-  }]);
-
-  // expect build step to contain synth
-  expect(output['.projen/tasks.json'].tasks.build.steps).toStrictEqual([
-    {
-      exec: 'npx projen',
-    },
-    {
-      spawn: 'test',
-    },
-    {
-      spawn: 'compile',
-    },
-    {
-      spawn: 'synth',
-    },
-  ]);
-
-  expect(output['package.json'].dependencies).toStrictEqual({
+  expect(output['package.json'].peerDependencies).toStrictEqual({
     'cdk8s': '^1.0.0-beta.18',
     'cdk8s-plus-17': '^1.0.0-beta.18',
     'constructs': '^3.3.75',
@@ -49,16 +26,19 @@ test ('test if cdk8s synth is possible', () => {
 });
 
 test ('constructs version undefined', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
     releaseWorkflow: true,
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
   });
 
   const output = synthSnapshot(project);
 
-  expect(output['package.json'].dependencies).toStrictEqual({
+  expect(output['package.json'].peerDependencies).toStrictEqual({
     'cdk8s': '^1.0.0-beta.11',
     'cdk8s-plus-17': '^1.0.0-beta.11',
     'constructs': '^3.2.34',
@@ -68,18 +48,21 @@ test ('constructs version undefined', () => {
 });
 
 test ('constructs version pinning', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new TestCdk8sConstructsProject({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
     releaseWorkflow: true,
     constructsVersion: '3.3.75',
     constructsVersionPinning: true,
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
   });
 
   const output = synthSnapshot(project);
 
-  expect(output['package.json'].dependencies).toStrictEqual({
+  expect(output['package.json'].peerDependencies).toStrictEqual({
     'cdk8s': '^1.0.0-beta.18',
     'cdk8s-plus-17': '^1.0.0-beta.18',
     'constructs': '3.3.75',
@@ -88,8 +71,8 @@ test ('constructs version pinning', () => {
 
 });
 
-class TestCdk8sAppProject extends Cdk8sTypeScriptApp {
-  constructor(options: Cdk8sTypeScriptAppOptions) {
+class TestCdk8sConstructsProject extends ConstructLibraryCdk8s {
+  constructor(options: ConstructLibraryCdk8sOptions) {
     super({
       outdir: mkdtemp(),
       logging: {

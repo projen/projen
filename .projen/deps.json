@@ -14,10 +14,6 @@
       "type": "build"
     },
     {
-      "name": "@types/inquirer",
-      "type": "build"
-    },
-    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -132,10 +128,6 @@
     },
     {
       "name": "ini",
-      "type": "bundled"
-    },
-    {
-      "name": "inquirer",
       "type": "bundled"
     },
     {
