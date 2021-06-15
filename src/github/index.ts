@@ -8,4 +8,6 @@ export * from './mergify';
 export * from './auto-merge';
 export * from './auto-approve';
 
+export * from './generic-workflows';
+
 export * as workflows from './workflows-model';
