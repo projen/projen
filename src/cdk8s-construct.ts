@@ -18,6 +18,14 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   readonly constructsVersion?: string;
 
   /**
+   * cdk8s-plus-17 version
+   *
+   * @default "cdk8sVersion"
+   */
+
+  readonly cdk8sPlusVersion?: string
+
+  /**
    * Use pinned version instead of caret version for CDK8s.
    *
    * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
@@ -36,6 +44,16 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
    * @default false
    */
   readonly constructsVersionPinning?: boolean;
+
+  /**
+   * Use pinned version instead of caret version for cdk8s-plus-17.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdk8sPlusVersionPinning?: boolean;
 }
 
 /**
@@ -58,6 +76,12 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
    */
   public readonly constructsVersion: string;
 
+  /**
+   * The cdk8s-plus-17 version this app is using.
+   */
+
+  public readonly cdk8sPlusVersion: string;
+
   constructor(options: ConstructLibraryCdk8sOptions) {
     super(options);
 
@@ -69,10 +93,17 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
       this.constructsVersion = '^3.2.34';
     }
 
+
+    if (!! options.cdk8sPlusVersion) {
+      this.cdk8sPlusVersion = options.cdk8sPlusVersionPinning ? options.cdk8sPlusVersion : `^${options.cdk8sPlusVersion}`;
+    } else {
+      this.cdk8sPlusVersion = this.cdk8sVersion
+    }
+
     this.addPeerDeps(
       `constructs@${this.constructsVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
-      `cdk8s-plus-17@${this.cdk8sVersion}`,
+      `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
     );
   }
 }
