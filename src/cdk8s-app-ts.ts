@@ -31,6 +31,14 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdk8sPlusVersion?: string;
 
   /**
+   * cdk8s-cli version
+   *
+   * @default "cdk8sVersion"
+   */
+
+  readonly cdk8sCliVersion?: string;
+
+  /**
    * Use pinned version instead of caret version for CDK8s.
    *
    * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
@@ -39,6 +47,16 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default false
    */
   readonly cdk8sVersionPinning?: boolean;
+
+  /**
+   * Use pinned version instead of caret version for CDK8s-cli.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdk8sCliVersionPinning?: boolean;
 
   /**
    * Use pinned version instead of caret version for cdk8s-plus-17.
@@ -96,6 +114,12 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
   public readonly cdk8sPlusVersion: string;
 
   /**
+   * The cdk8s-cli version this app is using.
+   */
+
+  public readonly cdk8sCliVersion: string;
+
+  /**
    * The CDK8s app entrypoint
    */
   public readonly appEntrypoint: string;
@@ -132,6 +156,12 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       this.constructsVersion = '^3.2.34';
     }
 
+    if (!! options.cdk8sCliVersion) {
+      this.cdk8sCliVersion = options.cdk8sCliVersionPinning ? options.cdk8sCliVersion: `^${options.cdk8sCliVersion}`;
+    } else {
+      this.cdk8sCliVersion = this.cdk8sVersion;
+    }
+
 
     // CLI
     this.addDeps(
@@ -141,7 +171,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     );
     this.addDevDeps(
       'ts-node@^9',
-      `cdk8s-cli@${this.cdk8sVersion}`,
+      `cdk8s-cli@${this.cdk8sCliVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`,
       `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
