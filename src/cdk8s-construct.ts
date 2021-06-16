@@ -23,7 +23,7 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
    * @default "cdk8sVersion"
    */
 
-  readonly cdk8sPlusVersion?: string
+  readonly cdk8sPlusVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK8s.
@@ -97,7 +97,7 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     if (!! options.cdk8sPlusVersion) {
       this.cdk8sPlusVersion = options.cdk8sPlusVersionPinning ? options.cdk8sPlusVersion : `^${options.cdk8sPlusVersion}`;
     } else {
-      this.cdk8sPlusVersion = this.cdk8sVersion
+      this.cdk8sPlusVersion = this.cdk8sVersion;
     }
 
     this.addPeerDeps(

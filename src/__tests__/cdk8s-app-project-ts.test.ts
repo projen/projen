@@ -9,7 +9,7 @@ test ('test if cdk8s synth is possible', () => {
     defaultReleaseBranch: 'main',
     releaseWorkflow: true,
     constructsVersion: '3.3.75',
-    cdk8sPlusVersion: '1.0.0-beta.18'
+    cdk8sPlusVersion: '1.0.0-beta.18',
   });
 
   const output = synthSnapshot(project);

@@ -123,7 +123,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     if (!! options.cdk8sPlusVersion) {
       this.cdk8sPlusVersion = options.cdk8sPlusVersionPinning ? options.cdk8sPlusVersion : `^${options.cdk8sPlusVersion}`;
     } else {
-      this.cdk8sPlusVersion = this.cdk8sVersion
+      this.cdk8sPlusVersion = this.cdk8sVersion;
     }
 
     if (options.constructsVersion) {
