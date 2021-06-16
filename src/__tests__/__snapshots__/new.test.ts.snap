@@ -2,6 +2,1114 @@
 
 exports[`--no-git wont create a git repository 1`] = `undefined`;
 
+exports[`can choose from one of multiple external project types 1`] = `
+Object {
+  ".eslintrc.json": Object {
+    "env": Object {
+      "jest": true,
+      "node": true,
+    },
+    "extends": Array [
+      "plugin:import/typescript",
+    ],
+    "ignorePatterns": Array [
+      "*.js",
+      "!.projenrc.js",
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
+    ],
+    "overrides": Array [
+      Object {
+        "files": Array [
+          ".projenrc.js",
+        ],
+        "rules": Object {
+          "@typescript-eslint/no-require-imports": "off",
+          "import/no-extraneous-dependencies": "off",
+        },
+      },
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": Object {
+      "ecmaVersion": 2018,
+      "project": "./tsconfig.eslint.json",
+      "sourceType": "module",
+    },
+    "plugins": Array [
+      "@typescript-eslint",
+      "import",
+    ],
+    "root": true,
+    "rules": Object {
+      "@typescript-eslint/indent": Array [
+        "error",
+        2,
+      ],
+      "@typescript-eslint/member-delimiter-style": Array [
+        "error",
+      ],
+      "@typescript-eslint/member-ordering": Array [
+        "error",
+        Object {
+          "default": Array [
+            "public-static-field",
+            "public-static-method",
+            "protected-static-field",
+            "protected-static-method",
+            "private-static-field",
+            "private-static-method",
+            "field",
+            "constructor",
+            "method",
+          ],
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-require-imports": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-shadow": Array [
+        "error",
+      ],
+      "@typescript-eslint/return-await": Array [
+        "error",
+      ],
+      "array-bracket-newline": Array [
+        "error",
+        "consistent",
+      ],
+      "array-bracket-spacing": Array [
+        "error",
+        "never",
+      ],
+      "brace-style": Array [
+        "error",
+        "1tbs",
+        Object {
+          "allowSingleLine": true,
+        },
+      ],
+      "comma-dangle": Array [
+        "error",
+        "always-multiline",
+      ],
+      "comma-spacing": Array [
+        "error",
+        Object {
+          "after": true,
+          "before": false,
+        },
+      ],
+      "curly": Array [
+        "error",
+        "multi-line",
+        "consistent",
+      ],
+      "dot-notation": Array [
+        "error",
+      ],
+      "import/no-extraneous-dependencies": Array [
+        "error",
+        Object {
+          "devDependencies": Array [
+            "**/test/**",
+            "**/build-tools/**",
+          ],
+          "optionalDependencies": false,
+          "peerDependencies": true,
+        },
+      ],
+      "import/no-unresolved": Array [
+        "error",
+      ],
+      "import/order": Array [
+        "warn",
+        Object {
+          "alphabetize": Object {
+            "caseInsensitive": true,
+            "order": "asc",
+          },
+          "groups": Array [
+            "builtin",
+            "external",
+          ],
+        },
+      ],
+      "indent": Array [
+        "off",
+      ],
+      "key-spacing": Array [
+        "error",
+      ],
+      "keyword-spacing": Array [
+        "error",
+      ],
+      "max-len": Array [
+        "error",
+        Object {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+          "ignoreUrls": true,
+        },
+      ],
+      "no-bitwise": Array [
+        "error",
+      ],
+      "no-duplicate-imports": Array [
+        "error",
+      ],
+      "no-multi-spaces": Array [
+        "error",
+        Object {
+          "ignoreEOLComments": false,
+        },
+      ],
+      "no-multiple-empty-lines": Array [
+        "error",
+      ],
+      "no-return-await": Array [
+        "off",
+      ],
+      "no-shadow": Array [
+        "off",
+      ],
+      "no-trailing-spaces": Array [
+        "error",
+      ],
+      "object-curly-newline": Array [
+        "error",
+        Object {
+          "consistent": true,
+          "multiline": true,
+        },
+      ],
+      "object-curly-spacing": Array [
+        "error",
+        "always",
+      ],
+      "object-property-newline": Array [
+        "error",
+        Object {
+          "allowAllPropertiesOnSameLine": true,
+        },
+      ],
+      "quote-props": Array [
+        "error",
+        "consistent-as-needed",
+      ],
+      "quotes": Array [
+        "error",
+        "single",
+        Object {
+          "avoidEscape": true,
+        },
+      ],
+      "semi": Array [
+        "error",
+        "always",
+      ],
+      "space-before-blocks": Array [
+        "error",
+      ],
+    },
+    "settings": Object {
+      "import/parsers": Object {
+        "@typescript-eslint/parser": Array [
+          ".ts",
+          ".tsx",
+        ],
+      },
+      "import/resolver": Object {
+        "node": Object {},
+        "typescript": Object {
+          "project": "./tsconfig.eslint.json",
+        },
+      },
+    },
+  },
+  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+
+*.snap                                     	linguist-generated
+/.eslintrc.json                            	linguist-generated
+/.gitattributes                            	linguist-generated
+/.github/pull_request_template.md          	linguist-generated
+/.github/workflows/build.yml               	linguist-generated
+/.github/workflows/release.yml             	linguist-generated
+/.github/workflows/upgrade-dependencies.yml	linguist-generated
+/.gitignore                                	linguist-generated
+/.gitpod.yml                               	linguist-generated
+/.mergify.yml                              	linguist-generated
+/.npmignore                                	linguist-generated
+/.projen/**                                	linguist-generated
+/.projen/deps.json                         	linguist-generated
+/.projen/tasks.json                        	linguist-generated
+/LICENSE                                   	linguist-generated
+/package.json                              	linguist-generated
+/tsconfig.eslint.json                      	linguist-generated
+/tsconfig.jest.json                        	linguist-generated
+/tsconfig.json                             	linguist-generated
+/yarn.lock                                 	linguist-generated",
+  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+*.lcov
+*.log
+*.pid
+*.pid.lock
+*.seed
+*.tgz
+*.tsbuildinfo
+.cache
+.eslintcache
+.nyc_output
+.yarn-integrity
+/.changelog.tmp.md
+/coverage
+/dist
+/lib
+/test-reports/
+build/Release
+coverage
+jspm_packages/
+junit.xml
+lerna-debug.log*
+lib-cov
+logs
+node_modules/
+npm-debug.log*
+pids
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+yarn-debug.log*
+yarn-error.log*
+!/.eslintrc.json
+!/.gitattributes
+!/.github/pull_request_template.md
+!/.github/workflows/build.yml
+!/.github/workflows/release.yml
+!/.github/workflows/upgrade-dependencies.yml
+!/.gitpod.yml
+!/.mergify.yml
+!/.npmignore
+!/.projen/deps.json
+!/.projen/tasks.json
+!/.projenrc.js
+!/LICENSE
+!/package.json
+!/src
+!/test
+!/tsconfig.eslint.json
+!/tsconfig.jest.json
+!/tsconfig.json
+",
+  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+
+pull_request_rules:
+  - name: Automatic merge on approval and successful build
+    actions:
+      merge:
+        method: squash
+        commit_message: title+body
+        strict: smart
+        strict_method: merge
+      delete_head_branch: {}
+    conditions:
+      - \\"#approved-reviews-by>=1\\"
+      - status-success=build
+",
+  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+/.changelog.tmp.md
+/.eslintrc.json
+/.github
+/.idea
+/.mergify.yml
+/.projen
+/.projenrc.js
+/.vscode
+/coverage
+/src
+/test
+/test-reports/
+/tsconfig.eslint.json
+/tsconfig.jest.json
+/tsconfig.json
+dist
+junit.xml
+tsconfig.tsbuildinfo
+!/lib
+!/lib/**/*.d.ts
+!/lib/**/*.js
+",
+  ".projen/deps.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "dependencies": Array [
+      Object {
+        "name": "@taimos/projen",
+        "type": "build",
+        "version": "0.0.121",
+      },
+      Object {
+        "name": "@types/jest",
+        "type": "build",
+      },
+      Object {
+        "name": "@types/node",
+        "type": "build",
+        "version": "^10.17.0",
+      },
+      Object {
+        "name": "@typescript-eslint/eslint-plugin",
+        "type": "build",
+      },
+      Object {
+        "name": "@typescript-eslint/parser",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint-import-resolver-node",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint-import-resolver-typescript",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint-plugin-import",
+        "type": "build",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+      },
+      Object {
+        "name": "jest-junit",
+        "type": "build",
+        "version": "^12",
+      },
+      Object {
+        "name": "json-schema",
+        "type": "build",
+      },
+      Object {
+        "name": "npm-check-updates",
+        "type": "build",
+        "version": "^11",
+      },
+      Object {
+        "name": "projen",
+        "type": "build",
+      },
+      Object {
+        "name": "standard-version",
+        "type": "build",
+        "version": "^9",
+      },
+      Object {
+        "name": "ts-jest",
+        "type": "build",
+      },
+      Object {
+        "name": "typedoc",
+        "type": "build",
+        "version": "^0.20.35",
+      },
+      Object {
+        "name": "typescript",
+        "type": "build",
+        "version": "^4.2.0",
+      },
+    ],
+  },
+  ".projen/tasks.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "env": Object {
+      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+    },
+    "tasks": Object {
+      "build": Object {
+        "category": "00.build",
+        "description": "Full release build (test+compile)",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "exec": "npx projen",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "package",
+          },
+          Object {
+            "spawn": "docgen",
+          },
+        ],
+      },
+      "bump": Object {
+        "category": "20.release",
+        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
+        "description": "Bumps version based on latest git tag and generates a changelog entry",
+        "env": Object {
+          "CHANGELOG": ".changelog.tmp.md",
+          "OUTFILE": "package.json",
+        },
+        "name": "bump",
+        "steps": Array [
+          Object {
+            "builtin": "release/bump-version",
+          },
+        ],
+      },
+      "clobber": Object {
+        "category": "30.maintain",
+        "condition": "git diff --exit-code > /dev/null",
+        "description": "hard resets to HEAD of origin and cleans the local repo",
+        "env": Object {
+          "BRANCH": "$(git branch --show-current)",
+        },
+        "name": "clobber",
+        "steps": Array [
+          Object {
+            "exec": "git checkout -b scratch",
+            "name": "save current HEAD in \\"scratch\\" branch",
+          },
+          Object {
+            "exec": "git checkout $BRANCH",
+          },
+          Object {
+            "exec": "git fetch origin",
+            "name": "fetch latest changes from origin",
+          },
+          Object {
+            "exec": "git reset --hard origin/$BRANCH",
+            "name": "hard reset to origin commit",
+          },
+          Object {
+            "exec": "git clean -fdx",
+            "name": "clean all untracked files",
+          },
+          Object {
+            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
+          },
+        ],
+      },
+      "compile": Object {
+        "category": "00.build",
+        "description": "Only compile",
+        "name": "compile",
+        "steps": Array [
+          Object {
+            "exec": "tsc",
+          },
+        ],
+      },
+      "default": Object {
+        "name": "default",
+        "steps": Array [
+          Object {
+            "exec": "node .projenrc.js",
+          },
+        ],
+      },
+      "docgen": Object {
+        "category": "20.release",
+        "description": "Generate TypeScript API reference docs/",
+        "name": "docgen",
+        "steps": Array [
+          Object {
+            "exec": "typedoc --out docs/",
+          },
+        ],
+      },
+      "eslint": Object {
+        "category": "10.test",
+        "description": "Runs eslint against the codebase",
+        "name": "eslint",
+        "steps": Array [
+          Object {
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
+          },
+        ],
+      },
+      "package": Object {
+        "category": "20.release",
+        "description": "Create an npm tarball",
+        "name": "package",
+        "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
+            "exec": "mkdir -p dist/js",
+          },
+          Object {
+            "exec": "yarn pack",
+          },
+          Object {
+            "exec": "mv *.tgz dist/js/",
+          },
+        ],
+      },
+      "test": Object {
+        "category": "10.test",
+        "description": "Run tests",
+        "name": "test",
+        "steps": Array [
+          Object {
+            "exec": "rm -fr lib/",
+          },
+          Object {
+            "spawn": "test:compile",
+          },
+          Object {
+            "exec": "jest --passWithNoTests --all --updateSnapshot",
+          },
+          Object {
+            "spawn": "eslint",
+          },
+        ],
+      },
+      "test:compile": Object {
+        "category": "10.test",
+        "description": "compiles the test code",
+        "name": "test:compile",
+        "steps": Array [
+          Object {
+            "exec": "tsc --noEmit --project tsconfig.jest.json",
+          },
+        ],
+      },
+      "test:update": Object {
+        "category": "10.test",
+        "description": "Update jest snapshots",
+        "name": "test:update",
+        "steps": Array [
+          Object {
+            "exec": "jest --updateSnapshot",
+          },
+        ],
+      },
+      "test:watch": Object {
+        "category": "10.test",
+        "description": "Run jest in watch mode",
+        "name": "test:watch",
+        "steps": Array [
+          Object {
+            "exec": "jest --watch",
+          },
+        ],
+      },
+      "unbump": Object {
+        "category": "20.release",
+        "description": "Restores version to 0.0.0",
+        "env": Object {
+          "CHANGELOG": ".changelog.tmp.md",
+          "OUTFILE": "package.json",
+        },
+        "name": "unbump",
+        "steps": Array [
+          Object {
+            "builtin": "release/reset-version",
+          },
+        ],
+      },
+      "upgrade-dependencies": Object {
+        "description": "upgrade dependencies",
+        "env": Object {
+          "CI": "0",
+        },
+        "name": "upgrade-dependencies",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
+            "exec": "yarn upgrade @taimos/projen @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit json-schema npm-check-updates standard-version ts-jest typedoc typescript",
+          },
+          Object {
+            "exec": "npx projen",
+          },
+        ],
+      },
+      "upgrade-projen": Object {
+        "description": "upgrade projen",
+        "env": Object {
+          "CI": "0",
+        },
+        "name": "upgrade-projen",
+        "steps": Array [
+          Object {
+            "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "yarn install --check-files",
+          },
+          Object {
+            "exec": "yarn upgrade projen",
+          },
+          Object {
+            "exec": "npx projen",
+          },
+        ],
+      },
+      "watch": Object {
+        "category": "00.build",
+        "description": "Watch & compile in the background",
+        "name": "watch",
+        "steps": Array [
+          Object {
+            "exec": "tsc -w",
+          },
+        ],
+      },
+    },
+  },
+  ".projenrc.js": "const { TaimosTypescriptLibrary } = require('@taimos/projen');
+const project = new TaimosTypescriptLibrary({
+  defaultReleaseBranch: 'main',
+  devDeps: ['@taimos/projen@0.0.121'],
+  name: 'my-project',
+
+  // deps: [],                          /* Runtime dependencies of this module. */
+  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,            /* The \\"name\\" in package.json. */
+  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
+  // release: undefined,                /* Add release management to this project. */
+});
+project.synth();",
+  "LICENSE": "
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      \\"License\\" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      \\"Licensor\\" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      \\"Legal Entity\\" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      \\"control\\" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      \\"Source\\" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      \\"Object\\" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      \\"Work\\" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      \\"Derivative Works\\" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      \\"Contribution\\" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, \\"submitted\\"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as \\"Not a Contribution.\\"
+
+      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a \\"NOTICE\\" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same \\"printed page\\" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the \\"License\\");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an \\"AS IS\\" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+",
+  "README.md": "# replace this",
+  "package.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "author": Object {
+      "email": "info@taimos.de",
+      "name": "Taimos GmbH",
+      "organization": true,
+      "url": "https://taimos.de",
+    },
+    "bundledDependencies": Array [],
+    "dependencies": Object {},
+    "devDependencies": Object {
+      "@taimos/projen": "0.0.121",
+      "@types/jest": "*",
+      "@types/node": "^10.17.0",
+      "@typescript-eslint/eslint-plugin": "*",
+      "@typescript-eslint/parser": "*",
+      "eslint": "*",
+      "eslint-import-resolver-node": "*",
+      "eslint-import-resolver-typescript": "*",
+      "eslint-plugin-import": "*",
+      "jest": "*",
+      "jest-junit": "^12",
+      "json-schema": "*",
+      "npm-check-updates": "^11",
+      "projen": "^999.999.999",
+      "standard-version": "^9",
+      "ts-jest": "*",
+      "typedoc": "^0.20.35",
+      "typescript": "^4.2.0",
+    },
+    "jest": Object {
+      "clearMocks": true,
+      "collectCoverage": true,
+      "coverageDirectory": "coverage",
+      "coveragePathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "coverageReporters": Array [
+        "json",
+        "lcov",
+        "clover",
+        "text",
+      ],
+      "globals": Object {
+        "ts-jest": Object {
+          "tsconfig": "tsconfig.jest.json",
+        },
+      },
+      "preset": "ts-jest",
+      "reporters": Array [
+        "default",
+        Array [
+          "jest-junit",
+          Object {
+            "outputDirectory": "test-reports",
+          },
+        ],
+      ],
+      "testMatch": Array [
+        "**/__tests__/**/*.ts?(x)",
+        "**/?(*.)+(spec|test).ts?(x)",
+      ],
+      "testPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+      "watchPathIgnorePatterns": Array [
+        "/node_modules/",
+      ],
+    },
+    "license": "Apache-2.0",
+    "main": "lib/index.js",
+    "name": "my-project",
+    "peerDependencies": Object {},
+    "scripts": Object {
+      "build": "npx projen build",
+      "bump": "npx projen bump",
+      "clobber": "npx projen clobber",
+      "compile": "npx projen compile",
+      "default": "npx projen default",
+      "docgen": "npx projen docgen",
+      "eslint": "npx projen eslint",
+      "package": "npx projen package",
+      "projen": "npx projen",
+      "start": "npx projen start",
+      "test": "npx projen test",
+      "test:compile": "npx projen test:compile",
+      "test:update": "npx projen test:update",
+      "test:watch": "npx projen test:watch",
+      "unbump": "npx projen unbump",
+      "upgrade-dependencies": "npx projen upgrade-dependencies",
+      "upgrade-projen": "npx projen upgrade-projen",
+      "watch": "npx projen watch",
+    },
+    "types": "lib/index.d.ts",
+    "version": "0.0.0",
+  },
+  "src/index.ts": "export class Hello {
+  public sayHello() {
+    return 'hello, world!';
+  }
+}",
+  "test/hello.test.ts": "import { Hello } from '../src';
+
+test('hello', () => {
+  expect(new Hello().sayHello()).toBe('hello, world!');
+});",
+  "tsconfig.eslint.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "resolveJsonModule": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [
+      "node_modules",
+    ],
+    "include": Array [
+      ".projenrc.js",
+      "src/**/*.ts",
+      "test/**/*.ts",
+    ],
+  },
+  "tsconfig.jest.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "resolveJsonModule": true,
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [
+      "node_modules",
+    ],
+    "include": Array [
+      ".projenrc.js",
+      "src/**/*.ts",
+      "test/**/*.ts",
+    ],
+  },
+  "tsconfig.json": Object {
+    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+    "compilerOptions": Object {
+      "alwaysStrict": true,
+      "declaration": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "inlineSourceMap": true,
+      "inlineSources": true,
+      "lib": Array [
+        "es2018",
+      ],
+      "module": "CommonJS",
+      "noEmitOnError": false,
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "outDir": "lib",
+      "resolveJsonModule": true,
+      "rootDir": "src",
+      "strict": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "stripInternal": true,
+      "target": "ES2018",
+    },
+    "exclude": Array [],
+    "include": Array [
+      "src/**/*.ts",
+    ],
+  },
+}
+`;
+
 exports[`creating java project with enum-typed CLI arg 1`] = `
 "import org.projen.java.JavaProject;
 import org.projen.java.JavaProjectOptions;
