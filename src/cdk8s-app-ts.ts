@@ -9,7 +9,7 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "^1.0.0-beta.10"
+   * @default "1.0.0-beta.10"
    * @featured
    */
   readonly cdk8sVersion: string;
@@ -17,7 +17,7 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * constructs verion
    *
-   * @default "^3.2.34"
+   * @default "3.2.34"
    */
 
   readonly constructsVersion?: string;
