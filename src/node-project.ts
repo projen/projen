@@ -575,6 +575,19 @@ export class NodeProject extends Project {
         },
       });
 
+      // if we pushed changes, we need to mark the current commit as failed, so
+      // that GitHub auto-merge does not risk merging this commit before the
+      // event for the new commit has registered.
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Self mutation happened, this commit should not be merged!',
+        run: [
+          'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
+          'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
+          'exit 1',
+        ],
+      });
+
       const workflow = this.createBuildWorkflow('Build', {
         jobId: buildJobId,
         trigger: {
