@@ -338,7 +338,7 @@ tsconfig.tsbuildinfo
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "tsc",
+            "exec": "tsc --build",
           },
         ],
       },
@@ -453,7 +453,7 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "tsc -w",
+            "exec": "tsc --build -w",
           },
         ],
       },
