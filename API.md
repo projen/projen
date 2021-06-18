@@ -805,8 +805,12 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
+  * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "^3.2.34"
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
 
 
@@ -817,6 +821,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
+**cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -1313,8 +1319,10 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "^3.2.34"
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
 
 
@@ -1324,6 +1332,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -3996,7 +4005,8 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 * **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
 * **dir** (<code>string</code>)  directory to add files to.
 * **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
-  * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
+  * **files** (<code>Map<string, string></code>)  The files to render into the directory. __*Optional*__
+  * **sourceDir** (<code>string</code>)  Absolute path to a directory to copy files from (does not need to be text files). __*Optional*__
 
 
 ### Methods
@@ -4034,9 +4044,10 @@ new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
-* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **filePath** (<code>string</code>)  - the relative path in the project to put the file.
 * **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
-  * **contents** (<code>string</code>)  The contents of the file to write. 
+  * **contents** (<code>string</code>)  The contents of the file to write. __*Optional*__
+  * **sourcePath** (<code>string</code>)  Absolute path to a file to copy the contents from (does not need to be a text file). __*Optional*__
 
 
 ### Methods
@@ -8254,12 +8265,16 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "^3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -8515,6 +8530,8 @@ Name | Type | Description
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -8522,7 +8539,7 @@ Name | Type | Description
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "^3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -10093,7 +10110,8 @@ SampleDir options.
 
 Name | Type | Description 
 -----|------|-------------
-**files**🔹 | <code>Map<string, string></code> | The files to render into the directory.
+**files**?🔹 | <code>Map<string, string></code> | The files to render into the directory.<br/>__*Optional*__
+**sourceDir**?🔹 | <code>string</code> | Absolute path to a directory to copy files from (does not need to be text files).<br/>__*Optional*__
 
 
 
@@ -10106,7 +10124,8 @@ Options for the SampleFile object.
 
 Name | Type | Description 
 -----|------|-------------
-**contents**🔹 | <code>string</code> | The contents of the file to write.
+**contents**?🔹 | <code>string</code> | The contents of the file to write.<br/>__*Optional*__
+**sourcePath**?🔹 | <code>string</code> | Absolute path to a file to copy the contents from (does not need to be a text file).<br/>__*Optional*__
 
 
 
