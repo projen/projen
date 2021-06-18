@@ -1,8 +1,9 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import * as glob from 'glob';
 import { Component } from './component';
 import { Project } from './project';
-import { writeFile } from './util';
+import { getFilePermissions, writeFile } from './util';
 
 /**
  * Options for the SampleFile object.
@@ -11,7 +12,20 @@ export interface SampleFileOptions {
   /**
    * The contents of the file to write.
    */
-  readonly contents: string;
+  readonly contents?: string;
+
+  /**
+   * Absolute path to a file to copy the contents from (does not need to be
+   * a text file).
+   *
+   * If your project is Typescript-based and has configured `testdir` to be a
+   * subdirectory of `src`, sample files should outside of the `src` directory,
+   * otherwise they may not be copied. For example:
+   * ```
+   * new SampleFile(this, 'assets/icon.png', { source: path.join(__dirname, '..', 'sample-assets', 'icon.png') });
+   * ```
+   */
+  readonly sourcePath?: string;
 }
 
 /**
@@ -25,17 +39,29 @@ export class SampleFile extends Component {
   /**
    * Creates a new SampleFile object
    * @param project - the project to tie this file to.
-   * @param filePath - the relative path in the project o put the file
+   * @param filePath - the relative path in the project to put the file
    * @param options - the options for the file.
    */
   constructor(project: Project, filePath: string, options: SampleFileOptions) {
     super(project);
+
+    if (options.contents && options.sourcePath) {
+      throw new Error('Cannot specify both \'contents\' and \'source\' fields.');
+    }
+    if (!options.contents && !options.sourcePath) {
+      throw new Error('Must specify at least one of \'contents\' or \'source\'.');
+    }
     this.filePath = filePath;
     this.options = options;
   }
 
   public synthesize() {
-    const contents = this.options.contents;
+    let contents;
+    if (this.options.contents) {
+      contents = this.options.contents;
+    } else if (this.options.sourcePath) {
+      contents = fs.readFileSync(this.options.sourcePath);
+    }
     this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
   }
 
@@ -47,7 +73,7 @@ export class SampleFile extends Component {
    * @return boolean - whether a new file was written or not.
    * @private
    */
-  private writeOnceFileContents(dir: string, filename: string, contents: string) {
+  private writeOnceFileContents(dir: string, filename: string, contents: any) {
     const fullFilename = path.join(dir, filename);
     if (fs.existsSync(fullFilename)) {
       return;
@@ -61,9 +87,24 @@ export class SampleFile extends Component {
  */
 export interface SampleDirOptions {
   /**
-   * The files to render into the directory
+   * The files to render into the directory. These files get added after
+   * any files from `source` if that option is specified (replacing if names
+   * overlap).
    */
-  readonly files: { [fileName: string]: string };
+  readonly files?: { [fileName: string]: string };
+
+  /**
+   * Absolute path to a directory to copy files from (does not need to be text
+   * files).
+   *
+   * If your project is typescript-based and has configured `testdir` to be a
+   * subdirectory of `src`, sample files should outside of the `src` directory
+   * otherwise they may not be copied. For example:
+   * ```
+   * new SampleDir(this, 'public', { source: path.join(__dirname, '..', 'sample-assets') });
+   * ```
+   */
+  readonly sourceDir?: string;
 }
 
 /**
@@ -81,6 +122,10 @@ export class SampleDir extends Component {
    */
   constructor(project: Project, dir: string, options: SampleDirOptions) {
     super(project);
+    if (!options.files && !options.sourceDir) {
+      throw new Error('Must specify at least one of \'files\' or \'source\'.');
+    }
+
     this.dir = dir;
     this.options = options;
   }
@@ -89,6 +134,24 @@ export class SampleDir extends Component {
     const fullOutdir = path.join(this.project.outdir, this.dir);
     if (fs.pathExistsSync(fullOutdir)) {
       return;
+    }
+
+    if (this.options.sourceDir) {
+      const basedir = this.options.sourceDir;
+      const files = glob.sync('**', {
+        cwd: basedir,
+        nodir: true,
+        dot: true,
+      }); // returns relative file paths with POSIX separators
+
+      for (const file of files) {
+        const sourcePath = path.join(basedir, file);
+        const targetPath = path.join(fullOutdir, file);
+
+        fs.mkdirpSync(path.dirname(targetPath));
+        fs.copyFileSync(sourcePath, targetPath);
+        fs.chmodSync(targetPath, getFilePermissions({ readonly: false, executable: false }));
+      }
     }
 
     for (const filename in this.options.files) {
