@@ -1,6 +1,6 @@
 {
   "name": "projen",
-  "description": "CDK for software projects",
+  "description": "CDK for software projects!",
   "repository": {
     "type": "git",
     "url": "https://github.com/projen/projen.git"
