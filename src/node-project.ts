@@ -585,7 +585,7 @@ export class NodeProject extends Project {
           'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
           'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
           'exit 1',
-        ],
+        ].join('\n'),
       });
 
       const workflow = this.createBuildWorkflow('Build', {
