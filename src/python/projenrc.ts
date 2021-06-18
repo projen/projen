@@ -138,7 +138,7 @@ function toPythonValue(value: any, name: string, optionFqns: Record<string, stri
     if (optionFqns[name] !== undefined) {
       const parts = optionFqns[name].split('.');
       const base = parts[parts.length - 1];
-      const choice = String(value).toUpperCase().replace('-', '_');
+      const choice = String(value).toUpperCase().replace(/-/g, '_');
       return { pythonValue: `${base}.${choice}`, importName: optionFqns[name] };
     } else {
       return { pythonValue: JSON.stringify(value) };

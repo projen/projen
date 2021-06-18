@@ -9,7 +9,7 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "^1.0.0-beta.10"
+   * @default "1.0.0-beta.10"
    * @featured
    */
   readonly cdk8sVersion: string;
@@ -17,10 +17,26 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
    * constructs verion
    *
-   * @default "^3.2.34"
+   * @default "3.2.34"
    */
 
   readonly constructsVersion?: string;
+
+  /**
+   * cdk8s-plus-17 version
+   *
+   * @default "cdk8sVersion"
+   */
+
+  readonly cdk8sPlusVersion?: string;
+
+  /**
+   * cdk8s-cli version
+   *
+   * @default "cdk8sVersion"
+   */
+
+  readonly cdk8sCliVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK8s.
@@ -31,6 +47,26 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default false
    */
   readonly cdk8sVersionPinning?: boolean;
+
+  /**
+   * Use pinned version instead of caret version for CDK8s-cli.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdk8sCliVersionPinning?: boolean;
+
+  /**
+   * Use pinned version instead of caret version for cdk8s-plus-17.
+   *
+   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
+   * If you use experimental features this will let you define the moment you include breaking changes.
+   *
+   * @default false
+   */
+  readonly cdk8sPlusVersionPinning?: boolean;
 
   /**
    * Use pinned version instead of caret version for constructs.
@@ -72,6 +108,18 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
   public readonly constructsVersion: string;
 
   /**
+   * The cdk8s-plus-17 version this app is using.
+   */
+
+  public readonly cdk8sPlusVersion: string;
+
+  /**
+   * The cdk8s-cli version this app is using.
+   */
+
+  public readonly cdk8sCliVersion: string;
+
+  /**
    * The CDK8s app entrypoint
    */
   public readonly appEntrypoint: string;
@@ -96,10 +144,22 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
 
+    if (!! options.cdk8sPlusVersion) {
+      this.cdk8sPlusVersion = options.cdk8sPlusVersionPinning ? options.cdk8sPlusVersion : `^${options.cdk8sPlusVersion}`;
+    } else {
+      this.cdk8sPlusVersion = this.cdk8sVersion;
+    }
+
     if (options.constructsVersion) {
       this.constructsVersion = options.constructsVersionPinning ? options.constructsVersion: `^${options.constructsVersion}`;
     } else {
       this.constructsVersion = '^3.2.34';
+    }
+
+    if (!! options.cdk8sCliVersion) {
+      this.cdk8sCliVersion = options.cdk8sCliVersionPinning ? options.cdk8sCliVersion: `^${options.cdk8sCliVersion}`;
+    } else {
+      this.cdk8sCliVersion = this.cdk8sVersion;
     }
 
 
@@ -107,14 +167,14 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     this.addDeps(
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`,
-      `cdk8s-plus-17@${this.cdk8sVersion}`,
+      `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
     );
     this.addDevDeps(
       'ts-node@^9',
-      `cdk8s-cli@${this.cdk8sVersion}`,
+      `cdk8s-cli@${this.cdk8sCliVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`,
-      `cdk8s-plus-17@${this.cdk8sVersion}`,
+      `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
     );
 
     const synth = this.addTask('synth', {

@@ -68,7 +68,72 @@ test ('constructs version pinning', () => {
     'constructs': '3.3.75',
   });
 
+});
 
+test ('cdk8sPlusVersion undefined', () => {
+  const project = new TestCdk8sConstructsProject({
+    cdk8sVersion: '1.0.0-beta.11',
+    name: 'project',
+    defaultReleaseBranch: 'main',
+    releaseWorkflow: true,
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
+    constructsVersion: '3.3.75',
+  });
+
+  const output = synthSnapshot(project);
+
+  expect(output['package.json'].peerDependencies).toStrictEqual({
+    'cdk8s': '^1.0.0-beta.11',
+    'cdk8s-plus-17': '^1.0.0-beta.11',
+    'constructs': '^3.3.75',
+  });
+});
+
+test ('cdk8sPlusVersion defined', () => {
+  const project = new TestCdk8sConstructsProject({
+    cdk8sVersion: '1.0.0-beta.11',
+    name: 'project',
+    defaultReleaseBranch: 'main',
+    cdk8sPlusVersion: '1.0.0-beta.10',
+    releaseWorkflow: true,
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
+    constructsVersion: '3.3.75',
+  });
+
+  const output = synthSnapshot(project);
+
+  expect(output['package.json'].peerDependencies).toStrictEqual({
+    'cdk8s': '^1.0.0-beta.11',
+    'cdk8s-plus-17': '^1.0.0-beta.10',
+    'constructs': '^3.3.75',
+  });
+});
+
+test ('cdk8sPlusVersion pinning', () => {
+  const project = new TestCdk8sConstructsProject({
+    cdk8sVersion: '1.0.0-beta.11',
+    name: 'project',
+    defaultReleaseBranch: 'main',
+    cdk8sPlusVersion: '1.0.0-beta.10',
+    cdk8sPlusVersionPinning: true,
+    releaseWorkflow: true,
+    repositoryUrl: 'github.com/test/test',
+    author: 'test',
+    authorAddress: 'test@test.com',
+    constructsVersion: '3.3.75',
+  });
+
+  const output = synthSnapshot(project);
+
+  expect(output['package.json'].peerDependencies).toStrictEqual({
+    'cdk8s': '^1.0.0-beta.11',
+    'cdk8s-plus-17': '1.0.0-beta.10',
+    'constructs': '^3.3.75',
+  });
 });
 
 class TestCdk8sConstructsProject extends ConstructLibraryCdk8s {
