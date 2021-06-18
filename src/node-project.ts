@@ -580,7 +580,7 @@ export class NodeProject extends Project {
       // event for the new commit has registered.
       updateRepo.push({
         if: hasChanges,
-        name: 'Self mutation happened, this commit should not be merged!',
+        name: 'Fail check if self mutation happened',
         run: [
           'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
           'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
