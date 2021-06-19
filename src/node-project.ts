@@ -593,7 +593,7 @@ export class NodeProject extends Project {
       // if we pushed changes, we need to mark the current commit as failed, so
       // that GitHub auto-merge does not risk merging this commit before the
       // event for the new commit has registered.
-      updateRepo.push({
+      postBuildSteps.push({
         if: hasChanges,
         name: 'Fail check if self mutation happened',
         run: [
