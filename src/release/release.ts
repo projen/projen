@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { GenericGitHubWorkflow } from '../github';
+import { GenericGithubWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Publisher } from '../publisher';
@@ -243,7 +243,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): GenericGitHubWorkflow {
+  private createWorkflow(branch: ReleaseBranch): GenericGithubWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -335,7 +335,7 @@ export class Release extends Component {
       },
     });
 
-    return new GenericGitHubWorkflow(github, {
+    return new GenericGithubWorkflow(github, {
       name: workflowName,
       jobId: Release.BUILD_JOBID,
       trigger: {

@@ -53,7 +53,7 @@ Name|Description
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
-[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)|A GitHub generic workflow.
+[github.GenericGithubWorkflow](#projen-github-genericgithubworkflow)|A GitHub generic workflow.
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
@@ -176,7 +176,7 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
-[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)|*No description*
+[github.GenericGithubWorkflowOptions](#projen-github-genericgithubworkflowoptions)|*No description*
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -3247,7 +3247,7 @@ Name | Type | Description
 **testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
 **testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
-**buildWorkflow**?🔹 | <code>[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[github.GenericGithubWorkflow](#projen-github-genericgithubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
@@ -5273,7 +5273,7 @@ addIgnore(dependencyName: string, ...versions: string[]): void
 
 
 
-## class GenericGitHubWorkflow 🔹 <a id="projen-github-genericgithubworkflow"></a>
+## class GenericGithubWorkflow 🔹 <a id="projen-github-genericgithubworkflow"></a>
 
 A GitHub generic workflow.
 
@@ -5287,11 +5287,11 @@ __Extends__: [github.GithubWorkflow](#projen-github-githubworkflow)
 
 
 ```ts
-new github.GenericGitHubWorkflow(github: GitHub, options: GenericGitHubWorkflowOptions)
+new github.GenericGithubWorkflow(github: GitHub, options: GenericGithubWorkflowOptions)
 ```
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
-* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+* **options** (<code>[github.GenericGithubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
   * **name** (<code>string</code>)  The workflow name. 
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
@@ -5330,10 +5330,10 @@ Name | Type | Description
 
 
 ```ts
-protected createWorkflow(options: GenericGitHubWorkflowOptions): GenericGitHubWorkflow
+protected createWorkflow(options: GenericGithubWorkflowOptions): GenericGithubWorkflow
 ```
 
-* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+* **options** (<code>[github.GenericGithubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
   * **name** (<code>string</code>)  The workflow name. 
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
@@ -5352,17 +5352,17 @@ protected createWorkflow(options: GenericGitHubWorkflowOptions): GenericGitHubWo
   * **trigger** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
 
 __Returns__:
-* <code>[github.GenericGitHubWorkflow](#projen-github-genericgithubworkflow)</code>
+* <code>[github.GenericGithubWorkflow](#projen-github-genericgithubworkflow)</code>
 
 #### *static* getMainStep(options)🔹 <a id="projen-github-genericgithubworkflow-getmainstep"></a>
 
 
 
 ```ts
-static getMainStep(options: GenericGitHubWorkflowOptions): JobStep
+static getMainStep(options: GenericGithubWorkflowOptions): JobStep
 ```
 
-* **options** (<code>[github.GenericGitHubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
+* **options** (<code>[github.GenericGithubWorkflowOptions](#projen-github-genericgithubworkflowoptions)</code>)  *No description*
   * **name** (<code>string</code>)  The workflow name. 
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
@@ -10796,7 +10796,7 @@ Name | Type | Description
 
 
 
-## struct GenericGitHubWorkflowOptions 🔹 <a id="projen-github-genericgithubworkflowoptions"></a>
+## struct GenericGithubWorkflowOptions 🔹 <a id="projen-github-genericgithubworkflowoptions"></a>
 
 
 

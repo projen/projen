@@ -1,5 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, GenericGitHubWorkflow, GenericGitHubWorkflowOptions } from './github';
+import { AutoMerge, DependabotOptions, GenericGithubWorkflow, GenericGithubWorkflowOptions } from './github';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
@@ -343,7 +343,7 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  public readonly buildWorkflow?: GenericGitHubWorkflow;
+  public readonly buildWorkflow?: GenericGithubWorkflow;
   public readonly buildWorkflowJobId?: string;
 
   /**
@@ -973,12 +973,12 @@ export class NodeProject extends Project {
     );
   }
 
-  private createBuildWorkflow(options: NodeWorkflowOptions): GenericGitHubWorkflow {
+  private createBuildWorkflow(options: NodeWorkflowOptions): GenericGithubWorkflow {
     const github = this.github;
     if (!github) { throw new Error('no github support'); }
 
     const project = github.project as NodeProject;
-    return new GenericGitHubWorkflow(github, {
+    return new GenericGithubWorkflow(github, {
       ...options,
       env: {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
@@ -1053,4 +1053,4 @@ export class DependenciesUpgradeMechanism {
   }
 }
 
-export type NodeWorkflowOptions = Omit<GenericGitHubWorkflowOptions, 'buildStep'>;
+export type NodeWorkflowOptions = Omit<GenericGithubWorkflowOptions, 'buildStep'>;

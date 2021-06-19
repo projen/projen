@@ -7,7 +7,7 @@ function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
-export interface GenericGitHubWorkflowOptions {
+export interface GenericGithubWorkflowOptions {
   /**
    * The workflow name.
    */
@@ -99,12 +99,12 @@ export interface GenericGitHubWorkflowOptions {
 /**
  * A GitHub generic workflow.
  */
-export class GenericGitHubWorkflow extends GithubWorkflow {
+export class GenericGithubWorkflow extends GithubWorkflow {
   public static readonly DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
   public static readonly DEFAULT_JOB_ID = 'build';
   public static readonly UBUNTU_LATEST = 'ubuntu-latest';
 
-  public static getMainStep(options: GenericGitHubWorkflowOptions) {
+  public static getMainStep(options: GenericGithubWorkflowOptions) {
     return options.buildStep ?? {
       name: options.task.name,
       run: `projen ${options.task.name}`,
@@ -114,14 +114,14 @@ export class GenericGitHubWorkflow extends GithubWorkflow {
   readonly github: GitHub;
   readonly jobId: string;
 
-  constructor(github: GitHub, options: GenericGitHubWorkflowOptions) {
+  constructor(github: GitHub, options: GenericGithubWorkflowOptions) {
     super(github, options.name);
-    this.jobId = options.jobId ?? GenericGitHubWorkflow.DEFAULT_JOB_ID;
+    this.jobId = options.jobId ?? GenericGithubWorkflow.DEFAULT_JOB_ID;
     this.github = github;
     this.createWorkflow(options);
   }
 
-  protected createWorkflow(options: GenericGitHubWorkflowOptions) {
+  protected createWorkflow(options: GenericGithubWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -159,7 +159,7 @@ export class GenericGitHubWorkflow extends GithubWorkflow {
     }
 
     const job: Mutable<Job> = {
-      runsOn: GenericGitHubWorkflow.UBUNTU_LATEST,
+      runsOn: GenericGithubWorkflow.UBUNTU_LATEST,
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -190,7 +190,7 @@ export class GenericGitHubWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        GenericGitHubWorkflow.getMainStep(options),
+        GenericGithubWorkflow.getMainStep(options),
 
         ...postBuildSteps,
 
