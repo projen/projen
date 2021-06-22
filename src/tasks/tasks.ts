@@ -51,9 +51,6 @@ export class Tasks extends Component {
    */
   public addTask(name: string, options: TaskOptions = {}) {
     const task = new Task(name, options);
-    if (this._tasks[name]) {
-      throw new Error(`A task with the name ${name} already exists. To override it, call removeTask first and then create the new task.`);
-    }
     this._tasks[name] = task;
     return task;
   }
