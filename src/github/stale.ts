@@ -41,14 +41,14 @@ export interface StaleBehavior {
 
   /**
    * The comment to add to the issue/PR when it becomes stale.
-   * @default "This issue/pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
+   * @default "This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
    */
   readonly staleMessage?: string;
 
   /**
    * The comment to add to the issue/PR when it's closed
    *
-   * @default "Closing this pull request as it hasn\'t seen activity for a while. Feel free to reopen when ready to continue."
+   * @default "Closing this pull request as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer when you are ready to continue."
    */
   readonly closeMessage?: string;
 
@@ -84,7 +84,7 @@ export class Stale extends Component {
       daysBeforeStale: options.pullRequest?.daysBeforeStale ?? 14,
       daysBeforeClose: options.pullRequest?.daysBeforeClose ?? 2,
       staleMessage: options.pullRequest?.staleMessage ?? 'This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
-      closeMessage: options.pullRequest?.closeMessage ?? 'Closing this pull request as it hasn\'t seen activity for a while. Feel free to reopen when ready to continue.',
+      closeMessage: options.pullRequest?.closeMessage ?? 'Closing this pull request as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer when you are ready to continue.',
       staleLabel: options.pullRequest?.staleLabel ?? 'Stale',
     };
 
@@ -92,7 +92,7 @@ export class Stale extends Component {
       daysBeforeStale: options.issues?.daysBeforeStale ?? 60,
       daysBeforeClose: options.issues?.daysBeforeClose ?? 7,
       staleMessage: options.issues?.staleMessage ?? 'This issue is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
-      closeMessage: options.issues?.closeMessage ?? 'Closing this issue as it hasn\'t seen activity for a while. Feel free to reopen if this is still relevant.',
+      closeMessage: options.issues?.closeMessage ?? 'Closing this issue as it hasn\'t seen activity for a while. Please a comment @mentioning a maintainer when you are ready to continue.',
       staleLabel: options.issues?.staleLabel ?? 'Stale',
     };
 
