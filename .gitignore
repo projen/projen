@@ -36,6 +36,7 @@ yarn-error.log*
 !/.github/pull_request_template.md
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
+!/.github/workflows/stale.yml
 !/.github/workflows/upgrade-dependencies.yml
 !/.gitpod.yml
 !/.markdownlint.json
