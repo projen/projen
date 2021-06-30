@@ -471,7 +471,7 @@ tsconfig.tsbuildinfo
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "tsc -w",
+            "exec": "tsc --build -w",
           },
         ],
       },

@@ -185,12 +185,12 @@ export class TypeScriptProject extends NodeProject {
     this.docgen = options.docgen;
     this.docsDirectory = options.docsDirectory ?? 'docs/';
 
-    this.compileTask.exec('tsc');
+    this.compileTask.exec('tsc --build');
 
     this.watchTask = this.addTask('watch', {
       description: 'Watch & compile in the background',
       category: TaskCategory.BUILD,
-      exec: 'tsc -w',
+      exec: 'tsc --build -w',
     });
 
     this.testdir = options.testdir ?? 'test';
