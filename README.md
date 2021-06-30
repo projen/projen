@@ -167,7 +167,7 @@ Some examples for features built-in to project types:
 * eslint
 * Jest
 * jsii: compile, package, api compatibility checks, API.md
-* Bump & release scripts with CHANGELOG generation based on Conventional Commits
+* Bump & release scripts with CHANGELOG generation based on conventional commits (currently broken! [#726](https://github.com/projen/projen/issues/726))
 * Automated PR builds
 * Automated releases to npm, maven, NuGet and PyPI
 * Mergify configuration
