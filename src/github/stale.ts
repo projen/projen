@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { GitHub } from './github';
+import { renderBehavior } from './stale-util';
 import { JobPermission } from './workflows-model';
 
 /**
@@ -27,6 +28,15 @@ export interface StaleOptions {
  * Stale behavior.
  */
 export interface StaleBehavior {
+  /**
+   * Determines if this behavior is enabled.
+   *
+   * Same as setting `daysBeforeStale` and `daysBeforeClose` to `-1`.
+   *
+   * @default true
+   */
+  readonly enabled?: boolean;
+
   /**
    * How many days until the issue or pull request is marked as "Stale". Set to -1 to disable.
    * @default -
@@ -80,21 +90,8 @@ export class Stale extends Component {
       workflowDispatch: {},
     });
 
-    const pullRequests: StaleBehavior = {
-      daysBeforeStale: options.pullRequest?.daysBeforeStale ?? 14,
-      daysBeforeClose: options.pullRequest?.daysBeforeClose ?? 2,
-      staleMessage: options.pullRequest?.staleMessage ?? 'This pull request is now marked as stale because it hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
-      closeMessage: options.pullRequest?.closeMessage ?? 'Closing this pull request as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer when you are ready to continue.',
-      staleLabel: options.pullRequest?.staleLabel ?? 'Stale',
-    };
-
-    const issues: StaleBehavior = {
-      daysBeforeStale: options.issues?.daysBeforeStale ?? 60,
-      daysBeforeClose: options.issues?.daysBeforeClose ?? 7,
-      staleMessage: options.issues?.staleMessage ?? 'This issue is now marked as stale because it hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
-      closeMessage: options.issues?.closeMessage ?? 'Closing this issue as it hasn\'t seen activity for a while. Please a comment @mentioning a maintainer when you are ready to continue.',
-      staleLabel: options.issues?.staleLabel ?? 'Stale',
-    };
+    const pullRequests = renderBehavior(options.pullRequest, { stale: 14, close: 2, type: 'pull request' });
+    const issues = renderBehavior(options.issues, { stale: 60, close: 7, type: 'issue' });
 
     stale.addJobs({
       stale: {
