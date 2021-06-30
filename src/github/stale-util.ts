@@ -17,6 +17,6 @@ export function renderBehavior(behavior: StaleBehavior | undefined, opts: Option
     daysBeforeClose: behavior?.daysBeforeClose ?? opts.close,
     staleMessage: behavior?.staleMessage ?? `This ${opts.type} is now marked as stale because it hasn\'t seen activity for a while. Add a comment or it will be closed soon.`,
     closeMessage: behavior?.closeMessage ?? `Closing this ${opts.type} as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer to reopen.`,
-    staleLabel: behavior?.staleLabel ?? 'Stale',
+    staleLabel: behavior?.staleLabel ?? 'stale',
   };
 };
