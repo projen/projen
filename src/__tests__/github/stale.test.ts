@@ -39,7 +39,7 @@ describe('renderBehavior()', () => {
       closeMessage: "Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen.",
       daysBeforeClose: 11,
       daysBeforeStale: 10,
-      staleLabel: 'Stale',
+      staleLabel: 'stale',
       staleMessage: "This issue is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon.",
     });
 
@@ -47,7 +47,7 @@ describe('renderBehavior()', () => {
       closeMessage: "Closing this xomo as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen.",
       daysBeforeClose: 65,
       daysBeforeStale: 99,
-      staleLabel: 'Stale',
+      staleLabel: 'stale',
       staleMessage: "This xomo is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon.",
     });
   });
