@@ -83,7 +83,7 @@ export class Stale extends Component {
     const pullRequests: StaleBehavior = {
       daysBeforeStale: options.pullRequest?.daysBeforeStale ?? 14,
       daysBeforeClose: options.pullRequest?.daysBeforeClose ?? 2,
-      staleMessage: options.pullRequest?.staleMessage ?? 'This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
+      staleMessage: options.pullRequest?.staleMessage ?? 'This pull request is now marked as stale because it hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
       closeMessage: options.pullRequest?.closeMessage ?? 'Closing this pull request as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer when you are ready to continue.',
       staleLabel: options.pullRequest?.staleLabel ?? 'Stale',
     };
@@ -91,7 +91,7 @@ export class Stale extends Component {
     const issues: StaleBehavior = {
       daysBeforeStale: options.issues?.daysBeforeStale ?? 60,
       daysBeforeClose: options.issues?.daysBeforeClose ?? 7,
-      staleMessage: options.issues?.staleMessage ?? 'This issue is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
+      staleMessage: options.issues?.staleMessage ?? 'This issue is now marked as stale because it hasn\'t seen activity for a while. Add a comment or it will be closed soon.',
       closeMessage: options.issues?.closeMessage ?? 'Closing this issue as it hasn\'t seen activity for a while. Please a comment @mentioning a maintainer when you are ready to continue.',
       staleLabel: options.issues?.staleLabel ?? 'Stale',
     };
