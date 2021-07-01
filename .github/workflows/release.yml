@@ -24,7 +24,7 @@ jobs:
           git config user.name "Automation"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.2.0
         with:
           node-version: 10.17.0
       - name: Install dependencies

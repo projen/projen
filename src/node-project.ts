@@ -815,7 +815,7 @@ export class NodeProject extends Project {
     if (this.nodeVersion) {
       install.push({
         name: 'Setup Node.js',
-        uses: 'actions/setup-node@v1',
+        uses: 'actions/setup-node@v2.2.0',
         with: { 'node-version': this.nodeVersion },
       });
     }
