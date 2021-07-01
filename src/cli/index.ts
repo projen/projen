@@ -16,6 +16,7 @@ async function main() {
 
   ya.recommendCommands();
   ya.strictCommands();
+  ya.showHelpOnFail(false);
   ya.wrap(yargs.terminalWidth());
   ya.option('post', { type: 'boolean', default: true, desc: 'Run post-synthesis steps such as installing dependencies. Use --no-post to skip' });
   ya.option('watch', { type: 'boolean', default: false, desc: 'Keep running and resynthesize when projenrc changes', alias: 'w' });

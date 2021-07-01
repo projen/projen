@@ -5,10 +5,10 @@ import * as logging from './logging';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
 
-export function exec(command: string, options?: child_process.ExecSyncOptions) {
+export function exec(command: string, options?: { cwd?: string }): void {
   logging.verbose(command);
-  return child_process.execSync(command, {
-    stdio: ['inherit', process.stderr, 'pipe'],
+  child_process.execSync(command, {
+    stdio: ['inherit', process.stderr, 'pipe'], // "pipe" for STDERR means it appears in exceptions
     ...options,
   });
 }
