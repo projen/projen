@@ -5,31 +5,35 @@ import * as logging from './logging';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
 
-export function exec(command: string, options?: { cwd?: string }): void {
+export function exec(command: string, options: { cwd: string }): void {
   logging.verbose(command);
   child_process.execSync(command, {
     stdio: ['inherit', process.stderr, 'pipe'], // "pipe" for STDERR means it appears in exceptions
-    ...options,
+    cwd: options.cwd,
   });
 }
 
 /**
  * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
  */
-export function execCapture(command: string, options?: child_process.ExecSyncOptions) {
+export function execCapture(command: string, options: { cwd: string }) {
   logging.verbose(command);
   return child_process.execSync(command, {
-    stdio: ['inherit', 'pipe', 'inherit'],
-    ...options,
+    stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
+    cwd: options.cwd,
   });
 }
 
 /**
  * Executes `command` and returns its value or undefined if the command failed.
  */
-export function execOrUndefined(command: string, options?: child_process.ExecSyncOptions): string | undefined {
+export function execOrUndefined(command: string, options: { cwd: string }): string | undefined {
   try {
-    const value = child_process.execSync(command, { stdio: ['inherit', 'pipe', 'ignore'], ...options }).toString('utf-8').trim();
+    const value = child_process.execSync(command, {
+      stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
+      cwd: options.cwd,
+    }).toString('utf-8').trim();
+
     if (!value) { return undefined; } // an empty string is the same as undefined
     return value;
   } catch {

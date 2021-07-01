@@ -118,7 +118,8 @@ export async function bump(cwd: string, options: BumpOptions) {
     cmd.push('--first-release');
   }
 
-  execCapture(cmd.join(' '), { stdio: 'inherit', cwd });
+  // use execCapture so that STDOUT wont pollute our output
+  execCapture(cmd.join(' '), { cwd });
 
   await remove(rcfile);
 
