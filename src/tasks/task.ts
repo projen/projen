@@ -25,6 +25,7 @@ export class Task {
 
   /**
    * The start menu category of the task.
+   * @deprecated - start menu has been removed (use `projen --help`)
    */
   public readonly category?: TaskCategory;
 

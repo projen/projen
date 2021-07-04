@@ -24,6 +24,7 @@ export interface TaskCommonOptions {
    * Category for start menu.
    *
    * @default TaskCategory.MISC
+   * @deprecated - start menu has been removed (use `projen --help`)
    */
   readonly category?: TaskCategory;
 
