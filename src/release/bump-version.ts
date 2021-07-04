@@ -27,6 +27,15 @@ export interface BumpOptions {
    * @default - any version is supported
    */
   readonly majorVersion?: number;
+
+  /**
+   * The name of a file which will include the output version number (a text file).
+   *
+   * Relative to cwd.
+   *
+   * @example `.version.txt`
+   */
+  readonly bumpFile: string;
 }
 
 /**
@@ -43,6 +52,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   const prerelease = options.prerelease;
   const major = options.majorVersion;
   const changjelog = options.changelog;
+  const bumpFile = join(cwd, options.bumpFile);
 
   // filter only tags for this major version if specified (start  with "vNN.").
   const prefix = major ? `v${major}.*` : 'v*';
@@ -133,6 +143,8 @@ export async function bump(cwd: string, options: BumpOptions) {
       throw new Error(`bump failed: this branch is configured to only publish v${major} releases - bump resulted in ${newVersion}`);
     }
   }
+
+  await writeFile(bumpFile, newVersion);
 }
 
 async function tryReadVersionFile(versionFile: string) {

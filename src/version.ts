@@ -34,8 +34,8 @@ export class Version extends Component {
   constructor(project: Project, options: VersionOptions) {
     super(project);
 
-    this.changelogFile = '.changelog.tmp.md';
-    this.bumpFile = '.bump.tmp.json';
+    this.changelogFile = '.changelog.md';
+    this.bumpFile = '.version.txt';
 
     const versionFile = options.versionFile;
 
@@ -46,6 +46,7 @@ export class Version extends Component {
     const env = {
       OUTFILE: versionFile,
       CHANGELOG: this.changelogFile,
+      BUMPFILE: this.bumpFile,
     };
 
     this.bumpTask = project.addTask('bump', {
@@ -56,11 +57,6 @@ export class Version extends Component {
     });
 
     this.bumpTask.builtin('release/bump-version');
-
-    // create a backup of the version JSON file (e.g. package.json) because we
-    // are going to revert the bump and we need the version number in order to
-    // create the github release.
-    this.bumpTask.exec(`cp -f ${versionFile} ${this.bumpFile}`);
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',

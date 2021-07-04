@@ -115,14 +115,12 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.tmp.md"
+        "CHANGELOG": ".changelog.md",
+        "BUMPFILE": ".version.txt"
       },
       "steps": [
         {
           "builtin": "release/bump-version"
-        },
-        {
-          "exec": "cp -f package.json .bump.json"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -133,7 +131,8 @@
       "description": "Restores version to 0.0.0",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.tmp.md"
+        "CHANGELOG": ".changelog.md",
+        "BUMPFILE": ".version.txt"
       },
       "steps": [
         {

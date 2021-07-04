@@ -13,6 +13,7 @@ test('first release', async () => {
   const result = await testBump();
   expect(result.version).toStrictEqual('0.0.0');
   expect(result.changelog).toMatch(/.*## 0\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 0.0.0 (2021-01-01)
+  expect(result.bumpfile).toStrictEqual('0.0.0');
 });
 
 test('first release, with major', async () => {
@@ -21,6 +22,7 @@ test('first release, with major', async () => {
   });
   expect(result.version).toStrictEqual('2.0.0');
   expect(result.changelog).toMatch(/.*## 2\.0\.0 \(\d{4}-\d{2}-\d{2}\).*/); // ## 2.0.0 (2021-01-01)
+  expect(result.bumpfile).toStrictEqual('2.0.0');
 });
 
 test('first release, with new major', async () => {
@@ -33,6 +35,7 @@ test('first release, with new major', async () => {
   });
   expect(result.version).toStrictEqual('4.0.0');
   expect(result.changelog.includes('## [4.0.0]')).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual('4.0.0');
 });
 
 test('first release, with prerelease', async () => {
@@ -41,6 +44,7 @@ test('first release, with prerelease', async () => {
   });
   expect(result.version).toStrictEqual('0.0.0-beta.0');
   expect(result.changelog.includes('## 0.0.0-beta.0')).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual('0.0.0-beta.0');
 });
 
 test('select latest', async () => {
@@ -57,6 +61,7 @@ test('select latest', async () => {
   expect(result.changelog.includes('Bug Fixes')).toBeTruthy();
   expect(result.changelog.includes('another bug')).toBeTruthy();
   expect(result.changelog.includes('bug')).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual('1.2.1');
 });
 
 test('select latest with major', async () => {
@@ -74,6 +79,7 @@ test('select latest with major', async () => {
   });
 
   expect(result1.version).toEqual('1.2.1');
+  expect(result1.bumpfile).toEqual('1.2.1');
 
   const result10 = await testBump({
     options: { majorVersion: 10 },
@@ -81,6 +87,7 @@ test('select latest with major', async () => {
   });
 
   expect(result10.version).toEqual('10.21.1');
+  expect(result10.bumpfile).toStrictEqual('10.21.1');
 });
 
 test('bump fails due to crossing major version', async () => {
@@ -131,11 +138,13 @@ async function testBump(opts: { options?: Partial<BumpOptions>; commits?: { mess
   await bump(workdir, {
     changelog: 'changelog.md',
     versionFile: 'version.json',
+    bumpFile: 'bump.txt',
     ...opts.options,
   });
 
   return {
     version: (await readJson(join(workdir, 'version.json'))).version,
     changelog: (await readFile(join(workdir, 'changelog.md'), 'utf8')),
+    bumpfile: (await readFile(join(workdir, 'bump.txt'), 'utf8')),
   };
 }

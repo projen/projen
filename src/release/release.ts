@@ -326,7 +326,7 @@ export class Release extends Component {
     });
 
     // create a github release
-    const getVersion = `v$(node -p \"require(\'./${this.version.bumpFile}\').version\")`;
+    const getVersion = `v$(cat ${this.version.bumpFile})`;
     steps.push({
       name: 'Create release',
       if: noNewCommits,
