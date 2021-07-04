@@ -45,7 +45,7 @@ class Command implements yargs.CommandModule {
               } else {
                 // if the field is required and we have a @default, then assign
                 // the value here so it appears in `--help`
-                defaultValue = renderDefault(option.default);
+                defaultValue = renderDefault(process.cwd(), option.default);
               }
             }
 
@@ -78,7 +78,7 @@ class Command implements yargs.CommandModule {
 
     // project type is defined but was not matched by yargs, so print the list of supported types
     if (args.projectTypeName) {
-      console.log(`Invalid project type ${args.projectType}. Supported types:`);
+      console.log(`Invalid project type ${args.projectTypeName}. Supported types:`);
       for (const pjid of inventory.discover().map(x => x.pjid)) {
         console.log(`  ${pjid}`);
       }
@@ -177,8 +177,8 @@ function createProject(opts: CreateProjectOptions) {
  *
  * @returns a javascript primitive (could be a string, number or boolean)
  */
-function renderDefault(value: string) {
-  return tryProcessMacro(value) ?? JSON.parse(value);
+function renderDefault(cwd: string, value: string) {
+  return tryProcessMacro(cwd, value) ?? JSON.parse(value);
 }
 
 /**
@@ -186,13 +186,13 @@ function renderDefault(value: string) {
  * @param type Project type
  * @param argv Command line switches
  */
-function commandLineToProps(type: inventory.ProjectType, argv: Record<string, unknown>): Record<string, any> {
+function commandLineToProps(cwd: string, type: inventory.ProjectType, argv: Record<string, unknown>): Record<string, any> {
   const props: Record<string, any> = {};
 
   // initialize props with default values
   for (const prop of type.options) {
     if (prop.default && prop.default !== 'undefined' && !prop.optional) {
-      props[prop.name] = renderDefault(prop.default);
+      props[prop.name] = renderDefault(cwd, prop.default);
     }
   }
 
@@ -273,7 +273,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
     if (option.default && option.default !== 'undefined') {
       if (!option.optional) {
-        const defaultValue = renderDefault(option.default);
+        const defaultValue = renderDefault(baseDir, option.default);
         args[option.name] = defaultValue;
         args[option.switch] = defaultValue;
       }
@@ -294,7 +294,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
  */
 async function newProject(baseDir: string, type: inventory.ProjectType, args: any, additionalProps?: Record<string, any>) {
   // convert command line arguments to project props using type information
-  const props = commandLineToProps(type, args);
+  const props = commandLineToProps(baseDir, type, args);
 
   // merge in additional props if specified
   for (const [k, v] of Object.entries(additionalProps ?? {})) {
