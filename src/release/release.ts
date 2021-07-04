@@ -174,6 +174,7 @@ export class Release extends Component {
 
     this.version = new Version(project, {
       versionFile: this.versionFile,
+      artifactsDirectory: this.artifactDirectory,
     });
 
     this.publisher = new Publisher(project, {
@@ -256,7 +257,6 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
-
     const env: Record<string, string> = {
       RELEASE: 'true',
     };
@@ -269,10 +269,15 @@ export class Release extends Component {
       env.PRERELEASE = branch.prerelease;
     }
 
-    // if this is the release for "main" or "master", just call it "release". otherwise, "release:BRANCH"
+    // the "release" task prepares a release but does not publish anything. the
+    // output of the release task is: `dist`, `.version.txt`, and
+    // `.changelog.md`. this is what publish tasks expect.
+
+    // if this is the release for "main" or "master", just call it "release".
+    // otherwise, "release:BRANCH"
     const releaseTaskName = (branch.name === 'main' || branch.name === 'master') ? 'release' : `release:${branch.name}`;
     const releaseTask = this.project.addTask(releaseTaskName, {
-      description: `Release from "${branch.name}" branch`,
+      description: `Prepare a release from "${branch.name}" branch`,
       env,
     });
 

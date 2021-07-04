@@ -4918,6 +4918,7 @@ new Version(project: Project, options: VersionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
 
 
@@ -10626,6 +10627,7 @@ Options for `Version`.
 
 Name | Type | Description 
 -----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 
 

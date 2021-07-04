@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Component } from './component';
 import { Project } from './project';
 import { Task, TaskCategory } from './tasks';
@@ -12,6 +13,12 @@ export interface VersionOptions {
    * @example "package.json"
    */
   readonly versionFile: string;
+
+  /**
+   * The name of the directory into which `changelog.md` and `version.txt` files
+   * are emitted.
+   */
+  readonly artifactsDirectory: string;
 }
 
 export class Version extends Component {
@@ -34,8 +41,8 @@ export class Version extends Component {
   constructor(project: Project, options: VersionOptions) {
     super(project);
 
-    this.changelogFile = '.changelog.md';
-    this.bumpFile = '.version.txt';
+    this.changelogFile = join(options.artifactsDirectory, 'changelog.md');
+    this.bumpFile = join(options.artifactsDirectory, 'version.txt');
 
     const versionFile = options.versionFile;
 

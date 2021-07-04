@@ -115,8 +115,8 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.md",
-        "BUMPFILE": ".version.txt"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -131,8 +131,8 @@
       "description": "Restores version to 0.0.0",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.md",
-        "BUMPFILE": ".version.txt"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -254,7 +254,7 @@
     },
     "release": {
       "name": "release",
-      "description": "Release from \"main\" branch",
+      "description": "Prepare a release from \"main\" branch",
       "env": {
         "RELEASE": "true"
       },

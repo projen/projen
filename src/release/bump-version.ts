@@ -1,5 +1,5 @@
-import { join } from 'path';
-import { pathExists, readFile, remove, writeFile } from 'fs-extra';
+import { dirname, join } from 'path';
+import { mkdirp, pathExists, readFile, remove, writeFile } from 'fs-extra';
 import * as logging from '../logging';
 import { execCapture } from '../util';
 
@@ -51,8 +51,11 @@ export async function bump(cwd: string, options: BumpOptions) {
   const versionFile = join(cwd, options.versionFile);
   const prerelease = options.prerelease;
   const major = options.majorVersion;
-  const changjelog = options.changelog;
+  const changelogFile = join(cwd, options.changelog);
   const bumpFile = join(cwd, options.bumpFile);
+
+  await mkdirp(dirname(bumpFile));
+  await mkdirp(dirname(changelogFile));
 
   // filter only tags for this major version if specified (start  with "vNN.").
   const prefix = major ? `v${major}.*` : 'v*';
@@ -114,7 +117,7 @@ export async function bump(cwd: string, options: BumpOptions) {
       type: 'json',
     }],
     commitAll: false,
-    infile: changjelog,
+    infile: changelogFile,
     prerelease: prerelease,
     header: '',
     skip: {
