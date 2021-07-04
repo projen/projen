@@ -2,7 +2,6 @@ import { join } from 'path';
 import { Component } from '../component';
 import { Project } from '../project';
 import { SampleDir } from '../sample-file';
-import { TaskCategory } from '../tasks';
 import { Pom } from './pom';
 
 const TESTDIR = join('src', 'test', 'java');
@@ -45,7 +44,6 @@ export class Junit extends Component {
 
     project.addTask('test', {
       description: 'Runs tests',
-      category: TaskCategory.TEST,
       exec: 'mvn test',
     });
 

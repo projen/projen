@@ -2,7 +2,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Component } from './component';
-import { TaskCategory } from './tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
@@ -179,13 +178,11 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     const synth = this.addTask('synth', {
       description: 'Synthesizes your cdk8s app into dist (part of "yarn build")',
-      category: TaskCategory.BUILD,
       exec: 'cdk8s synth',
     });
 
     this.addTask('import', {
       description: 'Imports API objects to your app by generating constructs.',
-      category: TaskCategory.MISC,
       exec: 'cdk8s import',
     });
 

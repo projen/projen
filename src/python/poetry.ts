@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { DependencyType } from '../deps';
-import { Task, TaskCategory, TaskRuntime } from '../tasks';
+import { Task, TaskRuntime } from '../tasks';
 import { TomlFile } from '../toml';
 import { exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';
@@ -27,7 +27,6 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
     this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
-      category: TaskCategory.BUILD,
       exec: 'poetry update',
     });
 
@@ -39,19 +38,16 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
     this.packageTask = project.addTask('package', {
       description: 'Creates source archive and wheel for distribution.',
-      category: TaskCategory.RELEASE,
       exec: 'poetry build',
     });
 
     this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
-      category: TaskCategory.RELEASE,
       exec: 'poetry publish -r testpypi',
     });
 
     this.publishTask = project.addTask('publish', {
       description: 'Uploads the package to PyPI.',
-      category: TaskCategory.RELEASE,
       exec: 'poetry publish',
     });
 

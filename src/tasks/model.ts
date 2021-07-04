@@ -21,14 +21,6 @@ export interface TaskCommonOptions {
   readonly description?: string;
 
   /**
-   * Category for start menu.
-   *
-   * @default TaskCategory.MISC
-   * @deprecated - start menu has been removed (use `projen --help`)
-   */
-  readonly category?: TaskCategory;
-
-  /**
    * Defines environment variables for the execution of this task.
    * Values in this map will be evaluated in a shell, so you can do stuff like `$(echo "foo")`.
    * @default {}
@@ -49,15 +41,6 @@ export interface TaskCommonOptions {
    * @default - process.cwd()
    */
   readonly cwd?: string;
-}
-
-
-export enum TaskCategory {
-  BUILD = '00.build',
-  TEST = '10.test',
-  RELEASE = '20.release',
-  MAINTAIN = '30.maintain',
-  MISC = '99.misc',
 }
 
 

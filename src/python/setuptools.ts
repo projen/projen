@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { Task, TaskCategory } from '../tasks';
+import { Task } from '../tasks';
 import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
 import { PythonProject } from './python-project';
 import { SetupPy } from './setuppy';
@@ -24,19 +24,16 @@ export class Setuptools extends Component implements IPythonPackaging {
 
     this.packageTask = project.addTask('package', {
       description: 'Creates source archive and wheel for distribution.',
-      category: TaskCategory.RELEASE,
       exec: 'python setup.py sdist bdist_wheel',
     });
 
     this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
-      category: TaskCategory.RELEASE,
       exec: 'twine upload --repository-url https://test.pypi.org/legacy/ dist/*',
     });
 
     this.publishTask = project.addTask('publish', {
       description: 'Uploads the package against a test PyPI endpoint.',
-      category: TaskCategory.RELEASE,
       exec: 'twine upload dist/*',
     });
 

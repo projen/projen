@@ -377,7 +377,6 @@ pull_request_rules:
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -390,7 +389,6 @@ pull_request_rules:
         ],
       },
       "bump": Object {
-        "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
@@ -405,7 +403,6 @@ pull_request_rules:
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
       },
@@ -418,7 +415,6 @@ pull_request_rules:
         ],
       },
       "dev": Object {
-        "category": "00.build",
         "description": "Starts the react application",
         "name": "dev",
         "steps": Array [
@@ -428,7 +424,6 @@ pull_request_rules:
         ],
       },
       "eject": Object {
-        "category": "99.misc",
         "description": "Ejects your React application from react-scripts",
         "name": "eject",
         "steps": Array [
@@ -438,7 +433,6 @@ pull_request_rules:
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -451,12 +445,10 @@ pull_request_rules:
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
       },
       "unbump": Object {
-        "category": "20.release",
         "description": "Restores version to 0.0.0",
         "env": Object {
           "CHANGELOG": ".changelog.tmp.md",

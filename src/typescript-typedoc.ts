@@ -1,4 +1,3 @@
-import { TaskCategory } from './tasks';
 import { TypeScriptProject } from './typescript';
 
 /**
@@ -10,7 +9,6 @@ export class TypedocDocgen {
 
     const docgen = project.addTask('docgen', {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
-      category: TaskCategory.RELEASE,
       exec: 'typedoc --out ' + project.docsDirectory,
     });
 
