@@ -8,6 +8,8 @@ import * as logging from '../logging';
 import { TasksManifest, TaskSpec } from './model';
 import { Tasks } from './tasks';
 
+const ENV_TRIM_LEN = 20;
+
 /**
  * The runtime component of the tasks engine.
  */
@@ -71,8 +73,15 @@ class RunTask {
     this.parents = parents;
     this.env = this.resolveEnvironment(parents);
 
+    const envlogs = [];
     for (const [k, v] of Object.entries(this.env)) {
-      this.log(chalk.gray(`env: ${k}=${v}`));
+      const vv = v ?? '';
+      const trimmed = vv.length > ENV_TRIM_LEN ? vv.substr(0, ENV_TRIM_LEN) + '...' : vv;
+      envlogs.push(`${k}=${trimmed}`);
+    }
+
+    if (envlogs.length) {
+      this.log(chalk.gray(`${chalk.underline('env')}: ${envlogs.join(' ')}`));
     }
 
     // evaluate condition
@@ -144,7 +153,7 @@ class RunTask {
       return true;
     }
 
-    this.log(`condition: ${task.condition}`);
+    this.log(chalk.gray(`${chalk.underline('condition')}: ${task.condition}`));
     const result = this.shell({
       command: task.condition,
       logprefix: 'condition: ',
