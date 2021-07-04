@@ -256,29 +256,6 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
-    const steps = new Array<workflows.JobStep>();
-
-    // check out sources.
-    steps.push({
-      name: 'Checkout',
-      uses: 'actions/checkout@v2',
-      with: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-    });
-
-    // sets git identity so we can push later
-    steps.push({
-      name: 'Set git identity',
-      run: [
-        'git config user.name "Automation"',
-        'git config user.email "github-actions@github.com"',
-      ].join('\n'),
-    });
-
-    steps.push(...this.preBuildSteps ?? []);
 
     const env: Record<string, string> = {
       RELEASE: 'true',
@@ -308,6 +285,30 @@ export class Release extends Component {
     if (this.antitamper) {
       releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
     }
+
+    const steps = new Array<workflows.JobStep>();
+
+    // check out sources.
+    steps.push({
+      name: 'Checkout',
+      uses: 'actions/checkout@v2',
+      with: {
+        // we must use 'fetch-depth=0' in order to fetch all tags
+        // otherwise tags are not checked out
+        'fetch-depth': 0,
+      },
+    });
+
+    // sets git identity so we can push later
+    steps.push({
+      name: 'Set git identity',
+      run: [
+        'git config user.name "Automation"',
+        'git config user.email "github-actions@github.com"',
+      ].join('\n'),
+    });
+
+    steps.push(...this.preBuildSteps ?? []);
 
     steps.push({
       name: 'Release',
