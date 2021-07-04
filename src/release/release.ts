@@ -173,7 +173,7 @@ export class Release extends Component {
     this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      versionFile: options.versionFile,
+      versionFile: this.versionFile,
     });
 
     this.publisher = new Publisher(project, {
@@ -280,7 +280,9 @@ export class Release extends Component {
 
     steps.push(...this.preBuildSteps ?? []);
 
-    const env: Record<string, string> = {};
+    const env: Record<string, string> = {
+      RELEASE: 'true',
+    };
 
     if (branch.majorVersion !== undefined) {
       env.MAJOR = branch.majorVersion.toString();
@@ -290,44 +292,30 @@ export class Release extends Component {
       env.PRERELEASE = branch.prerelease;
     }
 
-    steps.push({
-      name: 'Bump to next version',
-      run: this.project.runTaskCommand(this.version.bumpTask),
-      env: Object.keys(env).length ? env : undefined,
+    // if this is the release for "main" or "master", just call it "release". otherwise, "release:BRANCH"
+    const releaseTaskName = (branch.name === 'main' || branch.name === 'master') ? 'release' : `release:${branch.name}`;
+    const releaseTask = this.project.addTask(releaseTaskName, {
+      description: `Release from "${branch.name}" branch`,
+      env,
     });
 
-    // run the main build task
-    steps.push({
-      name: this.task.name,
-      run: this.project.runTaskCommand(this.task),
-    });
-
-    // run post-build steps
-    steps.push(...this.postBuildSteps);
-
-    // create a backup of the version JSON file (e.g. package.json) because we
-    // are going to revert the bump and we need the version number in order to
-    // create the github release.
-    const versionJsonBackup = `${this.versionFile}.bak.json`;
-    steps.push({
-      name: 'Backup version file',
-      run: `cp -f ${this.versionFile} ${versionJsonBackup}`,
-    });
-
-    // revert the bump so anti-tamper will not fail
-    steps.push({
-      name: 'Unbump',
-      run: this.project.runTaskCommand(this.version.unbumpTask),
-    });
+    releaseTask.spawn(this.version.bumpTask);
+    releaseTask.spawn(this.task);
+    releaseTask.spawn(this.version.unbumpTask);
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
     if (this.antitamper) {
-      steps.push({
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      });
+      releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
     }
+
+    steps.push({
+      name: 'Release',
+      run: this.project.runTaskCommand(releaseTask),
+    });
+
+    // run post-build steps
+    steps.push(...this.postBuildSteps);
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
@@ -338,7 +326,7 @@ export class Release extends Component {
     });
 
     // create a github release
-    const getVersion = `v$(node -p \"require(\'./${versionJsonBackup}\').version\")`;
+    const getVersion = `v$(node -p \"require(\'./${this.version.bumpFile}\').version\")`;
     steps.push({
       name: 'Create release',
       if: noNewCommits,
@@ -378,7 +366,6 @@ export class Release extends Component {
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {
           CI: 'true',
-          RELEASE: 'true',
         },
         permissions: {
           contents: workflows.JobPermission.WRITE,

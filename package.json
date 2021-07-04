@@ -28,6 +28,7 @@
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
     "contributors:update": "/bin/bash ./projen.bash contributors:update",
+    "release": "/bin/bash ./projen.bash release",
     "projen": "/bin/bash ./projen.bash",
     "start": "/bin/bash ./projen.bash start"
   },
@@ -63,6 +64,7 @@
     "standard-version": "^9",
     "typescript": "^3.9.10"
   },
+  "peerDependencies": {},
   "dependencies": {
     "@iarna/toml": "^2.2.5",
     "chalk": "^4.1.1",

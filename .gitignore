@@ -11,6 +11,7 @@
 .jsii
 .nyc_output
 .yarn-integrity
+/.bump.json
 /.changelog.tmp.md
 /coverage
 /dist

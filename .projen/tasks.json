@@ -120,6 +120,9 @@
       "steps": [
         {
           "builtin": "release/bump-version"
+        },
+        {
+          "exec": "cp -f package.json .bump.json"
         }
       ],
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
@@ -247,6 +250,27 @@
       "steps": [
         {
           "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
+        }
+      ]
+    },
+    "release": {
+      "name": "release",
+      "description": "Release from \"main\" branch",
+      "env": {
+        "RELEASE": "true"
+      },
+      "steps": [
+        {
+          "spawn": "bump"
+        },
+        {
+          "spawn": "build"
+        },
+        {
+          "spawn": "unbump"
+        },
+        {
+          "exec": "git diff --ignore-space-at-eol --exit-code"
         }
       ]
     }

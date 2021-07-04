@@ -6,7 +6,7 @@ import { synthSnapshot, TestProject } from '../util';
 test('minimal', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
@@ -22,7 +22,7 @@ test('minimal', () => {
 test('with major version filter', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
@@ -42,7 +42,7 @@ test('with major version filter', () => {
 test('addBranch() can be used for additional release branches', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',
@@ -65,7 +65,7 @@ test('addBranch() can be used for additional release branches', () => {
 test('if multiple branches are defined, the default branch requires a "majorVersion"', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',
@@ -82,7 +82,7 @@ test('if multiple branches are defined, the default branch requires a "majorVers
 test('publisher (defaults)', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',
@@ -104,7 +104,7 @@ test('publisher (defaults)', () => {
 test('publishers are added as jobs to all release workflows', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',
@@ -139,7 +139,7 @@ test('publishers are added as jobs to all release workflows', () => {
 test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',
@@ -169,7 +169,7 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
 test('majorVersion can be 0', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
@@ -187,7 +187,7 @@ test('majorVersion can be 0', () => {
 test('prerelease can be specified per branch', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   const release = new Release(project, {
@@ -208,7 +208,7 @@ test('prerelease can be specified per branch', () => {
 test('releaseBranches can be use to define additional branches', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
@@ -229,7 +229,7 @@ test('releaseBranches can be use to define additional branches', () => {
 test('releaseBranches as an array throws an error since type was changed', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
 
   // WHEN
   expect(() => new Release(project, {
@@ -244,7 +244,7 @@ test('releaseBranches as an array throws an error since type was changed', () =>
 test('github packages are supported by npm', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('release');
+  const task = project.addTask('build');
   const release = new Release(project, {
     task: task,
     versionFile: 'version.json',

@@ -69,8 +69,11 @@ class RunTask {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
     this.parents = parents;
-    this.env = { ...process.env };
-    this.env = this.resolveEnvironment();
+    this.env = this.resolveEnvironment(parents);
+
+    for (const [k, v] of Object.entries(this.env)) {
+      this.log(chalk.gray(`env: ${k}=${v}`));
+    }
 
     // evaluate condition
     if (!this.evalCondition(task)) {
@@ -158,18 +161,25 @@ class RunTask {
    * Renders the runtime environment for a task. Namely, it supports this syntax
    * `$(xx)` for allowing environment to be evaluated by executing a shell
    * command and obtaining its result.
-   *
-   * @param env The user-defined environment
    */
-  private resolveEnvironment() {
-    const env = {
-      ...this.runtime.manifest.env ?? {},
+  private resolveEnvironment(parents: string[]) {
+    let env = this.runtime.manifest.env ?? {};
+
+    // add env from all parent tasks one by one
+    for (const parent of parents) {
+      env = {
+        ...env,
+        ...this.runtime.tryFindTask(parent)?.env ?? {},
+      };
+    }
+
+    // apply the task's environment last
+    env = {
+      ...env,
       ...this.task.env ?? {},
     };
 
-    const output: { [name: string]: string | undefined } = {
-      ...process.env,
-    };
+    const output: { [name: string]: string | undefined } = { };
 
     for (const [key, value] of Object.entries(env ?? {})) {
       if (value.startsWith('$(') && value.endsWith(')')) {
@@ -234,7 +244,10 @@ class RunTask {
       cwd,
       shell: true,
       stdio: 'inherit',
-      env: this.env,
+      env: {
+        ...process.env,
+        ...this.env,
+      },
       ...options.spawnOptions,
     });
   }

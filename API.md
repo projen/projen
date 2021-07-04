@@ -4928,6 +4928,7 @@ new Version(project: Project, options: VersionOptions)
 Name | Type | Description 
 -----|------|-------------
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**bumpVersionFile**🔹 | <code>string</code> | An uncommitted JSON file that will include a "version" field with the bumped version.
 **changelogFile**🔹 | <code>string</code> | <span></span>
 **unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 *static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
