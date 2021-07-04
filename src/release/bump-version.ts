@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { pathExists, readFile, remove, writeFile } from 'fs-extra';
 import * as logging from '../logging';
-import { execCapture } from '../util';
+import { exec, execCapture } from '../util';
 
 export interface BumpOptions {
   /**
@@ -118,8 +118,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     cmd.push('--first-release');
   }
 
-  // use execCapture so that STDOUT wont pollute our output
-  execCapture(cmd.join(' '), { cwd });
+  exec(cmd.join(' '), { cwd });
 
   await remove(rcfile);
 

@@ -5,10 +5,16 @@ import * as logging from './logging';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const decamelize = require('decamelize');
 
+const MAX_BUFFER = 10 * 1024 * 1024;
+
+/**
+ * Executes a command with STDOUT > STDERR.
+ */
 export function exec(command: string, options: { cwd: string }): void {
   logging.verbose(command);
   child_process.execSync(command, {
     stdio: ['inherit', process.stderr, 'pipe'], // "pipe" for STDERR means it appears in exceptions
+    maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
   });
 }
@@ -20,6 +26,7 @@ export function execCapture(command: string, options: { cwd: string }) {
   logging.verbose(command);
   return child_process.execSync(command, {
     stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
+    maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
   });
 }
@@ -31,6 +38,7 @@ export function execOrUndefined(command: string, options: { cwd: string }): stri
   try {
     const value = child_process.execSync(command, {
       stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
+      maxBuffer: MAX_BUFFER,
       cwd: options.cwd,
     }).toString('utf-8').trim();
 
