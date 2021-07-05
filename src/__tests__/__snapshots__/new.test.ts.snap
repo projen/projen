@@ -437,7 +437,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -459,7 +458,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": Object {
-        "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
@@ -474,7 +472,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -507,7 +504,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
         "steps": Array [
@@ -525,7 +521,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "docgen": Object {
-        "category": "20.release",
         "description": "Generate TypeScript API reference docs/",
         "name": "docgen",
         "steps": Array [
@@ -535,7 +530,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "eslint": Object {
-        "category": "10.test",
         "description": "Runs eslint against the codebase",
         "name": "eslint",
         "steps": Array [
@@ -545,7 +539,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Create an npm tarball",
         "name": "package",
         "steps": Array [
@@ -564,7 +557,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -583,7 +575,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
@@ -593,7 +584,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:update": Object {
-        "category": "10.test",
         "description": "Update jest snapshots",
         "name": "test:update",
         "steps": Array [
@@ -603,7 +593,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:watch": Object {
-        "category": "10.test",
         "description": "Run jest in watch mode",
         "name": "test:watch",
         "steps": Array [
@@ -613,7 +602,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "unbump": Object {
-        "category": "20.release",
         "description": "Restores version to 0.0.0",
         "env": Object {
           "CHANGELOG": ".changelog.tmp.md",
@@ -669,7 +657,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [
