@@ -271,7 +271,6 @@ Name|Description
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
 
@@ -3717,7 +3716,6 @@ addTask(name: string, props?: TaskOptions): Task
 
 * **name** (<code>string</code>)  The task name to add.
 * **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -6751,7 +6749,6 @@ new tasks.Task(name: string, props?: TaskOptions)
 
 * **name** (<code>string</code>)  *No description*
 * **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  *No description*
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -6767,7 +6764,6 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | Task name.
 **steps**🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Returns an immutable copy of all the step specifications of the task.
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | The start menu category of the task.<br/>__*Optional*__
 **condition**?🔹 | <code>string</code> | A command to execute which determines if the task should be skipped.<br/>__*Optional*__
 **description**?🔹 | <code>string</code> | The description of the task.<br/>__*Optional*__
 
@@ -7057,7 +7053,6 @@ addTask(name: string, options?: TaskOptions): Task
 
 * **name** (<code>string</code>)  The name of the task.
 * **options** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task options.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -11462,7 +11457,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -11479,7 +11473,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -11499,7 +11492,6 @@ Specification of a single task.
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | Task name.
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -12417,19 +12409,6 @@ Name | Description
 **WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
 **INCREASE** 🔹|Always increase the version requirement to match the new version.
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
-
-
-## enum TaskCategory 🔹 <a id="projen-tasks-taskcategory"></a>
-
-
-
-Name | Description
------|-----
-**BUILD** 🔹|
-**TEST** 🔹|
-**RELEASE** 🔹|
-**MAINTAIN** 🔹|
-**MISC** 🔹|
 
 
 ## enum InternalConsoleOptions 🔹 <a id="projen-vscode-internalconsoleoptions"></a>

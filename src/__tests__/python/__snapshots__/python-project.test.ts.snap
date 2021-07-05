@@ -157,7 +157,6 @@ wheels/
         ],
       },
       "install": Object {
-        "category": "00.build",
         "description": "Install and upgrade dependencies",
         "name": "install",
         "steps": Array [
@@ -173,7 +172,6 @@ wheels/
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Runs tests",
         "name": "test",
         "steps": Array [
@@ -399,7 +397,6 @@ wheels/
         ],
       },
       "install": Object {
-        "category": "00.build",
         "description": "Install and upgrade dependencies",
         "name": "install",
         "steps": Array [
@@ -415,7 +412,6 @@ wheels/
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Runs tests",
         "name": "test",
         "steps": Array [
@@ -643,7 +639,6 @@ wheels/
         ],
       },
       "install": Object {
-        "category": "00.build",
         "description": "Install and upgrade dependencies",
         "name": "install",
         "steps": Array [
@@ -659,7 +654,6 @@ wheels/
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Runs tests",
         "name": "test",
         "steps": Array [
@@ -863,7 +857,6 @@ wheels/
         ],
       },
       "install": Object {
-        "category": "00.build",
         "description": "Install and upgrade dependencies",
         "name": "install",
         "steps": Array [

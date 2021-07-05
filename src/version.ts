@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { Project } from './project';
-import { Task, TaskCategory } from './tasks';
+import { Task } from './tasks';
 
 /**
  * Options for `Version`.
@@ -37,7 +37,6 @@ export class Version extends Component {
 
     this.bumpTask = project.addTask('bump', {
       description: 'Bumps version based on latest git tag and generates a changelog entry',
-      category: TaskCategory.RELEASE,
       condition: changesSinceLastRelease,
       env: env,
     });
@@ -46,7 +45,6 @@ export class Version extends Component {
 
     this.unbumpTask = project.addTask('unbump', {
       description: 'Restores version to 0.0.0',
-      category: TaskCategory.RELEASE,
       env: env,
     });
 

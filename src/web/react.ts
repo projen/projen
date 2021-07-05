@@ -4,7 +4,6 @@ import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
 import { SourceCode } from '../source-code';
-import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
@@ -218,7 +217,6 @@ export class ReactComponent extends Component {
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask('dev', {
       description: 'Starts the react application',
-      category: TaskCategory.BUILD,
       exec: `${reactScripts} start`,
     });
 
@@ -226,7 +224,6 @@ export class ReactComponent extends Component {
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',
-      category: TaskCategory.MISC,
       // eject is not necessary to rewire
       exec: 'react-scripts eject',
     });

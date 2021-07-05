@@ -10,7 +10,7 @@ import { NodePackage, NodePackageManager, NodePackageOptions } from './node-pack
 import { Project, ProjectOptions } from './project';
 import { Publisher } from './publisher';
 import { Release, ReleaseProjectOptions } from './release';
-import { Task, TaskCategory } from './tasks';
+import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
 import { Version } from './version';
 
@@ -440,24 +440,20 @@ export class NodeProject extends Project {
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
-      category: TaskCategory.BUILD,
     });
 
     this.testCompileTask = this.addTask('test:compile', {
       description: 'compiles the test code',
-      category: TaskCategory.TEST,
     });
 
     this.testTask = this.addTask('test', {
       description: 'Run tests',
-      category: TaskCategory.TEST,
     });
 
     this.testTask.spawn(this.testCompileTask);
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
-      category: TaskCategory.BUILD,
     });
 
     // first, execute projen as the first thing during build

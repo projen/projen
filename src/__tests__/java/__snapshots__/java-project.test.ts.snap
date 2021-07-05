@@ -189,7 +189,6 @@ target
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -222,7 +221,6 @@ target
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Compile the main source files",
         "name": "compile",
         "steps": Array [
@@ -244,7 +242,6 @@ target
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Creates a java deployment package under dist/java",
         "env": Object {
           "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
@@ -260,7 +257,6 @@ target
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Runs tests",
         "name": "test",
         "steps": Array [
@@ -881,7 +877,6 @@ target
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -914,7 +909,6 @@ target
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Compile the main source files",
         "name": "compile",
         "steps": Array [
@@ -936,7 +930,6 @@ target
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Creates a java deployment package under dist/java",
         "env": Object {
           "MAVEN_OPTS": "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
