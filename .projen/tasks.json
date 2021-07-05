@@ -107,7 +107,8 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.tmp.md"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -121,7 +122,8 @@
       "description": "Restores version to 0.0.0",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": ".changelog.tmp.md"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -233,6 +235,27 @@
       "steps": [
         {
           "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
+        }
+      ]
+    },
+    "release": {
+      "name": "release",
+      "description": "Prepare a release from \"main\" branch",
+      "env": {
+        "RELEASE": "true"
+      },
+      "steps": [
+        {
+          "spawn": "bump"
+        },
+        {
+          "spawn": "build"
+        },
+        {
+          "spawn": "unbump"
+        },
+        {
+          "exec": "git diff --ignore-space-at-eol --exit-code"
         }
       ]
     }

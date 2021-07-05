@@ -20,6 +20,7 @@ const versionFile = process.env.OUTFILE;
 const prerelease = process.env.PRERELEASE;
 const major = process.env.MAJOR;
 const changelog = process.env.CHANGELOG;
+const bumpFile = process.env.BUMPFILE;
 
 if (!versionFile) {
   throw new Error('OUTFILE is required');
@@ -27,6 +28,10 @@ if (!versionFile) {
 
 if (!changelog) {
   throw new Error('CHANGELOG is required');
+}
+
+if (!bumpFile) {
+  throw new Error('BUMPFILE is required');
 }
 
 const majorVersion = (major == null || major === '') ? undefined : parseInt(major);
@@ -39,6 +44,7 @@ const opts: BumpOptions = {
   changelog: changelog,
   majorVersion: majorVersion,
   prerelease: prerelease,
+  bumpFile: bumpFile,
 };
 
 bump(process.cwd(), opts).catch((e: Error) => {

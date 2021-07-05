@@ -13,9 +13,10 @@ exports[`sources and compiled output can be collocated 1`] = `
 .eslintcache
 .nyc_output
 .yarn-integrity
-/.changelog.tmp.md
 /coverage
 /dist
+/dist/changelog.md
+/dist/version.txt
 /lib/**/*.d.ts
 /lib/**/*.js
 /test-reports/

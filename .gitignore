@@ -11,9 +11,10 @@
 .jsii
 .nyc_output
 .yarn-integrity
-/.changelog.tmp.md
 /coverage
 /dist
+/dist/changelog.md
+/dist/version.txt
 /lib
 /test-reports/
 build/Release

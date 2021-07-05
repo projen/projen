@@ -4916,6 +4916,7 @@ new Version(project: Project, options: VersionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
 
 
@@ -4925,8 +4926,9 @@ new Version(project: Project, options: VersionOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**bumpFile**🔹 | <code>string</code> | An uncommitted JSON file that will include a "version" field with the bumped version.
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**changelogFile**🔹 | <code>string</code> | <span></span>
+**changelogFile**🔹 | <code>string</code> | The name of the changelog file created by the `bump` task.
 **unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 *static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
 
@@ -10620,6 +10622,7 @@ Options for `Version`.
 
 Name | Type | Description 
 -----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 
 

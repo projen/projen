@@ -1,3 +1,4 @@
+import * as chalk from 'chalk';
 import * as yargs from 'yargs';
 import * as logging from '../logging';
 import { TaskRuntime } from '../tasks';
@@ -39,13 +40,23 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
       throw new Error(`${name}: unable to resolve subtask with name "${name}"`);
     }
 
+    if (task.description) {
+      writeln(`${chalk.underline('description')}: ${task.description}`);
+    }
+
+    for (const [k, v] of Object.entries(task.env ?? {})) {
+      writeln(`${chalk.underline('env')}: ${k}=${v}`);
+    }
+
     for (const step of task.steps ?? []) {
       if (step.spawn) {
-        writeln(`${step.spawn}:`);
-        inspectTask(step.spawn, indent + 3);
+        writeln(`- ${chalk.bold(step.spawn)}`);
+        inspectTask(step.spawn, indent + 2);
       } else if (step.exec) {
-        writeln(step.exec);
+        writeln(`- exec: ${step.exec}`);
+      } else if (step.builtin) {
+        writeln(`- builtin: ${step.builtin}`);
       }
     }
-  };
+  }
 }
