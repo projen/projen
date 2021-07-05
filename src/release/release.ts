@@ -188,7 +188,7 @@ export class Release extends Component {
       name: options.branch,
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
-      workflowName: options.releaseWorkflowName ?? 'Release',
+      workflowName: options.releaseWorkflowName ?? 'release',
     };
 
     this.branches.push(this.defaultBranch);
