@@ -1,4 +1,4 @@
-import { TaskCategory, TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
+import { TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -24,11 +24,6 @@ export class Task {
   public readonly description?: string;
 
   /**
-   * The start menu category of the task.
-   */
-  public readonly category?: TaskCategory;
-
-  /**
    * A command to execute which determines if the task should be skipped. If it
    * returns a zero exit code, the task will not be executed.
    */
@@ -41,7 +36,6 @@ export class Task {
   constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
     this.description = props.description;
-    this.category = props.category;
     this.condition = props.condition;
     this.cwd = props.cwd;
 
@@ -177,7 +171,6 @@ export class Task {
   public _renderSpec(): TaskSpec {
     return {
       name: this.name,
-      category: this.category,
       description: this.description,
       env: this._env,
       steps: this._steps,

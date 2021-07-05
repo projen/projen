@@ -4,7 +4,7 @@ import { Component } from './component';
 import { Eslint, EslintOptions } from './eslint';
 import { NodeProject, NodeProjectOptions } from './node-project';
 import { SampleDir } from './sample-file';
-import { Task, TaskCategory } from './tasks';
+import { Task } from './tasks';
 import { TextFile } from './textfile';
 import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
 import { TypedocDocgen } from './typescript-typedoc';
@@ -189,7 +189,6 @@ export class TypeScriptProject extends NodeProject {
 
     this.watchTask = this.addTask('watch', {
       description: 'Watch & compile in the background',
-      category: TaskCategory.BUILD,
       exec: 'tsc --build -w',
     });
 
@@ -215,7 +214,6 @@ export class TypeScriptProject extends NodeProject {
     if (options.package ?? true) {
       this.packageTask = this.addTask('package', {
         description: 'Create an npm tarball',
-        category: TaskCategory.RELEASE,
       });
 
       this.packageTask.exec('rm -fr dist');

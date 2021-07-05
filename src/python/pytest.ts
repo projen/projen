@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { SampleDir } from '../sample-file';
-import { Task, TaskCategory } from '../tasks';
+import { Task } from '../tasks';
 import { PythonProject } from './python-project';
 
 export interface PytestOptions {
@@ -36,7 +36,6 @@ export class Pytest extends Component {
 
     this.testTask = project.addTask('test', {
       description: 'Runs tests',
-      category: TaskCategory.TEST,
       exec: [
         'pytest',
         ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),

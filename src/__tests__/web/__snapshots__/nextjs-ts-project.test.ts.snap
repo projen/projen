@@ -358,7 +358,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -377,7 +376,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
         "steps": Array [
@@ -395,7 +393,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "dev": Object {
-        "category": "00.build",
         "description": "Starts the Next.js application in development mode",
         "name": "dev",
         "steps": Array [
@@ -405,7 +402,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "export": Object {
-        "category": "20.release",
         "description": "Exports the application for production deployment",
         "name": "export",
         "steps": Array [
@@ -415,7 +411,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "server": Object {
-        "category": "20.release",
         "description": "Starts the Next.js application in production mode",
         "name": "server",
         "steps": Array [
@@ -425,7 +420,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "telemetry": Object {
-        "category": "99.misc",
         "description": "Checks the status of Next.js telemetry collection",
         "name": "telemetry",
         "steps": Array [
@@ -435,7 +429,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -445,7 +438,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
       },
@@ -492,7 +484,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [

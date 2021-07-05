@@ -3,7 +3,6 @@ import * as fs from 'fs-extra';
 import * as semver from 'semver';
 import { Component } from './component';
 import { JsonFile } from './json';
-import { TaskCategory } from './tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
 export enum CdkApprovalLevel {
@@ -125,25 +124,21 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     const synth = this.addTask('synth', {
       description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
-      category: TaskCategory.BUILD,
       exec: 'cdk synth',
     });
 
     this.addTask('deploy', {
       description: 'Deploys your CDK app to the AWS cloud',
-      category: TaskCategory.RELEASE,
       exec: 'cdk deploy',
     });
 
     this.addTask('destroy', {
       description: 'Destroys your cdk app in the AWS cloud',
-      category: TaskCategory.RELEASE,
       exec: 'cdk destroy',
     });
 
     this.addTask('diff', {
       description: 'Diffs the currently deployed app against your code',
-      category: TaskCategory.MISC,
       exec: 'cdk diff',
     });
 

@@ -686,7 +686,7 @@ export class NodePackage extends Component {
   }
 
   private determineVersion(currVersion?: string) {
-    if (!this.isRelaseBuild) {
+    if (!this.isReleaseBuild) {
       return '0.0.0';
     }
 
@@ -696,7 +696,7 @@ export class NodePackage extends Component {
   /**
    * Returns `true` if this is a CI release build.
    */
-  private get isRelaseBuild(): boolean {
+  private get isReleaseBuild(): boolean {
     return isTruthy(process.env.RELEASE);
   }
 

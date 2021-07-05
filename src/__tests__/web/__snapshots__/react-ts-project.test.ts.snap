@@ -354,7 +354,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -373,7 +372,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
       },
@@ -386,7 +384,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "dev": Object {
-        "category": "00.build",
         "description": "Starts the react application",
         "name": "dev",
         "steps": Array [
@@ -396,7 +393,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "eject": Object {
-        "category": "99.misc",
         "description": "Ejects your React application from react-scripts",
         "name": "eject",
         "steps": Array [
@@ -406,7 +402,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -419,7 +414,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
       },
@@ -466,7 +460,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [

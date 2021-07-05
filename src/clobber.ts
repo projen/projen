@@ -1,6 +1,5 @@
 import { Component } from './component';
 import { Project } from './project';
-import { TaskCategory } from './tasks';
 
 export class Clobber extends Component {
   constructor(project: Project) {
@@ -8,7 +7,6 @@ export class Clobber extends Component {
 
     const task = this.project.addTask('clobber', {
       description: 'hard resets to HEAD of origin and cleans the local repo',
-      category: TaskCategory.MAINTAIN,
       condition: 'git diff --exit-code > /dev/null',
       env: {
         BRANCH: '$(git branch --show-current)',

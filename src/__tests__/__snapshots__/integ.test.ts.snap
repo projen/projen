@@ -928,7 +928,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -947,7 +946,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "bump": Object {
-        "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
@@ -962,7 +960,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -995,7 +992,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compat": Object {
-        "category": "20.release",
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
         "steps": Array [
@@ -1007,7 +1003,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
         "steps": Array [
@@ -1028,7 +1023,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "docgen": Object {
-        "category": "20.release",
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
         "steps": Array [
@@ -1038,7 +1032,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "eslint": Object {
-        "category": "10.test",
         "description": "Runs eslint against the codebase",
         "name": "eslint",
         "steps": Array [
@@ -1048,7 +1041,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Create an npm tarball",
         "name": "package",
         "steps": Array [
@@ -1058,7 +1050,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -1077,7 +1068,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
@@ -1087,7 +1077,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:update": Object {
-        "category": "10.test",
         "description": "Update jest snapshots",
         "name": "test:update",
         "steps": Array [
@@ -1097,7 +1086,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:watch": Object {
-        "category": "10.test",
         "description": "Run jest in watch mode",
         "name": "test:watch",
         "steps": Array [
@@ -1107,7 +1095,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "unbump": Object {
-        "category": "20.release",
         "description": "Restores version to 0.0.0",
         "env": Object {
           "CHANGELOG": ".changelog.tmp.md",
@@ -1142,7 +1129,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [
@@ -2249,7 +2235,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -2259,7 +2244,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -2292,7 +2276,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compat": Object {
-        "category": "20.release",
         "description": "Perform API compatibility check against latest version",
         "name": "compat",
         "steps": Array [
@@ -2304,7 +2287,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
         "steps": Array [
@@ -2328,7 +2310,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "docgen": Object {
-        "category": "20.release",
         "description": "Generate API.md from .jsii manifest",
         "name": "docgen",
         "steps": Array [
@@ -2338,7 +2319,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "eslint": Object {
-        "category": "10.test",
         "description": "Runs eslint against the codebase",
         "name": "eslint",
         "steps": Array [
@@ -2348,7 +2328,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Create an npm tarball",
         "name": "package",
         "steps": Array [
@@ -2358,7 +2337,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -2380,7 +2358,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
@@ -2390,7 +2367,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:update": Object {
-        "category": "10.test",
         "description": "Update jest snapshots",
         "name": "test:update",
         "steps": Array [
@@ -2400,7 +2376,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "test:watch": Object {
-        "category": "10.test",
         "description": "Run jest in watch mode",
         "name": "test:watch",
         "steps": Array [
@@ -2452,7 +2427,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [
@@ -3677,7 +3651,6 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -3687,7 +3660,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -3720,7 +3692,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
         "steps": Array [
@@ -3738,7 +3709,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "eslint": Object {
-        "category": "10.test",
         "description": "Runs eslint against the codebase",
         "name": "eslint",
         "steps": Array [
@@ -3748,7 +3718,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "package": Object {
-        "category": "20.release",
         "description": "Create an npm tarball",
         "name": "package",
         "steps": Array [
@@ -3767,7 +3736,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -3789,7 +3757,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
         "steps": Array [
@@ -3799,7 +3766,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:update": Object {
-        "category": "10.test",
         "description": "Update jest snapshots",
         "name": "test:update",
         "steps": Array [
@@ -3809,7 +3775,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "test:watch": Object {
-        "category": "10.test",
         "description": "Run jest in watch mode",
         "name": "test:watch",
         "steps": Array [
@@ -3861,7 +3826,6 @@ tsconfig.tsbuildinfo
         ],
       },
       "watch": Object {
-        "category": "00.build",
         "description": "Watch & compile in the background",
         "name": "watch",
         "steps": Array [
@@ -4870,7 +4834,6 @@ junit.xml
     },
     "tasks": Object {
       "build": Object {
-        "category": "00.build",
         "description": "Full release build (test+compile)",
         "name": "build",
         "steps": Array [
@@ -4880,7 +4843,6 @@ junit.xml
         ],
       },
       "bump": Object {
-        "category": "20.release",
         "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
         "description": "Bumps version based on latest git tag and generates a changelog entry",
         "env": Object {
@@ -4895,7 +4857,6 @@ junit.xml
         ],
       },
       "clobber": Object {
-        "category": "30.maintain",
         "condition": "git diff --exit-code > /dev/null",
         "description": "hard resets to HEAD of origin and cleans the local repo",
         "env": Object {
@@ -4928,7 +4889,6 @@ junit.xml
         ],
       },
       "compile": Object {
-        "category": "00.build",
         "description": "Only compile",
         "name": "compile",
       },
@@ -4941,7 +4901,6 @@ junit.xml
         ],
       },
       "test": Object {
-        "category": "10.test",
         "description": "Run tests",
         "name": "test",
         "steps": Array [
@@ -4954,12 +4913,10 @@ junit.xml
         ],
       },
       "test:compile": Object {
-        "category": "10.test",
         "description": "compiles the test code",
         "name": "test:compile",
       },
       "test:update": Object {
-        "category": "10.test",
         "description": "Update jest snapshots",
         "name": "test:update",
         "steps": Array [
@@ -4969,7 +4926,6 @@ junit.xml
         ],
       },
       "test:watch": Object {
-        "category": "10.test",
         "description": "Run jest in watch mode",
         "name": "test:watch",
         "steps": Array [
@@ -4979,7 +4935,6 @@ junit.xml
         ],
       },
       "unbump": Object {
-        "category": "20.release",
         "description": "Restores version to 0.0.0",
         "env": Object {
           "CHANGELOG": ".changelog.tmp.md",
