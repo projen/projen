@@ -584,7 +584,7 @@ export class NodeProject extends Project {
         ].join('\n'),
       });
 
-      const workflow = this.createBuildWorkflow('Build', {
+      const workflow = this.createBuildWorkflow('build', {
         jobId: buildJobId,
         trigger: {
           pull_request: { },
