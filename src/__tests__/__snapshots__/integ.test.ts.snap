@@ -363,7 +363,7 @@ jobs:
     container:
       image: jsii/superchain
   release_npm:
-    name: Release to NPM
+    name: Release to npm
     needs: release
     runs-on: ubuntu-latest
     permissions:
@@ -377,9 +377,9 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
-          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
+          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
     container:
       image: jsii/superchain
   release_maven:
@@ -405,7 +405,7 @@ jobs:
     container:
       image: jsii/superchain
   release_pypi:
-    name: Release to PyPi
+    name: Release to PyPI
     needs: release
     runs-on: ubuntu-latest
     permissions:
@@ -1042,6 +1042,51 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "publish:maven": Object {
+        "description": "Publish this package to Maven Central",
+        "name": "publish:maven",
+        "requiredEnv": Array [
+          "MAVEN_GPG_PRIVATE_KEY",
+          "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
+          "MAVEN_PASSWORD",
+          "MAVEN_USERNAME",
+          "MAVEN_STAGING_PROFILE_ID",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "npx -p jsii-release@latest jsii-release-maven",
+          },
+        ],
+      },
+      "publish:npm": Object {
+        "description": "Publish this package to the npm Registry",
+        "env": Object {
+          "NPM_DIST_TAG": "latest",
+          "NPM_REGISTRY": "registry.npmjs.org",
+        },
+        "name": "publish:npm",
+        "requiredEnv": Array [
+          "NPM_TOKEN",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "npx -p jsii-release@latest jsii-release-npm",
+          },
+        ],
+      },
+      "publish:pypi": Object {
+        "description": "Publish this package to The Python Package Index (PyPI)",
+        "name": "publish:pypi",
+        "requiredEnv": Array [
+          "TWINE_USERNAME",
+          "TWINE_PASSWORD",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "npx -p jsii-release@latest jsii-release-pypi",
+          },
+        ],
+      },
       "release": Object {
         "description": "Prepare a release from \\"master\\" branch",
         "env": Object {
@@ -1579,6 +1624,9 @@ project.synth();
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
+      "publish:maven": "npx projen publish:maven",
+      "publish:npm": "npx projen publish:npm",
+      "publish:pypi": "npx projen publish:pypi",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",

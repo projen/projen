@@ -1,6 +1,6 @@
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
-import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './publisher';
+import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -138,19 +138,20 @@ export class JsiiProject extends TypeScriptProject {
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
     super({
+      repository: options.repositoryUrl,
+      authorName: options.author,
+      authorEmail,
+      authorUrl,
+
       ...options,
+
       workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
 
       // this is needed temporarily because our release workflows use the 'gh'
       // cli and its not yet available in jsii/superchain
       releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       releaseToNpm: false, // we have a jsii release workflow
-      repository: options.repositoryUrl,
-      authorName: options.author,
-      ...options,
       disableTsconfig: true, // jsii generates its own tsconfig.json
-      authorEmail,
-      authorUrl,
     });
 
     const srcdir = this.srcdir;

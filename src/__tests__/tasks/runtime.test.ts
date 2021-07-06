@@ -213,7 +213,21 @@ test('env is inherited from parent tasks', () => {
   ]);
 });
 
-function executeTask(p: Project, taskName: string) {
+test('requiredEnv can be used to specify required environment variables', () => {
+  const p = new TestProject();
+  p.addTask('my-task', {
+    requiredEnv: ['ENV1', 'ENV2', 'ENV3'],
+    exec: 'echo "$ENV1 $ENV2 $ENV3"',
+  });
+
+  expect(() => executeTask(p, 'my-task')).toThrow(/missing required environment variables: ENV1,ENV2,ENV3/);
+  expect(() => executeTask(p, 'my-task', { ENV1: 'env1' })).toThrow(/missing required environment variables: ENV2,ENV3/);
+  expect(executeTask(p, 'my-task', { ENV1: 'env1', ENV2: 'env2', ENV3: 'env3' })).toStrictEqual([
+    'env1 env2 env3',
+  ]);
+});
+
+function executeTask(p: Project, taskName: string, env: Record<string, string> = {}) {
   p.synth();
 
   const args = [
@@ -221,7 +235,7 @@ function executeTask(p: Project, taskName: string) {
     taskName,
   ].map(x => `"${x}"`);
 
-  const result = spawnSync(`"${process.execPath}"`, args, { cwd: p.outdir, shell: true, env: { ...process.env } });
+  const result = spawnSync(`"${process.execPath}"`, args, { cwd: p.outdir, shell: true, env: { ...process.env, ...env } });
   if (result.status !== 0) {
     throw new Error(`non-zero exit code: ${result.stderr.toString('utf-8')}`);
   }

@@ -2,9 +2,9 @@ import { Component } from '../component';
 import { TaskGithubWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
-import { Publisher } from '../publisher';
 import { Task } from '../tasks';
 import { Version } from '../version';
+import { Publisher } from './publisher';
 
 /**
  * Project options for release.

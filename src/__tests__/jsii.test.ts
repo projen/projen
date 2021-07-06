@@ -55,7 +55,22 @@ describe('maven repository options', () => {
       defaultReleaseBranch: 'master',
     });
 
-    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    const outdir = synthSnapshot(project);
+
+    expect(outdir['.projen/tasks.json'].tasks['publish:maven']).toStrictEqual({
+      name: 'publish:maven',
+      description: 'Publish this package to Maven Central',
+      requiredEnv: [
+        'MAVEN_GPG_PRIVATE_KEY',
+        'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
+        'MAVEN_PASSWORD',
+        'MAVEN_USERNAME',
+        'MAVEN_STAGING_PROFILE_ID',
+      ],
+      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+    });
+
+    const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
     expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
     expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
@@ -77,7 +92,25 @@ describe('maven repository options', () => {
       defaultReleaseBranch: 'master',
     });
 
-    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    const outdir = synthSnapshot(project);
+
+    expect(outdir['.projen/tasks.json'].tasks['publish:maven']).toStrictEqual({
+      name: 'publish:maven',
+      description: 'Publish this package to Maven Central',
+      env: {
+        MAVEN_ENDPOINT: 'https://s01.oss.sonatype.org',
+      },
+      requiredEnv: [
+        'MAVEN_GPG_PRIVATE_KEY',
+        'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
+        'MAVEN_PASSWORD',
+        'MAVEN_USERNAME',
+        'MAVEN_STAGING_PROFILE_ID',
+      ],
+      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+    });
+
+    const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
     expect(workflow).toContain('MAVEN_ENDPOINT: https://s01.oss.sonatype.org');
     expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
@@ -101,7 +134,26 @@ describe('maven repository options', () => {
       defaultReleaseBranch: 'master',
     });
 
-    const workflow = synthSnapshot(project)['.github/workflows/release.yml'];
+    const outdir = synthSnapshot(project);
+
+    expect(outdir['.projen/tasks.json'].tasks['publish:maven']).toStrictEqual({
+      name: 'publish:maven',
+      description: 'Publish this package to Maven Central',
+      env: {
+        MAVEN_SERVER_ID: 'github',
+        MAVEN_REPOSITORY_URL: 'https://maven.pkg.github.com/eladb',
+      },
+      requiredEnv: [
+        'MAVEN_GPG_PRIVATE_KEY',
+        'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
+        'MAVEN_PASSWORD',
+        'MAVEN_USERNAME',
+        'MAVEN_STAGING_PROFILE_ID',
+      ],
+      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+    });
+
+    const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('MAVEN_SERVER_ID: github');
     expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
   });
