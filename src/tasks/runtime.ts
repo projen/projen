@@ -95,6 +95,19 @@ class RunTask {
       return;
     }
 
+    // verify we required environment variables are defined
+    const merged = { ...process.env, ...this.env };
+    const missing = new Array<string>();
+    for (const name of task.requiredEnv ?? []) {
+      if ((!(name in merged))) {
+        missing.push(name);
+      }
+    }
+
+    if (missing.length > 0) {
+      throw new Error(`missing required environment variables: ${missing.join(',')}`);
+    }
+
     for (const step of task.steps) {
       if (step.say) {
         logging.info(this.fmtLog(step.say));

@@ -3720,6 +3720,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
@@ -6755,6 +6756,7 @@ new tasks.Task(name: string, props?: TaskOptions)
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 
@@ -7059,6 +7061,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 
 __Returns__:
@@ -11464,6 +11467,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
+**requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
 
 
 
@@ -11481,6 +11485,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+**requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
 
 
 
@@ -11499,6 +11504,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
+**requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
 **steps**?🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Task steps.<br/>__*Optional*__
 
 
