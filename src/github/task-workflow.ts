@@ -154,7 +154,8 @@ export class TaskGithubWorkflow extends GithubWorkflow {
     const postBuildSteps = options.postBuildSteps ?? [];
     const finalSteps = options.finalSteps ?? [];
 
-    const antitamperSteps = options.antitamper ? [{
+    const antitamper = options.antitamper ?? true;
+    const antitamperSteps = antitamper ? [{
       name: 'Anti-tamper check',
       run: 'git diff --ignore-space-at-eol --exit-code',
     }] : [];

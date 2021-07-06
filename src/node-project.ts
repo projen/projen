@@ -600,7 +600,7 @@ export class NodeProject extends Project {
       });
 
       const workflow = this.createBuildWorkflow({
-        name: 'Build',
+        name: 'build',
         jobId: buildJobId,
         trigger: {
           pullRequest: { },
@@ -980,7 +980,7 @@ export class NodeProject extends Project {
         CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
         ...options.env ?? {},
       },
-      antitamper: options.antitamper || project.antitamper,
+      antitamper: options.antitamper ?? project.antitamper,
       buildStep: {
         name: 'Build',
         run: project.runTaskCommand(options.task),

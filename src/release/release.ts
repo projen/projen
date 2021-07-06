@@ -287,6 +287,12 @@ export class Release extends Component {
     releaseTask.spawn(this.task);
     releaseTask.spawn(this.version.unbumpTask);
 
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    if (this.antitamper) {
+      releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
+    }
+
     const postBuildSteps = new Array<JobStep>(...this.postBuildSteps);
 
     const finalSteps = new Array<JobStep>();
@@ -343,11 +349,11 @@ export class Release extends Component {
         // otherwise tags are not checked out
         'fetch-depth': 0,
       },
-      antitamper: this.antitamper,
+      antitamper: false,
       preBuildSteps,
       task: this.task,
       buildStep: {
-        name: this.task.name,
+        name: 'Release',
         run: this.project.runTaskCommand(releaseTask),
       },
       postBuildSteps,
