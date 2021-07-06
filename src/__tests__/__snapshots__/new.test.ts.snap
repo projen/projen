@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`--no-git wont create a git repository 1`] = `undefined`;
-
 exports[`can choose from one of multiple external project types 1`] = `
 Object {
   ".eslintrc.json": Object {

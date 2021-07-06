@@ -161,15 +161,6 @@ describe('git', () => {
   });
 });
 
-test('--no-git wont create a git repository', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'project', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
-
-    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
-    expect(projenrc).toMatchSnapshot();
-  }, { git: false });
-});
-
 function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
   const outdir = mkdtemp();
   try {
