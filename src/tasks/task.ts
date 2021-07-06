@@ -32,6 +32,7 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
+  private readonly requiredEnv?: string[]
 
   constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
@@ -41,6 +42,7 @@ export class Task {
 
     this._env = props.env ?? {};
     this._steps = [];
+    this.requiredEnv = props.requiredEnv;
 
     if (props.exec) {
       this.exec(props.exec);
@@ -173,6 +175,7 @@ export class Task {
       name: this.name,
       description: this.description,
       env: this._env,
+      requiredEnv: this.requiredEnv,
       steps: this._steps,
       condition: this.condition,
       cwd: this.cwd,

@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { workflows } from './github';
-import { JobPermission, JobPermissions } from './github/workflows-model';
+import { Job, JobPermission, JobPermissions } from './github/workflows-model';
 import { Project } from './project';
 
 const JSII_RELEASE_VERSION = 'latest';
@@ -70,35 +70,23 @@ export class Publisher extends Component {
   public publishToNpm(options: JsiiReleaseNpm = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
 
-    // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-    const npmTokenSecret = options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN');
-
-    const permissions: JobPermissions = {
-      contents: JobPermission.READ,
-      packages: isGitHubPackages ? JobPermission.WRITE : undefined,
-    };
-
-    this.jobs.release_npm = {
-      permissions: permissions,
-      name: 'Release to NPM',
-      needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
-      container: {
-        image: 'jsii/superchain',
+    this.jobs.release_npm = this.createPublishJob({
+      name: 'npm',
+      command: 'jsii-release-npm',
+      registryName: 'the npm Registry',
+      env: {
+        NPM_DIST_TAG: options.distTag,
+        NPM_REGISTRY: options.registry,
       },
-      steps: [
-        this.renderDownloadArtifactStep(),
-        {
-          name: 'Release',
-          run: this.renderJsiiReleaseCommand('jsii-release-npm'),
-          env: {
-            NPM_TOKEN: `\${{ secrets.${npmTokenSecret} }}`,
-            NPM_DIST_TAG: options.distTag!,
-            NPM_REGISTRY: options.registry!,
-          },
-        },
-      ],
-    };
+      permissions: {
+        contents: JobPermission.READ,
+        packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+      },
+      secrets: {
+        // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
+        NPM_TOKEN: options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN'),
+      },
+    });
   }
 
   /**
@@ -106,26 +94,14 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: JsiiReleaseNuget = {}) {
-    const nugetApiKeySecret = options.nugetApiKeySecret ?? 'NUGET_API_KEY';
-    this.jobs.release_nuget = {
-      name: 'Release to Nuget',
-      permissions: { contents: JobPermission.READ },
-      needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
-      container: {
-        image: 'jsii/superchain',
+    this.jobs.release_nuget = this.createPublishJob({
+      name: 'NuGet',
+      command: 'jsii-release-nuget',
+      registryName: 'NuGet Gallery',
+      secrets: {
+        NUGET_API_KEY: options.nugetApiKeySecret ?? 'NUGET_API_KEY',
       },
-      steps: [
-        this.renderDownloadArtifactStep(),
-        {
-          name: 'Release',
-          run: this.renderJsiiReleaseCommand('jsii-release-nuget'),
-          env: {
-            NUGET_API_KEY: `\${{ secrets.${nugetApiKeySecret} }}`,
-          },
-        },
-      ],
-    };
+    });
   }
 
   /**
@@ -133,37 +109,23 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToMaven(options: JsiiReleaseMaven = {}) {
-    const mavenGpgPrivateKeySecret = options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY';
-    const mavenGpgPrivateKeyPassphrase = options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE';
-    const mavenUsername = options.mavenUsername ?? 'MAVEN_USERNAME';
-    const mavenPassword = options.mavenPassword ?? 'MAVEN_PASSWORD';
-    const mavenStagingProfileId = options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID';
-    this.jobs.release_maven = {
-      name: 'Release to Maven',
-      permissions: { contents: JobPermission.READ },
-      needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
-      container: {
-        image: 'jsii/superchain',
+    this.jobs.release_maven = this.createPublishJob({
+      name: 'Maven',
+      registryName: 'Maven Central',
+      command: 'jsii-release-maven',
+      env: {
+        MAVEN_ENDPOINT: options.mavenEndpoint,
+        MAVEN_SERVER_ID: options.mavenServerId,
+        MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
-      steps: [
-        this.renderDownloadArtifactStep(),
-        {
-          name: 'Release',
-          run: this.renderJsiiReleaseCommand('jsii-release-maven'),
-          env: {
-            MAVEN_ENDPOINT: options.mavenEndpoint!,
-            MAVEN_SERVER_ID: options.mavenServerId!,
-            MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl!,
-            MAVEN_GPG_PRIVATE_KEY: `\${{ secrets.${mavenGpgPrivateKeySecret} }}`,
-            MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: `\${{ secrets.${mavenGpgPrivateKeyPassphrase} }}`,
-            MAVEN_PASSWORD: `\${{ secrets.${mavenPassword} }}`,
-            MAVEN_USERNAME: `\${{ secrets.${mavenUsername} }}`,
-            MAVEN_STAGING_PROFILE_ID: `\${{ secrets.${mavenStagingProfileId} }}`,
-          },
-        },
-      ],
-    };
+      secrets: {
+        MAVEN_GPG_PRIVATE_KEY: options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
+        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
+        MAVEN_PASSWORD: options.mavenPassword ?? 'MAVEN_PASSWORD',
+        MAVEN_USERNAME: options.mavenUsername ?? 'MAVEN_USERNAME',
+        MAVEN_STAGING_PROFILE_ID: options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+      },
+    });
   }
 
   /**
@@ -171,29 +133,18 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: JsiiReleasePyPi = {}) {
-    const twineUsername = options.twineUsernameSecret ?? 'TWINE_USERNAME';
-    const twinePassword = options.twinePasswordSecret ?? 'TWINE_PASSWORD';
-    this.jobs.release_pypi = {
-      name: 'Release to PyPi',
-      permissions: { contents: JobPermission.READ },
-      needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
-      container: {
-        image: 'jsii/superchain',
+    this.jobs.release_pypi = this.createPublishJob({
+      name: 'PyPI',
+      registryName: 'The Python Package Index (PyPI)',
+      command: 'jsii-release-pypi',
+      env: {
+        TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
-      steps: [
-        this.renderDownloadArtifactStep(),
-        {
-          name: 'Release',
-          run: this.renderJsiiReleaseCommand('jsii-release-pypi'),
-          env: {
-            TWINE_USERNAME: `\${{ secrets.${twineUsername} }}`,
-            TWINE_PASSWORD: `\${{ secrets.${twinePassword} }}`,
-            ...(options.twineRegistryUrl && { TWINE_REPOSITORY_URL: options.twineRegistryUrl }),
-          },
-        },
-      ],
-    };
+      secrets: {
+        TWINE_USERNAME: options.twinePasswordSecret ?? 'TWINE_USERNAME',
+        TWINE_PASSWORD: options.twinePasswordSecret ?? 'TWINE_PASSWORD',
+      },
+    });
   }
 
   /**
@@ -201,47 +152,92 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: JsiiReleaseGo = {}) {
-    const githubTokenSecret = options.githubTokenSecret ?? 'GO_GITHUB_TOKEN';
-    this.jobs.release_golang = {
-      name: 'Release to Go',
-      permissions: { contents: JobPermission.READ },
+    this.jobs.release_golang = this.createPublishJob({
+      name: 'Go',
+      command: 'jsii-release-golang',
+      registryName: 'GitHub',
+      env: {
+        GITHUB_REPO: options.githubRepo,
+        GIT_BRANCH: options.gitBranch,
+        GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
+        GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
+        GIT_COMMIT_MESSAGE: options.gitCommitMessage,
+      },
+      secrets: {
+        GITHUB_TOKEN: options.githubTokenSecret ?? 'GO_GITHUB_TOKEN',
+      },
+    });
+  }
+
+  private createPublishJob(opts: PublishJobOptions): Job {
+    const requiredEnv = new Array<string>();
+    const jobEnv: Record<string, string> = {};
+
+    for (const [name, secretName] of Object.entries(opts.secrets ?? {})) {
+      requiredEnv.push(name);
+      jobEnv[name] = `\${{ secrets.${secretName} }}`;
+    }
+
+    const task = this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}`, {
+      description: `Publish this package to ${opts.registryName}`,
+      env: opts.env,
+      requiredEnv: requiredEnv,
+      exec: `npx -p jsii-release@${this.jsiiReleaseVersion} ${opts.command}`,
+    });
+
+    return {
+      name: `Release to ${opts.name}`,
+      permissions: opts.permissions ? opts.permissions : { contents: JobPermission.READ },
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
       container: {
-        image: 'jsii/superchain',
+        image: opts.image ?? 'jsii/superchain',
       },
       steps: [
-        this.renderDownloadArtifactStep(),
+        {
+          name: 'Download build artifacts',
+          uses: 'actions/download-artifact@v2',
+          with: {
+            name: this.artifactName,
+            path: 'dist', // this must be "dist" for jsii-release
+          },
+        },
         {
           name: 'Release',
-          run: this.renderJsiiReleaseCommand('jsii-release-golang'),
-          env: {
-            GITHUB_REPO: options.githubRepo!,
-            GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
-            GIT_BRANCH: options.gitBranch!,
-            GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
-            GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
-            GIT_COMMIT_MESSAGE: options.gitCommitMessage!,
-          },
+          run: this.project.runTaskCommand(task),
+          env: jobEnv,
         },
       ],
     };
   }
+}
 
-  private renderJsiiReleaseCommand(subcommand: string) {
-    return `npx -p jsii-release@${this.jsiiReleaseVersion} ${subcommand}`;
-  }
+interface PublishTaskOptions {
+  /**
+   * The jsii-release command to execute.
+   */
+  readonly command: string;
 
-  private renderDownloadArtifactStep() {
-    return {
-      name: 'Download build artifacts',
-      uses: 'actions/download-artifact@v2',
-      with: {
-        name: this.artifactName,
-        path: 'dist', // this is where jsii-release expects the output to do
-      },
-    };
-  }
+  /**
+   * Environment variables to set
+   */
+  readonly env?: Record<string, any>;
+
+  /**
+   * The display name of the registry (for description)
+   */
+  readonly registryName: string;
+
+  /**
+   * Job permissions
+   */
+  readonly permissions?: JobPermissions;
+}
+
+interface PublishJobOptions extends PublishTaskOptions {
+  readonly image?: string;
+  readonly name: string;
+  readonly secrets?: { [name: string]: string };
 }
 
 /**
@@ -451,3 +447,4 @@ export interface JsiiReleaseGo {
    */
   readonly gitCommitMessage?: string;
 }
+

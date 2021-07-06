@@ -313,7 +313,25 @@ test('"builtin" can be used to execute builtin commands', () => {
       },
     },
   });
+});
 
+test('"requiredEnv" can be used to specify required environment variables', () => {
+  const p = new TestProject();
+  p.addTask('foo', {
+    requiredEnv: ['MISSING1', 'MISSING2', 'NOT_MISSING'],
+  });
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      foo: {
+        name: 'foo',
+        requiredEnv: [
+          'MISSING1', 'MISSING2', 'NOT_MISSING',
+        ],
+      },
+    },
+  });
 });
 
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {

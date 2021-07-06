@@ -28,6 +28,12 @@ export interface TaskCommonOptions {
   readonly env?: { [name: string]: string };
 
   /**
+   * A set of environment variables that must be defined in order to execute
+   * this task. Task execution will fail if one of these is not defined.
+   */
+  readonly requiredEnv?: string[];
+
+  /**
    * A shell command which determines if the this task should be executed. If
    * the program exits with a zero exit code, steps will be executed. A non-zero
    * code means that task will be skipped.

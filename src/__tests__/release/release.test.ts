@@ -99,6 +99,7 @@ test('publisher (defaults)', () => {
   // THEN
   const outdir = synthSnapshot(project);
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
 });
 
 test('publishers are added as jobs to all release workflows', () => {
@@ -182,6 +183,7 @@ test('majorVersion can be 0', () => {
   // THEN
   const outdir = synthSnapshot(project);
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
 });
 
 test('prerelease can be specified per branch', () => {
@@ -203,6 +205,7 @@ test('prerelease can be specified per branch', () => {
   const outdir = synthSnapshot(project);
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
   expect(outdir['.github/workflows/release.10.x.yml']).toMatchSnapshot();
+  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
 });
 
 test('releaseBranches can be use to define additional branches', () => {
