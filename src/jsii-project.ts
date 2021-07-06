@@ -1,6 +1,6 @@
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
-import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './publisher';
+import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';

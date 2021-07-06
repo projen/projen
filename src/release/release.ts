@@ -1,9 +1,9 @@
 import { Component } from '../component';
 import { workflows, GithubWorkflow } from '../github';
 import { Project } from '../project';
-import { Publisher } from '../publisher';
 import { Task } from '../tasks';
 import { Version } from '../version';
+import { Publisher } from './publisher';
 
 const BUILD_JOBID = 'release';
 

@@ -1,7 +1,7 @@
-import { Component } from './component';
-import { workflows } from './github';
-import { Job, JobPermission, JobPermissions } from './github/workflows-model';
-import { Project } from './project';
+import { Component } from '../component';
+import { workflows } from '../github';
+import { Job, JobPermission, JobPermissions } from '../github/workflows-model';
+import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
