@@ -304,7 +304,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^12.19.16",
+        "version": "^12.19.0",
       },
       Object {
         "name": "@types/react",
@@ -700,7 +700,7 @@ tsconfig.tsbuildinfo
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
       "@types/jest": "*",
-      "@types/node": "^12.19.16",
+      "@types/node": "^12.19.0",
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^11",
