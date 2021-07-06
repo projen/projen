@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { DevEnvironmentDockerImage } from '../dev-env';
 import { FileBase } from '../file';
-import { GitpodOpenIn, GitpodOpenMode } from '../gitpod';
+import { Gitpod, GitpodOpenIn, GitpodOpenMode } from '../gitpod';
 import * as logging from '../logging';
 import { synthSnapshot, TestProject } from './util';
 
@@ -11,6 +11,32 @@ const GITPOD_FILE = '.gitpod.yml';
 const DEVCONTAINER_FILE = '.devcontainer.json';
 
 logging.disable();
+
+describe('dev environment constructor', () => {
+  test('for gitpod', () => {
+    // GIVEN
+    const project = new TestProject({
+      gitpod: false,
+    });
+    const task = project.addTask('dummy-task', { exec: 'echo hello' });
+
+    // WHEN
+    new Gitpod(project, {
+      dockerImage: DevEnvironmentDockerImage.fromImage('ubuntu:latest'),
+      prebuilds: {
+        pullRequests: true,
+      },
+      tasks: [task],
+      ports: ['3000'],
+      vscodeExtensions: ['dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=='],
+    });
+    project.synth();
+
+    // THEN
+    const outdir = synthSnapshot(project);
+    expect(outdir[GITPOD_FILE]).toMatchSnapshot();
+  });
+});
 
 describe('dev environment enable/disable', () => {
   test('given gitpod and devContainer are false', () => {
