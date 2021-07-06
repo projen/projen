@@ -1,7 +1,6 @@
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
 import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './publisher';
-import { TaskCategory } from './tasks';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -175,7 +174,6 @@ export class JsiiProject extends TypeScriptProject {
 
     const compatTask = this.addTask('compat', {
       description: 'Perform API compatibility check against latest version',
-      category: TaskCategory.RELEASE,
       exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
     });
 

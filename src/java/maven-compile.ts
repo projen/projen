@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task, TaskCategory } from '../tasks';
+import { Task } from '../tasks';
 import { Pom } from './pom';
 
 /**
@@ -42,7 +42,6 @@ export class MavenCompile extends Component {
 
     this.compileTask = project.addTask('compile', {
       description: 'Compile the main source files',
-      category: TaskCategory.BUILD,
       exec: 'mvn compiler:compile',
     });
   }

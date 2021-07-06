@@ -292,7 +292,15 @@ export class Gitpod extends Component implements IDevEnvironment {
     }
 
     if (options?.prebuilds) {
-      this.addPrebuilds(options?.prebuilds);
+      this.addPrebuilds(options.prebuilds);
+    }
+
+    if (options?.ports) {
+      this.addPorts(...options.ports);
+    }
+
+    if (options?.vscodeExtensions) {
+      this.addVscodeExtensions(...options.vscodeExtensions);
     }
 
     this.config = {

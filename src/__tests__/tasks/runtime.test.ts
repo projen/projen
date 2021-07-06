@@ -199,6 +199,20 @@ test('builtin tasks are scripts embedded inside projen', () => {
   ]);
 });
 
+test('env is inherited from parent tasks', () => {
+  const p = new TestProject();
+  const parent = p.addTask('parent', { env: { E1: 'parent1', E2: 'parent2' } });
+  const child = p.addTask('child', { env: { E2: 'child1', E3: 'child2' }, exec: 'echo "child: [$E1,$E2,$E3]"' });
+  parent.exec('echo "parent: [$E1,$E2,$E3]"');
+  parent.spawn(child);
+
+  const lines = executeTask(p, 'parent');
+  expect(lines).toStrictEqual([
+    'parent: [parent1,parent2,]',
+    'child: [parent1,child1,child2]',
+  ]);
+});
+
 function executeTask(p: Project, taskName: string) {
   p.synth();
 

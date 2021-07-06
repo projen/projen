@@ -474,13 +474,11 @@ test('projen synth is only executed for subprojects', () => {
   const rootBuildTask = snapshot['.projen/tasks.json'].tasks.build;
   const childBuildTask = snapshot['child/.projen/tasks.json'].tasks.build;
   expect(rootBuildTask).toStrictEqual({
-    category: '00.build',
     description: 'Full release build (test+compile)',
     name: 'build',
     steps: [{ exec: 'npx projen' }],
   });
   expect(childBuildTask).toStrictEqual({
-    category: '00.build',
     description: 'Full release build (test+compile)',
     name: 'build',
   });

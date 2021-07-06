@@ -173,7 +173,8 @@ export class Release extends Component {
     this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      versionFile: options.versionFile,
+      versionFile: this.versionFile,
+      artifactsDirectory: this.artifactsDirectory,
     });
 
     this.publisher = new Publisher(project, {
@@ -187,7 +188,7 @@ export class Release extends Component {
       name: options.branch,
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
-      workflowName: options.releaseWorkflowName ?? 'Release',
+      workflowName: options.releaseWorkflowName ?? 'release',
     };
 
     this.branches.push(this.defaultBranch);
@@ -258,7 +259,9 @@ export class Release extends Component {
 
     const preBuildSteps = new Array<JobStep>(...this.preBuildSteps);
 
-    const env: Record<string, string> = {};
+    const env: Record<string, string> = {
+      RELEASE: 'true',
+    };
 
     if (branch.majorVersion !== undefined) {
       env.MAJOR = branch.majorVersion.toString();
@@ -268,28 +271,23 @@ export class Release extends Component {
       env.PRERELEASE = branch.prerelease;
     }
 
-    preBuildSteps.push({
-      name: 'Bump to next version',
-      run: this.project.runTaskCommand(this.version.bumpTask),
-      env: Object.keys(env).length ? env : undefined,
+    // the "release" task prepares a release but does not publish anything. the
+    // output of the release task is: `dist`, `.version.txt`, and
+    // `.changelog.md`. this is what publish tasks expect.
+
+    // if this is the release for "main" or "master", just call it "release".
+    // otherwise, "release:BRANCH"
+    const releaseTaskName = (branch.name === 'main' || branch.name === 'master') ? 'release' : `release:${branch.name}`;
+    const releaseTask = this.project.addTask(releaseTaskName, {
+      description: `Prepare a release from "${branch.name}" branch`,
+      env,
     });
+
+    releaseTask.spawn(this.version.bumpTask);
+    releaseTask.spawn(this.task);
+    releaseTask.spawn(this.version.unbumpTask);
 
     const postBuildSteps = new Array<JobStep>(...this.postBuildSteps);
-
-    // create a backup of the version JSON file (e.g. package.json) because we
-    // are going to revert the bump and we need the version number in order to
-    // create the github release.
-    const versionJsonBackup = `${this.versionFile}.bak.json`;
-    postBuildSteps.push({
-      name: 'Backup version file',
-      run: `cp -f ${this.versionFile} ${versionJsonBackup}`,
-    });
-
-    // revert the bump so anti-tamper will not fail
-    postBuildSteps.push({
-      name: 'Unbump',
-      run: this.project.runTaskCommand(this.version.unbumpTask),
-    });
 
     const finalSteps = new Array<JobStep>();
 
@@ -302,7 +300,7 @@ export class Release extends Component {
     });
 
     // create a github release
-    const getVersion = `v$(node -p \"require(\'./${versionJsonBackup}\').version\")`;
+    const getVersion = `v$(cat ${this.version.bumpFile})`;
     finalSteps.push({
       name: 'Create release',
       if: noNewCommits,
@@ -336,7 +334,6 @@ export class Release extends Component {
       container: this.containerImage ? { image: this.containerImage } : undefined,
       env: {
         CI: 'true',
-        RELEASE: 'true',
       },
       permissions: {
         contents: JobPermission.WRITE,
@@ -351,7 +348,7 @@ export class Release extends Component {
       task: this.task,
       buildStep: {
         name: this.task.name,
-        run: this.project.runTaskCommand(this.task),
+        run: this.project.runTaskCommand(releaseTask),
       },
       postBuildSteps,
       finalSteps,
