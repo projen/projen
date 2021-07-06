@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { GenericGithubWorkflow } from '../github';
+import { TaskGithubWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Publisher } from '../publisher';
@@ -243,7 +243,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): GenericGithubWorkflow {
+  private createWorkflow(branch: ReleaseBranch): TaskGithubWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -293,15 +293,6 @@ export class Release extends Component {
 
     const finalSteps = new Array<JobStep>();
 
-    // anti-tamper check (fails if there were changes to committed files)
-    // this will identify any non-committed files generated during build (e.g. test snapshots)
-    if (this.antitamper) {
-      finalSteps.push({
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      });
-    }
-
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
     finalSteps.push({
@@ -335,7 +326,7 @@ export class Release extends Component {
       },
     });
 
-    return new GenericGithubWorkflow(github, {
+    return new TaskGithubWorkflow(github, {
       name: workflowName,
       jobId: Release.BUILD_JOBID,
       trigger: {
@@ -355,7 +346,7 @@ export class Release extends Component {
         // otherwise tags are not checked out
         'fetch-depth': 0,
       },
-      antitamperDisabled: true,
+      antitamper: this.antitamper,
       preBuildSteps,
       task: this.task,
       buildStep: {

@@ -7,7 +7,7 @@ function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
-export interface GenericGithubWorkflowOptions {
+export interface TaskGithubWorkflowOptions {
   /**
    * The workflow name.
    */
@@ -15,7 +15,7 @@ export interface GenericGithubWorkflowOptions {
 
   /**
    * The primary job id.
-   * @default "workflow"
+   * @default "build"
    */
   readonly jobId?: string;
 
@@ -32,7 +32,7 @@ export interface GenericGithubWorkflowOptions {
   /**
    * A directory name which contains artifacts to be uploaded (e.g. `dist`).
    *
-   * @default undefined
+   * @default - not set
    */
   readonly artifactsDirectory?: string;
 
@@ -45,16 +45,22 @@ export interface GenericGithubWorkflowOptions {
 
   /**
    * Initial steps to run before the source code checkout.
+   *
+   * @default - not set
    */
-  readonly initialSteps?: JobStep[];
+  readonly preCheckoutSteps?: JobStep[];
 
   /**
    * Override for the `with` property of the source code checkout step.
+   *
+   * @default - not set
    */
   readonly checkoutWith?: Record<string, any>;
 
   /**
    * Steps to run before the main build step.
+   *
+   * @default - not set
    */
   readonly preBuildSteps?: JobStep[];
 
@@ -65,22 +71,29 @@ export interface GenericGithubWorkflowOptions {
 
   /**
    * Main build step used in the workflow.
-   * @default {run: `projen ${task.name}`}
+   *
+   * @default - by default we will run `projen ${task.name}`
    */
   readonly buildStep?: JobStep;
 
   /**
-   * Steps to run after the main build step.
+   * Actions to run after the main build step.
+   *
+   * @default - not set
    */
   readonly postBuildSteps?: JobStep[];
 
   /**
-   * Disables anti-tamper checks in the workflow.
+   * Enables anti-tamper checks in the workflow.
+   *
+   * @default true
    */
-  readonly antitamperDisabled?: boolean;
+  readonly antitamper?: boolean;
 
   /**
-   * Job steps to run as the last .
+   * Actions to run as the last step in the job.
+   *
+   * @default - not set
    */
   readonly finalSteps?: JobStep[];
 
@@ -97,14 +110,14 @@ export interface GenericGithubWorkflowOptions {
 }
 
 /**
- * A GitHub generic workflow.
+ * A GitHub workflow for common build tasks within a project.
  */
-export class GenericGithubWorkflow extends GithubWorkflow {
+export class TaskGithubWorkflow extends GithubWorkflow {
   public static readonly DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
   public static readonly DEFAULT_JOB_ID = 'build';
   public static readonly UBUNTU_LATEST = 'ubuntu-latest';
 
-  public static getMainStep(options: GenericGithubWorkflowOptions) {
+  public static getMainStep(options: TaskGithubWorkflowOptions) {
     return options.buildStep ?? {
       name: options.task.name,
       run: `projen ${options.task.name}`,
@@ -114,14 +127,14 @@ export class GenericGithubWorkflow extends GithubWorkflow {
   readonly github: GitHub;
   readonly jobId: string;
 
-  constructor(github: GitHub, options: GenericGithubWorkflowOptions) {
+  constructor(github: GitHub, options: TaskGithubWorkflowOptions) {
     super(github, options.name);
-    this.jobId = options.jobId ?? GenericGithubWorkflow.DEFAULT_JOB_ID;
+    this.jobId = options.jobId ?? TaskGithubWorkflow.DEFAULT_JOB_ID;
     this.github = github;
     this.createWorkflow(options);
   }
 
-  protected createWorkflow(options: GenericGithubWorkflowOptions) {
+  protected createWorkflow(options: TaskGithubWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -135,16 +148,16 @@ export class GenericGithubWorkflow extends GithubWorkflow {
       workflowDispatch: {}, // allow manual triggering
     });
 
-    const initialSteps = options.initialSteps ?? [];
+    const preCheckoutSteps = options.preCheckoutSteps ?? [];
     const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
     const finalSteps = options.finalSteps ?? [];
 
-    const antitamperSteps = options.antitamperDisabled ? [] : [{
+    const antitamperSteps = options.antitamper ? [{
       name: 'Anti-tamper check',
       run: 'git diff --ignore-space-at-eol --exit-code',
-    }];
+    }] : [];
 
     if (options.artifactsDirectory) {
       finalSteps.push({
@@ -159,13 +172,13 @@ export class GenericGithubWorkflow extends GithubWorkflow {
     }
 
     const job: Mutable<Job> = {
-      runsOn: GenericGithubWorkflow.UBUNTU_LATEST,
+      runsOn: TaskGithubWorkflow.UBUNTU_LATEST,
       container: options.container,
       env: options.env,
       permissions: options.permissions,
       if: options.condition,
       steps: [
-        ...initialSteps,
+        ...preCheckoutSteps,
 
         // check out sources.
         {
@@ -190,7 +203,7 @@ export class GenericGithubWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        GenericGithubWorkflow.getMainStep(options),
+        TaskGithubWorkflow.getMainStep(options),
 
         ...postBuildSteps,
 
