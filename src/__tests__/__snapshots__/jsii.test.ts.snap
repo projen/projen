@@ -60,8 +60,10 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
+          NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
     container:
       image: jsii/superchain
@@ -78,8 +80,13 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:go
+        run: npx -p jsii-release@latest jsii-release-golang
         env:
+          GITHUB_REPO: github.com/foo/bar
+          GIT_BRANCH: custom-branch
+          GIT_USER_NAME: custom user
+          GIT_USER_EMAIL: custom@email.com
+          GIT_COMMIT_MESSAGE: custom commit message
           GITHUB_TOKEN: \${{ secrets.CUSTOM_SECRET }}
     container:
       image: jsii/superchain
@@ -146,8 +153,10 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
+          NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
     container:
       image: jsii/superchain
@@ -164,8 +173,10 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:go
+        run: npx -p jsii-release@latest jsii-release-golang
         env:
+          GIT_USER_NAME: GitHub Actions
+          GIT_USER_EMAIL: github-actions@github.com
           GITHUB_TOKEN: \${{ secrets.GO_GITHUB_TOKEN }}
     container:
       image: jsii/superchain
