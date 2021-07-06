@@ -19,7 +19,7 @@
     },
     {
       "name": "@types/node",
-      "version": "^10.17.0",
+      "version": "^12.19.16",
       "type": "build"
     },
     {
