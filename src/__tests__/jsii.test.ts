@@ -69,6 +69,11 @@ describe('maven repository options', () => {
       ],
       steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
     });
+
+    const workflow = outdir['.github/workflows/release.yml'];
+    expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
+    expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
+    expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
   });
 
   test('use nexus repo new endpoint', () => {
@@ -104,6 +109,12 @@ describe('maven repository options', () => {
       ],
       steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
     });
+
+    const workflow = outdir['.github/workflows/release.yml'];
+    expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
+    expect(workflow).toContain('MAVEN_ENDPOINT: https://s01.oss.sonatype.org');
+    expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
+    expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
   });
 
   test('use github as repository', () => {
@@ -141,6 +152,10 @@ describe('maven repository options', () => {
       ],
       steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
     });
+
+    const workflow = outdir['.github/workflows/release.yml'];
+    expect(workflow).toContain('MAVEN_SERVER_ID: github');
+    expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
   });
 });
 

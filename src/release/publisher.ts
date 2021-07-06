@@ -171,18 +171,22 @@ export class Publisher extends Component {
 
   private createPublishJob(opts: PublishJobOptions): Job {
     const requiredEnv = new Array<string>();
-    const jobEnv: Record<string, string> = {};
 
+    // jobEnv is the env we pass to the github job (task environment + secrets).
+    const jobEnv: Record<string, string> = { ...opts.env };
     for (const [name, secretName] of Object.entries(opts.secrets ?? {})) {
       requiredEnv.push(name);
       jobEnv[name] = `\${{ secrets.${secretName} }}`;
     }
 
-    const task = this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}`, {
+    // define a task which can be used through `projen publish:xxx`.
+    const command = `npx -p jsii-release@${this.jsiiReleaseVersion} ${opts.command}`;
+
+    this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}`, {
       description: `Publish this package to ${opts.registryName}`,
       env: opts.env,
       requiredEnv: requiredEnv,
-      exec: `npx -p jsii-release@${this.jsiiReleaseVersion} ${opts.command}`,
+      exec: command,
     });
 
     return {
@@ -204,7 +208,8 @@ export class Publisher extends Component {
         },
         {
           name: 'Release',
-          run: this.project.runTaskCommand(task),
+          // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+          run: command,
           env: jobEnv,
         },
       ],

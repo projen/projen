@@ -375,8 +375,10 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:npm
+        run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
+          NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
     container:
       image: jsii/superchain
@@ -393,7 +395,7 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:maven
+        run: npx -p jsii-release@latest jsii-release-maven
         env:
           MAVEN_GPG_PRIVATE_KEY: \${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: \${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}
@@ -415,7 +417,7 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: npx projen publish:pypi
+        run: npx -p jsii-release@latest jsii-release-pypi
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
