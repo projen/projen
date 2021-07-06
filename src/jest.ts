@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as semver from 'semver';
 import { NodeProject } from './node-project';
-import { TaskCategory } from './tasks';
 import { TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
@@ -736,7 +735,6 @@ export class Jest {
     if (!testWatch) {
       this.project.addTask('test:watch', {
         description: 'Run jest in watch mode',
-        category: TaskCategory.TEST,
         exec: 'jest --watch',
       });
     }
@@ -745,7 +743,6 @@ export class Jest {
     if (!testUpdate) {
       this.project.addTask('test:update', {
         description: 'Update jest snapshots',
-        category: TaskCategory.TEST,
         exec: 'jest --updateSnapshot',
       });
     }

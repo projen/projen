@@ -1,9 +1,9 @@
+import * as path from 'path';
 import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
 import { SourceCode } from '../source-code';
-import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
@@ -88,6 +88,7 @@ export class ReactProject extends NodeProject {
         fileExt: 'jsx',
         srcdir: this.srcdir,
       });
+      new SampleDir(this, 'public', { sourceDir: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
     }
   }
 }
@@ -157,6 +158,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         fileExt: 'tsx',
         srcdir: this.srcdir,
       });
+      new SampleDir(this, 'public', { sourceDir: path.join(__dirname, '..', '..', 'assets', 'web', 'react') });
     }
   }
 }
@@ -215,7 +217,6 @@ export class ReactComponent extends Component {
     // Create React App CLI commands, see: https://create-react-app.dev/docs/available-scripts/
     project.addTask('dev', {
       description: 'Starts the react application',
-      category: TaskCategory.BUILD,
       exec: `${reactScripts} start`,
     });
 
@@ -223,7 +224,6 @@ export class ReactComponent extends Component {
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',
-      category: TaskCategory.MISC,
       // eject is not necessary to rewire
       exec: 'react-scripts eject',
     });
@@ -454,72 +454,6 @@ class ReactSampleCode extends Component {
         'index.css': indexCss.join('\n'),
         ['reportWebVitals.' + fileExtWithoutX]: reportWebVitalsJs.join('\n'),
         ['setupTests.' + fileExtWithoutX]: setupTestsJs.join('\n'),
-      },
-    });
-
-    const indexHtml = [
-      '<!DOCTYPE html>',
-      '<html lang="en">',
-      '  <head>',
-      '    <meta charset="utf-8" />',
-      '    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />',
-      '    <meta name = "viewport" content = "width=device-width, initial-scale=1" />',
-      '    <meta name="theme-color" content = "#000000" />',
-      '    <meta name="description" content = "Web site created using create-react-app" />',
-      '    <link rel="apple-touch-icon" href = "%PUBLIC_URL%/logo192.png" />',
-      '    <!--',
-      '      manifest.json provides metadata used when your web app is installed on a',
-      "      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/",
-      '    -->',
-      '    <link rel="manifest" href = "%PUBLIC_URL%/manifest.json" />',
-      '    <!--',
-      '      Notice the use of % PUBLIC_URL % in the tags above.',
-      '      It will be replaced with the URL of the`public` folder during the build.',
-      '      Only files inside the`public` folder can be referenced from the HTML.',
-      '',
-      '      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will',
-      '      work correctly both with client - side routing and a non - root public URL.',
-      '      Learn how to configure a non-root public URL by running`npm run build`.',
-      '    -->',
-      '    <title>React App </title>',
-      '  </head>',
-      '  <body>',
-      '    <noscript>You need to enable JavaScript to run this app.</noscript>',
-      '    <div id="root"> </div>',
-      '    <!--',
-      '      This HTML file is a template.',
-      '      If you open it directly in the browser, you will see an empty page.',
-      '      You can add webfonts, meta tags, or analytics to this file.',
-      '      The build step will place the bundled scripts into the <body> tag.',
-      '',
-      '      To begin the development, run `npm start` or `yarn start`.',
-      '      To create a production bundle, use `npm run build` or `yarn build`.',
-      '    -->',
-      '  </body>',
-      '</html>',
-    ];
-
-    const publicManifest = {
-      short_name: 'React App',
-      name: 'Create React App Sample',
-      icons: [],
-      start_url: '.',
-      display: 'standalone',
-      theme_color: '#000000',
-      background_color: '#ffffff',
-    };
-
-    const robotTxt = [
-      '# https://www.robotstxt.org/robotstxt.html',
-      'User-agent: *',
-      'Disallow:',
-    ];
-
-    new SampleDir(project, 'public', {
-      files: {
-        'index.html': indexHtml.join('\n'),
-        'manifest.json': JSON.stringify(publicManifest, undefined, 2),
-        'robots.txt': robotTxt.join('\n'),
       },
     });
   }

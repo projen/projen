@@ -57,6 +57,7 @@ Name|Description
 [github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [java.JavaProject](#projen-java-javaproject)|Java project.
 [java.Junit](#projen-java-junit)|Implements JUnit-based testing.
 [java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
@@ -180,6 +181,8 @@ Name|Description
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
+[github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
@@ -268,7 +271,6 @@ Name|Description
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[tasks.TaskCategory](#projen-tasks-taskcategory)|*No description*
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
 
@@ -362,6 +364,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -554,6 +558,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -710,6 +716,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -805,8 +813,12 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
+  * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "^3.2.34"
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
 
 
@@ -817,6 +829,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
+**cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -918,6 +932,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1056,6 +1072,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1205,6 +1223,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -1313,8 +1333,10 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "^3.2.34"
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
 
 
@@ -1324,6 +1346,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -1360,6 +1383,8 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -2400,6 +2425,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3135,6 +3162,8 @@ new NodeProject(options: NodeProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -3596,6 +3625,8 @@ new Project(options: ProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
 
 
 
@@ -3685,7 +3716,6 @@ addTask(name: string, props?: TaskOptions): Task
 
 * **name** (<code>string</code>)  The task name to add.
 * **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task properties.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -3996,7 +4026,8 @@ new SampleDir(project: Project, dir: string, options: SampleDirOptions)
 * **project** (<code>[Project](#projen-project)</code>)  Parent project to add files to.
 * **dir** (<code>string</code>)  directory to add files to.
 * **options** (<code>[SampleDirOptions](#projen-samplediroptions)</code>)  options for which files to create.
-  * **files** (<code>Map<string, string></code>)  The files to render into the directory. 
+  * **files** (<code>Map<string, string></code>)  The files to render into the directory. __*Optional*__
+  * **sourceDir** (<code>string</code>)  Absolute path to a directory to copy files from (does not need to be text files). __*Optional*__
 
 
 ### Methods
@@ -4034,9 +4065,10 @@ new SampleFile(project: Project, filePath: string, options: SampleFileOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  - the project to tie this file to.
-* **filePath** (<code>string</code>)  - the relative path in the project o put the file.
+* **filePath** (<code>string</code>)  - the relative path in the project to put the file.
 * **options** (<code>[SampleFileOptions](#projen-samplefileoptions)</code>)  - the options for the file.
-  * **contents** (<code>string</code>)  The contents of the file to write. 
+  * **contents** (<code>string</code>)  The contents of the file to write. __*Optional*__
+  * **sourcePath** (<code>string</code>)  Absolute path to a file to copy the contents from (does not need to be a text file). __*Optional*__
 
 
 ### Methods
@@ -4362,6 +4394,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4486,6 +4520,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4610,6 +4646,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -4878,6 +4916,7 @@ new Version(project: Project, options: VersionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
+  * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
 
 
@@ -4887,8 +4926,9 @@ new Version(project: Project, options: VersionOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**bumpFile**🔹 | <code>string</code> | An uncommitted JSON file that will include a "version" field with the bumped version.
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**changelogFile**🔹 | <code>string</code> | <span></span>
+**changelogFile**🔹 | <code>string</code> | The name of the changelog file created by the `bump` task.
 **unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 *static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
 
@@ -5497,6 +5537,37 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 
 
 
+## class Stale 🔹 <a id="projen-github-stale"></a>
+
+Warns and then closes issues and PRs that have had no activity for a specified amount of time.
+
+The default configuration will:
+
+  * Add a "Stale" label to pull requests after 14 days and closed after 2 days
+  * Add a "Stale" label to issues after 60 days and closed after 7 days
+  * If a comment is added, the label will be removed and timer is restarted.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.Stale(github: GitHub, options?: StaleOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  *No description*
+  * **issues** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale issues. __*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
+  * **pullRequest** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale pull requests. __*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
+
+
+
+
 ## class JavaProject 🔹 <a id="projen-java-javaproject"></a>
 
 Java project.
@@ -5526,6 +5597,8 @@ new java.JavaProject(options: JavaProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
   * **groupId** (<code>string</code>)  This is generally unique amongst an organization or a project. 
   * **version** (<code>string</code>)  This is the last piece of the naming puzzle. 
@@ -6266,6 +6339,8 @@ new python.PythonProject(options: PythonProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
   * **version** (<code>string</code>)  Version of the package. 
@@ -6676,7 +6751,6 @@ new tasks.Task(name: string, props?: TaskOptions)
 
 * **name** (<code>string</code>)  *No description*
 * **props** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  *No description*
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -6692,7 +6766,6 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | Task name.
 **steps**🔹 | <code>Array<[tasks.TaskStep](#projen-tasks-taskstep)></code> | Returns an immutable copy of all the step specifications of the task.
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | The start menu category of the task.<br/>__*Optional*__
 **condition**?🔹 | <code>string</code> | A command to execute which determines if the task should be skipped.<br/>__*Optional*__
 **description**?🔹 | <code>string</code> | The description of the task.<br/>__*Optional*__
 
@@ -6982,7 +7055,6 @@ addTask(name: string, options?: TaskOptions): Task
 
 * **name** (<code>string</code>)  The name of the task.
 * **options** (<code>[tasks.TaskOptions](#projen-tasks-taskoptions)</code>)  Task options.
-  * **category** (<code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code>)  Category for start menu. __*Default*__: TaskCategory.MISC
   * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
   * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
@@ -7282,6 +7354,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -7450,6 +7524,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -7647,6 +7723,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -7812,6 +7890,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -8082,6 +8162,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8204,6 +8286,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8254,12 +8338,16 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "^3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -8339,6 +8427,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8476,6 +8566,8 @@ Name | Type | Description
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?⚠️ | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?⚠️ | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?⚠️ | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8515,6 +8607,8 @@ Name | Type | Description
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -8522,7 +8616,7 @@ Name | Type | Description
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "^3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -8610,6 +8704,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8741,6 +8837,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -8871,6 +8969,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -9635,6 +9735,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -9964,6 +10066,8 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -10036,6 +10140,8 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?🔹 | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 
 
 
@@ -10093,7 +10199,8 @@ SampleDir options.
 
 Name | Type | Description 
 -----|------|-------------
-**files**🔹 | <code>Map<string, string></code> | The files to render into the directory.
+**files**?🔹 | <code>Map<string, string></code> | The files to render into the directory.<br/>__*Optional*__
+**sourceDir**?🔹 | <code>string</code> | Absolute path to a directory to copy files from (does not need to be text files).<br/>__*Optional*__
 
 
 
@@ -10106,7 +10213,8 @@ Options for the SampleFile object.
 
 Name | Type | Description 
 -----|------|-------------
-**contents**🔹 | <code>string</code> | The contents of the file to write.
+**contents**?🔹 | <code>string</code> | The contents of the file to write.<br/>__*Optional*__
+**sourcePath**?🔹 | <code>string</code> | Absolute path to a file to copy the contents from (does not need to be a text file).<br/>__*Optional*__
 
 
 
@@ -10324,6 +10432,8 @@ Name | Type | Description
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?⚠️ | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?⚠️ | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?⚠️ | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -10440,6 +10550,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -10510,6 +10622,7 @@ Options for `Version`.
 
 Name | Type | Description 
 -----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 
 
@@ -10730,6 +10843,38 @@ Name | Type | Description
 
 
 
+## struct StaleBehavior 🔹 <a id="projen-github-stalebehavior"></a>
+
+
+Stale behavior.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**closeMessage**?🔹 | <code>string</code> | The comment to add to the issue/PR when it's closed.<br/>__*Default*__: "Closing this pull request as it hasn\'t seen activity for a while. Please add a comment
+**daysBeforeClose**?🔹 | <code>number</code> | Days until the issue/PR is closed after it is marked as "Stale".<br/>__*Default*__: -
+**daysBeforeStale**?🔹 | <code>number</code> | How many days until the issue or pull request is marked as "Stale".<br/>__*Default*__: -
+**enabled**?🔹 | <code>boolean</code> | Determines if this behavior is enabled.<br/>__*Default*__: true
+**staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "Stale"
+**staleMessage**?🔹 | <code>string</code> | The comment to add to the issue/PR when it becomes stale.<br/>__*Default*__: "This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
+
+
+
+## struct StaleOptions 🔹 <a id="projen-github-staleoptions"></a>
+
+
+Options for `Stale`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**issues**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale issues.<br/>__*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
+**pullRequest**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale pull requests.<br/>__*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
+
+
+
 ## struct JavaProjectOptions 🔹 <a id="projen-java-javaprojectoptions"></a>
 
 
@@ -10765,6 +10910,8 @@ Name | Type | Description
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
 **url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
 
@@ -11178,6 +11325,8 @@ Name | Type | Description
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 **setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
 **venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
 
@@ -11311,7 +11460,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -11328,7 +11476,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -11348,7 +11495,6 @@ Specification of a single task.
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | Task name.
-**category**?🔹 | <code>[tasks.TaskCategory](#projen-tasks-taskcategory)</code> | Category for start menu.<br/>__*Default*__: TaskCategory.MISC
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -11620,6 +11766,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11751,6 +11899,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
@@ -11887,6 +12037,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Source directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -12030,6 +12182,8 @@ Name | Type | Description
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Optional*__
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
@@ -12258,19 +12412,6 @@ Name | Description
 **WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
 **INCREASE** 🔹|Always increase the version requirement to match the new version.
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
-
-
-## enum TaskCategory 🔹 <a id="projen-tasks-taskcategory"></a>
-
-
-
-Name | Description
------|-----
-**BUILD** 🔹|
-**TEST** 🔹|
-**RELEASE** 🔹|
-**MAINTAIN** 🔹|
-**MISC** 🔹|
 
 
 ## enum InternalConsoleOptions 🔹 <a id="projen-vscode-internalconsoleoptions"></a>

@@ -7,6 +7,7 @@ import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
 import { AutoApprove, AutoApproveOptions, GitHub, GitHubOptions } from './github';
+import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
@@ -94,6 +95,20 @@ export interface ProjectOptions extends GitHubOptions {
    * @default - auto approve is disabled
    */
   readonly autoApproveOptions?: AutoApproveOptions;
+
+  /**
+   * Auto-close stale issues and pull requests. To disable set `stale` to `false`.
+   *
+   * @default - see defaults in `StaleOptions`
+   */
+  readonly staleOptions?: StaleOptions;
+
+  /**
+   * Auto-close of stale issues and pull request. See `staleOptions` for options.
+   *
+   * @default true
+   */
+  readonly stale?: boolean;
 }
 
 /**
@@ -262,6 +277,11 @@ export class Project {
 
     if (options.autoApproveOptions) {
       this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
+    }
+
+    const stale = options.stale ?? true;
+    if (stale && this.github) {
+      new Stale(this.github, options.staleOptions);
     }
   }
 

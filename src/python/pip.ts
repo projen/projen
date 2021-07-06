@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { Dependency, DependencyType } from '../deps';
-import { Task, TaskCategory, TaskRuntime } from '../tasks';
+import { Task, TaskRuntime } from '../tasks';
 import { IPackageProvider, IPythonDeps } from './python-deps';
 import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';
@@ -24,7 +24,6 @@ export class Pip extends Component implements IPythonDeps {
 
     this.installTask = project.addTask('install', {
       description: 'Install and upgrade dependencies',
-      category: TaskCategory.BUILD,
     });
     this.installTask.exec('pip install --upgrade pip');
     this.installTask.exec('pip install -r requirements.txt');

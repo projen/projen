@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task, TaskCategory } from '../tasks';
+import { Task } from '../tasks';
 import { Pom } from './pom';
 
 /**
@@ -90,7 +90,6 @@ export class MavenPackaging extends Component {
 
     const distdir = options.distdir ?? 'dist/java';
     this.task = project.addTask('package', {
-      category: TaskCategory.RELEASE,
       description: `Creates a java deployment package under ${distdir}`,
       env,
     });

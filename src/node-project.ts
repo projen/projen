@@ -10,7 +10,7 @@ import { NodePackage, NodePackageManager, NodePackageOptions } from './node-pack
 import { Project, ProjectOptions } from './project';
 import { Publisher } from './publisher';
 import { Release, ReleaseProjectOptions } from './release';
-import { Task, TaskCategory } from './tasks';
+import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
 import { Version } from './version';
 
@@ -440,24 +440,20 @@ export class NodeProject extends Project {
 
     this.compileTask = this.addTask('compile', {
       description: 'Only compile',
-      category: TaskCategory.BUILD,
     });
 
     this.testCompileTask = this.addTask('test:compile', {
       description: 'compiles the test code',
-      category: TaskCategory.TEST,
     });
 
     this.testTask = this.addTask('test', {
       description: 'Run tests',
-      category: TaskCategory.TEST,
     });
 
     this.testTask.spawn(this.testCompileTask);
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
-      category: TaskCategory.BUILD,
     });
 
     // first, execute projen as the first thing during build
@@ -575,7 +571,20 @@ export class NodeProject extends Project {
         },
       });
 
-      const workflow = this.createBuildWorkflow('Build', {
+      // if we pushed changes, we need to mark the current commit as failed, so
+      // that GitHub auto-merge does not risk merging this commit before the
+      // event for the new commit has registered.
+      updateRepo.push({
+        if: hasChanges,
+        name: 'Fail check if self mutation happened',
+        run: [
+          'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
+          'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
+          'exit 1',
+        ].join('\n'),
+      });
+
+      const workflow = this.createBuildWorkflow('build', {
         jobId: buildJobId,
         trigger: {
           pull_request: { },
@@ -802,7 +811,7 @@ export class NodeProject extends Project {
     if (this.nodeVersion) {
       install.push({
         name: 'Setup Node.js',
-        uses: 'actions/setup-node@v1',
+        uses: 'actions/setup-node@v2.2.0',
         with: { 'node-version': this.nodeVersion },
       });
     }

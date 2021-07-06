@@ -210,7 +210,7 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
       throw new Error(`fqn field is missing from enum option ${option.name}`);
     }
     const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
-    const enumChoice = String(arg).toUpperCase().replace('-', '_'); // custom-value -> CUSTOM_VALUE
+    const enumChoice = String(arg).toUpperCase().replace(/-/g, '_'); // custom-value -> CUSTOM_VALUE
     const js = `${parts.slice(1).join('.')}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
     const importName = parts[1]; // -> web
     return { js, importName: importName };

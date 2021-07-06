@@ -2,7 +2,6 @@ import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { TaskCategory } from './tasks';
 
 export interface EslintOptions {
   /**
@@ -120,7 +119,6 @@ export class Eslint extends Component {
 
     const eslint = project.addTask('eslint', {
       description: 'Runs eslint against the codebase',
-      category: TaskCategory.TEST,
       exec: [
         'eslint',
         `--ext ${fileExtensions.join(',')}`,

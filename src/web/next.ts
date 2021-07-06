@@ -2,7 +2,6 @@ import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
 import { SampleDir } from '../sample-file';
-import { TaskCategory } from '../tasks';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
@@ -234,7 +233,6 @@ export class NextComponent extends Component {
     // NextJS CLI commands, see: https://nextjs.org/docs/api-reference/cli
     project.addTask('dev', {
       description: 'Starts the Next.js application in development mode',
-      category: TaskCategory.BUILD,
       exec: 'next dev',
     });
 
@@ -242,19 +240,16 @@ export class NextComponent extends Component {
 
     project.addTask('export', {
       description: 'Exports the application for production deployment',
-      category: TaskCategory.RELEASE,
       exec: 'next export',
     });
 
     project.addTask('server', {
       description: 'Starts the Next.js application in production mode',
-      category: TaskCategory.RELEASE,
       exec: 'next start',
     });
 
     project.addTask('telemetry', {
       description: 'Checks the status of Next.js telemetry collection',
-      category: TaskCategory.MISC,
       exec: 'next telemetry',
     });
 
