@@ -135,7 +135,7 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
-  public static readonly BUILD_JOBID = 'release';
+  private static readonly BUILD_JOBID = 'release';
   /**
    * Package publisher.
    */

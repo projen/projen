@@ -524,6 +524,8 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
+      if (!this.github) { throw new Error('no github support'); }
+
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -599,11 +601,14 @@ export class NodeProject extends Project {
         ].join('\n'),
       });
 
-      const workflow = this.createBuildWorkflow({
+      this.buildWorkflow = new TaskGithubWorkflow(this.github, {
         name: 'build',
         jobId: buildJobId,
         trigger: {
           pullRequest: { },
+        },
+        env: {
+          CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
         },
         permissions: {
           checks: JobPermission.WRITE,
@@ -617,14 +622,16 @@ export class NodeProject extends Project {
         preBuildSteps: this.installWorkflowSteps, // install dependencies steps
 
         task: this.buildTask,
+        buildStep: {
+          name: 'Build',
+          run: this.runTaskCommand(this.buildTask),
+        },
 
         postBuildSteps,
 
-        antitamper: !mutableBuilds, // <-- disable anti-tamper if build workflow is mutable
+        antitamper: !mutableBuilds ?? this.antitamper, // <-- disable anti-tamper if build workflow is mutable
         container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
       });
-
-      this.buildWorkflow = workflow;
       this.buildWorkflowJobId = buildJobId;
     }
 
@@ -967,25 +974,6 @@ export class NodeProject extends Project {
       '# parcel-bundler cache (https://parceljs.org/)',
       '.cache',
     );
-  }
-
-  private createBuildWorkflow(options: NodeWorkflowOptions): TaskGithubWorkflow {
-    const github = this.github;
-    if (!github) { throw new Error('no github support'); }
-
-    const project = github.project as NodeProject;
-    return new TaskGithubWorkflow(github, {
-      ...options,
-      env: {
-        CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        ...options.env ?? {},
-      },
-      antitamper: options.antitamper ?? project.antitamper,
-      buildStep: {
-        name: 'Build',
-        run: project.runTaskCommand(options.task),
-      },
-    });
   }
 
   /**
