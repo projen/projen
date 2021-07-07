@@ -557,6 +557,22 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "publish:npm": Object {
+        "description": "Publish this package to the npm Registry",
+        "env": Object {
+          "NPM_DIST_TAG": "latest",
+          "NPM_REGISTRY": "registry.npmjs.org",
+        },
+        "name": "publish:npm",
+        "requiredEnv": Array [
+          "NPM_TOKEN",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "npx -p jsii-release@latest jsii-release-npm",
+          },
+        ],
+      },
       "release": Object {
         "description": "Prepare a release from \\"main\\" branch",
         "env": Object {
@@ -990,6 +1006,7 @@ project.synth();",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
+      "publish:npm": "npx projen publish:npm",
       "release": "npx projen release",
       "start": "npx projen start",
       "test": "npx projen test",
