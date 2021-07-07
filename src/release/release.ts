@@ -6,6 +6,8 @@ import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
 
+const BUILD_JOBID = 'release';
+
 /**
  * Project options for release.
  */
@@ -135,7 +137,6 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
-  private static readonly BUILD_JOBID = 'release';
   /**
    * Package publisher.
    */
@@ -179,7 +180,7 @@ export class Release extends Component {
 
     this.publisher = new Publisher(project, {
       artifactName: this.artifactsDirectory,
-      buildJobId: Release.BUILD_JOBID,
+      buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
 
@@ -257,6 +258,7 @@ export class Release extends Component {
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
+    // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = new Array<JobStep>(...this.preBuildSteps);
 
     const env: Record<string, string> = {
@@ -332,7 +334,7 @@ export class Release extends Component {
 
     return new TaskGithubWorkflow(github, {
       name: workflowName,
-      jobId: Release.BUILD_JOBID,
+      jobId: BUILD_JOBID,
       trigger: {
         schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
         push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
@@ -351,11 +353,7 @@ export class Release extends Component {
       },
       antitamper: false,
       preBuildSteps,
-      task: this.task,
-      buildStep: {
-        name: 'Release',
-        run: this.project.runTaskCommand(releaseTask),
-      },
+      task: releaseTask,
       postBuildSteps,
       finalSteps,
     });

@@ -24,7 +24,7 @@ const publisher = new Publisher(project, {
 });
 ```
 
-`workflow` is a `GithubWorkflow` with at least one job (in this case named `my-build-job`) whichj is responsile to build the code and upload a GitHub workflows artifact (named `dist` in this case) which will then be consumed by the publishing jobs.
+`workflow` is a `GithubWorkflow` with at least one job (in this case named `my-build-job`) which is responsile to build the code and upload a GitHub workflows artifact (named `dist` in this case) which will then be consumed by the publishing jobs.
 
 This component is opinionated about the subdirectory structure of the artifact:
 

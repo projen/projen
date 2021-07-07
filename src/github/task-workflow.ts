@@ -3,9 +3,8 @@ import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';
 import { ContainerOptions, Job, JobPermissions, JobStep, Triggers } from './workflows-model';
 
-function context(value: string) {
-  return `\${{ ${value} }}`;
-}
+const DEFAULT_JOB_ID = 'build';
+const UBUNTU_LATEST = 'ubuntu-latest';
 
 export interface TaskGithubWorkflowOptions {
   /**
@@ -113,32 +112,28 @@ export interface TaskGithubWorkflowOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskGithubWorkflow extends GithubWorkflow {
-  public static readonly DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
-  public static readonly DEFAULT_JOB_ID = 'build';
-  public static readonly UBUNTU_LATEST = 'ubuntu-latest';
+  readonly github: GitHub;
+  readonly jobId: string;
 
-  public static getMainStep(options: TaskGithubWorkflowOptions) {
+  constructor(github: GitHub, options: TaskGithubWorkflowOptions) {
+    super(github, options.name);
+    this.jobId = options.jobId ?? DEFAULT_JOB_ID;
+    this.github = github;
+    this.createWorkflow(options);
+  }
+
+  private getMainStep(options: TaskGithubWorkflowOptions) {
     return options.buildStep ?? {
       name: options.task.name,
       run: `projen ${options.task.name}`,
     };
   }
 
-  readonly github: GitHub;
-  readonly jobId: string;
-
-  constructor(github: GitHub, options: TaskGithubWorkflowOptions) {
-    super(github, options.name);
-    this.jobId = options.jobId ?? TaskGithubWorkflow.DEFAULT_JOB_ID;
-    this.github = github;
-    this.createWorkflow(options);
-  }
-
   protected createWorkflow(options: TaskGithubWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
-        throw new Error('"issueComment" should not be used as a trigger due to a security concern');
+        throw new Error('Trigger "issueComment" should not be used due to a security concern');
       }
 
       this.on(options.trigger);
@@ -173,7 +168,7 @@ export class TaskGithubWorkflow extends GithubWorkflow {
     }
 
     const job: Mutable<Job> = {
-      runsOn: TaskGithubWorkflow.UBUNTU_LATEST,
+      runsOn: UBUNTU_LATEST,
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -204,7 +199,7 @@ export class TaskGithubWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        TaskGithubWorkflow.getMainStep(options),
+        this.getMainStep(options),
 
         ...postBuildSteps,
 
