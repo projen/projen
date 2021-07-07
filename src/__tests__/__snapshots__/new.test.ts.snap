@@ -544,9 +544,6 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "rm -fr dist",
-          },
-          Object {
             "exec": "mkdir -p dist/js",
           },
           Object {
@@ -580,6 +577,9 @@ tsconfig.tsbuildinfo
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },

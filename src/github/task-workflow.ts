@@ -6,7 +6,7 @@ import { ContainerOptions, Job, JobPermissions, JobStep, Triggers } from './work
 const DEFAULT_JOB_ID = 'build';
 const UBUNTU_LATEST = 'ubuntu-latest';
 
-export interface TaskGithubWorkflowOptions {
+export interface TaskWorkflowOptions {
   /**
    * The workflow name.
    */
@@ -83,20 +83,6 @@ export interface TaskGithubWorkflowOptions {
   readonly postBuildSteps?: JobStep[];
 
   /**
-   * Enables anti-tamper checks in the workflow.
-   *
-   * @default true
-   */
-  readonly antitamper?: boolean;
-
-  /**
-   * Actions to run as the last step in the job.
-   *
-   * @default - not set
-   */
-  readonly finalSteps?: JobStep[];
-
-  /**
    * Workflow environment variables.
    * @default {}
    */
@@ -111,25 +97,15 @@ export interface TaskGithubWorkflowOptions {
 /**
  * A GitHub workflow for common build tasks within a project.
  */
-export class TaskGithubWorkflow extends GithubWorkflow {
+export class TaskWorkflow extends GithubWorkflow {
   readonly github: GitHub;
   readonly jobId: string;
 
-  constructor(github: GitHub, options: TaskGithubWorkflowOptions) {
+  constructor(github: GitHub, options: TaskWorkflowOptions) {
     super(github, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
     this.github = github;
-    this.createWorkflow(options);
-  }
 
-  protected getMainStep(options: TaskGithubWorkflowOptions) {
-    return options.buildStep ?? {
-      name: options.task.name,
-      run: this.github.project.runTaskCommand(options.task),
-    };
-  }
-
-  protected createWorkflow(options: TaskGithubWorkflowOptions) {
     if (options.trigger) {
       if (options.trigger.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
@@ -147,18 +123,13 @@ export class TaskGithubWorkflow extends GithubWorkflow {
     const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
-    const finalSteps = options.finalSteps ?? [];
-
-    const antitamper = options.antitamper ?? true;
-    const antitamperSteps = antitamper ? [{
-      name: 'Anti-tamper check',
-      run: 'git diff --ignore-space-at-eol --exit-code',
-    }] : [];
 
     if (options.artifactsDirectory) {
-      finalSteps.push({
+      postBuildSteps.push({
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
+        // Setting to always will ensure that this step will run even if
+        // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: 'always()',
         with: {
           name: options.artifactsDirectory,
@@ -167,7 +138,7 @@ export class TaskGithubWorkflow extends GithubWorkflow {
       });
     }
 
-    const job: Mutable<Job> = {
+    const job: Job = {
       runsOn: UBUNTU_LATEST,
       container: options.container,
       env: options.env,
@@ -183,10 +154,6 @@ export class TaskGithubWorkflow extends GithubWorkflow {
           ...checkoutWith,
         },
 
-        // perform an anti-tamper check immediately after we run projen.
-        ...antitamperSteps,
-
-
         // sets git identity so we can push later
         {
           name: 'Set git identity',
@@ -199,22 +166,15 @@ export class TaskGithubWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        this.getMainStep(options),
+        options.buildStep ?? {
+          name: options.task.name,
+          run: this.github.project.runTaskCommand(options.task),
+        },
 
         ...postBuildSteps,
-
-        // anti-tamper check (fails if there were changes to committed files)
-        // this will identify any non-committed files generated during build (e.g. test snapshots)
-        ...antitamperSteps,
-
-        ...finalSteps,
       ],
     };
 
     this.addJobs({ [this.jobId]: job });
-
-    return this;
   }
 }
-
-type Mutable<T> = { -readonly [P in keyof T]: T[P] };

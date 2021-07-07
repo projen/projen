@@ -7,13 +7,13 @@ Array [
     "uses": "actions/checkout@v2",
   },
   Object {
-    "name": "Anti-tamper check",
-    "run": "git diff --ignore-space-at-eol --exit-code",
-  },
-  Object {
     "name": "Set git identity",
     "run": "git config user.name \\"Automation\\"
 git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "name": "Anti-tamper check",
+    "run": "git diff --ignore-space-at-eol --exit-code",
   },
   Object {
     "name": "Install dependencies",

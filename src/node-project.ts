@@ -1,5 +1,5 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, TaskGithubWorkflow, TaskGithubWorkflowOptions } from './github';
+import { AutoMerge, DependabotOptions, TaskWorkflow } from './github';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
@@ -342,7 +342,7 @@ export class NodeProject extends Project {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  public readonly buildWorkflow?: TaskGithubWorkflow;
+  public readonly buildWorkflow?: TaskWorkflow;
   public readonly buildWorkflowJobId?: string;
 
   /**
@@ -535,6 +535,14 @@ export class NodeProject extends Project {
       const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
       const repoFullName = 'github.event.pull_request.head.repo.full_name';
 
+      // disable anti-tamper if build workflow is mutable
+      const antitamperSteps = (!mutableBuilds ?? this.antitamper) ? [{
+        // anti-tamper check (fails if there were changes to committed files)
+        // this will identify any non-committed files generated during build (e.g. test snapshots)
+        name: 'Anti-tamper check',
+        run: 'git diff --ignore-space-at-eol --exit-code',
+      }] : [];
+
       // run codecov if enabled or a secret token name is passed in
       // AND jest must be configured
       if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
@@ -600,7 +608,9 @@ export class NodeProject extends Project {
         ].join('\n'),
       });
 
-      this.buildWorkflow = new TaskGithubWorkflow(this.github, {
+      postBuildSteps.push(...antitamperSteps);
+
+      this.buildWorkflow = new TaskWorkflow(this.github, {
         name: 'build',
         jobId: buildJobId,
         trigger: {
@@ -618,13 +628,15 @@ export class NodeProject extends Project {
           repository: repo,
         } : undefined,
 
-        preBuildSteps: this.installWorkflowSteps, // install dependencies steps
+        preBuildSteps: [
+          ...antitamperSteps,
+          ...this.installWorkflowSteps, // install dependencies steps
+        ],
 
         task: this.buildTask,
 
         postBuildSteps,
 
-        antitamper: !mutableBuilds ?? this.antitamper, // <-- disable anti-tamper if build workflow is mutable
         container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
       });
       this.buildWorkflowJobId = buildJobId;
@@ -1031,5 +1043,3 @@ export class DependenciesUpgradeMechanism {
     this.binder(project);
   }
 }
-
-export type NodeWorkflowOptions = Omit<TaskGithubWorkflowOptions, 'buildStep'>;

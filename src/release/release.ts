@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { TaskGithubWorkflow } from '../github';
+import { TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Task } from '../tasks';
@@ -245,7 +245,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): TaskGithubWorkflow {
+  private createWorkflow(branch: ReleaseBranch): TaskWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -259,7 +259,7 @@ export class Release extends Component {
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
-    const preBuildSteps = new Array<JobStep>(...this.preBuildSteps);
+    const preBuildSteps = [...this.preBuildSteps];
 
     const env: Record<string, string> = {
       RELEASE: 'true',
@@ -295,13 +295,11 @@ export class Release extends Component {
       releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
     }
 
-    const postBuildSteps = new Array<JobStep>(...this.postBuildSteps);
-
-    const finalSteps = new Array<JobStep>();
+    const postBuildSteps = [...this.postBuildSteps];
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
-    finalSteps.push({
+    postBuildSteps.push({
       name: 'Check for new commits',
       id: gitRemoteStep,
       run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
@@ -309,7 +307,7 @@ export class Release extends Component {
 
     // create a github release
     const getVersion = `v$(cat ${this.version.bumpFile})`;
-    finalSteps.push({
+    postBuildSteps.push({
       name: 'Create release',
       if: noNewCommits,
       run: [
@@ -322,7 +320,7 @@ export class Release extends Component {
       },
     });
 
-    finalSteps.push({
+    postBuildSteps.push({
       name: 'Upload artifact',
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
@@ -332,7 +330,7 @@ export class Release extends Component {
       },
     });
 
-    return new TaskGithubWorkflow(github, {
+    return new TaskWorkflow(github, {
       name: workflowName,
       jobId: BUILD_JOBID,
       trigger: {
@@ -351,11 +349,9 @@ export class Release extends Component {
         // otherwise tags are not checked out
         'fetch-depth': 0,
       },
-      antitamper: false,
       preBuildSteps,
       task: releaseTask,
       postBuildSteps,
-      finalSteps,
     });
   }
 }

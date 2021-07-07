@@ -1,4 +1,4 @@
-import { TaskGithubWorkflow } from '../../github/task-workflow';
+import { TaskWorkflow } from '../../github/task-workflow';
 import { Task } from '../../tasks';
 import { synthSnapshot, TestProject } from '../util';
 
@@ -6,7 +6,7 @@ describe('task-workflow', () => {
   test('default', () => {
     const project = new TestProject();
 
-    new TaskGithubWorkflow(project.github!, {
+    new TaskWorkflow(project.github!, {
       name: 'task-workflow',
       task,
       permissions: {},
@@ -21,7 +21,7 @@ describe('task-workflow', () => {
   test('upload artifacts', () => {
     const project = new TestProject();
 
-    new TaskGithubWorkflow(project.github!, {
+    new TaskWorkflow(project.github!, {
       name: 'task-workflow',
       task,
       artifactsDirectory: './artifacts/',
@@ -36,7 +36,7 @@ describe('task-workflow', () => {
   test('issue comment error', () => {
     const project = new TestProject();
 
-    expect(() => new TaskGithubWorkflow(project.github!, {
+    expect(() => new TaskWorkflow(project.github!, {
       name: 'task-workflow',
       task,
       trigger: {
