@@ -5481,9 +5481,6 @@ Name | Type | Description
 -----|------|-------------
 **github**🔹 | <code>[github.GitHub](#projen-github-github)</code> | <span></span>
 **jobId**🔹 | <code>string</code> | <span></span>
-*static* **DEFAULT_JOB_ID**🔹 | <code>string</code> | <span></span>
-*static* **DEFAULT_TOKEN**🔹 | <code>string</code> | <span></span>
-*static* **UBUNTU_LATEST**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -5517,12 +5514,12 @@ protected createWorkflow(options: TaskGithubWorkflowOptions): TaskGithubWorkflow
 __Returns__:
 * <code>[github.TaskGithubWorkflow](#projen-github-taskgithubworkflow)</code>
 
-#### *static* getMainStep(options)🔹 <a id="projen-github-taskgithubworkflow-getmainstep"></a>
+#### protected getMainStep(options)🔹 <a id="projen-github-taskgithubworkflow-getmainstep"></a>
 
 
 
 ```ts
-static getMainStep(options: TaskGithubWorkflowOptions): JobStep
+protected getMainStep(options: TaskGithubWorkflowOptions): JobStep
 ```
 
 * **options** (<code>[github.TaskGithubWorkflowOptions](#projen-github-taskgithubworkflowoptions)</code>)  *No description*
