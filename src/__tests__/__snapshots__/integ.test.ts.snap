@@ -1095,6 +1095,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -3786,9 +3789,6 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "rm -fr dist",
-          },
-          Object {
             "exec": "mkdir -p dist/js",
           },
           Object {
@@ -4964,6 +4964,9 @@ junit.xml
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },

@@ -446,6 +446,9 @@ pull_request_rules:
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {

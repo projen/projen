@@ -141,7 +141,7 @@ export class Release extends Component {
    */
   public readonly publisher: Publisher;
 
-  private readonly task: Task;
+  private readonly buildTask: Task;
   private readonly version: Version;
   private readonly postBuildSteps: workflows.JobStep[];
   private readonly antitamper: boolean;
@@ -162,7 +162,7 @@ export class Release extends Component {
       throw new Error('"releaseBranches" is no longer an array. See type annotations');
     }
 
-    this.task = options.task;
+    this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.antitamper = options.antitamper ?? true;
@@ -281,8 +281,9 @@ export class Release extends Component {
       env,
     });
 
+    releaseTask.exec(`rm -fr ${this.artifactDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
-    releaseTask.spawn(this.task);
+    releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
     // anti-tamper check (fails if there were changes to committed files)
