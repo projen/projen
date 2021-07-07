@@ -217,6 +217,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -239,6 +242,9 @@ node_modules/
         "name": "release:10.x",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -260,6 +266,9 @@ node_modules/
         },
         "name": "release:2.x",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },
@@ -527,6 +536,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -548,6 +560,9 @@ node_modules/
         },
         "name": "release:foo",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },
@@ -743,6 +758,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -852,6 +870,9 @@ Object {
       },
       "name": "release",
       "steps": Array [
+        Object {
+          "exec": "rm -fr dist",
+        },
         Object {
           "spawn": "bump",
         },
@@ -1010,6 +1031,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -1122,6 +1146,9 @@ Object {
       "name": "release",
       "steps": Array [
         Object {
+          "exec": "rm -fr dist",
+        },
+        Object {
           "spawn": "bump",
         },
         Object {
@@ -1144,6 +1171,9 @@ Object {
       },
       "name": "release:10.x",
       "steps": Array [
+        Object {
+          "exec": "rm -fr dist",
+        },
         Object {
           "spawn": "bump",
         },
@@ -1418,6 +1448,9 @@ Object {
       "name": "release",
       "steps": Array [
         Object {
+          "exec": "rm -fr dist",
+        },
+        Object {
           "spawn": "bump",
         },
         Object {
@@ -1666,6 +1699,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "exec": "rm -fr dist",
+          },
+          Object {
             "spawn": "bump",
           },
           Object {
@@ -1687,6 +1723,9 @@ node_modules/
         },
         "name": "release:3.x",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },
@@ -1710,6 +1749,9 @@ node_modules/
         },
         "name": "release:next",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },
@@ -1870,6 +1912,9 @@ node_modules/
         },
         "name": "release:10.x",
         "steps": Array [
+          Object {
+            "exec": "rm -fr dist",
+          },
           Object {
             "spawn": "bump",
           },
