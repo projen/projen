@@ -333,7 +333,7 @@ export class Release extends Component {
     return new TaskWorkflow(github, {
       name: workflowName,
       jobId: BUILD_JOBID,
-      trigger: {
+      triggers: {
         schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
         push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
       },

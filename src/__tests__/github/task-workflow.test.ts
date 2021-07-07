@@ -39,7 +39,7 @@ describe('task-workflow', () => {
     expect(() => new TaskWorkflow(project.github!, {
       name: 'task-workflow',
       task,
-      trigger: {
+      triggers: {
         issueComment: {},
       },
       permissions: {},

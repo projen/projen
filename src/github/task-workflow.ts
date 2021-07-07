@@ -29,8 +29,9 @@ export interface TaskWorkflowOptions {
   readonly condition?: string;
 
   /**
-   * A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the 
-   * contents of this directory will be uploaded as an artifact at the end of the workflow run.
+   * A directory name which contains artifacts to be uploaded (e.g. `dist`).
+   * If this is set, the contents of this directory will be uploaded as an
+   * artifact at the end of the workflow run, even if other steps fail.
    *
    * @default - not set
    */
@@ -41,7 +42,7 @@ export interface TaskWorkflowOptions {
    *
    * @default - by default workflows can only be triggered by manually.
    */
-  readonly trigger?: Triggers;
+  readonly triggers?: Triggers;
 
   /**
    * Initial steps to run before the source code checkout.
@@ -70,13 +71,6 @@ export interface TaskWorkflowOptions {
   readonly task: Task;
 
   /**
-   * Main build step used in the workflow.
-   *
-   * @default - by default we will run `projen ${task.name}`
-   */
-  readonly buildStep?: JobStep;
-
-  /**
    * Actions to run after the main build step.
    *
    * @default - not set
@@ -99,21 +93,21 @@ export interface TaskWorkflowOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  readonly github: GitHub;
-  readonly jobId: string;
+  private readonly github: GitHub;
+  public readonly jobId: string;
 
   constructor(github: GitHub, options: TaskWorkflowOptions) {
     super(github, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
     this.github = github;
 
-    if (options.trigger) {
-      if (options.trigger.issueComment) {
+    if (options.triggers) {
+      if (options.triggers.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
         throw new Error('Trigger "issueComment" should not be used due to a security concern');
       }
 
-      this.on(options.trigger);
+      this.on(options.triggers);
     }
 
     this.on({
@@ -167,7 +161,7 @@ export class TaskWorkflow extends GithubWorkflow {
         ...preBuildSteps,
 
         // run the main build task
-        options.buildStep ?? {
+        {
           name: options.task.name,
           run: this.github.project.runTaskCommand(options.task),
         },

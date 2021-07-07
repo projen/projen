@@ -613,7 +613,7 @@ export class NodeProject extends Project {
       this.buildWorkflow = new TaskWorkflow(this.github, {
         name: 'build',
         jobId: buildJobId,
-        trigger: {
+        triggers: {
           pullRequest: { },
         },
         env: {

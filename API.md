@@ -5458,8 +5458,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **name** (<code>string</code>)  The workflow name. 
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
-  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). __*Default*__: not set
-  * **buildStep** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  Main build step used in the workflow. __*Default*__: by default we will run `projen ${task.name}`
+  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. __*Default*__: not set
   * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Default*__: not set
   * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
@@ -5468,7 +5467,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Default*__: not set
   * **preCheckoutSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Default*__: not set
-  * **trigger** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
+  * **triggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
 
 
 
@@ -5477,7 +5476,6 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**github**🔹 | <code>[github.GitHub](#projen-github-github)</code> | <span></span>
 **jobId**🔹 | <code>string</code> | <span></span>
 
 
@@ -10846,8 +10844,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | The workflow name.
 **permissions**🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions for the build job.
 **task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The main task to be executed.
-**artifactsDirectory**?🔹 | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`).<br/>__*Default*__: not set
-**buildStep**?🔹 | <code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code> | Main build step used in the workflow.<br/>__*Default*__: by default we will run `projen ${task.name}`
+**artifactsDirectory**?🔹 | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail.<br/>__*Default*__: not set
 **checkoutWith**?🔹 | <code>Map<string, any></code> | Override for the `with` property of the source code checkout step.<br/>__*Default*__: not set
 **condition**?🔹 | <code>string</code> | Adds an 'if' condition to the workflow.<br/>__*Optional*__
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
@@ -10856,7 +10853,7 @@ Name | Type | Description
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
-**trigger**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
+**triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
 
 
 
