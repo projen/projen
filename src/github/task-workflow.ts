@@ -29,7 +29,8 @@ export interface TaskWorkflowOptions {
   readonly condition?: string;
 
   /**
-   * A directory name which contains artifacts to be uploaded (e.g. `dist`).
+   * A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the 
+   * contents of this directory will be uploaded as an artifact at the end of the workflow run.
    *
    * @default - not set
    */
