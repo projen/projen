@@ -28,7 +28,7 @@ jobs:
           node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Build
+      - name: build
         run: /bin/bash ./projen.bash build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1

@@ -621,10 +621,6 @@ export class NodeProject extends Project {
         preBuildSteps: this.installWorkflowSteps, // install dependencies steps
 
         task: this.buildTask,
-        buildStep: {
-          name: 'Build',
-          run: this.runTaskCommand(this.buildTask),
-        },
 
         postBuildSteps,
 

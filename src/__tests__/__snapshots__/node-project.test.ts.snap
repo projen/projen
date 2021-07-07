@@ -20,7 +20,7 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npm ci",
   },
   Object {
-    "name": "Build",
+    "name": "build",
     "run": "npx projen build",
   },
   Object {
@@ -75,7 +75,7 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
-    "name": "Build",
+    "name": "build",
     "run": "npx projen build",
   },
   Object {

@@ -122,10 +122,10 @@ export class TaskGithubWorkflow extends GithubWorkflow {
     this.createWorkflow(options);
   }
 
-  private getMainStep(options: TaskGithubWorkflowOptions) {
+  protected getMainStep(options: TaskGithubWorkflowOptions) {
     return options.buildStep ?? {
       name: options.task.name,
-      run: `projen ${options.task.name}`,
+      run: this.github.project.runTaskCommand(options.task),
     };
   }
 

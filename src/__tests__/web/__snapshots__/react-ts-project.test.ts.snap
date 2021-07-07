@@ -47,7 +47,7 @@ jobs:
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Build
+      - name: build
         run: npx projen build
       - name: Check for changes
         id: git_diff

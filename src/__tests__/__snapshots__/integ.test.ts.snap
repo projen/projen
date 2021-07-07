@@ -284,7 +284,7 @@ jobs:
           node-version: 14.0.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Build
+      - name: build
         run: npx projen build
       - name: Check for changes
         id: git_diff
@@ -343,7 +343,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: release
-        run: projen release
+        run: npx projen release
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
@@ -4575,7 +4575,7 @@ jobs:
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Build
+      - name: build
         run: npx projen build
       - name: Check for changes
         id: git_diff
@@ -4628,7 +4628,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
-        run: projen release
+        run: npx projen release
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{
