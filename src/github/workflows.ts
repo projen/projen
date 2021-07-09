@@ -73,7 +73,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
   return result as any;
 }
 
-function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
+export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   if (typeof obj !== 'object' || obj == null) {
     return obj;
   }

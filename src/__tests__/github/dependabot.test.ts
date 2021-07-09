@@ -24,6 +24,10 @@ describe('dependabot', () => {
           type: 'npm-registry',
           url: 'https://npm.pkg.github.com',
           token: '${{ secrets.TOKEN }}',
+          replacesBase: true,
+          username: 'test',
+          password: '${{ secrets.TOKEN }}',
+          key: 'abc123',
         },
       },
     });

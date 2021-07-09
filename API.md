@@ -170,7 +170,7 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
-[github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
+[github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries.
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -10690,15 +10690,19 @@ Name | Type | Description
 ## struct DependabotRegistry 🔹 <a id="projen-github-dependabotregistry"></a>
 
 
-Use to add private registry support for dependabot.
+Use to add private registry support for dependabot https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**token**🔹 | <code>string</code> | Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'.
-**type**🔹 | <code>string</code> | Registry type e.g. 'npm-registry'.
-**url**🔹 | <code>string</code> | Url for the registry e.g. 'https://npm.pkg.github.com'.
+**type**🔹 | <code>string</code> | Registry type e.g. 'npm-registry' or 'docker-registry'.
+**url**🔹 | <code>string</code> | Url for the registry e.g. 'https://npm.pkg.github.com' or 'registry.hub.docker.com'.
+**key**?🔹 | <code>string</code> | A reference to a Dependabot secret containing an access key for this registry.<br/>__*Default*__: undefined
+**password**?🔹 | <code>string</code> | A reference to a Dependabot secret containing the password for the specified user.<br/>__*Default*__: undefined
+**replacesBase**?🔹 | <code>boolean</code> | For registries with type: python-index, if the boolean value is true, pip esolves dependencies by using the specified URL rather than the base URL of the Python Package Index (by default https://pypi.org/simple).<br/>__*Default*__: undefined
+**token**?🔹 | <code>string</code> | Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'.<br/>__*Default*__: undefined
+**username**?🔹 | <code>string</code> | The username that Dependabot uses to access the registry.<br/>__*Default*__: undefined
 
 
 

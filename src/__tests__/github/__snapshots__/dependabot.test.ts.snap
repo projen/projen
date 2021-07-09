@@ -24,6 +24,10 @@ registries:
     type: npm-registry
     url: https://npm.pkg.github.com
     token: \${{ secrets.TOKEN }}
+    replaces-base: true
+    username: test
+    password: \${{ secrets.TOKEN }}
+    key: abc123
 updates:
   - package-ecosystem: npm
     versioning-strategy: lockfile-only
