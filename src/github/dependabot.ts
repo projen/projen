@@ -43,6 +43,32 @@ export interface DependabotOptions {
    * List of labels to apply to the created PR's.
    */
   readonly labels?: string[];
+
+  /**
+   * Map of dependabot registries to use
+   * @default undefined
+   */
+  readonly registries?: { [name: string]: DependabotRegistry };
+}
+
+/**
+ * Use to add private registry support for dependabot
+ */
+export interface DependabotRegistry {
+  /**
+   * Registry type e.g. 'npm-registry'
+   */
+  readonly type: string;
+
+  /**
+   * Url for the registry e.g. 'https://npm.pkg.github.com'
+   */
+  readonly url: string;
+
+  /**
+   * Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'
+   */
+  readonly token: string;
 }
 
 /**
@@ -146,6 +172,7 @@ export class Dependabot extends Component {
 
     this.config = {
       version: 2,
+      registries: options.registries ?? undefined,
       updates: [
         {
           'package-ecosystem': 'npm',
