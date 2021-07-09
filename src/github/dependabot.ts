@@ -172,7 +172,7 @@ export class Dependabot extends Component {
 
     this.config = {
       version: 2,
-      registries: options.registries ?? undefined,
+      registries: options.registries,
       updates: [
         {
           'package-ecosystem': 'npm',
@@ -183,6 +183,7 @@ export class Dependabot extends Component {
           },
           'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
           'labels': options.labels ? options.labels : undefined,
+          'registries': options.registries ? Object.keys(options.registries) : undefined,
         },
       ],
     };
