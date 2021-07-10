@@ -126,27 +126,28 @@ time you update `.projenrc.js`:
 alias pj='npx projen'
 ```
 
-Most projects support a `start` command which displays a menu of workflow
-activities:
+Most projects come with an assortment of **tasks** that handle various
+development activities, from compiling to publishing. Tasks can be and composed
+together, and can be run as local commands or turned into GitHub workflows. You
+can list all tasks with `npx projen --help`:
 
 ```shell
-$ yarn start
-? Scripts: (Use arrow keys)
+$ npx projen --help
+projen [command]
 
-  BUILD
-❯ compile          Only compile
-  watch            Watch & compile in the background
-  build            Full release build (test+compile)
-
-  TEST
-  test             Run tests
-  test:watch       Run jest in watch mode
-  eslint           Runs eslint against the codebase
-
-  ...
+Commands:
+  projen new [PROJECT-TYPE-NAME] [OPTIONS]  Creates a new projen project
+  projen clobber                            hard resets to HEAD of origin and cleans the local repo
+  projen compile                            Only compile
+  projen test:compile                       compiles the test code
+  projen test                               Run tests
+  projen build                              Full release build (test+compile)
+  projen upgrade-dependencies               upgrade dependencies
+  projen upgrade-projen                     upgrade projen
+...
 ```
 
-The `build` command is the same command that's executed in your CI builds. It
+The `build` task is the same task that's executed in your CI builds. It
 typically compiles, lints, tests and packages your module for distribution.
 
 ### Shell Completions

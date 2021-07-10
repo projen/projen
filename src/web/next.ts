@@ -183,7 +183,10 @@ export interface NextJsTypeDefOptions extends FileBaseOptions { }
 
 export class NextJsTypeDef extends FileBase {
   constructor(project: NextJsTypeScriptProject, filePath: string, options: NextJsTypeDefOptions = {}) {
-    super(project, filePath, options);
+    super(project, filePath, {
+      readonly: false,
+      ...options,
+    });
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
