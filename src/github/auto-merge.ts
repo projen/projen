@@ -18,6 +18,12 @@ export interface AutoMergeOptions {
    * @default 1
    */
   readonly approvedReviews?: number;
+
+  /**
+   * List of labels that will prevent merging.
+   * @default []
+   */
+  readonly withoutLabels?: string[];
 }
 
 /**
@@ -37,6 +43,10 @@ export class AutoMerge extends Component {
 
     const successfulBuild = options.buildJob
       ? [`status-success=${options.buildJob}`]
+      : [];
+
+    const withoutLabels = options.withoutLabels?.length
+      ? [`-label~=(${options.withoutLabels.join('|')})`]
       : [];
 
     const mergeAction = {
@@ -62,6 +72,7 @@ export class AutoMerge extends Component {
       actions: mergeAction,
       conditions: [
         `#approved-reviews-by>=${approvedReviews}`,
+        ...withoutLabels,
         ...successfulBuild,
       ],
     });

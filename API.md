@@ -5103,6 +5103,7 @@ new github.AutoMerge(project: Project, options: AutoMergeOptions)
   * **mergify** (<code>[github.Mergify](#projen-github-mergify)</code>)  The mergify component. 
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
+  * **withoutLabels** (<code>Array<string></code>)  List of labels that will prevent merging. __*Default*__: []
 
 
 
@@ -10646,6 +10647,7 @@ Name | Type | Description
 **mergify**🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The mergify component.
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
+**withoutLabels**?🔹 | <code>Array<string></code> | List of labels that will prevent merging.<br/>__*Default*__: []
 
 
 
