@@ -1,7 +1,6 @@
 import { Component } from '../component';
-import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions } from '../node-project';
-import { SampleDir } from '../sample-file';
+import { SampleDir, SampleFile } from '../sample-file';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
@@ -114,14 +113,6 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
    */
   public readonly tailwind: boolean;
 
-  /**
-   * TypeScript definition file included that ensures Next.js types are picked
-   * up by the TypeScript compiler.
-   *
-   * @see https://nextjs.org/docs/basic-features/typescript
-   */
-  public readonly nextJsTypeDef: NextJsTypeDef;
-
   constructor(options: NextJsTypeScriptProjectOptions) {
     const defaultOptions = {
       srcdir: 'pages',
@@ -165,8 +156,6 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
       this.tsconfig.file.readonly = false;
     }
 
-    this.nextJsTypeDef = new NextJsTypeDef(this, 'next-env.d.ts');
-
     // generate sample code in `pages` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
       new NextSampleCode(this, {
@@ -176,24 +165,6 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
         tailwind: this.tailwind,
       });
     }
-  }
-}
-
-export interface NextJsTypeDefOptions extends FileBaseOptions { }
-
-export class NextJsTypeDef extends FileBase {
-  constructor(project: NextJsTypeScriptProject, filePath: string, options: NextJsTypeDefOptions = {}) {
-    super(project, filePath, {
-      readonly: false,
-      ...options,
-    });
-  }
-
-  protected synthesizeContent(_: IResolver): string | undefined {
-    return [
-      '/// <reference types="next" />',
-      '/// <reference types="next/types/global" />',
-    ].join('\n');
   }
 }
 
@@ -532,6 +503,17 @@ class NextSampleCode extends Component {
       files: {
         'vercel.svg': vercelSvg.join('\n'),
       },
+    });
+
+    new SampleFile(project, 'next-env.d.ts', {
+      contents: [
+        '/// <reference types="next" />',
+        '/// <reference types="next/types/global" />',
+        '/// <reference types="next/image-types/global" />',
+        '// NOTE: This file should not be edited',
+        '// see https://nextjs.org/docs/basic-features/typescript for more information.',
+        '',
+      ].join('\n'),
     });
   }
 }
