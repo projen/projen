@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile, TextFile, github } = require('./lib');
+const { JsiiProject, JsonFile, TextFile } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -65,8 +65,6 @@ const project = new JsiiProject({
     module: 'projen',
   },
 
-  mergify: false,
-
   // Disabled due to cycles between main module and submodules
   // publishToGo: {
   //   moduleName: 'github.com/projen/projen-go',
@@ -121,15 +119,7 @@ project.vscode.launchConfiguration.addConfiguration({
   ],
 });
 
-const mergify = new github.Mergify(project.github);
-
-new github.AutoMerge(project, {
-  mergify: mergify,
-  buildJob: project.buildWorkflowJobId,
-  withoutLabels: ['do-not-merge'],
-});
-
-mergify.addRule({
+project.github.mergify.addRule({
   name: 'Label core contributions',
   actions: {
     label: {
