@@ -27,7 +27,7 @@ jobs:
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Release
+      - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
@@ -120,7 +120,7 @@ jobs:
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Release
+      - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote

@@ -28,7 +28,7 @@ jobs:
           node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Release
+      - name: release
         run: /bin/bash ./projen.bash release
       - name: Check for new commits
         id: git_remote

@@ -1,5 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`enable anti-tamper 1`] = `
+Array [
+  Object {
+    "name": "Checkout",
+    "uses": "actions/checkout@v2",
+  },
+  Object {
+    "name": "Set git identity",
+    "run": "git config user.name \\"Automation\\"
+git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "name": "Anti-tamper check",
+    "run": "git diff --ignore-space-at-eol --exit-code",
+  },
+  Object {
+    "name": "Install dependencies",
+    "run": "npm ci",
+  },
+  Object {
+    "name": "build",
+    "run": "npx projen build",
+  },
+  Object {
+    "id": "git_diff",
+    "name": "Check for changes",
+    "run": "git diff --exit-code || echo \\"::set-output name=has_changes::true\\"",
+  },
+  Object {
+    "if": "steps.git_diff.outputs.has_changes",
+    "name": "Commit and push changes (if changed)",
+    "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
+  },
+  Object {
+    "env": Object {
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+    },
+    "if": "steps.git_diff.outputs.has_changes",
+    "name": "Update status check (if changed)",
+    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
+  },
+  Object {
+    "if": "steps.git_diff.outputs.has_changes",
+    "name": "Fail check if self mutation happened",
+    "run": "echo \\"Self-mutation happened on this pull request, so this commit is marked as having failed checks.\\"
+echo \\"The self-mutation commit has been marked as successful, and no further action should be necessary.\\"
+exit 1",
+  },
+  Object {
+    "name": "Anti-tamper check",
+    "run": "git diff --ignore-space-at-eol --exit-code",
+  },
+]
+`;
+
 exports[`mutableBuild will push changes to PR branches 1`] = `
 Array [
   Object {
@@ -11,16 +66,16 @@ Array [
     },
   },
   Object {
-    "name": "Install dependencies",
-    "run": "yarn install --check-files --frozen-lockfile",
-  },
-  Object {
     "name": "Set git identity",
     "run": "git config user.name \\"Automation\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
-    "name": "Build",
+    "name": "Install dependencies",
+    "run": "yarn install --check-files --frozen-lockfile",
+  },
+  Object {
+    "name": "build",
     "run": "npx projen build",
   },
   Object {

@@ -53,10 +53,11 @@ Name|Description
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
-[github.GithubWorkflow](#projen-github-githubworkflow)|*No description*
+[github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
+[github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
 [java.JavaProject](#projen-java-javaproject)|Java project.
 [java.Junit](#projen-java-junit)|Implements JUnit-based testing.
 [java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
@@ -177,6 +178,7 @@ Name|Description
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
+[github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
 [java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
@@ -3265,7 +3267,7 @@ Name | Type | Description
 **testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
 **testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
-**buildWorkflow**?🔹 | <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[github.TaskWorkflow](#projen-github-taskworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
 **jest**?🔹 | <code>[Jest](#projen-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
@@ -5245,7 +5247,9 @@ __Returns__:
 
 ## class GithubWorkflow 🔹 <a id="projen-github-githubworkflow"></a>
 
+Workflow for GitHub.
 
+A workflow is a configurable automated process made up of one or more jobs.
 
 __Submodule__: github
 
@@ -5429,6 +5433,50 @@ new github.Stale(github: GitHub, options?: StaleOptions)
   * **issues** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale issues. __*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
   * **pullRequest** (<code>[github.StaleBehavior](#projen-github-stalebehavior)</code>)  How to handle stale pull requests. __*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
 
+
+
+
+## class TaskWorkflow 🔹 <a id="projen-github-taskworkflow"></a>
+
+A GitHub workflow for common build tasks within a project.
+
+__Submodule__: github
+
+__Extends__: [github.GithubWorkflow](#projen-github-githubworkflow)
+
+### Initializer
+
+
+
+
+```ts
+new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  The workflow name. 
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Permissions for the build job. 
+  * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The main task to be executed. 
+  * **artifactsDirectory** (<code>string</code>)  A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail. __*Default*__: not set
+  * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Default*__: not set
+  * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
+  * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
+  * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "build"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Default*__: not set
+  * **preCheckoutSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Default*__: not set
+  * **triggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobId**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -10781,6 +10829,31 @@ Name | Type | Description
 -----|------|-------------
 **issues**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale issues.<br/>__*Default*__: By default, stale issues with no activity will be marked as stale after 60 days and closed within 7 days.
 **pullRequest**?🔹 | <code>[github.StaleBehavior](#projen-github-stalebehavior)</code> | How to handle stale pull requests.<br/>__*Default*__: By default, pull requests with no activity will be marked as stale after 14 days and closed within 2 days with relevant comments.
+
+
+
+## struct TaskWorkflowOptions 🔹 <a id="projen-github-taskworkflowoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The workflow name.
+**permissions**🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions for the build job.
+**task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The main task to be executed.
+**artifactsDirectory**?🔹 | <code>string</code> | A directory name which contains artifacts to be uploaded (e.g. `dist`). If this is set, the contents of this directory will be uploaded as an artifact at the end of the workflow run, even if other steps fail.<br/>__*Default*__: not set
+**checkoutWith**?🔹 | <code>Map<string, any></code> | Override for the `with` property of the source code checkout step.<br/>__*Default*__: not set
+**condition**?🔹 | <code>string</code> | Adds an 'if' condition to the workflow.<br/>__*Optional*__
+**container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
+**env**?🔹 | <code>Map<string, string></code> | Workflow environment variables.<br/>__*Default*__: {}
+**jobId**?🔹 | <code>string</code> | The primary job id.<br/>__*Default*__: "build"
+**postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
+**preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
+**preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
+**triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
 
 
 
