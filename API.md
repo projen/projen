@@ -89,7 +89,6 @@ Name|Description
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
 [web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
-[web.NextJsTypeDef](#projen-web-nextjstypedef)|*No description*
 [web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
 [web.PostCss](#projen-web-postcss)|Declares a PostCSS dependency with a default config file.
 [web.ReactComponent](#projen-web-reactcomponent)|*No description*
@@ -224,7 +223,6 @@ Name|Description
 [web.NextComponentOptions](#projen-web-nextcomponentoptions)|*No description*
 [web.NextJsCommonProjectOptions](#projen-web-nextjscommonprojectoptions)|*No description*
 [web.NextJsProjectOptions](#projen-web-nextjsprojectoptions)|*No description*
-[web.NextJsTypeDefOptions](#projen-web-nextjstypedefoptions)|*No description*
 [web.NextJsTypeScriptProjectOptions](#projen-web-nextjstypescriptprojectoptions)|*No description*
 [web.PostCssOptions](#projen-web-postcssoptions)|*No description*
 [web.ReactComponentOptions](#projen-web-reactcomponentoptions)|*No description*
@@ -1938,7 +1936,7 @@ allowDevDeps(pattern: string): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [git.GitAttributesFile](#projen-git-gitattributesfile), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.NextJsTypeDef](#projen-web-nextjstypedef), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [git.GitAttributesFile](#projen-git-gitattributesfile), [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
 
 ### Initializer
@@ -7518,50 +7516,6 @@ Name | Type | Description
 
 
 
-## class NextJsTypeDef 🔹 <a id="projen-web-nextjstypedef"></a>
-
-
-
-__Submodule__: web
-
-__Extends__: [FileBase](#projen-filebase)
-
-### Initializer
-
-
-
-
-```ts
-new web.NextJsTypeDef(project: NextJsTypeScriptProject, filePath: string, options?: NextJsTypeDefOptions)
-```
-
-* **project** (<code>[web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[web.NextJsTypeDefOptions](#projen-web-nextjstypedefoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
-  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
-  * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
-  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-
-
-### Methods
-
-
-#### protected synthesizeContent(_)🔹 <a id="projen-web-nextjstypedef-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(_: IResolver): string
-```
-
-* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
-
-
 ## class NextJsTypeScriptProject 🔹 <a id="projen-web-nextjstypescriptproject"></a>
 
 Next.js project with TypeScript.
@@ -7698,7 +7652,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **assetsdir**🔹 | <code>string</code> | The directory in which app assets reside.
-**nextJsTypeDef**🔹 | <code>[web.NextJsTypeDef](#projen-web-nextjstypedef)</code> | TypeScript definition file included that ensures Next.js types are picked up by the TypeScript compiler.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 **tailwind**🔹 | <code>boolean</code> | Setup Tailwind as a PostCSS plugin.
 
@@ -11887,22 +11840,6 @@ Name | Type | Description
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
-
-
-
-## struct NextJsTypeDefOptions 🔹 <a id="projen-web-nextjstypedefoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
-**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

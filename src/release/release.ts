@@ -285,7 +285,7 @@ export class Release extends Component {
       env,
     });
 
-    releaseTask.exec(`rm -fr ${this.artifactDirectory}`);
+    releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
