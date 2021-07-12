@@ -274,17 +274,17 @@ jobs:
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Set git identity
+        run: |-
+          git config user.name \\"Automation\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
           node-version: 14.0.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Set git identity
-        run: |-
-          git config user.name \\"Automation\\"
-          git config user.email \\"github-actions@github.com\\"
-      - name: Build
+      - name: build
         run: npx projen build
       - name: Check for changes
         id: git_diff
@@ -342,7 +342,7 @@ jobs:
           node-version: 14.0.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Release
+      - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote
@@ -4569,13 +4569,13 @@ jobs:
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
       - name: Set git identity
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Build
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+      - name: build
         run: npx projen build
       - name: Check for changes
         id: git_diff
@@ -4627,7 +4627,7 @@ jobs:
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Release
+      - name: release
         run: npx projen release
       - name: Check for new commits
         id: git_remote

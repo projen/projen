@@ -37,7 +37,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:10.x
         run: projen release:10.x
       - name: Check for new commits
         id: git_remote
@@ -80,7 +80,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:2.x
         run: projen release:2.x
       - name: Check for new commits
         id: git_remote
@@ -123,7 +123,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -339,7 +339,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:foo
         run: projen release:foo
       - name: Check for new commits
         id: git_remote
@@ -406,7 +406,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -632,7 +632,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -819,7 +819,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -940,7 +940,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -1092,7 +1092,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -1231,7 +1231,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -1519,7 +1519,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:3.x
         run: projen release:3.x
       - name: Check for new commits
         id: git_remote
@@ -1562,7 +1562,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:next
         run: projen release:next
       - name: Check for new commits
         id: git_remote
@@ -1605,7 +1605,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release
         run: projen release
       - name: Check for new commits
         id: git_remote
@@ -1821,7 +1821,7 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Release
+      - name: release:10.x
         run: projen release:10.x
       - name: Check for new commits
         id: git_remote

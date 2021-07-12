@@ -9,4 +9,6 @@ export * from './auto-merge';
 export * from './auto-approve';
 export * from './stale';
 
+export * from './task-workflow';
+
 export * as workflows from './workflows-model';
