@@ -1,5 +1,9 @@
+import * as path from 'path';
+import { glob } from 'glob';
 import * as semver from 'semver';
 import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { NodeLambdaConstructSourceCode } from './node-lambda-construct-source-code';
+
 
 /**
  * Options for the construct-lib-aws project.
@@ -68,6 +72,22 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * @featured
    */
   readonly cdkTestDependencies?: string[];
+
+  readonly bundleLambda?: boolean;
+
+  readonly bundleLambdaOptions?: BundleLambdaOptions;
+}
+
+export interface BundleLambdaOptions {
+  /**
+   * Suffix to be used to scan for lambda handlers.
+   */
+  readonly suffix?: string;
+
+  /**
+   * Should generate a construct with the name of the lambda.
+   */
+  readonly generateConstruct?: boolean;
 }
 
 /**
@@ -159,6 +179,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
+    this.logger.info('hello!!!!');
     const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (options.constructsVersion) {
       this.addPeerDeps(`constructs@^${options.constructsVersion}`);
@@ -180,6 +201,10 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
 
     this.addCdkDependencies(...options.cdkDependencies ?? []);
     this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
+
+    if (options.bundleLambda ?? true) {
+      this.bundleLambdas(options.bundleLambdaOptions);
+    }
   }
 
   /**
@@ -225,10 +250,63 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   private formatModuleSpec(module: string): string {
     return `${module}@${this.cdkVersion}`;
   }
+
+  /**
+   * Enables CDK apps to consume construct library lambdas.
+   *
+   * @param bundleLambdaOptions Bundle lambda options
+   * @private
+   */
+  private bundleLambdas(bundleLambdaOptions?: BundleLambdaOptions) {
+    this.logger.debug('running bundleLambdas');
+    const lambdaSuffix = (bundleLambdaOptions?.suffix ?? '.lambda');
+    const generateConstruct = bundleLambdaOptions?.generateConstruct ?? true;
+    const handlerFilePattern = `${this.srcdir}/**/*${lambdaSuffix}\\.@(ts|js)`;
+
+    this.addDevDeps('aws-sdk'); // common lambda runtime dependency
+    this.addDevDeps('esbuild');
+
+    this.eslint?.addOverride({
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+      },
+      files: [handlerFilePattern],
+    });
+
+    // create bundle compile task for each lambda handler, generate convenience construct
+    glob.sync(handlerFilePattern).forEach(file => {
+      this.logger.debug(`found lambda handler ${file}`);
+      const parsedPath = path.parse(file);
+      const bundleDirName = `${parsedPath.name}.bundle`;
+      const bundleDir = path.join(parsedPath.dir, `${parsedPath.name}.bundle`);
+      const compiledHandlerPath = bundleDir.replace(this.srcdir, this.libdir);
+      const constructFilePath = path.join(parsedPath.dir, parsedPath.name.replace(lambdaSuffix, '') + '.ts');
+
+      if (generateConstruct) {
+        new NodeLambdaConstructSourceCode(this, constructFilePath, bundleDirName);
+      }
+      const bundleLambdaTask = this.addTask(`bundleLambda:${file}`, {
+        description: `Bundle lambda: ${file}`,
+        exec: [
+          'esbuild',
+          '--bundle',
+          file,
+          '--target="node14"',
+          '--platform="node"',
+          `--outfile="${path.join(compiledHandlerPath, 'index.js')}"`,
+          '--external:aws-sdk',
+        ].join(' '),
+      });
+      this.compileTask.spawn(bundleLambdaTask);
+    });
+  }
+
 }
 
 /** @deprecated use `AwsCdkConstructLibraryOptions` */
-export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions { }
+export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions {
+}
 
 /** @deprecated use `AwsCdkConstructLibrary` */
-export class ConstructLibraryAws extends AwsCdkConstructLibrary { }
+export class ConstructLibraryAws extends AwsCdkConstructLibrary {
+}

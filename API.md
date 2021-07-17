@@ -104,6 +104,7 @@ Name|Description
 ----|-----------
 [AwsCdkConstructLibraryOptions](#projen-awscdkconstructlibraryoptions)|Options for the construct-lib-aws project.
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
+[BundleLambdaOptions](#projen-bundlelambdaoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
 [Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)|*No description*
 [ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
@@ -475,6 +476,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **bundleLambda** (<code>boolean</code>)  *No description* __*Optional*__
+  * **bundleLambdaOptions** (<code>[BundleLambdaOptions](#projen-bundlelambdaoptions)</code>)  *No description* __*Optional*__
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
@@ -1187,6 +1190,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdkVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **bundleLambda** (<code>boolean</code>)  *No description* __*Optional*__
+  * **bundleLambdaOptions** (<code>[BundleLambdaOptions](#projen-bundlelambdaoptions)</code>)  *No description* __*Optional*__
   * **cdkAssert** (<code>boolean</code>)  Install the @aws-cdk/assert library? __*Default*__: true
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed? __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
@@ -8088,6 +8093,8 @@ Name | Type | Description
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
+**bundleLambda**?🔹 | <code>boolean</code> | __*Optional*__
+**bundleLambdaOptions**?🔹 | <code>[BundleLambdaOptions](#projen-bundlelambdaoptions)</code> | __*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
@@ -8324,6 +8331,20 @@ Name | Type | Description
 
 
 
+## struct BundleLambdaOptions 🔹 <a id="projen-bundlelambdaoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**generateConstruct**?🔹 | <code>boolean</code> | Should generate a construct with the name of the lambda.<br/>__*Optional*__
+**suffix**?🔹 | <code>string</code> | Suffix to be used to scan for lambda handlers.<br/>__*Optional*__
+
+
+
 ## struct Catalog 🔹 <a id="projen-catalog"></a>
 
 
@@ -8495,6 +8516,8 @@ Name | Type | Description
 **autoMergeOptions**?⚠️ | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
+**bundleLambda**?⚠️ | <code>boolean</code> | __*Optional*__
+**bundleLambdaOptions**?⚠️ | <code>[BundleLambdaOptions](#projen-bundlelambdaoptions)</code> | __*Optional*__
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **catalog**?⚠️ | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?⚠️ | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
