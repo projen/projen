@@ -2,6 +2,7 @@ import { version } from 'yargs';
 import { Component } from '../component';
 import { YamlFile } from '../yaml';
 import { GitHub } from './github';
+import { kebabCaseKeys } from './workflows';
 
 export interface DependabotOptions {
   /**
@@ -43,6 +44,60 @@ export interface DependabotOptions {
    * List of labels to apply to the created PR's.
    */
   readonly labels?: string[];
+
+  /**
+   * Map of dependabot registries to use
+   * @default undefined
+   */
+  readonly registries?: { [name: string]: DependabotRegistry };
+}
+
+/**
+ * Use to add private registry support for dependabot
+ * https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries
+ */
+export interface DependabotRegistry {
+  /**
+   * Registry type e.g. 'npm-registry' or 'docker-registry'
+   */
+  readonly type: string;
+
+  /**
+   * Url for the registry e.g. 'https://npm.pkg.github.com' or 'registry.hub.docker.com'
+   */
+  readonly url: string;
+
+  /**
+   * The username that Dependabot uses to access the registry
+   * @default undefined
+   */
+  readonly username?: string;
+
+  /**
+   * A reference to a Dependabot secret containing the password for the specified user
+   * @default undefined
+   */
+  readonly password?: string;
+
+  /**
+   * A reference to a Dependabot secret containing an access key for this registry
+   * @default undefined
+   */
+  readonly key?: string;
+
+  /**
+   * Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'
+   * @default undefined
+   */
+  readonly token?: string;
+
+  /**
+   * For registries with type: python-index, if the boolean value is true, pip
+   * esolves dependencies by using the specified URL rather than the base URL of
+   * the Python Package Index (by default https://pypi.org/simple)
+   * @default undefined
+   */
+  readonly replacesBase?: boolean;
 }
 
 /**
@@ -144,8 +199,11 @@ export class Dependabot extends Component {
 
     this.ignore = [];
 
+    const registries = options.registries ? kebabCaseKeys(options.registries) : undefined;
+
     this.config = {
       version: 2,
+      registries,
       updates: [
         {
           'package-ecosystem': 'npm',
@@ -156,6 +214,7 @@ export class Dependabot extends Component {
           },
           'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
           'labels': options.labels ? options.labels : undefined,
+          'registries': registries ? Object.keys(registries) : undefined,
         },
       ],
     };
