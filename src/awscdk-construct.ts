@@ -179,7 +179,6 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
-    this.logger.info('hello!!!!');
     const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (options.constructsVersion) {
       this.addPeerDeps(`constructs@^${options.constructsVersion}`);
