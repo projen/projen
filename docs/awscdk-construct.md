@@ -157,6 +157,12 @@ docgen|generate documentation
 
 As you develop your library you'll likely be using the `test:watch` command the most.
 
+# Lambda bundling
+
+When adding a lambda handler with a `.lambda.ts` or `.lambda.js` suffix, projen will automatically generate a construct, and 
+will add bundling tasks to run as part of the build. This can be configured via `bundleLambdaOptions` or turned off via `bundleLambda` 
+fields.
+
 # Construct Catalog
 
 Finally, a field for setting up publishing to the [construct catalog](https://awscdk.io):
