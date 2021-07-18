@@ -1726,6 +1726,30 @@ Array [
         "type": "unknown",
       },
       Object {
+        "featured": false,
+        "name": "bundleLambda",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "bundleLambda",
+        ],
+        "switch": "bundle-lambda",
+        "type": "boolean",
+      },
+      Object {
+        "featured": false,
+        "fqn": "projen.BundleLambdaOptions",
+        "kind": "interface",
+        "name": "bundleLambdaOptions",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "bundleLambdaOptions",
+        ],
+        "switch": "bundle-lambda-options",
+        "type": "BundleLambdaOptions",
+      },
+      Object {
         "default": "- new version will be announced",
         "docs": "Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.",
         "featured": false,

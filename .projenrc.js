@@ -27,6 +27,7 @@ const project = new JsiiProject({
     'xmlbuilder2',
     'ini',
     'shx',
+    'pascal-case',
   ],
 
   devDeps: [
@@ -37,6 +38,7 @@ const project = new JsiiProject({
     '@types/ini',
     'markmac',
     'all-contributors-cli',
+    'jest-each',
   ],
 
   projenDevDependency: false, // because I am projen

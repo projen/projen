@@ -63,6 +63,10 @@
       "type": "build"
     },
     {
+      "name": "jest-each",
+      "type": "build"
+    },
+    {
       "name": "jest-junit",
       "version": "^12",
       "type": "build"
@@ -128,6 +132,10 @@
     },
     {
       "name": "ini",
+      "type": "bundled"
+    },
+    {
+      "name": "pascal-case",
       "type": "bundled"
     },
     {
