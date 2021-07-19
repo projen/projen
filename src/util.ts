@@ -259,3 +259,25 @@ export function sorted<T>(x: T) {
 export function formatAsPythonModule(name: string) {
   return name.replace(/-/g, '_').replace(/\./g, '_');
 }
+
+export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
+  if (typeof obj !== 'object' || obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    if (recursive) {
+      obj = obj.map((v) => kebabCaseKeys(v, recursive)) as any;
+    }
+    return obj;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (let [k, v] of Object.entries(obj)) {
+    if (recursive) {
+      v = kebabCaseKeys(v, recursive);
+    }
+    result[decamelize(k).replace(/_/mg, '-')] = v;
+  }
+  return result as any;
+}

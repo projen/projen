@@ -1,8 +1,8 @@
 import { version } from 'yargs';
 import { Component } from '../component';
+import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
 import { GitHub } from './github';
-import { kebabCaseKeys } from './workflows';
 
 export interface DependabotOptions {
   /**
@@ -46,21 +46,21 @@ export interface DependabotOptions {
   readonly labels?: string[];
 
   /**
-   * Map of dependabot registries to use
-   * @default undefined
+   * Map of package registries to use
+   * @default - use public registries
    */
   readonly registries?: { [name: string]: DependabotRegistry };
 }
 
 /**
  * Use to add private registry support for dependabot
- * https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries
+ * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries
  */
 export interface DependabotRegistry {
   /**
    * Registry type e.g. 'npm-registry' or 'docker-registry'
    */
-  readonly type: string;
+  readonly type: DependabotRegistryType;
 
   /**
    * Url for the registry e.g. 'https://npm.pkg.github.com' or 'registry.hub.docker.com'
@@ -69,7 +69,7 @@ export interface DependabotRegistry {
 
   /**
    * The username that Dependabot uses to access the registry
-   * @default undefined
+   * @default - do not authenticate
    */
   readonly username?: string;
 
@@ -98,6 +98,81 @@ export interface DependabotRegistry {
    * @default undefined
    */
   readonly replacesBase?: boolean;
+
+  /**
+   * Used with the hex-organization registry type.
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#hex-organization
+   * @default undefined
+   */
+  readonly organization?: string;
+}
+
+/**
+ * Each configuration type requires you to provide particular settings.
+ * Some types allow more than one way to connect
+ * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#configuration-options-for-private-registries
+ */
+export enum DependabotRegistryType {
+  /**
+   * The composer-repository type supports username and password.
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#composer-repository
+   */
+  COMPOSER_REGISTRY = 'composer-registry',
+
+  /**
+   * The docker-registry type supports username and password.
+   * The docker-registry type can also be used to pull from Amazon ECR using static AWS credentials
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#docker-registry
+   */
+  DOCKER_REGISTRY = 'docker-registry',
+
+  /**
+   * The git type supports username and password
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#git
+   */
+  GIT = 'git',
+
+  /**
+   * The hex-organization type supports organization and key
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#hex-organization
+   */
+  HEX_ORGANIZATION = 'hex-organization',
+
+  /**
+   * The maven-repository type supports username and password, or token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#maven-repository
+   */
+  MAVEN_REPOSITORY = 'maven-repository',
+
+  /**
+   * The npm-registry type supports username and password, or token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#npm-registry
+   */
+  NPM_REGISTRY = 'npm-registry',
+
+  /**
+   * The nuget-feed type supports username and password, or token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#nuget-feed
+   */
+  NUGET_FEED = 'nuget-feed',
+
+  /**
+   * The python-index type supports username and password, or token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#python-index
+   */
+  PYTHON_INDEX = 'python-index',
+
+  /**
+   * The rubygems-server type supports username and password, or token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#rubygems-server
+   */
+  RUBYGEMS_SERVER = 'rubygems-server',
+
+  /**
+   * The terraform-registry type supports a token
+   * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#terraform-registry
+   */
+  TERRAFORM_REGISTRY = 'terraform-registry'
 }
 
 /**

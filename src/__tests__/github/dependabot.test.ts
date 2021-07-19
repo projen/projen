@@ -1,4 +1,4 @@
-import { Dependabot } from '../../github';
+import { Dependabot, DependabotRegistryType } from '../../github';
 import { NodeProject, NodeProjectOptions } from '../../node-project';
 import { mkdtemp, synthSnapshot } from '../util';
 
@@ -21,7 +21,7 @@ describe('dependabot', () => {
     new Dependabot(project.github!, {
       registries: {
         [registryName]: {
-          type: 'npm-registry',
+          type: DependabotRegistryType.NPM_REGISTRY,
           url: 'https://npm.pkg.github.com',
           token: '${{ secrets.TOKEN }}',
           replacesBase: true,
