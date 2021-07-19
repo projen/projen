@@ -8,6 +8,11 @@ import { GitHub } from './github';
 
 import * as workflows from './workflows-model';
 
+/**
+ * Workflow for GitHub.
+ * A workflow is a configurable automated process made up of one or more jobs.
+ * @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+ */
 export class GithubWorkflow extends Component {
   public readonly name: string;
   public readonly file: YamlFile;

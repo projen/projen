@@ -6,7 +6,7 @@ import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
-import { AutoApprove, AutoApproveOptions, GitHub, GitHubOptions } from './github';
+import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions } from './github';
 import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
@@ -95,6 +95,14 @@ export interface ProjectOptions extends GitHubOptions {
    * @default - auto approve is disabled
    */
   readonly autoApproveOptions?: AutoApproveOptions;
+
+  /**
+   * Configure options for automatic merging on GitHub. Has no effect if
+   * `github.mergify` is set to false.
+   *
+   * @default - see defaults in `AutoMergeOptions`
+   */
+  readonly autoMergeOptions?: AutoMergeOptions;
 
   /**
    * Auto-close stale issues and pull requests. To disable set `stale` to `false`.

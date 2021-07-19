@@ -1,5 +1,6 @@
 import { Component } from '../component';
-import { workflows, GithubWorkflow } from '../github';
+import { TaskWorkflow } from '../github';
+import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
@@ -35,7 +36,7 @@ export interface ReleaseProjectOptions {
    * A set of workflow steps to execute in order to setup the workflow
    * container.
    */
-  readonly releaseWorkflowSetupSteps?: workflows.JobStep[];
+  readonly releaseWorkflowSetupSteps?: JobStep[];
 
   /**
    * Container image to use for GitHub workflows.
@@ -54,7 +55,7 @@ export interface ReleaseProjectOptions {
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
-  readonly postBuildSteps?: workflows.JobStep[];
+  readonly postBuildSteps?: JobStep[];
 
   /**
    * Checks that after build there are no modified files on git.
@@ -143,16 +144,16 @@ export class Release extends Component {
 
   private readonly buildTask: Task;
   private readonly version: Version;
-  private readonly postBuildSteps: workflows.JobStep[];
+  private readonly postBuildSteps: JobStep[];
   private readonly antitamper: boolean;
-  private readonly artifactDirectory: string;
+  private readonly artifactsDirectory: string;
   private readonly versionFile: string;
   private readonly releaseSchedule?: string;
   private readonly releaseEveryCommit: boolean;
-  private readonly preBuildSteps: workflows.JobStep[];
+  private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
   private readonly branches = new Array<ReleaseBranch>();
-  private readonly jobs: Record<string, workflows.Job> = {};
+  private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
 
   constructor(project: Project, options: ReleaseOptions) {
@@ -166,7 +167,7 @@ export class Release extends Component {
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.antitamper = options.antitamper ?? true;
-    this.artifactDirectory = options.artifactsDirectory ?? 'dist';
+    this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
     this.releaseSchedule = options.releaseSchedule;
     this.releaseEveryCommit = options.releaseEveryCommit ?? true;
@@ -174,11 +175,11 @@ export class Release extends Component {
 
     this.version = new Version(project, {
       versionFile: this.versionFile,
-      artifactsDirectory: this.artifactDirectory,
+      artifactsDirectory: this.artifactsDirectory,
     });
 
     this.publisher = new Publisher(project, {
-      artifactName: this.artifactDirectory,
+      artifactName: this.artifactsDirectory,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
@@ -229,7 +230,7 @@ export class Release extends Component {
    * Adds jobs to all release workflows.
    * @param jobs The jobs to add (name => job)
    */
-  public addJobs(jobs: Record<string, workflows.Job>) {
+  public addJobs(jobs: Record<string, Job>) {
     for (const [name, job] of Object.entries(jobs)) {
       this.jobs[name] = job;
     }
@@ -244,7 +245,7 @@ export class Release extends Component {
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): GithubWorkflow {
+  private createWorkflow(branch: ReleaseBranch): TaskWorkflow {
     const github = this.project.github;
     if (!github) { throw new Error('no github support'); }
 
@@ -256,6 +257,9 @@ export class Release extends Component {
     const gitRemoteStep = 'git_remote';
     const latestCommitOutput = 'latest_commit';
     const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
+
+    // The arrays are being cloned to avoid accumulating values from previous branches
+    const preBuildSteps = [...this.preBuildSteps];
 
     const env: Record<string, string> = {
       RELEASE: 'true',
@@ -281,7 +285,7 @@ export class Release extends Component {
       env,
     });
 
-    releaseTask.exec(`rm -fr ${this.artifactDirectory}`);
+    releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
@@ -292,41 +296,11 @@ export class Release extends Component {
       releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
     }
 
-    const steps = new Array<workflows.JobStep>();
-
-    // check out sources.
-    steps.push({
-      name: 'Checkout',
-      uses: 'actions/checkout@v2',
-      with: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-    });
-
-    // sets git identity so we can push later
-    steps.push({
-      name: 'Set git identity',
-      run: [
-        'git config user.name "Automation"',
-        'git config user.email "github-actions@github.com"',
-      ].join('\n'),
-    });
-
-    steps.push(...this.preBuildSteps ?? []);
-
-    steps.push({
-      name: 'Release',
-      run: this.project.runTaskCommand(releaseTask),
-    });
-
-    // run post-build steps
-    steps.push(...this.postBuildSteps);
+    const postBuildSteps = [...this.postBuildSteps];
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
-    steps.push({
+    postBuildSteps.push({
       name: 'Check for new commits',
       id: gitRemoteStep,
       run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
@@ -334,7 +308,7 @@ export class Release extends Component {
 
     // create a github release
     const getVersion = `v$(cat ${this.version.bumpFile})`;
-    steps.push({
+    postBuildSteps.push({
       name: 'Create release',
       if: noNewCommits,
       run: [
@@ -347,41 +321,39 @@ export class Release extends Component {
       },
     });
 
-    steps.push({
+    postBuildSteps.push({
       name: 'Upload artifact',
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
-        name: this.artifactDirectory,
-        path: this.artifactDirectory,
+        name: this.artifactsDirectory,
+        path: this.artifactsDirectory,
       },
     });
 
-    const workflow = github.addWorkflow(workflowName);
-
-    // determine release triggers
-    workflow.on({
-      schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-      push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
-      workflowDispatch: {}, // allow manual triggering
-    });
-
-    // add main build job
-    workflow.addJobs({
-      [BUILD_JOBID]: {
-        runsOn: 'ubuntu-latest',
-        container: this.containerImage ? { image: this.containerImage } : undefined,
-        env: {
-          CI: 'true',
-        },
-        permissions: {
-          contents: workflows.JobPermission.WRITE,
-        },
-        steps: steps,
+    return new TaskWorkflow(github, {
+      name: workflowName,
+      jobId: BUILD_JOBID,
+      triggers: {
+        schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
+        push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
       },
+      container: this.containerImage ? { image: this.containerImage } : undefined,
+      env: {
+        CI: 'true',
+      },
+      permissions: {
+        contents: JobPermission.WRITE,
+      },
+      checkoutWith: {
+        // we must use 'fetch-depth=0' in order to fetch all tags
+        // otherwise tags are not checked out
+        'fetch-depth': 0,
+      },
+      preBuildSteps,
+      task: releaseTask,
+      postBuildSteps,
     });
-
-    return workflow;
   }
 }
 

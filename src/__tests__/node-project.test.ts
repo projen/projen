@@ -3,7 +3,7 @@ import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
 import { JobPermission } from '../github/workflows-model';
 import * as logging from '../logging';
-import { NodePackage, NpmAccess } from '../node-package';
+import { NodePackage, NodePackageManager, NpmAccess } from '../node-package';
 import { DependenciesUpgradeMechanism } from '../node-project';
 import { Project } from '../project';
 import { Tasks } from '../tasks';
@@ -482,6 +482,26 @@ test('projen synth is only executed for subprojects', () => {
     description: 'Full release build (test+compile)',
     name: 'build',
   });
+});
+
+test('enable anti-tamper', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    packageManager: NodePackageManager.NPM,
+    releaseToNpm: true,
+    mutableBuild: false,
+    antitamper: true,
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(workflow.jobs.build.steps).toEqual(expect.arrayContaining([
+    expect.objectContaining({
+      name: 'Anti-tamper check',
+    }),
+  ]));
 });
 
 test('enabling dependabot does not overturn mergify: false', () => {

@@ -1,13 +1,7 @@
 import { Component } from '../component';
-import { Project } from '../project';
-import { Mergify } from './mergify';
+import { GitHub } from './github';
 
 export interface AutoMergeOptions {
-  /**
-   * The mergify component.
-   */
-  readonly mergify: Mergify;
-
   /**
    * The GitHub job ID of the build workflow.
    */
@@ -18,6 +12,12 @@ export interface AutoMergeOptions {
    * @default 1
    */
   readonly approvedReviews?: number;
+
+  /**
+   * List of labels that will prevent auto-merging.
+   * @default ['do-not-merge']
+   */
+  readonly blockingLabels?: string[];
 }
 
 /**
@@ -30,13 +30,21 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-  constructor(project: Project, options: AutoMergeOptions) {
-    super(project);
+  constructor(github: GitHub, options: AutoMergeOptions) {
+    super(github.project);
 
-    const mergify = options.mergify;
+    const mergify = github.mergify;
+    if (!mergify) {
+      throw new Error('auto merging requires mergify to be enabled');
+    }
 
     const successfulBuild = options.buildJob
       ? [`status-success=${options.buildJob}`]
+      : [];
+
+    const blockingLabels = options.blockingLabels ?? ['do-not-merge'];
+    const blockingCondition = blockingLabels?.length
+      ? [`-label~=(${blockingLabels.join('|')})`]
       : [];
 
     const mergeAction = {
@@ -62,6 +70,7 @@ export class AutoMerge extends Component {
       actions: mergeAction,
       conditions: [
         `#approved-reviews-by>=${approvedReviews}`,
+        ...blockingCondition,
         ...successfulBuild,
       ],
     });
