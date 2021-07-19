@@ -170,6 +170,7 @@ Name|Description
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
+[github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
@@ -269,6 +270,7 @@ Name|Description
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
+[github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -1546,6 +1548,7 @@ static dependabot(options?: DependabotOptions): DependenciesUpgradeMechanism
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **registries** (<code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code>)  Map of package registries to use. __*Default*__: use public registries
   * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
   * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
 
@@ -5146,6 +5149,7 @@ new github.Dependabot(github: GitHub, options?: DependabotOptions)
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **registries** (<code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code>)  Map of package registries to use. __*Default*__: use public registries
   * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
   * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
 
@@ -5222,6 +5226,7 @@ addDependabot(options?: DependabotOptions): Dependabot
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **registries** (<code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code>)  Map of package registries to use. __*Default*__: use public registries
   * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
   * **versioningStrategy** (<code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code>)  The strategy to use when edits manifest and lock files. __*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
 
@@ -10709,8 +10714,29 @@ Name | Type | Description
 **ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
+**registries**?🔹 | <code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code> | Map of package registries to use.<br/>__*Default*__: use public registries
 **scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY
 **versioningStrategy**?🔹 | <code>[github.VersioningStrategy](#projen-github-versioningstrategy)</code> | The strategy to use when edits manifest and lock files.<br/>__*Default*__: VersioningStrategy.LOCKFILE_ONLY The default is to only update the lock file because package.json is controlled by projen and any outside updates will fail the build.
+
+
+
+## struct DependabotRegistry 🔹 <a id="projen-github-dependabotregistry"></a>
+
+
+Use to add private registry support for dependabot.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**type**🔹 | <code>[github.DependabotRegistryType](#projen-github-dependabotregistrytype)</code> | Registry type e.g. 'npm-registry' or 'docker-registry'.
+**url**🔹 | <code>string</code> | Url for the registry e.g. 'https://npm.pkg.github.com' or 'registry.hub.docker.com'.
+**key**?🔹 | <code>string</code> | A reference to a Dependabot secret containing an access key for this registry.<br/>__*Default*__: undefined
+**organization**?🔹 | <code>string</code> | Used with the hex-organization registry type.<br/>__*Default*__: undefined
+**password**?🔹 | <code>string</code> | A reference to a Dependabot secret containing the password for the specified user.<br/>__*Default*__: undefined
+**replacesBase**?🔹 | <code>boolean</code> | For registries with type: python-index, if the boolean value is true, pip esolves dependencies by using the specified URL rather than the base URL of the Python Package Index (by default https://pypi.org/simple).<br/>__*Default*__: undefined
+**token**?🔹 | <code>string</code> | Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'.<br/>__*Default*__: undefined
+**username**?🔹 | <code>string</code> | The username that Dependabot uses to access the registry.<br/>__*Default*__: do not authenticate
 
 
 
@@ -12443,6 +12469,26 @@ Name | Description
 **BUILD** 🔹|The dependency is required to run the `build` task.
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
+
+
+## enum DependabotRegistryType 🔹 <a id="projen-github-dependabotregistrytype"></a>
+
+Each configuration type requires you to provide particular settings.
+
+Some types allow more than one way to connect
+
+Name | Description
+-----|-----
+**COMPOSER_REGISTRY** 🔹|The composer-repository type supports username and password.
+**DOCKER_REGISTRY** 🔹|The docker-registry type supports username and password.
+**GIT** 🔹|The git type supports username and password.
+**HEX_ORGANIZATION** 🔹|The hex-organization type supports organization and key.
+**MAVEN_REPOSITORY** 🔹|The maven-repository type supports username and password, or token.
+**NPM_REGISTRY** 🔹|The npm-registry type supports username and password, or token.
+**NUGET_FEED** 🔹|The nuget-feed type supports username and password, or token.
+**PYTHON_INDEX** 🔹|The python-index type supports username and password, or token.
+**RUBYGEMS_SERVER** 🔹|The rubygems-server type supports username and password, or token.
+**TERRAFORM_REGISTRY** 🔹|The terraform-registry type supports a token.
 
 
 ## enum DependabotScheduleInterval 🔹 <a id="projen-github-dependabotscheduleinterval"></a>
