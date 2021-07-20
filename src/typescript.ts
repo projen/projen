@@ -216,7 +216,6 @@ export class TypeScriptProject extends NodeProject {
         description: 'Create an npm tarball',
       });
 
-      this.packageTask.exec('rm -fr dist');
       this.packageTask.exec('mkdir -p dist/js');
       this.packageTask.exec(`${this.package.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
