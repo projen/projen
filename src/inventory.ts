@@ -31,7 +31,6 @@ export interface ProjectType {
   options: ProjectOption[];
   docs?: string;
   docsurl: string;
-  isMainModule?: boolean;
 }
 
 interface JsiiType {
@@ -70,7 +69,6 @@ interface JsiiType {
       pjid?: string;
     };
   };
-  isMainModule?: boolean;
 }
 
 /**
@@ -108,7 +106,7 @@ export function discover(...moduleDirs: string[]) {
 function discoverJsiiTypes(...moduleDirs: string[]) {
   const jsii: JsiiTypes = {};
 
-  const discoverJsii = (dir: string, isMainModule: boolean) => {
+  const discoverJsii = (dir: string) => {
     const jsiiFile = path.join(dir, '.jsii');
     if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
 
@@ -116,7 +114,6 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
     for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
       jsii[fqn] = {
         ...type,
-        isMainModule: isMainModule,
       };
     }
 
@@ -126,7 +123,7 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
       for (const dependency of Object.keys(manifest.dependencies)) {
         const nestedDependencyFolder = path.join(dir, 'node_modules', dependency);
         if (fs.existsSync(nestedDependencyFolder)) {
-          discoverJsii(nestedDependencyFolder, false);
+          discoverJsii(nestedDependencyFolder);
         }
       }
     }
@@ -135,13 +132,13 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
   // read all .jsii manifests from all requested modules and merge
   // them all into a single map of fqn->type.
   for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
-    discoverJsii(dir, true);
+    discoverJsii(dir);
 
     // Read from scoped packages
     if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
       const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
       for (const child of childDirs) {
-        discoverJsii(child, true);
+        discoverJsii(child);
       }
     }
   }
@@ -188,7 +185,6 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
     options: discoverOptions(jsii, fqn).sort((o1, o2) => o1.name.localeCompare(o2.name)),
     docs: typeinfo.docs?.summary,
     docsurl,
-    isMainModule: typeinfo.isMainModule,
   } as ProjectType;
 }
 
