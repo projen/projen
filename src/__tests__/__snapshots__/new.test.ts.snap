@@ -422,7 +422,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "typedoc",
         "type": "build",
-        "version": "^0.20.35",
+        "version": "^0.21.4",
       },
       Object {
         "name": "typescript",
@@ -527,7 +527,7 @@ tsconfig.tsbuildinfo
         "name": "docgen",
         "steps": Array [
           Object {
-            "exec": "typedoc --out docs/",
+            "exec": "typedoc src --disableSources --out docs/",
           },
         ],
       },
@@ -951,7 +951,7 @@ project.synth();",
       "projen": "^999.999.999",
       "standard-version": "^9",
       "ts-jest": "*",
-      "typedoc": "^0.20.35",
+      "typedoc": "^0.21.4",
       "typescript": "^4.2.0",
     },
     "jest": Object {
