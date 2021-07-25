@@ -5,6 +5,7 @@ import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
+const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 
 /**
  * Options for `Publisher`.
@@ -109,6 +110,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToMaven(options: JsiiReleaseMaven = {}) {
+    const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(GITHUB_PACKAGES_MAVEN_REPOSITORY);
+    const isGitHubActor = isGitHubPackages && options.mavenUsername == undefined;
+
     this.jobs.release_maven = this.createPublishJob({
       name: 'Maven',
       registryName: 'Maven Central',
@@ -118,12 +122,19 @@ export class Publisher extends Component {
         MAVEN_SERVER_ID: options.mavenServerId,
         MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
+      expressions: {
+        MAVEN_USERNAME: isGitHubActor ? '${{ github.actor }}' : undefined,
+      },
       secrets: {
-        MAVEN_GPG_PRIVATE_KEY: options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
-        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
+        MAVEN_GPG_PRIVATE_KEY: isGitHubPackages ? undefined : options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
+        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages ? undefined : options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
         MAVEN_PASSWORD: options.mavenPassword ?? 'MAVEN_PASSWORD',
-        MAVEN_USERNAME: options.mavenUsername ?? 'MAVEN_USERNAME',
-        MAVEN_STAGING_PROFILE_ID: options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+        MAVEN_USERNAME: isGitHubActor ? undefined : options.mavenUsername ?? 'MAVEN_USERNAME',
+        MAVEN_STAGING_PROFILE_ID: isGitHubPackages ? undefined : options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+      },
+      permissions: {
+        contents: JobPermission.READ,
+        packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
     });
   }
@@ -172,11 +183,17 @@ export class Publisher extends Component {
   private createPublishJob(opts: PublishJobOptions): Job {
     const requiredEnv = new Array<string>();
 
-    // jobEnv is the env we pass to the github job (task environment + secrets).
+    // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
     const jobEnv: Record<string, string> = { ...opts.env };
-    for (const [name, secretName] of Object.entries(opts.secrets ?? {})) {
+    const secretExpressionEntries = Object.entries(opts.secrets ?? {})
+      .filter(([_, secretName]) => secretName != undefined)
+      .map(([name, secretName]) => [name, `\${{ secrets.${secretName} }}`]);
+    const expressionEntries = Object.entries(opts.expressions ?? {})
+      .filter(([_, value]) => value != undefined) as string [][];
+    const mergedExpressionEntries = secretExpressionEntries.concat(expressionEntries);
+    for (const [name, expression] of mergedExpressionEntries) {
       requiredEnv.push(name);
-      jobEnv[name] = `\${{ secrets.${secretName} }}`;
+      jobEnv[name] = expression;
     }
 
     // define a task which can be used through `projen publish:xxx`.
@@ -242,7 +259,8 @@ interface PublishTaskOptions {
 interface PublishJobOptions extends PublishTaskOptions {
   readonly image?: string;
   readonly name: string;
-  readonly secrets?: { [name: string]: string };
+  readonly secrets?: { [name: string]: string | undefined };
+  readonly expressions?: { [name: string]: string | undefined };
 }
 
 /**

@@ -72,8 +72,10 @@ describe('maven repository options', () => {
 
     const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
+    expect(workflow).toContain('MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}');
     expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
     expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
+    expect(workflow).not.toContain('packages: write');
   });
 
   test('use nexus repo new endpoint', () => {
@@ -113,8 +115,10 @@ describe('maven repository options', () => {
     const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('run: npx -p jsii-release@latest jsii-release-maven');
     expect(workflow).toContain('MAVEN_ENDPOINT: https://s01.oss.sonatype.org');
+    expect(workflow).toContain('MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}');
     expect(workflow).not.toContainEqual('MAVEN_SERVER_ID');
     expect(workflow).not.toContainEqual('MAVEN_REPOSITORY_URL');
+    expect(workflow).not.toContain('packages: write');
   });
 
   test('use github as repository', () => {
@@ -144,11 +148,8 @@ describe('maven repository options', () => {
         MAVEN_REPOSITORY_URL: 'https://maven.pkg.github.com/eladb',
       },
       requiredEnv: [
-        'MAVEN_GPG_PRIVATE_KEY',
-        'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
         'MAVEN_PASSWORD',
         'MAVEN_USERNAME',
-        'MAVEN_STAGING_PROFILE_ID',
       ],
       steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
     });
@@ -156,6 +157,8 @@ describe('maven repository options', () => {
     const workflow = outdir['.github/workflows/release.yml'];
     expect(workflow).toContain('MAVEN_SERVER_ID: github');
     expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
+    expect(workflow).toContain('MAVEN_USERNAME: ${{ github.actor }}');
+    expect(workflow).toContain('packages: write');
   });
 });
 
