@@ -50,6 +50,7 @@ yarn-error.log*
 !/.vscode/launch.json
 !/API.md
 !/LICENSE
+!/Makefile
 !/package.json
 !/projen.bash
 !/src

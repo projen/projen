@@ -1,10 +1,21 @@
+import * as os from 'os';
 import * as path from 'path';
+import { resolve } from '../_resolve';
 import { PROJEN_DIR } from '../common';
 import { Component } from '../component';
 import { JsonFile } from '../json';
+import { Makefile } from '../makefile';
 import { Project } from '../project';
 import { TasksManifest, TaskSpec } from './model';
 import { Task, TaskOptions } from './task';
+
+export interface TasksOptions {
+  /**
+   * Whether to render the tasks as a Makefile.
+   * @default false
+   */
+  readonly makefile?: boolean;
+}
 
 /**
  * Defines project tasks.
@@ -21,12 +32,18 @@ export class Tasks extends Component {
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
-  constructor(project: Project) {
+  private readonly makefile?: Makefile;
+
+  constructor(project: Project, options: TasksOptions = {}) {
     super(project);
 
     const manifestFile = Tasks.MANIFEST_FILE;
     this._tasks = {};
     this._env = {};
+
+    if (options.makefile) {
+      this.makefile = new Makefile(project, 'Makefile');
+    }
 
     new JsonFile(project, manifestFile, {
       omitEmpty: true,
@@ -115,4 +132,85 @@ export class Tasks extends Component {
 
     return tasks;
   }
+
+  /**
+   * Obtains the full runtime environment for a task. This defers evaluation of
+   * values using the $(xx) syntax.
+   */
+  public getFullEnvironment(task: Task) {
+    let env = this._env ?? {};
+
+    env = {
+      ...env,
+      ...task._renderSpec().env ?? {},
+    };
+
+    return env;
+  }
+
+  private renderTaskAsRecipe(task: Task): string[] {
+    const recipe: string[] = [];
+
+    const env = this.getFullEnvironment(task);
+    for (const [key, value] of Object.entries(env)) {
+      recipe.push(`export ${key}=${value}`);
+    }
+
+    for (const step of task.steps) {
+      if (step.say) {
+        recipe.push(`echo ${step.say}`);
+      }
+
+      if (step.spawn) {
+        recipe.push(`make ${step.spawn}`); // use $(MAKE) here?
+      }
+
+      if (step.builtin) {
+        recipe.push(renderBuiltin(step.builtin));
+      }
+
+      const execs = step.exec ? [step.exec] : [];
+
+      for (let exec of execs) {
+        exec = resolve(exec);
+
+        let command = '';
+        const cmd = exec.split(' ')[0];
+        if (os.platform() == 'win32' && ['mkdir', 'mv', 'rm'].includes(cmd)) {
+          command = `shx ${exec}`;
+        } else {
+          command = exec;
+        }
+        const cwd = step.cwd;
+        if (cwd) {
+          command = `(cd ${cwd} && ${command})`;
+        }
+        recipe.push(command);
+      }
+    }
+    return recipe;
+  }
+
+  preSynthesize() {
+    if (this.makefile) {
+      for (let [name, task] of Object.entries(this._tasks)) {
+
+        // Make doesn't like : in the middle of target names
+        name = name.replace(/:/g, '-');
+
+        this.makefile.addAll(name);
+        this.makefile.addRule({
+          targets: [name],
+          recipe: this.renderTaskAsRecipe(task),
+          phony: true,
+        });
+      }
+    }
+  }
+}
+
+function renderBuiltin(builtin: string) {
+  const moduleRoot = path.dirname(require.resolve('../../package.json'));
+  const program = require.resolve(path.join(moduleRoot, 'lib', `${builtin}.task.js`));
+  return `${process.execPath} ${program}`;
 }

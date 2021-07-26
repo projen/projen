@@ -18,7 +18,7 @@ import { ObjectFile } from './object-file';
 import { NewProjectOptionHints } from './option-hints';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { Task, TaskOptions } from './tasks';
-import { Tasks } from './tasks/tasks';
+import { Tasks, TasksOptions } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
@@ -48,6 +48,12 @@ export interface ProjectOptions extends GitHubOptions {
    * @default "."
    */
   readonly outdir?: string;
+
+  /**
+   * Options for configuring projen's tasks system.
+   * @default - default options
+   */
+  readonly tasksOptions?: TasksOptions;
 
   /**
    * Add a Gitpod development environment
@@ -265,7 +271,7 @@ export class Project {
 
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
-    this.tasks = new Tasks(this);
+    this.tasks = new Tasks(this, options.tasksOptions);
     this.deps = new Dependencies(this);
 
     this.logger = new Logger(this, options.logging);

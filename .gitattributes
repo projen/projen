@@ -20,6 +20,7 @@
 /.projen/tasks.json                        	linguist-generated
 /.vscode/launch.json                       	linguist-generated
 /LICENSE                                   	linguist-generated
+/Makefile                                  	linguist-generated
 /package.json                              	linguist-generated
 /projen.bash                               	linguist-generated
 /tsconfig.eslint.json                      	linguist-generated
