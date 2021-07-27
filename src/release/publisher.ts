@@ -83,9 +83,9 @@ export class Publisher extends Component {
         contents: JobPermission.READ,
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
-      secrets: {
+      workflowEnv: {
         // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-        NPM_TOKEN: options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN'),
+        NPM_TOKEN: secret(options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN')),
       },
     });
   }
@@ -99,8 +99,8 @@ export class Publisher extends Component {
       name: 'NuGet',
       command: 'jsii-release-nuget',
       registryName: 'NuGet Gallery',
-      secrets: {
-        NUGET_API_KEY: options.nugetApiKeySecret ?? 'NUGET_API_KEY',
+      workflowEnv: {
+        NUGET_API_KEY: secret(options.nugetApiKeySecret ?? 'NUGET_API_KEY'),
       },
     });
   }
@@ -122,15 +122,12 @@ export class Publisher extends Component {
         MAVEN_SERVER_ID: options.mavenServerId,
         MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
-      expressions: {
-        MAVEN_USERNAME: isGitHubActor ? '${{ github.actor }}' : undefined,
-      },
-      secrets: {
-        MAVEN_GPG_PRIVATE_KEY: isGitHubPackages ? undefined : options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
-        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages ? undefined : options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
-        MAVEN_PASSWORD: options.mavenPassword ?? 'MAVEN_PASSWORD',
-        MAVEN_USERNAME: isGitHubActor ? undefined : options.mavenUsername ?? 'MAVEN_USERNAME',
-        MAVEN_STAGING_PROFILE_ID: isGitHubPackages ? undefined : options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+      workflowEnv: {
+        MAVEN_GPG_PRIVATE_KEY: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY'),
+        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE'),
+        MAVEN_PASSWORD: secret(options.mavenPassword ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'MAVEN_PASSWORD')),
+        MAVEN_USERNAME: isGitHubActor ? '${{ github.actor }}' : secret(options.mavenUsername ?? 'MAVEN_USERNAME'),
+        MAVEN_STAGING_PROFILE_ID: isGitHubPackages ? undefined : secret(options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID'),
       },
       permissions: {
         contents: JobPermission.READ,
@@ -151,9 +148,9 @@ export class Publisher extends Component {
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
-      secrets: {
-        TWINE_USERNAME: options.twinePasswordSecret ?? 'TWINE_USERNAME',
-        TWINE_PASSWORD: options.twinePasswordSecret ?? 'TWINE_PASSWORD',
+      workflowEnv: {
+        TWINE_USERNAME: secret(options.twinePasswordSecret ?? 'TWINE_USERNAME'),
+        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? 'TWINE_PASSWORD'),
       },
     });
   }
@@ -174,8 +171,8 @@ export class Publisher extends Component {
         GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
-      secrets: {
-        GITHUB_TOKEN: options.githubTokenSecret ?? 'GO_GITHUB_TOKEN',
+      workflowEnv: {
+        GITHUB_TOKEN: secret(options.githubTokenSecret ?? 'GO_GITHUB_TOKEN'),
       },
     });
   }
@@ -185,13 +182,9 @@ export class Publisher extends Component {
 
     // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
     const jobEnv: Record<string, string> = { ...opts.env };
-    const secretExpressionEntries = Object.entries(opts.secrets ?? {})
-      .filter(([_, secretName]) => secretName != undefined)
-      .map(([name, secretName]) => [name, `\${{ secrets.${secretName} }}`]);
-    const expressionEntries = Object.entries(opts.expressions ?? {})
+    const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
       .filter(([_, value]) => value != undefined) as string [][];
-    const mergedExpressionEntries = secretExpressionEntries.concat(expressionEntries);
-    for (const [name, expression] of mergedExpressionEntries) {
+    for (const [name, expression] of workflowEnvEntries) {
       requiredEnv.push(name);
       jobEnv[name] = expression;
     }
@@ -234,6 +227,10 @@ export class Publisher extends Component {
   }
 }
 
+function secret(secretName: string) {
+  return `\${{ secrets.${secretName} }}`;
+}
+
 interface PublishTaskOptions {
   /**
    * The jsii-release command to execute.
@@ -259,8 +256,7 @@ interface PublishTaskOptions {
 interface PublishJobOptions extends PublishTaskOptions {
   readonly image?: string;
   readonly name: string;
-  readonly secrets?: { [name: string]: string | undefined };
-  readonly expressions?: { [name: string]: string | undefined };
+  readonly workflowEnv?: { [name: string]: string | undefined };
 }
 
 /**
