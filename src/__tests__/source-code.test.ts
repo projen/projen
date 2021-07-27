@@ -64,6 +64,6 @@ test('trailing whitespace is trimmed', () => {
   
   expect(synthSnapshot(project)['test.txt']).toStrictEqual([
     '',
-    '    hello, world.'
+    '        hello, world.'
   ].join('\n'));
 });
