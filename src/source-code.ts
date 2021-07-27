@@ -34,7 +34,7 @@ export class SourceCode extends Component {
   public line(code?: string) {
     const spaces: number = this.indent * this.indentLevel;
     const prefix = ' '.repeat(spaces);
-    this.file.addLine(prefix + (code ?? ''));
+    this.file.addLine((prefix + (code ?? '')).trimEnd());
   }
 
   /**
