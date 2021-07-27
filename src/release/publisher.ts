@@ -112,6 +112,11 @@ export class Publisher extends Component {
   public publishToMaven(options: JsiiReleaseMaven = {}) {
     const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(GITHUB_PACKAGES_MAVEN_REPOSITORY);
     const isGitHubActor = isGitHubPackages && options.mavenUsername == undefined;
+    const mavenServerId = options.mavenServerId ?? (isGitHubPackages ? 'github' : undefined);
+
+    if (isGitHubPackages && mavenServerId != 'github') {
+      throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
+    }
 
     this.jobs.release_maven = this.createPublishJob({
       name: 'Maven',
@@ -119,7 +124,7 @@ export class Publisher extends Component {
       command: 'jsii-release-maven',
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
-        MAVEN_SERVER_ID: options.mavenServerId,
+        MAVEN_SERVER_ID: mavenServerId,
         MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
       workflowEnv: {

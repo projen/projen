@@ -132,7 +132,6 @@ describe('maven repository options', () => {
         javaPackage: 'com.github.eladb.watchful',
         mavenGroupId: 'com.github.eladb',
         mavenArtifactId: 'cdk-watchful',
-        mavenServerId: 'github',
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
       },
       defaultReleaseBranch: 'master',
@@ -159,6 +158,24 @@ describe('maven repository options', () => {
     expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
     expect(workflow).toContain('MAVEN_USERNAME: ${{ github.actor }}');
     expect(workflow).toContain('packages: write');
+  });
+
+  test('using github as repository with incorrect server id should throw', () => {
+    expect(() => new TestJsiiProject({
+      authorAddress: 'https://foo.bar',
+      authorUrl: 'https://foo.bar',
+      repositoryUrl: 'https://github.com/foo/bar.git',
+      author: 'My Name',
+      name: 'testproject',
+      publishToMaven: {
+        javaPackage: 'com.github.eladb.watchful',
+        mavenGroupId: 'com.github.eladb',
+        mavenArtifactId: 'cdk-watchful',
+        mavenServerId: 'something-else',
+        mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
+      },
+      defaultReleaseBranch: 'master',
+    })).toThrow('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
   });
 });
 
