@@ -48,3 +48,25 @@ publisher.publishToMaven(/* options */);
 
 See API reference for options for each target.
 
+## Publishing to GitHub Packages
+
+Some targets come with dynamic defaults that support GitHub Packages.
+If the respective registry URL is detected to be GitHub, other relevant options will automatically be set to fitting values.
+It will also ensure that the workflow token has write permissions for Packages.
+
+**npm**
+```ts
+publisher.publishToNpm({ 
+  registry: 'npm.pkg.github.com'
+  // also sets npmTokenSecret
+})
+```
+
+**Maven**
+```ts
+publisher.publishToMaven({
+  mavenRepositoryUrl: 'https://maven.pkg.github.com/USER/REPO'
+  // also sets mavenServerId, mavenUsername, mavenPassword
+  // disables mavenGpgPrivateKeySecret, mavenGpgPrivateKeyPassphrase, mavenStagingProfileId
+})
+```

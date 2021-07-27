@@ -357,9 +357,10 @@ export interface JsiiReleaseMaven {
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
    *
-   * @default "ossrh" Defaults to Maven Central.
+   * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */
   readonly mavenServerId?: string;
+
   /**
    * Deployment repository when not deploying to Maven Central
    *
@@ -373,7 +374,7 @@ export interface JsiiReleaseMaven {
    * packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY"
+   * @default "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeySecret?: string;
 
@@ -382,7 +383,7 @@ export interface JsiiReleaseMaven {
    * it. This is used to sign your Maven packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
+   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeyPassphrase?: string;
 
@@ -393,10 +394,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_USERNAME"
+   * @default "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
    */
   readonly mavenUsername?: string;
 
@@ -407,10 +407,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_PASSWORD"
+   * @default "MAVEN_PASSWORD" or "GITHUB_TOKEN" when using GitHub Packages
    */
   readonly mavenPassword?: string;
 
@@ -419,9 +418,9 @@ export interface JsiiReleaseMaven {
    * profile ID (e.g. 68a05363083174). Staging profile ID can be found in the
    * URL of the "Releases" staging profile under "Staging Profiles" in
    * https://oss.sonatype.org (e.g.
-   * https://oss.sonatype.org/#stagingProfiles;11a33451234521
+   * https://oss.sonatype.org/#stagingProfiles;11a33451234521)
 
-   * @default "MAVEN_STAGING_PROFILE_ID"
+   * @default "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
    */
   readonly mavenStagingProfileId?: string;
 }
