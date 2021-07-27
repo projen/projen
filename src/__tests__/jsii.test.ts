@@ -157,6 +157,7 @@ describe('maven repository options', () => {
     expect(workflow).toContain('MAVEN_SERVER_ID: github');
     expect(workflow).toContain('MAVEN_REPOSITORY_URL: https://maven.pkg.github.com/eladb');
     expect(workflow).toContain('MAVEN_USERNAME: ${{ github.actor }}');
+    expect(workflow).toContain('MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}');
     expect(workflow).toContain('packages: write');
   });
 
