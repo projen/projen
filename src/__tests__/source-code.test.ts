@@ -51,3 +51,19 @@ test('indent', () => {
     'level0',
   ].join('\n'));
 });
+
+test('trailing whitespace is trimmed', () => {
+  const project = new TestProject();
+  const hello = new SourceCode(project, 'test.txt', { indent: 4 });
+  hello.open();
+  hello.line();
+  hello.open();
+  hello.line('hello, world.   ');
+  hello.close();
+  hello.close();
+  
+  expect(synthSnapshot(project)['test.txt']).toStrictEqual([
+    '',
+    '    hello, world.'
+  ].join('\n'));
+});
