@@ -5,6 +5,7 @@ import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
+const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 
 /**
  * Options for `Publisher`.
@@ -82,9 +83,9 @@ export class Publisher extends Component {
         contents: JobPermission.READ,
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
-      secrets: {
+      workflowEnv: {
         // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-        NPM_TOKEN: options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN'),
+        NPM_TOKEN: secret(options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN')),
       },
     });
   }
@@ -98,8 +99,8 @@ export class Publisher extends Component {
       name: 'NuGet',
       command: 'jsii-release-nuget',
       registryName: 'NuGet Gallery',
-      secrets: {
-        NUGET_API_KEY: options.nugetApiKeySecret ?? 'NUGET_API_KEY',
+      workflowEnv: {
+        NUGET_API_KEY: secret(options.nugetApiKeySecret ?? 'NUGET_API_KEY'),
       },
     });
   }
@@ -109,21 +110,33 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToMaven(options: JsiiReleaseMaven = {}) {
+    const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(GITHUB_PACKAGES_MAVEN_REPOSITORY);
+    const isGitHubActor = isGitHubPackages && options.mavenUsername == undefined;
+    const mavenServerId = options.mavenServerId ?? (isGitHubPackages ? 'github' : undefined);
+
+    if (isGitHubPackages && mavenServerId != 'github') {
+      throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
+    }
+
     this.jobs.release_maven = this.createPublishJob({
       name: 'Maven',
       registryName: 'Maven Central',
       command: 'jsii-release-maven',
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
-        MAVEN_SERVER_ID: options.mavenServerId,
+        MAVEN_SERVER_ID: mavenServerId,
         MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
-      secrets: {
-        MAVEN_GPG_PRIVATE_KEY: options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
-        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
-        MAVEN_PASSWORD: options.mavenPassword ?? 'MAVEN_PASSWORD',
-        MAVEN_USERNAME: options.mavenUsername ?? 'MAVEN_USERNAME',
-        MAVEN_STAGING_PROFILE_ID: options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+      workflowEnv: {
+        MAVEN_GPG_PRIVATE_KEY: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY'),
+        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE'),
+        MAVEN_PASSWORD: secret(options.mavenPassword ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'MAVEN_PASSWORD')),
+        MAVEN_USERNAME: isGitHubActor ? '${{ github.actor }}' : secret(options.mavenUsername ?? 'MAVEN_USERNAME'),
+        MAVEN_STAGING_PROFILE_ID: isGitHubPackages ? undefined : secret(options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID'),
+      },
+      permissions: {
+        contents: JobPermission.READ,
+        packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
     });
   }
@@ -140,9 +153,9 @@ export class Publisher extends Component {
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
-      secrets: {
-        TWINE_USERNAME: options.twinePasswordSecret ?? 'TWINE_USERNAME',
-        TWINE_PASSWORD: options.twinePasswordSecret ?? 'TWINE_PASSWORD',
+      workflowEnv: {
+        TWINE_USERNAME: secret(options.twinePasswordSecret ?? 'TWINE_USERNAME'),
+        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? 'TWINE_PASSWORD'),
       },
     });
   }
@@ -163,8 +176,8 @@ export class Publisher extends Component {
         GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
-      secrets: {
-        GITHUB_TOKEN: options.githubTokenSecret ?? 'GO_GITHUB_TOKEN',
+      workflowEnv: {
+        GITHUB_TOKEN: secret(options.githubTokenSecret ?? 'GO_GITHUB_TOKEN'),
       },
     });
   }
@@ -172,11 +185,13 @@ export class Publisher extends Component {
   private createPublishJob(opts: PublishJobOptions): Job {
     const requiredEnv = new Array<string>();
 
-    // jobEnv is the env we pass to the github job (task environment + secrets).
+    // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
     const jobEnv: Record<string, string> = { ...opts.env };
-    for (const [name, secretName] of Object.entries(opts.secrets ?? {})) {
+    const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
+      .filter(([_, value]) => value != undefined) as string [][];
+    for (const [name, expression] of workflowEnvEntries) {
       requiredEnv.push(name);
-      jobEnv[name] = `\${{ secrets.${secretName} }}`;
+      jobEnv[name] = expression;
     }
 
     // define a task which can be used through `projen publish:xxx`.
@@ -217,6 +232,10 @@ export class Publisher extends Component {
   }
 }
 
+function secret(secretName: string) {
+  return `\${{ secrets.${secretName} }}`;
+}
+
 interface PublishTaskOptions {
   /**
    * The jsii-release command to execute.
@@ -242,7 +261,7 @@ interface PublishTaskOptions {
 interface PublishJobOptions extends PublishTaskOptions {
   readonly image?: string;
   readonly name: string;
-  readonly secrets?: { [name: string]: string };
+  readonly workflowEnv?: { [name: string]: string | undefined };
 }
 
 /**
@@ -338,9 +357,10 @@ export interface JsiiReleaseMaven {
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
    *
-   * @default "ossrh" Defaults to Maven Central.
+   * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */
   readonly mavenServerId?: string;
+
   /**
    * Deployment repository when not deploying to Maven Central
    *
@@ -354,7 +374,7 @@ export interface JsiiReleaseMaven {
    * packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY"
+   * @default "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeySecret?: string;
 
@@ -363,7 +383,7 @@ export interface JsiiReleaseMaven {
    * it. This is used to sign your Maven packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
+   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeyPassphrase?: string;
 
@@ -374,10 +394,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_USERNAME"
+   * @default "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
    */
   readonly mavenUsername?: string;
 
@@ -388,10 +407,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_PASSWORD"
+   * @default "MAVEN_PASSWORD" or "GITHUB_TOKEN" when using GitHub Packages
    */
   readonly mavenPassword?: string;
 
@@ -400,9 +418,9 @@ export interface JsiiReleaseMaven {
    * profile ID (e.g. 68a05363083174). Staging profile ID can be found in the
    * URL of the "Releases" staging profile under "Staging Profiles" in
    * https://oss.sonatype.org (e.g.
-   * https://oss.sonatype.org/#stagingProfiles;11a33451234521
+   * https://oss.sonatype.org/#stagingProfiles;11a33451234521)
 
-   * @default "MAVEN_STAGING_PROFILE_ID"
+   * @default "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
    */
   readonly mavenStagingProfileId?: string;
 }
