@@ -237,12 +237,20 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
-  // collect projects by looking up all .jsii modules in `node_modules`.
-  const modulesDir = path.join(baseDir, 'node_modules');
-  const modules = fs.readdirSync(modulesDir).map(file => path.join(modulesDir, file));
+  // Remove optional semver information from spec to retrieve the module name
+  const moduleName = spec.replace(/\@([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/, '');
+
+  // Find the just installed package and discover the rest recursively from this package folder
+  const moduleDir = path.dirname(require.resolve(`${moduleName}/.jsii`, {
+    paths: [
+      baseDir,
+    ],
+  }));
+
+  // Only leave projects from the main (requested) package
   const projects = inventory
-    .discover(...modules)
-    .filter(x => x.moduleName !== 'projen'); // filter built-in project types
+    .discover(moduleDir)
+    .filter(x => x.moduleName === moduleName); // Only list project types from the requested 'from' module
 
   if (projects.length < 1) {
     throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
