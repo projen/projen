@@ -493,7 +493,6 @@ export class NodeProject extends Project {
 
 
     this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
-    this.setScript('start', `${this.package.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.npmignore?.exclude(`/${PROJEN_DIR}`);
