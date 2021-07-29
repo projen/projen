@@ -32,8 +32,7 @@
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
     "contributors:update": "/bin/bash ./projen.bash contributors:update",
     "release": "/bin/bash ./projen.bash release",
-    "projen": "/bin/bash ./projen.bash",
-    "start": "/bin/bash ./projen.bash start"
+    "projen": "/bin/bash ./projen.bash"
   },
   "author": {
     "name": "Elad Ben-Israel",

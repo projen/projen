@@ -724,7 +724,6 @@ tsconfig.tsbuildinfo
       "dev": "npx projen dev",
       "eject": "npx projen eject",
       "projen": "npx projen",
-      "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
       "upgrade-dependencies": "npx projen upgrade-dependencies",

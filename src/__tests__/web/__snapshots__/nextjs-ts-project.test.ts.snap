@@ -736,7 +736,6 @@ tsconfig.tsbuildinfo
       "export": "npx projen export",
       "projen": "npx projen",
       "server": "npx projen server",
-      "start": "npx projen start",
       "telemetry": "npx projen telemetry",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",

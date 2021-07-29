@@ -795,7 +795,6 @@ pull_request_rules:
       "projen": "npx projen",
       "release": "npx projen release",
       "server": "npx projen server",
-      "start": "npx projen start",
       "telemetry": "npx projen telemetry",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
