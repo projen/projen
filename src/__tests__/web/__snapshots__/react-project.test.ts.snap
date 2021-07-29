@@ -776,7 +776,6 @@ pull_request_rules:
       "eject": "npx projen eject",
       "projen": "npx projen",
       "release": "npx projen release",
-      "start": "npx projen start",
       "test": "npx projen test",
       "test:compile": "npx projen test:compile",
       "unbump": "npx projen unbump",
