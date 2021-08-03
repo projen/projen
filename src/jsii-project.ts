@@ -152,6 +152,7 @@ export class JsiiProject extends TypeScriptProject {
       releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       releaseToNpm: false, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
+      docgen: false, // we use jsii-docgen here so disable typescript docgen
     });
 
     const srcdir = this.srcdir;

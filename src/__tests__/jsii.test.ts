@@ -277,6 +277,20 @@ describe('publish to go', () => {
   });
 });
 
+test('docgen: true should just work', () => {
+  const project = new TestJsiiProject({
+    author: 'My name',
+    name: 'testproject',
+    authorAddress: 'https://foo.bar',
+    defaultReleaseBranch: 'main',
+    repositoryUrl: 'https://github.com/foo/bar.git',
+    docgen: true,
+  });
+
+  const output = synthSnapshot(project);
+  expect(output['.projen/tasks.json'].tasks.docgen.steps[0].exec).toStrictEqual('jsii-docgen');
+});
+
 class TestJsiiProject extends JsiiProject {
   constructor(options: JsiiProjectOptions) {
     super({
