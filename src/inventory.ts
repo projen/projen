@@ -175,7 +175,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
   // projen.web.ReactProject -> web.ReactProject
   const typename = fqn.substring(fqn.indexOf('.') + 1);
 
-  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase().replace(/\./g, '-')}`;
   let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
   return {
     moduleName: typeinfo.assembly,

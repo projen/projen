@@ -8058,7 +8058,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "Java project.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-java.javaproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-java-javaproject",
     "fqn": "projen.java.JavaProject",
     "moduleName": "projen",
     "options": Array [
@@ -10082,7 +10082,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "Next.js project without TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web.nextjsproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web-nextjsproject",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
     "options": Array [
@@ -11345,7 +11345,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "Next.js project with TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web-nextjstypescriptproject",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
     "options": Array [
@@ -14209,7 +14209,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "Python project.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-python.pythonproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-python-pythonproject",
     "fqn": "projen.python.PythonProject",
     "moduleName": "projen",
     "options": Array [
@@ -14697,7 +14697,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "React project without TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web.reactproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web-reactproject",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
     "options": Array [
@@ -15947,7 +15947,7 @@ added, set to the exact version configrued here.",
   },
   Object {
     "docs": "React project with TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web.reacttypescriptproject",
+    "docsurl": "https://github.com/projen/projen/blob/master/API.md#projen-web-reacttypescriptproject",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
     "options": Array [
