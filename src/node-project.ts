@@ -983,10 +983,8 @@ export class NodeProject extends Project {
   }
 
   /**
- * Returns the shell command to execute in order to run a task. If
- * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
- * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
- * TASK`).
+ * Returns the shell command to execute in order to run a task. This will
+ * typically be `npx projen TASK`.
  *
  * @param task The task for which the command is required
  */
