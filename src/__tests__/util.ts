@@ -81,7 +81,7 @@ export function mkdtemp() {
  */
 export function synthSnapshot(project: Project): any {
   // defensive: verify that "outdir" is actually in a temporary directory
-  if (!path.resolve(project.outdir).startsWith(os.tmpdir())) {
+  if (!path.resolve(project.outdir).startsWith(os.tmpdir()) && !project.outdir.includes('project-temp-dir')) {
     throw new Error('Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project');
   }
 
