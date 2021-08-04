@@ -3472,10 +3472,8 @@ removeScript(name: string): void
 
 Returns the shell command to execute in order to run a task.
 
-If
-npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
-If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
-TASK`).
+This will
+typically be `npx projen TASK`.
 
 ```ts
 runTaskCommand(task: Task): string
