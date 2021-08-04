@@ -10253,6 +10253,8 @@ Name | Type | Description
 **noImplicitAny**?🔹 | <code>boolean</code> | In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type.<br/>__*Default*__: true
 **noImplicitReturns**?🔹 | <code>boolean</code> | When enabled, TypeScript will check all code paths in a function to ensure they return a value.<br/>__*Default*__: true
 **noImplicitThis**?🔹 | <code>boolean</code> | Raise error on ‘this’ expressions with an implied ‘any’ type.<br/>__*Default*__: true
+**noPropertyAccessFromIndexSignature**?🔹 | <code>boolean</code> | Raise error on use of the dot syntax to access fields which are not defined.<br/>__*Default*__: true
+**noUncheckedIndexedAccess**?🔹 | <code>boolean</code> | Raise error when accessing indexes on objects with unknown keys defined in index signatures.<br/>__*Default*__: true
 **noUnusedLocals**?🔹 | <code>boolean</code> | Report errors on unused local variables.<br/>__*Default*__: true
 **noUnusedParameters**?🔹 | <code>boolean</code> | Report errors on unused parameters in functions.<br/>__*Default*__: true
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/>__*Optional*__
