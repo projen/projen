@@ -5,11 +5,11 @@ import { TypeScriptProject } from './typescript';
  */
 export class TypedocDocgen {
   constructor(project: TypeScriptProject) {
-    project.addDevDeps('typedoc@^0.20.35');
+    project.addDevDeps('typedoc@^0.21.4');
 
     const docgen = project.addTask('docgen', {
       description: `Generate TypeScript API reference ${project.docsDirectory}`,
-      exec: 'typedoc --out ' + project.docsDirectory,
+      exec: `typedoc ${project.srcdir} --disableSources --out ${project.docsDirectory}`,
     });
 
     project.buildTask.spawn(docgen);

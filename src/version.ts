@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { posix } from 'path';
 import { Component } from './component';
 import { Project } from './project';
 import { Task } from './tasks';
@@ -41,8 +41,8 @@ export class Version extends Component {
   constructor(project: Project, options: VersionOptions) {
     super(project);
 
-    this.changelogFile = join(options.artifactsDirectory, 'changelog.md');
-    this.bumpFile = join(options.artifactsDirectory, 'version.txt');
+    this.changelogFile = posix.join(options.artifactsDirectory, 'changelog.md');
+    this.bumpFile = posix.join(options.artifactsDirectory, 'version.txt');
 
     const versionFile = options.versionFile;
 

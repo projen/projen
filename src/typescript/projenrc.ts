@@ -32,7 +32,11 @@ export class Projenrc extends Component {
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
     project.addDevDeps('ts-node@^9');
-    project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `ts-node ${this.rcfile}` });
+
+    // use the --skip-project flag to ensure ts-node doesn't use the
+    // tsconfig.json settings intended for the project's source code
+    // see: https://github.com/projen/projen/issues/948
+    project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `ts-node --skip-project ${this.rcfile}` });
 
     this.generateProjenrc();
   }

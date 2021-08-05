@@ -102,7 +102,7 @@ export class Stale extends Component {
         },
         steps: [
           {
-            uses: 'actions/stale@v3',
+            uses: 'actions/stale@v4',
             with: {
               // disable global
               'days-before-stale': -1,
