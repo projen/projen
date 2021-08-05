@@ -121,7 +121,10 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
     // this will also end-up in the projen module and add the projen types
     if (manifest.dependencies) {
       for (const dependency of Object.keys(manifest.dependencies)) {
-        const nestedDependencyFolder = path.join(dir, 'node_modules', dependency);
+        const nestedDependencyFolder = path.dirname(require.resolve(`${dependency}/package.json`, {
+          paths: [dir],
+        }));
+
         if (fs.existsSync(nestedDependencyFolder)) {
           discoverJsii(nestedDependencyFolder);
         }
