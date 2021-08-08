@@ -596,7 +596,7 @@ export class NodeProject extends Project {
       // event for the new commit has registered.
       postBuildSteps.push({
         if: hasChanges,
-        name: 'Cancel workflow (if self-mutation happened)',
+        name: 'Cancel workflow (if changed)',
         run: [
           'gh api',
           '-X POST',
