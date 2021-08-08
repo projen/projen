@@ -530,7 +530,6 @@ export class NodeProject extends Project {
       const gitDiffStepId = 'git_diff';
       const hasChangesCondName = 'has_changes';
       const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
-      const repoFullName = 'github.event.pull_request.head.repo.full_name';
 
       // disable anti-tamper if build workflow is mutable
       const antitamperSteps = (!mutableBuilds ?? this.antitamper) ? [{
@@ -581,7 +580,7 @@ export class NodeProject extends Project {
         run: [
           'gh api',
           '-X POST',
-          `/repos/\${{ ${repoFullName} }}/check-runs`,
+          `/repos/${repo}/check-runs`,
           `-F name="${buildJobId}"`,
           '-F head_sha="$(git rev-parse HEAD)"',
           '-F status="completed"',
@@ -597,12 +596,12 @@ export class NodeProject extends Project {
       // event for the new commit has registered.
       postBuildSteps.push({
         if: hasChanges,
-        name: 'Fail check if self mutation happened',
+        name: 'Cancel workflow (if self-mutation happened)',
         run: [
-          'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
-          'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
-          'exit 1',
-        ].join('\n'),
+          'gh api',
+          '-X POST',
+          `/repos/${repo}/actions/runs/\${{ github.run_id }}/cancel`,
+        ].join(' '),
       });
 
       postBuildSteps.push(...antitamperSteps);
