@@ -97,6 +97,7 @@ export class Publisher extends Component {
       },
       run: [
         `gh release create ${getVersion}`,
+        '-R ${{ github.repository }}',
         `-F ${changelogFile}`,
         `-t ${getVersion}`,
       ].join(' '),
