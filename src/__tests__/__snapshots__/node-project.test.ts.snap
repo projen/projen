@@ -42,8 +42,11 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
   },
   Object {
+    "env": Object {
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+    },
     "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if self-mutation happened)",
+    "name": "Cancel workflow (if changed)",
     "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
   },
   Object {
@@ -95,8 +98,11 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
   },
   Object {
+    "env": Object {
+      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+    },
     "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if self-mutation happened)",
+    "name": "Cancel workflow (if changed)",
     "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
   },
 ]
