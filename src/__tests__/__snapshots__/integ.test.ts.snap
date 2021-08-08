@@ -372,8 +372,8 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat
-          dist/version.txt)
+        run: gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F
+          dist/changelog.md -t v$(cat dist/version.txt)
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
   release_npm:
@@ -1068,7 +1068,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
         "steps": Array [
           Object {
-            "exec": "gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat dist/version.txt)",
+            "exec": "gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)",
           },
         ],
       },
@@ -4683,8 +4683,8 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat
-          dist/version.txt)
+        run: gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F
+          dist/changelog.md -t v$(cat dist/version.txt)
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
@@ -5008,7 +5008,7 @@ junit.xml
         ],
         "steps": Array [
           Object {
-            "exec": "gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat dist/version.txt)",
+            "exec": "gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)",
           },
         ],
       },
