@@ -202,12 +202,17 @@ Name|Description
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
-[release.JsiiReleaseGo](#projen-release-jsiireleasego)|Options for Go releases.
-[release.JsiiReleaseMaven](#projen-release-jsiireleasemaven)|Options for Maven releases.
-[release.JsiiReleaseNpm](#projen-release-jsiireleasenpm)|Options for npm release.
-[release.JsiiReleaseNuget](#projen-release-jsiireleasenuget)|Options for NuGet releases.
-[release.JsiiReleasePyPi](#projen-release-jsiireleasepypi)|Options for PyPI release.
+[release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
+[release.GoPublishOptions](#projen-release-gopublishoptions)|*No description*
+[release.JsiiReleaseMaven](#projen-release-jsiireleasemaven)|*No description*
+[release.JsiiReleaseNpm](#projen-release-jsiireleasenpm)|*No description*
+[release.JsiiReleaseNuget](#projen-release-jsiireleasenuget)|*No description*
+[release.JsiiReleasePyPi](#projen-release-jsiireleasepypi)|*No description*
+[release.MavenPublishOptions](#projen-release-mavenpublishoptions)|Options for Maven releases.
+[release.NpmPublishOptions](#projen-release-npmpublishoptions)|Options for npm release.
+[release.NugetPublishOptions](#projen-release-nugetpublishoptions)|Options for NuGet releases.
 [release.PublisherOptions](#projen-release-publisheroptions)|Options for `Publisher`.
+[release.PyPiPublishOptions](#projen-release-pypipublishoptions)|Options for PyPI release.
 [release.ReleaseOptions](#projen-release-releaseoptions)|Options for `Release`.
 [release.ReleaseProjectOptions](#projen-release-releaseprojectoptions)|Project options for release.
 [tasks.TaskCommonOptions](#projen-tasks-taskcommonoptions)|*No description*
@@ -4834,7 +4839,7 @@ new Version(project: Project, options: VersionOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
-  * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
 
 
 
@@ -4843,10 +4848,10 @@ new Version(project: Project, options: VersionOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**bumpFile**🔹 | <code>string</code> | An uncommitted JSON file that will include a "version" field with the bumped version.
 **bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**changelogFile**🔹 | <code>string</code> | The name of the changelog file created by the `bump` task.
+**changelogFileName**🔹 | <code>string</code> | The name of the changelog file (under `artifactsDirectory`).
 **unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**versionFileName**🔹 | <code>string</code> | The name of the file that contains the version (under `artifactsDirectory`).
 *static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
 
 
@@ -6648,15 +6653,30 @@ Name | Type | Description
 ### Methods
 
 
+#### publishToGitHubReleases(options)🔹 <a id="projen-release-publisher-publishtogithubreleases"></a>
+
+Creates a GitHub Release.
+
+```ts
+publishToGitHubReleases(options: GitHubReleasesPublishOptions): void
+```
+
+* **options** (<code>[release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)</code>)  Options.
+  * **changelogFile** (<code>string</code>)  The location of an .md file that includes the changelog for the release. 
+  * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
+
+
+
+
 #### publishToGo(options?)🔹 <a id="projen-release-publisher-publishtogo"></a>
 
 Adds a go publishing job.
 
 ```ts
-publishToGo(options?: JsiiReleaseGo): void
+publishToGo(options?: GoPublishOptions): void
 ```
 
-* **options** (<code>[release.JsiiReleaseGo](#projen-release-jsiireleasego)</code>)  Options.
+* **options** (<code>[release.GoPublishOptions](#projen-release-gopublishoptions)</code>)  Options.
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
   * **gitCommitMessage** (<code>string</code>)  The commit message. __*Default*__: "chore(release): $VERSION"
   * **githubRepo** (<code>string</code>)  GitHub repository to push to. __*Default*__: derived from `moduleName`
@@ -6672,10 +6692,10 @@ publishToGo(options?: JsiiReleaseGo): void
 Publishes artifacts from `java/**` to Maven.
 
 ```ts
-publishToMaven(options?: JsiiReleaseMaven): void
+publishToMaven(options?: MavenPublishOptions): void
 ```
 
-* **options** (<code>[release.JsiiReleaseMaven](#projen-release-jsiireleasemaven)</code>)  Options.
+* **options** (<code>[release.MavenPublishOptions](#projen-release-mavenpublishoptions)</code>)  Options.
   * **mavenEndpoint** (<code>string</code>)  URL of Nexus repository. __*Default*__: "https://oss.sonatype.org"
   * **mavenGpgPrivateKeyPassphrase** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
   * **mavenGpgPrivateKeySecret** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
@@ -6693,10 +6713,10 @@ publishToMaven(options?: JsiiReleaseMaven): void
 Publishes artifacts from `js/**` to npm.
 
 ```ts
-publishToNpm(options?: JsiiReleaseNpm): void
+publishToNpm(options?: NpmPublishOptions): void
 ```
 
-* **options** (<code>[release.JsiiReleaseNpm](#projen-release-jsiireleasenpm)</code>)  Options.
+* **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
   * **distTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
   * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
   * **registry** (<code>string</code>)  The domain name of the npm package registry. __*Default*__: "registry.npmjs.org"
@@ -6709,10 +6729,10 @@ publishToNpm(options?: JsiiReleaseNpm): void
 Publishes artifacts from `dotnet/**` to NuGet Gallery.
 
 ```ts
-publishToNuget(options?: JsiiReleaseNuget): void
+publishToNuget(options?: NugetPublishOptions): void
 ```
 
-* **options** (<code>[release.JsiiReleaseNuget](#projen-release-jsiireleasenuget)</code>)  Options.
+* **options** (<code>[release.NugetPublishOptions](#projen-release-nugetpublishoptions)</code>)  Options.
   * **nugetApiKeySecret** (<code>string</code>)  GitHub secret which contains the API key for NuGet. __*Default*__: "NUGET_API_KEY"
 
 
@@ -6723,10 +6743,10 @@ publishToNuget(options?: JsiiReleaseNuget): void
 Publishes wheel artifacts from `python` to PyPI.
 
 ```ts
-publishToPyPi(options?: JsiiReleasePyPi): void
+publishToPyPi(options?: PyPiPublishOptions): void
 ```
 
-* **options** (<code>[release.JsiiReleasePyPi](#projen-release-jsiireleasepypi)</code>)  Options.
+* **options** (<code>[release.PyPiPublishOptions](#projen-release-pypipublishoptions)</code>)  Options.
   * **twinePasswordSecret** (<code>string</code>)  The GitHub secret which contains PyPI password. __*Default*__: "TWINE_PASSWORD"
   * **twineRegistryUrl** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: twine default
   * **twineUsernameSecret** (<code>string</code>)  The GitHub secret which contains PyPI user name. __*Default*__: "TWINE_USERNAME"
@@ -6784,6 +6804,7 @@ new release.Release(project: Project, options: ReleaseOptions)
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task to execute in order to create the release artifacts. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **githubRelease** (<code>boolean</code>)  Create a GitHub release for each release. __*Default*__: true
 
 
 
@@ -9699,12 +9720,12 @@ Go target configuration.
 Name | Type | Description 
 -----|------|-------------
 **moduleName**🔹 | <code>string</code> | The name of the target go module.
-**gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
-**gitCommitMessage**?🔹 | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
-**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
-**gitUserName**?🔹 | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "GitHub Actions"
-**githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
-**githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**gitBranch**?⚠️ | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
+**gitCommitMessage**?⚠️ | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
+**gitUserEmail**?⚠️ | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
+**gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "GitHub Actions"
+**githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
+**githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
 
 
 
@@ -10665,7 +10686,7 @@ Options for `Version`.
 Name | Type | Description 
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
-**versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 
 
 
@@ -11497,25 +11518,102 @@ Name | Type | Description
 
 
 
-## struct JsiiReleaseGo 🔹 <a id="projen-release-jsiireleasego"></a>
+## struct GitHubReleasesPublishOptions 🔹 <a id="projen-release-githubreleasespublishoptions"></a>
 
 
-Options for Go releases.
+Publishing options for GitHub releases.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
-**gitCommitMessage**?🔹 | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
-**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
-**gitUserName**?🔹 | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "GitHub Actions"
-**githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
-**githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**changelogFile**🔹 | <code>string</code> | The location of an .md file that includes the changelog for the release.
+**versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
 
 
 
-## struct JsiiReleaseMaven 🔹 <a id="projen-release-jsiireleasemaven"></a>
+## struct GoPublishOptions ⚠️ <a id="projen-release-gopublishoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**gitBranch**?⚠️ | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
+**gitCommitMessage**?⚠️ | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
+**gitUserEmail**?⚠️ | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
+**gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "GitHub Actions"
+**githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
+**githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+
+
+
+## struct JsiiReleaseMaven ⚠️ <a id="projen-release-jsiireleasemaven"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**mavenEndpoint**?⚠️ | <code>string</code> | URL of Nexus repository.<br/>__*Default*__: "https://oss.sonatype.org"
+**mavenGpgPrivateKeyPassphrase**?⚠️ | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
+**mavenGpgPrivateKeySecret**?⚠️ | <code>string</code> | GitHub secret name which contains the GPG private key or file that includes it.<br/>__*Default*__: "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
+**mavenPassword**?⚠️ | <code>string</code> | GitHub secret name which contains the Password for maven repository.<br/>__*Default*__: "MAVEN_PASSWORD" or "GITHUB_TOKEN" when using GitHub Packages
+**mavenRepositoryUrl**?⚠️ | <code>string</code> | Deployment repository when not deploying to Maven Central.<br/>__*Default*__: not set
+**mavenServerId**?⚠️ | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
+**mavenStagingProfileId**?⚠️ | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
+**mavenUsername**?⚠️ | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+
+
+
+## struct JsiiReleaseNpm ⚠️ <a id="projen-release-jsiireleasenpm"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
+**npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
+
+
+
+## struct JsiiReleaseNuget ⚠️ <a id="projen-release-jsiireleasenuget"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**nugetApiKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+
+
+
+## struct JsiiReleasePyPi ⚠️ <a id="projen-release-jsiireleasepypi"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**twinePasswordSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
+**twineRegistryUrl**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
+**twineUsernameSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
+
+
+
+## struct MavenPublishOptions 🔹 <a id="projen-release-mavenpublishoptions"></a>
 
 
 Options for Maven releases.
@@ -11535,7 +11633,7 @@ Name | Type | Description
 
 
 
-## struct JsiiReleaseNpm 🔹 <a id="projen-release-jsiireleasenpm"></a>
+## struct NpmPublishOptions 🔹 <a id="projen-release-npmpublishoptions"></a>
 
 
 Options for npm release.
@@ -11550,7 +11648,7 @@ Name | Type | Description
 
 
 
-## struct JsiiReleaseNuget 🔹 <a id="projen-release-jsiireleasenuget"></a>
+## struct NugetPublishOptions 🔹 <a id="projen-release-nugetpublishoptions"></a>
 
 
 Options for NuGet releases.
@@ -11560,21 +11658,6 @@ Options for NuGet releases.
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
-
-
-
-## struct JsiiReleasePyPi 🔹 <a id="projen-release-jsiireleasepypi"></a>
-
-
-Options for PyPI release.
-
-
-
-Name | Type | Description 
------|------|-------------
-**twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
-**twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
-**twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
 
 
 
@@ -11594,6 +11677,21 @@ Name | Type | Description
 
 
 
+## struct PyPiPublishOptions 🔹 <a id="projen-release-pypipublishoptions"></a>
+
+
+Options for PyPI release.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
+**twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
+**twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
+
+
+
 ## struct ReleaseOptions 🔹 <a id="projen-release-releaseoptions"></a>
 
 
@@ -11608,6 +11706,7 @@ Name | Type | Description
 **versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**githubRelease**?🔹 | <code>boolean</code> | Create a GitHub release for each release.<br/>__*Default*__: true
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []

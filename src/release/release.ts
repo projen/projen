@@ -131,6 +131,13 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * You can add additional branches using `addBranch()`.
    */
   readonly branch: string;
+
+  /**
+   * Create a GitHub release for each release.
+   *
+   * @default true
+   */
+  readonly githubRelease?: boolean;
 }
 
 /**
@@ -176,7 +183,7 @@ export class Release extends Component {
     this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      versionFile: this.versionFile,
+      versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
     });
 
@@ -186,6 +193,14 @@ export class Release extends Component {
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
+
+    const githubRelease = options.githubRelease ?? true;
+    if (githubRelease) {
+      this.publisher.publishToGitHubReleases({
+        changelogFile: this.version.changelogFileName,
+        versionFile: this.version.versionFileName,
+      });
+    }
 
     // add the default branch
     this.defaultBranch = {
@@ -307,21 +322,6 @@ export class Release extends Component {
       name: 'Check for new commits',
       id: GIT_REMOTE_STEPID,
       run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
-    });
-
-    // create a github release
-    const getVersion = `v$(cat ${this.version.bumpFile})`;
-    postBuildSteps.push({
-      name: 'Create release',
-      if: noNewCommits,
-      run: [
-        `gh release create ${getVersion}`,
-        `-F ${this.version.changelogFile}`,
-        `-t ${getVersion}`,
-      ].join(' '),
-      env: {
-        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-      },
     });
 
     postBuildSteps.push({

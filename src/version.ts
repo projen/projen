@@ -12,7 +12,7 @@ export interface VersionOptions {
    *
    * @example "package.json"
    */
-  readonly versionFile: string;
+  readonly versionInputFile: string;
 
   /**
    * The name of the directory into which `changelog.md` and `version.txt` files
@@ -28,32 +28,35 @@ export class Version extends Component {
   public readonly unbumpTask: Task;
 
   /**
-   * The name of the changelog file created by the `bump` task.
+   * The name of the changelog file (under `artifactsDirectory`).
    */
-  public readonly changelogFile: string;
+  public readonly changelogFileName: string;
 
   /**
-   * An uncommitted JSON file that will include a "version" field with the
-   * bumped version. Created by the `bump` task.
+   * The name of the file that contains the version (under `artifactsDirectory`).
    */
-  public readonly bumpFile: string;
+  public readonly versionFileName: string;
 
   constructor(project: Project, options: VersionOptions) {
     super(project);
 
-    this.changelogFile = posix.join(options.artifactsDirectory, 'changelog.md');
-    this.bumpFile = posix.join(options.artifactsDirectory, 'version.txt');
+    this.changelogFileName = 'changelog.md';
+    this.versionFileName = 'version.txt';
 
-    const versionFile = options.versionFile;
+    const versionInputFile = options.versionInputFile;
 
     // this command determines if there were any changes since the last release
     // (the top-most commit is not a bump). it is used as a condition for both
     // the `bump` and the `release` tasks.
     const changesSinceLastRelease = '! git log --oneline -1 | grep -q "chore(release):"';
+
+    const changelogFile = posix.join(options.artifactsDirectory, this.changelogFileName);
+    const bumpFile = posix.join(options.artifactsDirectory, this.versionFileName);
+
     const env = {
-      OUTFILE: versionFile,
-      CHANGELOG: this.changelogFile,
-      BUMPFILE: this.bumpFile,
+      OUTFILE: versionInputFile,
+      CHANGELOG: changelogFile,
+      BUMPFILE: bumpFile,
     };
 
     this.bumpTask = project.addTask('bump', {
@@ -71,9 +74,9 @@ export class Version extends Component {
 
     this.unbumpTask.builtin('release/reset-version');
 
-    project.addGitIgnore(`/${this.changelogFile}`);
-    project.addGitIgnore(`/${this.bumpFile}`);
-    project.addPackageIgnore(`/${this.changelogFile}`);
-    project.addPackageIgnore(`/${this.bumpFile}`);
+    project.addGitIgnore(`/${changelogFile}`);
+    project.addGitIgnore(`/${bumpFile}`);
+    project.addPackageIgnore(`/${changelogFile}`);
+    project.addPackageIgnore(`/${bumpFile}`);
   }
 }

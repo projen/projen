@@ -129,7 +129,7 @@ test('publishers are added as jobs to all release workflows', () => {
       release_npm: { },
     },
   });
-  expect(wf1.jobs.release.steps.length).toBe(6);
+  expect(wf1.jobs.release.steps.length).toBe(5);
   const wf2 = YAML.parse(outdir['.github/workflows/release-2.x.yml']);
   expect(wf2).toMatchObject({
     on: { push: { branches: ['2.x'] } },
@@ -140,7 +140,7 @@ test('publishers are added as jobs to all release workflows', () => {
       release_npm: { },
     },
   });
-  expect(wf2.jobs.release.steps.length).toBe(6);
+  expect(wf2.jobs.release.steps.length).toBe(5);
 });
 
 test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {

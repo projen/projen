@@ -18,6 +18,7 @@
     "test:update": "/bin/bash ./projen.bash test:update",
     "bump": "/bin/bash ./projen.bash bump",
     "unbump": "/bin/bash ./projen.bash unbump",
+    "publish:github": "/bin/bash ./projen.bash publish:github",
     "upgrade-dependencies": "/bin/bash ./projen.bash upgrade-dependencies",
     "default": "/bin/bash ./projen.bash default",
     "watch": "/bin/bash ./projen.bash watch",
