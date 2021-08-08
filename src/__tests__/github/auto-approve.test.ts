@@ -6,7 +6,7 @@ describe('auto-approve', () => {
   test('default', () => {
     const project = createProject();
 
-    new AutoApprove(project, {
+    new AutoApprove(project.github!, {
       secret: 'MY_SECRET',
     });
 
@@ -19,7 +19,7 @@ describe('auto-approve', () => {
   test('configure options', () => {
     const project = createProject();
 
-    new AutoApprove(project, {
+    new AutoApprove(project.github!, {
       secret: 'MY_SECRET',
       label: 'my-approve',
       allowedUsernames: ['bot-1', 'bot-2'],
@@ -33,7 +33,7 @@ describe('auto-approve', () => {
   test('all users', () => {
     const project = createProject();
 
-    new AutoApprove(project, {
+    new AutoApprove(project.github!, {
       secret: 'MY_SECRET',
       allowedUsernames: [],
     });

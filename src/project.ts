@@ -22,7 +22,7 @@ import { Tasks } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
-export interface ProjectOptions extends GitHubOptions {
+export interface ProjectOptions {
   /**
    * This is the name of your project.
    *
@@ -55,6 +55,39 @@ export interface ProjectOptions extends GitHubOptions {
    * @default false
    */
   readonly gitpod?: boolean;
+
+  /**
+   * Enable VSCode integration.
+   *
+   * Enabled by default for root projects. Disabled for non-root projects.
+   *
+   * @default true
+   */
+  readonly vscode?: boolean;
+
+  /**
+   * Enable GitHub integration.
+   *
+   * Enabled by default for root projects. Disabled for non-root projects.
+   *
+   * @default true
+   */
+  readonly github?: boolean;
+
+  /**
+   * Options for GitHub integration
+   *
+   * @default - see GitHubOptions
+   */
+  readonly githubOptions?: GitHubOptions;
+
+  /**
+   * Whether mergify should be enabled on this repository or not.
+   *
+   * @default true
+   * @deprecated use `githubOptions.mergify` instead
+   */
+  readonly mergify?: boolean;
 
   /**
    * Add a VSCode development environment (used for GitHub Codespaces)
@@ -271,8 +304,14 @@ export class Project {
     this.logger = new Logger(this, options.logging);
 
     // we only allow these global services to be used in root projects
-    this.github = !this.parent ? new GitHub(this, options) : undefined;
-    this.vscode = !this.parent ? new VsCode(this) : undefined;
+    const github = options.github ?? (this.parent ? false : true);
+    this.github = github ? new GitHub(this, {
+      mergify: options.mergify,
+      ...options.githubOptions,
+    }) : undefined;
+
+    const vscode = options.vscode ?? (this.parent ? false : true);
+    this.vscode = vscode ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
     this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
@@ -283,8 +322,8 @@ export class Project {
 
     new SampleReadme(this, options.readme);
 
-    if (options.autoApproveOptions) {
-      this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
+    if (options.autoApproveOptions && this.github) {
+      this.autoApprove = new AutoApprove(this.github, options.autoApproveOptions);
     }
 
     const stale = options.stale ?? true;

@@ -519,6 +519,17 @@ test('enabling dependabot does not overturn mergify: false', () => {
   expect(snapshot).toHaveProperty(['.github/dependabot.yml']);
 });
 
+test('github: false disables github integration', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    github: false,
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(Object.keys(output).filter(p => p.startsWith('.github/'))).toStrictEqual([]);
+});
+
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }

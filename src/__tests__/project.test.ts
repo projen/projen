@@ -70,3 +70,13 @@ test('autoApprove is configured', () => {
   expect(p.autoApprove).toBeDefined();
   expect(p.autoApprove?.label).toEqual('auto-approve');
 });
+
+test('github: false disables github integration', () => {
+  // WHEN
+  const p = new TestProject({
+    github: false,
+  });
+
+  // THEN
+  expect(p.github).toBeUndefined();
+});

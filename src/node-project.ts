@@ -522,8 +522,6 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
-      if (!this.github) { throw new Error('no github support'); }
-
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -609,36 +607,38 @@ export class NodeProject extends Project {
 
       postBuildSteps.push(...antitamperSteps);
 
-      this.buildWorkflow = new TaskWorkflow(this.github, {
-        name: 'build',
-        jobId: buildJobId,
-        triggers: {
-          pullRequest: { },
-        },
-        env: {
-          CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        },
-        permissions: {
-          checks: JobPermission.WRITE,
-          contents: JobPermission.WRITE,
-        },
-        checkoutWith: mutableBuilds ? {
-          ref: branch,
-          repository: repo,
-        } : undefined,
+      if (this.github) {
+        this.buildWorkflow = new TaskWorkflow(this.github, {
+          name: 'build',
+          jobId: buildJobId,
+          triggers: {
+            pullRequest: { },
+          },
+          env: {
+            CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+          },
+          permissions: {
+            checks: JobPermission.WRITE,
+            contents: JobPermission.WRITE,
+          },
+          checkoutWith: mutableBuilds ? {
+            ref: branch,
+            repository: repo,
+          } : undefined,
 
-        preBuildSteps: [
-          ...antitamperSteps,
-          ...this.installWorkflowSteps, // install dependencies steps
-        ],
+          preBuildSteps: [
+            ...antitamperSteps,
+            ...this.installWorkflowSteps, // install dependencies steps
+          ],
 
-        task: this.buildTask,
+          task: this.buildTask,
 
-        postBuildSteps,
+          postBuildSteps,
 
-        container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
-      });
-      this.buildWorkflowJobId = buildJobId;
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
+        });
+        this.buildWorkflowJobId = buildJobId;
+      }
     }
 
     const release = options.release ?? options.releaseWorkflow ?? (this.parent ? false : true);
