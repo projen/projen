@@ -622,6 +622,7 @@ export class NodeProject extends Project {
           permissions: {
             checks: JobPermission.WRITE,
             contents: JobPermission.WRITE,
+            actions: JobPermission.WRITE,
           },
           checkoutWith: mutableBuilds ? {
             ref: branch,
