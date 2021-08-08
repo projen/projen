@@ -131,6 +131,18 @@
         }
       ]
     },
+    "publish:github": {
+      "name": "publish:github",
+      "description": "Publish this package to GitHub Releases",
+      "requiredEnv": [
+        "GITHUB_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat dist/version.txt)"
+        }
+      ]
+    },
     "upgrade-dependencies": {
       "name": "upgrade-dependencies",
       "description": "upgrade dependencies",
@@ -198,7 +210,7 @@
     },
     "publish:npm": {
       "name": "publish:npm",
-      "description": "Publish this package to the npm Registry",
+      "description": "Publish this package to npm",
       "env": {
         "NPM_DIST_TAG": "latest",
         "NPM_REGISTRY": "registry.npmjs.org"
@@ -230,7 +242,7 @@
     },
     "publish:pypi": {
       "name": "publish:pypi",
-      "description": "Publish this package to The Python Package Index (PyPI)",
+      "description": "Publish this package to PyPI",
       "requiredEnv": [
         "TWINE_USERNAME",
         "TWINE_PASSWORD"
