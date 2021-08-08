@@ -325,6 +325,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
     steps:
@@ -368,6 +370,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    if: needs.release.outputs.latest_commit == github.sha
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -388,6 +391,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    if: needs.release.outputs.latest_commit == github.sha
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -410,6 +414,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    if: needs.release.outputs.latest_commit == github.sha
     steps:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
@@ -4612,6 +4617,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
     steps:

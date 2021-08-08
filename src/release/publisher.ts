@@ -17,6 +17,13 @@ export interface PublisherOptions {
   readonly buildJobId: string;
 
   /**
+   * A GitHub workflow expression used as a condition for publishers.
+   *
+   * @default - no condition
+   */
+  readonly condition?: string;
+
+  /**
    * The name of the artifact to download (e.g. `dist`).
    *
    * The artifact is expected to include a subdirectory for each release target:
@@ -44,6 +51,7 @@ export class Publisher extends Component {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
+  public readonly condition?: string;
 
   // the jobs to add to the release workflow
   private readonly jobs: { [name: string]: workflows.Job } = {};
@@ -54,6 +62,7 @@ export class Publisher extends Component {
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
+    this.condition = options.condition;
   }
 
   /**
@@ -207,6 +216,7 @@ export class Publisher extends Component {
     return {
       name: `Release to ${opts.name}`,
       permissions: opts.permissions ? opts.permissions : { contents: JobPermission.READ },
+      if: this.condition,
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
       container: {
