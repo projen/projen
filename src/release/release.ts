@@ -240,15 +240,17 @@ export class Release extends Component {
   public preSynthesize() {
     for (const branch of this.branches) {
       const workflow = this.createWorkflow(branch);
-      workflow.addJobs(this.publisher.render());
-      workflow.addJobs(this.jobs);
+      if (workflow) {
+        workflow.addJobs(this.publisher.render());
+        workflow.addJobs(this.jobs);
+      }
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): TaskWorkflow {
-    const github = this.project.github;
-    if (!github) { throw new Error('no github support'); }
-
+  /**
+   * @returns a workflow or `undefined` if github integration is disabled.
+   */
+  private createWorkflow(branch: ReleaseBranch): TaskWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branch.name}`;
 
     // to avoid race conditions between two commits trying to release the same
@@ -331,29 +333,33 @@ export class Release extends Component {
       },
     });
 
-    return new TaskWorkflow(github, {
-      name: workflowName,
-      jobId: BUILD_JOBID,
-      triggers: {
-        schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-        push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
-      },
-      container: this.containerImage ? { image: this.containerImage } : undefined,
-      env: {
-        CI: 'true',
-      },
-      permissions: {
-        contents: JobPermission.WRITE,
-      },
-      checkoutWith: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-      preBuildSteps,
-      task: releaseTask,
-      postBuildSteps,
-    });
+    if (this.project.github) {
+      return new TaskWorkflow(this.project.github, {
+        name: workflowName,
+        jobId: BUILD_JOBID,
+        triggers: {
+          schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
+          push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
+        },
+        container: this.containerImage ? { image: this.containerImage } : undefined,
+        env: {
+          CI: 'true',
+        },
+        permissions: {
+          contents: JobPermission.WRITE,
+        },
+        checkoutWith: {
+          // we must use 'fetch-depth=0' in order to fetch all tags
+          // otherwise tags are not checked out
+          'fetch-depth': 0,
+        },
+        preBuildSteps,
+        task: releaseTask,
+        postBuildSteps,
+      });
+    } else {
+      return undefined;
+    }
   }
 }
 

@@ -1,6 +1,5 @@
-import { Project } from '..';
 import { Component } from '../component';
-import { GithubWorkflow } from './workflows';
+import { GitHub } from './github';
 import { Job, JobPermission } from './workflows-model';
 
 /**
@@ -40,15 +39,11 @@ export interface AutoApproveOptions {
 export class AutoApprove extends Component {
   public readonly label: string;
 
-  constructor(project: Project, options: AutoApproveOptions) {
-    super(project);
+  constructor(github: GitHub, options: AutoApproveOptions) {
+    super(github.project);
 
     this.label = options.label ?? 'auto-approve';
     const usernames = options.allowedUsernames ?? ['github-actions[bot]'];
-
-    if (!project.github) {
-      throw new Error('auto approval supported only for Github projects');
-    }
 
     let condition = `contains(github.event.pull_request.labels.*.name, '${this.label}')`;
     if (usernames.length > 0) {
@@ -71,7 +66,7 @@ export class AutoApprove extends Component {
       }],
     };
 
-    const workflow = new GithubWorkflow(project.github, 'auto-approve');
+    const workflow = github.addWorkflow('auto-approve');
     workflow.on({
       // The 'pull request' event gives the workflow 'read-only' permissions on some
       // pull requests (such as the ones from dependabot) when using the `GITHUB_TOKEN`
