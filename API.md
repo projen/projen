@@ -5517,6 +5517,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
   * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
   * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "build"
+  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  Mapping of job output names to values/expressions. __*Default*__: {}
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Default*__: not set
   * **preCheckoutSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Default*__: not set
@@ -6629,6 +6630,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
 * **options** (<code>[release.PublisherOptions](#projen-release-publisheroptions)</code>)  *No description*
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
+  * **condition** (<code>string</code>)  A GitHub workflow expression used as a condition for publishers. __*Default*__: no condition
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
 
 
@@ -6641,6 +6643,7 @@ Name | Type | Description
 **artifactName**🔹 | <code>string</code> | <span></span>
 **buildJobId**🔹 | <code>string</code> | <span></span>
 **jsiiReleaseVersion**🔹 | <code>string</code> | <span></span>
+**condition**?🔹 | <code>string</code> | __*Optional*__
 
 ### Methods
 
@@ -10953,6 +10956,7 @@ Name | Type | Description
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
 **env**?🔹 | <code>Map<string, string></code> | Workflow environment variables.<br/>__*Default*__: {}
 **jobId**?🔹 | <code>string</code> | The primary job id.<br/>__*Default*__: "build"
+**outputs**?🔹 | <code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code> | Mapping of job output names to values/expressions.<br/>__*Default*__: {}
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
@@ -11585,6 +11589,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
+**condition**?🔹 | <code>string</code> | A GitHub workflow expression used as a condition for publishers.<br/>__*Default*__: no condition
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
 
 
