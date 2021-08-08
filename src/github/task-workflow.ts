@@ -1,7 +1,7 @@
 import { Task } from '../tasks';
 import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';
-import { ContainerOptions, Job, JobPermissions, JobStep, Triggers } from './workflows-model';
+import { ContainerOptions, Job, JobPermissions, JobStep, JobStepOutput, Triggers } from './workflows-model';
 
 const DEFAULT_JOB_ID = 'build';
 const UBUNTU_LATEST = 'ubuntu-latest';
@@ -87,6 +87,13 @@ export interface TaskWorkflowOptions {
    * Permissions for the build job.
    */
   readonly permissions: JobPermissions;
+
+  /**
+   * Mapping of job output names to values/expressions.
+   *
+   * @default {}
+   */
+  readonly outputs?: { [name: string]: JobStepOutput };
 }
 
 /**
@@ -139,6 +146,7 @@ export class TaskWorkflow extends GithubWorkflow {
       env: options.env,
       permissions: options.permissions,
       if: options.condition,
+      outputs: options.outputs,
       steps: [
         ...preCheckoutSteps,
 

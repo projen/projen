@@ -7,6 +7,8 @@ import { Version } from '../version';
 import { Publisher } from './publisher';
 
 const BUILD_JOBID = 'release';
+const GIT_REMOTE_STEPID = 'git_remote';
+const LATEST_COMMIT_OUTPUT = 'latest_commit';
 
 /**
  * Project options for release.
@@ -180,6 +182,7 @@ export class Release extends Component {
 
     this.publisher = new Publisher(project, {
       artifactName: this.artifactsDirectory,
+      condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
     });
@@ -256,9 +259,7 @@ export class Release extends Component {
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
     // not, we will skip the release and just finish the build.
-    const gitRemoteStep = 'git_remote';
-    const latestCommitOutput = 'latest_commit';
-    const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
+    const noNewCommits = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = [...this.preBuildSteps];
@@ -304,8 +305,8 @@ export class Release extends Component {
     // if new commits have been pushed, we will cancel this release
     postBuildSteps.push({
       name: 'Check for new commits',
-      id: gitRemoteStep,
-      run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
+      id: GIT_REMOTE_STEPID,
+      run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
 
     // create a github release
@@ -337,6 +338,12 @@ export class Release extends Component {
       return new TaskWorkflow(this.project.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
+        outputs: {
+          latest_commit: {
+            stepId: GIT_REMOTE_STEPID,
+            outputName: LATEST_COMMIT_OUTPUT,
+          },
+        },
         triggers: {
           schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
           push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
