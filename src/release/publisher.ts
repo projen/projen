@@ -154,7 +154,7 @@ export class Publisher extends Component {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
       workflowEnv: {
-        TWINE_USERNAME: secret(options.twinePasswordSecret ?? 'TWINE_USERNAME'),
+        TWINE_USERNAME: secret(options.twineUsernameSecret ?? 'TWINE_USERNAME'),
         TWINE_PASSWORD: secret(options.twinePasswordSecret ?? 'TWINE_PASSWORD'),
       },
     });
