@@ -602,6 +602,9 @@ export class NodeProject extends Project {
           '-X POST',
           `/repos/${repo}/actions/runs/\${{ github.run_id }}/cancel`,
         ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
       });
 
       postBuildSteps.push(...antitamperSteps);

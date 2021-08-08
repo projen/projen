@@ -52,5 +52,7 @@ jobs:
         name: Cancel workflow (if self-mutation happened)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/actions/runs/${{ github.run_id }}/cancel
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
       image: jsii/superchain
