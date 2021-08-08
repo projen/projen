@@ -555,8 +555,20 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "publish:github": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat dist/version.txt)",
+          },
+        ],
+      },
       "publish:npm": Object {
-        "description": "Publish this package to the npm Registry",
+        "description": "Publish this package to npm",
         "env": Object {
           "NPM_DIST_TAG": "latest",
           "NPM_REGISTRY": "registry.npmjs.org",
@@ -1007,6 +1019,7 @@ project.synth();",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
+      "publish:github": "npx projen publish:github",
       "publish:npm": "npx projen publish:npm",
       "release": "npx projen release",
       "test": "npx projen test",

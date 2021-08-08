@@ -57,8 +57,8 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat
-          dist/version.txt)
+        run: gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F
+          dist/changelog.md -t v$(cat dist/version.txt)
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
   release_npm:
@@ -166,8 +166,8 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat
-          dist/version.txt)
+        run: gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F
+          dist/changelog.md -t v$(cat dist/version.txt)
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
   release_npm:
