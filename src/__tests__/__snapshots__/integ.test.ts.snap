@@ -266,6 +266,7 @@ jobs:
     permissions:
       checks: write
       contents: write
+      actions: write
     env:
       CI: \\"true\\"
     steps:
@@ -4586,6 +4587,7 @@ jobs:
     permissions:
       checks: write
       contents: write
+      actions: write
     env:
       CI: \\"true\\"
     steps:
