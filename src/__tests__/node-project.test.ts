@@ -530,6 +530,19 @@ test('github: false disables github integration', () => {
   expect(Object.keys(output).filter(p => p.startsWith('.github/'))).toStrictEqual([]);
 });
 
+test('githubOptions.workflows:false disables github workflows but not github integration', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    githubOptions: {
+      workflows: false,
+    },
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(Object.keys(output).filter(p => p.startsWith('.github/'))).toStrictEqual(['.github/pull_request_template.md']);
+});
+
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }

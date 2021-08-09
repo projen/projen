@@ -8,6 +8,15 @@ import { GitHub } from './github';
 
 import * as workflows from './workflows-model';
 
+export interface GithubWorkflowOptions {
+  /**
+   * Force the creation of the workflow even if `workflows` is disabled in `GitHub`.
+   *
+   * @default false
+   */
+  readonly force?: boolean;
+}
+
 /**
  * Workflow for GitHub.
  * A workflow is a configurable automated process made up of one or more jobs.
@@ -15,18 +24,23 @@ import * as workflows from './workflows-model';
  */
 export class GithubWorkflow extends Component {
   public readonly name: string;
-  public readonly file: YamlFile;
+  public readonly file: YamlFile | undefined;
 
   private events: workflows.Triggers = { };
   private jobs: Record<string, workflows.Job> = { };
 
-  constructor(github: GitHub, name: string) {
+  constructor(github: GitHub, name: string, options: GithubWorkflowOptions = {}) {
     super(github.project);
 
     this.name = name;
-    this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
-      obj: () => this.renderWorkflow(),
-    });
+
+    const workflowsEnabled = github.workflows || options.force;
+
+    if (workflowsEnabled) {
+      this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
+        obj: () => this.renderWorkflow(),
+      });
+    }
   }
 
   public on(events: workflows.Triggers) {
