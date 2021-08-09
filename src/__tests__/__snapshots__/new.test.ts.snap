@@ -563,7 +563,7 @@ tsconfig.tsbuildinfo
         ],
         "steps": Array [
           Object {
-            "exec": "gh release create v$(cat dist/version.txt) -F dist/changelog.md -t v$(cat dist/version.txt)",
+            "exec": "gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)",
           },
         ],
       },
