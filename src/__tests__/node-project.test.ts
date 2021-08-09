@@ -1,7 +1,6 @@
 import * as yaml from 'yaml';
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
-import { TaskWorkflow } from '../github';
 import { JobPermission } from '../github/workflows-model';
 import * as logging from '../logging';
 import { NodePackage, NodePackageManager, NpmAccess } from '../node-package';
@@ -202,7 +201,7 @@ describe('deps upgrade', () => {
       autoApproveUpgrades: true,
     });
 
-    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-dependencies.yml']);
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
     expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
@@ -223,18 +222,18 @@ describe('deps upgrade', () => {
   test('default - with projen secret', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
 
     // make sure yarn upgrade all deps, including projen.
     const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
-    expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual('yarn upgrade');
+    expect(tasks.upgrade.steps[2].exec).toStrictEqual('yarn upgrade');
   });
 
   test('default - no projen secret', () => {
     const project = new TestNodeProject();
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
   });
 
@@ -263,7 +262,7 @@ describe('deps upgrade', () => {
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
   });
 
@@ -272,7 +271,7 @@ describe('deps upgrade', () => {
       depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
     });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
   });
 

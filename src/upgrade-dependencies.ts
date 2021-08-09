@@ -59,7 +59,7 @@ export interface UpgradeDependenciesOptions {
    * The name of the task that will be created.
    * This will also be the workflow name.
    *
-   * @default "upgrade-dependencies".
+   * @default "upgrade".
    */
   readonly taskName?: string;
 
@@ -112,7 +112,7 @@ export class UpgradeDependencies extends Component {
   }
 
   private createTask(): Task {
-    const taskName = this.options.taskName ?? 'upgrade-dependencies';
+    const taskName = this.options.taskName ?? 'upgrade';
     const task = this._project.addTask(taskName, {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.

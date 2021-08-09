@@ -172,6 +172,7 @@ Name|Description
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
+[github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|*No description*
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
@@ -1594,7 +1595,7 @@ static githubWorkflow(options?: UpgradeDependenciesOptions): DependenciesUpgrade
   * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
-  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
+  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
@@ -4770,7 +4771,7 @@ new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptio
   * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
-  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade-dependencies".
+  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
   * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
   * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
 
@@ -5243,6 +5244,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
 
@@ -5251,6 +5253,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**workflows**🔹 | <code>boolean</code> | Are workflows enabled?
 **mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
 
 ### Methods
@@ -5319,11 +5322,13 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.GithubWorkflow(github: GitHub, name: string)
+new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflowOptions)
 ```
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
+* **options** (<code>[github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)</code>)  *No description*
+  * **force** (<code>boolean</code>)  Force the creation of the workflow even if `workflows` is disabled in `GitHub`. __*Default*__: false
 
 
 
@@ -5332,8 +5337,8 @@ new github.GithubWorkflow(github: GitHub, name: string)
 
 Name | Type | Description 
 -----|------|-------------
-**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
 **name**🔹 | <code>string</code> | <span></span>
+**file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | __*Optional*__
 
 ### Methods
 
@@ -10653,7 +10658,7 @@ Name | Type | Description
 **ignoreProjen**?🔹 | <code>boolean</code> | Whether or not to ignore projen upgrades.<br/>__*Default*__: true
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
 **pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
-**taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade-dependencies".
+**taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
 **workflow**?🔹 | <code>boolean</code> | Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule.<br/>__*Default*__: true for root projects, false for sub-projects.
 **workflowOptions**?🔹 | <code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code> | Options for the github workflow.<br/>__*Default*__: default options.
 
@@ -10867,6 +10872,20 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
+
+
+
+## struct GithubWorkflowOptions 🔹 <a id="projen-github-githubworkflowoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
 
 
 

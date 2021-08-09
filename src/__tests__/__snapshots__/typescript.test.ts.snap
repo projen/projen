@@ -39,7 +39,7 @@ yarn-error.log*
 !/.github/workflows/build.yml
 !/.github/workflows/release.yml
 !/.github/workflows/stale.yml
-!/.github/workflows/upgrade-dependencies.yml
+!/.github/workflows/upgrade.yml
 !/.mergify.yml
 !/.npmignore
 !/.projen/deps.json
