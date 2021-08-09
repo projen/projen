@@ -12,6 +12,13 @@ export interface GitHubOptions {
    * @default true
    */
   readonly mergify?: boolean;
+
+  /**
+   * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
+   *
+   * @default true
+   */
+  readonly workflows?: boolean;
 }
 
 export class GitHub extends Component {
@@ -21,8 +28,15 @@ export class GitHub extends Component {
    */
   public readonly mergify?: Mergify;
 
+  /**
+   * Are workflows enabled?
+   */
+  public readonly workflows: boolean;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
+
+    this.workflows = options.workflows ?? true;
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this);
