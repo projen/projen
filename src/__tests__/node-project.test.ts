@@ -1,7 +1,6 @@
 import * as yaml from 'yaml';
 import { NodeProject, NodeProjectOptions, LogLevel } from '..';
 import { DependencyType } from '../deps';
-import { TaskWorkflow } from '../github';
 import { JobPermission } from '../github/workflows-model';
 import * as logging from '../logging';
 import { NodePackage, NodePackageManager, NpmAccess } from '../node-package';
