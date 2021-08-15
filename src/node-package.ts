@@ -725,7 +725,7 @@ export class NodePackage extends Component {
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
-      npmRegistry: npmr.hostname,
+      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: options.npmTokenSecret ?? DEFAULT_NPM_TOKEN_SECRET,
     };
@@ -744,6 +744,14 @@ export class NodePackage extends Component {
       nodeVersion += ` <= ${this.maxNodeVersion}`;
     }
     this.addEngine('node', nodeVersion);
+  }
+
+  private renderNpmRegistryPath(path: string | undefined): string {
+    if (!path || path == '/') {
+      return '';
+    } else {
+      return path;
+    }
   }
 
   private renderInstallCommand(frozen: boolean) {
