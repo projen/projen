@@ -357,6 +357,23 @@ describe('npm publishing options', () => {
     });
   });
 
+  test('registry with path', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://foo.bar/path/',
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual('foo.bar/path/');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/path/');
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry: 'https://foo.bar/path/',
+    });
+  });
+
   test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {
     // GIVEN
     const project = new TestProject();
