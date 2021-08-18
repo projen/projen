@@ -631,7 +631,7 @@ export class Jest {
 
     project.addFields({ jest: this.config });
 
-    const coverageDirectoryPath = path.posix.join('/', coverageDirectory);
+    const coverageDirectoryPath = path.posix.join('/', coverageDirectory, '/');
     project.npmignore?.exclude(coverageDirectoryPath);
     project.gitignore.exclude(coverageDirectoryPath);
 
