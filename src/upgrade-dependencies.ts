@@ -17,6 +17,8 @@ const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const UBUNTU_LATEST = 'ubuntu-latest';
+const COMMIT_AUTHOR_NAME = 'Automation';
+const COMMIT_AUTHOR_EMAIL = 'github-actions@github.com';
 
 /**
  * Options for `UpgradeDependencies`.
@@ -283,6 +285,8 @@ export class UpgradeDependencies extends Component {
           'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
+          'author': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
+          'committer': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
         },
       },
     ];
