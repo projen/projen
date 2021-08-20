@@ -7,7 +7,7 @@ import * as inventory from '../../inventory';
 import { renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
 import { NewProjectOptionHints } from '../../option-hints';
-import { exec } from '../../util';
+import { exec, isTruthy } from '../../util';
 import { tryProcessMacro } from '../macros';
 
 class Command implements yargs.CommandModule {
@@ -107,7 +107,8 @@ interface CreateProjectOptions {
   params: Record<string, string>;
 
   /**
-   * Should we render commented-out default options in .projerc.js file?
+   * Should we render commented-out default options in the projenrc file?
+   * Does not apply to projenrc.json files.
    */
   comments: NewProjectOptionHints;
 
@@ -228,7 +229,11 @@ function commandLineToProps(cwd: string, type: inventory.ProjectType, argv: Reco
  */
 async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   const installCommand = `yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev`;
-  if (args.projenVersion) {
+  if (process.env.PROJEN_TEST) { // for integration tests
+    exec(`mkdir -p node_modules && ln -s ${process.execPath} node_modules/projen`, { cwd: baseDir });
+  } else if (process.env.PROJEN_LINK_LOCAL) {
+    exec('yarn link projen', { cwd: baseDir }); // for developing / debugging
+  } else if (args.projenVersion) {
     exec(`${installCommand} projen@${args.projenVersion}`, { cwd: baseDir });
   } else {
     // do not overwrite existing installation
@@ -276,6 +281,15 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     }
 
     if (args[option.name] !== undefined) {
+      if (option.type === 'number') {
+        args[option.name] = parseInt(args[option.name]);
+        args[option.switch] = args[option.name];
+      } else if (option.type === 'boolean') {
+        const raw = args[option.name];
+        const safe = typeof raw === 'string' ? isTruthy(raw) : raw;
+        args[option.name] = safe;
+        args[option.switch] = safe;
+      }
       continue; // do not overwrite passed arguments
     }
 

@@ -50,6 +50,11 @@ export interface SynthOutput {
   [filePath: string]: any;
 }
 
+beforeAll((done) => {
+  process.env.PROJEN_TEST = 'true';
+  done();
+});
+
 const autoRemove = new Set<string>();
 
 // Hook to automatically remove temporary directories without needing each
