@@ -147,7 +147,7 @@ test('creating java project with enum-typed CLI arg', () => {
 
 test('projenrc-json creates node-project', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'node', '--no-projenrc-js', '--projenrc-json', '--no-synth']);
+    execProjenCLI(projectdir, ['new', 'node', '--projenrc-json', '--no-synth']);
 
     const projenrc = directorySnapshot(projectdir)['.projenrc.json'];
     expect(projenrc).toMatchSnapshot();
@@ -156,7 +156,7 @@ test('projenrc-json creates node-project', () => {
 
 test('projenrc-json creates external project type', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--cdk-version', '1.63.0', '--no-projenrc-js', '--projenrc-json', '--no-synth']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth']);
 
     // exclude node_modules to work around bug where node_modules is generated AND one of the
     // dependencies includes a file with .json extension that isn't valid JSON

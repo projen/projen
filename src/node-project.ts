@@ -263,7 +263,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
    * .projenrc.js generation.
    *
-   * @default true
+   * @default - true if projenrcJson is false
    */
   readonly projenrcJs?: boolean;
 
@@ -752,7 +752,7 @@ export class NodeProject extends Project {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
 
-    const projenrcJs = options.projenrcJs ?? true;
+    const projenrcJs = options.projenrcJs ?? !options.projenrcJson;
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
