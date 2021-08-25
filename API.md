@@ -2330,6 +2330,7 @@ new Jest(project: NodeProject, options?: JestOptions)
 
 * **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
 * **options** (<code>[JestOptions](#projen-jestoptions)</code>)  *No description*
+  * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
@@ -9689,6 +9690,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
