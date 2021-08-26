@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { workflows } from '../github';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
+import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
@@ -125,8 +126,7 @@ export class Publisher extends Component {
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
       workflowEnv: {
-        // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-        NPM_TOKEN: secret(options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN')),
+        NPM_TOKEN: secret(defaultNpmToken(options.npmTokenSecret, options.registry)),
       },
     });
   }

@@ -724,15 +724,12 @@ export class NodePackage extends Component {
       throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
     }
 
-    const isGitHubPackages = npmr.hostname === GITHUB_PACKAGES_REGISTRY;
-
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
       npmRegistryUrl: npmr.href,
-      // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-      npmTokenSecret: options.npmTokenSecret ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET),
+      npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
     };
   }
 
@@ -1076,4 +1073,10 @@ function isScoped(packageName: string) {
 
 function defaultNpmAccess(packageName: string) {
   return isScoped(packageName) ? NpmAccess.RESTRICTED : NpmAccess.PUBLIC;
+}
+
+export function defaultNpmToken(npmToken: string | undefined, registry: string | undefined) {
+  // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
+  const isGitHubPackages = registry === GITHUB_PACKAGES_REGISTRY;
+  return npmToken ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET);
 }
