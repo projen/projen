@@ -238,7 +238,7 @@ export class Publisher extends Component {
     // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
     const jobEnv: Record<string, string> = { ...opts.env };
     const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
-      .filter(([_, value]) => value != undefined) as string [][];
+      .filter(([_, value]) => value != undefined) as string[][];
     for (const [name, expression] of workflowEnvEntries) {
       requiredEnv.push(name);
       jobEnv[name] = expression;
