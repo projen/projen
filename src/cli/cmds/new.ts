@@ -134,7 +134,7 @@ interface CreateProjectOptions {
  * that was just executed. In the future, this will also be done by the project
  * type, so we can easily support multiple languages of projenrc.
  */
-function createProject(opts: CreateProjectOptions) {
+export function createProject(opts: CreateProjectOptions) {
   // Default project resolution location
   let mod = '../../index';
 
