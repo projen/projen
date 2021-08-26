@@ -50,11 +50,6 @@ export interface SynthOutput {
   [filePath: string]: any;
 }
 
-beforeAll((done) => {
-  process.env.PROJEN_TEST = 'true';
-  done();
-});
-
 const autoRemove = new Set<string>();
 
 // Hook to automatically remove temporary directories without needing each
@@ -132,8 +127,8 @@ export interface DirectorySnapshotOptions {
   readonly excludeGlobs?: string[];
 }
 
-export function directorySnapshot(root: string, options: DirectorySnapshotOptions = { }) {
-  const output: SynthOutput = { };
+export function directorySnapshot(root: string, options: DirectorySnapshotOptions = {}) {
+  const output: SynthOutput = {};
 
   const files = glob.sync('**', {
     ignore: options.excludeGlobs ?? [],

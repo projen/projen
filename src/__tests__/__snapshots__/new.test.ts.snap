@@ -2892,7 +2892,7 @@ exports[`projenrc-json creates node-project 1`] = `
 Object {
   "defaultReleaseBranch": "main",
   "name": "my-project",
-  "projectTypeFqn": "projen.NodeProject",
   "projenrcJson": true,
+  "type": "projen.NodeProject",
 }
 `;

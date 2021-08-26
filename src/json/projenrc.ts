@@ -45,7 +45,7 @@ export class Projenrc extends Component {
     }
 
     const json = {
-      projectTypeFqn: bootstrap.fqn,
+      type: bootstrap.fqn,
       ...bootstrap.args,
     };
 

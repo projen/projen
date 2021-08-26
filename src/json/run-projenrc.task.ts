@@ -8,7 +8,7 @@
  *   Defaults to `.projenrc.json`.
  */
 import * as fs from 'fs-extra';
-import { createProject } from '../cli/cmds/new';
+import { createProject } from '../cli/create';
 import { resolveProjectType } from '../inventory';
 import { NewProjectOptionHints } from '../option-hints';
 
@@ -18,10 +18,13 @@ if (!filename || filename == '') {
   filename = '.projenrc.json';
 }
 
-const { projectTypeFqn, ...json } = fs.readJsonSync(filename, { encoding: 'utf8' });
-const projectType = resolveProjectType(projectTypeFqn);
+const { type, ...json } = fs.readJsonSync(filename, { encoding: 'utf8' });
+if (!type) {
+  throw new Error('projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject');
+}
+const projectType = resolveProjectType(type);
 if (!projectType) {
-  throw new Error(`Could not find project type with the fully qualified name "${projectTypeFqn}".`);
+  throw new Error(`Could not find project type with the fully qualified name "${type}".`);
 }
 
 createProject({
