@@ -1,4 +1,4 @@
-# GitHub Project Settings
+# External GitHub Repository Settings (RFC #1014)
 
 Projen is great for managing project-related configuration that is modeled in files within the git repository. Much of GitHub's configuration (such as issue 
 templates, workflows, etc) is managed through files under `.github` and to that extend, projen lends itself well to maintain these files.
@@ -9,7 +9,7 @@ rules, auto-merge options, and most noteable are repository secrets. Projen heav
 When maintaining many projects, manaing publishing secrets becomes a major burden. It is also error prone and has potential security implications. Ideally
 these secrets should be managed by tooling and not by humans.
 
-GitHub offers some support for centrally managinig secrets but these require organization-level permissions which are not always available.
+GitHub offers some support for centrally managing secrets but these require organization-level permissions which are not always available.
 
 ## README (working backwards)
 
