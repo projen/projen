@@ -2885,3 +2885,14 @@ const project = new TypeScriptAppProject({
 project.synth();",
 }
 `;
+
+exports[`projenrc-json creates external project type 1`] = `undefined`;
+
+exports[`projenrc-json creates node-project 1`] = `
+Object {
+  "defaultReleaseBranch": "main",
+  "name": "my-project",
+  "projenrcJson": true,
+  "type": "projen.NodeProject",
+}
+`;
