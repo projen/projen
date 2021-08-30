@@ -80,6 +80,8 @@ const publisher = new Publisher(project, {
   workflow: releaseWorkflow,
   buildJobId: 'my-build-job',
   artifactName: 'dist',
+  issueOnFailure: true,
+  failureIssueLabel: 'failed-release'
 });
 ```
 
