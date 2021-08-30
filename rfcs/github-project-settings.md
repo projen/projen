@@ -53,7 +53,7 @@ If your repository does not have the needed secerts, an error will be displayed 
 
 A similar approach can be taken to configure other non-source-code repository settings such as branch protection rules:
 
-```
+```js
 # this should be the default probably
 project.addBranchProtection(project.defaultBranch);
 ```
