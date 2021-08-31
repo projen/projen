@@ -75,12 +75,22 @@ publisher.publishToMaven({
 
 The NPM target comes with dynamic defaults that support AWS CodeArtifact.
 If the respective registry URL is detected to be AWS CodeArtifact, other relevant options will automatically be set to fitting values.
-The authentication will done using [AWS CLI](https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html). It is neccessary to provide AWS IAM CLI `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in GitHub Secrets. The names of the GitHub Secrets can be overridden if different names should be used.
+The authentication will done using [AWS CLI](https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html). It is neccessary to provide AWS IAM CLI `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in GitHub Secrets.
 
 **npm**
 ```ts
 publisher.publishToNpm({ 
-  registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/'
-  // also sets awsAccessKeyIdSecret and awsSecretAccessKeySecret
-})
+  registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+});
+```
+
+The names of the GitHub Secrets can be overridden if different names should be used.
+```ts
+publisher.publishToNpm({ 
+  registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+  codeArtifactOptions: {
+    accessKeyIdSecret: 'CUSTOM_AWS_ACCESS_KEY_ID',
+    secretAccessKeySecret: 'CUSTOM_AWS_SECRET_ACCESS_KEY',
+  },
+});
 ```

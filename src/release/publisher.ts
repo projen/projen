@@ -131,8 +131,8 @@ export class Publisher extends Component {
       workflowEnv: {
         NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
         // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
-        AWS_ACCESS_KEY_ID: isAwsCodeArtifactPackages ? secret(options.awsAccessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
-        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifactPackages ? secret(options.awsSecretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+        AWS_ACCESS_KEY_ID: isAwsCodeArtifactPackages ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifactPackages ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
       },
     });
   }
@@ -383,20 +383,29 @@ export interface NpmPublishOptions {
   readonly npmTokenSecret?: string;
 
   /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
    * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
    *
    * @default "AWS_ACCESS_KEY_ID"
    */
-  readonly awsAccessKeyIdSecret?: string;
+  readonly accessKeyIdSecret?: string;
 
   /**
-   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
-   *
-   * @default "AWS_SECRET_ACCESS_KEY"
-   */
-  readonly awsSecretAccessKeySecret?: string;
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
 }
 
 /**

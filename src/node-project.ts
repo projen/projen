@@ -668,8 +668,10 @@ export class NodeProject extends Project {
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
-          awsAccessKeyIdSecret: options.awsAccessKeyIdSecret,
-          awsSecretAccessKeySecret: options.awsSecretAccessKeySecret,
+          codeArtifactOptions: {
+            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+            secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+          },
         });
       }
 

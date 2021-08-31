@@ -303,8 +303,10 @@ test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
   // WHEN
   release.publisher.publishToNpm({
     registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
-    awsAccessKeyIdSecret: 'OTHER_AWS_ACCESS_KEY_ID',
-    awsSecretAccessKeySecret: 'OTHER_AWS_SECRET_ACCESS_KEY',
+    codeArtifactOptions: {
+      accessKeyIdSecret: 'OTHER_AWS_ACCESS_KEY_ID',
+      secretAccessKeySecret: 'OTHER_AWS_SECRET_ACCESS_KEY',
+    },
   });
 
   // THEN

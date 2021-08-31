@@ -293,20 +293,29 @@ export interface NodePackageOptions {
   readonly npmTokenSecret?: string;
 
   /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
    * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
    *
    * @default "AWS_ACCESS_KEY_ID"
    */
-  readonly awsAccessKeyIdSecret?: string;
+  readonly accessKeyIdSecret?: string;
 
   /**
-   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
-   *
-   * @default "AWS_SECRET_ACCESS_KEY"
-   */
-  readonly awsSecretAccessKeySecret?: string;
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
 }
 
 /**
@@ -762,8 +771,8 @@ export class NodePackage extends Component {
         throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
       }
     } else {
-      if (options.awsAccessKeyIdSecret || options.awsSecretAccessKeySecret) {
-        throw new Error('"awsAccessKeyIdSecret" and "awsSecretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+      if (options.codeArtifactOptions?.accessKeyIdSecret || options.codeArtifactOptions?.secretAccessKeySecret) {
+        throw new Error('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
       }
     }
 
@@ -773,8 +782,8 @@ export class NodePackage extends Component {
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
-      awsAccessKeyIdSecret: options.awsAccessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
-      awsSecretAccessKeySecret: options.awsSecretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+      awsAccessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
+      awsSecretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
     };
   }
 

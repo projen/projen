@@ -299,8 +299,8 @@ junit.xml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-/lib
 !/src/
+/lib
 /dist/
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -332,8 +332,8 @@ junit.xml
 /dist/version.txt
 /.mergify.yml
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist
