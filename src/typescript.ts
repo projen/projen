@@ -265,6 +265,9 @@ export class TypeScriptProject extends NodeProject {
         mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
     }
 
+    this.gitignore.include(`/${this.srcdir}/`);
+    this.npmignore?.exclude(`/${this.srcdir}/`);
+
     if (this.srcdir !== this.libdir) {
       // separated, can ignore the entire libdir
       this.gitignore.exclude(`/${this.libdir}`);
@@ -275,9 +278,6 @@ export class TypeScriptProject extends NodeProject {
     }
 
     this.npmignore?.include(`/${this.libdir}/`);
-
-    this.gitignore.include(`/${this.srcdir}/`);
-    this.npmignore?.exclude(`/${this.srcdir}/`);
 
     this.npmignore?.include(`/${this.libdir}/**/*.js`);
     this.npmignore?.include(`/${this.libdir}/**/*.d.ts`);
