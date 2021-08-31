@@ -252,8 +252,8 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-/lib
 !/pages/
+/lib
 /dist/
 !/tailwind.config.json
 !/postcss.config.json
@@ -279,8 +279,8 @@ pull_request_rules:
 /.projen/
 /.mergify.yml
 /test/
-!/lib/
 /pages/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist

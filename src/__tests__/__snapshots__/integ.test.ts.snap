@@ -621,8 +621,8 @@ junit.xml
 !/.github/workflows/upgrade.yml
 !/.github/pull_request_template.md
 !/test/
-/lib
 !/src/
+/lib
 /dist/
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -661,8 +661,8 @@ junit.xml
 /dist/version.txt
 /.mergify.yml
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist
@@ -2169,8 +2169,8 @@ junit.xml
 /coverage/
 !/.github/workflows/upgrade.yml
 !/test/
-/lib
 !/src/
+/lib
 /dist/
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -2186,8 +2186,8 @@ tsconfig.json
 junit.xml
 /coverage/
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist
@@ -3590,8 +3590,8 @@ junit.xml
 !/.github/workflows/upgrade.yml
 !/test/
 !/tsconfig.json
-/lib
 !/src/
+/lib
 /dist/
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -3603,8 +3603,8 @@ junit.xml
 junit.xml
 /coverage/
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist

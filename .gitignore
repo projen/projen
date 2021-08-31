@@ -42,8 +42,8 @@ junit.xml
 !/.github/workflows/upgrade.yml
 !/.github/pull_request_template.md
 !/src/__tests__/
-/lib
 !/src/
+/lib
 /dist/
 !/.projen/jest-snapshot-resolver.js
 !/.eslintrc.json
