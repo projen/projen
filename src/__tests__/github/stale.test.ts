@@ -1,6 +1,6 @@
 import { StaleBehavior } from '../../github';
 import { renderBehavior } from '../../github/stale-util';
-import { synthSnapshot, TestProject } from '../util';
+import { synthSnapshot, TestProject } from '../../test-utils';
 
 const defaults = { stale: 10, close: 11, type: 'issue' };
 

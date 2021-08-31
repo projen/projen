@@ -1,6 +1,6 @@
 import { LogLevel } from '../../logger';
+import { mkdtemp, synthSnapshot } from '../../test-utils';
 import { NextJsProject, NextJsProjectOptions } from '../../web';
-import { mkdtemp, synthSnapshot } from '../util';
 
 test('defaults', () => {
   const p = new TestNextJsProject();

@@ -1,7 +1,7 @@
 import { NpmConfig } from '../../javascript/npm-config';
 import { LogLevel } from '../../logger';
 import { NodeProject, NodeProjectOptions } from '../../node-project';
-import { mkdtemp, synthSnapshot } from '../util';
+import { mkdtemp, synthSnapshot } from '../../test-utils';
 
 test('registry is handled correctly', () => {
   const prj = new TestNodeProject({

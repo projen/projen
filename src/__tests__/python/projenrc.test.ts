@@ -1,7 +1,7 @@
 import { renderProjenNewOptions } from '../../javascript/render-options';
 import { ProjectType } from '../../project';
 import { Projenrc } from '../../python/projenrc';
-import { synthSnapshot, TestProject } from '../util';
+import { synthSnapshot, TestProject } from '../../test-utils';
 
 test('projenrc.py support', () => {
   // GIVEN

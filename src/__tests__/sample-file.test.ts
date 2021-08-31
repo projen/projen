@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { LogLevel, Project, ProjectOptions } from '..';
 import { SampleDir, SampleFile } from '../sample-file';
-import { mkdtemp, synthSnapshot } from './util';
+import { mkdtemp, synthSnapshot } from '../test-utils';
 
 
 test('sample file from text contents', () => {

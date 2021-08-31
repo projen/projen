@@ -1,5 +1,5 @@
 import { JsiiProject, JsiiProjectOptions, LogLevel } from '..';
-import { mkdtemp, synthSnapshot } from './util';
+import { mkdtemp, synthSnapshot } from '../test-utils';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {

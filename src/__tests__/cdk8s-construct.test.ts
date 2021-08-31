@@ -1,6 +1,6 @@
 import { ConstructLibraryCdk8s, ConstructLibraryCdk8sOptions } from '../cdk8s-construct';
 import { LogLevel } from '../logger';
-import { synthSnapshot, mkdtemp } from './util';
+import { synthSnapshot, mkdtemp } from '../test-utils';
 
 test ('constructs version defined', () => {
   const project = new TestCdk8sConstructsProject({

@@ -3,7 +3,7 @@ import { mkdirpSync } from 'fs-extra';
 import { JavaProject, JavaProjectOptions } from '../../java/java-project';
 import { renderProjenNewOptions } from '../../javascript/render-options';
 import { LogLevel } from '../../logger';
-import { mkdtemp, synthSnapshot } from '../util';
+import { mkdtemp, synthSnapshot } from '../../test-utils';
 
 let cwd = process.cwd();
 

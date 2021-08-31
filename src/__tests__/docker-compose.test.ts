@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { DockerCompose, DockerComposeProtocol } from '..';
 import * as logging from '../logging';
-import { TestProject } from './util';
+import { TestProject } from '../test-utils';
 
 logging.disable();
 

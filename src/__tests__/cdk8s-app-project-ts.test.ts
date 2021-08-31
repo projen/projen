@@ -1,6 +1,6 @@
 import { Cdk8sTypeScriptAppOptions, Cdk8sTypeScriptApp } from '../cdk8s-app-ts';
 import { LogLevel } from '../logger';
-import { synthSnapshot, mkdtemp } from './util';
+import { synthSnapshot, mkdtemp } from '../test-utils';
 
 test ('test if cdk8s synth is possible', () => {
   const project = new TestCdk8sAppProject({

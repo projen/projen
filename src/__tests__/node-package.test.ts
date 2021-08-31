@@ -1,5 +1,5 @@
 import { NodePackage } from '..';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../test-utils';
 
 test('minimal', () => {
   // GIVEN

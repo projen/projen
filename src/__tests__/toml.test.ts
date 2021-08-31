@@ -1,6 +1,6 @@
 import * as TOML from '@iarna/toml';
 import { TomlFile } from '..';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../test-utils';
 
 test('toml object can be mutated before synthesis', () => {
   const prj = new TestProject();

@@ -2,7 +2,7 @@ import { join } from 'path';
 import { existsSync, readFileSync } from 'fs-extra';
 import { Project } from '..';
 import { Dependencies, DependencyType } from '../deps';
-import { TestProject } from './util';
+import { TestProject } from '../test-utils';
 
 test('no dependencies, no manifest', () => {
   // GIVEN

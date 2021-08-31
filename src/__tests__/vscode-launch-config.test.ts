@@ -1,6 +1,6 @@
 import { FileBase } from '../file';
+import { synthSnapshot, TestProject } from '../test-utils';
 import { InternalConsoleOptions } from '../vscode/launch-config';
-import { synthSnapshot, TestProject } from './util';
 
 const VSCODE_DEBUGGER_FILE = '.vscode/launch.json';
 

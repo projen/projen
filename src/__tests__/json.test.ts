@@ -1,5 +1,5 @@
 import { JsonFile } from '..';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../test-utils';
 
 test('json object can be mutated before synthesis', () => {
   const prj = new TestProject();

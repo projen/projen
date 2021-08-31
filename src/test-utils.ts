@@ -2,10 +2,10 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { LogLevel, Project, ProjectOptions } from '..';
-import * as logging from '../logging';
-import { Task } from '../tasks';
-import { exec } from '../util';
+import { LogLevel, Project, ProjectOptions } from '.';
+import * as logging from './logging';
+import { Task } from './tasks';
+import { exec } from './util';
 
 const PROJEN_CLI = require.resolve('../../bin/projen');
 

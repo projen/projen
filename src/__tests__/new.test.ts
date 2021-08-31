@@ -4,8 +4,8 @@ import { execSync } from 'child_process';
 import { join } from 'path';
 import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
+import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from '../test-utils';
 import { execCapture } from '../util';
-import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {

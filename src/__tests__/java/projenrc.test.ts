@@ -1,7 +1,7 @@
 import { Pom } from '../../java';
 import { Projenrc } from '../../java/projenrc';
 import { renderProjenNewOptions } from '../../javascript/render-options';
-import { synthSnapshot, TestProject } from '../util';
+import { synthSnapshot, TestProject } from '../../test-utils';
 
 test('projenrc.java support', () => {
   // GIVEN

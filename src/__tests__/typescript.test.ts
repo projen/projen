@@ -1,6 +1,6 @@
 import { PROJEN_RC } from '../common';
+import { mkdtemp, synthSnapshot } from '../test-utils';
 import { mergeTsconfigOptions, TypeScriptProject } from '../typescript';
-import { mkdtemp, synthSnapshot } from './util';
 
 describe('mergeTsconfigOptions', () => {
   test('merging includes', () => {

@@ -4,7 +4,7 @@ import { basename, join } from 'path';
 import { mkdirpSync } from 'fs-extra';
 import { Project } from '../..';
 import { TaskRuntime } from '../../tasks';
-import { TestProject } from '../util';
+import { TestProject } from '../../test-utils';
 
 test('minimal case (just a shell command)', () => {
   // GIVEN

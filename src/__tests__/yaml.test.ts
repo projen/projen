@@ -1,6 +1,6 @@
 import * as YAML from 'yaml';
 import { YamlFile } from '..';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../test-utils';
 
 test('yaml object can be mutated before synthesis', () => {
   const prj = new TestProject();

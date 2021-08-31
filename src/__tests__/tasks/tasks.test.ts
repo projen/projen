@@ -1,6 +1,6 @@
 import { Project } from '../..';
 import { Tasks, TasksManifest, TaskStep } from '../../tasks';
-import { TestProject, synthSnapshot } from '../util';
+import { TestProject, synthSnapshot } from '../../test-utils';
 
 test('no tasks, no tasks file', () => {
   const p = new TestProject();
