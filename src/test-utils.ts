@@ -7,7 +7,7 @@ import * as logging from './logging';
 import { Task } from './tasks';
 import { exec } from './util';
 
-const PROJEN_CLI = require.resolve('../../bin/projen');
+const PROJEN_CLI = require.resolve('../bin/projen');
 
 logging.disable(); // no logging during tests
 
