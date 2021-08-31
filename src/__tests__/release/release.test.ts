@@ -269,3 +269,45 @@ test('github packages are supported by npm', () => {
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
+
+test('AWS CodeArtifact is supported by npm', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('build');
+  const release = new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
+
+test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('build');
+  const release = new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    awsAccessKeyIdSecret: 'OTHER_AWS_ACCESS_KEY_ID',
+    awsSecretAccessKeySecret: 'OTHER_AWS_SECRET_ACCESS_KEY',
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});

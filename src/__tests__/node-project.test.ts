@@ -374,6 +374,71 @@ describe('npm publishing options', () => {
     });
   });
 
+  test('AWS CodeArtifact registry', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual('my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/');
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    });
+    expect(npm.awsAccessKeyIdSecret).toStrictEqual('AWS_ACCESS_KEY_ID');
+    expect(npm.awsSecretAccessKeySecret).toStrictEqual('AWS_SECRET_ACCESS_KEY');
+  });
+
+  test('AWS CodeArtifact registry custom values', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+      awsAccessKeyIdSecret: 'OTHER_AWS_ACCESS_KEY_ID',
+      awsSecretAccessKeySecret: 'OTHER_AWS_SECRET_ACCESS_KEY',
+    });
+
+    // THEN
+    expect(npm.awsAccessKeyIdSecret).toStrictEqual('OTHER_AWS_ACCESS_KEY_ID');
+    expect(npm.awsSecretAccessKeySecret).toStrictEqual('OTHER_AWS_SECRET_ACCESS_KEY');
+  });
+
+  test('throw when \'npmTokenSecret\' is used with AWS CodeArtifact', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        npmRegistryUrl: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+        npmTokenSecret: 'INVALID_VALUE',
+      });
+    }).toThrow('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
+  });
+
+  test('throw when \'awsAccessKeyIdSecret\' or \'awsSecretAccessKeySecret\' is used without AWS CodeArtifact', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        awsAccessKeyIdSecret: 'INVALID_AWS_ACCESS_KEY_ID',
+      });
+    }).toThrow('"awsAccessKeyIdSecret" and "awsSecretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+    expect(() => {
+      new NodePackage(project, {
+        awsSecretAccessKeySecret: 'INVALID_AWS_SECRET_ACCESS_KEY',
+      });
+    }).toThrow('"awsAccessKeyIdSecret" and "awsSecretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+  });
+
   test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {
     // GIVEN
     const project = new TestProject();

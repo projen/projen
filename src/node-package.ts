@@ -16,6 +16,7 @@ const DEFAULT_NPM_TAG = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
 const DEFAULT_GITHUB_TOKEN_SECRET = 'GITHUB_TOKEN';
+const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 export interface NodePackageOptions {
   /**
@@ -290,6 +291,22 @@ export interface NodePackageOptions {
    * @default "NPM_TOKEN"
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly awsAccessKeyIdSecret?: string;
+
+  /**
+   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_SECRET_ACCESS_KEY"
+   */
+  readonly awsSecretAccessKeySecret?: string;
 }
 
 /**
@@ -362,7 +379,17 @@ export class NodePackage extends Component {
   /**
    * GitHub secret which contains the NPM token to use when publishing packages.
    */
-  public readonly npmTokenSecret: string;
+  public readonly npmTokenSecret?: string;
+
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   */
+  public readonly awsAccessKeyIdSecret?: string;
+
+  /**
+   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+   */
+  public readonly awsSecretAccessKeySecret?: string;
 
   /**
    * npm package access level.
@@ -390,12 +417,17 @@ export class NodePackage extends Component {
       project.root.annotateGenerated('/yarn.lock');
     }
 
-    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
+    const {
+      npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret,
+      awsAccessKeyIdSecret, awsSecretAccessKeySecret,
+    } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
     this.npmTokenSecret = npmTokenSecret;
+    this.awsAccessKeyIdSecret = awsAccessKeyIdSecret;
+    this.awsSecretAccessKeySecret = awsSecretAccessKeySecret;
 
     this.processDeps(options);
 
@@ -724,12 +756,25 @@ export class NodePackage extends Component {
       throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
     }
 
+    const isAwsCodeBuildRegistry = npmRegistryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(npmRegistryUrl);
+    if (isAwsCodeBuildRegistry) {
+      if (options.npmTokenSecret) {
+        throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
+      }
+    } else {
+      if (options.awsAccessKeyIdSecret || options.awsSecretAccessKeySecret) {
+        throw new Error('"awsAccessKeyIdSecret" and "awsSecretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+      }
+    }
+
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
+      awsAccessKeyIdSecret: options.awsAccessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
+      awsSecretAccessKeySecret: options.awsSecretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
     };
   }
 
@@ -1076,6 +1121,11 @@ function defaultNpmAccess(packageName: string) {
 }
 
 export function defaultNpmToken(npmToken: string | undefined, registry: string | undefined) {
+  // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
+  if (registry && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registry)) {
+    return undefined;
+  }
+
   // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
   const isGitHubPackages = registry === GITHUB_PACKAGES_REGISTRY;
   return npmToken ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET);

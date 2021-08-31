@@ -388,6 +388,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -588,6 +590,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -752,6 +756,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -974,6 +980,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -1120,6 +1128,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -1277,6 +1287,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -1443,6 +1455,8 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -2493,6 +2507,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -2933,6 +2949,8 @@ new NodePackage(project: Project, options?: NodePackageOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -2976,13 +2994,15 @@ Name | Type | Description
 **npmDistTag**🔹 | <code>string</code> | npm distribution tag.
 **npmRegistry**🔹 | <code>string</code> | The npm registry host (e.g. `registry.npmjs.org`).
 **npmRegistryUrl**🔹 | <code>string</code> | npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name.
-**npmTokenSecret**🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **packageName**🔹 | <code>string</code> | The name of the npm package.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Optional*__
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
+**npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Optional*__
 
 ### Methods
 
@@ -3236,6 +3256,8 @@ new NodeProject(options: NodeProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -4342,6 +4364,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -4474,6 +4498,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -4606,6 +4632,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -6779,6 +6807,8 @@ publishToNpm(options?: NpmPublishOptions): void
 ```
 
 * **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **distTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
   * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
   * **registry** (<code>string</code>)  The domain name of the npm package registry. __*Default*__: "registry.npmjs.org"
@@ -7568,6 +7598,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -7700,6 +7732,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -7904,6 +7938,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -8077,6 +8113,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **awsAccessKeyIdSecret** (<code>string</code>)  GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_ACCESS_KEY_ID"
+  * **awsSecretAccessKeySecret** (<code>string</code>)  GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact. __*Default*__: "AWS_SECRET_ACCESS_KEY"
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
@@ -8240,6 +8278,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -8383,6 +8423,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -8527,6 +8569,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -8662,6 +8706,8 @@ Name | Type | Description
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?⚠️ | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -8807,6 +8853,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -8951,6 +8999,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -9089,6 +9139,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -9863,6 +9915,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -10090,6 +10144,8 @@ Name | Type | Description
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -10142,6 +10198,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -10494,6 +10552,8 @@ Name | Type | Description
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?⚠️ | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?⚠️ | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -10618,6 +10678,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -11705,6 +11767,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**awsAccessKeyIdSecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 **registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -11768,6 +11832,8 @@ Options for npm release.
 
 Name | Type | Description 
 -----|------|-------------
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **distTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 **registry**?🔹 | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -12115,6 +12181,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -12227,6 +12295,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -12381,6 +12451,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
@@ -12521,6 +12593,8 @@ Name | Type | Description
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**awsAccessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**awsSecretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
