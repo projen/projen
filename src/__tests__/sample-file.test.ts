@@ -83,7 +83,6 @@ export class TestProject extends Project {
     super({
       name: 'my-project',
       outdir: tmpdir,
-      clobber: false,
       logging: {
         level: LogLevel.OFF,
       },

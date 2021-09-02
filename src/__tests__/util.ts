@@ -2,8 +2,9 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { LogLevel, Project, ProjectOptions } from '..';
+import { LogLevel, Project } from '..';
 import * as logging from '../logging';
+import { GitHubProject, GitHubProjectOptions } from '../project';
 import { Task } from '../tasks';
 import { exec } from '../util';
 
@@ -11,8 +12,8 @@ const PROJEN_CLI = require.resolve('../../bin/projen');
 
 logging.disable(); // no logging during tests
 
-export class TestProject extends Project {
-  constructor(options: Omit<ProjectOptions, 'name'> = {}) {
+export class TestProject extends GitHubProject {
+  constructor(options: Omit<GitHubProjectOptions, 'name'> = {}) {
     const tmpdir = mkdtemp();
     super({
       name: 'my-project',
