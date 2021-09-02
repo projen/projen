@@ -122,7 +122,8 @@ test('sources and compiled output can be collocated', () => {
 
   expect(prj.tsconfig?.exclude).not.toContain('/lib');
 
-  const snapshot = synthSnapshot(prj)['.gitignore'];
-  expect(snapshot).toMatchSnapshot();
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot['.gitignore']).toMatchSnapshot();
+  expect(snapshot['.npmignore']).toMatchSnapshot();
 
 });

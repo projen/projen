@@ -1,4 +1,4 @@
-import { Project, ProjectOptions } from '../project';
+import { GitHubProject, GitHubProjectOptions } from '../project';
 import { Junit, JunitOptions } from './junit';
 import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
@@ -9,7 +9,7 @@ import { Projenrc as ProjenrcJava, ProjenrcOptions } from './projenrc';
 /**
  * Options for `JavaProject`.
  */
-export interface JavaProjectOptions extends ProjectOptions, PomOptions {
+export interface JavaProjectOptions extends GitHubProjectOptions, PomOptions {
   /**
    * Final artifact output directory.
    *
@@ -102,7 +102,7 @@ export interface JavaProjectOptions extends ProjectOptions, PomOptions {
  *
  * @pjid java
  */
-export class JavaProject extends Project {
+export class JavaProject extends GitHubProject {
   /**
    * API for managing `pom.xml`.
    */

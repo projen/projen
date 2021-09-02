@@ -1180,12 +1180,11 @@ const project = new NodeProject({
   name: 'my-project',
   packageManager: NodePackageManager.NPM,
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();"
 `;
@@ -2593,13 +2592,12 @@ const project = new AwsCdkTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // cdkDependencies: undefined,        /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // cdkDependencies: undefined,  /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
+  // deps: [],                    /* Runtime dependencies of this module. */
+  // description: undefined,      /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                 /* Build dependencies for this module. */
+  // packageName: undefined,      /* The \\"name\\" in package.json. */
+  // release: undefined,          /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2616,14 +2614,13 @@ const project = new AwsCdkConstructLibrary({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // cdkDependencies: undefined,        /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
-  // cdkTestDependencies: undefined,    /* AWS CDK modules required for testing. */
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // cdkDependencies: undefined,      /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
+  // cdkTestDependencies: undefined,  /* AWS CDK modules required for testing. */
+  // deps: [],                        /* Runtime dependencies of this module. */
+  // description: undefined,          /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],                     /* Build dependencies for this module. */
+  // packageName: undefined,          /* The \\"name\\" in package.json. */
+  // release: undefined,              /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2637,12 +2634,11 @@ const project = new Cdk8sTypeScriptApp({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2659,12 +2655,11 @@ const project = new ConstructLibraryCdk8s({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2681,12 +2676,11 @@ const project = new ConstructLibraryCdktf({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2721,12 +2715,11 @@ const project = new JsiiProject({
   name: 'my-project',
   repositoryUrl: 'git@boom.com:foo/bar.git',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2739,13 +2732,12 @@ const project = new web.NextJsProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
-  // tailwind: true,                    /* Setup Tailwind CSS as a PostCSS plugin. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
+  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -2758,13 +2750,12 @@ const project = new web.NextJsTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
-  // tailwind: true,                    /* Setup Tailwind CSS as a PostCSS plugin. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
+  // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
 }
@@ -2777,12 +2768,11 @@ const project = new NodeProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2800,15 +2790,14 @@ const project = new python.PythonProject({
   name: 'my-project',
   version: '0.1.0',
 
-  // deps: [],                          /* List of runtime dependencies for this project. */
-  // description: undefined,            /* A short description of the package. */
-  // devDeps: [],                       /* List of dev dependencies for this project. */
-  // pip: true,                         /* Use pip with a requirements.txt file to track project dependencies. */
-  // poetry: false,                     /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // pytest: true,                      /* Include pytest tests. */
-  // setuptools: undefined,             /* Use setuptools with a setup.py script for packaging and publishing. */
-  // venv: true,                        /* Use venv to manage a virtual environment for installing dependencies inside. */
+  // deps: [],                /* List of runtime dependencies for this project. */
+  // description: undefined,  /* A short description of the package. */
+  // devDeps: [],             /* List of dev dependencies for this project. */
+  // pip: true,               /* Use pip with a requirements.txt file to track project dependencies. */
+  // poetry: false,           /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
+  // pytest: true,            /* Include pytest tests. */
+  // setuptools: undefined,   /* Use setuptools with a setup.py script for packaging and publishing. */
+  // venv: true,              /* Use venv to manage a virtual environment for installing dependencies inside. */
 });
 project.synth();",
 }
@@ -2821,12 +2810,11 @@ const project = new web.ReactProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2839,12 +2827,11 @@ const project = new web.ReactTypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2857,12 +2844,11 @@ const project = new TypeScriptProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -2875,12 +2861,11 @@ const project = new TypeScriptAppProject({
   defaultReleaseBranch: 'main',
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                       /* Build dependencies for this module. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }

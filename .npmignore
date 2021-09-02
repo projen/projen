@@ -7,8 +7,8 @@ junit.xml
 /dist/version.txt
 /.mergify.yml
 /src/__tests__/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist

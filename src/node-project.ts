@@ -7,7 +7,7 @@ import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
-import { Project, ProjectOptions } from './project';
+import { GitHubProject, GitHubProjectOptions } from './project';
 import { Release, ReleaseProjectOptions, Publisher } from './release';
 import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
@@ -15,7 +15,7 @@ import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
-export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, ReleaseProjectOptions {
+export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOptions, ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -293,7 +293,7 @@ export enum AutoRelease {
 /**
  * Node.js project
  */
-export class NodeProject extends Project {
+export class NodeProject extends GitHubProject {
   /**
    * API for managing the node package.
    */
