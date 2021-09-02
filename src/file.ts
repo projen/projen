@@ -66,13 +66,16 @@ export abstract class FileBase extends Component {
   constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
     super(project);
 
-    if ((options.committed ?? true) && filePath !== '.gitattributes') {
-      project.root.annotateGenerated(`/${filePath}`);
-    }
 
     this.readonly = options.readonly ?? true;
     this.executable = options.executable ?? false;
     this.path = filePath;
+
+    const globPattern = `/${this.path}`;
+    const committed = options.committed ?? true;
+    if (committed && filePath !== '.gitattributes') {
+      project.root.annotateGenerated(`/${filePath}`);
+    }
 
     this.absolutePath = path.resolve(project.outdir, filePath);
 
@@ -82,15 +85,9 @@ export abstract class FileBase extends Component {
       throw new Error(`there is already a file under ${path.relative(project.root.outdir, this.absolutePath)}`);
     }
 
-    const gitignore = options.editGitignore ?? true;
-    if (gitignore) {
-      const committed = options.committed ?? true;
-      const pattern = `/${this.path}`;
-      if (committed) {
-        project.gitignore.include(pattern);
-      } else {
-        project.gitignore.exclude(pattern);
-      }
+    const editGitignore = options.editGitignore ?? true;
+    if (editGitignore) {
+      this.project.addGitIgnore(`${committed ? '!' : ''}${globPattern}`);
     } else {
       if (options.committed != null) {
         throw new Error('"gitignore" is disabled, so it does not make sense to specify "committed"');

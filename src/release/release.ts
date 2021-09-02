@@ -1,7 +1,7 @@
 import { Component } from '../component';
-import { TaskWorkflow } from '../github';
+import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { Project } from '../project';
+import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
@@ -164,14 +164,16 @@ export class Release extends Component {
   private readonly branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
+  private readonly github?: GitHub;
 
-  constructor(project: Project, options: ReleaseOptions) {
+  constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error('"releaseBranches" is no longer an array. See type annotations');
     }
 
+    this.github = project.github;
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
@@ -334,8 +336,8 @@ export class Release extends Component {
       },
     });
 
-    if (this.project.github) {
-      return new TaskWorkflow(this.project.github, {
+    if (this.github) {
+      return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
         outputs: {
