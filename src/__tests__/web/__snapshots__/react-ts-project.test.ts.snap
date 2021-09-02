@@ -243,8 +243,8 @@ jspm_packages/
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-/lib
 !/src/
+/lib
 /dist/
 /build/
 !/react-app-env.d.ts
@@ -269,8 +269,8 @@ pull_request_rules:
 /.projen/
 /.mergify.yml
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist
