@@ -391,14 +391,11 @@ export class NodePackage extends Component {
   public readonly npmTokenSecret?: string;
 
   /**
-   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
    */
-  public readonly awsAccessKeyIdSecret?: string;
-
-  /**
-   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   */
-  public readonly awsSecretAccessKeySecret?: string;
+  readonly codeArtifactOptions?: CodeArtifactOptions;
 
   /**
    * npm package access level.
@@ -431,16 +428,14 @@ export class NodePackage extends Component {
     this.project.annotateGenerated(`/${this.lockFile}`);
 
     const {
-      npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret,
-      awsAccessKeyIdSecret, awsSecretAccessKeySecret,
+      npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret, codeArtifactOptions,
     } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
     this.npmTokenSecret = npmTokenSecret;
-    this.awsAccessKeyIdSecret = awsAccessKeyIdSecret;
-    this.awsSecretAccessKeySecret = awsSecretAccessKeySecret;
+    this.codeArtifactOptions = codeArtifactOptions;
 
     this.processDeps(options);
 
@@ -780,14 +775,22 @@ export class NodePackage extends Component {
       }
     }
 
+    // apply defaults for AWS CodeArtifact
+    let codeArtifactOptions: CodeArtifactOptions | undefined;
+    if (isAwsCodeBuildRegistry) {
+      codeArtifactOptions = {
+        accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
+        secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+      };
+    }
+
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
-      awsAccessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
-      awsSecretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+      codeArtifactOptions,
     };
   }
 
