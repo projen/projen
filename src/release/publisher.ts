@@ -112,7 +112,7 @@ export class Publisher extends Component {
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
-    const isAwsCodeArtifactPackages = options.registry ? AWS_CODEARTIFACT_REGISTRY_REGEX.test(options.registry) : false;
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     this.addPublishJob({
@@ -131,8 +131,8 @@ export class Publisher extends Component {
       workflowEnv: {
         NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
         // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
-        AWS_ACCESS_KEY_ID: isAwsCodeArtifactPackages ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
-        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifactPackages ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+        AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
       },
     });
   }
@@ -608,4 +608,13 @@ export interface GitHubReleasesPublishOptions {
    * @example changelog.md
    */
   readonly changelogFile: string;
+}
+
+/**
+ * Evaluates if the `registryUrl` is a AWS CodeArtifact registry.
+ * @param registryUrl url of registry
+ * @returns true for AWS CodeArtifact
+ */
+export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
+  return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
 }

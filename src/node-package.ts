@@ -7,6 +7,7 @@ import { Component } from './component';
 import { DependencyType } from './deps';
 import { JsonFile } from './json';
 import { Project } from './project';
+import { isAwsCodeArtifactRegistry } from './release/publisher';
 import { Task } from './tasks';
 import { exec, sorted, isTruthy, writeFile } from './util';
 
@@ -16,7 +17,6 @@ const DEFAULT_NPM_TAG = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
 const DEFAULT_GITHUB_TOKEN_SECRET = 'GITHUB_TOKEN';
-const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 export interface NodePackageOptions {
   /**
@@ -764,8 +764,8 @@ export class NodePackage extends Component {
       throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
     }
 
-    const isAwsCodeBuildRegistry = npmRegistryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(npmRegistryUrl);
-    if (isAwsCodeBuildRegistry) {
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
+    if (isAwsCodeArtifact) {
       if (options.npmTokenSecret) {
         throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
       }
@@ -777,7 +777,7 @@ export class NodePackage extends Component {
 
     // apply defaults for AWS CodeArtifact
     let codeArtifactOptions: CodeArtifactOptions | undefined;
-    if (isAwsCodeBuildRegistry) {
+    if (isAwsCodeArtifact) {
       codeArtifactOptions = {
         accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
         secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
@@ -1138,7 +1138,7 @@ function defaultNpmAccess(packageName: string) {
 
 export function defaultNpmToken(npmToken: string | undefined, registry: string | undefined) {
   // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
-  if (registry && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registry)) {
+  if (isAwsCodeArtifactRegistry(registry)) {
     return undefined;
   }
 
