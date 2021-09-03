@@ -33,9 +33,6 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     this.project.tasks.addEnvironment('VIRTUAL_ENV', '$(poetry env info -p)');
     this.project.tasks.addEnvironment('PATH', '$(echo $(poetry env info -p)/bin:$PATH)');
 
-    // declare the python versions for which the package is compatible
-    this.addDependency('python@^3.6');
-
     this.packageTask = project.addTask('package', {
       description: 'Creates source archive and wheel for distribution.',
       exec: 'poetry build',
