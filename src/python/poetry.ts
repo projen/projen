@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { Task, TaskRuntime } from '../tasks';
 import { TomlFile } from '../toml';
-import { exec, execOrUndefined } from '../util';
+import { decamelizeKeysRecursively, exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
 import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
@@ -262,6 +262,8 @@ export class PoetryPyproject extends Component {
   constructor(project: PythonProject, options: PoetryPyprojectOptions) {
     super(project);
 
+    const decamelisedOptions = decamelizeKeysRecursively(options, { separator: '-' });
+
     this.file = new TomlFile(project, 'pyproject.toml', {
       omitEmpty: false,
       obj: {
@@ -271,24 +273,7 @@ export class PoetryPyproject extends Component {
         },
         'tool': {
           poetry: {
-            'name': options.name,
-            'version': options.version,
-            'description': options.description,
-            'license': options.license,
-            'authors': options.authors,
-            'maintainers': options.maintainers,
-            'readme': options.readme,
-            'homepage': options.homepage,
-            'repository': options.repository,
-            'documentation': options.documentation,
-            'keywords': options.keywords,
-            'classifiers': options.classifiers,
-            'packages': options.packages,
-            'include': options.include,
-            'exclude': options.exclude,
-            'dependencies': options.dependencies,
-            'dev-dependencies': options.devDependencies,
-            'scripts': options.scripts,
+            ...decamelisedOptions,
           },
         },
       },
