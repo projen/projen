@@ -299,8 +299,8 @@ junit.xml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
-/lib
 !/src/
+/lib
 /dist/
 !/tsconfig.jest.json
 !/.eslintrc.json
@@ -332,8 +332,8 @@ junit.xml
 /dist/version.txt
 /.mergify.yml
 /test/
-!/lib/
 /src/
+!/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
 dist
@@ -725,11 +725,10 @@ const project = new TaimosTypescriptLibrary({
   devDeps: ['@taimos/projen@0.0.121'],
   name: 'my-project',
 
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // release: undefined,                /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
   "LICENSE": "
