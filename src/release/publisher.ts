@@ -71,8 +71,8 @@ export class Publisher extends Component {
   public readonly jsiiReleaseVersion: string;
   public readonly condition?: string;
 
-  private readonly issueOnFail: boolean;
-  private readonly issueOnFailLabel: string;
+  private readonly failureIssue: boolean;
+  private readonly failureIssueLabel: string;
 
   // the jobs to add to the release workflow
   private readonly jobs: { [name: string]: workflows.Job } = {};
@@ -85,8 +85,8 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
 
-    this.issueOnFail = options.failureIssue ?? false;
-    this.issueOnFailLabel = options.failureIssueLabel ?? 'failed-release';
+    this.failureIssue = options.failureIssue ?? false;
+    this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
   }
 
   /**
@@ -292,7 +292,7 @@ export class Publisher extends Component {
 
     const perms = opts.permissions ?? { contents: JobPermission.READ };
 
-    if (this.issueOnFail) {
+    if (this.failureIssue) {
       steps.push(...[
         {
           name: 'Extract Version',
@@ -305,7 +305,7 @@ export class Publisher extends Component {
           if: '${{ failure() }}',
           uses: 'imjohnbo/issue-bot@v3',
           with: {
-            labels: this.issueOnFailLabel,
+            labels: this.failureIssueLabel,
             title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
             body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
           },
