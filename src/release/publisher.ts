@@ -49,11 +49,11 @@ export interface PublisherOptions {
    *
    * @default false
    */
-  readonly issueOnFailure?: boolean;
+  readonly failureIssue?: boolean;
 
   /**
    * The label to apply to the issue marking failed publish tasks.
-   * Only applies if `issueOnFailure` is true.
+   * Only applies if `failureIssue` is true.
    *
    * @default "failed-release"
    */
@@ -85,7 +85,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
 
-    this.issueOnFail = options.issueOnFailure ?? false;
+    this.issueOnFail = options.failureIssue ?? false;
     this.issueOnFailLabel = options.failureIssueLabel ?? 'failed-release';
   }
 
