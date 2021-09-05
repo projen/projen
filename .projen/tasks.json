@@ -227,6 +227,9 @@
     "publish:maven": {
       "name": "publish:maven",
       "description": "Publish this package to Maven Central",
+      "env": {
+        "MAVEN_ENDPOINT": "https://s01.oss.sonatype.org"
+      },
       "requiredEnv": [
         "MAVEN_GPG_PRIVATE_KEY",
         "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",

@@ -55,15 +55,17 @@ const project = new JsiiProject({
   },
 
   publishToMaven: {
-    javaPackage: 'org.projen',
-    mavenGroupId: 'com.github.eladb',
+    javaPackage: 'io.github.cdklabs.projen',
+    mavenGroupId: 'io.github.cdklabs',
     mavenArtifactId: 'projen',
+    mavenEndpoint: 'https://s01.oss.sonatype.org',
   },
 
   publishToPypi: {
     distName: 'projen',
     module: 'projen',
   },
+
   failureIssue: true,
 
   // Disabled due to cycles between main module and submodules
