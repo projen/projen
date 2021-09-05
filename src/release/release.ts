@@ -102,6 +102,21 @@ export interface ReleaseProjectOptions {
    * `addBranch()` to add additional branches.
    */
   readonly releaseBranches?: { [name: string]: BranchOptions };
+
+  /**
+   * Create a github issue on every failed publishing task.
+   *
+   * @default false
+   */
+  readonly failureIssue?: boolean;
+
+  /**
+   * The label to apply to issues indicating publish failures.
+   * Only applies if `failureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly failureIssueLabel?: string;
 }
 
 /**
@@ -194,6 +209,8 @@ export class Release extends Component {
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
+      failureIssue: options.failureIssue,
+      failureIssueLabel: options.failureIssueLabel,
     });
 
     const githubRelease = options.githubRelease ?? true;

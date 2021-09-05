@@ -56,7 +56,7 @@ It will also ensure that the workflow token has write permissions for Packages.
 
 **npm**
 ```ts
-publisher.publishToNpm({ 
+publisher.publishToNpm({
   registry: 'npm.pkg.github.com'
   // also sets npmTokenSecret
 })
@@ -70,3 +70,22 @@ publisher.publishToMaven({
   // disables mavenGpgPrivateKeySecret, mavenGpgPrivateKeyPassphrase, mavenStagingProfileId
 })
 ```
+
+## Handling Failures
+
+You can instruct the publisher to create GitHub issues for publish failures:
+
+```ts
+const publisher = new Publisher(project, {
+  workflow: releaseWorkflow,
+  buildJobId: 'my-build-job',
+  artifactName: 'dist',
+  issueOnFailure: true,
+  failureIssueLabel: 'failed-release'
+});
+```
+
+This will create an issue labeled with the `failed-release` label for every individual failed publish task.
+For example, if Nuget publishing failed for a specific version, it will create an issue titled *Publishing v1.0.4 to Nuget gallery failed*.
+
+This can be helpful to keep track of failed releases as well as integrate with third-party ticketing systems by querying issues labeled with `failed-release`.
