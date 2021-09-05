@@ -138,9 +138,9 @@
     "outdir": "dist",
     "targets": {
       "java": {
-        "package": "org.projen",
+        "package": "io.github.cdklabs.projen",
         "maven": {
-          "groupId": "com.github.eladb",
+          "groupId": "io.github.cdklabs",
           "artifactId": "projen"
         }
       },
