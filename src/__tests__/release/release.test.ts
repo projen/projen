@@ -278,8 +278,8 @@ test('can enable issue creation on failed releases with a custom label', () => {
     task: task,
     versionFile: 'version.json',
     branch: 'main',
-    releaseFailureIssue: true,
-    releaseFailureIssueLabel: 'custom-label',
+    failureIssue: true,
+    failureIssueLabel: 'custom-label',
   });
 
   // WHEN
