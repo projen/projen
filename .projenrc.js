@@ -71,6 +71,9 @@ const project = new JsiiProject({
   // publishToGo: {
   //   moduleName: 'github.com/projen/projen-go',
   // },
+
+  autoApproveUpgrades: true,
+  autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },
 });
 
 // this script is what we use as the projen command in this project
