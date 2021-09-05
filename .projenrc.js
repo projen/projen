@@ -64,7 +64,7 @@ const project = new JsiiProject({
     distName: 'projen',
     module: 'projen',
   },
-  failureIssue: true,
+  releaseFailureIssue: true,
 
   // Disabled due to cycles between main module and submodules
   // publishToGo: {
