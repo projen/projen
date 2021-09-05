@@ -108,15 +108,15 @@ export interface ReleaseProjectOptions {
    *
    * @default false
    */
-  readonly failureIssue?: boolean;
+  readonly releaseFailureIssue?: boolean;
 
   /**
    * The label to apply to issues indicating publish failures.
-   * Only applies if `failureIssue` is true.
+   * Only applies if `releaseFailureIssue` is true.
    *
    * @default "failed-release"
    */
-  readonly failureIssueLabel?: string;
+  readonly releaseFailureIssueLabel?: string;
 }
 
 /**
@@ -209,8 +209,8 @@ export class Release extends Component {
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
-      failureIssue: options.failureIssue,
-      failureIssueLabel: options.failureIssueLabel,
+      failureIssue: options.releaseFailureIssue,
+      failureIssueLabel: options.releaseFailureIssueLabel,
     });
 
     const githubRelease = options.githubRelease ?? true;
