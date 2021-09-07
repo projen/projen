@@ -75,10 +75,18 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
+    var pythonDefined: boolean = false;
     for (const pkg of this.project.deps.all) {
+      if (pkg.name === 'python') {
+        pythonDefined = true;
+      }
       if (pkg.type === DependencyType.RUNTIME) {
         dependencies[pkg.name] = pkg.version;
       }
+    }
+    if (!pythonDefined) {
+      // Python version must be defined for poetry projects. Default to ^3.6.
+      dependencies.python = '^3.6';
     }
     return dependencies;
   }
