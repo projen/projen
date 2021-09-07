@@ -196,8 +196,8 @@ Name|Description
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [json.ProjenrcOptions](#projen-json-projenrcoptions)|*No description*
 [python.PipOptions](#projen-python-pipoptions)|Options for pip.
-[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|*No description*
-[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|*No description*
+[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)|Poetry-specific options.
+[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|Poetry-specific options.
 [python.ProjenrcOptions](#projen-python-projenrcoptions)|Options for `Projenrc`.
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
 [python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)|*No description*
@@ -6314,16 +6314,20 @@ new python.PoetryPyproject(project: PythonProject, options: PoetryPyprojectOptio
   * **description** (<code>string</code>)  A short description of the package (required). __*Optional*__
   * **documentation** (<code>string</code>)  A URL to the documentation of the project. __*Optional*__
   * **exclude** (<code>Array<string></code>)  A list of patterns that will be excluded in the final package. __*Optional*__
+  * **extras** (<code>Map<string, Array<string>></code>)  Package extras. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **include** (<code>Array<string></code>)  A list of patterns that will be included in the final package. __*Optional*__
   * **keywords** (<code>Array<string></code>)  A list of keywords (max: 5) that the package is related to. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
   * **maintainers** (<code>Array<string></code>)  the maintainers of the package. __*Optional*__
   * **name** (<code>string</code>)  Name of the package (required). __*Optional*__
-  * **packages** (<code>Array<string></code>)  A list of packages and modules to include in the final distribution. __*Optional*__
+  * **packages** (<code>Array<any></code>)  A list of packages and modules to include in the final distribution. __*Optional*__
+  * **plugins** (<code>any</code>)  Plugins. __*Optional*__
   * **readme** (<code>string</code>)  The name of the readme file of the package. __*Optional*__
   * **repository** (<code>string</code>)  A URL to the repository of the project. __*Optional*__
   * **scripts** (<code>Map<string, any></code>)  The scripts or executables that will be installed when installing the package. __*Optional*__
+  * **source** (<code>Array<any></code>)  Source registries from which packages are retrieved. __*Optional*__
+  * **urls** (<code>Map<string, string></code>)  Project custom URLs, in addition to homepage, repository and documentation. __*Optional*__
   * **version** (<code>string</code>)  Version of the package (required). __*Optional*__
   * **dependencies** (<code>Map<string, any></code>)  A list of dependencies for the project. __*Optional*__
   * **devDependencies** (<code>Map<string, any></code>)  A list of development dependencies for the project. __*Optional*__
@@ -11492,7 +11496,9 @@ Options for pip.
 ## struct PoetryPyprojectOptions 🔹 <a id="projen-python-poetrypyprojectoptions"></a>
 
 
+Poetry-specific options.
 
+See https://python-poetry.org/docs/pyproject/
 
 
 
@@ -11505,16 +11511,20 @@ Name | Type | Description
 **devDependencies**?🔹 | <code>Map<string, any></code> | A list of development dependencies for the project.<br/>__*Optional*__
 **documentation**?🔹 | <code>string</code> | A URL to the documentation of the project.<br/>__*Optional*__
 **exclude**?🔹 | <code>Array<string></code> | A list of patterns that will be excluded in the final package.<br/>__*Optional*__
+**extras**?🔹 | <code>Map<string, Array<string>></code> | Package extras.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
 **include**?🔹 | <code>Array<string></code> | A list of patterns that will be included in the final package.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | A list of keywords (max: 5) that the package is related to.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
 **maintainers**?🔹 | <code>Array<string></code> | the maintainers of the package.<br/>__*Optional*__
 **name**?🔹 | <code>string</code> | Name of the package (required).<br/>__*Optional*__
-**packages**?🔹 | <code>Array<string></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**packages**?🔹 | <code>Array<any></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**plugins**?🔹 | <code>any</code> | Plugins.<br/>__*Optional*__
 **readme**?🔹 | <code>string</code> | The name of the readme file of the package.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | A URL to the repository of the project.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, any></code> | The scripts or executables that will be installed when installing the package.<br/>__*Optional*__
+**source**?🔹 | <code>Array<any></code> | Source registries from which packages are retrieved.<br/>__*Optional*__
+**urls**?🔹 | <code>Map<string, string></code> | Project custom URLs, in addition to homepage, repository and documentation.<br/>__*Optional*__
 **version**?🔹 | <code>string</code> | Version of the package (required).<br/>__*Optional*__
 
 
@@ -11522,7 +11532,9 @@ Name | Type | Description
 ## struct PoetryPyprojectOptionsWithoutDeps 🔹 <a id="projen-python-poetrypyprojectoptionswithoutdeps"></a>
 
 
+Poetry-specific options.
 
+See https://python-poetry.org/docs/pyproject/
 
 
 
@@ -11533,16 +11545,20 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package (required).<br/>__*Optional*__
 **documentation**?🔹 | <code>string</code> | A URL to the documentation of the project.<br/>__*Optional*__
 **exclude**?🔹 | <code>Array<string></code> | A list of patterns that will be excluded in the final package.<br/>__*Optional*__
+**extras**?🔹 | <code>Map<string, Array<string>></code> | Package extras.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
 **include**?🔹 | <code>Array<string></code> | A list of patterns that will be included in the final package.<br/>__*Optional*__
 **keywords**?🔹 | <code>Array<string></code> | A list of keywords (max: 5) that the package is related to.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
 **maintainers**?🔹 | <code>Array<string></code> | the maintainers of the package.<br/>__*Optional*__
 **name**?🔹 | <code>string</code> | Name of the package (required).<br/>__*Optional*__
-**packages**?🔹 | <code>Array<string></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**packages**?🔹 | <code>Array<any></code> | A list of packages and modules to include in the final distribution.<br/>__*Optional*__
+**plugins**?🔹 | <code>any</code> | Plugins.<br/>__*Optional*__
 **readme**?🔹 | <code>string</code> | The name of the readme file of the package.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | A URL to the repository of the project.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, any></code> | The scripts or executables that will be installed when installing the package.<br/>__*Optional*__
+**source**?🔹 | <code>Array<any></code> | Source registries from which packages are retrieved.<br/>__*Optional*__
+**urls**?🔹 | <code>Map<string, string></code> | Project custom URLs, in addition to homepage, repository and documentation.<br/>__*Optional*__
 **version**?🔹 | <code>string</code> | Version of the package (required).<br/>__*Optional*__
 
 

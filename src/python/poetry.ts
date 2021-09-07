@@ -142,7 +142,9 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
   }
 }
 
-
+/**
+ * Poetry-specific options. See https://python-poetry.org/docs/pyproject/
+ */
 export interface PoetryPyprojectOptionsWithoutDeps {
   /**
    * Name of the package (required).
@@ -212,7 +214,7 @@ export interface PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of packages and modules to include in the final distribution.
    */
-  readonly packages?: string[];
+  readonly packages?: any[];
 
   /**
    * A list of patterns that will be included in the final package.
@@ -231,8 +233,32 @@ export interface PoetryPyprojectOptionsWithoutDeps {
    * The scripts or executables that will be installed when installing the package.
    */
   readonly scripts?: { [key: string]: any };
+
+  /**
+   * Source registries from which packages are retrieved.
+   */
+  readonly source?: any[];
+
+  /**
+   * Package extras
+   */
+  readonly extras?: { [key: string]: string[] };
+
+  /**
+   * Plugins. Must be specified as a table. See https://toml.io/en/v1.0.0#table
+   */
+  readonly plugins?: any;
+
+  /**
+   * Project custom URLs, in addition to homepage, repository and documentation.
+   * E.g. "Bug Tracker"
+   */
+  readonly urls?: { [key: string]: string };
 }
 
+/**
+ * Poetry-specific options. See https://python-poetry.org/docs/pyproject/
+ */
 export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of dependencies for the project.
