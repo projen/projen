@@ -143,6 +143,23 @@
         }
       ]
     },
+    "publish:git": {
+      "name": "publish:git",
+      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "env": {
+        "CHANGELOG": "dist/changelog.md",
+        "VERSION_FILE": "dist/version.txt",
+        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md"
+      },
+      "steps": [
+        {
+          "builtin": "release/update-changelog"
+        },
+        {
+          "builtin": "release/tag-version"
+        }
+      ]
+    },
     "upgrade": {
       "name": "upgrade",
       "description": "upgrade dependencies",

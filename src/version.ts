@@ -2,6 +2,7 @@ import { posix } from 'path';
 import { Component } from './component';
 import { Project } from './project';
 import { Task } from './tasks';
+import * as utils from './util';
 
 /**
  * Options for `Version`.
@@ -23,6 +24,12 @@ export interface VersionOptions {
 
 export class Version extends Component {
   public static readonly STANDARD_VERSION = 'standard-version@^9';
+
+  public static async tryReadVersion(versionFile: string) {
+    const version = (await utils.tryReadFile(versionFile)).trim();
+
+    return version.startsWith('v') ? version.substr(1) : version;
+  }
 
   public readonly bumpTask: Task;
   public readonly unbumpTask: Task;

@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Component } from '../component';
 import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
@@ -33,6 +34,16 @@ export interface ReleaseProjectOptions {
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Project-level changelog file path.
+   *
+   * `publish:git` will write a project-level changelog to this file as part of
+   * git publication.
+   *
+   * @default "CHANGELOG.md"
+   */
+  readonly projectChangelogFile?: string;
 
   /**
    * A set of workflow steps to execute in order to setup the workflow
@@ -157,6 +168,7 @@ export class Release extends Component {
   private readonly antitamper: boolean;
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
+  private readonly projectChangelogFile: string;
   private readonly releaseSchedule?: string;
   private readonly releaseEveryCommit: boolean;
   private readonly preBuildSteps: JobStep[];
@@ -180,6 +192,7 @@ export class Release extends Component {
     this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
+    this.projectChangelogFile = options.projectChangelogFile ?? 'CHANGELOG.md';
     this.releaseSchedule = options.releaseSchedule;
     this.releaseEveryCommit = options.releaseEveryCommit ?? true;
     this.containerImage = options.workflowContainerImage;
@@ -203,6 +216,12 @@ export class Release extends Component {
         versionFile: this.version.versionFileName,
       });
     }
+
+    this.publisher.publishToGit({
+      changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+      versionFile: join(this.artifactsDirectory, this.version.versionFileName),
+      projectChangelogFile: this.projectChangelogFile,
+    });
 
     // add the default branch
     this.defaultBranch = {

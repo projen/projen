@@ -452,6 +452,23 @@ pull_request_rules:
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -818,6 +835,7 @@ pull_request_rules:
       "dev": "npx projen dev",
       "export": "npx projen export",
       "projen": "npx projen",
+      "publish:git": "npx projen publish:git",
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "server": "npx projen server",

@@ -76,6 +76,23 @@ export class Publisher extends Component {
     return { ...this.jobs };
   }
 
+  public publishToGit(options: GitPublishOptions) {
+    const versionFile = options.versionFile;
+    const changelog = options.changelogFile;
+    const projectChangelogFile = options.projectChangelogFile;
+
+    const publishTask = this.project.addTask('publish:git', {
+      description: 'Creates a release tag, updates the root project changelog, and pushes tags to origin',
+      env: {
+        CHANGELOG: changelog,
+        VERSION_FILE: versionFile,
+        PROJECT_CHANGELOG_FILE: projectChangelogFile,
+      },
+    });
+    publishTask.builtin('release/update-changelog');
+    publishTask.builtin('release/tag-version');
+  }
+
   /**
    * Creates a GitHub Release.
    * @param options Options
@@ -560,10 +577,7 @@ export interface GoPublishOptions {
   readonly gitCommitMessage?: string;
 }
 
-/**
- * Publishing options for GitHub releases.
- */
-export interface GitHubReleasesPublishOptions {
+interface VersionArtifactOptions {
   /**
    * The location of a text file (relative to `dist/`) that contains the version number.
    *
@@ -572,9 +586,24 @@ export interface GitHubReleasesPublishOptions {
   readonly versionFile: string;
 
   /**
-   * The location of an .md file that includes the changelog for the release.
-   *
-   * @example changelog.md
-   */
+    * The location of an .md file (relative to `dist/`) that includes the changelog for the release.
+    *
+    * @example changelog.md
+    */
   readonly changelogFile: string;
+}
+
+/**
+ * Publishing options for GitHub releases.
+ */
+export interface GitHubReleasesPublishOptions extends VersionArtifactOptions { }
+
+/**
+ * Publishing options for Git releases
+ */
+export interface GitPublishOptions extends VersionArtifactOptions {
+  /**
+   * The location of an .md file that includes the project-level changelog.
+   */
+  readonly projectChangelogFile: string;
 }

@@ -250,6 +250,23 @@ node_modules/
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -598,6 +615,23 @@ node_modules/
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -846,6 +880,23 @@ node_modules/
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -996,6 +1047,23 @@ Object {
       "steps": Array [
         Object {
           "builtin": "release/bump-version",
+        },
+      ],
+    },
+    "publish:git": Object {
+      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "env": Object {
+        "CHANGELOG": "dist/changelog.md",
+        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+        "VERSION_FILE": "dist/version.txt",
+      },
+      "name": "publish:git",
+      "steps": Array [
+        Object {
+          "builtin": "release/update-changelog",
+        },
+        Object {
+          "builtin": "release/tag-version",
         },
       ],
     },
@@ -1186,6 +1254,23 @@ node_modules/
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -1323,6 +1408,23 @@ Object {
       "steps": Array [
         Object {
           "builtin": "release/bump-version",
+        },
+      ],
+    },
+    "publish:git": Object {
+      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "env": Object {
+        "CHANGELOG": "dist/changelog.md",
+        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+        "VERSION_FILE": "dist/version.txt",
+      },
+      "name": "publish:git",
+      "steps": Array [
+        Object {
+          "builtin": "release/update-changelog",
+        },
+        Object {
+          "builtin": "release/tag-version",
         },
       ],
     },
@@ -1588,6 +1690,23 @@ Object {
       "steps": Array [
         Object {
           "builtin": "release/bump-version",
+        },
+      ],
+    },
+    "publish:git": Object {
+      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "env": Object {
+        "CHANGELOG": "dist/changelog.md",
+        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+        "VERSION_FILE": "dist/version.txt",
+      },
+      "name": "publish:git",
+      "steps": Array [
+        Object {
+          "builtin": "release/update-changelog",
+        },
+        Object {
+          "builtin": "release/tag-version",
         },
       ],
     },
@@ -1964,6 +2083,23 @@ node_modules/
           },
         ],
       },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
+          },
+        ],
+      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -2201,6 +2337,23 @@ node_modules/
         "steps": Array [
           Object {
             "builtin": "release/bump-version",
+          },
+        ],
+      },
+      "publish:git": Object {
+        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "env": Object {
+          "CHANGELOG": "dist/changelog.md",
+          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
+          "VERSION_FILE": "dist/version.txt",
+        },
+        "name": "publish:git",
+        "steps": Array [
+          Object {
+            "builtin": "release/update-changelog",
+          },
+          Object {
+            "builtin": "release/tag-version",
           },
         ],
       },
