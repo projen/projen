@@ -43,6 +43,21 @@ export interface PublisherOptions {
    * @default "latest"
    */
   readonly jsiiReleaseVersion?: string;
+
+  /**
+   * Create an issue when a publish task fails.
+   *
+   * @default false
+   */
+  readonly failureIssue?: boolean;
+
+  /**
+   * The label to apply to the issue marking failed publish tasks.
+   * Only applies if `failureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly failureIssueLabel?: string;
 }
 
 /**
@@ -56,6 +71,9 @@ export class Publisher extends Component {
   public readonly jsiiReleaseVersion: string;
   public readonly condition?: string;
 
+  private readonly failureIssue: boolean;
+  private readonly failureIssueLabel: string;
+
   // the jobs to add to the release workflow
   private readonly jobs: { [name: string]: workflows.Job } = {};
 
@@ -66,6 +84,9 @@ export class Publisher extends Component {
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
+
+    this.failureIssue = options.failureIssue ?? false;
+    this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
   }
 
   /**
@@ -104,6 +125,24 @@ export class Publisher extends Component {
     // create a github release
     const getVersion = `v$(cat ${versionFile})`;
 
+    const ghRelease = [
+      `gh release create ${getVersion}`,
+      '-R $GITHUB_REPOSITORY',
+      `-F ${changelogFile}`,
+      `-t ${getVersion}`,
+    ].join(' ');
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      'errout=$(mktemp);',
+      `${ghRelease} 2> $errout && true;`,
+      'exitcode=$?;',
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      'cat $errout;',
+      'exit $exitcode;',
+      'fi',
+    ].join(' ');
+
     this.addPublishJob({
       name: 'github',
       registryName: 'GitHub Releases',
@@ -112,13 +151,9 @@ export class Publisher extends Component {
       },
       workflowEnv: {
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        GITHUB_REPOSITORY: '${{ github.repository }}',
       },
-      run: [
-        `gh release create ${getVersion}`,
-        '-R ${{ github.repository }}',
-        `-F ${changelogFile}`,
-        `-t ${getVersion}`,
-      ].join(' '),
+      run: idempotentRelease,
     });
   }
 
@@ -269,31 +304,60 @@ export class Publisher extends Component {
       exec: opts.run,
     });
 
+    const steps: any[] = [
+      {
+        name: 'Download build artifacts',
+        uses: 'actions/download-artifact@v2',
+        with: {
+          name: this.artifactName,
+          path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
+        },
+      },
+      {
+        name: 'Release',
+        // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+        run: opts.run,
+        env: jobEnv,
+      },
+    ];
+
+    const perms = opts.permissions ?? { contents: JobPermission.READ };
+
+    if (this.failureIssue) {
+      steps.push(...[
+        {
+          name: 'Extract Version',
+          if: '${{ failure() }}',
+          id: 'extract-version',
+          run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+        },
+        {
+          name: 'Create Issue',
+          if: '${{ failure() }}',
+          uses: 'imjohnbo/issue-bot@v3',
+          with: {
+            labels: this.failureIssueLabel,
+            title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
+            body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+          },
+          env: {
+            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          },
+        },
+      ]);
+      Object.assign(perms, { issues: JobPermission.WRITE });
+    }
+
     const job = {
       name: `Publish to ${opts.registryName}`,
-      permissions: opts.permissions ? opts.permissions : { contents: JobPermission.READ },
+      permissions: perms,
       if: this.condition,
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
       container: opts.containerImage ? {
         image: opts.containerImage,
       } : undefined,
-      steps: [
-        {
-          name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v2',
-          with: {
-            name: this.artifactName,
-            path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
-          },
-        },
-        {
-          name: 'Release',
-          // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-          run: opts.run,
-          env: jobEnv,
-        },
-      ],
+      steps,
     };
 
     this.jobs[jobname] = job;
