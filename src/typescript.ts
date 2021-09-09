@@ -392,7 +392,7 @@ export class TypeScriptProject extends NodeProject {
 
     this.addDevDeps(
       `typescript${tsver}`,
-      `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+      `@types/node@^${this.package.minNodeVersion ?? '14.17.0'}`, // install the minimum version to ensure compatibility
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
