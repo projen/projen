@@ -851,6 +851,14 @@ export class NodeProject extends GitHubProject {
       });
     }
 
+    if (this.package.packageManager == NodePackageManager.PNPM) {
+      install.push({
+        name: 'Setup pnpm',
+        uses: 'pnpm/action-setup@v2.0.1',
+        with: { version: '6.14.7' }, // current latest. Should probably become tunable.
+      });
+    }
+
     install.push({
       name: 'Install dependencies',
       run: this.package.installCommand,

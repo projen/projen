@@ -4611,6 +4611,10 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: build
@@ -4662,6 +4666,10 @@ jobs:
         run: |-
           git config user.name \\"Automation\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
@@ -4750,6 +4758,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.0.2
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
