@@ -43,7 +43,7 @@ jobs:
           name: dist
           path: dist
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -117,7 +117,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: 
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -157,7 +157,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: 
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -192,4 +192,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: 
