@@ -263,7 +263,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -637,7 +637,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -1023,7 +1023,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -1198,7 +1198,7 @@ Object {
       ],
     },
     "publish:git": Object {
-      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       "env": Object {
         "CHANGELOG": "dist/changelog.md",
         "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -1407,7 +1407,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -1569,7 +1569,7 @@ Object {
       ],
     },
     "publish:git": Object {
-      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       "env": Object {
         "CHANGELOG": "dist/changelog.md",
         "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -1856,7 +1856,7 @@ Object {
       ],
     },
     "publish:git": Object {
-      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       "env": Object {
         "CHANGELOG": "dist/changelog.md",
         "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -2259,7 +2259,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
@@ -2521,7 +2521,7 @@ node_modules/
         ],
       },
       "publish:git": Object {
-        "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
         "env": Object {
           "CHANGELOG": "dist/changelog.md",
           "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",

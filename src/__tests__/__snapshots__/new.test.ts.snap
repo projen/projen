@@ -560,10 +560,11 @@ tsconfig.tsbuildinfo
         "name": "publish:github",
         "requiredEnv": Array [
           "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
         ],
         "steps": Array [
           Object {
-            "exec": "gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)",
+            "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
       },
@@ -1153,9 +1154,9 @@ test('hello', () => {
 `;
 
 exports[`creating java project with enum-typed CLI arg 1`] = `
-"import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
-import io.github.cdklabs.projen.ProjectType;
+"import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
+import org.projen.ProjectType;
 
 public class projenrc {
     public static void main(String[] args) {
@@ -2687,8 +2688,8 @@ project.synth();",
 
 exports[`projen new java 1`] = `
 Object {
-  "src/test/java/projenrc.java": "import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
+  "src/test/java/projenrc.java": "import org.projen.java.JavaProject;
+import org.projen.java.JavaProjectOptions;
 
 public class projenrc {
     public static void main(String[] args) {
