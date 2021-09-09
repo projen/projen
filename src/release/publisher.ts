@@ -82,7 +82,7 @@ export class Publisher extends Component {
     const projectChangelogFile = options.projectChangelogFile;
 
     const publishTask = this.project.addTask('publish:git', {
-      description: 'Creates a release tag, updates the root project changelog, and pushes tags to origin',
+      description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
       env: {
         CHANGELOG: changelog,
         VERSION_FILE: versionFile,
