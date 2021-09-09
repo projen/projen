@@ -424,6 +424,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -624,6 +626,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -788,6 +792,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -1010,6 +1016,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -1156,6 +1164,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -1313,6 +1323,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -1479,6 +1491,8 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -2601,6 +2615,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -3345,6 +3361,8 @@ new NodeProject(options: NodeProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -4432,6 +4450,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -4564,6 +4584,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -4696,6 +4718,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -6754,6 +6778,8 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
   * **condition** (<code>string</code>)  A GitHub workflow expression used as a condition for publishers. __*Default*__: no condition
+  * **failureIssue** (<code>boolean</code>)  Create an issue when a publish task fails. __*Default*__: false
+  * **failureIssueLabel** (<code>string</code>)  The label to apply to the issue marking failed publish tasks. __*Default*__: "failed-release"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
 
 
@@ -6915,6 +6941,8 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -7658,6 +7686,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -7790,6 +7820,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -7994,6 +8026,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -8167,6 +8201,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -8390,6 +8426,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -8520,6 +8558,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -8668,6 +8708,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -8812,6 +8854,8 @@ Name | Type | Description
 **release**?⚠️ | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?⚠️ | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?⚠️ | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?⚠️ | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -8956,6 +9000,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -9095,6 +9141,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -9233,6 +9281,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -10037,6 +10087,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -10296,6 +10348,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -10646,6 +10700,8 @@ Name | Type | Description
 **release**?⚠️ | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?⚠️ | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?⚠️ | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?⚠️ | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -10770,6 +10826,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -11873,6 +11931,8 @@ Name | Type | Description
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **condition**?🔹 | <code>string</code> | A GitHub workflow expression used as a condition for publishers.<br/>__*Default*__: no condition
+**failureIssue**?🔹 | <code>boolean</code> | Create an issue when a publish task fails.<br/>__*Default*__: false
+**failureIssueLabel**?🔹 | <code>string</code> | The label to apply to the issue marking failed publish tasks.<br/>__*Default*__: "failed-release"
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
 
 
@@ -11913,6 +11973,8 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
@@ -11937,6 +11999,8 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
@@ -12256,6 +12320,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -12379,6 +12445,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -12522,6 +12590,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -12673,6 +12743,8 @@ Name | Type | Description
 **release**?🔹 | <code>boolean</code> | Add release management to this project.<br/>__*Default*__: true (false for subprojects)
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?🔹 | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
+**releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
+**releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?🔹 | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
