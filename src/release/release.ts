@@ -229,8 +229,8 @@ export class Release extends Component {
     const githubRelease = options.githubRelease ?? true;
     if (githubRelease) {
       this.publisher.publishToGitHubReleases({
-        changelogFile: this.version.changelogFileName,
-        versionFile: this.version.versionFileName,
+        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
       });
     }
 

@@ -7,7 +7,7 @@ import { Project } from '../project';
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
-const ARTIFACTS_DIR = 'dist';
+const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const JSII_RELEASE_IMAGE = 'jsii/superchain';
 
 /**
@@ -119,8 +119,8 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const versionFile = `${ARTIFACTS_DIR}/${options.versionFile}`;
-    const changelogFile = `${ARTIFACTS_DIR}/${options.changelogFile}`;
+    const versionFile = options.versionFile;
+    const changelogFile = options.changelogFile;
 
     // create a github release
     const getVersion = `v$(cat ${versionFile})`;
@@ -310,7 +310,7 @@ export class Publisher extends Component {
         uses: 'actions/download-artifact@v2',
         with: {
           name: this.artifactName,
-          path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
+          path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
         },
       },
       {
