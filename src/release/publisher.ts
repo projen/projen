@@ -586,10 +586,10 @@ interface VersionArtifactOptions {
   readonly versionFile: string;
 
   /**
-    * The location of an .md file (relative to `dist/`) that includes the changelog for the release.
-    *
-    * @example changelog.md
-    */
+   * The location of an .md file (relative to `dist/`) that includes the changelog for the release.
+   *
+   * @example changelog.md
+   */
   readonly changelogFile: string;
 }
 
