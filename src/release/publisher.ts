@@ -108,6 +108,24 @@ export class Publisher extends Component {
     // create a github release
     const getVersion = `v$(cat ${versionFile})`;
 
+    const ghRelease = [
+      `gh release create ${getVersion}`,
+      '-R $GITHUB_REPOSITORY',
+      `-F ${changelogFile}`,
+      `-t ${getVersion}`,
+    ].join(' ');
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      'errout=$(mktemp);',
+      `${ghRelease} 2> $errout && true;`,
+      'exitcode=$?;',
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      'cat $errout;',
+      'exit $exitcode;',
+      'fi',
+    ].join(' ');
+
     this.addPublishJob({
       name: 'github',
       registryName: 'GitHub Releases',
@@ -116,13 +134,9 @@ export class Publisher extends Component {
       },
       workflowEnv: {
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        GITHUB_REPOSITORY: '${{ github.repository }}',
       },
-      run: [
-        `gh release create ${getVersion}`,
-        '-R ${{ github.repository }}',
-        `-F ${changelogFile}`,
-        `-t ${getVersion}`,
-      ].join(' '),
+      run: idempotentRelease,
     });
   }
 
