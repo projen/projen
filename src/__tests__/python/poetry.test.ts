@@ -14,6 +14,33 @@ test('poetry enabled', () => {
     classifiers: [
       'Development Status :: 4 - Beta',
     ],
+  });
+
+  const snapshot = synthSnapshot(p);
+  expect(snapshot['pyproject.toml']).toContain('First Last');
+  expect(snapshot['pyproject.toml']).toContain('email@example.com');
+  expect(snapshot['pyproject.toml']).toContain('http://www.example.com');
+  expect(snapshot['pyproject.toml']).toContain('a short project description');
+  expect(snapshot['pyproject.toml']).toContain('Apache-2.0');
+  expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
+});
+
+test('poetry enabled with poetry-specific options', () => {
+  const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
+    poetry: true,
+    homepage: 'http://www.example.com',
+    description: 'a short project description',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
+    deps: [
+      'package1@0.0.1',
+      'package2@0.0.2',
+    ],
     poetryOptions: {
       maintainers: ['First-2 Last-2'],
       repository: 'https://github.com/test-python-project',
@@ -53,34 +80,7 @@ test('poetry enabled', () => {
     },
   });
 
-  const snapshot = synthSnapshot(p);
-  expect(snapshot['pyproject.toml']).toContain('name = "test-python-project"');
-  expect(snapshot['pyproject.toml']).toContain('authors = [');
-  expect(snapshot['pyproject.toml']).toContain('First Last <email@example.com>');
-  expect(snapshot['pyproject.toml']).toContain('homepage = "http://www.example.com"');
-  expect(snapshot['pyproject.toml']).toContain('description = "a short project description"');
-  expect(snapshot['pyproject.toml']).toContain('license = "Apache-2.0"');
-  expect(snapshot['pyproject.toml']).toContain('classifiers = [');
-  expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
-  expect(snapshot['pyproject.toml']).toContain('maintainers = [');
-  expect(snapshot['pyproject.toml']).toContain('First-2 Last-2');
-  expect(snapshot['pyproject.toml']).toContain('repository = "https://github.com/test-python-project"');
-  expect(snapshot['pyproject.toml']).toContain('keywords = [');
-  expect(snapshot['pyproject.toml']).toContain('Keyword1');
-  expect(snapshot['pyproject.toml']).toContain('[[tool.poetry.packages]]');
-  expect(snapshot['pyproject.toml']).toContain('include = "my_package"');
-  expect(snapshot['pyproject.toml']).toContain('include = [ "CHANGELOG.md" ]');
-  expect(snapshot['pyproject.toml']).toContain('exclude = [ "my_package/excluded.py" ]');
-  expect(snapshot['pyproject.toml']).toContain('[[tool.poetry.source]]');
-  expect(snapshot['pyproject.toml']).toContain('url = "https://pypi.org/simple/"');
-  expect(snapshot['pyproject.toml']).toContain('[tool.poetry.scripts]');
-  expect(snapshot['pyproject.toml']).toContain('test-python-cli = "test-python-project.cli:cli"');
-  expect(snapshot['pyproject.toml']).toContain('[tool.poetry.extras]');
-  expect(snapshot['pyproject.toml']).toContain('cli = [ "package1", "package2" ]');
-  expect(snapshot['pyproject.toml']).toContain('[tool.poetry.plugins."blogtool.parsers"]');
-  expect(snapshot['pyproject.toml']).toContain('".rst" = "some_module:SomeClass"');
-  expect(snapshot['pyproject.toml']).toContain('[tool.poetry.urls]');
-  expect(snapshot['pyproject.toml']).toContain('"bug tracker" = "https://github.com/test-python-project/issues"');
+  expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
 class TestPythonProject extends PythonProject {
