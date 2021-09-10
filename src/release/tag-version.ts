@@ -5,7 +5,7 @@ import { Version } from '../version';
 
 export interface TagOptions {
   /**
-   * Path to release version file.
+   * Path to version file housing the release version.
    *
    * Relative to cwd.
    *
@@ -14,7 +14,7 @@ export interface TagOptions {
   readonly versionFile: string;
 
   /**
-   * Path to release changelog file.
+   * Path to release-specific changelog file.
    *
    * Relative to cwd.
    *

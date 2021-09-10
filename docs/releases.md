@@ -40,3 +40,13 @@ releaseBranches: {
   },
 }
 ```
+
+## Release Strategies
+
+If the project type supports it, then you can specify a `releaseStrategy`. You can use this to control whether
+or not your releases are automated as well as any unique artifacts associated with releases such as project-level
+changelogs.
+
+```js
+releaseStrategy: ReleaseStrategy.manual({ changelog: true })
+```

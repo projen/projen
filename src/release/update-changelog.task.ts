@@ -1,6 +1,10 @@
 /**
  * Prepends the release changelog entry onto the provided project-level changelog
  *
+ * Currently assumes a headerless changelog formatted according to
+ * [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
+ * rules.
+ *
  * Environment variables:
  *
  * - VERSION_FILE: Current release version file

@@ -35,6 +35,10 @@ export interface UpdateChangelogOptions {
 /**
  * Prepends input changelog entry onto project-level changelog.
  *
+ * Currently assumes a headerless changelog formatted according to
+ * [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
+ * rules.
+ *
  * @param cwd working directory (git repository)
  * @param options options
  */

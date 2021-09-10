@@ -6,6 +6,7 @@ import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
+import { ReleaseStrategy } from './release-strategy';
 
 const BUILD_JOBID = 'release';
 const GIT_REMOTE_STEPID = 'git_remote';
@@ -17,16 +18,28 @@ const LATEST_COMMIT_OUTPUT = 'latest_commit';
 export interface ReleaseProjectOptions {
   /**
    * Automatically release new versions every commit to one of branches in `releaseBranches`.
+   *
    * @default true
+   *
+   * @deprecated Use `releaseStrategy` instead
    */
   readonly releaseEveryCommit?: boolean;
 
   /**
-    * CRON schedule to trigger new releases.
-    *
-    * @default - no scheduled releases
-    */
+   * CRON schedule to trigger new releases.
+   *
+   * @default - no scheduled releases
+   *
+   * @deprecated Use `releaseStrategy` instead
+   */
   readonly releaseSchedule?: string;
+
+  /**
+   * The release strategy to use.
+   *
+   * @default - Continuous releases
+   */
+  readonly releaseStrategy?: ReleaseStrategy;
 
   /**
    * A directory which will contain artifacts to be published to npm.
@@ -87,11 +100,11 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
-    * Bump versions from the default branch as pre-releases (e.g. "beta",
-    * "alpha", "pre").
-    *
-    * @default - normal semantic versions
-    */
+   * Bump versions from the default branch as pre-releases (e.g. "beta",
+   * "alpha", "pre").
+   *
+   * @default - normal semantic versions
+   */
   readonly prerelease?: string;
 
   /**
@@ -184,8 +197,7 @@ export class Release extends Component {
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
   private readonly projectChangelogFile: string;
-  private readonly releaseSchedule?: string;
-  private readonly releaseEveryCommit: boolean;
+  private readonly releaseStrategy: ReleaseStrategy;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
   private readonly branches = new Array<ReleaseBranch>();
@@ -208,9 +220,23 @@ export class Release extends Component {
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
     this.projectChangelogFile = options.projectChangelogFile ?? 'CHANGELOG.md';
-    this.releaseSchedule = options.releaseSchedule;
-    this.releaseEveryCommit = options.releaseEveryCommit ?? true;
+    this.releaseStrategy = options.releaseStrategy ?? ReleaseStrategy.continuous();
     this.containerImage = options.workflowContainerImage;
+
+
+    /**
+     * Use manual releases with no changelog if releaseEveryCommit is explicitly
+     * disabled and no other strategy is set.
+     *
+     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
+     */
+    if (!((options.releaseEveryCommit ?? true) || options.releaseSchedule || options.releaseStrategy)) {
+      this.releaseStrategy = ReleaseStrategy.manual({ changelog: false });
+    }
+
+    if (options.releaseSchedule) {
+      this.releaseStrategy = ReleaseStrategy.scheduled({ schedule: options.releaseSchedule });
+    }
 
     this.version = new Version(project, {
       versionInputFile: this.versionFile,
@@ -372,7 +398,7 @@ export class Release extends Component {
       },
     });
 
-    if (this.github) {
+    if (this.github && !this.releaseStrategy.isManual) {
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -383,8 +409,8 @@ export class Release extends Component {
           },
         },
         triggers: {
-          schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-          push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
+          schedule: this.releaseStrategy.schedule ? [{ cron: this.releaseStrategy.schedule }] : undefined,
+          push: this.releaseStrategy.isContinuous ? { branches: [branch.name] } : undefined,
         },
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {
