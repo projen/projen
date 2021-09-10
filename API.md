@@ -11498,8 +11498,6 @@ Options for pip.
 
 Poetry-specific options.
 
-See https://python-poetry.org/docs/pyproject/
-
 
 
 Name | Type | Description 
@@ -11533,8 +11531,6 @@ Name | Type | Description
 
 
 Poetry-specific options.
-
-See https://python-poetry.org/docs/pyproject/
 
 
 
