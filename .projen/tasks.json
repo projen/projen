@@ -146,7 +146,7 @@
     },
     "publish:git": {
       "name": "publish:git",
-      "description": "Creates a release tag, updates the root project changelog, and pushes tags to origin",
+      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       "env": {
         "CHANGELOG": "dist/changelog.md",
         "VERSION_FILE": "dist/version.txt",
