@@ -143,7 +143,8 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 }
 
 /**
- * Poetry-specific options. See https://python-poetry.org/docs/pyproject/
+ * Poetry-specific options.
+ * @see https://python-poetry.org/docs/pyproject/
  */
 export interface PoetryPyprojectOptionsWithoutDeps {
   /**
@@ -245,7 +246,8 @@ export interface PoetryPyprojectOptionsWithoutDeps {
   readonly extras?: { [key: string]: string[] };
 
   /**
-   * Plugins. Must be specified as a table. See https://toml.io/en/v1.0.0#table
+   * Plugins. Must be specified as a table.
+   * @see https://toml.io/en/v1.0.0#table
    */
   readonly plugins?: any;
 
@@ -257,7 +259,8 @@ export interface PoetryPyprojectOptionsWithoutDeps {
 }
 
 /**
- * Poetry-specific options. See https://python-poetry.org/docs/pyproject/
+ * Poetry-specific options.
+ * @see https://python-poetry.org/docs/pyproject/
  */
 export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
   /**
