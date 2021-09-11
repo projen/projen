@@ -2921,6 +2921,7 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **all** (<code>Array<string></code>)  List of targets to build when Make is invoked without specifying any targets. __*Default*__: []
+  * **prelude** (<code>Array<string></code>)  List of lines to include before the targets/recipes (e.g. to declare variables). __*Optional*__
   * **rules** (<code>Array<[Rule](#projen-rule)></code>)  Rules to include in the Makefile. __*Default*__: []
 
 
@@ -2961,6 +2962,19 @@ addAlls(...targets: string[]): Makefile
 __Returns__:
 * <code>[Makefile](#projen-makefile)</code>
 
+#### addPrelude(...lines)🔹 <a id="projen-makefile-addprelude"></a>
+
+
+
+```ts
+addPrelude(...lines: string[]): Makefile
+```
+
+* **lines** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[Makefile](#projen-makefile)</code>
+
 #### addRule(rule)🔹 <a id="projen-makefile-addrule"></a>
 
 Add a rule to the Makefile.
@@ -2971,6 +2985,7 @@ addRule(rule: Rule): Makefile
 
 * **rule** (<code>[Rule](#projen-rule)</code>)  *No description*
   * **targets** (<code>Array<string></code>)  Files to be created or updated by this rule. 
+  * **description** (<code>string</code>)  A description that is added as a comment next to the rule. __*Default*__: no description
   * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
   * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
   * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
@@ -2988,6 +3003,7 @@ addRules(...rules: Rule[]): Makefile
 
 * **rules** (<code>[Rule](#projen-rule)</code>)  *No description*
   * **targets** (<code>Array<string></code>)  Files to be created or updated by this rule. 
+  * **description** (<code>string</code>)  A description that is added as a comment next to the rule. __*Default*__: no description
   * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
   * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
   * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
@@ -7367,34 +7383,6 @@ addTask(name: string, options?: TaskOptions): Task
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
 
-#### getFullEnvironment(task)🔹 <a id="projen-tasks-tasks-getfullenvironment"></a>
-
-Obtains the full runtime environment for a task.
-
-This defers evaluation of
-values using the $(xx) syntax.
-
-```ts
-getFullEnvironment(task: Task): Map<string, string>
-```
-
-* **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  *No description*
-
-__Returns__:
-* <code>Map<string, string></code>
-
-#### preSynthesize()🔹 <a id="projen-tasks-tasks-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
 #### removeTask(name)🔹 <a id="projen-tasks-tasks-removetask"></a>
 
 Removes a task from a project.
@@ -7407,6 +7395,18 @@ removeTask(name: string): Task
 
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
+
+#### synthesize()🔹 <a id="projen-tasks-tasks-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(): void
+```
+
+
+
+
 
 #### tryFind(name)🔹 <a id="projen-tasks-tasks-tryfind"></a>
 
@@ -10251,6 +10251,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**prelude**?🔹 | <code>Array<string></code> | List of lines to include before the targets/recipes (e.g. to declare variables).<br/>__*Optional*__
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 **rules**?🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.<br/>__*Default*__: []
 
@@ -10518,6 +10519,7 @@ A Make rule.
 Name | Type | Description 
 -----|------|-------------
 **targets**🔹 | <code>Array<string></code> | Files to be created or updated by this rule.
+**description**?🔹 | <code>string</code> | A description that is added as a comment next to the rule.<br/>__*Default*__: no description
 **phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Default*__: false
 **prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Default*__: []
 **recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Default*__: []

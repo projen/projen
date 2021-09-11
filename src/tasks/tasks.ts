@@ -43,7 +43,7 @@ export class Tasks extends Component {
     this._env = {};
 
     if (options.makefile ?? false) {
-      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.ONESHELL:'] });
+      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.ONESHELL:', '.EXPORT_ALL_VARIABLES:'] });
     }
 
     new JsonFile(project, manifestFile, {
@@ -135,10 +135,11 @@ export class Tasks extends Component {
   }
 
   /**
-   * Obtains the full runtime environment for a task. This defers evaluation of
-   * values using the $(xx) syntax.
+   * Obtains the full runtime environment for a task.
+   *
+   * Note: values in map can sometimes be undefined.
    */
-  public getFullEnvironment(task: Task): { [name: string]: string | undefined } {
+  private getFullEnvironment(task: Task): { [name: string]: string } {
     return {
       ...this._env,
       ...task._renderSpec().env,
@@ -148,27 +149,27 @@ export class Tasks extends Component {
   private renderTaskAsRecipe(task: Task): string[] {
     const recipe: string[] = [];
 
-    recipe.push(`@echo [info] Running task \\"${task.name}\\"...`);
+    recipe.push(`@echo 🤖 Running task ${green(task.name)}...`);
 
     const env = this.getFullEnvironment(task);
     for (const [key, value] of Object.entries(env)) {
-      if (value === undefined) {
+      if (value === undefined) { // values may be undefined
         // do nothing
       } else if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
-        recipe.push(`export ${key}=$(shell ${sanitize(query)})`);
+        recipe.push(`@export ${key}=$(shell ${sanitize(query)})`);
       } else {
-        recipe.push(`export ${key}=${sanitize(value)}`);
+        recipe.push(`@export ${key}=${sanitize(value)}`);
       }
     }
 
     for (const step of task.steps) {
       if (step.say) {
-        recipe.push(`@echo [info] ${sanitize(step.say)}`);
+        recipe.push(`@echo ${sanitize(step.say)}`);
       }
 
       if (step.spawn) {
-        recipe.push(`make ${step.spawn}`); // use $(MAKE) here?
+        recipe.push(`@make ${step.spawn}`);
       }
 
       if (step.builtin) {
@@ -194,6 +195,8 @@ export class Tasks extends Component {
         recipe.push(sanitize(command));
       }
     }
+
+    recipe.push(`@echo 🤖 Finished task ${green(task.name)}.`);
     return recipe;
   }
 
@@ -231,6 +234,10 @@ export class Tasks extends Component {
     const relativePath = path.relative(this.project.outdir, absolutePath);
     return `node ${relativePath}`;
   }
+}
+
+function green(value: string) {
+  return `\\\\033[32m${value}\\\\033[0m`;
 }
 
 function sanitize(value: string) {
