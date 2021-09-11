@@ -32,6 +32,13 @@ export interface Rule {
    * @default false
    */
   readonly phony?: boolean;
+
+  /**
+   * A description that is added as a comment next to the rule.
+   *
+   * @default - no description
+   */
+  readonly description?: string;
 }
 
 interface AllRule extends Rule {
@@ -55,6 +62,12 @@ export interface MakefileOptions extends FileBaseOptions {
    * @default []
    */
   readonly rules?: Rule[];
+
+  /**
+   * List of lines to include before the targets/recipes
+   * (e.g. to declare variables).
+   */
+  readonly prelude?: string[];
 }
 
 /**
@@ -67,13 +80,15 @@ export class Makefile extends FileBase {
   public readonly rules: Rule[];
 
   private readonly all: AllRule;
+  private readonly prelude: string[];
 
 
   constructor(project: Project, filePath: string, options: MakefileOptions = {}) {
     super(project, filePath, options);
 
-    const all = options.all ? options.all : [];
-    const rules = options.rules ? options.rules : [];
+    const all = options.all ?? [];
+    const rules = options.rules ?? [];
+    this.prelude = options.prelude ?? [];
 
     rules.forEach(e => this.validateRule(e));
 
@@ -121,6 +136,11 @@ export class Makefile extends FileBase {
     return this;
   }
 
+  public addPrelude(...lines: string[]): Makefile {
+    this.prelude.push(...lines);
+    return this;
+  }
+
   private validateRule(rule: Rule) {
     if (!rule.targets || !rule.targets.length) {
       throw new Error('"targets" cannot be undefined or empty for items in "rules"');
@@ -130,22 +150,28 @@ export class Makefile extends FileBase {
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const rules = resolver.resolve(this.rules);
 
-    const lines = [
-      `# ${FileBase.PROJEN_MARKER}`,
+    const lines = [`# ${FileBase.PROJEN_MARKER}`];
+
+    if (this.prelude.length > 0) {
+      lines.push(this.prelude.join('\n'));
+    }
+
+    lines.push(
       ...rules.map((rule: Rule) => {
         const targets = rule.targets.join(' ');
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
-        const recipe = rule.recipe ? rule.recipe : [];
+        const recipe = rule.recipe ?? [];
+        const description = rule.description ? `\t## ${rule.description}` : '';
 
         const phony = rule.phony ? [`.PHONY: ${targets}`] : [];
 
         return [
           ...phony,
-          `${targets}: ${prerequisites}`.trim(),
+          `${targets}: ${prerequisites}${description}`.trim(),
           ...recipe.map(step => `\t${step}`),
         ].join('\n');
       }),
-    ];
+    );
 
     return `${lines.join('\n\n')}\n`;
   }

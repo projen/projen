@@ -141,7 +141,7 @@ class RunTask {
           hasError = result.status !== 0;
         } catch (e) {
           // This is the error 'shx' will throw
-          if (e?.message?.startsWith('non-zero exit code:')) {
+          if (e instanceof Error && e?.message?.startsWith('non-zero exit code:')) {
             hasError = true;
           }
           throw e;

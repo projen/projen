@@ -43,7 +43,7 @@ export class Tasks extends Component {
     this._env = {};
 
     if (options.makefile ?? false) {
-      this.makefile = new Makefile(project, 'Makefile');
+      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.ONESHELL:'] });
     }
 
     new JsonFile(project, manifestFile, {
@@ -138,7 +138,7 @@ export class Tasks extends Component {
    * Obtains the full runtime environment for a task. This defers evaluation of
    * values using the $(xx) syntax.
    */
-  public getFullEnvironment(task: Task): any {
+  public getFullEnvironment(task: Task): { [name: string]: string | undefined } {
     return {
       ...this._env,
       ...task._renderSpec().env,
@@ -148,14 +148,23 @@ export class Tasks extends Component {
   private renderTaskAsRecipe(task: Task): string[] {
     const recipe: string[] = [];
 
+    recipe.push(`@echo [info] Running task \\"${task.name}\\"...`);
+
     const env = this.getFullEnvironment(task);
     for (const [key, value] of Object.entries(env)) {
-      recipe.push(`export ${key}=${value}`);
+      if (value === undefined) {
+        // do nothing
+      } else if (value.startsWith('$(') && value.endsWith(')')) {
+        const query = value.substring(2, value.length - 1);
+        recipe.push(`export ${key}=$(shell ${sanitize(query)})`);
+      } else {
+        recipe.push(`export ${key}=${sanitize(value)}`);
+      }
     }
 
     for (const step of task.steps) {
       if (step.say) {
-        recipe.push(`echo ${step.say}`);
+        recipe.push(`@echo [info] ${sanitize(step.say)}`);
       }
 
       if (step.spawn) {
@@ -182,7 +191,7 @@ export class Tasks extends Component {
         if (cwd) {
           command = `(cd ${cwd} && ${command})`;
         }
-        recipe.push(command);
+        recipe.push(sanitize(command));
       }
     }
     return recipe;
@@ -196,10 +205,20 @@ export class Tasks extends Component {
         // Make doesn't like : in the middle of target names
         name = name.replace(/:/g, '-');
 
-        this.makefile.addAll(name);
         this.makefile.addRule({
           targets: [name],
           recipe: this.renderTaskAsRecipe(task),
+          description: task.description ?? 'No description',
+          phony: true,
+        });
+      }
+
+      if (!('help' in this._tasks)) {
+        this.makefile.addAll('help');
+        this.makefile.addRule({
+          targets: ['help'],
+          recipe: [sanitize('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
+          description: 'Show help messages for make targets',
           phony: true,
         });
       }
@@ -211,4 +230,11 @@ function renderBuiltin(builtin: string) {
   const moduleRoot = path.dirname(require.resolve('../../package.json'));
   const program = require.resolve(path.join(moduleRoot, 'lib', `${builtin}.task.js`));
   return `${process.execPath} ${program}`;
+}
+
+function sanitize(value: string) {
+  // we do not want "\n" or "\t" in tasks to generate actual new lines or tabs in Makefiles
+  value = value.replace(/\n/g, '\\n');
+  value = value.replace(/\t/g, '\\t');
+  return value;
 }
