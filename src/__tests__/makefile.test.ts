@@ -1,4 +1,4 @@
-import { Makefile } from '..';
+import { FileBase, Makefile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('makefile synthesizes correctly', () => {
@@ -26,6 +26,8 @@ test('makefile synthesizes correctly', () => {
   });
 
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
+    `# ${FileBase.PROJEN_MARKER}`,
+    '',
     '.PHONY: all',
     'all: one two three',
     '',
@@ -67,6 +69,8 @@ test('makefile synthesizes correctly using imperative API', () => {
     .addAlls('two', 'three');
 
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
+    `# ${FileBase.PROJEN_MARKER}`,
+    '',
     '.PHONY: all',
     'all: one two three',
     '',

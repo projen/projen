@@ -61,11 +61,11 @@ export class Tasks extends Component {
 
     this.engine = options.engine ?? TasksEngine.PROJEN_RUNTIME;
 
-    if (options.engine === TasksEngine.MAKE) {
+    if (this.engine === TasksEngine.MAKE) {
       this.makefile = new Makefile(project, 'Makefile', {
         prelude: ['.EXPORT_ALL_VARIABLES:'],
       });
-    } else if (options.engine === TasksEngine.PROJEN_RUNTIME) {
+    } else if (this.engine === TasksEngine.PROJEN_RUNTIME) {
       new JsonFile(project, manifestFile, {
         omitEmpty: true,
         obj: {
