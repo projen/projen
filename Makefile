@@ -22,7 +22,7 @@ bump: 	## Bumps version based on latest git tag and generates a changelog entry
 	export OUTFILE=package.json
 	export CHANGELOG=dist/changelog.md
 	export BUMPFILE=dist/version.txt
-	/Users/rybickic/.nvm/versions/node/v14.16.1/bin/node /Users/rybickic/Developer/projen/lib/release/bump-version.task.js
+	node lib/release/bump-version.task.js
 
 .PHONY: clobber
 clobber: 	## hard resets to HEAD of origin and cleans the local repo
@@ -164,7 +164,7 @@ unbump: 	## Restores version to 0.0.0
 	export OUTFILE=package.json
 	export CHANGELOG=dist/changelog.md
 	export BUMPFILE=dist/version.txt
-	/Users/rybickic/.nvm/versions/node/v14.16.1/bin/node /Users/rybickic/Developer/projen/lib/release/reset-version.task.js
+	node lib/release/reset-version.task.js
 
 .PHONY: upgrade
 upgrade: 	## upgrade dependencies

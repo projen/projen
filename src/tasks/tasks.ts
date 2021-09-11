@@ -172,7 +172,7 @@ export class Tasks extends Component {
       }
 
       if (step.builtin) {
-        recipe.push(renderBuiltin(step.builtin));
+        recipe.push(this.renderBuiltin(step.builtin));
       }
 
       const execs = step.exec ? [step.exec] : [];
@@ -224,12 +224,13 @@ export class Tasks extends Component {
       }
     }
   }
-}
 
-function renderBuiltin(builtin: string) {
-  const moduleRoot = path.dirname(require.resolve('../../package.json'));
-  const program = require.resolve(path.join(moduleRoot, 'lib', `${builtin}.task.js`));
-  return `${process.execPath} ${program}`;
+  private renderBuiltin(builtin: string) {
+    const moduleRoot = path.dirname(require.resolve('../../package.json'));
+    const absolutePath = require.resolve(path.join(moduleRoot, 'lib', `${builtin}.task.js`));
+    const relativePath = path.relative(this.project.outdir, absolutePath);
+    return `node ${relativePath}`;
+  }
 }
 
 function sanitize(value: string) {
