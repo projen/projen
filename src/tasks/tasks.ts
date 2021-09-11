@@ -41,7 +41,7 @@ export class Tasks extends Component {
     this._tasks = {};
     this._env = {};
 
-    if (options.makefile) {
+    if (options.makefile ?? false) {
       this.makefile = new Makefile(project, 'Makefile');
     }
 
@@ -137,15 +137,11 @@ export class Tasks extends Component {
    * Obtains the full runtime environment for a task. This defers evaluation of
    * values using the $(xx) syntax.
    */
-  public getFullEnvironment(task: Task) {
-    let env = this._env ?? {};
-
-    env = {
-      ...env,
-      ...task._renderSpec().env ?? {},
+  public getFullEnvironment(task: Task): any {
+    return {
+      ...this._env,
+      ...task._renderSpec().env,
     };
-
-    return env;
   }
 
   private renderTaskAsRecipe(task: Task): string[] {

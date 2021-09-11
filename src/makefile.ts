@@ -131,6 +131,7 @@ export class Makefile extends FileBase {
     const rules = resolver.resolve(this.rules);
 
     const lines = [
+      `# ${FileBase.PROJEN_MARKER}`,
       ...rules.map((rule: Rule) => {
         const targets = rule.targets.join(' ');
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
