@@ -176,24 +176,3 @@ command to the projen CLI:
 
 This means that when `yarn compile` or `npm run compile` are executed, the
 projen CLI will be invoked and the task will be executed.
-
-You can set `npmTaskExecution: NpmTaskExecution.SHELL` when the project is
-defined to tell projen to render the task command directly as an npm script,
-bypassing the projen CLI:
-
-```js
-const project = new NodeProject({
-  // ...
-  npmTaskExecution: NpmTaskExecution.SHELL,
-});
-```
-
-And then, this is how `package.json` will look like:
-
-```json
-{
-  "scripts": {
-    "compile": "tsc"
-  }
-}
-```

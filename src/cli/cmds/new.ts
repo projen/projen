@@ -1,13 +1,12 @@
 import * as os from 'os';
 import * as path from 'path';
-import * as vm from 'vm';
 import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
-import { renderJavaScriptOptions } from '../../javascript/render-options';
 import * as logging from '../../logging';
 import { NewProjectOptionHints } from '../../option-hints';
-import { exec } from '../../util';
+import { exec, isTruthy } from '../../util';
+import { createProject } from '../create';
 import { tryProcessMacro } from '../macros';
 
 class Command implements yargs.CommandModule {
@@ -90,86 +89,6 @@ class Command implements yargs.CommandModule {
   }
 }
 
-interface CreateProjectOptions {
-  /**
-   * Project directory.
-   */
-  dir: string;
-
-  /**
-   * Project type from the inventory.
-   */
-  type: inventory.ProjectType;
-
-  /**
-   * Option values.
-   */
-  params: Record<string, string>;
-
-  /**
-   * Should we render commented-out default options in .projerc.js file?
-   */
-  comments: NewProjectOptionHints;
-
-  /**
-   * Should we call `project.synth()` or instantiate the project (could still
-   * have side-effects) and render the .projenrc file.
-   */
-  synth: boolean;
-
-  /**
-   * Should we execute post synthesis hooks? (usually package manager install).
-   */
-  post: boolean;
-}
-
-/**
- * Creates a new project with defaults.
- *
- * This function creates the project type in-process (with in VM) and calls
- * `.synth()` on it (if `options.synth` is not `false`).
- *
- * At the moment, it also generates a `.projenrc.js` file with the same code
- * that was just executed. In the future, this will also be done by the project
- * type, so we can easily support multiple languages of projenrc.
- */
-function createProject(opts: CreateProjectOptions) {
-  // Default project resolution location
-  let mod = '../../index';
-
-  // External projects need to load the module from the modules directory
-  if (opts.type.moduleName !== 'projen') {
-    try {
-      mod = path.dirname(
-        require.resolve(path.join(opts.type.moduleName, 'package.json'), { paths: [process.cwd()] }),
-      );
-    } catch (err) {
-      throw new Error(`External project module '${opts.type.moduleName}' could not be resolved.`);
-    }
-  }
-
-  // pass the FQN of the project type to the project initializer so it can
-  // generate the projenrc file.
-  const { renderedOptions } = renderJavaScriptOptions({
-    bootstrap: true,
-    comments: opts.comments,
-    type: opts.type,
-    args: opts.params,
-  });
-
-  const newProjectCode = `const project = new ${opts.type.typename}(${renderedOptions});`;
-
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const module = require(mod);
-  const ctx = vm.createContext(module);
-
-  process.env.PROJEN_DISABLE_POST = (!opts.post).toString();
-  vm.runInContext([
-    newProjectCode,
-    opts.synth ? 'project.synth();' : '',
-  ].join('\n'), ctx);
-}
-
 
 /**
  * Given a value from "@default", processes macros and returns a stringified
@@ -237,12 +156,20 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   const specDependencyInfo = yarnAdd(baseDir, spec);
 
-  // collect projects by looking up all .jsii modules in `node_modules`.
-  const modulesDir = path.join(baseDir, 'node_modules');
-  const modules = fs.readdirSync(modulesDir).map(file => path.join(modulesDir, file));
+  // Remove optional semver information from spec to retrieve the module name
+  const moduleName = spec.replace(/\@([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/, '');
+
+  // Find the just installed package and discover the rest recursively from this package folder
+  const moduleDir = path.dirname(require.resolve(`${moduleName}/.jsii`, {
+    paths: [
+      baseDir,
+    ],
+  }));
+
+  // Only leave projects from the main (requested) package
   const projects = inventory
-    .discover(...modules)
-    .filter(x => x.moduleName !== 'projen'); // filter built-in project types
+    .discover(moduleDir)
+    .filter(x => x.moduleName === moduleName); // Only list project types from the requested 'from' module
 
   if (projects.length < 1) {
     throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
@@ -268,6 +195,15 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     }
 
     if (args[option.name] !== undefined) {
+      if (option.type === 'number') {
+        args[option.name] = parseInt(args[option.name]);
+        args[option.switch] = args[option.name];
+      } else if (option.type === 'boolean') {
+        const raw = args[option.name];
+        const safe = typeof raw === 'string' ? isTruthy(raw) : raw;
+        args[option.name] = safe;
+        args[option.switch] = safe;
+      }
       continue; // do not overwrite passed arguments
     }
 

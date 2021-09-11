@@ -51,15 +51,15 @@ list):
 * [cdk8s-app-ts](https://github.com/projen/projen/blob/master/API.md#projen-cdk8stypescriptapp) - CDK8s app in TypeScript.
 * [cdk8s-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
 * [cdktf-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdktf) - CDKTF construct library project.
-* [java](https://github.com/projen/projen/blob/master/API.md#projen-java.javaproject) - Java project.
+* [java](https://github.com/projen/projen/blob/master/API.md#projen-java-javaproject) - Java project.
 * [jsii](https://github.com/projen/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
-* [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjsproject) - Next.js project without TypeScript.
-* [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.nextjstypescriptproject) - Next.js project with TypeScript.
+* [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web-nextjsproject) - Next.js project without TypeScript.
+* [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://github.com/projen/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
 * [project](https://github.com/projen/projen/blob/master/API.md#projen-project) - Base project.
-* [python](https://github.com/projen/projen/blob/master/API.md#projen-python.pythonproject) - Python project.
-* [react](https://github.com/projen/projen/blob/master/API.md#projen-web.reactproject) - React project without TypeScript.
-* [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-web.reacttypescriptproject) - React project with TypeScript.
+* [python](https://github.com/projen/projen/blob/master/API.md#projen-python-pythonproject) - Python project.
+* [react](https://github.com/projen/projen/blob/master/API.md#projen-web-reactproject) - React project without TypeScript.
+* [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-web-reacttypescriptproject) - React project with TypeScript.
 * [typescript](https://github.com/projen/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
 * [typescript-app](https://github.com/projen/projen/blob/master/API.md#projen-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
@@ -242,6 +242,21 @@ project.synth();
 ## Roadmap
 
 See [Vision](./VISION.md).
+
+## FAQ
+
+### Do I have to write my configuration in JavaScript?
+
+Not at all! JavaScript is the default, but it's also possible to write it in
+Java, TypeScript, or even JSON. Python support is also planned. This is made
+possible by the [jsii](https://github.com/aws/jsii) library which allows us
+to write APIs once and generate libraries in several languages. You can choose
+a different language by passing the `--projenrc-ts`, `--projenrc-java`, or
+`--projenrc-json` flags when running `projen new`.
+
+Note: using a `.projenrc.json` file to specify configuration only allows
+accessing a subset of the entire API - the options which are passed to the
+constructor of each project type.
 
 ## Contributions
 

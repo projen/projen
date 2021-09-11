@@ -79,30 +79,8 @@ interface JsiiType {
  * @param moduleDirs A list of npm module directories
  */
 export function discover(...moduleDirs: string[]) {
-  const jsii: JsiiTypes = {};
 
-  const discoverJsii = (dir: string) => {
-    const jsiiFile = path.join(dir, '.jsii');
-    if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
-
-    const manifest = fs.readJsonSync(jsiiFile);
-    for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
-      jsii[fqn] = type;
-    }
-  };
-
-  // read all .jsii manifests from all modules (incl. projen itself) and merge
-  // them all into a single map of fqn->type.
-  for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
-    discoverJsii(dir);
-
-    if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
-      const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
-      for (const child of childDirs) {
-        discoverJsii(child);
-      }
-    }
-  }
+  const jsii = discoverJsiiTypes(...moduleDirs);
 
   const result = new Array<ProjectType>();
 
@@ -118,20 +96,75 @@ export function discover(...moduleDirs: string[]) {
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
 }
 
-export function resolveProjectType(projectFqn: string) {
-  const manifest = readJsiiManifest(projectFqn);
-
+/**
+ * Resolve all jsii types from @modulesDirs.
+ * When a jsii module is found it will recusively list the types from the dependant module as well
+ *
+ * @param moduleDirs
+ * @returns
+ */
+function discoverJsiiTypes(...moduleDirs: string[]) {
   const jsii: JsiiTypes = {};
-  for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
-    jsii[fqn] = type;
+
+  const discoverJsii = (dir: string) => {
+    const jsiiFile = path.join(dir, '.jsii');
+    if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
+
+    const manifest = fs.readJsonSync(jsiiFile);
+    for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
+      jsii[fqn] = {
+        ...type,
+      };
+    }
+
+    // Also search recursively in nested project dependencies. If the requested module is an external module
+    // this will also end-up in the projen module and add the projen types
+    if (manifest.dependencies) {
+      for (const dependency of Object.keys(manifest.dependencies)) {
+        const nestedDependencyFolder = path.dirname(require.resolve(`${dependency}/package.json`, {
+          paths: [dir],
+        }));
+
+        if (fs.existsSync(nestedDependencyFolder)) {
+          discoverJsii(nestedDependencyFolder);
+        }
+      }
+    }
+  };
+
+  // read all .jsii manifests from all requested modules and merge
+  // them all into a single map of fqn->type.
+  for (const dir of [...moduleDirs, PROJEN_MODULE_ROOT]) {
+    discoverJsii(dir);
+
+    // Read from scoped packages
+    if (dir.includes('@') && fs.lstatSync(dir).isDirectory()) {
+      const childDirs = fs.readdirSync(dir).map(file => path.join(dir, file));
+      for (const child of childDirs) {
+        discoverJsii(child);
+      }
+    }
   }
 
-  // Read Projen JSII types
-  const projenManifest = readJsiiManifest('projen');
-  for (const [fqn, type] of Object.entries(projenManifest.types as JsiiTypes)) {
-    jsii[fqn] = type;
+  return jsii;
+}
+
+export function resolveProjectType(projectFqn: string) {
+  let [moduleName] = projectFqn.split('.');
+  if (moduleName === 'projen') {
+    moduleName = PROJEN_MODULE_ROOT;
   }
 
+  // try picking the manifest. We only need the base folder but this is directly a nice check if we request from a valid jsii package
+  const jsiiManifestFile = require.resolve(`${moduleName}/.jsii`, {
+    paths: [
+      process.cwd(),
+    ],
+  });
+  const moduleFolder = path.dirname(jsiiManifestFile);
+
+  // Read all jsii types that can be loaded from this project type
+  const jsii = discoverJsiiTypes(moduleFolder);
   return toProjectType(jsii, projectFqn);
 }
 
@@ -145,7 +178,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
   // projen.web.ReactProject -> web.ReactProject
   const typename = fqn.substring(fqn.indexOf('.') + 1);
 
-  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase()}`;
+  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase().replace(/\./g, '-')}`;
   let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
   return {
     moduleName: typeinfo.assembly,

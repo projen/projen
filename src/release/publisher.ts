@@ -1,10 +1,14 @@
 import { Component } from '../component';
 import { workflows } from '../github';
-import { Job, JobPermission, JobPermissions } from '../github/workflows-model';
+import { JobPermission, JobPermissions } from '../github/workflows-model';
+import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
+const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
+const ARTIFACTS_DIR = 'dist';
+const JSII_RELEASE_IMAGE = 'jsii/superchain';
 
 /**
  * Options for `Publisher`.
@@ -14,6 +18,13 @@ export interface PublisherOptions {
    * The job ID that produces the build artifacts. All publish jobs will take a dependency on this job.
    */
   readonly buildJobId: string;
+
+  /**
+   * A GitHub workflow expression used as a condition for publishers.
+   *
+   * @default - no condition
+   */
+  readonly condition?: string;
 
   /**
    * The name of the artifact to download (e.g. `dist`).
@@ -32,6 +43,21 @@ export interface PublisherOptions {
    * @default "latest"
    */
   readonly jsiiReleaseVersion?: string;
+
+  /**
+   * Create an issue when a publish task fails.
+   *
+   * @default false
+   */
+  readonly failureIssue?: boolean;
+
+  /**
+   * The label to apply to the issue marking failed publish tasks.
+   * Only applies if `failureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly failureIssueLabel?: string;
 }
 
 /**
@@ -43,6 +69,10 @@ export class Publisher extends Component {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
+  public readonly condition?: string;
+
+  private readonly failureIssue: boolean;
+  private readonly failureIssueLabel: string;
 
   // the jobs to add to the release workflow
   private readonly jobs: { [name: string]: workflows.Job } = {};
@@ -53,6 +83,10 @@ export class Publisher extends Component {
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
+    this.condition = options.condition;
+
+    this.failureIssue = options.failureIssue ?? false;
+    this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
   }
 
   /**
@@ -64,16 +98,60 @@ export class Publisher extends Component {
   }
 
   /**
+   * Creates a GitHub Release.
+   * @param options Options
+   */
+  public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
+    const versionFile = `${ARTIFACTS_DIR}/${options.versionFile}`;
+    const changelogFile = `${ARTIFACTS_DIR}/${options.changelogFile}`;
+
+    // create a github release
+    const getVersion = `v$(cat ${versionFile})`;
+
+    const ghRelease = [
+      `gh release create ${getVersion}`,
+      '-R $GITHUB_REPOSITORY',
+      `-F ${changelogFile}`,
+      `-t ${getVersion}`,
+    ].join(' ');
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      'errout=$(mktemp);',
+      `${ghRelease} 2> $errout && true;`,
+      'exitcode=$?;',
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      'cat $errout;',
+      'exit $exitcode;',
+      'fi',
+    ].join(' ');
+
+    this.addPublishJob({
+      name: 'github',
+      registryName: 'GitHub Releases',
+      permissions: {
+        contents: JobPermission.WRITE,
+      },
+      workflowEnv: {
+        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        GITHUB_REPOSITORY: '${{ github.repository }}',
+      },
+      run: idempotentRelease,
+    });
+  }
+
+  /**
    * Publishes artifacts from `js/**` to npm.
    * @param options Options
    */
-  public publishToNpm(options: JsiiReleaseNpm = {}) {
+  public publishToNpm(options: NpmPublishOptions = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
 
-    this.jobs.release_npm = this.createPublishJob({
+    this.addPublishJob({
       name: 'npm',
-      command: 'jsii-release-npm',
-      registryName: 'the npm Registry',
+      run: this.jsiiReleaseCommand('jsii-release-npm'),
+      containerImage: JSII_RELEASE_IMAGE,
+      registryName: 'npm',
       env: {
         NPM_DIST_TAG: options.distTag,
         NPM_REGISTRY: options.registry,
@@ -82,9 +160,8 @@ export class Publisher extends Component {
         contents: JobPermission.READ,
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
-      secrets: {
-        // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
-        NPM_TOKEN: options.npmTokenSecret ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'NPM_TOKEN'),
+      workflowEnv: {
+        NPM_TOKEN: secret(defaultNpmToken(options.npmTokenSecret, options.registry)),
       },
     });
   }
@@ -93,13 +170,14 @@ export class Publisher extends Component {
    * Publishes artifacts from `dotnet/**` to NuGet Gallery.
    * @param options Options
    */
-  public publishToNuget(options: JsiiReleaseNuget = {}) {
-    this.jobs.release_nuget = this.createPublishJob({
-      name: 'NuGet',
-      command: 'jsii-release-nuget',
+  public publishToNuget(options: NugetPublishOptions = {}) {
+    this.addPublishJob({
+      name: 'nuget',
+      containerImage: JSII_RELEASE_IMAGE,
+      run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
-      secrets: {
-        NUGET_API_KEY: options.nugetApiKeySecret ?? 'NUGET_API_KEY',
+      workflowEnv: {
+        NUGET_API_KEY: secret(options.nugetApiKeySecret ?? 'NUGET_API_KEY'),
       },
     });
   }
@@ -108,22 +186,35 @@ export class Publisher extends Component {
    * Publishes artifacts from `java/**` to Maven.
    * @param options Options
    */
-  public publishToMaven(options: JsiiReleaseMaven = {}) {
-    this.jobs.release_maven = this.createPublishJob({
-      name: 'Maven',
+  public publishToMaven(options: MavenPublishOptions = {}) {
+    const isGitHubPackages = options.mavenRepositoryUrl?.startsWith(GITHUB_PACKAGES_MAVEN_REPOSITORY);
+    const isGitHubActor = isGitHubPackages && options.mavenUsername == undefined;
+    const mavenServerId = options.mavenServerId ?? (isGitHubPackages ? 'github' : undefined);
+
+    if (isGitHubPackages && mavenServerId != 'github') {
+      throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
+    }
+
+    this.addPublishJob({
+      name: 'maven',
       registryName: 'Maven Central',
-      command: 'jsii-release-maven',
+      containerImage: JSII_RELEASE_IMAGE,
+      run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
-        MAVEN_SERVER_ID: options.mavenServerId,
+        MAVEN_SERVER_ID: mavenServerId,
         MAVEN_REPOSITORY_URL: options.mavenRepositoryUrl,
       },
-      secrets: {
-        MAVEN_GPG_PRIVATE_KEY: options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY',
-        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE',
-        MAVEN_PASSWORD: options.mavenPassword ?? 'MAVEN_PASSWORD',
-        MAVEN_USERNAME: options.mavenUsername ?? 'MAVEN_USERNAME',
-        MAVEN_STAGING_PROFILE_ID: options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID',
+      workflowEnv: {
+        MAVEN_GPG_PRIVATE_KEY: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeySecret ?? 'MAVEN_GPG_PRIVATE_KEY'),
+        MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: isGitHubPackages ? undefined : secret(options.mavenGpgPrivateKeyPassphrase ?? 'MAVEN_GPG_PRIVATE_KEY_PASSPHRASE'),
+        MAVEN_PASSWORD: secret(options.mavenPassword ?? (isGitHubPackages ? 'GITHUB_TOKEN' : 'MAVEN_PASSWORD')),
+        MAVEN_USERNAME: isGitHubActor ? '${{ github.actor }}' : secret(options.mavenUsername ?? 'MAVEN_USERNAME'),
+        MAVEN_STAGING_PROFILE_ID: isGitHubPackages ? undefined : secret(options.mavenStagingProfileId ?? 'MAVEN_STAGING_PROFILE_ID'),
+      },
+      permissions: {
+        contents: JobPermission.READ,
+        packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
     });
   }
@@ -132,17 +223,18 @@ export class Publisher extends Component {
    * Publishes wheel artifacts from `python` to PyPI.
    * @param options Options
    */
-  public publishToPyPi(options: JsiiReleasePyPi = {}) {
-    this.jobs.release_pypi = this.createPublishJob({
-      name: 'PyPI',
-      registryName: 'The Python Package Index (PyPI)',
-      command: 'jsii-release-pypi',
+  public publishToPyPi(options: PyPiPublishOptions = {}) {
+    this.addPublishJob({
+      name: 'pypi',
+      registryName: 'PyPI',
+      run: this.jsiiReleaseCommand('jsii-release-pypi'),
+      containerImage: JSII_RELEASE_IMAGE,
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
-      secrets: {
-        TWINE_USERNAME: options.twinePasswordSecret ?? 'TWINE_USERNAME',
-        TWINE_PASSWORD: options.twinePasswordSecret ?? 'TWINE_PASSWORD',
+      workflowEnv: {
+        TWINE_USERNAME: secret(options.twineUsernameSecret ?? 'TWINE_USERNAME'),
+        TWINE_PASSWORD: secret(options.twinePasswordSecret ?? 'TWINE_PASSWORD'),
       },
     });
   }
@@ -151,10 +243,11 @@ export class Publisher extends Component {
    * Adds a go publishing job.
    * @param options Options
    */
-  public publishToGo(options: JsiiReleaseGo = {}) {
-    this.jobs.release_golang = this.createPublishJob({
-      name: 'Go',
-      command: 'jsii-release-golang',
+  public publishToGo(options: GoPublishOptions = {}) {
+    this.addPublishJob({
+      name: 'golang',
+      run: this.jsiiReleaseCommand('jsii-release-golang'),
+      containerImage: JSII_RELEASE_IMAGE,
       registryName: 'GitHub',
       env: {
         GITHUB_REPO: options.githubRepo,
@@ -163,65 +256,110 @@ export class Publisher extends Component {
         GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
-      secrets: {
-        GITHUB_TOKEN: options.githubTokenSecret ?? 'GO_GITHUB_TOKEN',
+      workflowEnv: {
+        GITHUB_TOKEN: secret(options.githubTokenSecret ?? 'GO_GITHUB_TOKEN'),
       },
     });
   }
 
-  private createPublishJob(opts: PublishJobOptions): Job {
+  private addPublishJob(opts: PublishJobOptions) {
+    const jobname = `release_${opts.name}`;
+    if (jobname in this.jobs) {
+      throw new Error(`Duplicate job with name "${jobname}"`);
+    }
+
     const requiredEnv = new Array<string>();
 
-    // jobEnv is the env we pass to the github job (task environment + secrets).
+    // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
     const jobEnv: Record<string, string> = { ...opts.env };
-    for (const [name, secretName] of Object.entries(opts.secrets ?? {})) {
+    const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
+      .filter(([_, value]) => value != undefined) as string[][];
+    for (const [name, expression] of workflowEnvEntries) {
       requiredEnv.push(name);
-      jobEnv[name] = `\${{ secrets.${secretName} }}`;
+      jobEnv[name] = expression;
     }
 
     // define a task which can be used through `projen publish:xxx`.
-    const command = `npx -p jsii-release@${this.jsiiReleaseVersion} ${opts.command}`;
-
     this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}`, {
       description: `Publish this package to ${opts.registryName}`,
       env: opts.env,
       requiredEnv: requiredEnv,
-      exec: command,
+      exec: opts.run,
     });
 
-    return {
-      name: `Release to ${opts.name}`,
-      permissions: opts.permissions ? opts.permissions : { contents: JobPermission.READ },
-      needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
-      container: {
-        image: opts.image ?? 'jsii/superchain',
+    const steps: any[] = [
+      {
+        name: 'Download build artifacts',
+        uses: 'actions/download-artifact@v2',
+        with: {
+          name: this.artifactName,
+          path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
+        },
       },
-      steps: [
+      {
+        name: 'Release',
+        // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+        run: opts.run,
+        env: jobEnv,
+      },
+    ];
+
+    const perms = opts.permissions ?? { contents: JobPermission.READ };
+
+    if (this.failureIssue) {
+      steps.push(...[
         {
-          name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v2',
+          name: 'Extract Version',
+          if: '${{ failure() }}',
+          id: 'extract-version',
+          run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+        },
+        {
+          name: 'Create Issue',
+          if: '${{ failure() }}',
+          uses: 'imjohnbo/issue-bot@v3',
           with: {
-            name: this.artifactName,
-            path: 'dist', // this must be "dist" for jsii-release
+            labels: this.failureIssueLabel,
+            title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
+            body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+          },
+          env: {
+            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
           },
         },
-        {
-          name: 'Release',
-          // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-          run: command,
-          env: jobEnv,
-        },
-      ],
+      ]);
+      Object.assign(perms, { issues: JobPermission.WRITE });
+    }
+
+    const job = {
+      name: `Publish to ${opts.registryName}`,
+      permissions: perms,
+      if: this.condition,
+      needs: [this.buildJobId],
+      runsOn: 'ubuntu-latest',
+      container: opts.containerImage ? {
+        image: opts.containerImage,
+      } : undefined,
+      steps,
     };
+
+    this.jobs[jobname] = job;
+  }
+
+  private jsiiReleaseCommand(command: string) {
+    return `npx -p jsii-release@${this.jsiiReleaseVersion} ${command}`;
   }
 }
 
-interface PublishTaskOptions {
+function secret(secretName: string) {
+  return `\${{ secrets.${secretName} }}`;
+}
+
+interface PublishJobOptions {
   /**
-   * The jsii-release command to execute.
+   * The command to execute.
    */
-  readonly command: string;
+  readonly run: string;
 
   /**
    * Environment variables to set
@@ -237,18 +375,33 @@ interface PublishTaskOptions {
    * Job permissions
    */
   readonly permissions?: JobPermissions;
+
+  /**
+   * Custom container image to use.
+   * @default - no custom image
+   */
+  readonly containerImage?: string;
+
+  /**
+   * The name of the publish job (should be lowercase).
+   */
+  readonly name: string;
+
+  /**
+   * Environment to include only in the workflow (and not tasks).
+   */
+  readonly workflowEnv?: { [name: string]: string | undefined };
 }
 
-interface PublishJobOptions extends PublishTaskOptions {
-  readonly image?: string;
-  readonly name: string;
-  readonly secrets?: { [name: string]: string };
-}
+/**
+ * @deprecated Use `NpmPublishOptions` instead.
+ */
+export interface JsiiReleaseNpm extends NpmPublishOptions { }
 
 /**
  * Options for npm release
  */
-export interface JsiiReleaseNpm {
+export interface NpmPublishOptions {
   /**
    * Tags can be used to provide an alias instead of version numbers.
    *
@@ -289,9 +442,14 @@ export interface JsiiReleaseNpm {
 }
 
 /**
+ * @deprecated Use `PyPiPublishOptions` instead.
+ */
+export interface JsiiReleasePyPi extends PyPiPublishOptions { }
+
+/**
  * Options for PyPI release
  */
-export interface JsiiReleasePyPi {
+export interface PyPiPublishOptions {
   /**
    * The registry url to use when releasing packages.
    *
@@ -313,9 +471,14 @@ export interface JsiiReleasePyPi {
 }
 
 /**
+ * @deprecated Use `NugetPublishOptions` instead.
+ */
+export interface JsiiReleaseNuget extends NugetPublishOptions { }
+
+/**
  * Options for NuGet releases
  */
-export interface JsiiReleaseNuget {
+export interface NugetPublishOptions {
   /**
    * GitHub secret which contains the API key for NuGet.
    *
@@ -325,9 +488,14 @@ export interface JsiiReleaseNuget {
 }
 
 /**
+ * @deprecated Use `MavenPublishOptions` instead.
+ */
+export interface JsiiReleaseMaven extends MavenPublishOptions { }
+
+/**
  * Options for Maven releases
  */
-export interface JsiiReleaseMaven {
+export interface MavenPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
@@ -338,9 +506,10 @@ export interface JsiiReleaseMaven {
   /**
    * Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).
    *
-   * @default "ossrh" Defaults to Maven Central.
+   * @default "ossrh" (Maven Central) or "github" when using GitHub Packages
    */
   readonly mavenServerId?: string;
+
   /**
    * Deployment repository when not deploying to Maven Central
    *
@@ -354,7 +523,7 @@ export interface JsiiReleaseMaven {
    * packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY"
+   * @default "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeySecret?: string;
 
@@ -363,7 +532,7 @@ export interface JsiiReleaseMaven {
    * it. This is used to sign your Maven packages. See instructions.
    *
    * @see https://github.com/aws/jsii-release#maven
-   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE"
+   * @default "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
    */
   readonly mavenGpgPrivateKeyPassphrase?: string;
 
@@ -374,10 +543,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_USERNAME"
+   * @default "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
    */
   readonly mavenUsername?: string;
 
@@ -388,10 +556,9 @@ export interface JsiiReleaseMaven {
    * new project (see links).
    *
    * @see https://issues.sonatype.org/secure/Signup
-   * @see
-   * https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
+   * @see https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
    *
-   * @default "MAVEN_PASSWORD"
+   * @default "MAVEN_PASSWORD" or "GITHUB_TOKEN" when using GitHub Packages
    */
   readonly mavenPassword?: string;
 
@@ -400,17 +567,21 @@ export interface JsiiReleaseMaven {
    * profile ID (e.g. 68a05363083174). Staging profile ID can be found in the
    * URL of the "Releases" staging profile under "Staging Profiles" in
    * https://oss.sonatype.org (e.g.
-   * https://oss.sonatype.org/#stagingProfiles;11a33451234521
+   * https://oss.sonatype.org/#stagingProfiles;11a33451234521)
 
-   * @default "MAVEN_STAGING_PROFILE_ID"
+   * @default "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
    */
   readonly mavenStagingProfileId?: string;
 }
 
 /**
+ * @deprecated Use `GoPublishOptions` instead.
+export interface JsiiReleaseGo extends GoPublishOptions { }
+
+/**
  * Options for Go releases.
  */
-export interface JsiiReleaseGo {
+export interface GoPublishOptions {
   /**
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
@@ -453,3 +624,21 @@ export interface JsiiReleaseGo {
   readonly gitCommitMessage?: string;
 }
 
+/**
+ * Publishing options for GitHub releases.
+ */
+export interface GitHubReleasesPublishOptions {
+  /**
+   * The location of a text file (relative to `dist/`) that contains the version number.
+   *
+   * @example version.txt
+   */
+  readonly versionFile: string;
+
+  /**
+   * The location of an .md file that includes the changelog for the release.
+   *
+   * @example changelog.md
+   */
+  readonly changelogFile: string;
+}

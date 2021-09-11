@@ -129,7 +129,7 @@ test('publishers are added as jobs to all release workflows', () => {
       release_npm: { },
     },
   });
-  expect(wf1.jobs.release.steps.length).toBe(6);
+  expect(wf1.jobs.release.steps.length).toBe(5);
   const wf2 = YAML.parse(outdir['.github/workflows/release-2.x.yml']);
   expect(wf2).toMatchObject({
     on: { push: { branches: ['2.x'] } },
@@ -140,7 +140,7 @@ test('publishers are added as jobs to all release workflows', () => {
       release_npm: { },
     },
   });
-  expect(wf2.jobs.release.steps.length).toBe(6);
+  expect(wf2.jobs.release.steps.length).toBe(5);
 });
 
 test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {
@@ -268,4 +268,26 @@ test('github packages are supported by npm', () => {
   // THEN
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
+});
+
+test('can enable issue creation on failed releases with a custom label', () => {
+
+  const project = new TestProject();
+  const task = project.addTask('build');
+  const release = new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+    releaseFailureIssue: true,
+    releaseFailureIssueLabel: 'custom-label',
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry: 'npm.pkg.github.com',
+  });
+
+  const outdir = synthSnapshot(project);
+  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+
 });

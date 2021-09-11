@@ -12,7 +12,7 @@ test('upgrades command includes all dependencies', () => {
   const deps = 'jest jest-junit npm-check-updates standard-version some-dep';
 
   const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
-  expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
 
 });
 
@@ -25,7 +25,7 @@ test('upgrades command includes dependencies added post instantiation', () => {
   const deps = 'jest jest-junit npm-check-updates standard-version some-dep';
 
   const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
-  expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
 
 });
 
@@ -42,7 +42,7 @@ test('upgrades command doesnt include ignored packages', () => {
   const deps = 'jest jest-junit npm-check-updates standard-version dep1';
 
   const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
-  expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
 
 });
 
@@ -59,7 +59,7 @@ test('upgrades command includes only included packages', () => {
   const deps = 'dep1';
 
   const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
-  expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[2].exec).toStrictEqual(`yarn upgrade ${deps}`);
 
 });
 
@@ -70,8 +70,8 @@ test('default options', () => {
   });
 
   const snapshot = synthSnapshot(project);
-  expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
-  expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade.yml']).toMatchSnapshot();
 });
 
 test('custom options', () => {
@@ -86,8 +86,8 @@ test('custom options', () => {
   });
 
   const snapshot = synthSnapshot(project);
-  expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
-  expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade.yml']).toMatchSnapshot();
 });
 
 

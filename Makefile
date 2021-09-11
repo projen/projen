@@ -1,5 +1,5 @@
 .PHONY: all
-all: clobber compile test-compile test build test-watch test-update bump unbump upgrade-dependencies default watch package eslint compat publish-npm publish-maven publish-pypi docgen readme-macros devenv-setup contributors-update
+all: clobber compile test-compile test build test-watch test-update bump unbump publish-github upgrade default watch package eslint compat publish-npm publish-maven publish-pypi docgen readme-macros devenv-setup contributors-update
 
 .PHONY: clobber
 clobber:
@@ -64,8 +64,13 @@ unbump:
 	export BUMPFILE=dist/version.txt
 	/Users/rybickic/.nvm/versions/node/v14.16.1/bin/node /Users/rybickic/Developer/projen/lib/release/reset-version.task.js
 
-.PHONY: upgrade-dependencies
-upgrade-dependencies:
+.PHONY: publish-github
+publish-github:
+	export PATH=$(npx -c "node -e \"console.log(process.env.PATH)\"")
+	errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+
+.PHONY: upgrade
+upgrade:
 	export PATH=$(npx -c "node -e \"console.log(process.env.PATH)\"")
 	export CI=0
 	npm-check-updates --upgrade --target=minor --reject='projen'
@@ -110,7 +115,7 @@ publish-npm:
 .PHONY: publish-maven
 publish-maven:
 	export PATH=$(npx -c "node -e \"console.log(process.env.PATH)\"")
-	export MAVEN_ENDPOINT=undefined
+	export MAVEN_ENDPOINT=https://s01.oss.sonatype.org
 	export MAVEN_SERVER_ID=undefined
 	export MAVEN_REPOSITORY_URL=undefined
 	npx -p jsii-release@latest jsii-release-maven

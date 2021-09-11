@@ -201,7 +201,7 @@ describe('deps upgrade', () => {
       autoApproveUpgrades: true,
     });
 
-    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-dependencies.yml']);
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
     expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
@@ -222,18 +222,18 @@ describe('deps upgrade', () => {
   test('default - with projen secret', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
 
     // make sure yarn upgrade all deps, including projen.
     const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
-    expect(tasks['upgrade-dependencies'].steps[2].exec).toStrictEqual('yarn upgrade');
+    expect(tasks.upgrade.steps[2].exec).toStrictEqual('yarn upgrade');
   });
 
   test('default - no projen secret', () => {
     const project = new TestNodeProject();
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
   });
 
@@ -262,7 +262,7 @@ describe('deps upgrade', () => {
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
   });
 
@@ -271,7 +271,7 @@ describe('deps upgrade', () => {
       depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
     });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-dependencies.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
   });
 
@@ -354,6 +354,23 @@ describe('npm publishing options', () => {
       access: 'public',
       registry: 'https://foo.bar/',
       tag: 'next',
+    });
+  });
+
+  test('registry with path', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://foo.bar/path/',
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual('foo.bar/path/');
+    expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/path/');
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry: 'https://foo.bar/path/',
     });
   });
 
@@ -517,6 +534,41 @@ test('enabling dependabot does not overturn mergify: false', () => {
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty(['.mergify.yml']);
   expect(snapshot).toHaveProperty(['.github/dependabot.yml']);
+});
+
+test('github: false disables github integration', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    github: false,
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(Object.keys(output).filter(p => p.startsWith('.github/'))).toStrictEqual([]);
+});
+
+test('githubOptions.workflows:false disables github workflows but not github integration', () => {
+  // WHEN
+  const project = new TestNodeProject({
+    githubOptions: {
+      workflows: false,
+    },
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(Object.keys(output).filter(p => p.startsWith('.github/'))).toStrictEqual(['.github/pull_request_template.md']);
+});
+
+test('using GitHub npm registry will default npm secret to GITHUB_TOKEN', () => {
+  // GIVEN
+  const project = new TestNodeProject({
+    npmRegistryUrl: 'https://npm.pkg.github.com',
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output['.github/workflows/release.yml']).not.toMatch('NPM_TOKEN');
 });
 
 function packageJson(project: Project) {

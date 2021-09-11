@@ -1,6 +1,6 @@
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
-import { JsiiReleaseGo, JsiiReleaseMaven, JsiiReleasePyPi, JsiiReleaseNuget } from './release';
+import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
 const DEFAULT_JSII_IMAGE = 'jsii/superchain';
@@ -99,18 +99,18 @@ export enum Stability {
   DEPRECATED = 'deprecated'
 }
 
-export interface JsiiJavaTarget extends JsiiReleaseMaven {
+export interface JsiiJavaTarget extends MavenPublishOptions {
   readonly javaPackage: string;
   readonly mavenGroupId: string;
   readonly mavenArtifactId: string;
 }
 
-export interface JsiiPythonTarget extends JsiiReleasePyPi {
+export interface JsiiPythonTarget extends PyPiPublishOptions {
   readonly distName: string;
   readonly module: string;
 }
 
-export interface JsiiDotNetTarget extends JsiiReleaseNuget {
+export interface JsiiDotNetTarget extends NugetPublishOptions {
   readonly dotNetNamespace: string;
   readonly packageId: string;
 }
@@ -118,7 +118,7 @@ export interface JsiiDotNetTarget extends JsiiReleaseNuget {
 /**
  * Go target configuration
  */
-export interface JsiiGoTarget extends JsiiReleaseGo {
+export interface JsiiGoTarget extends GoPublishOptions {
   /**
    * The name of the target go module.
    *
@@ -152,6 +152,7 @@ export class JsiiProject extends TypeScriptProject {
       releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       releaseToNpm: false, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
+      docgen: false, // we use jsii-docgen here so disable typescript docgen
     });
 
     const srcdir = this.srcdir;

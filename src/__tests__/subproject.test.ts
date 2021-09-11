@@ -83,7 +83,7 @@ class PreSynthProject extends Project {
   public file: TextFile;
   public fileExistedDuringPresynth: boolean;
   constructor(options: Omit<ProjectOptions, 'name'> = {}) {
-    super({ name: 'presynth-project', clobber: false, logging: { level: LogLevel.OFF }, ...options });
+    super({ name: 'presynth-project', logging: { level: LogLevel.OFF }, ...options });
 
     this.file = new TextFile(this, 'presynth.txt', { lines: [PROJEN_MARKER] });
     this.fileExistedDuringPresynth = false;

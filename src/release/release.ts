@@ -1,12 +1,14 @@
 import { Component } from '../component';
-import { TaskWorkflow } from '../github';
+import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { Project } from '../project';
+import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
 
 const BUILD_JOBID = 'release';
+const GIT_REMOTE_STEPID = 'git_remote';
+const LATEST_COMMIT_OUTPUT = 'latest_commit';
 
 /**
  * Project options for release.
@@ -100,6 +102,21 @@ export interface ReleaseProjectOptions {
    * `addBranch()` to add additional branches.
    */
   readonly releaseBranches?: { [name: string]: BranchOptions };
+
+  /**
+   * Create a github issue on every failed publishing task.
+   *
+   * @default false
+   */
+  readonly releaseFailureIssue?: boolean;
+
+  /**
+   * The label to apply to issues indicating publish failures.
+   * Only applies if `releaseFailureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly releaseFailureIssueLabel?: string;
 }
 
 /**
@@ -129,6 +146,13 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * You can add additional branches using `addBranch()`.
    */
   readonly branch: string;
+
+  /**
+   * Create a GitHub release for each release.
+   *
+   * @default true
+   */
+  readonly githubRelease?: boolean;
 }
 
 /**
@@ -155,14 +179,16 @@ export class Release extends Component {
   private readonly branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
+  private readonly github?: GitHub;
 
-  constructor(project: Project, options: ReleaseOptions) {
+  constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error('"releaseBranches" is no longer an array. See type annotations');
     }
 
+    this.github = project.github;
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
@@ -174,15 +200,26 @@ export class Release extends Component {
     this.containerImage = options.workflowContainerImage;
 
     this.version = new Version(project, {
-      versionFile: this.versionFile,
+      versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
     });
 
     this.publisher = new Publisher(project, {
       artifactName: this.artifactsDirectory,
+      condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
+      failureIssue: options.releaseFailureIssue,
+      failureIssueLabel: options.releaseFailureIssueLabel,
     });
+
+    const githubRelease = options.githubRelease ?? true;
+    if (githubRelease) {
+      this.publisher.publishToGitHubReleases({
+        changelogFile: this.version.changelogFileName,
+        versionFile: this.version.versionFileName,
+      });
+    }
 
     // add the default branch
     this.defaultBranch = {
@@ -240,23 +277,23 @@ export class Release extends Component {
   public preSynthesize() {
     for (const branch of this.branches) {
       const workflow = this.createWorkflow(branch);
-      workflow.addJobs(this.publisher.render());
-      workflow.addJobs(this.jobs);
+      if (workflow) {
+        workflow.addJobs(this.publisher.render());
+        workflow.addJobs(this.jobs);
+      }
     }
   }
 
-  private createWorkflow(branch: ReleaseBranch): TaskWorkflow {
-    const github = this.project.github;
-    if (!github) { throw new Error('no github support'); }
-
+  /**
+   * @returns a workflow or `undefined` if github integration is disabled.
+   */
+  private createWorkflow(branch: ReleaseBranch): TaskWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branch.name}`;
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
     // not, we will skip the release and just finish the build.
-    const gitRemoteStep = 'git_remote';
-    const latestCommitOutput = 'latest_commit';
-    const noNewCommits = `\${{ steps.${gitRemoteStep}.outputs.${latestCommitOutput} == github.sha }}`;
+    const noNewCommits = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = [...this.preBuildSteps];
@@ -302,23 +339,8 @@ export class Release extends Component {
     // if new commits have been pushed, we will cancel this release
     postBuildSteps.push({
       name: 'Check for new commits',
-      id: gitRemoteStep,
-      run: `echo ::set-output name=${latestCommitOutput}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
-    });
-
-    // create a github release
-    const getVersion = `v$(cat ${this.version.bumpFile})`;
-    postBuildSteps.push({
-      name: 'Create release',
-      if: noNewCommits,
-      run: [
-        `gh release create ${getVersion}`,
-        `-F ${this.version.changelogFile}`,
-        `-t ${getVersion}`,
-      ].join(' '),
-      env: {
-        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-      },
+      id: GIT_REMOTE_STEPID,
+      run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
 
     postBuildSteps.push({
@@ -331,29 +353,39 @@ export class Release extends Component {
       },
     });
 
-    return new TaskWorkflow(github, {
-      name: workflowName,
-      jobId: BUILD_JOBID,
-      triggers: {
-        schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-        push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
-      },
-      container: this.containerImage ? { image: this.containerImage } : undefined,
-      env: {
-        CI: 'true',
-      },
-      permissions: {
-        contents: JobPermission.WRITE,
-      },
-      checkoutWith: {
-        // we must use 'fetch-depth=0' in order to fetch all tags
-        // otherwise tags are not checked out
-        'fetch-depth': 0,
-      },
-      preBuildSteps,
-      task: releaseTask,
-      postBuildSteps,
-    });
+    if (this.github) {
+      return new TaskWorkflow(this.github, {
+        name: workflowName,
+        jobId: BUILD_JOBID,
+        outputs: {
+          latest_commit: {
+            stepId: GIT_REMOTE_STEPID,
+            outputName: LATEST_COMMIT_OUTPUT,
+          },
+        },
+        triggers: {
+          schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
+          push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
+        },
+        container: this.containerImage ? { image: this.containerImage } : undefined,
+        env: {
+          CI: 'true',
+        },
+        permissions: {
+          contents: JobPermission.WRITE,
+        },
+        checkoutWith: {
+          // we must use 'fetch-depth=0' in order to fetch all tags
+          // otherwise tags are not checked out
+          'fetch-depth': 0,
+        },
+        preBuildSteps,
+        task: releaseTask,
+        postBuildSteps,
+      });
+    } else {
+      return undefined;
+    }
   }
 }
 

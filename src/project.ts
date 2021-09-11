@@ -13,6 +13,7 @@ import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
 import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
+import { Projenrc, ProjenrcOptions } from './json/index';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
 import { NewProjectOptionHints } from './option-hints';
@@ -22,7 +23,10 @@ import { Tasks, TasksOptions } from './tasks/tasks';
 import { isTruthy } from './util';
 import { VsCode, DevContainer } from './vscode';
 
-export interface ProjectOptions extends GitHubOptions {
+/**
+ * Options for `Project`.
+ */
+export interface ProjectOptions {
   /**
    * This is the name of your project.
    *
@@ -50,79 +54,29 @@ export interface ProjectOptions extends GitHubOptions {
   readonly outdir?: string;
 
   /**
-   * Options for configuring projen's tasks system.
-   * @default - default options
-   */
-  readonly tasksOptions?: TasksOptions;
-
-  /**
-   * Add a Gitpod development environment
-   *
-   * @default false
-   */
-  readonly gitpod?: boolean;
-
-  /**
-   * Add a VSCode development environment (used for GitHub Codespaces)
-   *
-   * @default false
-   */
-  readonly devContainer?: boolean;
-
-  /**
-   * Add a `clobber` task which resets the repo to origin.
-   * @default true
-   */
-  readonly clobber?: boolean;
-
-  /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
-
-  /**
-   * Which type of project this is (library/app).
-   * @default ProjectType.UNKNOWN
-   * @featured
-   */
-  readonly projectType?: ProjectType;
-
-  /**
    * Configure logging options such as verbosity.
    * @default {}
    */
   readonly logging?: LoggerOptions;
 
   /**
-   * Enable and configure the 'auto approve' workflow.
-   * @default - auto approve is disabled
+   * Options for projen's task engine.
    */
-  readonly autoApproveOptions?: AutoApproveOptions;
+  readonly tasksOptions?: TasksOptions;
 
   /**
-   * Configure options for automatic merging on GitHub. Has no effect if
-   * `github.mergify` is set to false.
+   * Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable
+   * .projenrc.json generation.
    *
-   * @default - see defaults in `AutoMergeOptions`
+   * @default false
    */
-  readonly autoMergeOptions?: AutoMergeOptions;
+  readonly projenrcJson?: boolean;
 
   /**
-   * Auto-close stale issues and pull requests. To disable set `stale` to `false`.
-   *
-   * @default - see defaults in `StaleOptions`
-   */
-  readonly staleOptions?: StaleOptions;
-
-  /**
-   * Auto-close of stale issues and pull request. See `staleOptions` for options.
-   *
-   * @default true
-   */
-  readonly stale?: boolean;
+    * Options for .projenrc.json
+    * @default - default options
+    */
+  readonly projenrcJsonOptions?: ProjenrcOptions;
 }
 
 /**
@@ -168,39 +122,9 @@ export class Project {
   public readonly root: Project;
 
   /**
-   * Access all github components.
-   *
-   * This will be `undefined` for subprojects.
+   * Project tasks.
    */
-  public readonly github: GitHub | undefined;
-
-  /**
-   * Access all VSCode components.
-   *
-   * This will be `undefined` for subprojects.
-   */
-  public readonly vscode: VsCode | undefined;
-
   public readonly tasks: Tasks;
-
-  /**
-   * Access for Gitpod
-   *
-   * This will be `undefined` if gitpod boolean is false
-   */
-  public readonly gitpod: Gitpod | undefined;
-
-  /**
-   * Access for .devcontainer.json (used for GitHub Codespaces)
-   *
-   * This will be `undefined` if devContainer boolean is false
-   */
-  public readonly devContainer: DevContainer | undefined;
-
-  /*
-   * Which project type this is.
-   */
-  public readonly projectType: ProjectType;
 
   /**
    * Project dependencies.
@@ -219,11 +143,6 @@ export class Project {
    */
   public readonly newProject?: NewProject;
 
-  /**
-   * Auto approve set up for this project.
-   */
-  public readonly autoApprove?: AutoApprove;
-
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -235,7 +154,6 @@ export class Project {
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
-    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
 
     if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
       throw new Error('"outdir" must be a relative path');
@@ -276,26 +194,9 @@ export class Project {
 
     this.logger = new Logger(this, options.logging);
 
-    // we only allow these global services to be used in root projects
-    this.github = !this.parent ? new GitHub(this, options) : undefined;
-    this.vscode = !this.parent ? new VsCode(this) : undefined;
-
-    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
-    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
-
-    if (options.clobber ?? true) {
-      new Clobber(this);
-    }
-
-    new SampleReadme(this, options.readme);
-
-    if (options.autoApproveOptions) {
-      this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
-    }
-
-    const stale = options.stale ?? true;
-    if (stale && this.github) {
-      new Stale(this.github, options.staleOptions);
+    const projenrcJson = options.projenrcJson ?? false;
+    if (projenrcJson) {
+      new Projenrc(this, options.projenrcJsonOptions);
     }
   }
 
@@ -446,16 +347,14 @@ export class Project {
   }
 
   /**
-   * Marks the provided file(s) as being generated. This is achieved using the
-   * github-linguist attributes. Generated files do not count against the
-   * repository statistics and language breakdown.
+   * Consider a set of files as "generated". This method is implemented by
+   * derived classes and used for example, to add git attributes to tell GitHub
+   * that certain files are generated.
    *
-   * @param glob the glob pattern to match (could be a file path).
-   *
-   * @see https://github.com/github/linguist/blob/master/docs/overrides.md
+   * @param _glob the glob pattern to match (could be a file path).
    */
-  public annotateGenerated(glob: string): void {
-    this.gitattributes.addAttributes(glob, 'linguist-generated');
+  public annotateGenerated(_glob: string): void {
+    // nothing to do at the abstract level
   }
 
   /**
@@ -553,6 +452,8 @@ export class Project {
 
 /**
  * Which type of project this is.
+ *
+ * @deprecated no longer supported at the base project level
  */
 export enum ProjectType {
   /**
@@ -594,8 +495,206 @@ export interface NewProject {
   readonly type: inventory.ProjectType;
 
   /**
-   * Include commented out options.
+   * Include commented out options. Does not apply to projenrc.json files.
    * @default NewProjectOptionHints.FEATURED
    */
   readonly comments: NewProjectOptionHints;
+}
+
+/**
+ * Options for `GitHubProject`.
+ */
+export interface GitHubProjectOptions extends ProjectOptions {
+  /**
+   * Add a Gitpod development environment
+   *
+   * @default false
+   */
+  readonly gitpod?: boolean;
+
+  /**
+   * Enable VSCode integration.
+   *
+   * Enabled by default for root projects. Disabled for non-root projects.
+   *
+   * @default true
+   */
+  readonly vscode?: boolean;
+
+  /**
+   * Enable GitHub integration.
+   *
+   * Enabled by default for root projects. Disabled for non-root projects.
+   *
+   * @default true
+   */
+  readonly github?: boolean;
+
+  /**
+   * Options for GitHub integration
+   *
+   * @default - see GitHubOptions
+   */
+  readonly githubOptions?: GitHubOptions;
+
+  /**
+   * Whether mergify should be enabled on this repository or not.
+   *
+   * @default true
+   * @deprecated use `githubOptions.mergify` instead
+   */
+  readonly mergify?: boolean;
+
+  /**
+   * Add a VSCode development environment (used for GitHub Codespaces)
+   *
+   * @default false
+   */
+  readonly devContainer?: boolean;
+
+  /**
+   * Add a `clobber` task which resets the repo to origin.
+   * @default true
+   */
+  readonly clobber?: boolean;
+
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
+
+  /**
+   * Which type of project this is (library/app).
+   * @default ProjectType.UNKNOWN
+   * @deprecated no longer supported at the base project level
+   */
+  readonly projectType?: ProjectType;
+
+  /**
+   * Enable and configure the 'auto approve' workflow.
+   * @default - auto approve is disabled
+   */
+  readonly autoApproveOptions?: AutoApproveOptions;
+
+  /**
+   * Configure options for automatic merging on GitHub. Has no effect if
+   * `github.mergify` is set to false.
+   *
+   * @default - see defaults in `AutoMergeOptions`
+   */
+  readonly autoMergeOptions?: AutoMergeOptions;
+
+  /**
+   * Auto-close stale issues and pull requests. To disable set `stale` to `false`.
+   *
+   * @default - see defaults in `StaleOptions`
+   */
+  readonly staleOptions?: StaleOptions;
+
+  /**
+   * Auto-close of stale issues and pull request. See `staleOptions` for options.
+   *
+   * @default true
+   */
+  readonly stale?: boolean;
+}
+
+/**
+ * GitHub-based project.
+ *
+ * @deprecated This is a *temporary* class. At the moment, our base project
+ * types such as `NodeProject` and `JavaProject` are derived from this, but we
+ * want to be able to use these project types outside of GitHub as well. One of
+ * the next steps to address this is to abstract workflows so that different
+ * "engines" can be used to implement our CI/CD solutions.
+ */
+export class GitHubProject extends Project {
+  /**
+   * Access all github components.
+   *
+   * This will be `undefined` for subprojects.
+   */
+  public readonly github: GitHub | undefined;
+
+  /**
+   * Access all VSCode components.
+   *
+   * This will be `undefined` for subprojects.
+   */
+  public readonly vscode: VsCode | undefined;
+
+  /**
+   * Access for Gitpod
+   *
+   * This will be `undefined` if gitpod boolean is false
+   */
+  public readonly gitpod: Gitpod | undefined;
+
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false
+   */
+  public readonly devContainer: DevContainer | undefined;
+
+  /*
+   * Which project type this is.
+   *
+   * @deprecated
+   */
+  public readonly projectType: ProjectType;
+
+  /**
+   * Auto approve set up for this project.
+   */
+  public readonly autoApprove?: AutoApprove;
+
+  constructor(options: GitHubProjectOptions) {
+    super(options);
+
+    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
+    // we only allow these global services to be used in root projects
+    const github = options.github ?? (this.parent ? false : true);
+    this.github = github ? new GitHub(this, {
+      mergify: options.mergify,
+      ...options.githubOptions,
+    }) : undefined;
+
+    const vscode = options.vscode ?? (this.parent ? false : true);
+    this.vscode = vscode ? new VsCode(this) : undefined;
+
+    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
+    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
+
+    if (options.clobber ?? true) {
+      new Clobber(this);
+    }
+
+    new SampleReadme(this, options.readme);
+
+    if (options.autoApproveOptions && this.github) {
+      this.autoApprove = new AutoApprove(this.github, options.autoApproveOptions);
+    }
+
+    const stale = options.stale ?? true;
+    if (stale && this.github) {
+      new Stale(this.github, options.staleOptions);
+    }
+  }
+
+  /**
+   * Marks the provided file(s) as being generated. This is achieved using the
+   * github-linguist attributes. Generated files do not count against the
+   * repository statistics and language breakdown.
+   *
+   * @param glob the glob pattern to match (could be a file path).
+   *
+   * @see https://github.com/github/linguist/blob/master/docs/overrides.md
+   */
+  public annotateGenerated(glob: string): void {
+    this.gitattributes.addAttributes(glob, 'linguist-generated');
+  }
 }

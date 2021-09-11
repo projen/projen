@@ -17,6 +17,8 @@ const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const UBUNTU_LATEST = 'ubuntu-latest';
+const COMMIT_AUTHOR_NAME = 'Automation';
+const COMMIT_AUTHOR_EMAIL = 'github-actions@github.com';
 
 /**
  * Options for `UpgradeDependencies`.
@@ -59,7 +61,7 @@ export interface UpgradeDependenciesOptions {
    * The name of the task that will be created.
    * This will also be the workflow name.
    *
-   * @default "upgrade-dependencies".
+   * @default "upgrade".
    */
   readonly taskName?: string;
 
@@ -112,7 +114,7 @@ export class UpgradeDependencies extends Component {
   }
 
   private createTask(): Task {
-    const taskName = this.options.taskName ?? 'upgrade-dependencies';
+    const taskName = this.options.taskName ?? 'upgrade';
     const task = this._project.addTask(taskName, {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
@@ -283,6 +285,8 @@ export class UpgradeDependencies extends Component {
           'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
+          'author': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
+          'committer': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
         },
       },
     ];

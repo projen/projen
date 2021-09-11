@@ -2,8 +2,9 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { LogLevel, Project, ProjectOptions } from '..';
+import { LogLevel, Project } from '..';
 import * as logging from '../logging';
+import { GitHubProject, GitHubProjectOptions } from '../project';
 import { Task } from '../tasks';
 import { exec } from '../util';
 
@@ -11,8 +12,8 @@ const PROJEN_CLI = require.resolve('../../bin/projen');
 
 logging.disable(); // no logging during tests
 
-export class TestProject extends Project {
-  constructor(options: Omit<ProjectOptions, 'name'> = {}) {
+export class TestProject extends GitHubProject {
+  constructor(options: Omit<GitHubProjectOptions, 'name'> = {}) {
     const tmpdir = mkdtemp();
     super({
       name: 'my-project',
@@ -80,6 +81,11 @@ export function mkdtemp() {
  * files so that the snapshots are human readable.
  */
 export function synthSnapshot(project: Project): any {
+  // defensive: verify that "outdir" is actually in a temporary directory
+  if (!path.resolve(project.outdir).startsWith(os.tmpdir()) && !project.outdir.includes('project-temp-dir')) {
+    throw new Error('Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project');
+  }
+
   const synthed = Symbol.for('synthed');
   if (synthed in project) {
     throw new Error('duplicate synth()');
@@ -122,8 +128,8 @@ export interface DirectorySnapshotOptions {
   readonly excludeGlobs?: string[];
 }
 
-export function directorySnapshot(root: string, options: DirectorySnapshotOptions = { }) {
-  const output: SynthOutput = { };
+export function directorySnapshot(root: string, options: DirectorySnapshotOptions = {}) {
+  const output: SynthOutput = {};
 
   const files = glob.sync('**', {
     ignore: options.excludeGlobs ?? [],

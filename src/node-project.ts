@@ -7,7 +7,7 @@ import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
-import { Project, ProjectOptions } from './project';
+import { GitHubProject, GitHubProjectOptions } from './project';
 import { Release, ReleaseProjectOptions, Publisher } from './release';
 import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
@@ -15,7 +15,7 @@ import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
-export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, ReleaseProjectOptions {
+export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOptions, ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -224,7 +224,8 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly npmignoreEnabled?: boolean;
 
   /**
-   * Additional entries to .npmignore
+   * Additional entries to .npmignore.
+   * @deprecated - use `project.addPackageIgnore`
    */
   readonly npmignore?: string[];
 
@@ -263,7 +264,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    * Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable
    * .projenrc.js generation.
    *
-   * @default true
+   * @default - true if projenrcJson is false
    */
   readonly projenrcJs?: boolean;
 
@@ -292,7 +293,7 @@ export enum AutoRelease {
 /**
  * Node.js project
  */
-export class NodeProject extends Project {
+export class NodeProject extends GitHubProject {
   /**
    * API for managing the node package.
    */
@@ -493,10 +494,9 @@ export class NodeProject extends Project {
 
 
     this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
-    this.setScript('start', `${this.package.projenCommand} start`);
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
-    this.npmignore?.exclude(`/${PROJEN_DIR}`);
+    this.npmignore?.exclude(`/${PROJEN_DIR}/`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
     const projen = options.projenDevDependency ?? true;
@@ -523,8 +523,6 @@ export class NodeProject extends Project {
     }
 
     if (options.buildWorkflow ?? (this.parent ? false : true)) {
-      if (!this.github) { throw new Error('no github support'); }
-
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -533,7 +531,6 @@ export class NodeProject extends Project {
       const gitDiffStepId = 'git_diff';
       const hasChangesCondName = 'has_changes';
       const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
-      const repoFullName = 'github.event.pull_request.head.repo.full_name';
 
       // disable anti-tamper if build workflow is mutable
       const antitamperSteps = (!mutableBuilds ?? this.antitamper) ? [{
@@ -584,7 +581,7 @@ export class NodeProject extends Project {
         run: [
           'gh api',
           '-X POST',
-          `/repos/\${{ ${repoFullName} }}/check-runs`,
+          `/repos/${repo}/check-runs`,
           `-F name="${buildJobId}"`,
           '-F head_sha="$(git rev-parse HEAD)"',
           '-F status="completed"',
@@ -600,46 +597,52 @@ export class NodeProject extends Project {
       // event for the new commit has registered.
       postBuildSteps.push({
         if: hasChanges,
-        name: 'Fail check if self mutation happened',
+        name: 'Cancel workflow (if changed)',
         run: [
-          'echo "Self-mutation happened on this pull request, so this commit is marked as having failed checks."',
-          'echo "The self-mutation commit has been marked as successful, and no further action should be necessary."',
-          'exit 1',
-        ].join('\n'),
+          'gh api',
+          '-X POST',
+          `/repos/${repo}/actions/runs/\${{ github.run_id }}/cancel`,
+        ].join(' '),
+        env: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        },
       });
 
       postBuildSteps.push(...antitamperSteps);
 
-      this.buildWorkflow = new TaskWorkflow(this.github, {
-        name: 'build',
-        jobId: buildJobId,
-        triggers: {
-          pullRequest: { },
-        },
-        env: {
-          CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-        },
-        permissions: {
-          checks: JobPermission.WRITE,
-          contents: JobPermission.WRITE,
-        },
-        checkoutWith: mutableBuilds ? {
-          ref: branch,
-          repository: repo,
-        } : undefined,
+      if (this.github) {
+        this.buildWorkflow = new TaskWorkflow(this.github, {
+          name: 'build',
+          jobId: buildJobId,
+          triggers: {
+            pullRequest: { },
+          },
+          env: {
+            CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
+          },
+          permissions: {
+            checks: JobPermission.WRITE,
+            contents: JobPermission.WRITE,
+            actions: JobPermission.WRITE,
+          },
+          checkoutWith: mutableBuilds ? {
+            ref: branch,
+            repository: repo,
+          } : undefined,
 
-        preBuildSteps: [
-          ...antitamperSteps,
-          ...this.installWorkflowSteps, // install dependencies steps
-        ],
+          preBuildSteps: [
+            ...antitamperSteps,
+            ...this.installWorkflowSteps, // install dependencies steps
+          ],
 
-        task: this.buildTask,
+          task: this.buildTask,
 
-        postBuildSteps,
+          postBuildSteps,
 
-        container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
-      });
-      this.buildWorkflowJobId = buildJobId;
+          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
+        });
+        this.buildWorkflowJobId = buildJobId;
+      }
     }
 
     const release = options.release ?? options.releaseWorkflow ?? (this.parent ? false : true);
@@ -750,7 +753,7 @@ export class NodeProject extends Project {
       this.github?.addPullRequestTemplate(...options.pullRequestTemplateContents ?? []);
     }
 
-    const projenrcJs = options.projenrcJs ?? true;
+    const projenrcJs = options.projenrcJs ?? !options.projenrcJson;
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
@@ -984,10 +987,8 @@ export class NodeProject extends Project {
   }
 
   /**
- * Returns the shell command to execute in order to run a task. If
- * npmTaskExecution is set to PROJEN, the command will be `npx projen TASK`.
- * If it is set to SHELL, the command will be `yarn run TASK` (or `npm run
- * TASK`).
+ * Returns the shell command to execute in order to run a task. This will
+ * typically be `npx projen TASK`.
  *
  * @param task The task for which the command is required
  */

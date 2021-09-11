@@ -232,6 +232,20 @@ export interface TypeScriptCompilerOptions {
   readonly noImplicitThis?: boolean;
 
   /**
+   * Raise error on use of the dot syntax to access fields which are not defined.
+   *
+   * @default true
+   */
+  readonly noPropertyAccessFromIndexSignature?: boolean;
+
+  /**
+   * Raise error when accessing indexes on objects with unknown keys defined in index signatures.
+   *
+   * @default true
+   */
+  readonly noUncheckedIndexedAccess?: boolean;
+
+  /**
    * Report errors on unused local variables.
    *
    * @default true

@@ -131,8 +131,21 @@
         }
       ]
     },
-    "upgrade-dependencies": {
-      "name": "upgrade-dependencies",
+    "publish:github": {
+      "name": "publish:github",
+      "description": "Publish this package to GitHub Releases",
+      "requiredEnv": [
+        "GITHUB_TOKEN",
+        "GITHUB_REPOSITORY"
+      ],
+      "steps": [
+        {
+          "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
+        }
+      ]
+    },
+    "upgrade": {
+      "name": "upgrade",
       "description": "upgrade dependencies",
       "env": {
         "CI": "0"
@@ -198,7 +211,7 @@
     },
     "publish:npm": {
       "name": "publish:npm",
-      "description": "Publish this package to the npm Registry",
+      "description": "Publish this package to npm",
       "env": {
         "NPM_DIST_TAG": "latest",
         "NPM_REGISTRY": "registry.npmjs.org"
@@ -215,6 +228,9 @@
     "publish:maven": {
       "name": "publish:maven",
       "description": "Publish this package to Maven Central",
+      "env": {
+        "MAVEN_ENDPOINT": "https://s01.oss.sonatype.org"
+      },
       "requiredEnv": [
         "MAVEN_GPG_PRIVATE_KEY",
         "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
@@ -230,7 +246,7 @@
     },
     "publish:pypi": {
       "name": "publish:pypi",
-      "description": "Publish this package to The Python Package Index (PyPI)",
+      "description": "Publish this package to PyPI",
       "requiredEnv": [
         "TWINE_USERNAME",
         "TWINE_PASSWORD"

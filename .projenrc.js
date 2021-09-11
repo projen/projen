@@ -59,20 +59,25 @@ const project = new JsiiProject({
   },
 
   publishToMaven: {
-    javaPackage: 'org.projen',
-    mavenGroupId: 'com.github.eladb',
+    javaPackage: 'io.github.cdklabs.projen',
+    mavenGroupId: 'io.github.cdklabs',
     mavenArtifactId: 'projen',
+    mavenEndpoint: 'https://s01.oss.sonatype.org',
   },
 
   publishToPypi: {
     distName: 'projen',
     module: 'projen',
   },
+  releaseFailureIssue: true,
 
   // Disabled due to cycles between main module and submodules
   // publishToGo: {
   //   moduleName: 'github.com/projen/projen-go',
   // },
+
+  autoApproveUpgrades: true,
+  autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },
 });
 
 // this script is what we use as the projen command in this project

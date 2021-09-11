@@ -1,5 +1,5 @@
 import { Projenrc as ProjenrcJavaScript } from '../javascript';
-import { Project, ProjectOptions, ProjectType } from '../project';
+import { GitHubProject, GitHubProjectOptions, ProjectType } from '../project';
 import { Pip } from './pip';
 import { Poetry } from './poetry';
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from './projenrc';
@@ -18,7 +18,7 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
 /**
  * Options for `PythonProject`.
  */
-export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOptions {
+export interface PythonProjectOptions extends GitHubProjectOptions, PythonPackagingOptions {
   // -- required options --
 
   /**
@@ -140,7 +140,7 @@ export interface PythonProjectOptions extends ProjectOptions, PythonPackagingOpt
  *
  * @pjid python
  */
-export class PythonProject extends Project {
+export class PythonProject extends GitHubProject {
   /**
    * Python module name (the project name, with any hyphens or periods replaced
    * with underscores).
