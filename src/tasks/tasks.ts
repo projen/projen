@@ -1,4 +1,3 @@
-import * as os from 'os';
 import * as path from 'path';
 import { resolve } from '../_resolve';
 import { PROJEN_DIR } from '../common';
@@ -10,6 +9,9 @@ import { sorted } from '../util';
 import { TasksManifest, TaskSpec } from './model';
 import { Task, TaskOptions } from './task';
 
+/**
+ * Engine to use for running tasks.
+ */
 export enum TasksEngine {
   /**
    * Run tasks using projen's built-in runtime.
@@ -62,14 +64,12 @@ export class Tasks extends Component {
     this.engine = options.engine ?? TasksEngine.PROJEN_RUNTIME;
 
     if (this.engine === TasksEngine.MAKE) {
-      this.makefile = new Makefile(project, 'Makefile', {
-        prelude: ['.EXPORT_ALL_VARIABLES:'],
-      });
+      this.makefile = new Makefile(project, 'Makefile');
     } else if (this.engine === TasksEngine.PROJEN_RUNTIME) {
       new JsonFile(project, manifestFile, {
         omitEmpty: true,
         obj: {
-          tasks: (() => this.renderTasks()) as any,
+          tasks: (() => this.renderTasksToJson()) as any,
           env: (() => this._env) as any,
         } as TasksManifest,
       });
@@ -146,7 +146,7 @@ export class Tasks extends Component {
     return this._tasks[name];
   }
 
-  private renderTasks() {
+  private renderTasksToJson() {
     const tasks: { [name: string]: TaskSpec } = {};
     for (const task of Object.values(this._tasks)) {
       tasks[task.name] = task._renderSpec();
@@ -155,11 +155,12 @@ export class Tasks extends Component {
     return sorted(tasks);
   }
 
-  /**
-   * Obtains the full runtime environment for a task.
-   *
-   * Note: values in map can sometimes be undefined.
-   */
+  synthesize() {
+    if (this.makefile) {
+      this.renderTasksToMakefile(this.makefile, this._tasks);
+    }
+  }
+
   private getFullEnvironment(task: Task): { [name: string]: string } {
     return {
       ...this._env,
@@ -202,13 +203,7 @@ export class Tasks extends Component {
       for (let exec of execs) {
         exec = resolve(exec);
 
-        let command = '';
-        const cmd = exec.split(' ')[0];
-        if (os.platform() == 'win32' && ['mkdir', 'mv', 'rm'].includes(cmd)) {
-          command = `shx ${exec}`;
-        } else {
-          command = exec;
-        }
+        let command = exec;
         const cwd = step.cwd;
         if (cwd) {
           command = `(cd ${cwd} && ${command})`;
@@ -221,28 +216,35 @@ export class Tasks extends Component {
     return recipe;
   }
 
-  synthesize() {
-    if (this.makefile) {
-      const tasks = sorted(this._tasks) ?? {};
-      for (let [name, task] of Object.entries(tasks)) {
-        this.makefile.addRule({
-          targets: [sanitizeTaskName(name)],
-          recipe: this.renderTaskAsRecipe(task),
-          description: task.description ?? 'No description',
-          phony: true,
-        });
-      }
-
-      if (!('help' in this._tasks)) {
-        this.makefile.addAll('help');
-        this.makefile.addRule({
-          targets: ['help'],
-          recipe: [sanitizeCommand('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
-          description: 'Show help messages for make targets',
-          phony: true,
-        });
-      }
+  private renderTasksToMakefile(makefile: Makefile, tasks: { [name: string]: Task }) {
+    tasks = sorted(tasks) ?? {};
+    for (let [name, task] of Object.entries(tasks)) {
+      makefile.addRule({
+        targets: [sanitizeTaskName(name)],
+        recipe: this.renderTaskAsRecipe(task),
+        description: task.description ?? 'No description',
+        phony: true,
+      });
     }
+
+    if (!('help' in this._tasks)) {
+      makefile.addRule({
+        targets: ['help'],
+        recipe: [sanitizeCommand('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
+        description: 'Show help messages for make targets',
+        phony: true,
+      });
+    }
+
+    if ('default' in this._tasks) {
+      makefile.addAll('default');
+    } else {
+      makefile.addAll('help');
+    }
+
+    // in Makefiles, each line in a recipe is run as a new child process
+    // adding this special target will export variables to child processes
+    makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
   }
 
   private renderBuiltin(builtin: string) {
@@ -258,7 +260,7 @@ function green(value: string) {
 }
 
 export function sanitizeTaskName(name: string) {
-  // Make doesn't allow : in the middle of target names
+  // Make doesn't allow ":" within target names
   return name.replace(/:/g, '-');
 }
 

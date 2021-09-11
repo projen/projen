@@ -3,7 +3,7 @@
 .EXPORT_ALL_VARIABLES:
 
 .PHONY: all
-all: help
+all: default
 
 .PHONY: build
 build:                        ## Full release build (test+compile)
