@@ -239,11 +239,11 @@ export function dedupArray<T>(array: T[]): T[] {
 /**
  * Returns a sorted version of `x` or `undefined` if it is an empty array or object.
  */
-export function sorted<T>(x: T) {
+export function sorted<T>(x: T): T | undefined {
   if (x == null) { return undefined; }
   if (Array.isArray(x)) {
     if (x.length === 0) { return undefined; }
-    return (x as unknown[]).sort();
+    return x.sort();
   } else if (typeof x === 'object') {
     if (Object.keys(x).length === 0) { return undefined; }
     const result: Record<string, unknown> = {};

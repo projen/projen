@@ -6,6 +6,7 @@ import { Component } from '../component';
 import { JsonFile } from '../json';
 import { Makefile } from '../makefile';
 import { Project } from '../project';
+import { sorted } from '../util';
 import { TasksManifest, TaskSpec } from './model';
 import { Task, TaskOptions } from './task';
 
@@ -130,7 +131,7 @@ export class Tasks extends Component {
       tasks[task.name] = task._renderSpec();
     }
 
-    return tasks;
+    return sorted(tasks);
   }
 
   /**
@@ -187,9 +188,10 @@ export class Tasks extends Component {
     return recipe;
   }
 
-  preSynthesize() {
+  synthesize() {
     if (this.makefile) {
-      for (let [name, task] of Object.entries(this._tasks)) {
+      const tasks = sorted(this._tasks) ?? {};
+      for (let [name, task] of Object.entries(tasks)) {
 
         // Make doesn't like : in the middle of target names
         name = name.replace(/:/g, '-');
