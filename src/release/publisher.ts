@@ -114,10 +114,10 @@ export class Publisher extends Component {
       env: {
         CHANGELOG: changelog,
         VERSION_FILE: versionFile,
-        PROJECT_CHANGELOG_FILE: projectChangelogFile,
+        PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
       },
     });
-    publishTask.builtin('release/update-changelog');
+    projectChangelogFile && publishTask.builtin('release/update-changelog');
     publishTask.builtin('release/tag-version');
   }
 
@@ -676,5 +676,5 @@ export interface GitPublishOptions extends VersionArtifactOptions {
   /**
    * The location of an .md file that includes the project-level changelog.
    */
-  readonly projectChangelogFile: string;
+  readonly projectChangelogFile?: string;
 }

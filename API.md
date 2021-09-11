@@ -82,7 +82,7 @@ Name|Description
 [python.Venv](#projen-python-venv)|Manages a virtual environment through the Python venv module.
 [release.Publisher](#projen-release-publisher)|Implements GitHub jobs for publishing modules to package managers.
 [release.Release](#projen-release-release)|Manages releases (currently through GitHub workflows).
-[release.ReleaseStrategy](#projen-release-releasestrategy)|*No description*
+[release.ReleaseStrategy](#projen-release-releasestrategy)|Used to manage release strategies.
 [tasks.Task](#projen-tasks-task)|A task that can be performed on the project.
 [tasks.TaskRuntime](#projen-tasks-taskruntime)|The runtime component of the tasks engine.
 [tasks.Tasks](#projen-tasks-tasks)|Defines project tasks.
@@ -207,9 +207,7 @@ Name|Description
 [python.RequirementsFileOptions](#projen-python-requirementsfileoptions)|*No description*
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
-[release.AutomatedReleaseOptions](#projen-release-automatedreleaseoptions)|*No description*
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
-[release.ContinuousReleaseOptions](#projen-release-continuousreleaseoptions)|*No description*
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
 [release.GoPublishOptions](#projen-release-gopublishoptions)|*No description*
@@ -6845,16 +6843,18 @@ Name | Type | Description
 
 #### publishToGit(options)🔹 <a id="projen-release-publisher-publishtogit"></a>
 
+Publish to git.
 
+This includes generating a project-level changelog and release tags.
 
 ```ts
 publishToGit(options: GitPublishOptions): void
 ```
 
-* **options** (<code>[release.GitPublishOptions](#projen-release-gitpublishoptions)</code>)  *No description*
+* **options** (<code>[release.GitPublishOptions](#projen-release-gitpublishoptions)</code>)  Options.
   * **changelogFile** (<code>string</code>)  The location of an .md file (relative to `dist/`) that includes the changelog for the release. 
-  * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
+  * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. __*Optional*__
 
 
 
@@ -7078,7 +7078,10 @@ preSynthesize(): void
 
 ## class ReleaseStrategy 🔹 <a id="projen-release-releasestrategy"></a>
 
+Used to manage release strategies.
 
+This includes release
+and release artifact automation
 
 __Submodule__: release
 
@@ -7089,26 +7092,38 @@ __Submodule__: release
 
 Name | Type | Description 
 -----|------|-------------
-**changelog**🔹 | <code>boolean</code> | Whether or not a project-level changelog should be maintained.
 **isContinuous**🔹 | <code>boolean</code> | Whether or not this is a continuous release.
 **isManual**🔹 | <code>boolean</code> | Whether or not this is a manual release strategy.
+**changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Optional*__
+**pushArtifacts**?🔹 | <code>boolean</code> | Push release artifacts to the remote as part of releases.<br/>__*Optional*__
 **schedule**?🔹 | <code>string</code> | Cron schedule for releases.<br/>__*Optional*__
 
 ### Methods
 
 
-#### *static* continuous(options?)🔹 <a id="projen-release-releasestrategy-continuous"></a>
+#### publishTask(project)🔹 <a id="projen-release-releasestrategy-publishtask"></a>
+
+Returns the publish task for a given release strategy.
+
+```ts
+publishTask(project: Project): Task
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  Project.
+
+__Returns__:
+* <code>[tasks.Task](#projen-tasks-task)</code>
+
+#### *static* continuous()🔹 <a id="projen-release-releasestrategy-continuous"></a>
 
 Creates a continuous release strategy.
 
 Automated releases will occur on every commit.
 
 ```ts
-static continuous(options?: ContinuousReleaseOptions): ReleaseStrategy
+static continuous(): ReleaseStrategy
 ```
 
-* **options** (<code>[release.ContinuousReleaseOptions](#projen-release-continuousreleaseoptions)</code>)  release options.
-  * **changelog** (<code>boolean</code>)  Whether or not to include a project-level changelog. __*Default*__: false
 
 __Returns__:
 * <code>[release.ReleaseStrategy](#projen-release-releasestrategy)</code>
@@ -7131,7 +7146,10 @@ static manual(options?: ManualReleaseOptions): ReleaseStrategy
 ```
 
 * **options** (<code>[release.ManualReleaseOptions](#projen-release-manualreleaseoptions)</code>)  release options.
-  * **changelog** (<code>boolean</code>)  Whether or not to include a project-level changelog. __*Default*__: true
+  * **changelog** (<code>boolean</code>)  Maintain a project-level changelog. __*Default*__: true
+  * **changelogPath** (<code>string</code>)  Project-level changelog file path. __*Default*__: 'CHANGELOG.md'
+  * **publish** (<code>boolean</code>)  Run the publish task as part of releases. __*Default*__: false
+  * **pushArtifacts** (<code>boolean</code>)  Push release artifacts to the remote as part of releases. __*Default*__: false
 
 __Returns__:
 * <code>[release.ReleaseStrategy](#projen-release-releasestrategy)</code>
@@ -7147,7 +7165,6 @@ static scheduled(options: ScheduledReleaseOptions): ReleaseStrategy
 ```
 
 * **options** (<code>[release.ScheduledReleaseOptions](#projen-release-scheduledreleaseoptions)</code>)  release options.
-  * **changelog** (<code>boolean</code>)  Whether or not to include a project-level changelog. __*Default*__: false
   * **schedule** (<code>string</code>)  Cron schedule for releases. 
 
 __Returns__:
@@ -11934,19 +11951,6 @@ Name | Type | Description
 
 
 
-## struct AutomatedReleaseOptions 🔹 <a id="projen-release-automatedreleaseoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**changelog**?🔹 | <code>boolean</code> | Whether or not to include a project-level changelog.<br/>__*Default*__: false
-
-
-
 ## struct BranchOptions 🔹 <a id="projen-release-branchoptions"></a>
 
 
@@ -11959,19 +11963,6 @@ Name | Type | Description
 **majorVersion**🔹 | <code>number</code> | The major versions released from this branch.
 **prerelease**?🔹 | <code>string</code> | Bump the version as a pre-release tag.<br/>__*Default*__: normal releases
 **workflowName**?🔹 | <code>string</code> | The name of the release workflow.<br/>__*Default*__: "release-BRANCH"
-
-
-
-## struct ContinuousReleaseOptions 🔹 <a id="projen-release-continuousreleaseoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**changelog**?🔹 | <code>boolean</code> | Whether or not to include a project-level changelog.<br/>__*Default*__: false
 
 
 
@@ -11999,8 +11990,8 @@ Publishing options for Git releases.
 Name | Type | Description 
 -----|------|-------------
 **changelogFile**🔹 | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release.
-**projectChangelogFile**🔹 | <code>string</code> | The location of an .md file that includes the project-level changelog.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
+**projectChangelogFile**?🔹 | <code>string</code> | The location of an .md file that includes the project-level changelog.<br/>__*Optional*__
 
 
 
@@ -12094,7 +12085,10 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**changelog**?🔹 | <code>boolean</code> | Whether or not to include a project-level changelog.<br/>__*Default*__: true
+**changelog**?🔹 | <code>boolean</code> | Maintain a project-level changelog.<br/>__*Default*__: true
+**changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Default*__: 'CHANGELOG.md'
+**publish**?🔹 | <code>boolean</code> | Run the publish task as part of releases.<br/>__*Default*__: false
+**pushArtifacts**?🔹 | <code>boolean</code> | Push release artifacts to the remote as part of releases.<br/>__*Default*__: false
 
 
 
@@ -12249,7 +12243,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **schedule**🔹 | <code>string</code> | Cron schedule for releases.
-**changelog**?🔹 | <code>boolean</code> | Whether or not to include a project-level changelog.<br/>__*Default*__: false
 
 
 

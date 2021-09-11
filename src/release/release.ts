@@ -196,7 +196,6 @@ export class Release extends Component {
   private readonly antitamper: boolean;
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
-  private readonly projectChangelogFile: string;
   private readonly releaseStrategy: ReleaseStrategy;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
@@ -219,10 +218,8 @@ export class Release extends Component {
     this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
-    this.projectChangelogFile = options.projectChangelogFile ?? 'CHANGELOG.md';
     this.releaseStrategy = options.releaseStrategy ?? ReleaseStrategy.continuous();
     this.containerImage = options.workflowContainerImage;
-
 
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
@@ -260,10 +257,10 @@ export class Release extends Component {
       });
     }
 
-    this.publisher.publishToGit({
+    this.releaseStrategy.isManual && this.publisher.publishToGit({
       changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
       versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-      projectChangelogFile: this.projectChangelogFile,
+      projectChangelogFile: this.releaseStrategy.changelogPath,
     });
 
     // add the default branch
@@ -371,6 +368,13 @@ export class Release extends Component {
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
+
+    const publishTask = this.releaseStrategy.publishTask(this.project);
+    publishTask && releaseTask.spawn(publishTask);
+
+    if (this.releaseStrategy.pushArtifacts) {
+      releaseTask.exec(`git push --follow-tags origin ${branch.name}`);
+    }
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)

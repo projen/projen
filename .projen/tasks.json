@@ -144,23 +144,6 @@
         }
       ]
     },
-    "publish:git": {
-      "name": "publish:git",
-      "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
-      "env": {
-        "CHANGELOG": "dist/changelog.md",
-        "VERSION_FILE": "dist/version.txt",
-        "PROJECT_CHANGELOG_FILE": "CHANGELOG.md"
-      },
-      "steps": [
-        {
-          "builtin": "release/update-changelog"
-        },
-        {
-          "builtin": "release/tag-version"
-        }
-      ]
-    },
     "upgrade": {
       "name": "upgrade",
       "description": "upgrade dependencies",

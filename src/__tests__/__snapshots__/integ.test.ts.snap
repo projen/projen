@@ -1063,23 +1063,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "publish:git": Object {
-        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
-        "env": Object {
-          "CHANGELOG": "dist/changelog.md",
-          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
-          "VERSION_FILE": "dist/version.txt",
-        },
-        "name": "publish:git",
-        "steps": Array [
-          Object {
-            "builtin": "release/update-changelog",
-          },
-          Object {
-            "builtin": "release/tag-version",
-          },
-        ],
-      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -1678,7 +1661,6 @@ project.synth();
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "projen": "npx projen",
-      "publish:git": "npx projen publish:git",
       "publish:github": "npx projen publish:github",
       "publish:maven": "npx projen publish:maven",
       "publish:npm": "npx projen publish:npm",
@@ -5030,23 +5012,6 @@ junit.xml
           },
         ],
       },
-      "publish:git": Object {
-        "description": "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
-        "env": Object {
-          "CHANGELOG": "dist/changelog.md",
-          "PROJECT_CHANGELOG_FILE": "CHANGELOG.md",
-          "VERSION_FILE": "dist/version.txt",
-        },
-        "name": "publish:git",
-        "steps": Array [
-          Object {
-            "builtin": "release/update-changelog",
-          },
-          Object {
-            "builtin": "release/tag-version",
-          },
-        ],
-      },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
         "name": "publish:github",
@@ -5453,7 +5418,6 @@ project.synth();
       "compile": "npx projen compile",
       "default": "npx projen default",
       "projen": "npx projen",
-      "publish:git": "npx projen publish:git",
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "test": "npx projen test",

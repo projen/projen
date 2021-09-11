@@ -48,5 +48,38 @@ or not your releases are automated as well as any unique artifacts associated wi
 changelogs.
 
 ```js
-releaseStrategy: ReleaseStrategy.manual({ changelog: true })
+releaseStrategy: ReleaseStrategy.scheduled({ schedule: '0 17 * * *' }),
+```
+
+### Manual Releases
+
+```js
+releaseStrategy: ReleaseStrategy.manual(),
+```
+
+Using manual releases disables the generation of the github release workflow and provides an extra
+`publish:git` task for you to use. The OOB manual release workflow would then look like:
+
+```terminal
+$ yarn build
+$ yarn release
+$ yarn publish:git
+$ git push --follow-tags origin main
+```
+
+You can optimize the release experience using the `publish` and `pushArtifacts` manual release options
+to automate running `publish:git` and pushing the resulting artifacts as part of release:
+
+```js
+releaseStrategy: ReleaseStrategy.manual({
+  publish: true,
+  pushArtifacts: true,
+}),
+```
+
+=>
+
+```terminal
+$ yarn build
+$ yarn release
 ```

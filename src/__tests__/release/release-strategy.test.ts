@@ -8,7 +8,7 @@ describe('manual release', () => {
   });
 
   test('has a changelog by default', () => {
-    expect(releaseStrategy.changelog).toBe(true);
+    expect(releaseStrategy.changelogPath).toEqual('CHANGELOG.md');
   });
 
   test('is not continuous', () => {
@@ -23,13 +23,34 @@ describe('manual release', () => {
     expect(releaseStrategy.isManual).toBe(true);
   });
 
+  test('does not push artifacts by default', () => {
+    expect(releaseStrategy.pushArtifacts).toBe(false);
+  });
+
   describe('without changelog', () => {
-    beforeAll(() => {
+    test('does not have a changelog', () => {
       releaseStrategy = ReleaseStrategy.manual({ changelog: false });
+
+      expect(releaseStrategy.changelogPath).toBeUndefined();
     });
 
-    test('does not have a changelog', () => {
-      expect(releaseStrategy.changelog).toBe(false);
+    test('ignores changelogPath', () => {
+      releaseStrategy = ReleaseStrategy.manual({
+        changelog: false,
+        changelogPath: 'out/changelog.md',
+      });
+
+      expect(releaseStrategy.changelogPath).toBeUndefined();
+    });
+  });
+
+  describe('with published artifacts', () => {
+    test('artifacts are published', () => {
+      releaseStrategy = ReleaseStrategy.manual({
+        pushArtifacts: true,
+      });
+
+      expect(releaseStrategy.pushArtifacts).toBe(true);
     });
   });
 });
@@ -51,18 +72,12 @@ describe('continuous release', () => {
     expect(releaseStrategy.schedule).toBeUndefined();
   });
 
-  test('does not have a changelog by default', () => {
-    expect(releaseStrategy.changelog).toBe(false);
+  test('does not have a changelog', () => {
+    expect(releaseStrategy.changelogPath).toBeUndefined();
   });
 
-  describe('with a changelog', () => {
-    beforeAll(() => {
-      releaseStrategy = ReleaseStrategy.continuous({ changelog: true });
-    });
-
-    test('has a changelog', () => {
-      expect(releaseStrategy.changelog).toBe(true);
-    });
+  test('does not define whether or not to push artifacts by default', () => {
+    expect(releaseStrategy.pushArtifacts).toBeUndefined();
   });
 });
 
@@ -87,20 +102,11 @@ describe('scheduled release', () => {
     expect(releaseStrategy.schedule).toEqual(releaseSchedule);
   });
 
-  test('does not have a changelog by default', () => {
-    expect(releaseStrategy.changelog).toBe(false);
+  test('does not have a changelog', () => {
+    expect(releaseStrategy.changelogPath).toBeUndefined();
   });
 
-  describe('with a changelog', () => {
-    beforeAll(() => {
-      releaseStrategy = ReleaseStrategy.scheduled({
-        schedule: releaseSchedule,
-        changelog: true,
-      });
-    });
-
-    test('has a changelog', () => {
-      expect(releaseStrategy.changelog).toBe(true);
-    });
+  test('does not define whether or not to push artifacts by default', () => {
+    expect(releaseStrategy.pushArtifacts).toBeUndefined();
   });
 });

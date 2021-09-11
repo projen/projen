@@ -1,15 +1,6 @@
-export interface AutomatedReleaseOptions {
-  /**
-   * Whether or not to include a project-level changelog.
-   *
-   * @default false
-   */
-  readonly changelog?: boolean;
-}
+import { Project } from '..';
 
-export interface ContinuousReleaseOptions extends AutomatedReleaseOptions {}
-
-export interface ScheduledReleaseOptions extends AutomatedReleaseOptions {
+export interface ScheduledReleaseOptions {
   /**
    * Cron schedule for releases.
    *
@@ -22,20 +13,43 @@ export interface ScheduledReleaseOptions extends AutomatedReleaseOptions {
 
 export interface ManualReleaseOptions {
   /**
-   * Whether or not to include a project-level changelog.
+   * Run the publish task as part of releases.
+   *
+   * @default false
+   */
+  readonly publish?: boolean;
+
+  /**
+   * Push release artifacts to the remote as part of releases.
+   *
+   * @default false
+   */
+  readonly pushArtifacts?: boolean;
+
+  /**
+   * Maintain a project-level changelog.
    *
    * @default true
    */
   readonly changelog?: boolean;
+
+  /**
+   * Project-level changelog file path.
+   *
+   * Ignored if `changelog` is false.
+   *
+   * @default 'CHANGELOG.md'
+   */
+  readonly changelogPath?: string;
 }
 
-interface ReleaseOptions {
+interface ReleaseStrategyOptions {
   /**
-   * Whether or not a project-level changelog should be maintained.
+   * Project-level changelog file path.
    *
-   * @default false
+   * Ignored if `changelog` is false
    */
-  readonly changelog?: boolean;
+  readonly changelogPath?: string;
 
   /**
    * Whether or not this is a continuous release.
@@ -45,17 +59,35 @@ interface ReleaseOptions {
   readonly continuous?: boolean;
 
   /**
-   * Cron schedule for releases.
+   * Cron schedule for release.
    *
    * Only defined if this is a scheduled release.
    *
    * @example '0 17 * * *' - every day at 5 pm
+   */
+  readonly schedule?: string;
+
+  /**
+   * The publish task name for a given release strategy
+   *
+   * Leave undefined if not applicable or publishing should not occur.
+   */
+  readonly publishTaskName?: string;
+
+  /**
+   * Push release artifacts to the remote as part of releases.
+   *
+   * Can be left undefined if not relevant for a given release strategy.
    *
    * @default undefined
    */
-  readonly schedule?: string;
+  readonly pushArtifacts?: boolean;
 }
 
+/**
+ * Used to manage release strategies. This includes release
+ * and release artifact automation
+ */
 export class ReleaseStrategy {
   /**
    * Creates a manual release strategy.
@@ -72,8 +104,17 @@ export class ReleaseStrategy {
    * @param options release options
    */
   public static manual(options: ManualReleaseOptions = {}) {
+    const publish = options.publish ?? false;
+    let changelogPath;
+
+    if (options.changelog ?? true) {
+      changelogPath = options.changelogPath ?? 'CHANGELOG.md';
+    }
+
     return new ReleaseStrategy({
-      changelog: options.changelog ?? true,
+      changelogPath: changelogPath,
+      publishTaskName: publish ? 'publish:git' : undefined,
+      pushArtifacts: options.pushArtifacts ?? false,
     });
   }
 
@@ -87,7 +128,6 @@ export class ReleaseStrategy {
   public static scheduled(options: ScheduledReleaseOptions) {
     return new ReleaseStrategy({
       schedule: options.schedule,
-      changelog: options.changelog,
     });
   }
 
@@ -95,20 +135,19 @@ export class ReleaseStrategy {
    * Creates a continuous release strategy.
    *
    * Automated releases will occur on every commit.
-   *
-   * @param options release options
    */
-  public static continuous(options: ContinuousReleaseOptions = {}) {
+  public static continuous() {
     return new ReleaseStrategy({
       continuous: true,
-      changelog: options.changelog,
     });
   }
 
+  private readonly publishTaskName: string;
+
   /**
-   * Whether or not a project-level changelog should be maintained.
+   * Project-level changelog file path.
    */
-  public readonly changelog: boolean;
+  public readonly changelogPath?: string;
 
   /**
    * Cron schedule for releases.
@@ -124,10 +163,28 @@ export class ReleaseStrategy {
    */
   public readonly isContinuous: boolean;
 
-  private constructor(options: ReleaseOptions = {}) {
+  /**
+   * Push release artifacts to the remote as part of releases.
+   *
+   * Undefined if not relevant for a given release strategy.
+   */
+  readonly pushArtifacts?: boolean;
+
+  private constructor(options: ReleaseStrategyOptions = {}) {
     this.isContinuous = options.continuous ?? false;
     this.schedule = options.schedule;
-    this.changelog = options.changelog ?? false;
+    this.changelogPath = options.changelogPath;
+    this.publishTaskName = options.publishTaskName ?? '';
+    this.pushArtifacts = options.pushArtifacts;
+  }
+
+  /**
+   * Returns the publish task for a given release strategy.
+   * @param project Project
+   * @returns Publish task if one is found
+   */
+  public publishTask(project: Project) {
+    return project.tasks.tryFind(this.publishTaskName);
   }
 
   /**
