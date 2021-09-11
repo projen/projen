@@ -218,6 +218,7 @@ export class Tasks extends Component {
 
   private renderTasksToMakefile(makefile: Makefile, tasks: { [name: string]: Task }) {
     tasks = sorted(tasks) ?? {};
+
     for (let [name, task] of Object.entries(tasks)) {
       makefile.addRule({
         targets: [sanitizeTaskName(name)],
@@ -236,6 +237,7 @@ export class Tasks extends Component {
       });
     }
 
+    // determine what runs when "make" is executed with no arguments
     if ('default' in this._tasks) {
       makefile.addAll('default');
     } else {
@@ -265,7 +267,7 @@ export function sanitizeTaskName(name: string) {
 }
 
 function sanitizeCommand(value: string) {
-  // we do not want "\n" or "\t" in tasks to generate actual new lines or tabs in Makefiles
+  // we do not want "\n" or "\t" in commands to generate actual new lines or tabs in Makefiles
   value = value.replace(/\n/g, '\\n');
   value = value.replace(/\t/g, '\\t');
   return value;
