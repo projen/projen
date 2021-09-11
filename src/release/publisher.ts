@@ -97,6 +97,13 @@ export class Publisher extends Component {
     return { ...this.jobs };
   }
 
+  /**
+   * Publish to git.
+   *
+   * This includes generating a project-level changelog and release tags.
+   *
+   * @param options Options
+   */
   public publishToGit(options: GitPublishOptions) {
     const versionFile = options.versionFile;
     const changelog = options.changelogFile;
