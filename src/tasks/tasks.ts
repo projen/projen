@@ -43,7 +43,7 @@ export class Tasks extends Component {
     this._env = {};
 
     if (options.makefile ?? false) {
-      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.ONESHELL:', '.EXPORT_ALL_VARIABLES:'] });
+      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.EXPORT_ALL_VARIABLES:'] });
     }
 
     new JsonFile(project, manifestFile, {

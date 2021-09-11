@@ -161,13 +161,16 @@ export class Makefile extends FileBase {
         const targets = rule.targets.join(' ');
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
         const recipe = rule.recipe ?? [];
-        const description = rule.description ? `\t## ${rule.description}` : '';
+
+        const signature = `${targets}: ${prerequisites}`.trim();
+        const spacer = ' '.repeat(Math.max(0, 30 - signature.length));
+        const description = rule.description ? `## ${rule.description}` : '';
 
         const phony = rule.phony ? [`.PHONY: ${targets}`] : [];
 
         return [
           ...phony,
-          `${targets}: ${prerequisites}${description}`.trim(),
+          `${signature}${spacer}${description}`.trim(),
           ...recipe.map(step => `\t${step}`),
         ].join('\n');
       }),
