@@ -1,4 +1,5 @@
 const { JsiiProject, JsonFile, TextFile } = require('./lib');
+const { TasksEngine } = require('./lib/tasks');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -9,7 +10,7 @@ const project = new JsiiProject({
   stability: 'experimental',
 
   tasksOptions: {
-    makefile: true,
+    engine: TasksEngine.MAKE,
   },
 
   pullRequestTemplateContents: [
@@ -91,7 +92,7 @@ new TextFile(project, 'projen.bash', {
     '  echo "bootstrapping..."',
     '  npx jsii --silence-warnings=reserved-word --no-fix-peer-dependencies',
     'fi',
-    'exec bin/projen $@',
+    'make $@',
   ],
 });
 

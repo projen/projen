@@ -7,7 +7,7 @@ import { Component } from './component';
 import { DependencyType } from './deps';
 import { JsonFile } from './json';
 import { Project } from './project';
-import { Task } from './tasks';
+import { sanitizeTaskName, Task, TasksEngine } from './tasks';
 import { exec, sorted, isTruthy, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';
@@ -158,7 +158,10 @@ export interface NodePackageOptions {
    *
    * Can be used to customize in special environments.
    *
-   * @default "npx projen"
+   * Defaults to "npx projen" if the projen built-in task engine is used, and
+   * "make" if the projen task engine is used.
+   *
+   * @default - depends on the task engine used
    */
   readonly projenCommand?: string;
 
@@ -385,7 +388,7 @@ export class NodePackage extends Component {
     super(project);
 
     this.packageName = options.packageName ?? project.name;
-    this.projenCommand = options.projenCommand ?? 'npx projen';
+    this.projenCommand = options.projenCommand ?? (project.tasks.engine === TasksEngine.PROJEN_RUNTIME ? 'npx projen' : 'make');
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
@@ -1006,7 +1009,11 @@ export class NodePackage extends Component {
 
 
   private npmScriptForTask(task: Task) {
-    return `${this.projenCommand} ${task.name}`;
+    if (this.project.tasks.engine === TasksEngine.MAKE) {
+      return `${this.projenCommand} ${sanitizeTaskName(task.name)}`;
+    } else {
+      return `${this.projenCommand} ${task.name}`;
+    }
   }
 
   private readPackageJson() {

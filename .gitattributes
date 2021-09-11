@@ -18,7 +18,6 @@
 /.projen/**                        	linguist-generated
 /.projen/deps.json                 	linguist-generated
 /.projen/jest-snapshot-resolver.js 	linguist-generated
-/.projen/tasks.json                	linguist-generated
 /.vscode/launch.json               	linguist-generated
 /LICENSE                           	linguist-generated
 /Makefile                          	linguist-generated

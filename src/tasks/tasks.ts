@@ -10,12 +10,24 @@ import { sorted } from '../util';
 import { TasksManifest, TaskSpec } from './model';
 import { Task, TaskOptions } from './task';
 
+export enum TasksEngine {
+  /**
+   * Run tasks using projen's built-in runtime.
+   */
+  PROJEN_RUNTIME = 'projen-runtime',
+
+  /**
+   * Run tasks using the unix `make` build automation tool.
+   */
+  MAKE = 'make',
+}
+
 export interface TasksOptions {
   /**
-   * Whether to render the tasks as a Makefile.
-   * @default false
+   * Engine to use for running tasks.
+   * @default TasksEngine.PROJEN_RUNTIME;
    */
-  readonly makefile?: boolean;
+  readonly engine?: TasksEngine;
 }
 
 /**
@@ -30,6 +42,11 @@ export class Tasks extends Component {
    */
   public static readonly MANIFEST_FILE = path.posix.join(PROJEN_DIR, 'tasks.json');
 
+  /**
+   * Engine used for running tasks.
+   */
+  public readonly engine: TasksEngine;
+
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
@@ -42,17 +59,21 @@ export class Tasks extends Component {
     this._tasks = {};
     this._env = {};
 
-    if (options.makefile ?? false) {
-      this.makefile = new Makefile(project, 'Makefile', { prelude: ['.EXPORT_ALL_VARIABLES:'] });
-    }
+    this.engine = options.engine ?? TasksEngine.PROJEN_RUNTIME;
 
-    new JsonFile(project, manifestFile, {
-      omitEmpty: true,
-      obj: {
-        tasks: (() => this.renderTasks()) as any,
-        env: (() => this._env) as any,
-      } as TasksManifest,
-    });
+    if (options.engine === TasksEngine.MAKE) {
+      this.makefile = new Makefile(project, 'Makefile', {
+        prelude: ['.EXPORT_ALL_VARIABLES:'],
+      });
+    } else if (options.engine === TasksEngine.PROJEN_RUNTIME) {
+      new JsonFile(project, manifestFile, {
+        omitEmpty: true,
+        obj: {
+          tasks: (() => this.renderTasks()) as any,
+          env: (() => this._env) as any,
+        } as TasksManifest,
+      });
+    }
   }
 
   /**
@@ -157,19 +178,19 @@ export class Tasks extends Component {
         // do nothing
       } else if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
-        recipe.push(`@export ${key}=$(shell ${sanitize(query)})`);
+        recipe.push(`@export ${key}=$(shell ${sanitizeCommand(query)})`);
       } else {
-        recipe.push(`@export ${key}=${sanitize(value)}`);
+        recipe.push(`@export ${key}=${sanitizeCommand(value)}`);
       }
     }
 
     for (const step of task.steps) {
       if (step.say) {
-        recipe.push(`@echo ${sanitize(step.say)}`);
+        recipe.push(`@echo ${sanitizeCommand(step.say)}`);
       }
 
       if (step.spawn) {
-        recipe.push(`@make ${step.spawn}`);
+        recipe.push(`@make ${sanitizeTaskName(step.spawn)}`);
       }
 
       if (step.builtin) {
@@ -192,7 +213,7 @@ export class Tasks extends Component {
         if (cwd) {
           command = `(cd ${cwd} && ${command})`;
         }
-        recipe.push(sanitize(command));
+        recipe.push(sanitizeCommand(command));
       }
     }
 
@@ -204,12 +225,8 @@ export class Tasks extends Component {
     if (this.makefile) {
       const tasks = sorted(this._tasks) ?? {};
       for (let [name, task] of Object.entries(tasks)) {
-
-        // Make doesn't like : in the middle of target names
-        name = name.replace(/:/g, '-');
-
         this.makefile.addRule({
-          targets: [name],
+          targets: [sanitizeTaskName(name)],
           recipe: this.renderTaskAsRecipe(task),
           description: task.description ?? 'No description',
           phony: true,
@@ -220,7 +237,7 @@ export class Tasks extends Component {
         this.makefile.addAll('help');
         this.makefile.addRule({
           targets: ['help'],
-          recipe: [sanitize('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
+          recipe: [sanitizeCommand('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
           description: 'Show help messages for make targets',
           phony: true,
         });
@@ -240,7 +257,12 @@ function green(value: string) {
   return `\\\\033[32m${value}\\\\033[0m`;
 }
 
-function sanitize(value: string) {
+export function sanitizeTaskName(name: string) {
+  // Make doesn't allow : in the middle of target names
+  return name.replace(/:/g, '-');
+}
+
+function sanitizeCommand(value: string) {
   // we do not want "\n" or "\t" in tasks to generate actual new lines or tabs in Makefiles
   value = value.replace(/\n/g, '\\n');
   value = value.replace(/\t/g, '\\t');

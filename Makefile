@@ -153,7 +153,7 @@ release:                      ## Prepare a release from "main" branch
 test:                         ## Run tests
 	@echo 🤖 Running task \\033[32mtest\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	@make test:compile
+	@make test-compile
 	jest --passWithNoTests --all --updateSnapshot
 	@make eslint
 	@echo 🤖 Finished task \\033[32mtest\\033[0m.
