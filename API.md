@@ -4992,22 +4992,6 @@ Name | Type | Description
 **versionFileName**🔹 | <code>string</code> | The name of the file that contains the version (under `artifactsDirectory`).
 *static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
 
-### Methods
-
-
-#### *static* tryReadVersion(versionFile)🔹 <a id="projen-version-tryreadversion"></a>
-
-
-
-```ts
-static tryReadVersion(versionFile: string): string
-```
-
-* **versionFile** (<code>string</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
 
 
 ## class XmlFile 🔹 <a id="projen-xmlfile"></a>
