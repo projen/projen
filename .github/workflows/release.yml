@@ -117,7 +117,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: 
+      image: jsii/superchain:node14
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -157,7 +157,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: 
+      image: jsii/superchain:node14
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -192,4 +192,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: 
+      image: jsii/superchain:node14

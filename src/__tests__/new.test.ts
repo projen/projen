@@ -104,7 +104,7 @@ test('can choose from one of multiple external project types', () => {
       ],
     });
 
-    expect(actual).toMatchSnapshot();
+    expect(actual['.projenrc.js']).toContain('@taimos/projen@0.0.121');
   });
 });
 
