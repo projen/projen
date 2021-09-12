@@ -6,12 +6,11 @@ Just like TS, Node and Python, having support for a Go project would be great.
 
 Get dependencies if vendoring is disabled, run `go fmt`, run the linter, run go test, and finally run build.
 
-## Tests
-
-
 ## Releases
 
 Setup semantic versioning and release using semantic-release.
+
+## Tests
 
 Expose an API that interacts with `go test`, allows arguments to be passed.
 
