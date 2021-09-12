@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
-          node-version: 10.17.0
+          node-version: 14.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: build
@@ -56,4 +56,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
