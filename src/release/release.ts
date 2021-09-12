@@ -257,11 +257,13 @@ export class Release extends Component {
       });
     }
 
-    this.releaseStrategy.isManual && this.publisher.publishToGit({
-      changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
-      versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-      projectChangelogFile: this.releaseStrategy.changelogPath,
-    });
+    if (this.releaseStrategy.isManual) {
+      this.publisher.publishToGit({
+        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
+        projectChangelogFile: this.releaseStrategy.changelogPath,
+      });
+    }
 
     // add the default branch
     this.defaultBranch = {
@@ -370,7 +372,9 @@ export class Release extends Component {
     releaseTask.spawn(this.version.unbumpTask);
 
     const publishTask = this.releaseStrategy.publishTask(this.project);
-    publishTask && releaseTask.spawn(publishTask);
+    if (publishTask) {
+      releaseTask.spawn(publishTask);
+    }
 
     if (this.releaseStrategy.pushArtifacts) {
       releaseTask.exec(`git push --follow-tags origin ${branch.name}`);
