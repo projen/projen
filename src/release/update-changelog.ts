@@ -1,8 +1,7 @@
 import { join } from 'path';
 import { readFile, writeFile } from 'fs-extra';
 import * as logging from '../logging';
-import { exec } from '../util';
-import { Version } from '../version';
+import * as utils from '../util';
 
 export interface UpdateChangelogOptions {
   /**
@@ -51,7 +50,7 @@ export async function updateChangelog(
   const versionFile = join(cwd, options.versionFile);
 
 
-  let version = await Version.tryReadVersion(versionFile);
+  let version = await utils.tryReadVersion(versionFile);
 
   if (!version) {
     throw new Error(
@@ -84,5 +83,5 @@ export async function updateChangelog(
     newChangelog,
   );
 
-  exec(`git add ${outputChangelog} && git commit -m "chore(release): ${version}"`, { cwd });
+  utils.exec(`git add ${outputChangelog} && git commit -m "chore(release): ${version}"`, { cwd });
 }

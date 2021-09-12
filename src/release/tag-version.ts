@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { pathExists } from 'fs-extra';
 import * as utils from '../util';
-import { Version } from '../version';
 
 export interface TagOptions {
   /**
@@ -49,7 +48,7 @@ export async function tag(cwd: string, options: TagOptions) {
     throw new Error(`No changelog file present at ${changelogFilePath}`);
   }
 
-  let version = await Version.tryReadVersion(versionFilePath);
+  let version = await utils.tryReadVersion(versionFilePath);
 
   if (!version) {
     throw new Error(`No version present in file at ${versionFilePath}`);

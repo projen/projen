@@ -289,3 +289,9 @@ export async function tryReadFile(file: string) {
 
   return fs.readFile(file, 'utf8');
 }
+
+export async function tryReadVersion(versionFile: string) {
+  const version = (await tryReadFile(versionFile)).trim();
+
+  return version.startsWith('v') ? version.substr(1) : version;
+}
