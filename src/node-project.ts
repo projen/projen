@@ -851,7 +851,7 @@ export class NodeProject extends GitHubProject {
       });
     }
 
-    if (this.package.packageManager == NodePackageManager.PNPM) {
+    if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: 'Setup pnpm',
         uses: 'pnpm/action-setup@v2.0.1',
