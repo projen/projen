@@ -41,7 +41,7 @@ const project = new JsiiProject({
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
-  minNodeVersion: '14.17.0',
+  minNodeVersion: '10.24.1',
   codeCov: true,
   defaultReleaseBranch: 'main',
   gitpod: true,
