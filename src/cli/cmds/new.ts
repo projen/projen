@@ -146,12 +146,13 @@ function commandLineToProps(cwd: string, type: inventory.ProjectType, argv: Reco
  * @param args Command line arguments (incl. project type)
  */
 async function newProjectFromModule(baseDir: string, spec: string, args: any) {
-  const installCommand = `yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev`;
+  const projenVersion = args.projenVersion ?? 'latest';
+  const installCommand = renderInstallCommand(baseDir, `projen@${projenVersion}`);
   if (args.projenVersion) {
-    exec(`${installCommand} projen@${args.projenVersion}`, { cwd: baseDir });
+    exec(installCommand, { cwd: baseDir });
   } else {
     // do not overwrite existing installation
-    exec(`yarn list --depth=0 --pattern projen || ${installCommand} projen`, { cwd: baseDir });
+    exec(`yarn list --depth=0 --pattern projen || ${installCommand}`, { cwd: baseDir });
   }
 
   const specDependencyInfo = yarnAdd(baseDir, spec);
@@ -283,7 +284,7 @@ function yarnAdd(baseDir: string, spec: string): string {
   }
 
   logging.info(`installing external module ${spec}...`);
-  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
+  exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // if package.json did not exist before calling yarn add, we should remove it
   // so we can start off clean.
@@ -292,6 +293,22 @@ function yarnAdd(baseDir: string, spec: string): string {
   }
 
   return dependencyInfo;
+}
+
+/**
+ * Render a command to install an npm package.
+ *
+ * Engine checks are ignorred at this point so that the module can be installed
+ * regardless of the environment. This was needed to unblock the upgrade of the
+ * minimum node version of projen, but also okay generally because engine checks
+ * will be performed later and for all eternety.
+ *
+ * @param dir Base directory
+ * @param module The module to install (e.g. foo@^1.2)
+ * @returns The string that includes the install command ("yarn add ...")
+ */
+function renderInstallCommand(dir: string, module: string): string {
+  return `yarn add --modules-folder=${dir}/node_modules --silent --no-lockfile --ignore-engines --dev ${module}`;
 }
 
 module.exports = new Command();

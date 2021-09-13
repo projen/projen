@@ -785,6 +785,7 @@ const project = new AwsCdkAppSyncApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
   devDeps: ['cdk-appsync-project@1.1.2'],
+  minNodeVersion: '10.17.0',
   name: 'my-project',
   transformerVersion: '1.77.15',
 
@@ -1054,6 +1055,9 @@ project.synth();",
       "ts-jest": "*",
       "ts-node": "*",
       "typescript": "*",
+    },
+    "engines": Object {
+      "node": ">= 10.17.0",
     },
     "jest": Object {
       "clearMocks": true,
