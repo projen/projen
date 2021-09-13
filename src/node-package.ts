@@ -731,7 +731,7 @@ export class NodePackage extends Component {
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
-      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
+      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
     };

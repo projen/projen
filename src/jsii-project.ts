@@ -3,7 +3,7 @@ import { JsiiDocgen } from './jsii-docgen';
 import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
-const DEFAULT_JSII_IMAGE = 'jsii/superchain';
+const DEFAULT_JSII_IMAGE = 'jsii/superchain:node14';
 
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
@@ -148,7 +148,7 @@ export class JsiiProject extends TypeScriptProject {
       workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
 
       // this is needed temporarily because our release workflows use the 'gh'
-      // cli and its not yet available in jsii/superchain
+      // cli and its not yet available in jsii/superchain:node14
       releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       releaseToNpm: false, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
@@ -188,7 +188,7 @@ export class JsiiProject extends TypeScriptProject {
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
     this.packageTask?.reset('jsii-pacmak');
 
-    const targets: Record<string, any> = { };
+    const targets: Record<string, any> = {};
 
     const jsii: any = {
       outdir: 'dist',
