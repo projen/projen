@@ -362,7 +362,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^10.17.0",
+        "version": "^14.17.0",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -560,10 +560,11 @@ tsconfig.tsbuildinfo
         "name": "publish:github",
         "requiredEnv": Array [
           "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
         ],
         "steps": Array [
           Object {
-            "exec": "gh release create v$(cat dist/version.txt) -R \${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)",
+            "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
       },
@@ -948,7 +949,7 @@ project.synth();",
     "devDependencies": Object {
       "@taimos/projen": "0.0.121",
       "@types/jest": "*",
-      "@types/node": "^10.17.0",
+      "@types/node": "^14.17.0",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
       "eslint": "*",
