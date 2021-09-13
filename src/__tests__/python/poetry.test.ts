@@ -23,6 +23,26 @@ test('poetry enabled', () => {
   expect(snapshot['pyproject.toml']).toContain('a short project description');
   expect(snapshot['pyproject.toml']).toContain('Apache-2.0');
   expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
+  expect(snapshot['pyproject.toml']).toContain('python = "^3.6"'); // default python version
+});
+
+test('poetry enabled with specified python version', () => {
+  const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
+    poetry: true,
+    homepage: 'http://www.example.com',
+    description: 'a short project description',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
+  });
+  p.addDependency('python@^3.7,<=3.9');
+
+  const snapshot = synthSnapshot(p);
+  expect(snapshot['pyproject.toml']).toContain('python = "^3.7,<=3.9"');
 });
 
 class TestPythonProject extends PythonProject {
