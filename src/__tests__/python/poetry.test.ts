@@ -45,6 +45,64 @@ test('poetry enabled with specified python version', () => {
   expect(snapshot['pyproject.toml']).toContain('python = "^3.7,<=3.9"');
 });
 
+test('poetry enabled with poetry-specific options', () => {
+  const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
+    poetry: true,
+    homepage: 'http://www.example.com',
+    description: 'a short project description',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
+    deps: [
+      'package1@0.0.1',
+      'package2@0.0.2',
+    ],
+    poetryOptions: {
+      maintainers: ['First-2 Last-2'],
+      repository: 'https://github.com/test-python-project',
+      keywords: ['Keyword1'],
+      packages: [
+        {
+          include: 'my_package',
+          format: 'sdist',
+        },
+      ],
+      include: ['CHANGELOG.md'],
+      exclude: ['my_package/excluded.py'],
+      source: [
+        {
+          name: 'pypi_',
+          url: 'https://pypi.org/simple/',
+          default: true,
+        },
+      ],
+      scripts: {
+        'test-python-cli': 'test-python-project.cli:cli',
+      },
+      extras: {
+        cli: [
+          'package1',
+          'package2',
+        ],
+      },
+      plugins: {
+        'blogtool.parsers': {
+          '.rst': 'some_module:SomeClass',
+        },
+      },
+      urls: {
+        'bug tracker': 'https://github.com/test-python-project/issues',
+      },
+    },
+  });
+
+  expect(synthSnapshot(p)).toMatchSnapshot();
+});
+
 class TestPythonProject extends PythonProject {
   constructor(options: Partial<PythonProjectOptions> = { }) {
     super({
