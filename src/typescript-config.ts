@@ -127,10 +127,10 @@ export interface TypeScriptCompilerOptions {
 
   /**
    * Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
-   * Decorators are a language feature which hasn’t yet been fully ratified into the JavaScript specification. 
+   * Decorators are a language feature which hasn’t yet been fully ratified into the JavaScript specification.
    * This means that the implementation version in TypeScript may differ from the implementation in JavaScript when it it decided by TC39.
    * You can find out more about decorator support in TypeScript in the handbook.
-   * 
+   *
    * @see https://www.typescriptlang.org/docs/handbook/decorators.html
    * @default undefined
    */
