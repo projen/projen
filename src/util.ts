@@ -199,7 +199,7 @@ export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boo
       if (isObject(value)) {
         // if the value at the target is not an object, override it with an
         // object so we can continue the recursion
-        if (!isObject(target[key])) {
+        if (typeof(target[key]) !== 'object') {
           target[key] = value;
         }
         mergeOne(target[key], value);
@@ -208,7 +208,7 @@ export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boo
         // eventual value we assigned is `undefined`, and there are no
         // sibling concrete values alongside, so we can delete this tree.
         const output = target[key];
-        if (isObject(output) && Object.keys(output).length === 0 && destructive) {
+        if (typeof(output) === 'object' && Object.keys(output).length === 0 && destructive) {
           delete target[key];
         }
       } else if (value === undefined && destructive) {
