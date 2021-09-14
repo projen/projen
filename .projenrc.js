@@ -19,7 +19,7 @@ const project = new JsiiProject({
     'yaml',
     'fs-extra',
     'yargs',
-    'decamelize',
+    'case',
     'glob@^7',
     'semver',
     'chalk',
