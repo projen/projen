@@ -33,9 +33,6 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     this.project.tasks.addEnvironment('VIRTUAL_ENV', '$(poetry env info -p)');
     this.project.tasks.addEnvironment('PATH', '$(echo $(poetry env info -p)/bin:$PATH)');
 
-    // declare the python versions for which the package is compatible
-    this.addDependency('python@^3.6');
-
     this.packageTask = project.addTask('package', {
       description: 'Creates source archive and wheel for distribution.',
       exec: 'poetry build',
@@ -78,10 +75,18 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
+    let pythonDefined: boolean = false;
     for (const pkg of this.project.deps.all) {
+      if (pkg.name === 'python') {
+        pythonDefined = true;
+      }
       if (pkg.type === DependencyType.RUNTIME) {
         dependencies[pkg.name] = pkg.version;
       }
+    }
+    if (!pythonDefined) {
+      // Python version must be defined for poetry projects. Default to ^3.6.
+      dependencies.python = '^3.6';
     }
     return dependencies;
   }
