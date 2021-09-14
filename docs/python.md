@@ -125,6 +125,23 @@ converted to the appropriate dependency manager syntax in synthesized files. For
 example, `lib^3.1.0` will be converted to `lib>=3.1.0, <4.0.0` in
 `requirements.txt`.
 
+### Poetry Dependencies
+
+When using the `poetry` project type, note the following:
+
+* Poetry requires the `python` version to be specified as a dependency e.g. `python@^3.7,<=3.9`.
+  When not specified, projen will set it to a default value of `python@^3.6`.
+* The `[@version]` part of the dependency declaration must be present for all dependencies
+* Dependencies that require additional metadata regarding extras etc. may be declared as
+  follows:
+
+  ```text
+  deps: [
+    ...
+    "mypackage@{version = '^3.3.3', extras = ['mypackage-extra']}",
+  ],
+  ```
+
 ## Unit Testing with Pytest
 
 The `Pytest` component adds support for writing Python tests with

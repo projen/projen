@@ -147,11 +147,6 @@ cython_debug/
         "type": "runtime",
         "version": "0.0.2",
       },
-      Object {
-        "name": "python",
-        "type": "runtime",
-        "version": "^3.6",
-      },
     ],
   },
   ".projen/tasks.json": Object {
