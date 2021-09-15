@@ -46,22 +46,22 @@ Currently supported project types (use `npx projen new` without a type for a
 list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
-* [awscdk-app-ts](https://github.com/projen/projen/blob/master/API.md#projen-awscdktypescriptapp) - AWS CDK app in TypeScript.
-* [awscdk-construct](https://github.com/projen/projen/blob/master/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
-* [cdk8s-app-ts](https://github.com/projen/projen/blob/master/API.md#projen-cdk8stypescriptapp) - CDK8s app in TypeScript.
-* [cdk8s-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
-* [cdktf-construct](https://github.com/projen/projen/blob/master/API.md#projen-constructlibrarycdktf) - CDKTF construct library project.
-* [java](https://github.com/projen/projen/blob/master/API.md#projen-java-javaproject) - Java project.
-* [jsii](https://github.com/projen/projen/blob/master/API.md#projen-jsiiproject) - Multi-language jsii library project.
-* [nextjs](https://github.com/projen/projen/blob/master/API.md#projen-web-nextjsproject) - Next.js project without TypeScript.
-* [nextjs-ts](https://github.com/projen/projen/blob/master/API.md#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
-* [node](https://github.com/projen/projen/blob/master/API.md#projen-nodeproject) - Node.js project.
-* [project](https://github.com/projen/projen/blob/master/API.md#projen-project) - Base project.
-* [python](https://github.com/projen/projen/blob/master/API.md#projen-python-pythonproject) - Python project.
-* [react](https://github.com/projen/projen/blob/master/API.md#projen-web-reactproject) - React project without TypeScript.
-* [react-ts](https://github.com/projen/projen/blob/master/API.md#projen-web-reacttypescriptproject) - React project with TypeScript.
-* [typescript](https://github.com/projen/projen/blob/master/API.md#projen-typescriptproject) - TypeScript project.
-* [typescript-app](https://github.com/projen/projen/blob/master/API.md#projen-typescriptappproject) - TypeScript app.
+* [awscdk-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-awscdktypescriptapp) - AWS CDK app in TypeScript.
+* [awscdk-construct](https://github.com/projen/projen/blob/main/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
+* [cdk8s-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-cdk8stypescriptapp) - CDK8s app in TypeScript.
+* [cdk8s-construct](https://github.com/projen/projen/blob/main/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
+* [cdktf-construct](https://github.com/projen/projen/blob/main/API.md#projen-constructlibrarycdktf) - CDKTF construct library project.
+* [java](https://github.com/projen/projen/blob/main/API.md#projen-java-javaproject) - Java project.
+* [jsii](https://github.com/projen/projen/blob/main/API.md#projen-jsiiproject) - Multi-language jsii library project.
+* [nextjs](https://github.com/projen/projen/blob/main/API.md#projen-web-nextjsproject) - Next.js project without TypeScript.
+* [nextjs-ts](https://github.com/projen/projen/blob/main/API.md#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
+* [node](https://github.com/projen/projen/blob/main/API.md#projen-nodeproject) - Node.js project.
+* [project](https://github.com/projen/projen/blob/main/API.md#projen-project) - Base project.
+* [python](https://github.com/projen/projen/blob/main/API.md#projen-python-pythonproject) - Python project.
+* [react](https://github.com/projen/projen/blob/main/API.md#projen-web-reactproject) - React project without TypeScript.
+* [react-ts](https://github.com/projen/projen/blob/main/API.md#projen-web-reacttypescriptproject) - React project with TypeScript.
+* [typescript](https://github.com/projen/projen/blob/main/API.md#projen-typescriptproject) - TypeScript project.
+* [typescript-app](https://github.com/projen/projen/blob/main/API.md#projen-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
 
 > Use `npx projen new PROJECT-TYPE --help` to view a list of command line
