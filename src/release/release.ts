@@ -1,7 +1,7 @@
 import { Component } from '../component';
-import { TaskWorkflow } from '../github';
+import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { Project } from '../project';
+import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
@@ -102,6 +102,21 @@ export interface ReleaseProjectOptions {
    * `addBranch()` to add additional branches.
    */
   readonly releaseBranches?: { [name: string]: BranchOptions };
+
+  /**
+   * Create a github issue on every failed publishing task.
+   *
+   * @default false
+   */
+  readonly releaseFailureIssue?: boolean;
+
+  /**
+   * The label to apply to issues indicating publish failures.
+   * Only applies if `releaseFailureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly releaseFailureIssueLabel?: string;
 }
 
 /**
@@ -164,14 +179,16 @@ export class Release extends Component {
   private readonly branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
+  private readonly github?: GitHub;
 
-  constructor(project: Project, options: ReleaseOptions) {
+  constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error('"releaseBranches" is no longer an array. See type annotations');
     }
 
+    this.github = project.github;
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
@@ -192,6 +209,8 @@ export class Release extends Component {
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
+      failureIssue: options.releaseFailureIssue,
+      failureIssueLabel: options.releaseFailureIssueLabel,
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -334,8 +353,8 @@ export class Release extends Component {
       },
     });
 
-    if (this.project.github) {
-      return new TaskWorkflow(this.project.github, {
+    if (this.github) {
+      return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
         outputs: {

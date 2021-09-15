@@ -90,6 +90,21 @@ test('select latest with major', async () => {
   expect(result10.bumpfile).toStrictEqual('10.21.1');
 });
 
+test('already tagged version is not bumped again', async () => {
+  const result = await testBump({
+    commits: [
+      { message: 'first version', tag: 'v1.1.0' },
+      { message: 'second version', tag: 'v1.2.0' },
+      { message: 'fix: bug', tag: 'v1.2.1' },
+    ],
+  });
+
+  expect(result.version).toEqual('1.2.1');
+  expect(result.changelog.includes('Bug Fixes')).toBeTruthy();
+  expect(result.changelog.includes('bug')).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual('1.2.1');
+});
+
 test('bump fails due to crossing major version', async () => {
   const commits = [
     { message: 'first version', tag: 'v1.1.0' },

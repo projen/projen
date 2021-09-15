@@ -35,6 +35,10 @@ export class GitAttributesFile extends FileBase {
     const entries = Array.from(this.attributes.entries())
       .sort(([l], [r]) => l.localeCompare(r));
 
+    if (entries.length === 0) {
+      return undefined;
+    }
+
     const maxLen = Math.max(...entries.map(([glob]) => glob.length));
     return [
       `# ${FileBase.PROJEN_MARKER}`,

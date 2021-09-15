@@ -8,6 +8,9 @@ import { GitHub } from './github';
 
 import * as workflows from './workflows-model';
 
+/**
+ * Options for `GithubWorkflow`.
+ */
 export interface GithubWorkflowOptions {
   /**
    * Force the creation of the workflow even if `workflows` is disabled in `GitHub`.
@@ -19,11 +22,20 @@ export interface GithubWorkflowOptions {
 
 /**
  * Workflow for GitHub.
+ *
  * A workflow is a configurable automated process made up of one or more jobs.
+ *
  * @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
  */
 export class GithubWorkflow extends Component {
+  /**
+   * The name of the workflow.
+   */
   public readonly name: string;
+
+  /**
+   * The workflow YAML file.
+   */
   public readonly file: YamlFile | undefined;
 
   private events: workflows.Triggers = { };
@@ -43,6 +55,11 @@ export class GithubWorkflow extends Component {
     }
   }
 
+  /**
+   * Add events to triggers the workflow.
+   *
+   * @param events The event(s) to trigger the workflow.
+   */
   public on(events: workflows.Triggers) {
     this.events = {
       ...this.events,
@@ -50,6 +67,11 @@ export class GithubWorkflow extends Component {
     };
   }
 
+  /**
+   * Add jobs to the workflow.
+   *
+   * @param jobs Jobs to add.
+   */
   public addJobs(jobs: Record<string, workflows.Job>) {
     // verify that job has a "permissions" statement to ensure workflow can
     // operate in repos with default tokens set to readonly

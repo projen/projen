@@ -369,6 +369,11 @@ export class NodePackage extends Component {
    */
   public readonly npmAccess: NpmAccess;
 
+  /**
+   * The name of the lock file.
+   */
+  public readonly lockFile: string;
+
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
@@ -385,10 +390,9 @@ export class NodePackage extends Component {
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? 'lib/index.js';
+    this.lockFile = determineLockfile(this.packageManager);
 
-    if (this.packageManager === NodePackageManager.YARN) {
-      project.root.annotateGenerated('/yarn.lock');
-    }
+    this.project.annotateGenerated(`/${this.lockFile}`);
 
     const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
@@ -727,7 +731,7 @@ export class NodePackage extends Component {
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
-      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
+      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
     };
@@ -1079,4 +1083,16 @@ export function defaultNpmToken(npmToken: string | undefined, registry: string |
   // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
   const isGitHubPackages = registry === GITHUB_PACKAGES_REGISTRY;
   return npmToken ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET);
+}
+
+function determineLockfile(packageManager: NodePackageManager) {
+  if (packageManager === NodePackageManager.YARN) {
+    return 'yarn.lock';
+  } else if (packageManager === NodePackageManager.NPM) {
+    return 'package-lock.json';
+  } else if (packageManager === NodePackageManager.PNPM) {
+    return 'pnpm-lock.yaml';
+  }
+
+  throw new Error(`unsupported package manager ${packageManager}`);
 }
