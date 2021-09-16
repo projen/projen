@@ -33,9 +33,24 @@ export interface BumpOptions {
    *
    * Relative to cwd.
    *
-   * @example `.version.txt`
+   * @example ".version.txt"
    */
   readonly bumpFile: string;
+
+  /**
+   * The name of the file which will include the release tag (a text file).
+   *
+   * Relative to cwd.
+   *
+   * @example ".releasetag.txt"
+   */
+  readonly releaseTagFile: string;
+
+  /**
+   * The prefix applied to release tags. Bumps will be made based on the latest
+   * version found with this prefix.
+   */
+  readonly tagPrefix?: string;
 }
 
 /**
@@ -51,20 +66,23 @@ export async function bump(cwd: string, options: BumpOptions) {
   const versionFile = join(cwd, options.versionFile);
   const prerelease = options.prerelease;
   const major = options.majorVersion;
-  const changelogFile = join(cwd, options.changelog);
+  const prefix = options.tagPrefix ?? '';
   const bumpFile = join(cwd, options.bumpFile);
+  const changelogFile = join(cwd, options.changelog);
+  const releaseTagFile = join(cwd, options.releaseTagFile);
 
   await mkdirp(dirname(bumpFile));
   await mkdirp(dirname(changelogFile));
+  await mkdirp(dirname(releaseTagFile));
 
-  const { latest, firstRelease } = determineLatestTag(cwd, major, prerelease);
+  const { latestVersion, latestTag, isFirstRelease } = determineLatestTag({ cwd, major, prerelease, prefix });
 
   const content = await tryReadVersionFile(versionFile);
 
   // update version
-  content.version = latest;
+  content.version = latestVersion;
 
-  logging.info(`Update ${versionFile} to latest resolved version: ${latest}`);
+  logging.info(`Update ${versionFile} to latest resolved version: ${latestVersion}`);
   await writeFile(versionFile, JSON.stringify(content, undefined, 2));
 
   // check if the latest commit already has a version tag
@@ -73,13 +91,13 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   let skipBump = false;
 
-  if (currentTags.includes(`v${latest}`)) {
+  if (currentTags.includes(latestTag)) {
     logging.info('Skipping bump...');
     skipBump = true;
 
     // delete the existing tag (locally)
     // if we don't do this, standard-version generates an empty changelog
-    exec(`git tag --delete v${latest}`, { cwd });
+    exec(`git tag --delete ${latestTag}`, { cwd });
   }
 
   // create a standard-version configuration file
@@ -105,15 +123,15 @@ export async function bump(cwd: string, options: BumpOptions) {
   }, undefined, 2));
 
   const cmd = ['npx', 'standard-version@^9'];
-  if (firstRelease) {
+  if (isFirstRelease) {
     cmd.push('--first-release');
   }
 
   exec(cmd.join(' '), { cwd });
 
   // add the tag back if it was previously removed
-  if (currentTags.includes(`v${latest}`)) {
-    exec(`git tag v${latest}`, { cwd });
+  if (currentTags.includes(latestTag)) {
+    exec(`git tag ${latestTag}`, { cwd });
   }
 
   await remove(rcfile);
@@ -131,6 +149,9 @@ export async function bump(cwd: string, options: BumpOptions) {
   }
 
   await writeFile(bumpFile, newVersion);
+
+  const newTag = `${prefix}v${newVersion}`;
+  await writeFile(releaseTagFile, newTag);
 }
 
 async function tryReadVersionFile(versionFile: string) {
@@ -141,15 +162,36 @@ async function tryReadVersionFile(versionFile: string) {
   return JSON.parse(await readFile(versionFile, 'utf8'));
 }
 
+interface LatestTagOptions {
+  /**
+   * Working directory of the git repository.
+   */
+  readonly cwd: string;
+  /**
+   * Major version to select from.
+   */
+  readonly major?: number;
+  /**
+   * A pre-release suffix.
+   */
+  readonly prerelease?: string;
+  /**
+   * A prefix applied to all tags.
+   */
+  readonly prefix: string;
+}
+
 /**
  * Determines the latest release tag.
  * @param major (optional) A major version line to select from
  * @param prerelease (optional) A pre-release suffix.
  * @returns the latest tag, and whether it is the first release or not
  */
-function determineLatestTag(cwd: string, major: number | undefined, prerelease: string | undefined): { latest: string; firstRelease: boolean } {
-  // filter only tags for this major version if specified (start  with "vNN.").
-  const prefix = major ? `v${major}.*` : 'v*';
+function determineLatestTag(options: LatestTagOptions): { latestVersion: string; latestTag: string; isFirstRelease: boolean } {
+  const { cwd, major, prerelease, prefix } = options;
+
+  // filter only tags for this prefix and major version if specified (start with "vNN.").
+  const prefixFilter = major ? `${prefix}v${major}.*` : `${prefix}v*`;
 
   const listGitTags = [
     'git',
@@ -157,7 +199,7 @@ function determineLatestTag(cwd: string, major: number | undefined, prerelease: 
     'tag',
     '--sort="-version:refname"', // sort as versions and not lexicographically
     '--list',
-    `"${prefix}"`,
+    `"${prefixFilter}"`,
   ].join(' ');
 
   const stdout = execCapture(listGitTags, { cwd }).toString('utf8');
@@ -172,21 +214,27 @@ function determineLatestTag(cwd: string, major: number | undefined, prerelease: 
   tags = tags.filter(x => x);
 
   // if a pre-release tag is used, then add it to the initial version
-  let firstRelease = false;
-  let latest;
+  let isFirstRelease = false;
+  let latestTag;
 
   if (tags.length > 0) {
-    latest = tags[0];
+    latestTag = tags[0];
   } else {
-    const initial = `v${major ?? 0}.0.0`;
-    latest = prerelease ? `${initial}-${prerelease}.0` : initial;
-    firstRelease = true;
+    const initial = `${prefix}v${major ?? 0}.0.0`;
+    latestTag = prerelease ? `${initial}-${prerelease}.0` : initial;
+    isFirstRelease = true;
+  }
+
+  // remove tag prefix (if exists)
+  let latestVersion = latestTag;
+  if (prefix && latestVersion.startsWith(prefix)) {
+    latestVersion = latestVersion.substr(prefix.length);
   }
 
   // remove "v" prefix (if exists)
-  if (latest.startsWith('v')) {
-    latest = latest.substr(1);
+  if (latestVersion.startsWith('v')) {
+    latestVersion = latestVersion.substr(1);
   }
 
-  return { latest, firstRelease };
+  return { latestVersion, latestTag, isFirstRelease };
 }

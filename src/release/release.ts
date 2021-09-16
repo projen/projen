@@ -117,6 +117,20 @@ export interface ReleaseProjectOptions {
    * @default "failed-release"
    */
   readonly releaseFailureIssueLabel?: string;
+
+  /**
+   * Automatically add the given prefix to release tags.
+   * Useful if you are releasing on multiple branches with overlapping
+   * version numbers.
+   *
+   * Note: this prefix is used to detect the latest tagged version
+   * when bumping, so if you change this on a project with an existing version
+   * history, you may need to manually tag your latest release
+   * with the new prefix.
+   *
+   * @default - no prefix
+   */
+  readonly releaseTagPrefix?: string;
 }
 
 /**
@@ -218,6 +232,7 @@ export class Release extends Component {
       this.publisher.publishToGitHubReleases({
         changelogFile: this.version.changelogFileName,
         versionFile: this.version.versionFileName,
+        releaseTagFile: this.version.releaseTagFileName,
       });
     }
 
@@ -227,6 +242,7 @@ export class Release extends Component {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       workflowName: options.releaseWorkflowName ?? 'release',
+      tagPrefix: options.releaseTagPrefix,
     };
 
     this.branches.push(this.defaultBranch);
@@ -308,6 +324,10 @@ export class Release extends Component {
 
     if (branch.prerelease) {
       env.PRERELEASE = branch.prerelease;
+    }
+
+    if (branch.tagPrefix) {
+      env.PREFIX = branch.tagPrefix;
     }
 
     // the "release" task prepares a release but does not publish anything. the
@@ -410,6 +430,20 @@ export interface BranchOptions {
    * @default - normal releases
    */
   readonly prerelease?: string;
+
+  /**
+   * Automatically add the given prefix to release tags.
+   * Useful if you are releasing on multiple branches with overlapping
+   * version numbers.
+   *
+   * Note: this prefix is used to detect the latest tagged version
+   * when bumping, so if you change this on a project with an existing version
+   * history, you may need to manually tag your latest release
+   * with the new prefix.
+   *
+   * @default - no prefix
+   */
+  readonly tagPrefix?: string;
 }
 
 interface ReleaseBranch extends Partial<BranchOptions> {

@@ -102,17 +102,18 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const versionFile = `${ARTIFACTS_DIR}/${options.versionFile}`;
     const changelogFile = `${ARTIFACTS_DIR}/${options.changelogFile}`;
+    const releaseTagFile = `${ARTIFACTS_DIR}/${options.releaseTagFile}`;
 
     // create a github release
-    const getVersion = `v$(cat ${versionFile})`;
+    const releaseTag = `$(cat ${releaseTagFile})`;
 
     const ghRelease = [
-      `gh release create ${getVersion}`,
+      `gh release create ${releaseTag}`,
       '-R $GITHUB_REPOSITORY',
       `-F ${changelogFile}`,
-      `-t ${getVersion}`,
+      `-t ${releaseTag}`,
+      '--target $GITHUB_REF',
     ].join(' ');
 
     // release script that does not error when re-releasing a given version
@@ -135,6 +136,7 @@ export class Publisher extends Component {
       workflowEnv: {
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
         GITHUB_REPOSITORY: '${{ github.repository }}',
+        GITHUB_REF: '${{ github.ref }}',
       },
       run: idempotentRelease,
     });
@@ -634,6 +636,13 @@ export interface GitHubReleasesPublishOptions {
    * @example version.txt
    */
   readonly versionFile: string;
+
+  /**
+   * The location of a text file (relative to `dist/`) that contains the release tag.
+   *
+   * @example releasetag.txt
+   */
+  readonly releaseTagFile: string;
 
   /**
    * The location of an .md file that includes the changelog for the release.
