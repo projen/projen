@@ -10569,6 +10569,7 @@ Name | Type | Description
 **allowJs**?🔹 | <code>boolean</code> | Allow JavaScript files to be compiled.<br/>__*Default*__: false
 **allowSyntheticDefaultImports**?🔹 | <code>boolean</code> | Allow default imports from modules with no default export.<br/>__*Optional*__
 **alwaysStrict**?🔹 | <code>boolean</code> | Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.<br/>__*Default*__: true
+**baseUrl**?🔹 | <code>string</code> | Lets you set a base directory to resolve non-absolute module names.<br/>__*Optional*__
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
 **emitDecoratorMetadata**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: undefined
@@ -10593,6 +10594,7 @@ Name | Type | Description
 **noUnusedLocals**?🔹 | <code>boolean</code> | Report errors on unused local variables.<br/>__*Default*__: true
 **noUnusedParameters**?🔹 | <code>boolean</code> | Report errors on unused parameters in functions.<br/>__*Default*__: true
 **outDir**?🔹 | <code>string</code> | Output directory for the compiled files.<br/>__*Optional*__
+**paths**?🔹 | <code>Map<string, Array<string>></code> | A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.<br/>__*Optional*__
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.<br/>__*Default*__: true
 **rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/>__*Optional*__
 **skipLibCheck**?🔹 | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts).<br/>__*Default*__: false

@@ -345,6 +345,20 @@ export interface TypeScriptCompilerOptions {
    * Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
    */
   readonly allowSyntheticDefaultImports?: boolean;
+
+  /**
+   * Lets you set a base directory to resolve non-absolute module names.
+   *
+   * You can define a root folder where you can do absolute file resolution.
+   */
+  readonly baseUrl?: string;
+
+  /**
+   * A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.
+   *
+   * paths lets you declare how TypeScript should resolve an import in your require/imports.
+  */
+  readonly paths?: { [key: string]: string[] };
 }
 
 export class TypescriptConfig {
