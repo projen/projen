@@ -290,7 +290,7 @@ function installPackage(baseDir: string, spec: string): string {
  * @returns The string that includes the install command ("yarn add ...")
  */
 function renderInstallCommand(dir: string, module: string): string {
-  return `npm i --silent -D --no-lockfile --prefix=${dir} ${module}`;
+  return `npm i --silent -D -f --no-package-lock --prefix=${dir} ${module}`;
 }
 
 module.exports = new Command();
