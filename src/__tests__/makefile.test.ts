@@ -86,3 +86,87 @@ test('makefile synthesizes correctly using imperative API', () => {
     '', // new line at end of file
   ].join('\n'));
 });
+
+test('makefile rules can have descriptions', () => {
+  const prj = new TestProject();
+
+  new Makefile(prj, 'Makefile', {
+    all: ['one', 'two', 'three'],
+    rules: [
+      {
+        targets: ['one'],
+        recipe: ['touch one'],
+        phony: false,
+        description: 'update a file',
+      },
+      {
+        targets: ['two', 'three'],
+        prerequisites: ['one'],
+        recipe: ['touch $@'],
+        description: 'update two files',
+      },
+      {
+        targets: ['clean'],
+        recipe: ['rm -f one two three'],
+        phony: true,
+        description: 'clean up all files',
+      },
+    ],
+  });
+
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
+    `# ${FileBase.PROJEN_MARKER}`,
+    '',
+    '.PHONY: all',
+    'all: one two three',
+    '',
+    'one:                          ## update a file',
+    '\ttouch one',
+    '',
+    'two three: one                ## update two files',
+    '\ttouch $@',
+    '',
+    '.PHONY: clean',
+    'clean:                        ## clean up all files',
+    '\trm -f one two three',
+    '', // new line at end of file
+  ].join('\n'));
+});
+
+
+test('makefiles can specify a prelude section', () => {
+  const prj = new TestProject();
+
+  new Makefile(prj, 'Makefile', {
+    all: ['one', 'two', 'three'],
+    rules: [
+      {
+        targets: ['one'],
+        recipe: ['touch one'],
+        phony: false,
+      },
+    ],
+    prelude: [
+      '# author: Pancakes the Otter',
+      '# here is an extra target',
+      '',
+      '.POSIX',
+    ],
+  });
+
+  expect(synthSnapshot(prj).Makefile).toStrictEqual([
+    `# ${FileBase.PROJEN_MARKER}`,
+    '',
+    '# author: Pancakes the Otter',
+    '# here is an extra target',
+    '',
+    '.POSIX',
+    '',
+    '.PHONY: all',
+    'all: one two three',
+    '',
+    'one:',
+    '\ttouch one',
+    '', // new line at end of file
+  ].join('\n'));
+});
