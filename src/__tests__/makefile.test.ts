@@ -2,8 +2,10 @@ import { FileBase, Makefile } from '..';
 import { synthSnapshot, TestProject } from './util';
 
 test('makefile synthesizes correctly', () => {
+  // GIVEN
   const prj = new TestProject();
 
+  // WHEN
   new Makefile(prj, 'Makefile', {
     all: ['one', 'two', 'three'],
     rules: [
@@ -25,6 +27,7 @@ test('makefile synthesizes correctly', () => {
     ],
   });
 
+  // THEN
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
     `# ${FileBase.PROJEN_MARKER}`,
     '',
@@ -45,8 +48,10 @@ test('makefile synthesizes correctly', () => {
 });
 
 test('makefile synthesizes correctly using imperative API', () => {
+  // GIVEN
   const prj = new TestProject();
 
+  // WHEN
   new Makefile(prj, 'Makefile')
     .addRule({
       targets: ['one'],
@@ -68,6 +73,7 @@ test('makefile synthesizes correctly using imperative API', () => {
     .addAll('one')
     .addAlls('two', 'three');
 
+  // THEN
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
     `# ${FileBase.PROJEN_MARKER}`,
     '',
@@ -88,8 +94,10 @@ test('makefile synthesizes correctly using imperative API', () => {
 });
 
 test('makefile rules can have descriptions', () => {
+  // GIVEN
   const prj = new TestProject();
 
+  // WHEN
   new Makefile(prj, 'Makefile', {
     all: ['one', 'two', 'three'],
     rules: [
@@ -114,6 +122,7 @@ test('makefile rules can have descriptions', () => {
     ],
   });
 
+  // THEN
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
     `# ${FileBase.PROJEN_MARKER}`,
     '',
@@ -135,8 +144,10 @@ test('makefile rules can have descriptions', () => {
 
 
 test('makefiles can specify a prelude section', () => {
+  // GIVEN
   const prj = new TestProject();
 
+  // WHEN
   new Makefile(prj, 'Makefile', {
     all: ['one', 'two', 'three'],
     rules: [
@@ -154,6 +165,7 @@ test('makefiles can specify a prelude section', () => {
     ],
   });
 
+  // THEN
   expect(synthSnapshot(prj).Makefile).toStrictEqual([
     `# ${FileBase.PROJEN_MARKER}`,
     '',
