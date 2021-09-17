@@ -42,6 +42,26 @@ describe('overrides', () => {
     });
   });
 
+  test('addOverride(p, v) allows indexing into arrays to reach particular paths', () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, 'my/object/file.json', {
+      obj: {
+        myArray: [1, 2, { foo: 'bar' }],
+      },
+      marker: false,
+    });
+
+    // WHEN
+    file.addOverride('myArray.0', 123);
+    file.addOverride('myArray.2.foo', 'baz');
+
+    // THEN
+    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
+      myArray: [123, 2, { foo: 'baz' }],
+    });
+  });
+
   test('addOverride(p, undefined) can be used to delete a value', () => {
     // GIVEN
     const prj = new TestProject();

@@ -39,7 +39,7 @@ jobs:
           name: .upgrade.tmp.patch
           path: .upgrade.tmp.patch
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
   pr:
     name: Create Pull Request
     needs: upgrade
