@@ -13,6 +13,13 @@ export interface Rule {
   readonly targets: string[];
 
   /**
+   * Target-specific variable assignments.
+   *
+   * @default []
+   */
+  readonly variableAssignments?: string[];
+
+  /**
    * Files that are used as inputs to create a target.
    *
    * @default []
@@ -162,6 +169,9 @@ export class Makefile extends FileBase {
         const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
         const recipe = rule.recipe ?? [];
 
+        const variables = (rule.variableAssignments ?? []).map(
+          assignment => `${targets}: ${assignment}`,
+        );
         const signature = `${targets}: ${prerequisites}`.trim();
         const spacer = ' '.repeat(Math.max(0, 30 - signature.length));
         const description = rule.description ? `## ${rule.description}` : '';
@@ -170,6 +180,7 @@ export class Makefile extends FileBase {
 
         return [
           ...phony,
+          ...variables,
           `${signature}${spacer}${description}`.trim(),
           ...recipe.map(step => `\t${step}`),
         ].join('\n');
