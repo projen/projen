@@ -31,6 +31,7 @@ describe('prettier', () => {
       defaultReleaseBranch: 'master',
     });
 
+
     // WHEN
     new Eslint(project, {
       dirs: ['mysrc'],
@@ -59,4 +60,35 @@ describe('prettier', () => {
     // THEN
     expect(eslint.rules).toHaveProperty('prettier/prettier', ['error']);
   });
+});
+
+describe('alias', () => {
+  test('custom config', () => {
+    // GIVEN
+    const project = new NodeProject({
+      outdir: mkdtemp(),
+      name: 'test',
+      logging: { level: LogLevel.OFF },
+      defaultReleaseBranch: 'master',
+    });
+
+
+    // WHEN
+    const eslint = new Eslint(project, {
+      dirs: ['mysrc'],
+      aliasMap: {
+        '@src': './src',
+        '@foo': './src/foo',
+      },
+      aliasExtensions: ['.ts', '.js'],
+    });
+
+    // THEN
+    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty('map', [
+      ['@src', './src'],
+      ['@foo', './src/foo'],
+    ]);
+    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty('extensions', ['.ts', '.js']);
+  });
+
 });
