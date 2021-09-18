@@ -2990,7 +2990,6 @@ addRule(rule: Rule): Makefile
   * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
   * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
   * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
-  * **variableAssignments** (<code>Array<string></code>)  Target-specific variable assignments. __*Default*__: []
 
 __Returns__:
 * <code>[Makefile](#projen-makefile)</code>
@@ -3009,7 +3008,6 @@ addRules(...rules: Rule[]): Makefile
   * **phony** (<code>boolean</code>)  Marks whether the target is phony. __*Default*__: false
   * **prerequisites** (<code>Array<string></code>)  Files that are used as inputs to create a target. __*Default*__: []
   * **recipe** (<code>Array<string></code>)  Commands that are run (using prerequisites as inputs) to create a target. __*Default*__: []
-  * **variableAssignments** (<code>Array<string></code>)  Target-specific variable assignments. __*Default*__: []
 
 __Returns__:
 * <code>[Makefile](#projen-makefile)</code>
@@ -10531,7 +10529,6 @@ Name | Type | Description
 **phony**?🔹 | <code>boolean</code> | Marks whether the target is phony.<br/>__*Default*__: false
 **prerequisites**?🔹 | <code>Array<string></code> | Files that are used as inputs to create a target.<br/>__*Default*__: []
 **recipe**?🔹 | <code>Array<string></code> | Commands that are run (using prerequisites as inputs) to create a target.<br/>__*Default*__: []
-**variableAssignments**?🔹 | <code>Array<string></code> | Target-specific variable assignments.<br/>__*Default*__: []
 
 
 

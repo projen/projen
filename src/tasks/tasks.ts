@@ -173,6 +173,18 @@ export class Tasks extends Component {
 
     recipe.push(`@echo 🤖 Running task ${green(task.name)}...`);
 
+    const env = this.getFullEnvironment(task);
+    for (const [key, value] of Object.entries(env)) {
+      if (value === undefined) { // values may be undefined
+        // do nothing
+      } else if (value.startsWith('$(') && value.endsWith(')')) {
+        const query = value.substring(2, value.length - 1);
+        recipe.push(`@export ${key}=$(shell ${sanitizeCommand(query)})`);
+      } else {
+        recipe.push(`@export ${key}=${sanitizeCommand(value)}`);
+      }
+    }
+
     for (const step of task.steps) {
       if (step.say) {
         recipe.push(`@echo ${sanitizeCommand(step.say)}`);
@@ -208,29 +220,11 @@ export class Tasks extends Component {
     tasks = sorted(tasks) ?? {};
 
     for (let [name, task] of Object.entries(tasks)) {
-
-      // target-specific variable assignments are used to pass environment
-      // variables to all recipe steps, since by default, each recipe step
-      // is executed in a separate subshell
-      const env = this.getFullEnvironment(task);
-      const variableAssignments = [];
-      for (const [key, value] of Object.entries(env)) {
-        if (value === undefined) { // values may be undefined
-          // do nothing
-        } else if (value.startsWith('$(') && value.endsWith(')')) {
-          const query = value.substring(2, value.length - 1);
-          variableAssignments.push(`${key} = $(shell ${sanitizeCommand(query)})`);
-        } else {
-          variableAssignments.push(`${key} = ${sanitizeCommand(value)}`);
-        }
-      }
-
       makefile.addRule({
         targets: [sanitizeTaskName(name)],
         recipe: this.renderTaskAsRecipe(task),
         description: task.description ?? 'No description',
         phony: true,
-        variableAssignments: variableAssignments,
       });
     }
 
@@ -249,6 +243,10 @@ export class Tasks extends Component {
     } else {
       makefile.addAll('help');
     }
+
+    // in Makefiles, each line in a recipe is run as a new child process
+    // adding this special target will export variables to child processes
+    makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
   }
 
   private renderBuiltin(builtin: string) {
