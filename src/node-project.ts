@@ -241,7 +241,7 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    *
    * @default - default content
    */
-  readonly pullRequestTemplateContents?: string;
+  readonly pullRequestTemplateContents?: string[];
 
   /**
    * Additional entries to .gitignore

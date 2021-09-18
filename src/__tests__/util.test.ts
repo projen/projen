@@ -100,7 +100,7 @@ describe('deepMerge (destructive: false)', () => {
 
   test('overwrites non-objects', () => {
     // GIVEN
-    const original = { a: [] };
+    const original = { a: 'foo' };
 
     // WHEN
     deepMerge([original, { a: { b: 3 } }]);
@@ -164,7 +164,7 @@ describe('deepMerge (destructive: true)', () => {
 
   test('overwrites non-objects', () => {
     // GIVEN
-    const original = { a: [] };
+    const original = { a: 'foo' };
 
     // WHEN
     deepMerge([original, { a: { b: 3 } }], true);

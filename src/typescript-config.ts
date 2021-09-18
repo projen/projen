@@ -126,6 +126,17 @@ export interface TypeScriptCompilerOptions {
   readonly experimentalDecorators?: boolean;
 
   /**
+   * Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.
+   * Decorators are a language feature which hasn’t yet been fully ratified into the JavaScript specification.
+   * This means that the implementation version in TypeScript may differ from the implementation in JavaScript when it it decided by TC39.
+   * You can find out more about decorator support in TypeScript in the handbook.
+   *
+   * @see https://www.typescriptlang.org/docs/handbook/decorators.html
+   * @default undefined
+   */
+  readonly emitDecoratorMetadata?: boolean;
+
+  /**
    * Disallow inconsistently-cased references to the same file.
    *
    * @default false
@@ -334,6 +345,20 @@ export interface TypeScriptCompilerOptions {
    * Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
    */
   readonly allowSyntheticDefaultImports?: boolean;
+
+  /**
+   * Lets you set a base directory to resolve non-absolute module names.
+   *
+   * You can define a root folder where you can do absolute file resolution.
+   */
+  readonly baseUrl?: string;
+
+  /**
+   * A series of entries which re-map imports to lookup locations relative to the baseUrl, there is a larger coverage of paths in the handbook.
+   *
+   * paths lets you declare how TypeScript should resolve an import in your require/imports.
+  */
+  readonly paths?: { [key: string]: string[] };
 }
 
 export class TypescriptConfig {
