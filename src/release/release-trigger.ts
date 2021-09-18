@@ -1,5 +1,3 @@
-import { Project } from '..';
-
 export interface ScheduledReleaseOptions {
   /**
    * Cron schedule for releases.
@@ -12,20 +10,6 @@ export interface ScheduledReleaseOptions {
 }
 
 export interface ManualReleaseOptions {
-  /**
-   * Run the publish task as part of releases.
-   *
-   * @default false
-   */
-  readonly publish?: boolean;
-
-  /**
-   * Push release artifacts to the remote as part of releases.
-   *
-   * @default false
-   */
-  readonly pushArtifacts?: boolean;
-
   /**
    * Maintain a project-level changelog.
    *
@@ -43,7 +27,7 @@ export interface ManualReleaseOptions {
   readonly changelogPath?: string;
 }
 
-interface ReleaseStrategyOptions {
+interface ReleaseTriggerOptions {
   /**
    * Project-level changelog file path.
    *
@@ -66,31 +50,15 @@ interface ReleaseStrategyOptions {
    * @example '0 17 * * *' - every day at 5 pm
    */
   readonly schedule?: string;
-
-  /**
-   * The publish task name for a given release strategy
-   *
-   * Leave undefined if not applicable or publishing should not occur.
-   */
-  readonly publishTaskName?: string;
-
-  /**
-   * Push release artifacts to the remote as part of releases.
-   *
-   * Can be left undefined if not relevant for a given release strategy.
-   *
-   * @default undefined
-   */
-  readonly pushArtifacts?: boolean;
 }
 
 /**
  * Used to manage release strategies. This includes release
  * and release artifact automation
  */
-export class ReleaseStrategy {
+export class ReleaseTrigger {
   /**
-   * Creates a manual release strategy.
+   * Creates a manual release trigger.
    *
    * Use this option if you want totally manual releases.
    *
@@ -104,45 +72,40 @@ export class ReleaseStrategy {
    * @param options release options
    */
   public static manual(options: ManualReleaseOptions = {}) {
-    const publish = options.publish ?? false;
     let changelogPath;
 
     if (options.changelog ?? true) {
       changelogPath = options.changelogPath ?? 'CHANGELOG.md';
     }
 
-    return new ReleaseStrategy({
+    return new ReleaseTrigger({
       changelogPath: changelogPath,
-      publishTaskName: publish ? 'publish:git' : undefined,
-      pushArtifacts: options.pushArtifacts ?? false,
     });
   }
 
   /**
-   * Creates a scheduled release strategy.
+   * Creates a scheduled release trigger.
    *
    * Automated releases will occur based on the provided cron schedule.
    *
    * @param options release options.
    */
   public static scheduled(options: ScheduledReleaseOptions) {
-    return new ReleaseStrategy({
+    return new ReleaseTrigger({
       schedule: options.schedule,
     });
   }
 
   /**
-   * Creates a continuous release strategy.
+   * Creates a continuous release trigger.
    *
    * Automated releases will occur on every commit.
    */
   public static continuous() {
-    return new ReleaseStrategy({
+    return new ReleaseTrigger({
       continuous: true,
     });
   }
-
-  private readonly publishTaskName: string;
 
   /**
    * Project-level changelog file path.
@@ -163,32 +126,14 @@ export class ReleaseStrategy {
    */
   public readonly isContinuous: boolean;
 
-  /**
-   * Push release artifacts to the remote as part of releases.
-   *
-   * Undefined if not relevant for a given release strategy.
-   */
-  readonly pushArtifacts?: boolean;
-
-  private constructor(options: ReleaseStrategyOptions = {}) {
+  private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
     this.schedule = options.schedule;
     this.changelogPath = options.changelogPath;
-    this.publishTaskName = options.publishTaskName ?? '';
-    this.pushArtifacts = options.pushArtifacts;
   }
 
   /**
-   * Returns the publish task for a given release strategy.
-   * @param project Project
-   * @returns Publish task if one is found
-   */
-  public publishTask(project: Project) {
-    return project.tasks.tryFind(this.publishTaskName);
-  }
-
-  /**
-   * Whether or not this is a manual release strategy.
+   * Whether or not this is a manual release trigger.
    */
   public get isManual() {
     return !(this.isContinuous || this.schedule);

@@ -41,45 +41,23 @@ releaseBranches: {
 }
 ```
 
-## Release Strategies
+## Release Triggers
 
-If the project type supports it, then you can specify a `releaseStrategy`. You can use this to control whether
+If the project type supports it, then you can specify a `releaseTrigger`. You can use this to control whether
 or not your releases are automated as well as any unique artifacts associated with releases such as project-level
 changelogs.
 
 ```js
-releaseStrategy: ReleaseStrategy.scheduled({ schedule: '0 17 * * *' }),
+releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
 ```
 
 ### Manual Releases
 
 ```js
-releaseStrategy: ReleaseStrategy.manual(),
+releaseTrigger: ReleaseTrigger.manual(),
 ```
 
 Using manual releases disables the generation of the github release workflow and provides an extra
-`publish:git` task for you to use. The OOB manual release workflow would then look like:
-
-```terminal
-$ yarn build
-$ yarn release
-$ yarn publish:git
-$ git push --follow-tags origin main
-```
-
-You can optimize the release experience using the `publish` and `pushArtifacts` manual release options
-to automate running `publish:git` and pushing the resulting artifacts as part of release:
-
-```js
-releaseStrategy: ReleaseStrategy.manual({
-  publish: true,
-  pushArtifacts: true,
-}),
-```
-
-=>
-
-```terminal
-$ yarn build
-$ yarn release
-```
+`publish:git` task which is triggered as part of the `release` task. `publish:git` will manage a
+project-level changelog, commit any changes, tag the release, and push any commits and tags to
+remote. 

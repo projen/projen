@@ -6,7 +6,7 @@ import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
-import { ReleaseStrategy } from './release-strategy';
+import { ReleaseTrigger } from './release-trigger';
 
 const BUILD_JOBID = 'release';
 const GIT_REMOTE_STEPID = 'git_remote';
@@ -21,7 +21,7 @@ export interface ReleaseProjectOptions {
    *
    * @default true
    *
-   * @deprecated Use `releaseStrategy` instead
+   * @deprecated Use `releaseTrigger` instead
    */
   readonly releaseEveryCommit?: boolean;
 
@@ -30,16 +30,16 @@ export interface ReleaseProjectOptions {
    *
    * @default - no scheduled releases
    *
-   * @deprecated Use `releaseStrategy` instead
+   * @deprecated Use `releaseTrigger` instead
    */
   readonly releaseSchedule?: string;
 
   /**
-   * The release strategy to use.
+   * The release trigger to use.
    *
    * @default - Continuous releases
    */
-  readonly releaseStrategy?: ReleaseStrategy;
+  readonly releaseTrigger?: ReleaseTrigger;
 
   /**
    * A directory which will contain artifacts to be published to npm.
@@ -196,7 +196,7 @@ export class Release extends Component {
   private readonly antitamper: boolean;
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
-  private readonly releaseStrategy: ReleaseStrategy;
+  private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
   private readonly branches = new Array<ReleaseBranch>();
@@ -218,21 +218,21 @@ export class Release extends Component {
     this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
-    this.releaseStrategy = options.releaseStrategy ?? ReleaseStrategy.continuous();
+    this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
 
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
-     * disabled and no other strategy is set.
+     * disabled and no other trigger is set.
      *
      * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
      */
-    if (!((options.releaseEveryCommit ?? true) || options.releaseSchedule || options.releaseStrategy)) {
-      this.releaseStrategy = ReleaseStrategy.manual({ changelog: false });
+    if (!((options.releaseEveryCommit ?? true) || options.releaseSchedule || options.releaseTrigger)) {
+      this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
     }
 
     if (options.releaseSchedule) {
-      this.releaseStrategy = ReleaseStrategy.scheduled({ schedule: options.releaseSchedule });
+      this.releaseTrigger = ReleaseTrigger.scheduled({ schedule: options.releaseSchedule });
     }
 
     this.version = new Version(project, {
@@ -254,14 +254,6 @@ export class Release extends Component {
       this.publisher.publishToGitHubReleases({
         changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
         versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-      });
-    }
-
-    if (this.releaseStrategy.isManual) {
-      this.publisher.publishToGit({
-        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
-        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-        projectChangelogFile: this.releaseStrategy.changelogPath,
       });
     }
 
@@ -371,13 +363,15 @@ export class Release extends Component {
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
-    const publishTask = this.releaseStrategy.publishTask(this.project);
-    if (publishTask) {
-      releaseTask.spawn(publishTask);
-    }
+    if (this.releaseTrigger.isManual) {
+      const publishTask = this.publisher.publishToGit({
+        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
+        projectChangelogFile: this.releaseTrigger.changelogPath,
+        gitBranch: branch.name,
+      });
 
-    if (this.releaseStrategy.pushArtifacts) {
-      releaseTask.exec(`git push --follow-tags origin ${branch.name}`);
+      releaseTask.spawn(publishTask);
     }
 
     // anti-tamper check (fails if there were changes to committed files)
@@ -406,7 +400,7 @@ export class Release extends Component {
       },
     });
 
-    if (this.github && !this.releaseStrategy.isManual) {
+    if (this.github && !this.releaseTrigger.isManual) {
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -417,8 +411,8 @@ export class Release extends Component {
           },
         },
         triggers: {
-          schedule: this.releaseStrategy.schedule ? [{ cron: this.releaseStrategy.schedule }] : undefined,
-          push: this.releaseStrategy.isContinuous ? { branches: [branch.name] } : undefined,
+          schedule: this.releaseTrigger.schedule ? [{ cron: this.releaseTrigger.schedule }] : undefined,
+          push: this.releaseTrigger.isContinuous ? { branches: [branch.name] } : undefined,
         },
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {

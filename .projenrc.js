@@ -1,5 +1,4 @@
 const { JsiiProject, JsonFile, TextFile } = require('./lib');
-const { ReleaseStrategy } = require('./lib/release');
 
 const project = new JsiiProject({
   name: 'projen',

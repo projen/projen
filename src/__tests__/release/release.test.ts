@@ -1,6 +1,6 @@
 import * as YAML from 'yaml';
 import { JobPermission } from '../../github/workflows-model';
-import { Release, ReleaseStrategy } from '../../release';
+import { Release, ReleaseTrigger } from '../../release';
 import { synthSnapshot, TestProject } from '../util';
 
 test('minimal', () => {
@@ -153,7 +153,7 @@ test('manual releases do not generate a release workflow', () => {
     task: task,
     versionFile: 'version.json',
     branch: 'main',
-    releaseStrategy: ReleaseStrategy.manual(),
+    releaseTrigger: ReleaseTrigger.manual(),
   });
 
   // THEN

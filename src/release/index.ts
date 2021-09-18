@@ -1,3 +1,3 @@
 export * from './release';
 export * from './publisher';
-export * from './release-strategy';
+export * from './release-trigger';

@@ -108,8 +108,11 @@ export class Publisher extends Component {
     const versionFile = options.versionFile;
     const changelog = options.changelogFile;
     const projectChangelogFile = options.projectChangelogFile;
+    const gitBranch = options.gitBranch ?? 'main';
 
-    const publishTask = this.project.addTask('publish:git', {
+    const taskName = (gitBranch == 'main' || gitBranch == 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
+
+    const publishTask = this.project.addTask(taskName, {
       description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
       env: {
         CHANGELOG: changelog,
@@ -117,8 +120,13 @@ export class Publisher extends Component {
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
       },
     });
-    projectChangelogFile && publishTask.builtin('release/update-changelog');
+    if (projectChangelogFile) {
+      publishTask.builtin('release/update-changelog');
+    }
     publishTask.builtin('release/tag-version');
+    publishTask.exec(`git push --follow-tags origin ${gitBranch}`);
+
+    return publishTask;
   }
 
   /**
@@ -677,4 +685,11 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    * The location of an .md file that includes the project-level changelog.
    */
   readonly projectChangelogFile?: string;
+
+  /**
+   * Branch to push to.
+   *
+   * @default "main"
+   */
+  readonly gitBranch?: string;
 }
