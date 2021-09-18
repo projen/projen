@@ -171,31 +171,32 @@ export class Tasks extends Component {
   private renderTaskAsRecipe(task: Task): string[] {
     const recipe: string[] = [];
 
-    recipe.push(`@echo 🤖 Running task ${green(task.name)}...`);
+    recipe.push(`@echo "🤖 Running task ${green(task.name)}..."`);
 
+    const envVars = [];
     const env = this.getFullEnvironment(task);
     for (const [key, value] of Object.entries(env)) {
       if (value === undefined) { // values may be undefined
         // do nothing
       } else if (value.startsWith('$(') && value.endsWith(')')) {
         const query = value.substring(2, value.length - 1);
-        recipe.push(`@export ${key}=$(shell ${sanitizeCommand(query)})`);
+        envVars.push(`export ${key}=$(shell ${sanitizeCommand(query)}); \\\n\t`);
       } else {
-        recipe.push(`@export ${key}=${sanitizeCommand(value)}`);
+        envVars.push(`export ${key}=${sanitizeCommand(value)}; \\\n\t`);
       }
     }
 
     for (const step of task.steps) {
       if (step.say) {
-        recipe.push(`@echo ${sanitizeCommand(step.say)}`);
+        recipe.push(`@${envVars.join('')}echo "${sanitizeCommand(step.say)}"`);
       }
 
       if (step.spawn) {
-        recipe.push(`@make ${sanitizeTaskName(step.spawn)}`);
+        recipe.push(`@${envVars.join('')}$(MAKE) ${sanitizeTaskName(step.spawn)}`);
       }
 
       if (step.builtin) {
-        recipe.push(this.renderBuiltin(step.builtin));
+        recipe.push(`@${envVars.join('')}${this.renderBuiltin(step.builtin)}`);
       }
 
       const execs = step.exec ? [step.exec] : [];
@@ -208,11 +209,11 @@ export class Tasks extends Component {
         if (cwd) {
           command = `(cd ${cwd} && ${command})`;
         }
-        recipe.push(sanitizeCommand(command));
+        recipe.push(`@${envVars.join('')}${sanitizeCommand(command)}`);
       }
     }
 
-    recipe.push(`@echo 🤖 Finished task ${green(task.name)}.`);
+    recipe.push(`@echo "🤖 Finished task ${green(task.name)}."`);
     return recipe;
   }
 
@@ -231,7 +232,7 @@ export class Tasks extends Component {
     if (!('help' in this._tasks)) {
       makefile.addRule({
         targets: ['help'],
-        recipe: [sanitizeCommand('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
+        recipe: [sanitizeCommand('@echo "$\{BOLD\}COMMANDS:$\{NORMAL\}"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t$\{GREEN\}%-30s$\{NORMAL\} %s\n", $$1, $$2}\'')],
         description: 'Show help messages for make targets',
         phony: true,
       });
@@ -244,9 +245,14 @@ export class Tasks extends Component {
       makefile.addAll('help');
     }
 
-    // in Makefiles, each line in a recipe is run as a new child process
-    // adding this special target will export variables to child processes
-    makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
+    makefile.addPrelude(
+      'ncolors = $(shell tput colors)',
+      'ifeq ($(shell test ${ncolors} -ge 8; echo $$?),0)',
+      '	GREEN=$(shell tput setaf 2)',
+      '	BOLD=$(shell tput bold)',
+      '	NORMAL=$(shell tput sgr0)',
+      'endif',
+    );
   }
 
   private renderBuiltin(builtin: string) {
@@ -258,7 +264,7 @@ export class Tasks extends Component {
 }
 
 function green(value: string) {
-  return `\\\\033[32m${value}\\\\033[0m`;
+  return `$\{GREEN\}${value}$\{NORMAL\}`;
 }
 
 export function sanitizeTaskName(name: string) {
