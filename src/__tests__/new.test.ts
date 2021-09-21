@@ -97,10 +97,6 @@ test('projen new --from external dist tag', () => {
   withProjectDir(projectdir => {
     execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@latest', '--no-post', MIN_NODE_VERSION_OPTION]);
 
-    // patch the projen version in package.json to match the current version
-    // otherwise, every bump would need to update these snapshots.
-    sanitizeOutput(projectdir);
-
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [
@@ -111,7 +107,7 @@ test('projen new --from external dist tag', () => {
       ],
     });
 
-    expect(actual).toMatchSnapshot();
+    // Not doing a snapshot test because @latest is used
     expect(actual['schema.graphql']).toBeDefined();
   });
 });

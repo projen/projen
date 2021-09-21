@@ -258,7 +258,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 /**
  * Installs the npm module (through `npm install`) to node_modules under `projectDir`.
  * @param spec The npm package spec (e.g. foo@^1.2 or foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
- * @returns Basic npm package spec (e.g. foo@^1.2)
+ * @returns The installed `package@version` (e.g. foo@1.2)
  */
 function installPackage(baseDir: string, spec: string): string {
   const packageJsonPath = path.join(baseDir, 'package.json');
