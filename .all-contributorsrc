@@ -477,6 +477,69 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "hassanazharkhan",
+      "name": "Hassan Azhar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57677979?v=4",
+      "profile": "https://github.com/hassanazharkhan",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jumic",
+      "name": "Julian Michel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15660169?v=4",
+      "profile": "https://www.linkedin.com/in/julian-michel-812a223a/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "lmarsden",
+      "name": "lmarsden",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51232932?v=4",
+      "profile": "https://github.com/lmarsden",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "adrianmace",
+      "name": "Adrian Mace",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5071859?v=4",
+      "profile": "https://github.com/adrianmace",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mKeRix",
+      "name": "Heiko Rothe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/770596?v=4",
+      "profile": "https://github.com/mKeRix",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "hyandell",
+      "name": "Henri Yandell",
+      "avatar_url": "https://avatars.githubusercontent.com/u/477715?v=4",
+      "profile": "https://github.com/hyandell",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mwg-rea",
+      "name": "Matthew Gamble",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82480228?v=4",
+      "profile": "https://github.com/mwg-rea",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
