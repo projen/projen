@@ -160,7 +160,7 @@ dist/java
         "version": "3.0.0",
       },
       Object {
-        "name": "com.github.eladb/projen",
+        "name": "io.github.cdklabs/projen",
         "type": "test",
         "version": "^1.2.3",
       },
@@ -368,7 +368,7 @@ dist/java
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -531,7 +531,7 @@ exports[`dependencies 1`] = `
             <version>[1.2.3,2.0.0)</version>
         </dependency>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -670,7 +670,7 @@ exports[`dependencies via ctor 1`] = `
             <version>[1.2.3,2.0.0)</version>
         </dependency>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -858,7 +858,7 @@ dist/java
         "version": "3.0.0",
       },
       Object {
-        "name": "com.github.eladb/projen",
+        "name": "io.github.cdklabs/projen",
         "type": "test",
         "version": "^1.2.3",
       },
@@ -1047,7 +1047,7 @@ dist/java
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>
@@ -1184,7 +1184,7 @@ exports[`pom options 1`] = `
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>[1.2.3,2.0.0)</version>
             <scope>test</scope>

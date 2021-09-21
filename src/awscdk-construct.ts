@@ -122,8 +122,8 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
  *   // jsii publishing
  *
  *   java: {
- *     javaPackage: 'com.github.eladb.watchful',
- *     mavenGroupId: 'com.github.eladb',
+ *     javaPackage: 'io.github.cdklabs.watchful',
+ *     mavenGroupId: 'io.github.cdklabs',
  *     mavenArtifactId: 'cdk-watchful'
  *   },
  *   python: {
