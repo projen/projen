@@ -44,7 +44,7 @@ test('projen new --from external', () => {
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-post', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -70,7 +70,7 @@ test('options are not overwritten when creating from external project types', ()
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-synth', '--cdk-version', '1.63.0', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-synth', '--cdk-version', '1.63.0', MIN_NODE_VERSION_OPTION]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -158,7 +158,7 @@ test('projenrc-json creates node-project', () => {
 
 test('projenrc-json creates external project type', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
 
     // exclude node_modules to work around bug where node_modules is generated AND one of the
     // dependencies includes a file with .json extension that isn't valid JSON
