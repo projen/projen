@@ -370,14 +370,15 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: errout=$(mktemp); gh release create v$(cat dist/version.txt) -R
-          $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2>
-          $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q
-          \\"Release.tag_name already exists\\" $errout; then cat $errout; exit
-          $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
+          $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
+          --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode
+          -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then
+          cat $errout; exit $exitcode; fi
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
+          GITHUB_REF: \${{ github.ref }}
   release_npm:
     name: Publish to npm
     needs: release
@@ -965,6 +966,7 @@ tsconfig.tsbuildinfo
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
+          "RELEASETAG": "dist/releasetag.txt",
         },
         "name": "bump",
         "steps": Array [
@@ -1069,10 +1071,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "requiredEnv": Array [
           "GITHUB_TOKEN",
           "GITHUB_REPOSITORY",
+          "GITHUB_REF",
         ],
         "steps": Array [
           Object {
-            "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
       },
@@ -1196,6 +1199,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
+          "RELEASETAG": "dist/releasetag.txt",
         },
         "name": "unbump",
         "steps": Array [
@@ -2064,7 +2068,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
-          node-version: 14.17.0
+          node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -2225,7 +2229,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14.17.0",
+        "version": "^10.17.0",
       },
       Object {
         "name": "@types/yaml",
@@ -2450,7 +2454,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "spawn": "test:compile",
           },
           Object {
-            "exec": "jest --passWithNoTests --all --coverageProvider=v8",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -2847,7 +2851,7 @@ common.fixup(project);
 project.synth();
 ",
   "cdk8s.common.js": "exports.options = {
-  minNodeVersion: '14.17.0',
+  minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
   authorUrl: 'https://aws.amazon.com',
@@ -2972,7 +2976,7 @@ project.synth();
       "@types/follow-redirects": "*",
       "@types/jest": "*",
       "@types/json-stable-stringify": "*",
-      "@types/node": "^14.17.0",
+      "@types/node": "^10.17.0",
       "@types/yaml": "*",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
@@ -2995,7 +2999,7 @@ project.synth();
       "typescript": "*",
     },
     "engines": Object {
-      "node": ">= 14.17.0",
+      "node": ">= 10.17.0",
     },
     "jest": Object {
       "clearMocks": true,
@@ -3486,7 +3490,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
-          node-version: 14.17.0
+          node-version: 10.17.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -3641,7 +3645,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14.17.0",
+        "version": "^10.17.0",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -3847,7 +3851,7 @@ tsconfig.tsbuildinfo
             "spawn": "test:compile",
           },
           Object {
-            "exec": "jest --passWithNoTests --all --coverageProvider=v8",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -4226,7 +4230,7 @@ common.fixup(project);
 project.synth();
 ",
   "cdk8s.common.js": "exports.options = {
-  minNodeVersion: '14.17.0',
+  minNodeVersion: '10.17.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
   authorUrl: 'https://aws.amazon.com',
@@ -4357,7 +4361,7 @@ project.synth();
       "@types/fs-extra": "*",
       "@types/jest": "*",
       "@types/json-schema": "*",
-      "@types/node": "^14.17.0",
+      "@types/node": "^10.17.0",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
       "eslint": "*",
@@ -4373,7 +4377,7 @@ project.synth();
       "typescript": "*",
     },
     "engines": Object {
-      "node": ">= 14.17.0",
+      "node": ">= 10.17.0",
     },
     "jest": Object {
       "clearMocks": true,
@@ -4698,14 +4702,15 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: errout=$(mktemp); gh release create v$(cat dist/version.txt) -R
-          $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2>
-          $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q
-          \\"Release.tag_name already exists\\" $errout; then cat $errout; exit
-          $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
+          $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
+          --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode
+          -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then
+          cat $errout; exit $exitcode; fi
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
+          GITHUB_REF: \${{ github.ref }}
 ",
   ".github/workflows/stale.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -4972,6 +4977,7 @@ junit.xml
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
+          "RELEASETAG": "dist/releasetag.txt",
         },
         "name": "bump",
         "steps": Array [
@@ -5030,10 +5036,11 @@ junit.xml
         "requiredEnv": Array [
           "GITHUB_TOKEN",
           "GITHUB_REPOSITORY",
+          "GITHUB_REF",
         ],
         "steps": Array [
           Object {
-            "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
       },
@@ -5101,6 +5108,7 @@ junit.xml
           "BUMPFILE": "dist/version.txt",
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
+          "RELEASETAG": "dist/releasetag.txt",
         },
         "name": "unbump",
         "steps": Array [

@@ -67,7 +67,7 @@ export class Projenrc extends Component {
     const execOpts = this.testScope ? ' -Dexec.classpathScope="test"' : '';
     const compileGoal = this.testScope ? 'compiler:testCompile' : 'compiler:compile';
 
-    project.deps.addDependency(`com.github.eladb/projen@${projenVersion}`, depType);
+    project.deps.addDependency(`io.github.cdklabs/projen@${projenVersion}`, depType);
     pom.addPlugin('org.codehaus.mojo/exec-maven-plugin@3.0.0');
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.

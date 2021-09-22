@@ -48,8 +48,8 @@ describe('maven repository options', () => {
       author: 'My Name',
       name: 'testproject',
       publishToMaven: {
-        javaPackage: 'com.github.eladb.watchful',
-        mavenGroupId: 'com.github.eladb',
+        javaPackage: 'io.github.cdklabs.watchful',
+        mavenGroupId: 'io.github.cdklabs',
         mavenArtifactId: 'cdk-watchful',
       },
       defaultReleaseBranch: 'master',
@@ -86,8 +86,8 @@ describe('maven repository options', () => {
       author: 'My Name',
       name: 'testproject',
       publishToMaven: {
-        javaPackage: 'com.github.eladb.watchful',
-        mavenGroupId: 'com.github.eladb',
+        javaPackage: 'io.github.cdklabs.watchful',
+        mavenGroupId: 'io.github.cdklabs',
         mavenArtifactId: 'cdk-watchful',
         mavenEndpoint: 'https://s01.oss.sonatype.org',
       },
@@ -129,8 +129,8 @@ describe('maven repository options', () => {
       author: 'My Name',
       name: 'testproject',
       publishToMaven: {
-        javaPackage: 'com.github.eladb.watchful',
-        mavenGroupId: 'com.github.eladb',
+        javaPackage: 'io.github.cdklabs.watchful',
+        mavenGroupId: 'io.github.cdklabs',
         mavenArtifactId: 'cdk-watchful',
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
       },
@@ -169,8 +169,8 @@ describe('maven repository options', () => {
       author: 'My Name',
       name: 'testproject',
       publishToMaven: {
-        javaPackage: 'com.github.eladb.watchful',
-        mavenGroupId: 'com.github.eladb',
+        javaPackage: 'io.github.cdklabs.watchful',
+        mavenGroupId: 'io.github.cdklabs',
         mavenArtifactId: 'cdk-watchful',
         mavenServerId: 'something-else',
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',

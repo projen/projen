@@ -438,7 +438,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "cdk-appsync-project",
         "type": "build",
-        "version": "1.1.2",
+        "version": "1.1.3",
       },
       Object {
         "name": "eslint",
@@ -784,7 +784,8 @@ tsconfig.tsbuildinfo
 const project = new AwsCdkAppSyncApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
-  devDeps: ['cdk-appsync-project@1.1.2'],
+  devDeps: ['cdk-appsync-project@1.1.3'],
+  minNodeVersion: '10.17.0',
   name: 'my-project',
   transformerVersion: '1.77.15',
 
@@ -1040,7 +1041,7 @@ project.synth();",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
       "aws-cdk": "^1.95.2",
-      "cdk-appsync-project": "1.1.2",
+      "cdk-appsync-project": "1.1.3",
       "eslint": "*",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
@@ -1054,6 +1055,9 @@ project.synth();",
       "ts-jest": "*",
       "ts-node": "*",
       "typescript": "*",
+    },
+    "engines": Object {
+      "node": ">= 10.17.0",
     },
     "jest": Object {
       "clearMocks": true,

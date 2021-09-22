@@ -1,4 +1,3 @@
-import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
@@ -146,15 +145,16 @@ function commandLineToProps(cwd: string, type: inventory.ProjectType, argv: Reco
  * @param args Command line arguments (incl. project type)
  */
 async function newProjectFromModule(baseDir: string, spec: string, args: any) {
-  const installCommand = `yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev`;
+  const projenVersion = args.projenVersion ?? 'latest';
+  const installCommand = renderInstallCommand(baseDir, `projen@${projenVersion}`);
   if (args.projenVersion) {
-    exec(`${installCommand} projen@${args.projenVersion}`, { cwd: baseDir });
+    exec(installCommand, { cwd: baseDir });
   } else {
     // do not overwrite existing installation
-    exec(`yarn list --depth=0 --pattern projen || ${installCommand} projen`, { cwd: baseDir });
+    exec(`npm ls --prefix=${baseDir} --depth=0 --pattern projen || ${installCommand}`, { cwd: baseDir });
   }
 
-  const specDependencyInfo = yarnAdd(baseDir, spec);
+  const specDependencyInfo = installPackage(baseDir, spec);
 
   // Remove optional semver information from spec to retrieve the module name
   const moduleName = spec.replace(/\@([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/, '');
@@ -256,34 +256,17 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 }
 
 /**
- * Installs the npm module (through `yarn add`) to node_modules under `projectDir`.
+ * Installs the npm module (through `npm install`) to node_modules under `projectDir`.
  * @param spec The npm package spec (e.g. foo@^1.2)
  * @returns String info for the project devDeps (e.g. foo@^1.2 or foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
  */
-function yarnAdd(baseDir: string, spec: string): string {
+function installPackage(baseDir: string, spec: string): string {
   const packageJsonPath = path.join(baseDir, 'package.json');
   const packageJsonExisted = fs.existsSync(packageJsonPath);
   let dependencyInfo = spec;
 
-  // workaround: yarn fails to extract tgz if it contains '@' in the name, so we
-  // create a temp copy called pkg.tgz and install from there.
-  // see: https://github.com/yarnpkg/yarn/issues/6339
-  if (spec.endsWith('.tgz') && spec.includes('@')) {
-    // if user passes in a file spec then we have to specify the project name and the package location
-    // (e.g foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
-    const moduleName = spec.split('/').slice(-1)[0].trim().split('@')[0].trim(); // Example: ./cdk-project/dist/js/cdk-project@1.0.0.jsii.tgz
-
-    const packageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-'));
-    const copy = path.join(packageDir, 'pkg.tgz');
-    fs.copyFileSync(spec, copy);
-
-    spec = copy;
-
-    dependencyInfo = `${moduleName}@${spec}`;
-  }
-
   logging.info(`installing external module ${spec}...`);
-  exec(`yarn add --modules-folder=${baseDir}/node_modules --silent --no-lockfile --dev ${spec}`, { cwd: baseDir });
+  exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // if package.json did not exist before calling yarn add, we should remove it
   // so we can start off clean.
@@ -292,6 +275,22 @@ function yarnAdd(baseDir: string, spec: string): string {
   }
 
   return dependencyInfo;
+}
+
+/**
+ * Render a command to install an npm package.
+ *
+ * Engine checks are ignorred at this point so that the module can be installed
+ * regardless of the environment. This was needed to unblock the upgrade of the
+ * minimum node version of projen, but also okay generally because engine checks
+ * will be performed later and for all eternety.
+ *
+ * @param dir Base directory
+ * @param module The module to install (e.g. foo@^1.2)
+ * @returns The string that includes the install command ("yarn add ...")
+ */
+function renderInstallCommand(dir: string, module: string): string {
+  return `npm install --save-dev -f --no-package-lock --prefix=${dir} ${module}`;
 }
 
 module.exports = new Command();

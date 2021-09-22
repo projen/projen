@@ -23,6 +23,84 @@ test('poetry enabled', () => {
   expect(snapshot['pyproject.toml']).toContain('a short project description');
   expect(snapshot['pyproject.toml']).toContain('Apache-2.0');
   expect(snapshot['pyproject.toml']).toContain('Development Status :: 4 - Beta');
+  expect(snapshot['pyproject.toml']).toContain('python = "^3.6"'); // default python version
+});
+
+test('poetry enabled with specified python version', () => {
+  const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
+    poetry: true,
+    homepage: 'http://www.example.com',
+    description: 'a short project description',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
+  });
+  p.addDependency('python@^3.7,<=3.9');
+
+  const snapshot = synthSnapshot(p);
+  expect(snapshot['pyproject.toml']).toContain('python = "^3.7,<=3.9"');
+});
+
+test('poetry enabled with poetry-specific options', () => {
+  const p = new TestPythonProject({
+    venv: false,
+    pip: false,
+    setuptools: false,
+    poetry: true,
+    homepage: 'http://www.example.com',
+    description: 'a short project description',
+    license: 'Apache-2.0',
+    classifiers: [
+      'Development Status :: 4 - Beta',
+    ],
+    deps: [
+      'package1@0.0.1',
+      'package2@0.0.2',
+    ],
+    poetryOptions: {
+      maintainers: ['First-2 Last-2'],
+      repository: 'https://github.com/test-python-project',
+      keywords: ['Keyword1'],
+      packages: [
+        {
+          include: 'my_package',
+          format: 'sdist',
+        },
+      ],
+      include: ['CHANGELOG.md'],
+      exclude: ['my_package/excluded.py'],
+      source: [
+        {
+          name: 'pypi_',
+          url: 'https://pypi.org/simple/',
+          default: true,
+        },
+      ],
+      scripts: {
+        'test-python-cli': 'test-python-project.cli:cli',
+      },
+      extras: {
+        cli: [
+          'package1',
+          'package2',
+        ],
+      },
+      plugins: {
+        'blogtool.parsers': {
+          '.rst': 'some_module:SomeClass',
+        },
+      },
+      urls: {
+        'bug tracker': 'https://github.com/test-python-project/issues',
+      },
+    },
+  });
+
+  expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
 class TestPythonProject extends PythonProject {

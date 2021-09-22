@@ -21,6 +21,14 @@ For example:
 majorVersion: 1
 ```
 
+It is possible to release the same major version to different branches by specifying a prefix that is applied to all tags for a particular branch.
+
+For example:
+
+```js
+tagPrefix: 'stable/'
+```
+
 ## Release Branches
 
 Our release model is based on [trunk-based development](https://trunkbaseddevelopment.com/). This means that commits to the default 
