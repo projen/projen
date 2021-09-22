@@ -1437,731 +1437,110 @@ test('Snapshot', () => {
 
 exports[`projen new --from external tarball 1`] = `
 Object {
-  ".eslintrc.json": Object {
-    "env": Object {
-      "jest": true,
-      "node": true,
-    },
-    "extends": Array [
-      "plugin:import/typescript",
-    ],
-    "ignorePatterns": Array [
-      "*.js",
-      "!.projenrc.js",
-      "*.d.ts",
-      "node_modules/",
-      "*.generated.ts",
-      "coverage",
-    ],
-    "overrides": Array [
-      Object {
-        "files": Array [
-          ".projenrc.js",
-        ],
-        "rules": Object {
-          "@typescript-eslint/no-require-imports": "off",
-          "import/no-extraneous-dependencies": "off",
-        },
-      },
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
-      "ecmaVersion": 2018,
-      "project": "./tsconfig.eslint.json",
-      "sourceType": "module",
-    },
-    "plugins": Array [
-      "@typescript-eslint",
-      "import",
-    ],
-    "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
-        "error",
-        2,
-      ],
-      "@typescript-eslint/member-delimiter-style": Array [
-        "error",
-      ],
-      "@typescript-eslint/member-ordering": Array [
-        "error",
-        Object {
-          "default": Array [
-            "public-static-field",
-            "public-static-method",
-            "protected-static-field",
-            "protected-static-method",
-            "private-static-field",
-            "private-static-method",
-            "field",
-            "constructor",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": Array [
-        "error",
-      ],
-      "@typescript-eslint/return-await": Array [
-        "error",
-      ],
-      "array-bracket-newline": Array [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": Array [
-        "error",
-        "never",
-      ],
-      "brace-style": Array [
-        "error",
-        "1tbs",
-        Object {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": Array [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": Array [
-        "error",
-        Object {
-          "after": true,
-          "before": false,
-        },
-      ],
-      "curly": Array [
-        "error",
-        "multi-line",
-        "consistent",
-      ],
-      "dot-notation": Array [
-        "error",
-      ],
-      "import/no-extraneous-dependencies": Array [
-        "error",
-        Object {
-          "devDependencies": Array [
-            "**/test/**",
-            "**/build-tools/**",
-          ],
-          "optionalDependencies": false,
-          "peerDependencies": true,
-        },
-      ],
-      "import/no-unresolved": Array [
-        "error",
-      ],
-      "import/order": Array [
-        "warn",
-        Object {
-          "alphabetize": Object {
-            "caseInsensitive": true,
-            "order": "asc",
-          },
-          "groups": Array [
-            "builtin",
-            "external",
-          ],
-        },
-      ],
-      "indent": Array [
-        "off",
-      ],
-      "key-spacing": Array [
-        "error",
-      ],
-      "keyword-spacing": Array [
-        "error",
-      ],
-      "max-len": Array [
-        "error",
-        Object {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
-      "no-bitwise": Array [
-        "error",
-      ],
-      "no-duplicate-imports": Array [
-        "error",
-      ],
-      "no-multi-spaces": Array [
-        "error",
-        Object {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": Array [
-        "error",
-      ],
-      "no-return-await": Array [
-        "off",
-      ],
-      "no-shadow": Array [
-        "off",
-      ],
-      "no-trailing-spaces": Array [
-        "error",
-      ],
-      "object-curly-newline": Array [
-        "error",
-        Object {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": Array [
-        "error",
-        "always",
-      ],
-      "object-property-newline": Array [
-        "error",
-        Object {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": Array [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": Array [
-        "error",
-        "single",
-        Object {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": Array [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": Array [
-        "error",
-      ],
-    },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
-          ".ts",
-          ".tsx",
-        ],
-      },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
-          "project": "./tsconfig.eslint.json",
-        },
-      },
-    },
+  "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
+  "bundledDependencies": Array [],
+  "dependencies": Object {
+    "@aws-cdk/assert": "^1.95.2",
+    "@aws-cdk/aws-appsync": "^1.95.2",
+    "@aws-cdk/aws-cognito": "^1.95.2",
+    "@aws-cdk/aws-dynamodb": "^1.95.2",
+    "@aws-cdk/aws-iam": "^1.95.2",
+    "@aws-cdk/core": "^1.95.2",
+    "cdk-appsync-transformer": "1.77.15",
   },
-  ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+  "devDependencies": Object {
+    "./cdk-appsync-project-1.1.3.tgz": "*",
+    "@types/jest": "*",
+    "@types/node": "^10.17.0",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "aws-cdk": "^1.95.2",
+    "eslint": "*",
+    "eslint-import-resolver-node": "*",
+    "eslint-import-resolver-typescript": "*",
+    "eslint-plugin-import": "*",
+    "jest": "*",
+    "jest-junit": "^12",
+    "json-schema": "*",
+    "npm-check-updates": "^11",
+    "projen": "^999.999.999",
+    "standard-version": "^9",
+    "ts-jest": "*",
+    "ts-node": "*",
+    "typescript": "*",
+  },
+  "engines": Object {
+    "node": ">= 10.17.0",
+  },
+  "jest": Object {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "coverageReporters": Array [
+      "json",
+      "lcov",
+      "clover",
+      "text",
+    ],
+    "globals": Object {
+      "ts-jest": Object {
+        "tsconfig": "tsconfig.jest.json",
+      },
+    },
+    "preset": "ts-jest",
+    "reporters": Array [
+      "default",
+      Array [
+        "jest-junit",
+        Object {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": Array [
+      "**/__tests__/**/*.ts?(x)",
+      "**/?(*.)+(spec|test).ts?(x)",
+    ],
+    "testPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "watchPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+  },
+  "license": "Apache-2.0",
+  "name": "my-project",
+  "peerDependencies": Object {},
+  "scripts": Object {
+    "build": "npx projen build",
+    "bump": "npx projen bump",
+    "clobber": "npx projen clobber",
+    "compile": "npx projen compile",
+    "default": "npx projen default",
+    "deploy": "npx projen deploy",
+    "destroy": "npx projen destroy",
+    "diff": "npx projen diff",
+    "eslint": "npx projen eslint",
+    "projen": "npx projen",
+    "start": "npx projen start",
+    "synth": "npx projen synth",
+    "test": "npx projen test",
+    "test:compile": "npx projen test:compile",
+    "test:update": "npx projen test:update",
+    "test:watch": "npx projen test:watch",
+    "unbump": "npx projen unbump",
+    "upgrade-dependencies": "npx projen upgrade-dependencies",
+    "upgrade-projen": "npx projen upgrade-projen",
+  },
+  "version": "0.0.0",
+}
+`;
 
-*.snap                                     	linguist-generated
-/.eslintrc.json                            	linguist-generated
-/.gitattributes                            	linguist-generated
-/.github/pull_request_template.md          	linguist-generated
-/.github/workflows/build.yml               	linguist-generated
-/.github/workflows/upgrade-dependencies.yml	linguist-generated
-/.mergify.yml                              	linguist-generated
-/.npmignore                                	linguist-generated
-/.projen/                                  	linguist-generated
-/.versionrc.json                           	linguist-generated
-/cdk.json                                  	linguist-generated
-/LICENSE                                   	linguist-generated
-/package.json                              	linguist-generated
-/tsconfig.eslint.json                      	linguist-generated
-/tsconfig.jest.json                        	linguist-generated
-/tsconfig.json                             	linguist-generated
-/yarn.lock                                 	linguist-generated",
-  ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-*.lcov
-*.log
-*.pid
-*.pid.lock
-*.seed
-*.tgz
-*.tsbuildinfo
-.cache
-.cdk.staging/
-.eslintcache
-.nyc_output
-.parcel-cache/
-.yarn-integrity
-/.changelog.tmp.md
-/.version.tmp.json
-/coverage
-/dist
-/lib
-/test-reports/
-appsync/
-build/Release
-cdk.out/
-coverage
-jspm_packages/
-junit.xml
-lerna-debug.log*
-lib-cov
-logs
-node_modules/
-npm-debug.log*
-pids
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-yarn-debug.log*
-yarn-error.log*
-!/.eslintrc.json
-!/.gitattributes
-!/.github/pull_request_template.md
-!/.github/workflows/build.yml
-!/.github/workflows/upgrade-dependencies.yml
-!/.mergify.yml
-!/.npmignore
-!/.projen/deps.json
-!/.projen/tasks.json
-!/.projenrc.js
-!/.versionrc.json
-!/LICENSE
-!/cdk.json
-!/package.json
-!/src
-!/test
-!/tsconfig.eslint.json
-!/tsconfig.jest.json
-!/tsconfig.json
-",
-  ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-
-pull_request_rules:
-  - name: Automatic merge on approval and successful build
-    actions:
-      merge:
-        method: squash
-        commit_message: title+body
-        strict: smart
-        strict_method: merge
-      delete_head_branch: {}
-    conditions:
-      - \\"#approved-reviews-by>=1\\"
-      - status-success=build
-  - name: Automatic merge PRs with auto-merge label upon successful build
-    actions:
-      merge:
-        method: squash
-        commit_message: title+body
-        strict: smart
-        strict_method: merge
-      delete_head_branch: {}
-    conditions:
-      - label=auto-merge
-      - status-success=build
-",
-  ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-.cdk.staging/
-/.eslintrc.json
-/.github
-/.idea
-/.mergify.yml
-/.projen
-/.projenrc.js
-/.vscode
-/coverage
-/src
-/test
-/test-reports/
-/tsconfig.eslint.json
-/tsconfig.jest.json
-/tsconfig.json
-appsync/
-cdk.out/
-dist
-junit.xml
-tsconfig.tsbuildinfo
-!/lib
-!/lib/**/*.d.ts
-!/lib/**/*.js
-",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
-        "name": "./cdk-appsync-project-1.1.3.tgz",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/jest",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "build",
-        "version": "^10.17.0",
-      },
-      Object {
-        "name": "@typescript-eslint/eslint-plugin",
-        "type": "build",
-      },
-      Object {
-        "name": "@typescript-eslint/parser",
-        "type": "build",
-      },
-      Object {
-        "name": "aws-cdk",
-        "type": "build",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "eslint",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-node",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-plugin-import",
-        "type": "build",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
-        "name": "jest-junit",
-        "type": "build",
-        "version": "^12",
-      },
-      Object {
-        "name": "json-schema",
-        "type": "build",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^11",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^11",
-      },
-      Object {
-        "name": "projen",
-        "type": "build",
-        "version": "^999.999.999",
-      },
-      Object {
-        "name": "standard-version",
-        "type": "build",
-        "version": "^9",
-      },
-      Object {
-        "name": "ts-jest",
-        "type": "build",
-      },
-      Object {
-        "name": "ts-node",
-        "type": "build",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "@aws-cdk/assert",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/aws-appsync",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cognito",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/aws-dynamodb",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/aws-iam",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "runtime",
-        "version": "^1.95.2",
-      },
-      Object {
-        "name": "cdk-appsync-transformer",
-        "type": "runtime",
-        "version": "1.77.15",
-      },
-    ],
-  },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
-    },
-    "tasks": Object {
-      "build": Object {
-        "category": "00.build",
-        "description": "Full release build (test+compile)",
-        "name": "build",
-        "steps": Array [
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "test",
-          },
-          Object {
-            "spawn": "compile",
-          },
-          Object {
-            "spawn": "synth",
-          },
-        ],
-      },
-      "bump": Object {
-        "category": "20.release",
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "name": "bump",
-        "steps": Array [
-          Object {
-            "exec": "git -c \\"versionsort.suffix=-\\" tag --sort=\\"-version:refname\\" --list \\"v*\\" | head -n1 > .version.tmp.json",
-          },
-          Object {
-            "exec": "if [ \\"$(cat .version.tmp.json)\\" = \\"\\" ]; then echo \\"v0.1.0\\" > .version.tmp.json; fi",
-          },
-          Object {
-            "exec": "standard-version",
-          },
-        ],
-      },
-      "clobber": Object {
-        "category": "30.maintain",
-        "condition": "git diff --exit-code > /dev/null",
-        "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
-          "BRANCH": "$(git branch --show-current)",
-        },
-        "name": "clobber",
-        "steps": Array [
-          Object {
-            "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
-          },
-          Object {
-            "exec": "git checkout $BRANCH",
-          },
-          Object {
-            "exec": "git fetch origin",
-            "name": "fetch latest changes from origin",
-          },
-          Object {
-            "exec": "git reset --hard origin/$BRANCH",
-            "name": "hard reset to origin commit",
-          },
-          Object {
-            "exec": "git clean -fdx",
-            "name": "clean all untracked files",
-          },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
-          },
-        ],
-      },
-      "compile": Object {
-        "category": "00.build",
-        "description": "Only compile",
-        "name": "compile",
-      },
-      "default": Object {
-        "name": "default",
-        "steps": Array [
-          Object {
-            "exec": "node .projenrc.js",
-          },
-        ],
-      },
-      "deploy": Object {
-        "category": "20.release",
-        "description": "Deploys your CDK app to the AWS cloud",
-        "name": "deploy",
-        "steps": Array [
-          Object {
-            "exec": "cdk deploy",
-          },
-        ],
-      },
-      "destroy": Object {
-        "category": "20.release",
-        "description": "Destroys your cdk app in the AWS cloud",
-        "name": "destroy",
-        "steps": Array [
-          Object {
-            "exec": "cdk destroy",
-          },
-        ],
-      },
-      "diff": Object {
-        "category": "99.misc",
-        "description": "Diffs the currently deployed app against your code",
-        "name": "diff",
-        "steps": Array [
-          Object {
-            "exec": "cdk diff",
-          },
-        ],
-      },
-      "eslint": Object {
-        "category": "10.test",
-        "description": "Runs eslint against the codebase",
-        "name": "eslint",
-        "steps": Array [
-          Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-          },
-        ],
-      },
-      "synth": Object {
-        "category": "00.build",
-        "description": "Synthesizes your cdk app into cdk.out (part of \\"yarn build\\")",
-        "name": "synth",
-        "steps": Array [
-          Object {
-            "exec": "cdk synth",
-          },
-        ],
-      },
-      "test": Object {
-        "category": "10.test",
-        "description": "Run tests",
-        "name": "test",
-        "steps": Array [
-          Object {
-            "exec": "rm -fr lib/",
-          },
-          Object {
-            "spawn": "test:compile",
-          },
-          Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
-          },
-          Object {
-            "spawn": "eslint",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "category": "10.test",
-        "description": "compiles the test code",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "tsc --noEmit --project tsconfig.jest.json",
-          },
-        ],
-      },
-      "test:update": Object {
-        "category": "10.test",
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
-          },
-        ],
-      },
-      "test:watch": Object {
-        "category": "10.test",
-        "description": "Run jest in watch mode",
-        "name": "test:watch",
-        "steps": Array [
-          Object {
-            "exec": "jest --watch",
-          },
-        ],
-      },
-      "unbump": Object {
-        "category": "20.release",
-        "description": "Restores version to 0.0.0",
-        "name": "unbump",
-        "steps": Array [
-          Object {
-            "exec": "standard-version -r 0.0.0",
-          },
-        ],
-      },
-      "upgrade-dependencies": Object {
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-dependencies",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-        ],
-      },
-      "watch": Object {
-        "category": "00.build",
-        "description": "Watch & compile in the background",
-        "name": "watch",
-        "steps": Array [
-          Object {
-            "exec": "tsc -w",
-          },
-        ],
-      },
-    },
-  },
-  ".projenrc.js": "const { AwsCdkAppSyncApp } = require('cdk-appsync-project');
+exports[`projen new --from external tarball 2`] = `
+"const { AwsCdkAppSyncApp } = require('cdk-appsync-project');
 const project = new AwsCdkAppSyncApp({
   cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
@@ -2177,1143 +1556,7 @@ const project = new AwsCdkAppSyncApp({
   // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
   // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
 });
-project.synth();",
-  ".versionrc.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "bumpFiles": Array [
-      "package.json",
-    ],
-    "commitAll": false,
-    "header": "",
-    "infile": ".changelog.tmp.md",
-    "packageFiles": Array [
-      Object {
-        "filename": ".version.tmp.json",
-        "type": "plain-text",
-      },
-    ],
-    "skip": Object {
-      "commit": true,
-      "tag": true,
-    },
-  },
-  "LICENSE": "                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
-   1. Definitions.
-
-      \\"License\\" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
-
-      \\"Licensor\\" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
-
-      \\"Legal Entity\\" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      \\"control\\" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
-
-      \\"You\\" (or \\"Your\\") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
-
-      \\"Source\\" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
-
-      \\"Object\\" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
-
-      \\"Work\\" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
-
-      \\"Derivative Works\\" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
-
-      \\"Contribution\\" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, \\"submitted\\"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as \\"Not a Contribution.\\"
-
-      \\"Contributor\\" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
-
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
-
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
-
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
-
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
-
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
-
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
-
-      (d) If the Work includes a \\"NOTICE\\" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
-
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an \\"AS IS\\" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets \\"[]\\"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same \\"printed page\\" as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright 2021 
-
-   Licensed under the Apache License, Version 2.0 (the \\"License\\");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an \\"AS IS\\" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-",
-  "README.md": "# replace this",
-  "cdk-appsync-project-1.1.3.tgz": "�      �{_�8�0|�}�v�C2Bz�w�,� ���$.=��8���q���,�g�JK��י=C~3M\\"K�R��iݚ}g��wc3�C�;��迾�R���T��r�T�_n����Y�V77+/���Tk�
-�_��h��Ql��ʗ�a�1�����_�����C�wB3vl�;5Fa�����y\`��MK�c��QfB��12L�6±o,��{�b����c9�͑1���y���Q��}.�x�
-��5�9�mv��<z6�=�C��k�D���<x^�sM����h�;v=[v�\`���3rx��F�h��� t>�z��k�F�;'�܀�f�/�褱Wo��6�#�\`��(������G�������f藽��]��[�~��H�����~�>@n� ��S�c�ZM��J�V{�����ےa,��x��������t=��|kE�a�g��V0\\\\.�:�9t��k�7.��x���wKL�x���}Ċ�ݱo{���ڋV��84���*W˕eY�iyǷ\\\\�[pÃ�+����O�9-�{^�C'��o�h�[7��J�2���#P4f�ῡ���8�s���Zs��rq:%�\\\\�XW����RfZ�=B�E�hޙ����Nd��(��H�\\\\������m,�PlF�ߞ�׷�g:r�׬m.��8\\"v��o�PmQ�&�w�J>6K)���r��8�3��мsҼ��!�ݞi�
-�B-�p��x�*��ắ�x��]V�T�-s�a�{�˹t���p�t�'#W�m�-���9�Y����^R�>*F�I�K�-[���9ES�Z%V����b��麞O��s?rBw����%�q��� �G���'-Py��bf-�G��+��G �j���\\\\5
-?�~����\\"�깖�G��L��Y��y�GC'6m3Nx����[��f���̱7��	���v��ؙAK! 3�:�=T܄�������co���3����5����?�����u�~lā�u�q��j�c���8�ozc����s��&ᰣU�_�W��R4z��oS61��yƿƮu�M
-F;�;�m���ۆ�Q���c�S�Η��p脹�I�0'�ꌆ�2�eo��r�H4��0�~�4����Ѝ��]C�
-W��a�Q�a��	w�/G����k\\"�gPV�Ze�CYߵ�k����qC
-�����_��\`��������[�SPZ�[���jys�\\\\��z�L���1&�uF�o�P68!�$�~���0�������4�0�в���ԉ���1������P�3+��#h�����5��/~��1|gb����\`h�
-<�R��* �#F(��#�e6�_��N�f�R��Ѐ
-���\\"�_
-�]�n�B���AY��4��Ѝ!�/� �=3�
-ռ\`BH9Q��'���&A��CgDn��D�'�JG(Z(���j�UjwH�Rv
-\\"����9�ό�g���y>xN8X���p���a��G&��껤!��|�5:�}�E'��|s�ԞB&�?s�6桔q��9:���IG<ߜy^��&/���z1�L���ѩ�CG�u��l�4�qLG9z� <�2
-g<���w&ў}˝��vdF�3�z�yN,U�D�9t�&vC���90��Qӱ��K1�Aj��wH�$�C�J�!��TExB:W�(/�HQ}&�h�_���,Ye#�wc���'�ɐ!�S�U� O担�=k��>Ff ,P3��I�ڢ����L��]�ѧ���C�@<.�}��;pfY���'����Ϡ��^%ӥh��
-M}��?GV1���G�q�\\\\>�|�%	�)~ �P��w
-��T&����T	�L����)�����j\\"jv!F2�85=�S�JYV1@����ru�崼-�Y�D?�\`e�1D���Y1w8C�^�ٞ��EgE��jm&\\"�2
-�G���j%�7�>��!�ric^J{���wZΪ��b��qB ����~Zw���u�o㫦廇��'��'���:��N��뷝5g�~s������ｐ��������Is���6����ߍ�����c<�a�Z�%p����\\"l�ʕ�ql�c�[\`x+/f6�t����d2)��M9�k<W�-a��z�M��i�{����y��6N[�E�^2Z������=,.Q��F���ؽ�P-�N��<P��%������h\`z%nY��	�l���6ke��B�Z2B3�c���º���
-LH32l�m�j;R�a0��-��s�^\`�Q��
-�bV0��n���(AC�![\`��p�ZP�:�ލ)S�̬���7=�N�3H�} �]�aD( ��\`�V�G�HPA�0�J���?<B����ұ/2{��!�,�NpX�e� 	��8�d�T�.�=��LC���[dM���\`�B��<�j�����2aұ��Bch��9q��hl
-8b%c2ph�0�ԯI�U�L\\\\�&�Rp��h��R��5�%�ta����nc���1(/�� �)t\\"@v�\`Al�CW�L��:/h����:����ε�+4T�� �{�֍�{�F1<������7pQ��iN�N�	ChNO{DqJzӶD��+��\`׷�1������	��1
-z��+�
-Ls��� �U(	���qH�)����.9��M��\`:�D�(�<t0WX�Ώ)�J<��g�#�+��0R���(P!Ǉ)w��V���;E�a�;tl�4(i��2o3J79Ƥ������C
- #�дA�ܙ���)�E/�P�\\"Zb��)���n>-%H��(E��V�mQH\`�A\` ν9A�l
-؜5�9�|���bB�}���L�A
-$H��� �#�|���@70y>���} ��0]�]�t�,L�5P��� �:w.M%r1��ˉ� ��P�|�Ui����9p
-Q߄�����}�/�s���BO�4�/i�q�!7�#��j��Mʧ���
-�Ǜ���D�.p�	FE1�IX�)��A��ۂ^2�{�ʹ�ϝ�H�U��a����	��=)\`��V�|�%E(b��t�	���>������A�E�z\\\\�#���B�2����BuTP+S���]��R�v^��l)��$bBf�Z�F���K8]�#>����'�c�s�(*ѝ�PH�8J�����\\"���>�'wZbc\\\\J���,�
-E�(v������i��\\"�k��G�Ǽ�k�D/)jD���H7�q�qDV�z���n�%i��49���X?���ȵ��8�Ž����;.��}�t?�\\"�6�QY-7�ަ��jy9+�)�Z[H��.�J@ԏ�T���M���2:��i��D#|�vK �@of���Uď)�Z�8D�
-�ݓ����3�*��E�T�쀕4Ѿ���8��9�Q��7rb��\`?P}�=q���ܥB��~����1p
-��OW{��\\\\p��yƚ��;�� !g4]��G�.�*��<]� ���FT�5nS�|���Y���c�I��	ZW&證J�����3�Q��X#!���h��X��w�Ѯ��BG��y\`�/�4J�lb���2�
-I͈��~�#ѫ9yn>L:QuG��L���*��N��Ro� �Qd�.Ig��\\"�q\\\\a�T�/DE����x$ҫ�f�b@,����gN���b�S!l]�h�p�e,��B����}���7�1)9��%}�0��U\\"�
-��?��0�ᙓh��8T��3# �'>AJ+�SplK!�P;�c%�3��1$O�0WL�D�2�\`�K�4�&OxU�:����	^1#�ٸ��3��.�B����e�娙�2u=4��fKk!Ѓ��m4}4�ˣ)A�:��#>B���\\"�a33�34Y)	�� 	k
-'Nm�Jt׶����F:N�#���7\`Z]\\"*-����!~25�>�#�WdFE�]�O��I\\\\i��0~gI�0��ab�OX�)ݣ��,�0�6;����=[Jϡ����߬�� F��)��(��%ֱĹ��j�v�o*)��h��KA���V��I<7�=B�ȡŅ3ӥ5'&qa�.6���։fQi���N�r����W_ỏ��H�.�ҏ*]�
-ȑ�ei�P\\"�4
-�	L1f�tN.YQ)���U�p�F��
-��PZ��
-�|
-�ҕ�
-\`���N�Yz�$�Vp���m��)pLh�PH�h.�Te�1�*�z�p{��A��O,\`~��T6���d�xl�C�^JRȁ��M �U�T΍��9�ѱp�7��(�W���|���Bi��\\"	^�C����޺�r��l����C�wT�T��9����~����)Loض���p[5����b:�:�,�@�\\\\a�ln��[����3k�\\"�DITAn+%��J|)S�@�8T�1%�תy�9|���Y2b\`������M)���������D�k%�� �Y�Ҭ���1�L�4򑖖��J*�&d����b����ƅV4�Is�#˥���@\\"�Ӵ�$��4���U��c��Ds��j��SB3�f�
-�0�u���#k�bl$WoȾt����)�C3B�Ec0�c;l!�@���.X��(C�>�t��S.!�9����xR�� ��7C����=�Z�f��1$���m�9c�r++B|��xAj��F�G�Y/'�Ü>�	8qf��
-��$a*�����#4��I��J��8��4b��(��˧B����g�4�y�� �0J�,�nD�.���K�?�.S)���yc����E
-^�,X)�0.�Q�jqŤA:DUkc�R��\\"�@�/ﴍF{���i7ڂ����Ӌs�r���i�7�m㴥.˟;�k�u����V��1;%#qI��J�4� ʓ�BOM!�%RQ@fU,�q~R/՛���A��<���7�Kƛzk����m�4ί����z�m��0��\`�.NvZ�ۋ���v�Y[�Z����?�N]Zu����3��E�����*���U�,�E��p��v#��Q\`�2LfJ���R6V]h����~*�oARlt��}ge���� �Ǐ	�<Jv�i+����)��{.x_�S,��ʕ��'�����{n�:B����n!��qBD�������f>0)#��s�c���5�f_��ck�% ��\\\\[WV�A�p_�s*���*44�� oLW�l����ոj�t��c�cƬ���d*zU�殉�p�^��6�F��o�(#|W�D>�7�52���O�2�9;Ap �W��؉�q��AO'�8�L7�;�I{|�H '�����3	�*;���м��Nb����뮋kz�p�r��B�A�,(e:��vʹ���sH���#M|��1biP����w��ǭ%IB����A��Y(�[�P���˖Z\`<(/<�r���Q0�H����\`DOp2>���{�j�����%qy1*�D����$�(�FO2E
-�0�Ln��gx&�D������ \\\\a-�3�sR�f8$M$�kI�D��a�����1��Q|x���w���H4E
-$4���D�F�m��0�7�Ѯ�m���;o�B���6����ШS�}Aݺ����\\\\K����
-J|��Mnu R�!Z<�+%�|���5�@��3���UJ8s���e��(3���T0iU�)�t�(����/�Ȩ �CѠh�����p�%<:P̶�6��MA��˅P
-��'������B�S]�7�e豲�+y��,8_Z�:ɖZ!�D�p��$�#z_������h�r=�SN����L��0Ck�+֌���Z�V5�s}�)�	[	�tn)��?�V�[,���?P��rᵻ>�:IJ����A��c���|kƂ���a�w=�a�d�|�����!%���Єkj�Y�z���&��GCA�4y1�\\"04�?� �����Ǔ#�{e�U�O��������+�f�J��U,��W��V�������7�_�x���=>h!�=��?�����b����n\\\\t߇����j��?C(p�x
-�?��ަ�<%��%y�(�I�
-�@l������EL򖡾����B�L�e
-$;Cwy&��G��'ח���dϏ�F���4p�d�m�v��}����J;��[�����N���Uo�*7Z�Ý�?�& ,��;��o4�U��ۓt�j��t2�:���F�Ԩw��s�}�@�v��Icg��Β\`/�o�{����۪�����K�~v������f�l*~^휷O����}qr���N�'�mB�^���9���@7@�]�vu@������ֆN�[;�A�~x�8�7����j�����E�7(;�F{D��O	 �h�D\\"7� ����-���z����n�r��8��+�6_��*/3��x�gB?��o�)�x�8���1��*���8~k�\\\\L^�ު
-?G-�F2���3��
-1?�S4�o�րgFE
-T[8f[0�(�Xi�+E��v �����0!���Ṫ$9��>Ss�=ɵfK�h%��0�����&C4{��M��#�c�
-<�	)sEl��ܶ������<��\`��-ԥ��p����2�ryL}��T��&��d�NL^��2
-�yu�,�J)�\\\\�QN��m���,)�s�5O����unj�KsMiI_�Y c�<m���n{����V����8:=ٯ��9�����je���j��M&�G����wIZH�ɥ�������M��~}�\`���Z��n9�w|r�?hq�鍽�^�5\\\\����F&���g��=>��/e��iZ�M�h[o��%c��f��\`��}�J<�z����	��@��җ��K_)\\\\�:���W	��^(��
-~�'W��y��c���Z����bc�9��]>��5��6Jz h���(����!��>G�ϑ�sd���O���������
-�+� O����_/6����.�E���ҧ�~
-ÿ���ߘg�����_ʉj���/}���3�K���_�����f�ڪ4�K_��#~_��/}�ٟc��������d��£���J�����Y�����������
-��d&pei�1@ٹ�+{��
-���%�ß�6
-A�c���u{�����
-F�����@�c�P���[a�\\\\�N�
-.)�q35n��f�V���/�����(��Çml]�?�\`_��)M�2�	����O^�w�Ӊ���=�k�\\"V��u���δ�!��鞢q��P��}���
-B�jq���'	��������& ^�x�t������_�+�JJ�k�����=>��Ӌ�F%��.�(� d����@�������]�T)��؃�b9����c�����{k��NW�0���vX�):ؘ:)@S�M����_$*M��*A�a��P��%<b'�ft�8�4L@%����ʠ@�]'�g+��
-S������;��X[3�����c����D@�M۸�A��G�ⶎ��<�/��QZt��ÂZ�&�*�1����s�����lc���u1��w3H�cw9����q�Y*�	�ޮ�^����
-�,A��~�i۸��˔y8����**,���
-�~�{U'��4�z-5�MJrU*G:q/Z�mn�Z��X�78�
-|Ǹ��05Ȋek�X�oA\`�yU\\\\A�$;�V��R�5�j;nJ&^�|@�����\\"�Z�z0:�p�45�M� �]&8�?(��!�CI),eC�)�f��e��\\"�C/��C$$� \`�K�����O��l�m���!G�b%�?�T��\\"%�l�NSƷtA 9e�m�剟	 �b�i������h�^�
-�iA��J�\\"��R ���B��r���<����;xD����^\`݊Z
-v��g�מ���Z'������!a,���D���3���;4�{OWWqTZ��� ��P��]c��\\"���1���	� <��D?x����r���¯+�
-�<���:M
-�B��~Ly���\\"�꺻8���ZMJ$;
-�n
-�P\\\\NqC�*\\"j�<��X?��&�� ��y�ׅN�Z#�E�4z˭���y�^�U�@rH���epvL�Q[o��������uΕ�o+�mA\\\\���8�21,c�CTQ3�/9.b��i��|$IB2d�I-���,ӛ$��'
-��6*A�R)��RI	�����N��;����y�5J�σ��9 ��B��&\\\\�SRrN�eӽh��L�.�&�B#vz4�:�=�]�,N��q��jE~$1�8煶�s�o�1��3͑!hy����h�>\`��L<��4R��h���R3W�@頁I��F�)biZ}���R�=� �?��%�0�7�����6�3��������\`m��H�%I�� �y\\\\)sũ�nn���e�yZ)�^ɛ�,��^���bFɋI���T��#3A.�����ʲ����3�.[hQM�\\\\���-��ƙz�^�b��%���3��t�<�N�B4<����	1N��� K������u D^T��5�ŒZSm)� �b��C���<1��=a��� [2a9���sF�xH��*c���esJ@K���������3Cy��R�����\`��L?\\\\4_7O/�yTt�0�=&B/b
-#�p'x�v�G��aK��1��a�
-�,�>CjC�2hO�~���윬\`�D��[)~�l$��1B.�~g�OfVa��d�d@���0:�Zˤ�Y���ؠ~��q��W
-�Eu�^I��Oڜim��4�����D����� ��G\\"Dt�=���Q��đ�����h
-~p����ٵ Y;+���C�d�F7/��U����=;��9��i����Zę��'������O�d��ܧMMLB�TxCaa��Ș�2�����	��Ǽ��}^���~[��>{x�����f���͍�����������(p�̑ѫ�U�}@��Z�z��kE��N��J��]d��\\"4Q\\\\�.��j�G�zn�W����d����>�+R�KR�%�T��]p*�?^���A�����(��L�~���_�b����5g��N{��|$2+0����UP��qN��d[��;���X6i��7vh��eNH�h�E��ը,����ق�J)����+h��z�p����>�H�r ���\`;U��}��-^
-92����W��&
-�����PY��/2��.4��1E�
-�⧯X�v�I�ˍH�����'.j�%�[�ً�ʂ&W~lθ�cJgyHB���ԙL������=�\\"��K���箁����)f]d-4ˮ�����5Q���
-��~\\\\\`
-5�o�uT���>me5�����:)q��^3\`5%�<��mZ7����R��eg���N�C5�Sj5N��j���Az	S��<j*\\"0g��) ���q���g��5���7g�D�)�g��E�A��w�E�5��X�枎���+���9K㟼,>Ӵ/�>��e_|�\\\\\`���6�+��/�X��d,�\`�YM���\\\\�����@'��q�%ymt|Y^�v\\\\�^4��鏋���G�z�jKc^S%Ja;��Q0*ȝ��F�
-�(�nr7
-dy&��\`n�o�� '˔���K�M��L�nQ�|_{A��g�'�Bd8�������Ot��w�	����k\\"g92���J�9���U�O����)H��\`�o���$8���WB�7:�k ���f(��>kE����L��m�Pq�_�������B����\`�A|�&A�|w��W<5���\\"�a��p���c�U#���؄��������E��q�����Y������]h�y; ���^�Ȭ��������'o��.��g��x������f���P�2c��*���X.�ݧmq4�L�S*��-ҭ�a(��ڮ,������P�iY%%$g�3.*e'��!��0ѳ
-?�\\\\\`WŎE�?�u#�H�EOu�%��BĨ(�@8ڸ����S���nI�#^��o��S\\"���L{e���<�7�Wr��vY�\\"v��Y|��G�@A-~�g5r@I�.\\\\�(�@�t�9�l�%[��k�fBA�]��}]D�(�d�k�C��w��hqG�\`
-}���o%R�E���� �񔑔��ޣ&���E\`�lz�����/�.gڤ\\"I=��l�0{ҵx}4�;���L�B�u�+���8$9۾��AZ��VS:�	s��m�IȹRʦM�)���QU�RǓ]�d-��Գr�Q��2�����m�ɯbI{H[T����ϓ��(�?w�\\\\��V}Q����|�|��w��y9��F��o
-��;,�d1���7F[S�+[��1�J]v��VU1��V�혚
-���ڏ�vc��=�����x��*�HW)�K�����޳�3vبB��
-�|+C.P�n3�*�4��}��s|�,w7��7������sz#K�=cq�)D�t�������-�h�����BTDE�81iW>|��E,��tM	_�\\"� ���I!?=��,Pn�,u��6�&^SC���g߉�e�P��*	z*!��b;�q�����##����8#��� hۋ^ -冋�_�X�Kw�-��d��ߕ������݋CL聱Tg�F���G~-]�Kȕ3�ө�ߎ��qx�~�m�3��h�1 �Y��?O	��J�Ka�#\`�S�X�B(_u�\`�%�b��H�^YP~%�
-*�B��䗫�^��j��d�HFtr/��_����]�K���z��O�^$؅�~K�T��G��Kn+�e�
-���t�&ei�/��)��&�l<��A7��P�1ŋy��A�0р���K/L=��v\`H*(2���\`��b������r�'��|/��φrrY/�+��HX9�-�@�N�Z�@�fet4��X1�
-id���R�H��(����sB�X����u�����\\\\,0��%Hf(�A)��JSZ�ߖ�ZR�� ��?b~�K�d�Zr&��O��l-j�<�qj��h�N��Ch��9�K8�L!QE����J�c *�J]��(^)�R���N��	�~�X���6({�ߏ%��%������j�a��4V0� �*7���+�[8�A��T����[;{������'��;'���Ѧ	 ��Ǒ�6��^$�K�	<ėB^i���^$mC���%�;{��_ܵ��x��#O�2DM��)��Tr{S���;�)[|��3Ŕz�H�����TM���)�f�)�(���_K���|���|\\\\�\\\\F��&��Y;��R�W}�=#@֥�9�T	��n�tţT���j>f��iC�lD:s��qR�Y��7�AQU��O
-��NA�d�����}�*��[��<me�ړiД�J�3�̠0N�?S�x�=tM*p��fl~?�J��zϲ��(��DOߓ�$*��2#�������J~/��:R�kʹ6��J�߅��?�?i����{�c��\\"?�xbG�ǒ�1�V��F�6ODn!����y?�zkP��h
-�f�&�C���&��ed�*9P7ʸ���g�a֒��ѽ	�bw>-�Зr�ZB���PT���Ӗ����0�זrY�ksi&{�9+��#p���X��\\"�̫��<]P��.�B�d�\`;�W�*�VT��>���XbTz͚+�T,k��a莨RO�FUI� �R�fO��II�X������L�G�<)�(?+���%)��A�҃�8+�i�h>ֹ��a�����q0��J2ԕ�<��MD����m(��VA'
-�9�'j;�)	q�{i��Zx�c��/q]<g,���>w�F��/�/���
-��\\"�E�j���@o�0�f�R\\"��έ�Na}�����@�ݧ�����H!��*h�(�i�;)-���m�o�J����-n�ȑx�Z�X�J6e g�����-P���ʯ\`a�����<����E�y�\\\\��o�x������y�COp�cL��;C7.���۟%
-z�s\`�b��g�������Sz+o��FD����.e�D�.��'��:��۵���6i�����{���y�$�'��	�e�ܪT���f.�RF�{�
-4�
-�F�+���|3h|��ە�o>�n~<Κ�Z��81O~o�g�T��{'~����v
-�?\`�-	�e����(�Ýk��?��_�Q�ѻ��2:U�W�=˻�W?(�%PZ/��P7ȼX�87
- ��X�<� %�j��[��2�#F:dO���{_����;�]�v�쪷����_����O��F�y��w�,'���_-� |��d,��DohpB ��Kǿ=_-��I�g��F�\`Ё\\\\ۨ��{+\`Y�n�\\\\|��J�2�V���G��P�jP�
-!�Loό�-(�\`��\\\\2~4p�N��}���\\\\������q�~��m��p��Tv�nu+ ��O�> �Idٷ��~��4���ۣ\\\\[�<3�����oGr���I�X��F���
-�DX<���9���*�f���}%ˢ1�*�����Ȫj�9y���m<�/r����xѴ�	!;,�dK�@&^���}��8��������o�n��Z�mcv�+��eӶ��QT�U�'��?��[^w�,�&�����ִ {���O\`�U�e�
-Bg�4�!��h̭c}ߍ��u�)����έ�bH/��O���lgdٹg���p��V���&���h�Z��!���B���/��\`>h���Jf��p]����sP�������� �-��K�t(2ȏ�tZ����lV����(����2�I��XŔ	�x�f���-{��طT^��[�w%����e	�\\\\�����}p
-*2�� ���C�vU�1��S(�Y�Ԥ��Py��8����E�Nzy���w���ܗ���n<(����bz������d8�s�0V�F9�QHS2��^6�x���b1J)\\\\iqf;U������8�m�E�o��<��/ gp,�c+���8OI�/��7�9��@ݕ��4/�.��_A����
-��uT���F�I�J�|&)pc�lu��	T�I���>B��WK��oƛ)um<�����3��p
-W�Z�BD
-�,�ZZ��l+m�E� ���Kz/�R�my>\\"t�qD
-Pf
-a�TAUt��@u��882�������-��0ƷA�YV[�e����v��n������ah�g';#A��BY}�0A+.Q|�u��������3���^[yRP�eތzBw�D����ڗ�N5e��f��<��B,)+��7�c��)��5)]~y�|��̕܍��p���ܭ�J.
-e��������wz�<O�� L-_��~�\`�����\\"j���^�(�!81�x��#:}�n���lv��R�h����7��Qo�?L�&�PH�}��,��k�ƿ��7���˯L�@]��烘�%^���_HM�+l�=,��@��iY�؇!p�x��O\`��Ph �2y)�*�>����p�J�0d����q<B���U2���g��2UH�k� ���
-���S��K��y.����s-���k�S���I8�JO� ��\\\\:]�_���;2�|��;�2�
-H
-hE��6gN0{��gZNk2��W)�
-3�s��t��0�m�nv\\"�$��!�W�v��;��ю�\`Ѫ�D��MY�O�r�c���~���?'x�7fV����� x�_WGh\`�+g�'S�~9�-�z'~F�&x�-R��)�^ӆ8�bT�qM��G���x.8�ь�2 cӷ��މ�X�q��P5��q�^�\\"M[�G�I~A�B��=��(2F3c
-~{�D��{7���+G���o#���klr��bX�l�����4 ���\\\\�;ݯ�q0�'X���=㜃3��bV�a�U��NI�C�5�y���tn��� �
-�\`�M!A �a�]r�*Z��!�� D�4�s�������T�;Q����e�(�����6�Ѳm���������.�){,�C�!�A}�}⩀.�4l��Y�}/)l6���8:[�uQr���ڠ��Dů���jE�Έ��бw���A��(�$�f���*�Me<z	���R�EK��������������msl� ́�*� �{@A5�A��O;�Zf=����b�C��	$)���x��C�gb�%�'�Zn)��x�)�-g@��]eX���Mnc䑊���\\\\&�+�)�S�C	���#�GۇTeȝ}�]�͛��$���e��]o}x{zz��^�L���z]�m԰��k9}��SUb2@�:�坓��K��盆�s��o�q+$���ǥǜA�sⁿ�WjM K�gsY���{�(����k�l}䟈A!S�@16Lmo�0���U�wl����*���н�~K��l�|�n
-�@\`>S�������3[c��$s��Q�8��g�\\\\�OL��;(߅�tL_y\`�!ĸI�̉>\`vmp��%yhޟ��BT�s��E��xi�'�
-�ӝ��>���<߈y(����O0\\">��%E�F�[gZ蹎g�\\\\{�d�%ҽ��<w���^��e�D�e���b�;C
-z� ̨\\\\4��1���!#�=j�|�_c�r�	��	������ /���߂��	Hv��9@:n�����K#�23�Q�GDP��iL�H��EYv�JX��P�3zD�<�\\"�3d�
-�Ùۓ�(F�gÀ��{z���cc�Ə�
-���b��/�n���TXP�@�'���&;��s������|��u��;�2�hߡF�rq�3��&��o�(�X1@H��4a lp&T��Ȼz҈>.����\`�7\`�������E�m�	Ńֵ�Q��%��%gz\\\\��:~0/�ƍ������м���k^n��\\\\�Ǧ�ƅ��zgz]봻��
->o�תmU�aӳ����ic|�n=X�7w��}�ƽjO��� ��z�z�
-����	��]�c��r�{vQ�^W�w�����n����Ay��c�߬����<{]�~yvq�R�����ݳ�������\`�T�g��&��� �\`m��o�d����3��!>>�h�Z{�7PvsR��=��V܂��	���ԛ���K���A�ս���:�}�:'��]Dm���C���'\\\\9��������<9���L�����Gg���E�����D9��A�����EY� ��V�N�^�-ڿ�goE��4�����:�wzш�0���K�k2E���6��l�
-~��Ճ�ֹ]x�g>����i܄�����!�����޸�Xת����FdaW�=V��wr���V�?npa�!��\\\\T�f�
-�f��E_����O���3�p�D���}�sp,�C����a�ڹ�����]軓�C,�\\\\D݋&=�&����	���it��m�N+��g�bx�<D9i^�A���A&P�:0_U�[a��\\\\f_�#��� px���)hB|?�㙄�g����x[H3���M�l�o��:���E.�
-����>Ѧv_}B_�m&�_�k(c2[��/��|h��p��ӶuA��������n�u ��0���K��OW��W��vf_�e��֯�WZ�+�_����$�����x�J<t�zQ��*��>���+
-�ݝ,F_λ)zh<��|(�G ��⩗7��*��5\\\\�p�D����9a����x���E{r�3ֆ���)���<�':�(vl���\\"����4wn4��qK���1�G�	��m�?��r��E�_��Zo�����z��[��\\\\�0%��1����hO��_�ߔz��Ƴ���|c��_^��2���fߡ����y�4׶3���l���o�z]8ۧ����vi�t�Ѵ�:&ڸ�.o�.���Se�v�ùb��ڶ���o�α�
-�V�濺{y	6��ė��:�cv�?�O�Щ��L������[��~�N���Z��j�~k���嵂s|ߪ���;�o�| ����_=�q���T�4�'
-f'�~����Ι:�����4��߼���?�\\\\5��������=�nc���������W���qx��O��J��������xp�[�tݣ݁}�����w���oT�=����ƨ{�{g�g}g��k�7�o��j׻�5���n�b�������w+�Y�I������ghs~}Y�t;u���w��p+n��������i�~lb���J�(�^׵��v�p��ݒ㛾�ӟ�0��6��Q�oy��fp]��]�g�V��]�{c�U��5������s5@��ZsƜ�k�z�o��|���ϣc���u��o4�Z��ˍ���ִ{ٙv���U��|��zk�q-ҳ׹����w�9�؅9Sh�k�;����C������荜�Α7��4?ZCob�a��8��0o͊�w>� ������F�\`ݪ4oM���Fw��~�ZG�����v2�zgrs������}1�ʹ���.�Qs ��\\\\4�n/6�ݣ�wr��UFHo������(���x:��:��y��J?�g�#�C>�8�� ���������z���XÃ�U����U��n<�o����v�.�3��?�g�o�p0؃��V��j����.�Q��BٙV�~own��p�j�u'6�?�������x��b|jJ�{�޹>8����n}�y��|����G+Rx�?;��Vqw���Mmcd��(�:��28�{'5js�9�^n�^�O���vR�}�t�sv�=�m���@�����6#���޳��('S����T+0�ތ��nl^�c�����v��������{t��M{g
-�	��S���\\\\Y���p}.�fw�颪�k!�\\\\�����T�]�9¹m=4� �\`W@�m!�G��[o�]��axbk�=���^ߙC��� _w�3\\\\���=<�@_ӛ˃[���i�r{Ҭ�c��\\\\ׇ��p��F������3j��?����;��(���m%��[���Zb�u��{}�
-N�������~Mh<�^�o_��r������C�#�
-�}�#gx��+t���ġ7E�l�ƿ�5o�:�����[�ב�W����k���	�z���\`rN�h]�̯�h�Y��w=D���'�e�d^5� #˽��l�O����E��� ~��<���>{8�ގR<<��jU��Y��@I1��ֆu(���x}y��-��h2���8vqf�r�˹�nQ�WH���G��S>�__zc�C ��G��O�u��К��h�\\"�&��lk�V�i�[O�2�/�5�of�qώ�ˆ�ȉ�gf>����dO�cZ�������^�%����*1�!����>j���3t<�/�^������:�
-�g}��l��2����?�t:���e3�~������I�:0��N��T_;kS1> N8�L]�6��4�������cg뭫�]C�/����g�>1���!Z�xi�ϯ�s���9 ��
-�
-ȯ����OH��q�noT����v�P��A��ֱ�O?�\`~�yպ��ЕӋí��hvQ1��[����іw����w��-�\`�q}u�] ��:�Ep\\\\9��x6����u�͇��9�0۬����}FK&�D5�	�|y�o/�\\\\�>�h�����
-|\\\\Ug�����!�uZ8N�Q�SyU�Ķ����U���s�����^�/��瞐Y������ l����3�u�ɇ�C�O��=��Y��b����
-|̉ytDY�x�GU>�k^
-񃱠/P��@�l\\\\�-��X�H�<Ӈ�g�?u�V�H�Q�<)ߓ��X�>�L��\\"��R,�ȧ�'���K�5��z߽\\\\9�Bzw|��k������v[��{\`� ��/w�S?8j�w�{sة?D���O}�>���D�U���ۛ�k��ޠ��$�6���G�%���Y���s�qA� t�u���h�z|v��?�vN;{�O��V=��óN�M�\`K���p�9j_l����ώ�]R?�7�����	�	���}���ww|Ł5����u�6ħ�u�1i�>�=�Tt����	���<Jd��+�/�sC�?{�_����}?o��&�N�yqva�_c]�	��C��1 ����� >�~/PL�K��!����X����/����6T�{:[\\"�{XS�8��9E_]ι���/�Y�������Uh�3{�6��g~+�k��K�M��������p�?H�v�Ȼ���[廒v*\`[ƍ�]�v��Wɏ��\`��E���i����4��c����̟��;�sZ�H�����3�w���l��co2����͸}I�odyg��V�+�R�w|-��c��F�c5/�v����G6�03�	;oA|��Ȍ�
-}�zusy||�su�U��.�f��=%Ǘ��Gחå}�G�h�-�8?�����rH�uU�y@�]q�}�	�
-��B߆�bw�S���v��&�H�Ș�z=�]Ow�rA�9�����@�6���B�#͊�Q��.�rq��f�(�t�L��k��6��I��ͪE��xet<j���o������V���A\`�l���2p<��*�y�n��s��)�����c�i�k���w�a�̍�^��x��Mm�c�1�?�n.�t���=\`��}���9�l<x���)�3�O�'���޵v�#́W���2���mw�6��y��Y�}P��ݻ4�h��p��:<':��#�un�t��L�'���c�C{�9F��f�q�A\\\\��u&Z>O�]����t��ݸ�����yI�0d���޽A�q��{.�|�)=��������^[�J�qݸ����U��-�U�W�*���o;��{V���)�@�I��g<���/Y8�\\"� ��=O��M��+e*o����u��-F�3<������s������|r�ﮃ>�|��Ig~Lm�욤Gtܭw���p#��v��6��b*#r�[���ߌ��s��~�Ȍ�s��;�N��A�(
-u�=��\\\\��ź:D�d��ɥwk�mXWIރ�\\\\[W���~B��~{�����+��o�'�wt\\\\�*����\\\\]�L��觊����<rْ44/I���<+_�>,���p+�iK�N���۬�~lQ��<<X�p�C��d���U� ��Y��k�T��:94�_k�mglc>s��ֈ��݆P��H���ꀭ 
-�mc�~7�N�b�c��Z��q�o��>_b}l����頭�x���+�#�v���\\\\V���1��hCM6רǽ�=K����o��H[1�\\"�NuN��>��SyA�)U��g>�{�~�����:�u�h6'�A1����6��r�ݚW|m1��p�肯=��F��P�b���=Z�]�X�_t���d�!�u[���t�n��.�����H���2�>���M1�d�7�����IH�7%�K>yU_CL��?�Mt������4O<\\\\���a
-}������˻G;��ѡ���߽�Ÿ��?�}G�c�j��=���ܴ�G���|L�%�����m2�hC�fĐ��J�}U�}{^�dd�V���'V�.+>�%��l!)�����A����V��/�}��'ʠ�/�v&�;���+w(O�E�{�ڕy��i�|U��#��6v���o;iZJ+�[��3�Z������>�42/���R�~��d����o���96��87���b}�qh{ 7S��%�l��ls�[�V�@�%������,�|���ڃ�!�t��0~�wA�v}��U�Ϩ~���{鍭�Ľjg��K��{���t��R5��,��� ��;�9��Хub���[l�������0i_�
-t�fd��ڰ��
-=f���:�Ic?�/�F]_�H�up{sf�| �Nr��&���\\\\��
-qM��c��4�3{�b*�.��}���^ ˇ6���	�sC���wo�#�]��U26Y�S���I�qPId�2J�}�WO�n�}Yn�������0/xٜ��B
-��l���.�@�מ)�\\\\]TZh�.L�-�/�a��'K߁�g�
-7x�u#=�������G �vpǬu6^B�-�'&.��j��>��D�C���s�(M�v��+]����g6�a��N�YG�z�M;�Y�;u��Yn��� qч��g���y��S@�.��*h���Nt��#�k0�G=s��=��U�?̦!]���0G	~���C�̓4%;�7��|]8�)zG�H�������\`������:�X�	���-�K��~�z�Mܹ�|6ϗ���c��ښ mrO�A�ר�~grs�6c��e��h���=�g�r v��W)Ş��W�gi?��6[5�ס~E{�s��Y��_i��/p&&��l��˪�z6���H^E�r���g���od�<�
-�w����Ў��X��@�LϏ��n�V�I�g�w�NK�>s�;#�I^.M�T_I9�U#�>/>6�\`[P~p������������qmsy�ӎh/��.�:�[�����H9g��z�w��q�l p�@���s�z׿�jQ��5�#�����P٢p���':D̻X3\\"����莲����9j�n&��
-q�z-�}�Z�fݙ^�5F̷S� �O�+�Ѽ����]�(�dŽ����{����q����v�s�fƫz��_~-����+���Z������������'s�w�4�+'c��2�E9yx�Ny�X�#v��#��ǅ��Q��])t_���7�*�!������Ɠé/m��UY���Q5�T�W�
-����X,��/���ɕq!�j��*������	��V6���r�V{����YI��XYZ�h�FS:�Yޢ�RN�b�Y���?����� O���ˌ����|�����域>�\\\\��2�]������\`���=���7��Ŷ1.���ʳ�#~��g8��L̗����������������e^+���^�A�u^+�[>޲�d}Q^���}��;'U�B^����[2.$7��]�\`q��o�4�_!��.4�3ᒋhv�$�&��P.8�Q
-�̆��})9�
-����7��!�y#���i@I!}yf�H����L�yW�\`$��D����Br�-R����t!k2��K(�խ)�Y�z3%���z%�<���@��Yo�L���j�n
-�V���~ê:CZe$,#U/�5�3���ݏ�L�R�bY<{�3�r
-�:ڒ�͇�����Qj&�6��?�_�zB���/k�g��|��?ޜ�)�5,���s�[�1����t���Q[�����*Sċr�������L,RU�t�΄�<��B�e�'�c���IAI{�४�Ẍ́�<����=���m�����ܺ:�O���=�����}�����KW ���͍����������w�h�4�<O�6Gx�:]
-4��Q����w���K�b�A8����Y>\`�=�C�?���U4j��U�g�8|p�L�8���������{N��)�1L��{x�m2A}�D^��B<�zŴp9�.���F��~[�5����D�4��S���=<hW^��Ã��פ4����cw�p�<�� &+ʾ%0Ƀ�_���x'}�M���q�#�J��_�j�7̿�_	(AG{���q�'O�����V�ދ>o������ЁXf84�(�t�\`V�L�Ó�
-\\"�M#r܍��6w,�2�11#v�;����U���qW��Ὴ�gU|Q����lbP\\\\2���'�*C
-���>Y��#���wcd�V+\\"�Y���ٍY��Ԋ������Ћ�24Q�A�D�#�7
-�X�!-�٭	}'ZӵUx׷���4��>H� 4Cy'3@�T12_w����	���͡B�*q\\"�z����-��{��&�:��0H�@�ă���E���PD�d��Yn@�,
-���a���L�n� VQ&jLPA�0
-�����.�0�u��ԡ�k!�E���-G�h6v �����������w���ʋ�0$�LC�{��U�z����R��И���	�9 �4�5Xg��B ����I�;��ĺ\\\\�@��%y&~�o��P��Ύ�c���#�;x�p��.��!j��hIR
-��4�)㜖��׋�u����d���������}bg�)-H�tdwAK�Z_,E՝�NԢ;GX����I�lX�jcS�-I�m��>����L���]����d��މA�KF���{�h ᴕ��n�SZ�WǷJ3�AΉ̀��'����A<�:�T�r�Q�\\\\&��E��d/^;�CX��)���F5����&Q_d�>�of����jŨѾ����s����T1���i�*W���P5i�G�|t#7u��\\"RN��\\\\�!�Ow���汍�;�\\\\ΉR���̓a���^x�Ue���x�<F���3�Y^z��\\"�N��W��!ϵ�m�,��*��̕n�Gr���uɽH��>����x��S�_�����ee�9�����$���!C��1�E�&�!�(im���=�@�OT�}�WN��(+����++�9O�;g&fl	2[���8�{�za�y�y����a����
-��M��8�t!N&��1ؿ��2$�]�ͯPZ�&�H��	�3N���[؂TaI
-C���X\`(t�S���Z�Tl��],�a�����G�����^�|��������|>g��ym䏃̊!��U�%Q�̴�1�$O)�/W�v.浠= ZJ�����3πh�6�y༚��h$-�#N�f�dY/
-X���b��KeTQ+
-T�$�Y�.ꑲ|Z��e�v����jf��%|{�������s��7ch�:�����VEĘ����U\\\\4���X]�¬m��E��,b+�J���$m j��
-G�
-��HcR��L��\`�c���w}���,���@�'��i�(Q�0�?������g���|����/��?XJ�YQ�?O�?�}����������������?���_�\\"�zZ2��TS�!\`�K	
-ڥP2pkV�F<g��2c�My{DԤ��q���\\"�m�\`�hiy��	������μM��Z\`
-�,�4��x�l�0��Jꥏ�x��
-�7�D�3��UG[<}����ܰ\\"�����.�J��7n�zo�ֳ��H���3�E��ؿ�
-}Z�+2��F�	��E%����'|^��.�/����:�m������~g��[jb�����Ruq8v�ezi���L/rfQ�
-Q�(��_�P���/}Z�ي�7���^ld�/������
-�_�C��gyY��׽OQ�HIF��%�9�r�'��o�ɕ�x����g���old�7j���|��K��-���?̋��Kԅżʬ�P\\"�~���D.\\"�m�P�v�v�az�h��l���0>�WXD\\\\��g��y�u�!�t�W�)
-ex�-K�8��Ο��ǿ�M��ϣA0���AL0��K��[�����Cc���ӂa�4'���SS�|�!���b0E��������qI}�~C]\\\\S.��l�e�;�0�Ǟ��\`�\\"�$PUȐlW�:�!�}�y��_�����m��7��㯼6Q۰��p�L�|E4��9�.i��<H�s��Y��]���T/V�����6Kf� ��ʅ<C!�J��쇬,Y��#��
-/�ǥ4���1�cd\\\\/g��1���8�#�WP��p. �#!� N\\"y>�|�'��ג�a�d���E�i��I����ӟ�JuǱ�q�'�����S��d>��P����b{������d�~���o�G���*�|�������Սg��{|��O�נ���_�����M���-=�l�F޴ ����%�\\\\%��,�ŤsA�����������C���_�?3�����-_\`��DޑG%c��V
-��������E<	��	�W����.:�yS��7��Cj����;W9Oˑ�ZN�R2V�E�����[@���%�Q\\\\�L����~��-l�gف'����_뛕g��=>y�����~�Yo	I�?�nE��w'���ة�SEs�R\`�NX��s�{S���ɕ%��9}Ӛ�F�F�0��Q]Ϟ��������3C�Ms�J;��b�=�y�J��
-p�]sG���0P��w�[ỽ�x��i�CҐ�$&Q��^�@�0���KҬXT]Ť<�ۺ��1?a�r�X�x���ż���>��*)�����(e���M�)�J������Nz�3�H��pE�?���6^����X�������k�c��t�}�J�/��j����M�x�
-����S��o�{%���q@P%�,h��L�P�� 4
-X��H�Z�<�w��}�W���
-�����d}x��;z���L�����|��čE���[��(r�:/I=�j��\\"&x��m�֊?v�p��p�9iYTB��:�*�0B�9�=�TFO�i2HE1�G���MS*|�� ���Tb�\\\\t��\\\\d�<TӸ���cp�\\\\J��W�9���D�G����Y�&zך��랻�T㚦�b��^�����(�oL�h���
-R#��-%B[Rb8
-,{)^RR�g�ר8H�ڏ%1����x���P�Z���ٯ�2]�#�7��F�Gy2����?IY+�tm�<�4u���=FM1��߉���~]�7��hg�pT�r���R���ߍ�'��l<8a�Yʊ��h��.���##�{�6I=ft�������J{F ˣq4(�Kj��������E
-d�C\`B%�u��۽}�<�Y��o:��[���^Y���x	������|��_sw�?�r�7�����m��b�͎b�E��/ỽ�M����?�B�O�$���2��B��ԗD�a��(v���[]?����	J8d<�53�!o�����_e~$fA�dk�$���G�ͤ���37��Y.��5C�E���1� ����e ����+��X���3��-���g�?'w�y����\`��0�ۤO�oJG�8*�v�|��{D濪�I֙5z�RH>p���L���WL������#�^c0.$���K���?�g��_Ĺ_���j��f��������w���;O�AH����8a���m�f����w��?�C���?��(��Nmz�C7�ۅ�:<H�;�}@��9���f��#�� f��/ŗ���ҩv&]>h��xB�p��aFQ\`�&��1�G&W,#�c��[,��1=v8��� e�1�%en3����7�4�x�C���͉N��Dx���o��<thX�q�s#��n�.D��jXh�ł�0���V<���4�;������1'�;��j#���@��[; �Q��62(�����	
-�M��F���l/f�$#�A�2$p
-Fɼ�G� O��:�d�hxSP�\`B0ƃ��zQ�+5�2apT7ڧ�;���ho[������ޛ��q,��\\\\E�~�\`@���'�D���A�e� �nU���u���S�t������Io�{	C�5�d�\\\\��gS@U�����14����s�=��<�xrzy�@�������遳s��yvx���4^=?k��;�g�����<;<�;��?<y��B���������8�ES��sl�q��~��^�^q/N��ht�y�svq�wy�s�<�<{~zހ���ٓÓ�3�q�8�(C���i�������#�j��?#��N��>;|���yrz�߀��
-�lg���]����v�W�����
-�u
-��Q1��'
-z���{��'8��ӓ�3���<�PU_�7V����s����Sh�j�R#P����T�+E���yCò��9��α�Y�<�ቘ�[8����G�|ᄵ�����^���O(P���|9%U%�D�����92��t���
-X?��tk{k3�4���wR�j���%@j_y���Bk�u~ymLm�
-���]�-�V]8%O��px�{�?���c�������������r�l�Q�2�l�=B��0b\`�dB$��d�A��@e�R�6iph�U��Qxn͹��M)�P0q���Ó;GJ)�� �ԏWx�NSju+�=� �ϼ2�f�S	677��<�~��^�����i�/o�ѬP�C�Ẑ�V�̆�6d�\\\\(�DD����8 6A8 ��I���3币fx�h�0���
-�p<��%C���p:����6*��)�F�|��:�^�Z��r>o�/���w���ze}K=���E�J��'��s�ؐ���:���/���86�$R�-�f��6F-����)y%�?եTY�����Ň\\\\L܈+j_Y(ƚyu%)�n�6I��S\`\`�)|K'��G�F0�� L]a�E�A-s�BE����q���S8\\"�$)R\\":,*=��:������ZI2g5��KM�\`Y\\"��B&o����0d5�s��:���b<}�d��v�p�v�U#]�58�s�re?�= \\\\^�/&F IopLn䡫E�8��]	z��mw��\`��Qp��1�C3&�Fi����3�֐��-/�+���A^0L�k%x�C-���Ӌa��5J�l���AZ��O>r	G�߯d�����%D��k���$LG�j����<$����@\`��o����X������\\"���ϟ�
-�A�h�V���,�ܲe�D�
-�Ȥn��2�ȫ�.1��Da)�J�B�۫oV���N0!��7�!�]�:�^(S���~ �I��@\`��d��9��9���\\\\dݸ���H��HhD��*z�8Q\\\\������>W�,�v�3��gͅ�}y(�:�e�#�Ȍ��ݛ<LXԻ�d���
-\\"}~�s���������\`;�h��4P���ۋX���חĽ��]��~��c{�ˣ
-��i�A�{7�O�?S8nV+�@Ftt�y���|���F���S;ɜs��P(��Rm���\\\\��>S��?3��O�����٨W����\\"�?���8�űo��ǽu��3�����rR� ��m	��I�����/3�	�!�3H�'R����Q����@
-���&r-Ӻ�8�Iɰ�*ni:�F���\\\\�o)U���(���G�\\"�}ФL�W�0>J>ɴ~��ڌp��\`+m9�4l-Nd��e����l��r�p���%HbxK�3����x�3���0=�O��Ҥ+5/y�n�,�c�(�g�ʯ������̵� ^pB���T��Z�R����|��?#��Q���e�D|��	^JfCMEtW�����\`v�0� 2>6y��RT*���^�/�y���8i�ג�j�����\\"�Ͻ��~\\"���4k��BN&|�a���OG ���LhL��F��z2?��ߵZ:�sm������|����������� B�X�����
-Z�w�ھr�=�ġ7����ֽ�L�tI{��Y���N����u��^^�ˎY�r�Ͽ�EǴi��o(�P(i�����M�wС�HD!ߊ�\\\\;km���+;a�ޗ����W��n��9�]o��9���Y�&7��!���w��o��$!T�A��ux�~ /��7,]�/����TC���:���;Z�C�� 
-S�����^(�pl�D��?\\\\\\\\(�#��6&;���ǈ����2�C��J&V�fT�f)��$�	�hF/G���5�0�4y�K���,i�f�X�ۮ���}�ג��U���gF�t7Kzu��_[��݉+KS��;Q�C5V���9Q��m���P���6ss���3�h~S��,1{r���:��Nt�~�/'߿��?�V{�g���3��~kT�<n�ʺ�_;����
-� �]�Ɖ�q�����H������<� �h�닠��lA+�+���ڛWOw_n�?��=�/����o?>��u� ��v�����������M���o^<�i�����>�������u���F�C}|�vr��~������_��ÿ������Jt8�_�^r�W�~���m�q�f������\`���h���=��7O�w�|qxtp����������_^\\\\F�T������:��wY��?j������>��g��l+:�g�\\\\��� ޿hD�����xր�/��(w��b�Q�=���r��w�D�����Sx��\`|q,�߮㿧�c��i�\\\\{s�0�]������F�nS�/�����a���~�<	~��N�݉|G0��8N\\"x'���_?t����
-�����3xwvo�!��6���F�(��s0��8k����
-�*��/�|�]1�l�5�o_�1��4��5���V�^���|O���|ɇ���jO�c�<����m�:��Z�u�u$y���.�����u�p\`�����{y(�������s��	��^�6a�g�kb��<{%�1_������l�	�{���ΰ@�$X{GТ�������������>��q\`z��!���{�hĆտh����^:�m5NG�;����������w�g���{qt 0�h[�ۤa/	���5�σ���w�.=��Y4ʽ|�m�e������������
-��I�0�^а����ƙ���ˆh�8�_��j�ʛ��
-��[����z��Z{z�Z�����ڃ����U��d��S��M�_q����'7��m��� |��E�z���op���.���������F��ݵׯ�{��e���^k�]�v�:��^~���y<Ɠ�������'�뗝��'�#�k���ߍ߼�����jkpR!���U�vr��^���m��/�ON*����=�������{��gO����/n�����p�����~~Q�=]�uڽ���/����c���n{���;��G��w76j��a�������K��n����a��b���y��Z�Q��[i�����^;�؇�Я���Z�=��V�taN��׵�q{�^km��}��}�$n���ů]�Γ��7�wV���m�����������ŋ��с��'�.����;Aќ$�k�{��[�_��	<�ow�?g%xv޷���u�;+o^��~kЩ�{����U돟��ck��w��''�)\`õ���eϷ��u���'/*ƛ�=�����7�Ϊ��:�_���緧׻n�҇�[rL�������/^�����׼7�����Y����;��=������s�_Qm�/n�N|xs޻yՏ�G�����n���Vt��>��~ɽ(�����	���\\\\Bc�5��2o^R�4�׵����A�������ū�[��������Mkx<�{���N�a=�ܗPn��=7O��;O^ܷ�]�a'��'OoP>j���sk�-�oہ����w^]XCI3��vo�O�F@߁f�^����x��>/�[�W���A%|v�_=������-���Ww�^����Z�z�w}�f���+����ܩ��+���ͥ����Li?��z
-�wT�k�ً���o�I��z��~U%�.���W���η��s��s�����}������j]���31��(��w�~����)���j�)���F�����|0z+��ݡm4����B��ێ�\`,�o;��}+�rI�@��7��g;{��ˣ����\\\\���v=�\`n���Hu��
-��o�i\\"�q�_Q�01G@?��F�FNK-�?��W\\"��,���_&\`\\"J�17a��t��G��2���WW���+-��Q�ø5N����i΍��r=n�N���\`rV��s�D�}�8�0����Ї2q�T����r%���w��,�\\\\!D�ʍNo��f������ÓgKη�
-թ�,	�*(���o7�_����VJ�wЯ���UuAc?\\"Xq�M,\`�/r�4�z�1J�hN�5��v��,�h���n��x�LB(z�sŽ+�mNOH�\\\\]��c���' Tz�\\"L�\`X� e�zg��}�_��F>G$��p����Fڝ����-o�V���UG�b �\\"�\\"�?8���(�-��nV��Y��U�/J�N\`���:�ﺓt��Y��U�/J#�_6�1�Y��)�M������Ѫ��D��F�S��,�/*�7Jsqa����ï���ۮ�~��׺m�(\\"�o�~�KvE��E��(�;l ��?q�L6���c]�6\`R���Qǈ()L�����Z�ʛ5����L��Fňt�KҬ߂���$<c�u���F��xz1X?�vYqvV_�imw����DV��5���\\"�#E
-��Q������k�#	$�}�jC��z��{n��Ov8[�q.���s}�I�͏1�ƭ��Ǎ�y�,�'ܹ�$�<F\`#
-� Ԗ�@{|n��:;��/���q�!������
-�X ���m@
-��g�����]8\`��MN�p4��
-�Ҁ� hI@���c�����s���^�M�����AXV0�G�zϿ�'���K������ o�e�^�0\\\\>5\\\\��ec�<��{��K���By�<D��Y�������(/� �'/�+8�<��7p^�����	���c(�X�a0��|�f�\\\\<��gЧ<���Y�����
-�X�c������\`¥�2m��[|��K�3��#3k?G��_JV֐:%G��@����y��	��S��ɤ8/�(�GN>��\\"�2�GX��	3��H �7o{�F����G�.��M~4~\\\\�+e>EH�~�Taz���~�w&v�BO���qiQ���#B%�v��7v�����x4�-��	VyΑ	�30��g��\\\\�\\"sNٚ���va�eJ�4��ە��ۛ@>6	Y�Yf�Tϲ=�ds����C��9�U;+%,���{o���۳\\"���-�s�	�nS���}g�Q�mh:Y��F���!3h��]�Q2a)�5���0#s���*��]��Ց�D��������s���\\\\�|H���ޚ	�ea:@�����{�VM��v5��	�b��z�Bh��2��#�˞�vp�a�u�u3қX�l�yG\`6��X���0
-�!0���:x)D��i,�\\"nM/���-}��Zk0�ke?u(y�
-�d|E�ʧ�_����v��
-5@�v�|V��*3��MӖr��32dL-l�Q�\\" �#P�x�!r�[�>���m���b��4�l�>!4��\\"$/�bD�� oEmE����ʪ-%����Hf��Kn��G� �jIz�??̗@
-������'%Ah�!�\\"���L�6�I�j��|˅��=��:?�hh� ʣF<Z�W+�dntj�����1�eKFꢲ�haV�&�����Nh8��5nA+9g��%P&h�P�D�P�8�pa~ɢIR���Bt.ĶT��X���M$��bI�ќ���A�;f��>��\`j�'���^+b����\\\\j�s�=�d���b旬zz�n�4��-�!5&�k�>��i�{-k�������n�I��{j�m�l��.��-��-6M�FIu[�j�i* 5��\\"��X�@����Ս��?�R�U5�g��\`4bT�5�S<!���)�n�B���uj�
-�\\\\?�L���b
-��	�gE��d-���0[�Y86]�^j}U��&b��V�?��
-���	��iC���@��@����z�8J̵����!e���F��X�����W.�@�t�V�gEp�T��=XL=�Y�(�pA*I=fǞ��C�qIYG���@��
-w�Jf��]��_+K6�[QL�O9�g?�iy�S%���A�m���R���L90a�&�Ւ��×��(����20+��������s��
-������Q�yJ�ٽa�<XiE]�
-��1*��Ԝ���h���q�\\"s6�+~B)F8�W�1���<�s	uQe*tM8���r��k�]����+6���6C\\\\�\`V��hE^��p� @O����A��8p�x���MGf�/E��w9���'��CG�.[W3U�:
-32�H�擝˩����1���QW�7	� �pw�!� ��?$���i��xLՙ��nB@�;�^������Bv�[�3���>��� t�3��o���R�������_��'�t���p��D'\\\\�#y��Ä|Ff�=��g1#>R��������0bzL��@����Y@�{��0�����P��/:(�
-�}�8�A�d^����~\`XF�B��r \\\\��0���ȡ�d��nw�_��gp�c��f�̣}Ӝ����ld���b*>9�#��[$��K��/0$��a�#�F�)36�s��% XM�a0 �&t-�^.R�V��b�hN1�ƅ,!n�hqQM��'�$�aK�ϭ�cU�H�P�&٦�(C!���<����:Ǯ!���߉;�����Ƀ�h\\\\4��_d�9:�(~4r}�������e��Q�H�[Fc U9<i,��FHdN�&ޝێ�
-K�J\`����ds���\\"
-Țн]�����;����$:����(�2�TDn�6����o��N� ��P��j�ى\\"�9f�\\\\�Q*;�>x(ؼN ����q�L�er�����g�\\\\-ٜ2�*��1�6[���&9�)lm�Q�
-<��C�X
-Gf좔c���鍁�;� ����'�-����
-��T߿�@X��8 ���p���M�H�y�dH=I�}�$CC5d�#�)t�����r�3aSKO�w�9������؈6b��~��@����9I�2�R���hh�涤1���C1dBR^Q4��}���V������q��X<9f�&��S[+���'��$��M�%1N�5�\\"�I�/�h<\\"<:xľc��v��K[4?*��έ�a HFbT\\\\p��>.\\"!*^0�����3яV��%�6my��d��U9�݅�PЎNl�a��.	}Y��}Q�D��{R@t�;xE%����i�N�E�����#�����=9��|X��D\\\\l�N��=��m~;�<O��E=w�K��i����G�d|D+����)��RuV�icxNV�icK,\`��lll\`/���2n 	�Z\`Y(��#G
-;����x-�\\\\��f�9��6M�F�ZV��j�eL_᥷P����5f�ݿf�9����3��u�Y����#5�9�X�$y�ZW�
-A	��6��@� g�'c�gg\\"
-ȩ2�a.Ѿ���0l���T�>k|�-,�\`���.�~�x�CRu'Y5��l�:<�p�����9�o���\`��9��Y� /�C�&�v~7��V{�K�O�V�x�(b ����DI��D�|��¦�@y��e�6����:��g�gj�y�D,l�EZJA�
-�y���J��������eH�DD=��8�T�����I�i�6�u��͗��\`�:�s�Dd{j k�X�TR�ʢ����ȼ%�	_���Fr\`�v��w؟�]7��py���n}
-����	쨧�{��QLv-n��P�w�F�o@P\\"A��F���J�	9!yژ'��O���Lx����k�=�٫x�)b̃�8���ǚ}�M{�}�P2�8��D2N��c����S�6���!�e3��3Z�SW�<=
-�R��4�RT�_�t��ȔQR<�'ͼ�yR��xre���!Y#Ӱ/��|D��H�ۄ�H\\"OG�f��r1{�8�����&��g�JD��H<f%=8w�P\\"�M0l{�,�|�-p�^�Y'�p�g�:�j���7vCw{�M�C|��\\\\��]�LY�rPUz��;�� ��D�o�H�_��=[�J�v5a����
-��T��k�J�X�R�ʍW��������d��=��ɕ��X�]╥�����#� ��ȿe���DI͈s� tV��k�@�G��Ƒ1�|��cQ��BRc�\\";A�9�L�f�\`Y\\"u_nX��L��fL���=	��:�: ѫ1����<DI)�a�Y�}����\`N\\\\hG\\"����;����������X�Vj���?կ��_�3���\\\\^���Q�|���Y@|�Y���q��b�6�_�l@����!n��Ņj�\\\\/WT�\\"��� I7�����4g���B�!V���2K�m+��i�7R��J�f=/>'%��)�(��l����+�Y�[�S�Թ+�'U+Q^�N,���.�V;�0ɴ�ʨ�Y\\\\|kew�o�hb���@U[\\"��ȳ�PYsNm\\"��j98_�y���BS�ZΜ���<b3u�}ԫ�9���V�?|�_r��7ؘ�FNݒYz��Z�=e�Gz�p(��� 0-�*�/�촐���X�R�\\"g0�=Oܛ��W�\\"uRѝ-�({��-��hd*�f�8�eM��ձ}���=e77v���U6M��V��)v��W&��ak\\"��#	@�BL��P��(�x�D�B:����J��J1\`ϡ=��8��/=:У�A�
-lK���q���~�jT����X�:��a[M#T��)�����!Sσ��� kEq0�X������튂�M�WH�K!����d&�MSE_�.G��*��.v�]$�K��8E%^}ce���[��w����l�kgn��u�
-�ۖ�?�&N ��N!���H�C�����6����Ms0K��1�'Y�_�D��j�PUTp�1Q��#i���̲�vfe\\\\2�����4:k��@NKL(�0	J��+�œG��x7�o|/�2���~�����TP�}�X�x������Ó���ƙ��t/���>hq�ѭ�K� �
-���P����q�C�v$.i�.j�P�[�m���[�>^ �. �ld��y�\`����l%eTA��C�\`���ۆ��F}3�(�#�wϚOz\`����²$=�*�	fQ~�U�E#���*-�eB�Q~PP��Q�]P���UF㹅&j�'c����UE�C���H0?+�5t���T[rC��5X����7����Rb�\\"�;a�$�H��Ѩ��L�#�՜U���ڷ	xF,�NlC��P�3n{��n���B�x�-�{뿣U�{ȢNL8z�gs�������?:��/��q�#�%�Q?��~wKa���L&M��/V�_Hp�'�g=�e�e�;z9}��}&�9�ت}J���8���z}#��y��U��E>Y��B�t�a
-ΛT#����e]��eJ<{ 	,���h��m��Z	�V(�S��9�PR���ڍRњ�)p�8$^�|�
-��=>�|n���2���̶�h篎C('_��-�ȨR�t*5����@���b[�H�j�Wv�H�!^�5��~������5���6����Ć�	�A�1:!�T����#ʠOC �ou��S~*؜Z0Ns���{l�ȃ��L��L�s[��X���ю(���,�'t�	�,ݯVP��i)�^ۊ<b�|@:���ɺ��Y��1��Hwq+ �ѡ�VYV¨����(\\\\�s���� ��Z�0�eg�^VQ� �8�u��[�,�<��\\"b[ڷىb�	��GI����0��6��Ƽ�b1��i�'��B�FS�Ui�TPn�\`�*4���(��ӊȅ�d&��E�!��
-
-�]F�(�K���\\\\E,����$ڑ�Z��bc[b�����[}��W?��L\\\\��r�!n]!D�SB1#�އ$��7B��k��2��e]��� A\\\\$ZC�L-d2�M}s\\"�	��)�,e�ּ��L+9җ@�dLI��ؼ������;�S�j��+�(� /��e��J�+}|136r2�ER�Y!%�����	PM���m�#A7��G�z.5-DӦ0�\\"�����	6�n�2^\`'�<��p+�_�4B���V���9{�f�ʈ��PE��f��z�1�f交;��蔃R��&���^�MU>�%Dd��lDH̠P��o+�]�4����7��Sn~O2��^�]�5�yD�V��J���N�0Z��_Y@eNd�}��{4g:�V��$�[b��6W6q�aۻj�U��N��)\\\\��A��֩ތe��O1q|%����������?��X���6��}�k��/�yh��ԑp�\`��I&м�.�O*��O�XG���2*8�i��\\"���!L���n����0���[@y@�/	/;:�)Gß��-s]>0��LX�Ӟ8�y�)W��d�IJ;e�ٗLڮ�{͓Tn\\\\?<t�(1�q���������#�b��^��R��_�}�O�[6�Ch�}�{��TF�=I�?������BRW�U!UF�.�?�[a�k� �!{�tf�톶)��[��揌���:Y�]���$\\\\��Y�l|ON���\`B4�_�I}(�,ѿ�0瘊��V���6d�.D�A$Z�������0I	���)n��/1Hr����/@����3��]ػ�'H��1e8�~�Z���/D��Db�1�h��
-���Tά�n�2C6wc�����Ʌ��)��X�b�������%�\\"h󖠈i��\\\\!
-����b��l�\\"#��Qy@y9d/�2ǡa��l�a-�ڃ���/Z�;$�_y���?�������=��{��GƧ���ln���z�����|��h�L���>��w��(�¯,����4�Cv��Ad�'L�\\"�X��G�(i�P8��O��#gaaN;-c3O�OO�
-
-B�\\"��@�2,}�.cV��V��%�;��V�@���\`@��0q-������CC
-�n�̹�[2��:7�؏�dow��l�1�Q�ɚ������إpe?�/
-�%�E�.��auN���dwk�8d	5��~4VW\`\\"s���+z
-��~J�_N�3#%�����o����F����������~��G:9��n&���8���?�윿?><::<�87�'�\\"����dr���)*\`�j��lf��M�f�l������<�F{���N����,��&Ȥ�9��p���Ӧ-Y쨝�,��4!\\\\I���d�{$�/�,9�x0*#�����������վ��/񹩖������?�'��������5ֳ�����4�W��m~��_����@��@5�H�P��<jPGo�S�ļ�ǙG������yet�Kͷƃ�݇왛R��\`��;�>$�==�I'AP���a��=�c�!(�<��X�G��~�@D�����P��nO<@��*��b��_�co�.����o�6� �H�u@\\",��5�\\\\z<t~���D�_������O��g��Y5�h�>&��l&��_�	���������u�=$�;���+�
-?�xšo���U|��_�[�� *:���v�ao3b��/i���w��D� j	�2��\\\\C<M���7D���x=Z]���ոU��W����\`#�7q ���\\"M�a�!-���s4����|�m�mJ��a�n��w�vU�ꪟ����5{x��#q��U@�p������(�Ea��������� �2����V��v%=�9�e5f)���P��� u��}:�xö����m
-�ʊ��л�C���u@��|.��o\\"����=h�K���Y',�������b��'�~����j5����Y�*�}��E�座H����I�/������T|�S)�P)��(�.9%ݸC��w�aэ�j���}E�Me<'�0]�F���őa��E��iʄ���(��0�6Cɞ��Q��u�\`L��H���߅W�|��#�+3�@���͑���i�-@>0��y<W���Џ�̾8�����&�,��.��+��\`������#!jA��O�;gj���͹��a�8�����B\\"y��f�Gxni�^�rq���Ky�Jo6�c�4���5u��� S����8r
-P���h��{§%tRUjj^���ߪf�A 3G��P�.﹕j������
-�H�&Ɣ �J����bvtx؁5�f׉�I��K���rXn�6��?��W߿G>&z�~UcK�Ձ���>v3
-H���C��'��
-�ߏhF�R����N�u\`}c��X2���^5���� ��
-������=��.�D�������SB��,��7��?�;7���E5Z*�9 ���i�#Z�ʌ�7�d�%�,��y���O9��������,���q:a0*�Ci�A�n1�A7Z���hq�r�z���HTNq�x8�&�ʏ\\\\�1Se!uz/��a�%IK���j&ub�B��K� � ��G�Vߏ���JDW¹�)���(�n/JQk�]�ݑS����]n˰l�g��F���\\"~���k>�:���90�l5ԯ��;�'���ɋ�#�3n�{{��s}bgiBr�#@� �2�xr[e3�̄�
-]��k�-5�.��ʛ&_��=4^9�؆��zn���0���(��Cs}�Y������}�ə~��[l��%����f��o������|,����$��ȕ�n�܂�$��H�6}�'?k��(-6K m-i���J��$m����mH�_F��$r!��M�Ғg��1��e�-SV���~nKh,Ħ��B��z����RY���P����U\\\\1>������pL�����/�_����Ǣ�J����c���*S�ƳʹR�����C(;� ��e��\\\\֖�F���JE>���)��1g�N[W���Y���ȧ�g��4�c���ׂ�*�o��R��2�%���
-O�RhʲR9���i]��fk\\"���5]A�P�O��[�j�oz�(������?��}s#e�U�o���_�c��v��FxEP\\"�v��T4��[8��Ռ.&���[-��fU�|*zFӲD	z���⡢0����1�O
-��QvI�U�G��i��~'5>3����+Y����x��[����>+�
-<���,�x�n�(,i��|*ŬP-(�I�(�+�&{%4A��
-���Ck�v�p��3��괖g��\\"Ϡ�KBe��B�_]�#Fr-�K̰���]�1q������DWYc��&�/?��F�X=�Z�T��M�:Ҩ�Q^3�>Hq鷪:?D�/��武�:~���N-�]+[�\`��uFU�v��[k�c�d0��m�M�́�
-� VLY�]���y^����U�Z��r�T[�1f��$�x�hR�}R�N_����H��\`o��UŢKL0��c���wxh]��r��x�$�%~Z\\\\./}���Ĕ�A�2�B�s�� ��y�X�>{�>�z�O�<�\`&p�2^��_pHh�BG�����U�*}1���� ��a�7�chb��v71%���6��٫�Y�fSnG�����zjƸ6֜�u4�ͫ�2��; �n��+b�J�9�n_o&kKk�au�=n���?�]ۑ��?�=F4��5@R�@X8P2��ˡ�7Wn_��b����j��i�� �y̹|T�m&�I h��TQ�9���	���t��)���I�g�1'��oVS��կ��_�3��7�8o�<x��@�]�t{��DV.���ڒ�X�Ԫ��v���47G}�{΁�Ess���Q��p�:�o��nm<V��B�%��mmkms�]�i$?^�77��Ne{���yk��F
-5w��Y����V����w��������nz�S��7����������E>�8��ΙGy��l�彾E^��<7�)�����޹|�(���۝�h�s�3��7��n�
-Vro#x,��?K�<w���9��s�è�/�gh*Lᜨ��BvLa;��S��1%�\\"o���'�	Eu}#As�8KN�����������u��Y�T7�?~���87���x��q�� ,9pu�.�����RK@8�L�)L���qTs�f3��0fwr\\\\�b:�ވY]��Hڗ�E��eg�{�O��gZ��W��%�I-	<��a�0ډ� ouŗW%f%��JfD�n0N]Bi<��o3�A\\\\v޿_�g�y']x
-bǨнr�ݩLjC)V�3�l*�#�_�hF�
-���\`���(�tb7��y���Nv�U�fDE�w��=�۟���{hsu�M��7���\`H��t���؏��[�a{R0H
-g�(�L��1�뾰�ja\\"zF�/�x(�J��n�D�q�9�)��'�
- !�a�S��룀���\\"<i�����>J\\"J�id�mNm�9W�Cm,�������
-���J���)�!�zr10̎ͩ�K p$$�iQ|���ڙ{љ��a�/H,6�\\"HN�ޯ\\"KM��M������������Q�;��Pmd\`AD���_%&�����p\`��G��v���#g�Kc��\\"C8	]�F�OҰ�!�~�h����V1�7�p�q�I��jfh��Ed���
-�j��Z��D��l��N
-	�j	g���SC�Z4I�A�|a×�4#�<;rV��^6~��>�3��'�\\\\Jxܿ'	��{w^{��Q MN��l�æA&\`��@i��xMNS��ym5���n�����yVD@�5�0$@UD�^��
-����.�H�ʞ���{�}��#�+�il5�R3j0>q�
-{�L���x��쮂n�ys�޾S=h������} 9��q\\\\9���# �^0��H�o����O�y.g�7S��.�=����|�qe�G�oB�aS�.�,6Q�ݤ�d�I����J��>�s��Y���w��<�8_�DA��F�Ӊ���~� �����@��l�]��3c(��֋���ahM�Qj;�5�H��)\\"��7_�B���o�x��\`�D�9���V�_4�E�L�<L��0p�_	�?|��	�u�e7b�~$�\`4�i�k�B'�f7��K�6��8}dv�&'c�[�.�Ө����\\"�*y�^�iv���6�8���/	{���)�5�/��.��jl d7XT������^��G����A�a�z�50C�L09���w1[a�S mHy��Jw
-� ��bB| �r���PT%��C���e��B�{C{8�ҋ�:MM�3U	��!*a���
-��̀(g��0%HO�1p_�~�\`�nIЌ(k)�C��Û s��R�H��x��Ui�{w�{z�$�*??;}�81���AϽv�)BԌ�����':����cX8�3*��bI�؝�t�����Y�DYT����Мa���zi�1��.!M\`eyL9���b��Ħg1�s���ى
-p1��0�y^&
-L�&�~$�*�XSvgJ��)5����8��q��O�L���(�|��'�Ԍ<ý\`a;�3�G#�qp��0��> w�>QR���;:L#�aȢ�Z����V��,���m��p?�g�m�c�|�9\`�@�>Q�\\\\��Օp>8�6�Jgm�7��h	��\\"��HH��-5� �[�Q &-�#�O�{>�TC�PPh�h|b�M)�tP3��j!u�<
-{.���Ù��
-������Q�<���X�iQe��t���a��\\"�:���br�g���t|�}���B�nF�k�/T����]��h
-��1֗�<�3�QM��� \`b+��ttïV�� ����ۂiا������VT!DW�ן���9�Z�w�qK�Y�!����Y�>j�l\\"P:���4m��-�ߦi���h��s�f��|QrI���Mf]���9'��U��п��	PY�Q���g1 �/T䦋�c��	�k�:B�jV=s��0d�r�������(}v&N�C�V%��\\"+@V�AٶZ�}#'�l��^B�vzk��s�HG�w�Px�s�����V��E��<���6q *�K9	�s/�	g���sCf.Ɗ��X�89o�HA-��cE���q[A\\\\(����;m���$혮��p���4wÖ%]������J^A�[���&r<;�����b�\\"���9Zо�\`J�Q�\`!r�#��l�f��������;,��.,*'a�IB3.q6NT�r�Ӆ�&���C�)�H��BZ�x��-��IT�W��my�hCY��=<N���#7�d�Am�I����}��������Dm%�J�ұ�\\"��^1��BS�܀�ढ�Z��V��PlGgL:V�&Am��.3\\"�=�ۼ�
->m���5
-�����|��3���$4���y^G�|�FP�hm�'�>v�:]����a�^t������E��tD}��ݣi���P��N����\\\\�I#��9)
-�I�n��kv<���8�׷m��>�����O�v:����-�V��p>uo\\\\6�X*#�Eh��5-1�UD���>�\\\\ӀfH��]�2\\\\,�d��]o6����쏢(��D������V�X�&���,��$��8i0�i$n'i4�( _ʂ��	i��N�\\"�V�6@��Fp��!�J�ZQGYk�֙�8��<�˄i��l��@�B~��	�#	%3�欢ʙ�V�4Q��%ʸ�qЕ��\\\\#�7�>����%q�-)��/��R�,YZ�持��#,4���0k�b�@�vL��',&��\\\\J�
-Nճ�z����zo�DQP�E�,F\\\\�T��U�eQh*
-6\`����(w�.h�&�(6�y/�D
-I���<��%FYh
-!ʦ7ur)��NO��E�����V�����Q��/�������l(�<k�����5v��q�gJߢ�OU�p3Ȃa2i� ِ��f�-d��$(�&�q�6�ޛ��� vXJ���Ûg-���S��Ҙ.���w� �q���e
-���%[Ӧ�飌� �Y,~'���5��|��cP����H�pPxۮ�9>��F����ßj&��ꖗ����2�w�TM�<B���M�J����׻��H��bAx��b���E�P�?$ێL��*���J�:�(l�./7�W���q���[?�Rh���K���W�h���z�!u�+�a����سu�4,��ȁ]�Fmf�gz.!�TKLjXl���cl������Q#C���$gh���$ڞ�p:���!�\\\\�z�%2z�x������(�9���:$��A Z�7�hL��'9W/�[&<9j.VtNr��$�0�k9���E.���	F�I,�V�� �,6�Uf�q9��E�|�-�42�d��FS_\\"*�Eňb(*�o�ݰ��K�����9)h]	��@9�ۀq'*����b[e�����>@���	�#��k;�!܃��H�����/�C���d�b�4Y�o�e�j��44-F0��H� ���(6,�����2׏�̍/���/x?C�����q�͛Z�8u���#Ở�����$;��B���v&3�m�\`�V�ݹ�ظt�I�,�.G����x4\`+P<A�e&{)�2~��\\\\�*hB<�:\\"=>��qd0��<G�c�|9d��^���H�gF�/��vo�t�:�ć�''o���~��4�p�П��fްk�xo'_ � x'�,1:��w��ZWTLڀ�X
-�?ŭ��M�\\\\C���=�������^Q�MC\\"2�A+s�yp{h E71(Σ������|W����8��{��C�yM��0��>y�Т[�4���*�M�n���F���M���-Hr��ݳӝ�����c�͵�ĭh:���[S��E�N����\`W>AɤG}����@����â�X4K�9��8c��9�g.����i�A椻ۄ�&���e/ma�S��\\\\�#�OV6Y���l�4߷���8۔f<�\`PS�}(�4)���)<}<e����?���O�j	G(ٮy؎PS�G�PE���P�P=�)��y2n�V�5*�U�5j2�_�A�\`�����PdZ7��iJX�M���m����XMxk�@dq���>[��O�S���8�\\\\����e��_�Z �Y
-_�I�f����v�qV4�oc�X8����_m��5��e������L�%ρ�Oє2�H�C$�Z���,ƣ<{ά��\\\\6����Y�Xuf�nYv�V�0k�mgu˰��{�Oh$�³\`�:[:/Ou�M����ws	����82go;\\\\�T'ߧ-):�O�T�1�gu�r$��&���
-^�T���p'��&4:�d������F�vd/n�A��}�.�7��w�'�'f�����}ℵ�n�s�V1A�r��w�Y��/Z&�SQ�����TO�G���M��T��t0�b�+��=�Ӱ���\`y$paZ?�a�Lwg�O���&Ȧ&��ʌ\`1^N�\\"{e���J5�-{���3fL�g���l��a�͘�cN<� wUH��>$0�Q�&˂�_�ҁ<&{��#�È�7a�?%�_�����LTx~�'N&f��8iO���䏓�G�?�t0ze:��� ,9��%�4� ��'� �&���D�A0'D��<��]��ؑa&��f�iŇ����_���������C��d���81������d�(bLV��42>0f�8?s̘���ōIǌ)���9&s��1���H
-�m0�n�Si��d��j(C�N�	ŁQ3W��3��3����n�Y0�d@��&f	+$&�Aa�27Z�w-�+4y�r�M�X[�t���M�s+\`��8��{-'�Q�Oy��ό�G�M+�M|����b�f/��H��v�H�Y�dE�MEe�����f�$8f|�����ܣ�M�=z$���D��.�b��蛹|v��u��j���+.�9��z��o��6��o��w:E[��o$��m�	���'n&ˑ?�F��Ο8�,w��4�_�F33x�)�3�S����>*���ez�Oy�=���C�|˧�ڟ�ü����˟X�Y������:ϙ\\"�g8�Ow�;�%>��K��l�����1� �R���x4�{|�ɑ�\\"�t��i��u�/\\"0)'�O�ל�U��V���Y�m���,~F��l�h8�BI�N�ejÃ�\`�y�L8&%(��ݓpq�{�'e�\\"%��tZ���=MȰ�U� Ɯ�����қu�;ߴOk� F~�V@�i
-tX�l�Vn��
-~��l�X).��Ov�U��v�͙�����%�v��p���d�2[��Lp�$?��N�1O�xb�{��d��7m�,r����NP���~d�׽';'�G����,��?��֓�_��ͯ�����gO&����B	�()�C�7%t�_'h�ъ
-A_X����9o���
-;%A�232�iv��YxB�T���d�%��BR����ǫ�2�0��+�uJ8])U1���&5�������{ae�*Ss&�P�������zr���jկ��K|�˰��U��WK���R�37W\\"�b��ЃJ�~�d7*��ť&�p�Z�ν�a��	{\`B��B1��j�-lT��W����)oP@�D���Q�[/�p.�7����D�k����աϹm�@U��J��Q���L���p���
-#h�j���V�.��-[%����|�YY�uv+�<��GZ���y��Ca���d�5��5�j����1�z�z��l�:yj�6�k�5Z_��on�6|�'�o�XS\\"JE!�Z�^�Sm7��k��cx�&�43Qʊ�ZA��T� 8OGh�(P�GZ�q��|�è��H��wS�%.n�k�_e��� ��j��k��8���T�
-9�D���%*4�&�P��(򑏁�بn�8PSL�ƌӱAӁW^�δ�t\\"�.���LB�W����,r�#5��.�em�- ���QV���@���_�ޕ{���P���0�G�c�ͱ?)����! �,�N=Z^Flm�u�S�8�@Ͽ#'h���;��\\\\D�Ⱦ\`<l��֍����w�f�].��04�Eγ�0�R��+5^⍭ٖxc��x��������2�p�� � fǬ�h.����Ó����m}�]�^�c �sh��Ա�\\"u��ª{7M�[��
-n?Ȍdr}��r׋q��0Bџ>*�����G���7x��|�
-�MI��n�n�K�~�GMՉ�����z�zrq��������Ƒ:��x��Al�\`.�U3�
-�3f��
-�*D!��ƒR#_�P�������\`���ַ�3��
-�=������H�'tF�� &\`K1��m�k[��h�.d?b�=�?r�2�d>�H�]�}GW0/-wI�B��\`�a�ݪY�	<y���P,5���~��]D���f���On�K2��\\\\�R���o�{N�ؽ#_�� o_;d�ݵ�in2a�k�q��Q�3U�|0�³��-A���V3A]^>9�h�)���
-�h~��|�+t!�>�Ì���	���,��r�d]���P$������7Q����#���_i�I�$oa|a�@���57��W���Fu����I��H��1�a6J�0�S�'F����>��A$'	�0�<TZ�0�T�Ɗӳ�-7�,��$w[0=R��(ҦF�-R�m�8���x����0G������ع��2Fw\`���@�;~~�q}6�
-���H'
-�Q�Shp
-({��o�F����l��|쓇]�$�N:�C�:�A5_�g�����:W�:W6KՍ�u^^�=k�<;<y�T�
-T4:��铫ipz _���>9��f��;} #R�#RӪ�v���)c��#��$��Wc�caC;�~	�r�}(����)�h{C�L����>�'�����6��(�an}82*y�?��0J!
- P����O������� �
-�9��lT�I+&�٧�M@?�aJ�I\\"g}ũ� 5�$�f�j낫=�Ø4+�3fC
-��&����x�g��6�1����t[Q�G�+~�ߏ=�����\\\\�!=���\\\\�7>4Or{��BE�B��5���yI2��4S��]����(��-�������Yk������F	���Ѹ����d��C(d��˳�pݶX<V�=q)�a�7�j!�ҿ�G?�:�H_g���w�ZOx��� Y��!�Fg��ˀ��cE����T��yyHqהZ'R���i|2�Q�q�,/��dY��ƙC�/��p�@Zv?8ؤ4/4b h��_jGNM憁��h~��\`o���9��eEO$�Kem��)�(\\\\�+ ���Gv�:��V��'8�L�om���
-�x�U(��\\\\3$3\\"0�$	L $����6c��-����h_�$��YA�\`�!�U����4C��(��<VEp@�hM��1��PO�[�%��
-�2�Dk�8��]�mkVydkͤ����\\"��& L�T�o��nϪ'���UCs�H���\`}�������%�$�2�ht�٧Fo�Y�* ��ƁF7N����p���D|��n��{Z\\"�׽:#�_ݔ�C�N��@4I�������S֙����\\"� �����n �^
-�f��J��7��MՃΑmr�G�����)��JU�Z�'�ZF��'�7!Q�ٍ�����
-�Un�NmF��V3T�3TنI�W��Ҭqz��'rӴ�B��ya�G/�#�iP9n��o֗T���p(�6A��p�a���P�*���F��?��Ϳ���{��}�ρ����_R�= ���!ۄ
-#7!F�!�XfHEq�(Ь�����x��}a@��zk6�	�ĪTժl�ֲY�g:y�9��G�������y��b�C�)�/
-�Xݲo�6�=	nW��H�\\"ؤf
-�5�������1��$�}}F�4������p��X�������\`C�NZp���J���\`�Y�K%�$k������a������[(Q��$£Ʈ��cfm���ɳ8�������eACI<�)u�������ڲ�I� ����;��N'��#X��(��	��z�wP����6٥Ԥ����bXf����Rb?����������x@>�$� ��!EV�=��\\"�#�j3�Q
-�hn�� �wCFV%6b
-���r�4\\\\�(U�T��ي�o--6�H��Zs%\\\\�y�Z/֩�L�Ǿ?�R�Ы3��*��5k���jٚ\\\\\\\\9:?�[������Vƴ(��yW�����Ga�э�6K	@�A\\\\uZ
-Z-�6��D�����l�=ԣ݊�@��T�U]��Ijbr��\\".3��-�ڬ�p:��û���H�.�%�$�|.�FA�JlN�|)�[A|��ͩhf<8*bs��V�\\"���,�@�A)�����+є�J#\`�O��b��Q��x�
-�y��	�Po)u|	#���ڌ;GX��(��'95����#.����<�����P]�g������\`u�lO��ʩ5�<n�8�����'��Rev4��4�H�MF���ѱ�iB�F�tQ���k,n�v�ݮ�Q(o_#��fA��kb�\\\\j
-���6�a�K��۱��Q��V��RJsN벌XTF�&������⢘gn���'b�\\\\5䤵��k$/=?Ļ_�?�Z� eX!kq����BR�@5�����%2���{]\\"�d[��S�.�e�E���j��=۩��V�9̖ƭ9<CK��f�����4
- ;=�r�zkc��٩lT��n�խmx�k�������:���ܕ-��N]�ܬG��>ƔD�ӼYG��$a�km:�я�oپ�/�$U&O҅���=v��s����#B����t�K��_�wo����<�����uD�Zx��j��-������f;;��	��|�
-���S����V���mͦd�zKx!:���R˒밡����YГL���ff�d��ȃ��m�N�(�B�����:�3�~����\\\\���SBc���=h�wX��P�r���3�*����#�<F:���j�����*!�& �۩w�
-6JMB��Y(%%��FŠg��%'�bm�j�5���x��h�?t�~��&�-��\`�]բV2�����kހ�Z#�Yu��<���p�h�t�~����R��sF�:�(^!�Ҍ���n�Z��v���xwN%BP4��5E2+8m�7�� ���r_\\"�>~{�wo�\\\\,�dqvD�4B,]�P#X�yfΔ����s@�1����mR�}
-�x]�#Ī�-��k���*9�\\"L�ο�2N
-��R b�'R�|%q�Jk�\\"�\\" X{}��v]��I���+��m�
-�{�O����M��L��>q��V[�>wd��6��V(���Z���ܛ{��}V��%r���@8W�;h�lв��;]6���RD�U���͊����1
-�.���(��������=y���mّ�{ �?�D
-|	�o ��#�e�۞��pN�
-�#���#eh�����+JeE\`���P��C�b
-7B*;j��uXA��rV�%���(�����[p$ �~��vF��a��Ą��S {��*�&ŋs�5����Xj-����̀�=Z���U8@�à6J���Z%��(\`t�;a�FWw�l�tW|�������~ߏ����Y��U��펌������wC�EXg��X[HH~>;����A�����
-��RŝP)�[�xY�%tA�_'vH��@�Pv���\\"Ф������\\\\9Ǉ:}��./���\\\\^.#x�m�,c)��a��F0�1R��a�n]6D�ЅVز�/|*��ZV���B&=�p,��s�C$��Z�!jro�5��͝]�bAf
-y�[����زf����h���)ih����ĳRR���[������%���2@PU��/�a�h��_$f�1�4M�?�� i��� ��H�W���\\"���6��߂��;�;�v�0�^�
-
-�,���qӞ�,����6�\`����m�RB%���Z���6ʛ��%��7*}X�݉|j
-�c�+��0��	������(���VD)Uhj��m�O]�S�߇j$,�G��X��ޮ��c�73z�4�U5��F��&	�$	��;=�F���Gi\\"�@�����Tc��;�+��u2r˛�����;Q�]it�с��TY��& 6�j�'�U�6Vɻ��lk��� ��@��2I0@���t}$y	�8ݘu��坁P��n���\\\\�A�9���Ց��!q�����������R���ؤ�#��dڕA�4��s��P8o��yO�1#a�	r݆)�NaB&��w�@��P�F-��*[��$�,w q�k%J�OE��<{���5����l��v:4
-�M'I僂+?��a��\\"b0[�m�ns�L��y�l������Z�AXu)��2'��Gqŝ��T��z��r����R�5c.7�-�K��	R?��& 3�g�:��������i��<w@���E��M#���UI��@V�R���0�J�:�UN�]�#[8������jw���X���6V���)�l4&��z��\`N�Ա��~^+߱�_�E ^2QJ�
-���^�,���f6kcpEdꑡ[e��b�
-�b �F��崧ɣ�x$��N�W7�<�G<ҩh��*�R�
-Z� -3�IU����r��3���%{J�ʟ�~#@�'	����O�FL5������V_)�<��7Zx�iS\`;ũ�a�W���{�2V�ʌ�}�wA}���}vH��)0� 8�m��(�]̎fȴ�}�o{!��zl�N@��:E���1�N� ����XB^q���*��g��h�(�k����T4\`�[�Uak��uM���͸�Eܨn[�Q�;q��!31�B�֊a�k�aK2pu�x��
-2�!��6]��dL0��k��/��Ko�]��y5v{�75��*�5��A�4P=�b{��xux~!N;�_�CQ\\\\5�A2���t8���㿢[Ũ	n�[6o�?}F����wI4W5��c�DH}�j�R�'8�~���������V�[�w�5�[�����5ϫ�w���n��ViW[j�]8��u�� *�;�x�A(Ǩ�s-۰�<�
-���q�@i���M��\\\\K�6MٺҨ��(\\"��ۿu�#a!*
-1BQK�2ܓ�ظz���;�L��8EₚA�Y#�q� �D���u�x/���3�����	QRMH�n��0L4�z=<�ڧ��q\\"QO�߉ʴU��U���u��uWAx�g��i���\\\\?F��:^�f ��k������y4&�����c�T�Z�̋;���^��67�[�V���zk{{m������nw{{ccsk}���ޞ զI/5n��M�E�u?�j�,�I�5YK��4\`�����p0�:>\`uS�7��G��
-��>��UEp0pᷯ����4�1ݵLo-�=t�@�k�B��ɮ-q-a�jb띢[m����u��ԇ�Ѝ�{g0����o�0�2�5�ަ��wo;���Ŀ�GMIݞ���%���=�[��P[R���JuJ~�&�L��P�*���n��j��5]�R�@[�@�U�������A�������\\"G+�[q	�nEk���r����dƕ�S�B¬D��x���	������{�j���)
-l=a)6
-�#8���H��~QR�:)�*��8 �Ew��<1*�q�BS/�SܣK�˓�WU^2%�y���G��o�2l�y�>�����M�:UX];j:?�Hў��b�|%��H���� ΀rf�� ���U@j{��
-�Z�(�M	����I�.�?���g��g���Ϡ�NR��o��B�����t���U�Ib��Da�u�h����Cý��g[2�
-s��L�ډ�5�\\"ֶ��zA���x#�ǊÉ'�Ma�����Y�b��Ѷ�@ �N+K+US���[�}t����\`l;l��;��H�4�|��A3Z1fd���ˊ4�4�y5�㿪(���͚��8�c�7JQPC�M H�ӳ���{��MB�m�rD+�W�i�ӄCu\\"�B��٤Ad�%��{���DZI�KU��cX*S���OA���R^/���7�x�S��̬!�mE��憨�߷�ViI�t���@�C��+�������W�%�㧦
-k�w����~�9 �2U;.F��
-%wyCܛ���r����)qL�.�!�E�Bt�>��d
-�gq�@�]�� �_���2�$��kٸ�n�l�\\\\��[<���]%�?�o�y���ME�>���A���H���[P;mҎ�WC=�d�hV�
-#��A��S�V{�1'.;쑄��c��Y�AJ;{������	g���SB�R���˚Ѻ�0�����J3D�F�]�����p?k����s��Ay#�<h�7
-�)�r�=G�Y�ȩ�° a kS țXg���麘I��-gC��C��E�'Dj���im�
-�a��VS�f�5��/���<(�TRb��W�Ж&e���{�h8�bi��&��+-m��I� ���Z�+gp���s����=�9V\\\\<�PJm�
-ǃ\\"]
-;�R;�$�6���D�-�c_�0�}鎈eX7\`�-�e̺�pqB�Q�'��:�\\\\CH.%��4c�>�TAdP,��ML���dX�#�9�^'Iz8�d�G�x��HԊ�ima�VX�EL2W��K��0��u��b��͇ڔ�h�
-k�y�e5j[���k$ڬ�6+9�h��~������L�ܾl�b4��J�'�#��n�S9Dqmӫ&bG��<k�V%��vp4��eE�+f�,�����pe�ʑ�:_,���cʽ�S�M?%�-��Kjap��?�y+�|�kuY\\\\7x�7~T�;d]�%5zr�Ŏ��%�hEaވ�|�l��(q�.%g>U��Ox�j�ျ�N�%#���U>I��?�)w��ЊdML�b񄑦�veX4r�s�%���:��2zb;mӾv(b��q�T������	� ��F��r9ړ�/�D�=
-���~�qN6��۰�G�-A�����?�~
-j�o�Nڴ�eg,b�7�^!x��C�Zq�$�1��*�E��j�����+��i�*�?��i��UH�c[�V16M5���X�
-�
-A�_��}-���n4@\\\\�q �s4_7�uʋb}݁��^�=�����ڃ�d���5�>��PYֳ	1��cs�Y���.��.mv�m�~XtV�}���c�\\"�c�o��Q��-�y�~���fΈX���<9o)q2&Ib\`*���\\"F���1(���N����Pq� N���ڶ�W���	��-ޝ�²���D[3O��VFl]^����=nR�LQ�h�ܣ FI�(���1�ln�٤(��
-ú���,�ڭ8���w]���(P����R|*�z8q]�����\\"h@k�]�����ﶍk��3�
-�>7U�@=�6qEN�Z����'W�5A�� �����~�sf �z��4]�Z]�E���̞�������NX֝����43ó��N�Yg]�t���.�ӽ�P�T�d����ԁ�PdF-3��_.m�Fκ\\"��/���f8(S��>���)f�� W�a�[U����:��W�#�>^>�bt�ɉ��%� �,f��w5�yU\\"w�%U�%ա����\\\\���{�x���Ф�9�K�����L&p��5��Wk ��5�\`�����＂�5�$֞h]����-�nJ �d����e�I�'�ML��	� g�	���j^:/ү�����Qu�GNn^55�����^��KG�$���\`$�c2��R�'�*)�s��|�|DyS���0�B�3\\\\��S!�
-�M	+�R��;�D �eϠ3٭˄��ŧL��}&����9ٷD�̗���)���RҠi���YL2��sza��w�/ý�NC���;-B_1�ڭ�l�8E����}�$	 �XS����2]_e.TeNTUV���\`��\`[��\\\\��R�Q�F�!U�5��E9&��o��+ܹ���ᨆOi�����W�W�U�{KEݙ�F���7���)dھB,T!v�Sr��K�-�
-e�Q0�Xf����-�W��^��+$�8�<�I�ٰl�˳���ѐ(�x%ց��[Θ 'cЃ��]�����<3�D�SU���]�y���=��s�e�
-�;l��&����}�]g�i��l�|Mv|eXGe�s�7�œ�A���ې;�Wky61�PAxܬ����2͒��L��)����u|NG��H����t��-��*;�*_I�QI�h��Fq}_� 
-Q4�v�s�����-,/2+�T��ܒf��K_s����1��������� ��}���/J�X�������VX�q����_eE�����.��u�yJ��;���z+�K\\\\�p�ov�}���w�)_���&95��cC�D6�$��������S���Ԛ�!�����;�&�V�Q����j52&O�_\\\\p����p�t0)9ɜ�)���eIx�3��v/���튀\`�zaKO�3#O�_T�	<�\`����!���2�%s\\"�M��[��r��\`���A�S�7���E��)9��{��jO�պ�=�ߤN�J2�ɾ-�E� A��E�(㗑��8�.��G����y;���(2�L6�k�5�\\\\�tH�����{*29Hh�k
-~r�ޞ1�*;��~\\"fr��4�n�Y�;��ԁ�(: ��R*6�t�!!�6�vC0�Y<��V�Zp�������=�t�q�N���#G�����i��C������l��#|�� B�e�C��&�\\\\���k�B�q�!\\"����9�SɃ/��̤W�j����m��W��3b��$�FM�D��ť�#X��m���k�\\"�Ӯ�F���x
-B��t�v*	h�?������w�(ME��G'��c�]{�,[�\\\\:�˔��g�|���D�����H�e�vt������e�v)�T53�$���;C�Wе�gY�˲��0���T>�瞯vwvw}�׮�/��!��y�3�[�)Ռ� �w�����wH9n����M�bN%^�t5���ɩ�Ƚ�=�[?�R����v������kw�sz���n.L1,����]	��:Ū�MI�����gf���)y��L�}^y��K��\`�[�g���2�b�W��Q�#K�7%�<
-Ð;�W�vXI{w��K	|���꛰��z�/��f]*t�w�/�v4�ɟss��j���K�E]�Zс-T��A���.�
-75��ìx8|��˱�-��@��~Ƽ(W_�ۊ��x��p�&|���]��i<�B�� ԃ��,�6ac�F�b�WYȿz}��پ�Z�p:)(
-��/��ww��NW��@^����j����K��н@���
-��<X�z��t>��Po� :or��j؎�a�C�p�R��3��y��>�o�_�m�,{�R(x����0n�_�ڶj����U/��=�K��ݒp��aO����*�.;ꇰl��ĭ�K��m�)$*��hS�;�.�[boЛ�
-��q�0��԰�.�9��_hloVmQ[���1��⍝8xw����V�E�}��7�r=N��tl��d��_�l��#�H�6�E�9�\\"#Ww�m�~T�E�BK���;\\\\*�|4���-����/
-�G�hA��R��3<�9��-a�%^y�[��0q���N�~�E�֮�m�\\"�@�A�[��&M�Z�Kr�s�gK�ؼ���/��Ľ� ���2��Wo���8�e��&���r[̃Z��C��7!uv0f��xn���N���>8�p,��Na6��<��C�a*<L�k\`1��',�РDd�И���+M9h=KȭJTQs)��1Ÿ�'�Z�e�f=@��즀Nm\\\\�a�{��]�|W����7�4�b��%
-dʘ���ŝ�K*Ϸl~~�Uk��Ȣ�O�Ф���2*Z2yŨ�'璞�s��R�e�œ�~ʸ�X��� ��8f��Є�&6@�^��4|���7�d!U\\">(�3�������G�V�A�	�+���7Hx0���!�O&����k�')��\\\\DQ�'���T����S���\\"<\`�fP����
-���M ,�8C�c+\`���ߵP|+G�6�<I!�)k$~:8y�=��k��^�Hc��s�S�M��oq�Q���;���P<��<������f
-��/���$(@��6�����U��[g!�����Lcu���_!�qo?\\\\<3Y9Ȉ|�MFSxn]H���qD~6��������?�S!!��9�n�^�u3��S-CtD�~V�1T�T��̝��>��?Q��:������_L�r��ʃ���rW�V���S�\`N�[ߖ��x<���(�z= �ҡ*Ybܿ9:���5f���.ͪz��M��%c���K6��7��_�H��W��48;�!Tу��~�D�ů���P��=�=���P�
-����n�t��a��hw�&s/��;�gP/��$\\\\P/�
-�A��c+D����bc������W]������%N�]�;�d����Q�ONb�A�?]����Bһ�.��f�I^0 s�iu_�:;�.��A��ʦƓEXP42�m[-�!7SƊ�qL�[�gk��x?%�z��ǕwW~����+��9��
-S.�,6Tf-��W6u\\\\٤�x	���;�t��|�X�u��n����z$��c�&��Uc��_�a��2�7��t�͂�V*7[ޞ��������3��PX8*cCG�$��s
-=��f���m��ԚSVǁ���c�Z�(� ���Qw{5��P{�<��'mݐ�%<V5��tx �M�,��tC��#e�\`im�Ρ�]z	�������Ө��[�*C�{(wl� ���[�$�,�Q<V��(�����Y����9F�V������)��	z\`�͠v�Qc�k_q�݆�jg�\\"���N�@O*�Ò�Mz��͸X���u�C!�H?uj��9w�)��ge��P����K�6*��7���ѹ2�S�,�PC聍73f�����P���Z,l�I�z���3���� w�-�B���[�8��m�n��B>�cI>���Ә��1i�R���e���� �
-tj�k��,�/�>4(z�#8�M%o����拻��w��0l(����~rG�]�;��Kڠ:��d��*����n�gA�]F�}��w�H���E�R�F�mz^g���P�߹+t�
-��Yp����=x;�B���<:� �Jx������nz\`U�0�M���Kg���B\\\\�B�� \\\\)�<��f�,Ĭ�ڔ��1���b{͢\\"\\"($�7��\`�pϒ�0g�ܡϥ�(�8/�+��r-����t���&���<�ǲb�������wՎ��%�
-�+���CA��z������OT�?��	,~ ���e��Ds8o��p��֝}\`�2�ɡs�uB�{(���ڲ|#A�,���p���L��� �ϭ�L�J��#N=0�|O�:~3a@G���k�O3��E��_ 2�}5hʮ)�S�rw��K�7�����ߌ����%�n)g�I��5m��w�c�Z�@X�<�#jjI��rQћ$��@�B�<�:�\`Gu+ܘ��l9��ˠT���Bf\\"<�/B=4�J�w���w:�\\"�GE2�9+Q�u\\\\/1�Y��ĩKJ�j]F���#�xz����s��ǈ_�ܾ��%����̄�����7�f���N;�3�xRaD0r|�����g��7� ���v�뫀�/�����p'��m_ad������s����o�_�\\\\���F���K�Lܷ��#s{�%�Y�
-���+1�.r�,l-Íw0�Ub�����u���1���?�<�9r��T����u�xP=�䲳4���I)�¹�jS�A�$��������!��$+��,*���t1;��?_qVޢ	�3g����� �R�	e�d��s�>}.2��\`>T�jL7�;(��!B�y(��ջ�f
-̼���K
-.�^��\\\\��=�ܟ�<��rB��Ac>�0�7�v����NYK�)W���e���)����i�j��须#���,����.Jv��q��j� ��
-�C��
-��
-Az��DNOʐ\\\\\\\\ܲ�j\`���Ք�~�O� �鶣��R��F�]vm6��[��|	�CCp~�<9�XQ���]��wAj�..�vgh�+��.�l�q��?��	��C�02�e97+�rZiT�<�Ϧ�=��fNB�+@R)6�JT�q���Cj��/KLV�:��H��4
-��[�l�,�$�b6̄J�]���a.O��t�&ޅ���Pp����,�$�[!la���R�����&��)#Ա^n|���DLA錑��/:4 h�˂�
-��J���C!�(��c.����'�Y���Q���so����(�;�$p�a#\\"�q��n*>נ+$�Ѳy��?�9,s���_s���?�?��(B�9�k<H���͡��5�p?x�<�CFSo���SkaV�4K�^�|��j�L_�[�f�	��\\"��~�f��5�S
-������v+��\\"�U4�~���l�Pz�]���Z�$�����Zʧ���C����!֗\\" !�+�r�2*�T�Zs�?~��dߡ�}�+�qK�T��%Io�k�8)��!��O^�ds���r#��ݨ�GD+��q_�uh���SC_�u:$�HE%4�bWXR'�I��<'����Т}H~������B�R��ǋlɋW�>��e\\\\����+�\\\\C��P��_�ގ���:GV�f��Ӧ�񕏙V�~������ޔ\\"F�ꩣ8�Q�[�B�<�=2w�B_ wh��	*����,�=P�ҟq�#tow��@vK�G�G��#�Î�;�^����j8�eI9B��I5���*�q���h�L��A�Eɡ����2C~Hd��\`�܉�5��@j?)�-A�v��t�X� +�r��&�� �y]t9��_&o��ۡb��dc�U�hsp�����Uy�T$���8��G\`����� �j��̉א �����r�T�^�����;Z}�?7�v���
-v\\\\����KB1�������Vŏ?~�Y9��4�XL�(�k����L��V��(����eW2��9�(	��,IO�G�\\"�0x���F��̏Gjw��PN�n�����v�K����h\`��j�j�.��
-oa\` �zP�!�X�k�V�Y���$m���/��.-&�?�M��p6�߇Yz�������q6#��v,�3UnN�I�Xߎfq?�I�c�
-���km�ѯ5���Ut�յ���9����z2�ǖL��4�f!<5E��
-6�8���$&[��?�wp�|�ȻK�vH����t���si�7?��%r�*8�-V6��QІ�l
-:7� F��Q��#���>既�V�;�P��L��+���Ά�;e�7\\"7�)���;,!��I�{��=_�30{G!|�[s2�U�:�o�4g�v��� K��#],Q}���g���O� ;(�8�?�x�H�!�^^��T��Am{j8ʋ��B�����Ώ��C�9�\\"ZW��H��4�������6��=d֒��������[����L=�J��?���ݝ�{B�N�y����]E�!�7��O�5M}��
-�ŀ���au�
-hArf���R
-k��-�Nu�fW�P4���{������KW�0/
-f7��)���������co��kU�=p�^e�n����g�ǜ6�BL@�
-�X�Z���'��i��Tm���V��	�c\\"}����� �(���ooe�@}M�ʥ�<�i�י:��\\\\_���i�
-�W���_k͍x��W-D�g0��^�C��OVmp�G�N�޾~�����Io�c����
-<S
-����CvT9HS0?�~0�(�&�4��H�lf��?ˋ䭖�Z�.�)�60\\\\ԖP�������'�6��WY0��K�\`���I�;��\`8��z�r����w$��\`n��[�c=\`�: ㆡ�p_�A��qe���I�
-��P�����]e�Xȇt�ךM��{��kA]ĕ�� �]2U�Jo�y&D쉰����m�&�YQ$}��K_N�B�	I��?x۪2#@��Ec��Ur1�P��h��f[��q���3uV����b�E2NF�|�}>#CsHi4ޢi[ES���W���-�'�xQD�?w��[;u�b�Ib�$i̎Gf��Dx[�R��=էm�>�%K򁘜��:FhKz]��Lޮ�$pb�44�R�f�m2����F�K��]S�rk[����0��iR�i�ƿB�0�d뙙ɬīs�鶺�j�[mU���6ڛ?0xKeη��31Qa���xR֨�<'!�}�p#m����/�X��vq8yry5%�+j�ӽ���n64��X~Pq/��~̎)��Yo3�t�=P�<
-kp���h�Ȫ��N�{ː-�!߲��._��)*H�{+?[Ƶ甊�/���/�x�
-����Cb������e�f�ԫ�h�R�\`�d'�\\";��߈׏�'��5�Eo>�l�<��h[�^BRZۜ��)��E�����
-7�����#5���F�	���h[b~��|�\\"
-�[�l��eѼe'
-�
-0��8��*iw���M+jzl��:�
-��z��֗Rzs۳S�r�Z�2�T%k��-5��{��)Jm���o9m��(��Z�
-��m�27��x���ab��Yx[e�n6����^,o�d��2��Igr[��z��K���ZL��(H%�/'��C���D�\\"�ޣPU�*���Ę�9�|p��Y>jߑ!$���ą*��7׸#?�����&A���yG
-���i-�j�˾jeK�I^Q�Z�d�\\\\�1��sR9B�'���ˌ�|�瘅����y���b	�>��Ar�� x�B�7a�{7�%�D6��R��#U���T�ú�?��h3ן��)�я�|��#F �Eg�Cu>�v��P�r���Q�Gf��[���Ä
-Bb/���0h{@�
-3�J���lRU��R��c�6hBn��>L��0���4�y���Z�z^����(���i�D8}&x��:F
-�>����������� &�jd��#�Ah���-E�0��E��k�dPf�~i�-�OÑ��^4bԭ?�����dG����?Be��6��i���K�6�hs@�\\"U2&Z�-�q:��\`��~�\\"�����T��Ym�)���1�H��avqk-�a|��	[E%瘷o�t�3�1��T�Lko��4��z6��ruZD��kG8o����<�Cf����?���W�鄩�	AF9ns�8�$�x��	�K�g\`T�Ҭ�����?b(P���#^��j�p���������ģq��t:;[[���;�n���mn�t�pg��u��͝������J�r�ǶC�����C~vZa�r���v�a��֚?�Z3\`N��ȣ�/{��;L
-*e�Z7�u�Ԅ��u�=Z�f7{Φ�'�?���ݭ�a�\\"~�:'��5���vZ�~�u6�������g����
-��6�u_��d���t:ft���֊�ll|�城_}���|�g�A�+�(+{<(�5���4+�qEM΍D�>n��{rR�������ϑ�A���M|�JH�6{��ֶ�;���g�����������g�����VE�����@�1�K�V\\\\��uλ�j�-��(��ل���ږ��.��f�}��E�a58�p�Ņʥ�7+Z�
-��n�.�$k�R��Ѣ&W��{�l�Q�[�pѥ��9�c�t�N�?�{8g,��L'�k�j�F��jt�W��$���:�A�%�_�I4J�Ƒx�O|Y���Vp�b��&q�&E����$g�@��B��{�\\"�-�&��x>��n5���s�IX8#��V�Y;�mC$�z����=ۂ��¼�9��R}5�����Z������s.�ӧOu�0Ԉ^�񪺻��]
-6�}l�;�>����>�U2�o_��������۱c�j�;��AԤ�lE\\"��30c)E�'��s@ E���.����DX1l?87�n�����iE���-�)H�f)��q�0�6���{�i���,���B����C�%�������7�b-��9�m��߼�����j�F+�)-;� ���g�%�M\`�'�	�8R:4'\\\\hJ�J.���#�;����,7wiI���IQ&����Ÿ�y6�̆�V�h��/�֕��nB�C7Ko]4d3�;���˜R9�m��\\"�g{�T�Et{�;�����<\`\`����?F7�8Φ����K��4�!\\\\�T=�\\\\B�8xRZ4*�]���6��3'/p�g�W��M��X���9{ݐ�����빻TM������v��f1,eL��p�O�ڪ�.��/����7̺/h@7����-:K_����-�q2�F�/|:��}sbLa.s����0u�
-o �ƃ�k� �]���&��k�iBZ�|(�KQ�����L���1k������E�X���>@�Z��@�^�~ɧ�un�c���l��j$dO� ��\`����?a�[�vǎ
-��rо���;{�$V�R�ײ0�:=Q�%���_��{؉6��!�a ��\`\\"��p4����.��\\"#���� K1���V���v��,�q�LA{��Kh���k,���g���U%�%������{M�;�0�m��VZ��p��B�[�\\"P��!�IRS�HC��-t�L�\`�M�sA����Q2�<�AZ^y;��[�ORe�8���6����f��/�5n?�!��, d'��qX��.��)�M3	.K�J�
-�r�5o�S�<	V��܊��L#]�\`�l���\`_��UQ
-(F�:�w�sP�p0��vU��0�^P�T6�ᨭJ�.�¦��\\\\�����@Z�>���ㅁ.҇yǤ9F�ZMu��R�_U�i��Vu�k�Єf��g���a��gi�[�ܗ�։���	䏦ˤibP1��Qx�8�Ve�=?��b�sp&R�%�M�
-.!7,��h���q-��I�C0��&7;��I<��
-��&���p-��̃D��Y���܆����Z4�l�z��4�$��8PVE;w����|8nkav�j���9g�(����Z�K�Q����Y�T���?��h���>\\\\\`�i@���#(�{FDD���誼O�@����j�!쯦����aד�D��[�k���&���>�M�B>�U�$˗�R�����1W$܁������}�p�V�}���8�v��Z���ن7/���tV<ŵ���R�/%q�0NH[\`-�M�O'�S�8�Ve�
-�>ּ�Ĕ�������Z�ˎ�~n�f��T�
-
-6�'=�UuK8[�����q ��l�]&��4�	���1V�V4U�9��ʹ~8�����g>o�a����z8~ja|�_e��i
-Y��}z�<���H���T0��_.֨X���L�Q���in�\`�H��ˌ�O	>�AazP��SS��f��JA^�1�V����*w��1�R����.�((V��2�na��	�)�J����0M��ϊ:!�٪���2�xX��h���%���@]��t�S�>
-��pYJK���f��D��Z�����h�Do۴�������ǝ��N��{�������k�<
-J/�V����
-K$��VqEY�$k���7��Qǯ�W7ђ/�:=���Q�+�38�T�ֈv�c�õ�\\",�A��o��|� =4���dL���F)�AxF�E�^!��y�����}�n~�\\\\'OA�N�1�M�P�Ðz�	Q���V����ؼןg�����_+~��|B�6�����	������m˻ۭm��?j�^t��%��3}�������d'�_�ל���B�δ:�q�4�&�m-���� \\"7�O����DiC�����L�.��}Ĉ��Kr���O���nz�zҊ[�/�W/)���P���l�Ib=�
-�v�c�ُ�}���	\\"�Uqb�&vޒ�@��'V�l����9�i!�������r�o��-���n����f�*��v�;�����#bq�8�j_U@J�{,�$:#�4lO��]�V���ݎ$0��:P\\"v�\`[�3T�֔���v+8�r
-����ji=)�hP���<\\\\�BdD4�c��\`Ĩ1�I�Ð9{u\`j���0I���{.L]�VqsY_v���c�}��}�d��=%�F�
-�4����(�� ����������ܟ%�L����)����yn�4��j���/�8���ۇ�'�Ln�y�����|�U��t������0Hm�o�<C�;W4����tBs���Q�v��\\"1�^��X�B���1��>EU����s�Q!��Q/�VF���m��V�	!x��Yr���GZ�6Y�ֽY���'���<��ʨ�V��Y̟��V;.$
-j�Ա�L�g��A��z�	!��YA%�����
-P���c&t���\`��P�Z���_�5y��Ę�J�8b�\`�]��'�K�����ϡ�o�a~��J\\"��2&NE���k����LŁT�V=��oॐ��$�/�$�/k���\`b�k �#��.5b�:S�u�9�g����iX����}�2�V&D����@9��l9_bbF@۹�R� ��5D����PCg-�����f�	���o����k���0�����|�껎�I�ϰ�Z.	��Ae�ܻ���7EpP��h�Fɴϩ���ЭD��K�է�;�?��n��H���ap��s��hB�NC|;��r�����4�d$N����9�p�\`��o\\"o���{4�����5���|��kZ�a�K�Qq\\"�y�5�o�:ȊL)]_�_}��u�Qv��V̈Z:=F>�uL�w�Y������>|4�@Z�;�+C�n������G�op�6���b����uY�6��dtw�t��O����k�#Ma>ͫ�[�aAD���p�\`�\`q�K�ͨ��d�N� ���)	414�ω}��m�D;�yz����O���3��\`G������ӄ�^~ kۗ��ʏH���S�>ȷ𪞘Lc�_A���?�c��&��A7z��@�(\\\\�D��#��+���� ��ӕد���z�g�{&ؕ}�TE��g���s�E�O��<[iT?[�$���G��%��Xx\\\\>/}�wǽ��mr�cR���3���}�<e?\\\\�G/�ҳv�8��KϺ�ԕ}Uy�2����U�c�3�d����C1gN�a\`sᕉ.1ǘW����^�s��:NZO���BU)�\\\\$�U��]���uT�������>��CK�|�>������ʱ^6A�ad��9\\"�� ��j4�[��)���̎j�\\"3'�1��:�����*���MWz��&JF��@r�Č+�y�z�.�i,�V�l�����[\\\\��q�&�Q6�_���hļ�J�ap��y�d�P����Z����\`����&�F�N�-��9]��������G��WB���C��z��JT�ppX��I0�����m?g=71n_�s.N:]��Δ5ņ��#�zL��vL;<ہ-��NR�05�@D2L�(�
-��.p=�*rs�hqR��W�u��җ>=|G7o�cuY���)Xe4Nq�ǵ���Zԃ�H;ɸ�]д��K{��^�r̋��K,oa� ���BY����l:Svl����N�s�6�<'�k�h	�U+�LR���	�y��'f���M6��c��t��b�$ŠE�����0F����t����H�|�x�%D���]<�L�n.7���z
-�<m����NVS���)�D��d�.f\`�x�ir��D�z|���/� [,M�x���kE��ԼVr�b�2�S1h<c�u��ČCl�^>7���0�����&J��t���_$n���W&�-]ً�Q�.��d�#X��Yp�h���>��o�ěp��*�ĊD��v�~6N>��,C�H$eb�3� ܂d�/��ާ����n��<��0m��-�lٴT���m�+���a�'��甛� z��e�5b�L�QF^�{�:^�2��Z���$���)�FG5O@N� �cJ�?��,N��%���{�q:P)&� tN$�z���dMQ:�����K\\"o�&+J�b�c�gͽ��b����zQ	�o�h4��%p�/��D�� e76Q��Ѿ\`���u_�%Pf��K�XZ,����TY���(��S��Þ�(��j�󘋈�a����NM{����؈�-��s}��D���mbs0��\`
-n3�;w�O�/����қ�e��hp�7�&�b�Q_���1��S�t�-��~6JT:>���9�)���C(�hՔ��)�c��x�p��<����o��)u�K5gL�'�&<J�X���0�K��$�����LbԸOYG�՟��a|�P6*9���ݶ�jN�&n����I�j&iS����-��Fp[l�.7�Nc��:����Y��.A��c��%:�����\\\\�?��ó�bVhB�.�*A\\\\�M�a���\`~�35��(�\\"�7i�C�vd&�zzc\`��S �q2e��(׽���,e�\`�EE	L�=���������Q�oC��W~̰���O���-���:�_�x*\\\\ȱx�q|��_�$�B3<���e�a����+�T��-|��1�zʄ}LJ �$%�o�5I0��
-y�V�f�e�藽����\\\\��U�了�5LX��QR�=�҉��O�w�~ғEm�/0��×fS�.:�G�xp	��
-\\\\�A���6�e���Y���-<.)�j�ᵚ�hǈ[I���Oh�����D�GE����8׭*�\\\\�㊊#�^4I@ɡ�zu'=�K�\\\\s\\\\��EoM[.��ް�N�G�R/�d�v���mLb�l�ŋANc�/66P%���H#�a�
-�↑�C~$�G���Vp�\`�SE,�c�\\"p4c�ַ̙�
-}�.� �Ս��\\"k��! ��Ş���g��[�tCl��P�B	$	=%5.�|��F��x�6�;I?C^PX�q$�^Ƥ��4����Fb*���/���
-(Il��eМh\`h��8�c��aM70'�bɟl֟�/_nJ��⥈I!� *X�2��/{=5'��(X�l6�R*^/�� bL	&�!�:�B4�W��VMW5{�$	��%C=��j���*ΰJ_��c@C�ӂ��l�����L����C�JG5X �蟢>�&6C�Ŋ5~���oj}��Zx�L�>��n���8�Ǘ -GXW	�
-�HVE2��/�n�;C}W0���Ed(���J���>C
-�e E�O�:[X��S*�0s�R��Jm�_��8�I��yH���=]�
-��ۜR��,��N�p�*�h�!Ϗi�]�fy��DN�C��@'81i<Z�D�I��b4�o�1B����5��K�׻��?@M�6�S<������N��ٸ�|0$0b����4Eu�u�l����;
-ޘ;�^�%�x�����G�\\\\��u�A߹������ ���?K�d�S@@���������V�3��W�y�f'�jn��1!��p�M�KPI$����[D�R&�F�4��YJ�;���\`:nĽTt4@o���Ԍ��8�A�\`�7i���q��R�=4�<.��ܟ ?�٠��F�й���]�����?���\`6A�8�Z��{^⥘��+7�l�}�|Ԍ��Ri
-�bt9�VuS�@�\`Ӄ�]�w194iFR��7��=��I8٩��;�.~%Q���.��*�z�ޔ��5��p;x��FU^]6�6(�	8:~�烗�
-�w6F���fMZ6�nr��~%
-��ʳl���u�E��x84���Ssk{/}.I�
-%��z̧1|p�J(k�����\\"�%�9�)\\\\�y1��]��R������VZ�5(v&�z��>��
-���.��n �l�
-��a���������#�,��y7 �#%��cp��pV�L�z�A��eF�v
-��KЬ�j�*>�k��)����&f�����2��L�z�*6���+C�jN_�.���UU�Q�?�M���,-�	
-*�䆛\`�ES�Diњ\`e���9��.Ћ;��>��&�unUV�bb�f)�m�?q�DSv����
-3��R�x�(��������K��!�w�x��DC�d�֭��
-�?Y�All�!�]��soFI�?mM7DHFXY�rw��\`� �K�r0�V��*��ф>���7�OV��),>�QL��LP���+��k$&q�Z%��(�F�Ȳ^}:���0��T��a�Q�c����>���gq�q
-�	hO��~4�/D$,G:�8��$b��[TUkX���/��KF�ܓc��P���6&�%>md8ʃ>~^�&Bb'O��6KT��F�y�NX<,�so�U�ױ�U�2_ܗ���vd�a���\\\\�+(�Ӧیvr56�2��N6����N*Y̼�:�|�Hܘ�τ�E�J�	y����u$,K F��Ǯ��W�v�R���G��1�9ʑ�;���'У���S\\\\4�I�>ƅ��!�,Y[�k��5����8lGs��,s4,!�F^s���(J$��Ɍ-[Dc~��o�$�^��\`���(睐�Y�ؠ��Q�?��$��ZC�O3�l��W�^(��H.3;��l�yհ����tXJSY����b��ٴ	����̲���J���Z�ˊ��ա�'�5q �;(���ܒ4Q,
-S�^��,h<z�]�^+g���S���O���1�1���ċ��I�	���a�4�+:�c��]Gx�#B,ˋ4������ߚ���}�Ǆ���B&��2��F:!�Xaѳ˫�n�#���-�m�}�=�e�������G����9��*&�FF�ˆ�&�X&���C�H�ϒ�Xob$�o�݃_�g��o��}A6� BW.���l�P[j|>�]O��A�+�-�>JEb��ܠ����
-9o�tm#�%i�X=��3~-��I�E��Qds�5�+0˭�-�B���2?� ���.�E��2�.����o����L�*f����P�,v�i^�+&f{�'��2���(�ܼvsJ��<��
-��[kp;���U
-~��+D�нv�ʔ�~i/�x Q���yu{m?��D5��ےP��WI*Lk�ǹ��Y�/$���9��U��&['m�X�*1�	(Q��ޱ��%D���F�Ǩ�=
-����<��R��!^V��-м0$���{�j')na옇�6�҂�c�ɣ�(����0x����R� D�᧛��A��iv�[ >�L��k_\\\\X��)V&�h�i��YL�Q��(<i�\\\\��/fn&��\\"��]�7�u��ȍ��'M�2���1�M�<��h�{MO�t�e��1k()�؁�~#��&ϴ����E�]��W���6��?u���?~�
-�6M���Z�(*�ќ�)cƙ}�q��A���|�:��*��$�}�	����G&R[\\"����n�
-���3��&����Hp.��nܺ/E����K���fs\`�%�ͦ�Jbs�Qp��_=�&���?���\\"اG,���9=�u���ش(�'pS�W_=	;�}]J�}'��z�o[�(��>���s���/�.~D�:�d�����^b��4�1z��5��#�����t����q����mm��m�B��s�d�a��S|��'��\\\\�<Uj�T���Zj��j{܌]K�6��g8hm{�_V��\\\\�cU�f�C�M�F��\\\\�ZͲ����^�5�b�0���̞J�W:����,<�(���t��c���t���P������T��	��-�a�(�q�.��z���g�}���������m��M�.��|��H���i���{�,�\\"!vm��.N�����U�c�̗�[Y)S;�6��S�$Hi
-N���s�&��rݹ��͗�8����
-+�Ռ�/m��M+�lNڍ�r�鳈<¯\`�,9�r��zM4㪜jL�f[��gZ�q��Wd�*;$�:�ֿ|�l�3L��g֕(g<g�s�3�z��Z<�+eا9�g儫bC����:��9�6�KH��K���D���{L��żs�?ن��[maw�m���u�9�l�.�E����U�����ۀ�&U����OFɂ�r�2l\\"K�e8HS-��'
-ߦ�ޖ�E����fa� ��S#�K44z^�iq:|��g��_Ib'��~���ӵ��5+���D�H�z��f�k�uN��$�q�V�@����Jrt�
-wD��=-��O�D�Y)�k��G�<��}L���/C������o�)��	���8�
-,X�K��t�#�
-����U���rv�p�os	T:�����C�3��d��Ū�r��B+�S9�ٹC�P��$)a:̆�$��s���|�*����o�9Q���>Ͳ:���LK��-��ЏQ�J��M���^zA����Sד�19���k�<��U�[�8�p��0����w�i�6�dҝ)D��$��r9#��YHAX?9~ȧu7���Eb��FP�<�?�^�o.�Q2B��׿���o�gi�o�R��ዟ x7���nw����������˦h�[
-b칏���<J�o2.o��t���ز�aQ�Cí�������b{߀P�\`X��C�6Z��	s\`�w�I>16�}�MW����Ƞ��-d����p��J\\"��bN�fBa=^���R��+T�K�C�JB8ҡ�d�\\"Ū�o	��L�2%ĝ9M����	G��9�\\\\��m��M��:��I��b݊3����aD�
--X�*
-z�\`\` �.��ڳ��R�1UK� ��<�dJb ђ���a�FSƟ_�>㰝2�GF�� ��,������F0�E���dg������q��z#���%I�{
-����i;\`��;����N-�i���C<e����-�����RY\\\\��m~�߬=��S��V��|��*���[���\\\\�-p�J�9��X��σ,N�8�8���4���� %R�\\\\���
-��3�C٠���ޓ�h�����V7�\\\\6id<[S�XםIο{���n��ys�ڜ�/Ís��Z������n����Y��������:?O�����u��f�TH�j.e�5ESq\\\\����t
-S���E��j¤��GѰ�0�����#'�~�)�G=���&j?���n\\\\�-)�ip���l3U����&��k����Y��=�M�4���-�˿�̉����l%�
-�	
-�����T�(��l�榐�1�UQ!E�Vtն�4��
-������	
-�i��	m��R���m��pe{�%vZ�U�Y����f����)|/��nc�ڇ�a3��p�L�0�h�e���,cwל
-7c�S�_�J� ��\\"A⬖��~�]̷U�ɐzg�t�7i-e�M1�Aa9�ҟ�'<�'F�ʦ z+G�J���$�)��P�FI��S�+�|I��\\"�)� %SJ
-)O��=��k��������O���?n�Dְ͇5->m��w������~��y�����mq8���� ��>|-��rzҚ� ���76j�F�
-��	y\\"F�A�&����[,����4�z@:,�ꕍ�
-6@�v��+.Ds�p\\"\\\\K���|��/q���p���Ky6�a����q2ܝn�̽�K���\`�ȪT����ޮo���g��Ӈ�.]����/\`��%������Y�a�Yc1����ߵ�˽z=����8�W��:�̿{���W�O�b�#8 ���[�w:��U���\\\\��W�����1{a�
-��L�[������?�>�|������P� � ",
-  "cdk.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "app": "npx ts-node --prefer-ts-exts src/main.ts",
-  },
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "bundledDependencies": Array [],
-    "dependencies": Object {
-      "@aws-cdk/assert": "^1.95.2",
-      "@aws-cdk/aws-appsync": "^1.95.2",
-      "@aws-cdk/aws-cognito": "^1.95.2",
-      "@aws-cdk/aws-dynamodb": "^1.95.2",
-      "@aws-cdk/aws-iam": "^1.95.2",
-      "@aws-cdk/core": "^1.95.2",
-      "cdk-appsync-transformer": "1.77.15",
-    },
-    "devDependencies": Object {
-      "./cdk-appsync-project-1.1.3.tgz": "*",
-      "@types/jest": "*",
-      "@types/node": "^10.17.0",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
-      "aws-cdk": "^1.95.2",
-      "eslint": "*",
-      "eslint-import-resolver-node": "*",
-      "eslint-import-resolver-typescript": "*",
-      "eslint-plugin-import": "*",
-      "jest": "*",
-      "jest-junit": "^12",
-      "json-schema": "*",
-      "npm-check-updates": "^11",
-      "projen": "^999.999.999",
-      "standard-version": "^9",
-      "ts-jest": "*",
-      "ts-node": "*",
-      "typescript": "*",
-    },
-    "engines": Object {
-      "node": ">= 10.17.0",
-    },
-    "jest": Object {
-      "clearMocks": true,
-      "collectCoverage": true,
-      "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "coverageReporters": Array [
-        "json",
-        "lcov",
-        "clover",
-        "text",
-      ],
-      "globals": Object {
-        "ts-jest": Object {
-          "tsconfig": "tsconfig.jest.json",
-        },
-      },
-      "preset": "ts-jest",
-      "reporters": Array [
-        "default",
-        Array [
-          "jest-junit",
-          Object {
-            "outputDirectory": "test-reports",
-          },
-        ],
-      ],
-      "testMatch": Array [
-        "**/__tests__/**/*.ts?(x)",
-        "**/?(*.)+(spec|test).ts?(x)",
-      ],
-      "testPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "watchPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-    },
-    "license": "Apache-2.0",
-    "name": "my-project",
-    "peerDependencies": Object {},
-    "scripts": Object {
-      "build": "npx projen build",
-      "bump": "npx projen bump",
-      "clobber": "npx projen clobber",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "deploy": "npx projen deploy",
-      "destroy": "npx projen destroy",
-      "diff": "npx projen diff",
-      "eslint": "npx projen eslint",
-      "projen": "npx projen",
-      "start": "npx projen start",
-      "synth": "npx projen synth",
-      "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
-      "test:update": "npx projen test:update",
-      "test:watch": "npx projen test:watch",
-      "unbump": "npx projen unbump",
-      "upgrade-dependencies": "npx projen upgrade-dependencies",
-      "upgrade-projen": "npx projen upgrade-projen",
-    },
-    "version": "0.0.0",
-  },
-  "schema.graphql": "# This is a sample generated schema
-type Customer @model
-    @auth(rules: [
-        { allow: groups, groups: [\\"Admins\\"] },
-        { allow: private, provider: iam, operations: [read, update] }
-    ]) {
-        id: ID!
-        firstName: String!
-        lastName: String!
-        active: Boolean!
-        address: String!
-}
-
-type Product @model
-    @auth(rules: [
-        { allow: groups, groups: [\\"Admins\\"] },
-        { allow: public, provider: iam, operations: [read] }
-    ]) {
-        id: ID!
-        name: String!
-        description: String!
-        price: String!
-        active: Boolean!
-        added: AWSDateTime!
-        orders: [Order] @connection
-}
-
-type Order @model
-    @key(fields: [\\"id\\", \\"productID\\"]) {
-        id: ID!
-        productID: ID!
-        total: String!
-        ordered: AWSDateTime!
-}
-
-# Demonstrate the FUNCTION resolvers
-type User @model(queries: null, mutations: null, subscriptions: null)
-    @auth(rules: [
-        { allow: groups, groups: [\\"Admins\\"] },
-        { allow: owner, ownerField: \\"sub\\" },
-        { allow: private, provider: iam, operations: [create, update] }
-    ]) {
-    id: ID!
-    enabled: Boolean!
-    status: String!
-    email: String!
-    name: String!
-    email_verified: String
-    phone_number: String
-    phone_number_verified: String
-}
-
-type UserConnection {
-    items: [User]
-}
-
-input CreateUserInput {
-    email: String!
-    name: String!
-}
-
-input UpdateUserInput {
-    id: ID!
-    email: String
-    name: String
-    number: String
-}
-
-# Demonstrate the FUNCTION resolvers
-type Query {
-  listUsers: UserConnection @function(name: \\"router\\")
-  getUser(id: ID!): User @function(name: \\"router\\")
-}
-
-type Mutation {
-  createUser(input: CreateUserInput!): User @function(name: \\"router\\")
-  updateUser(input: UpdateUserInput!): User @function(name: \\"router\\")
-}",
-  "src/lib/my-project-stack.ts": "import { Construct, Stack, StackProps } from '@aws-cdk/core';
-import { AuthorizationType, UserPoolDefaultAction } from '@aws-cdk/aws-appsync';
-import { CfnIdentityPool, UserPool, UserPoolClient, VerificationEmailStyle } from '@aws-cdk/aws-cognito';
-import { Role, WebIdentityPrincipal } from '@aws-cdk/aws-iam';
-
-import { AppSyncTransformer } from 'cdk-appsync-transformer';
-
-export interface MyProjectStackProps extends StackProps { }
-
-export class MyProjectStack extends Stack {
-  public userPool: UserPool;
-  public appsyncTransformer: AppSyncTransformer
-
-  constructor(scope: Construct, id: string, props: MyProjectStackProps = {}) {
-    super(scope, id, props);
-
-    this.userPool = new UserPool(this, 'user-pool', {
-      autoVerify: {
-        email: true,
-        phone: false
-      },
-      selfSignUpEnabled: true,
-      signInAliases: {
-        email: true
-      },
-      standardAttributes: {
-        email: {
-          mutable: true,
-          required: true
-        },
-      },
-      userVerification: {
-        emailSubject: 'Verify your email',
-        emailBody: 'Hello {username}! Your verification code is {####}',
-        emailStyle: VerificationEmailStyle.CODE,
-      }
-    });
-
-    const userpoolWebClient = new UserPoolClient(this, 'user-pool-client', {
-      userPool: this.userPool,
-      generateSecret: false,
-      authFlows: {
-        userPassword: true,
-      }
-    });
-
-    const identityPool = new CfnIdentityPool(this, 'identity-pool', {
-      cognitoIdentityProviders: [
-        {
-          clientId: userpoolWebClient.userPoolClientId,
-          providerName: \`cognito-idp.\${this.region}.amazonaws.com/\${this.userPool.userPoolId}\`,
-        },
-      ],
-      allowUnauthenticatedIdentities: true,
-    });
-
-    const unauthRole = new Role(this, 'unauth-role', {
-      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
-        .withConditions({
-          'StringEquals': { 'cognito-identity.amazonaws.com:aud': \`\${identityPool.ref}\` },
-          'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'unauthenticated' },
-        }),
-    });
-
-    const authRole = new Role(this, 'auth-role', {
-      assumedBy: new WebIdentityPrincipal('cognito-identity.amazonaws.com')
-        .withConditions({
-          'StringEquals': { 'cognito-identity.amazonaws.com:aud': \`\${identityPool.ref}\` },
-          'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'authenticated' },
-        }),
-    });
-
-    this.appsyncTransformer = new AppSyncTransformer(this, 'appsync-api', {
-      schemaPath: './schema.graphql',
-      apiName: 'my-cool-api',
-      authorizationConfig: {
-        defaultAuthorization: {
-          authorizationType: AuthorizationType.USER_POOL,
-          userPoolConfig: {
-            userPool: this.userPool,
-            appIdClientRegex: userpoolWebClient.userPoolClientId,
-            defaultAction: UserPoolDefaultAction.ALLOW
-          }
-        }
-      }
-    });
-
-    this.appsyncTransformer.grantPublic(unauthRole);
-  }
-}",
-  "src/main.ts": "import { App } from '@aws-cdk/core';
-import { MyProjectStack } from './lib/my-project-stack';
-const STAGE = process.env.STAGE || 'dev'; // default to dev as the stage
-const ACCOUNT = process.env.ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT;
-const REGION = process.env.REGION || 'us-east-2'; // default region we are using
-const app = new App(
-  {
-    context: {
-      STAGE: STAGE,
-    },
-  },
-);
-
-new MyProjectStack(app, \`my-project-\${STAGE}\`, {
-  terminationProtection: true,
-  description: 'Stack for my-project',
-  env: {
-    account: ACCOUNT,
-    region: REGION,
-  },
-});
-app.synth();",
-  "test/main.test.ts": "import '@aws-cdk/assert/jest';
-import { MyStack } from '../src/main'
-import { App } from '@aws-cdk/core';
-
-test('Snapshot', () => {
-  const app = new App();
-  const stack = new MyStack(app, 'test');
-
-  expect(stack).toHaveResource('AWS::Cognito::UserPool');
-  expect(stack.api.nestedAppsyncStack).toHaveResource('AWS::AppSync::GraphQLApi');
-});",
-  "tsconfig.eslint.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2018",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2018",
-    },
-    "exclude": Array [
-      "node_modules",
-    ],
-    "include": Array [
-      ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
-    ],
-  },
-  "tsconfig.jest.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2018",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2018",
-    },
-    "exclude": Array [
-      "node_modules",
-    ],
-    "include": Array [
-      ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
-    ],
-  },
-  "tsconfig.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2018",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "outDir": "lib",
-      "resolveJsonModule": true,
-      "rootDir": "src",
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2018",
-    },
-    "exclude": Array [
-      "node_modules",
-      "lib",
-      "cdk.out",
-    ],
-    "include": Array [
-      "src/**/*.ts",
-    ],
-  },
-}
+project.synth();"
 `;
 
 exports[`projen new awscdk-app-ts 1`] = `

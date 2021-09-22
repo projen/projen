@@ -4,7 +4,7 @@ import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
 import * as logging from '../../logging';
 import { NewProjectOptionHints } from '../../option-hints';
-import { exec, execCapture, isTruthy } from '../../util';
+import { exec, isTruthy } from '../../util';
 import { createProject } from '../create';
 import { tryProcessMacro } from '../macros';
 
@@ -154,10 +154,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     exec(`npm ls --prefix=${baseDir} --depth=0 --pattern projen || ${installCommand}`, { cwd: baseDir });
   }
 
-  const specDependencyInfo = installPackage(baseDir, spec);
-
-  // Remove optional semver information from spec to retrieve the module name
-  const moduleName = specDependencyInfo.replace(/\@([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/, '');
+  const moduleName = installPackage(baseDir, spec);
 
   // Find the just installed package and discover the rest recursively from this package folder
   const moduleDir = path.dirname(require.resolve(`${moduleName}/.jsii`, {
@@ -172,7 +169,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     .filter(x => x.moduleName === moduleName); // Only list project types from the requested 'from' module
 
   if (projects.length < 1) {
-    throw new Error(`No projects found after installing ${specDependencyInfo}. The module must export at least one class which extends projen.Project`);
+    throw new Error(`No projects found after installing ${spec}. The module must export at least one class which extends projen.Project`);
   }
 
   const requested = args.projectTypeName;
@@ -180,7 +177,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // if user did not specify a project type but the module has more than one, we need them to tell us which one...
   if (!requested && projects.length > 1) {
-    throw new Error(`Multiple projects found after installing ${specDependencyInfo}: ${types.join(',')}. Please specify a project name.\nExample: npx projen new --from ${specDependencyInfo} ${types[0]}`);
+    throw new Error(`Multiple projects found after installing ${spec}: ${types.join(',')}. Please specify a project name.\nExample: npx projen new --from ${spec} ${types[0]}`);
   }
 
   // if user did not specify a type (and we know we have only one), the select it. otherwise, search by pjid.
@@ -257,18 +254,28 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 
 /**
  * Installs the npm module (through `npm install`) to node_modules under `projectDir`.
- * @param spec The npm package spec (e.g. foo@^1.2 or foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
- * @returns The installed `package@version` (e.g. foo@1.2)
+ * @param spec The npm package spec (e.g. `foo@^1.2` or `foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz`)
+ * @returns The installed package name (e.g. `@foo/bar`)
  */
 function installPackage(baseDir: string, spec: string): string {
   const packageJsonPath = path.join(baseDir, 'package.json');
   const packageJsonExisted = fs.existsSync(packageJsonPath);
 
-  logging.info(`installing external module ${spec}...`);
-  const installResult = execCapture(renderInstallCommand(baseDir, spec), { cwd: baseDir });
+  if (!packageJsonExisted) {
+    // Make sure we have a package.json to read from later
+    exec('npm init --yes', { cwd: baseDir });
+  }
 
-  // Gets the true resolved `package@version` from the install command
-  const dependencyInfo = installResult.toString().split('\n')[0].slice(2);
+  logging.info(`installing external module ${spec}...`);
+  exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
+
+  // Get the true installed package name
+  const packageJson = fs.readJsonSync(packageJsonPath);
+  const packageName = Object.keys(packageJson.devDependencies).find(name => name != 'projen');
+
+  if (!packageName) {
+    throw new Error(`Unable to resolve package name from spec ${spec}`);
+  }
 
   // if package.json did not exist before calling `npm install`, we should remove it
   // so we can start off clean.
@@ -276,7 +283,7 @@ function installPackage(baseDir: string, spec: string): string {
     fs.removeSync(packageJsonPath);
   }
 
-  return dependencyInfo;
+  return packageName;
 }
 
 /**

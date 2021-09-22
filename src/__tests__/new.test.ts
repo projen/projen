@@ -90,7 +90,6 @@ test('projen new --from external tarball', () => {
 
     expect(actual['package.json']).toMatchSnapshot();
     expect(actual['.projenrc.js']).toMatchSnapshot();
-    expect(actual['./cdk-appsync-project@1.1.3']).toBeDefined(); // check our tarball wasn't deleted
     expect(actual['schema.graphql']).toBeDefined();
   });
 });
