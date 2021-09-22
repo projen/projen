@@ -4614,7 +4614,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.0.2
+          version: 6.14.7
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: build
@@ -4669,7 +4669,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.0.2
+          version: 6.14.7
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: release
@@ -4761,7 +4761,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.0.2
+          version: 6.14.7
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
