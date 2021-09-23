@@ -271,7 +271,7 @@ function installPackage(baseDir: string, spec: string): string {
 
   // Get the true installed package name
   const packageJson = fs.readJsonSync(packageJsonPath);
-  const packageName = Object.keys(packageJson.devDependencies).find(name => name != 'projen');
+  const packageName = Object.keys(packageJson.devDependencies).find(name => name !== 'projen');
 
   if (!packageName) {
     throw new Error(`Unable to resolve package name from spec ${spec}`);
