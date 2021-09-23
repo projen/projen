@@ -16,7 +16,7 @@ class Command implements yargs.CommandModule {
     args.positional('PROJECT-TYPE-NAME', { describe: 'optional only when --from is used and there is a single project type in the external module', type: 'string' });
     args.option('synth', { type: 'boolean', default: true, desc: 'Synthesize after creating .projenrc.js' });
     args.option('comments', { type: 'boolean', default: true, desc: 'Include commented out options in .projenrc.js (use --no-comments to disable)' });
-    args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by yarn (such as "my-pack@^2.0")' });
+    args.option('from', { type: 'string', alias: 'f', desc: 'External jsii npm module to create project from. Supports any package spec supported by npm (such as "my-pack@^2.0")' });
     args.option('git', { type: 'boolean', default: true, desc: 'Run `git init` and create an initial commit (use --no-git to disable)' });
     args.example('projen new awscdk-app-ts', 'Creates a new project of built-in type "awscdk-app-ts"');
     args.example('projen new --from projen-vue@^2', 'Creates a new project from an external module "projen-vue" with the specified version');
@@ -154,10 +154,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
     exec(`npm ls --prefix=${baseDir} --depth=0 --pattern projen || ${installCommand}`, { cwd: baseDir });
   }
 
-  const specDependencyInfo = installPackage(baseDir, spec);
-
-  // Remove optional semver information from spec to retrieve the module name
-  const moduleName = spec.replace(/\@([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/, '');
+  const moduleName = installPackage(baseDir, spec);
 
   // Find the just installed package and discover the rest recursively from this package folder
   const moduleDir = path.dirname(require.resolve(`${moduleName}/.jsii`, {
@@ -218,7 +215,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
 
   // include a dev dependency for the external module
   await newProject(baseDir, type, args, {
-    devDeps: [specDependencyInfo],
+    devDeps: [spec],
   });
 }
 
@@ -257,24 +254,36 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
 
 /**
  * Installs the npm module (through `npm install`) to node_modules under `projectDir`.
- * @param spec The npm package spec (e.g. foo@^1.2)
- * @returns String info for the project devDeps (e.g. foo@^1.2 or foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz)
+ * @param spec The npm package spec (e.g. `foo@^1.2` or `foo@/var/folders/8k/qcw0ls5pv_ph0000gn/T/projen-RYurCw/pkg.tgz`)
+ * @returns The installed package name (e.g. `@foo/bar`)
  */
 function installPackage(baseDir: string, spec: string): string {
   const packageJsonPath = path.join(baseDir, 'package.json');
   const packageJsonExisted = fs.existsSync(packageJsonPath);
-  let dependencyInfo = spec;
+
+  if (!packageJsonExisted) {
+    // Make sure we have a package.json to read from later
+    exec('npm init --yes', { cwd: baseDir });
+  }
 
   logging.info(`installing external module ${spec}...`);
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
-  // if package.json did not exist before calling yarn add, we should remove it
+  // Get the true installed package name
+  const packageJson = fs.readJsonSync(packageJsonPath);
+  const packageName = Object.keys(packageJson.devDependencies).find(name => name !== 'projen');
+
+  if (!packageName) {
+    throw new Error(`Unable to resolve package name from spec ${spec}`);
+  }
+
+  // if package.json did not exist before calling `npm install`, we should remove it
   // so we can start off clean.
   if (!packageJsonExisted) {
     fs.removeSync(packageJsonPath);
   }
 
-  return dependencyInfo;
+  return packageName;
 }
 
 /**
@@ -287,7 +296,7 @@ function installPackage(baseDir: string, spec: string): string {
  *
  * @param dir Base directory
  * @param module The module to install (e.g. foo@^1.2)
- * @returns The string that includes the install command ("yarn add ...")
+ * @returns The string that includes the install command ("npm install ...")
  */
 function renderInstallCommand(dir: string, module: string): string {
   return `npm install --save-dev -f --no-package-lock --prefix=${dir} ${module}`;
