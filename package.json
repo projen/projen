@@ -62,7 +62,7 @@
     "jsii-docgen": "^1.8.110",
     "jsii-pacmak": "^1.34.0",
     "json-schema": "^0.3.0",
-    "markmac": "^0.1.40",
+    "markmac": "^0.1.41",
     "npm-check-updates": "^11",
     "standard-version": "^9",
     "typescript": "^3.9.10"
