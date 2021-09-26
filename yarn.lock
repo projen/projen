@@ -812,9 +812,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "16.9.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.6.tgz#040a64d7faf9e5d9e940357125f0963012e66f04"
-  integrity sha512-YHUZhBOMTM3mjFkXVcK+WwAcYmyhe1wL4lfqNtzI0b3qAy7yuSetnM7QJazgE5PFmgVTNGiLOgRFfJMqW7XpSQ==
+  version "16.10.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.10.1.tgz#f3647623199ca920960006b3dccf633ea905f243"
+  integrity sha512-4/Z9DMPKFexZj/Gn3LylFgamNKHm4K3QDi0gz9B26Uk0c8izYf97B5fxfpspMNkWlFupblKM/nV8+NA9Ffvr+w==
 
 "@types/node@^10.17.0":
   version "10.17.60"
@@ -827,9 +827,9 @@
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
 "@types/prettier@^2.0.0":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.3.2.tgz#fc8c2825e4ed2142473b4a81064e6e081463d1b3"
-  integrity sha512-eI5Yrz3Qv4KPUa/nSIAi0h+qX0XyewOliug5F2QAtuRg6Kjg6jfmxe1GIwoIRhZspD1A0RP8ANrPwvEXXtRFog==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.0.tgz#900b13362610ccd3570fb6eefb911a6732973d00"
+  integrity sha512-WHRsy5nMpjXfU9B0LqOqPT06EI2+8Xv5NERy0pLxJLbU98q7uhcGogQzfX+rXpU7S5mgHsLxHrLCufZcV/P8TQ==
 
 "@types/semver@^7.3.8":
   version "7.3.8"
@@ -4706,10 +4706,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-markmac@^0.1.40:
-  version "0.1.40"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.40.tgz#3e5d51c4af64c66f922881253037549b50bb21b3"
-  integrity sha512-X2eImFOATRw+DsrwxRLzYGX5ks7yRJWr1OJ+heb/SijHtc3jGL8kJB2SztuEtSL1kGtFaLwnKmfamH4pSgtBuw==
+markmac@^0.1.41:
+  version "0.1.41"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.41.tgz#bd7b8c1d65c48c45fa7b3d3d3a914b6364b507f9"
+  integrity sha512-3G6QvZNYAz77JDbtwXoZUFELBOK1PcU3qhe+7sD2b6h1Emf6oggwaGQ8cmCjEXn4tWUXyhwudfpDxi2Ya3C3eA==
 
 mdurl@~1.0.1:
   version "1.0.1"
