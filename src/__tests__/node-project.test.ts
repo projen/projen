@@ -202,7 +202,7 @@ describe('deps upgrade', () => {
     });
 
     const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
-    expect(snapshot.jobs.pr.steps[3].with.labels).toStrictEqual(project.autoApprove?.label);
+    expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
   test('dependabot can be auto approved', () => {

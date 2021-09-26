@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
+      - name: Git Identify
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: gh-workflow-test
         run: projen gh-workflow-test
@@ -35,9 +35,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
+      - name: Git Identify
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: gh-workflow-test
         run: projen gh-workflow-test

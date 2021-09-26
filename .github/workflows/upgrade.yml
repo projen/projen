@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Git Identify
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -51,6 +55,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Git Identify
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
@@ -92,8 +100,6 @@ jobs:
 
 
             *Automatically created by projen via the "upgrade" workflow*
-          author: Automation <github-actions@github.com>
-          committer: Automation <github-actions@github.com>
       - name: Update status check
         if: steps.create-pr.outputs.pull-request-url != ''
         run: "curl -i --fail -X POST -H \"Accept: application/vnd.github.v3+json\" -H
