@@ -78,6 +78,13 @@ export interface UpgradeDependenciesOptions {
    */
   readonly ignoreProjen?: boolean;
 
+  /**
+   * Add Signed-off-by line by the committer at the end of the commit log message.
+   *
+   * @default false
+   */
+  readonly signoff?: boolean;
+
 }
 
 /**
@@ -286,6 +293,7 @@ export class UpgradeDependencies extends Component {
           'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
+          'signoff': this.options.signoff ?? false,
         },
       },
     ];

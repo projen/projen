@@ -205,6 +205,17 @@ describe('deps upgrade', () => {
     expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
+  test('commit can be signed', () => {
+    const project = new TestNodeProject({
+      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+        signoff: true,
+      }),
+    });
+
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
+    expect(snapshot.jobs.pr).toMatchSnapshot();
+  });
+
   test('dependabot can be auto approved', () => {
     const project = new TestNodeProject({
       dependabot: true,
