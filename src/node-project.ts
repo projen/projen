@@ -700,10 +700,6 @@ export class NodeProject extends GitHubProject {
       });
     }
 
-    if (options.depsUpgrade && typeof(options.depsUpgrade) !== 'boolean') {
-      throw new Error("'depsUpgrade' must be a boolean. See https://github.com/projen/projen/pull/1100 for migration instructions");
-    }
-
     const dependabot = options.dependabot ?? false;
     const depsUpgrade = options.depsUpgrade ?? !dependabot;
 

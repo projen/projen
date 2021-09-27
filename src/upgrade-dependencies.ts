@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { GitHub, GithubWorkflow, workflows } from './github';
-import { SET_GIT_IDENTITY_WORKFLOW_STEP } from './github/constants';
+import { GITHUB_ACTIONS_USER, SET_GIT_IDENTITY_WORKFLOW_STEP } from './github/constants';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -271,6 +271,8 @@ export class UpgradeDependencies extends Component {
       `*Automatically created by projen via the "${workflow.name}" workflow*`,
     ].join('\n');
 
+    const comitter = `${GITHUB_ACTIONS_USER.name} <${GITHUB_ACTIONS_USER.email}>`;
+
     const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
@@ -299,6 +301,8 @@ export class UpgradeDependencies extends Component {
           'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
+          'author': comitter,
+          'committer': comitter,
           'signoff': this.options.signoff ?? false,
         },
       },

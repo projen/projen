@@ -292,12 +292,6 @@ describe('deps upgrade', () => {
     }).toThrow("'dependabot' cannot be configured together with 'depsUpgrade'");
   });
 
-  test('throws when depsUpgrade is not of correct type', () => {
-    expect(() => {
-      new TestNodeProject({ dependabot: true, depsUpgrade: ({ something: 'else ' } as any) });
-    }).toThrow("'depsUpgrade' must be a boolean");
-  });
-
 });
 
 describe('npm publishing options', () => {

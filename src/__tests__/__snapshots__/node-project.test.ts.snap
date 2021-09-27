@@ -37,6 +37,7 @@ git config user.email \\"github-actions@github.com\\"",
       "name": "Create Pull Request",
       "uses": "peter-evans/create-pull-request@v3",
       "with": Object {
+        "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
 
 [Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
@@ -54,6 +55,7 @@ Upgrades project dependencies. See details in [workflow run].
 ------
 
 *Automatically created by projen via the \\"upgrade\\" workflow*",
+        "committer": "github-actions <github-actions@github.com>",
         "signoff": true,
         "title": "chore(deps): upgrade dependencies",
         "token": "\${{ secrets.GITHUB_TOKEN }}",

@@ -275,6 +275,8 @@ jobs:
 
 
             *Automatically created by projen via the \\"upgrade\\" workflow*
+          author: github-actions <github-actions@github.com>
+          committer: github-actions <github-actions@github.com>
           signoff: false
       - name: Update status check
         if: steps.create-pr.outputs.pull-request-url != ''
