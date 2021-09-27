@@ -103,12 +103,18 @@ export class UpgradeDependencies extends Component {
 
   private readonly pullRequestTitle: string;
 
+  /**
+   * Whether or not projen is also upgraded in this workflow,
+   */
+  public readonly ignoresProjen: boolean;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
+    this.ignoresProjen = this.options.ignoreProjen ?? true;
 
     project.addDevDeps('npm-check-updates@^11');
 
@@ -129,7 +135,7 @@ export class UpgradeDependencies extends Component {
     });
 
     const exclude = this.options.exclude ?? [];
-    if (this.options.ignoreProjen ?? true) {
+    if (this.ignoresProjen) {
       exclude.push('projen');
     }
     const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];

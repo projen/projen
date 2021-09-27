@@ -4,7 +4,6 @@ import { DependencyType } from '../deps';
 import { JobPermission } from '../github/workflows-model';
 import * as logging from '../logging';
 import { NodePackage, NodePackageManager, NpmAccess } from '../node-package';
-import { DependenciesUpgradeMechanism } from '../node-project';
 import { Project } from '../project';
 import { Tasks } from '../tasks';
 import { mkdtemp, synthSnapshot, TestProject } from './util';
@@ -207,9 +206,9 @@ describe('deps upgrade', () => {
 
   test('commit can be signed', () => {
     const project = new TestNodeProject({
-      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+      depsUpgradeOptions: {
         signoff: true,
-      }),
+      },
     });
 
     const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
@@ -250,7 +249,7 @@ describe('deps upgrade', () => {
 
   test('dependabot - with projen secret', () => {
     const project = new TestNodeProject({
-      depsUpgrade: DependenciesUpgradeMechanism.dependabot(),
+      dependabot: true,
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
@@ -260,7 +259,7 @@ describe('deps upgrade', () => {
 
   test('dependabot - no projen secret', () => {
     const project = new TestNodeProject({
-      depsUpgrade: DependenciesUpgradeMechanism.dependabot(),
+      dependabot: true,
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/dependabot.yml']).toBeDefined();
@@ -269,27 +268,34 @@ describe('deps upgrade', () => {
 
   test('github actions - with projen secret', () => {
     const project = new TestNodeProject({
-      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
-  });
-
-  test('github actions - no projen secret', () => {
-    const project = new TestNodeProject({
-      depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow(),
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
   });
 
-  test('throws when depracated dependabot is configued with dependenciesUpgrade', () => {
+  test('github actions - no projen secret', () => {
+    const project = new TestNodeProject({});
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
+
+    // note that in this case only the task is created, not the workflow
+    const upgradeProjen = snapshot['.projen/tasks.json'].tasks['upgrade-projen'];
+    expect(upgradeProjen).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+  });
+
+  test('throws when dependabot is configued with depsUpgrade', () => {
     expect(() => {
-      new TestNodeProject({ dependabot: true, depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow() });
+      new TestNodeProject({ dependabot: true, depsUpgrade: true });
     }).toThrow("'dependabot' cannot be configured together with 'depsUpgrade'");
+  });
+
+  test('throws when depsUpgrade is not of correct type', () => {
+    expect(() => {
+      new TestNodeProject({ dependabot: true, depsUpgrade: ({ something: 'else ' } as any) });
+    }).toThrow("'depsUpgrade' must be a boolean");
   });
 
 });

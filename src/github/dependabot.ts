@@ -265,6 +265,11 @@ export class Dependabot extends Component {
    */
   public readonly config: any;
 
+  /**
+   * Whether or not projen is also upgraded in this config,
+   */
+  public readonly ignoresProjen: boolean;
+
   private readonly ignore: any[];
 
   constructor(github: GitHub, options: DependabotOptions = {}) {
@@ -273,6 +278,7 @@ export class Dependabot extends Component {
     const project = github.project;
 
     this.ignore = [];
+    this.ignoresProjen = options.ignoreProjen ?? true;
 
     const registries = options.registries ? kebabCaseKeys(options.registries) : undefined;
 
@@ -303,7 +309,7 @@ export class Dependabot extends Component {
       this.addIgnore(i.dependencyName, ...(i.versions ?? []));
     }
 
-    if (options.ignoreProjen ?? true) {
+    if (this.ignoresProjen) {
       this.addIgnore('projen');
     }
   }
