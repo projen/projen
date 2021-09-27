@@ -3576,9 +3576,9 @@ is-generator-fn@^2.0.0:
   integrity sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==
 
 is-glob@^4.0.0, is-glob@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-4.0.1.tgz#7567dbe9f2f5e2467bc77ab83c4a29482407a5dc"
-  integrity sha512-5G0tKtBTFImOqDnLB2hG6Bp2qcKEFduo4tZu9MT/H6NQv/ghhy30o55ufafxJ/LdH79LLs2Kfrn85TLKyA7BUg==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-4.0.2.tgz#859fc2e731e58c902f99fcabccb75a7dd07d29d8"
+  integrity sha512-ZZTOjRcDjuAAAv2cTBQP/lL59ZTArx77+7UzHdWW/XB1mrfp7DEaVpKmZ0XIzx+M7AxfhKcqV+nMetUQmFifwg==
   dependencies:
     is-extglob "^2.1.1"
 
@@ -4706,10 +4706,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-markmac@^0.1.41:
-  version "0.1.41"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.41.tgz#bd7b8c1d65c48c45fa7b3d3d3a914b6364b507f9"
-  integrity sha512-3G6QvZNYAz77JDbtwXoZUFELBOK1PcU3qhe+7sD2b6h1Emf6oggwaGQ8cmCjEXn4tWUXyhwudfpDxi2Ya3C3eA==
+markmac@^0.1.42:
+  version "0.1.42"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.42.tgz#b6cb759438ffb83303f10f88b288a3ef54d16983"
+  integrity sha512-nJYqAkorH/Eb9Io71xalhcwqjec5aNrHJtqutDvinZGeMTA/77USKzNE4GInleMNqD7nY05M6fRJIKhtqhH0rA==
 
 mdurl@~1.0.1:
   version "1.0.1"
