@@ -16,7 +16,7 @@ Object {
       "uses": "actions/checkout@v2",
     },
     Object {
-      "name": "Git Identify",
+      "name": "Set git identity",
       "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
     },
@@ -78,7 +78,7 @@ Array [
     "uses": "actions/checkout@v2",
   },
   Object {
-    "name": "Git Identify",
+    "name": "Set git identity",
     "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
@@ -138,7 +138,7 @@ Array [
     },
   },
   Object {
-    "name": "Git Identify",
+    "name": "Set git identity",
     "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },

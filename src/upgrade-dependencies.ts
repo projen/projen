@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { GitHub, GithubWorkflow, workflows } from './github';
-import { GIT_IDENTIFY_WORKFLOW_STEP } from './github/constants';
+import { SET_GIT_IDENTITY_WORKFLOW_STEP } from './github/constants';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -201,7 +201,7 @@ export class UpgradeDependencies extends Component {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
-      GIT_IDENTIFY_WORKFLOW_STEP,
+      SET_GIT_IDENTITY_WORKFLOW_STEP,
       ...this._project.installWorkflowSteps,
       {
         name: 'Upgrade dependencies',
@@ -276,7 +276,7 @@ export class UpgradeDependencies extends Component {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
-      GIT_IDENTIFY_WORKFLOW_STEP,
+      SET_GIT_IDENTITY_WORKFLOW_STEP,
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',

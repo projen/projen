@@ -1,5 +1,5 @@
 import { Task } from '../tasks';
-import { GIT_IDENTIFY_WORKFLOW_STEP } from './constants';
+import { SET_GIT_IDENTITY_WORKFLOW_STEP } from './constants';
 import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';
 import { ContainerOptions, Job, JobPermissions, JobStep, JobStepOutput, Triggers } from './workflows-model';
@@ -159,7 +159,7 @@ export class TaskWorkflow extends GithubWorkflow {
         },
 
         // sets git identity so we can push later
-        GIT_IDENTIFY_WORKFLOW_STEP,
+        SET_GIT_IDENTITY_WORKFLOW_STEP,
 
         ...preBuildSteps,
 

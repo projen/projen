@@ -732,7 +732,7 @@ export class NodeProject extends GitHubProject {
     if (dependabot) {
       const dependabotConf = this.github?.addDependabot({
         labels: autoApproveLabel(depsAutoApprove),
-        ...options.dependabotOptions,
+        ...(options.dependabotOptions ?? {}),
       });
       ignoresProjen = dependabotConf?.ignoresProjen;
     }
@@ -749,8 +749,7 @@ export class NodeProject extends GitHubProject {
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
         },
-        // override with custom options
-        ...options.depsUpgradeOptions,
+        ...(options.depsUpgradeOptions ?? {}),
       });
       ignoresProjen = upgradeDependencies.ignoresProjen;
     }
