@@ -529,7 +529,7 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    if (options.buildWorkflow ?? (this.parent ? false : true)) {
+    if (buildEnabled) {
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -872,6 +872,14 @@ export class NodeProject extends GitHubProject {
         name: 'Setup Node.js',
         uses: 'actions/setup-node@v2.2.0',
         with: { 'node-version': this.nodeVersion },
+      });
+    }
+
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      install.push({
+        name: 'Setup pnpm',
+        uses: 'pnpm/action-setup@v2.0.1',
+        with: { version: '6.14.7' }, // current latest. Should probably become tunable.
       });
     }
 

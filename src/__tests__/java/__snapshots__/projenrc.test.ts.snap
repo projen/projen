@@ -73,7 +73,7 @@ node_modules/
         "version": "3.0.0",
       },
       Object {
-        "name": "com.github.eladb/projen",
+        "name": "io.github.cdklabs/projen",
         "type": "test",
         "version": "1.0.0",
       },
@@ -116,7 +116,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
@@ -188,7 +188,7 @@ node_modules/
         "version": "3.0.0",
       },
       Object {
-        "name": "com.github.eladb/projen",
+        "name": "io.github.cdklabs/projen",
         "type": "test",
         "version": "7.7.7",
       },
@@ -231,7 +231,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>7.7.7</version>
             <scope>test</scope>
@@ -303,7 +303,7 @@ node_modules/
         "version": "3.0.0",
       },
       Object {
-        "name": "com.github.eladb/projen",
+        "name": "io.github.cdklabs/projen",
         "type": "runtime",
         "version": "7.7.7",
       },
@@ -346,7 +346,7 @@ node_modules/
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.github.eladb</groupId>
+            <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>7.7.7</version>
         </dependency>
