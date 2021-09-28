@@ -17,6 +17,8 @@ test('no workflow', () => {
 test('adding empty workflow', () => {
   // GIVEN
   const p = new TestProject();
+
+  // WHEN
   p.github?.addWorkflow('my-workflow');
 
   // THEN
@@ -37,11 +39,11 @@ test('throws when adding workflow with existing name', () => {
 test('tryFind valid workflow', () => {
   // GIVEN
   const p = new TestProject();
+
+  // WHEN
   p.github?.addWorkflow('workflow1');
   p.github?.addWorkflow('workflow2');
-
-  // THEN
-  const workflow1 = p.github?.tryFind('workflow1');
+  const workflow1 = p.github?.tryFindWorkflow('workflow1');
 
   // THEN
   const workflows = synthWorkflows(p);
@@ -54,11 +56,11 @@ test('tryFind valid workflow', () => {
 test('tryFind unknown workflow', () => {
   // GIVEN
   const p = new TestProject();
+
+  // WHEN
   p.github?.addWorkflow('workflow1');
   p.github?.addWorkflow('workflow2');
-
-  // THEN
-  const workflow3 = p.github?.tryFind('workflow3');
+  const workflow3 = p.github?.tryFindWorkflow('workflow3');
 
   // THEN
   const workflows = synthWorkflows(p);
