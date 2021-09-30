@@ -81,7 +81,7 @@ export interface UpgradeDependenciesOptions {
   /**
    * Add Signed-off-by line by the committer at the end of the commit log message.
    *
-   * @default true.
+   * @default true
    */
   readonly signoff?: boolean;
 
