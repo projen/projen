@@ -1,3 +1,5 @@
+import * as workflow from './workflows-model';
+
 /**
  * Represents the github-actions user.
  *
@@ -11,7 +13,7 @@ export const GITHUB_ACTIONS_USER = {
 /**
  * Workflow flow to configure git with the github actions identity.
  */
-export const SET_GIT_IDENTITY_WORKFLOW_STEP = {
+export const SET_GIT_IDENTITY_WORKFLOW_STEP: workflow.JobStep = {
   name: 'Set git identity',
   run: [
     `git config user.name "${GITHUB_ACTIONS_USER.name}"`,

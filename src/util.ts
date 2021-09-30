@@ -193,11 +193,8 @@ export function isObject(x: any): x is Obj<any> {
  */
 export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boolean = false) {
   function mergeOne(target: Obj<any>, source: Obj<any>) {
-    console.log('Target is:');
-    console.dir(target);
     for (const key of Object.keys(source)) {
       const value = source[key];
-      console.log(`Source: Key=${key}, value=${value}`);
 
       if (isObject(value)) {
         // if the value at the target is not an object, override it with an
