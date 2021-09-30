@@ -11,6 +11,7 @@ import { GitHubProject, GitHubProjectOptions } from './project';
 import { Release, ReleaseProjectOptions, Publisher } from './release';
 import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
+import { deepMerge } from './util';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -726,15 +727,15 @@ export class NodeProject extends GitHubProject {
 
     let ignoresProjen;
     if (dependabot) {
-      const dependabotConf = this.github?.addDependabot({
+      const defaultOptions = {
         labels: autoApproveLabel(depsAutoApprove),
-        ...(options.dependabotOptions ?? {}),
-      });
+      };
+      const dependabotConf = this.github?.addDependabot(deepMerge([defaultOptions, options.dependabotOptions ?? {}]));
       ignoresProjen = dependabotConf?.ignoresProjen;
     }
 
     if (depsUpgrade) {
-      const upgradeDependencies = new UpgradeDependencies(this, {
+      const defaultOptions = {
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
@@ -745,8 +746,8 @@ export class NodeProject extends GitHubProject {
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
         },
-        ...(options.depsUpgradeOptions ?? {}),
-      });
+      };
+      const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
       ignoresProjen = upgradeDependencies.ignoresProjen;
     }
 

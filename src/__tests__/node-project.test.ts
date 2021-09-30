@@ -292,6 +292,28 @@ describe('deps upgrade', () => {
     }).toThrow("'dependabot' cannot be configured together with 'depsUpgrade'");
   });
 
+  test('can specity nested config withtout loosing default values', () => {
+
+    const project = new TestNodeProject({
+      autoApproveUpgrades: true,
+      autoApproveOptions: {
+        label: 'auto-approve',
+        secret: 'GITHUB_TOKEN',
+      },
+      depsUpgradeOptions: {
+        workflowOptions: {
+          secret: 'PROJEN_SECRET',
+        },
+      },
+    });
+    const snapshot = synthSnapshot(project);
+    const upgrade = yaml.parse(snapshot['.github/workflows/upgrade.yml']);
+
+    // we expect the default auto-approve label to be applied
+    expect(upgrade.jobs.pr.steps[4].with.labels).toEqual('auto-approve');
+
+  });
+
 });
 
 describe('npm publishing options', () => {
