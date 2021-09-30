@@ -18,6 +18,13 @@ export interface GithubWorkflowOptions {
    * @default false
    */
   readonly force?: boolean;
+  /**
+   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+   *
+   * @default disabled
+   * @experimental
+   */
+  readonly concurrency?: string;
 }
 
 /**
@@ -32,6 +39,13 @@ export class GithubWorkflow extends Component {
    * The name of the workflow.
    */
   public readonly name: string;
+  /**
+   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+   *
+   * @default disabled
+   * @experimental
+   */
+  public readonly concurrency?: string;
 
   /**
    * The workflow YAML file.
@@ -45,6 +59,7 @@ export class GithubWorkflow extends Component {
     super(github.project);
 
     this.name = name;
+    this.concurrency = options.concurrency;
 
     const workflowsEnabled = github.workflows || options.force;
 
@@ -91,6 +106,7 @@ export class GithubWorkflow extends Component {
     return {
       name: this.name,
       on: snakeCaseKeys(this.events),
+      concurrency: this.concurrency,
       jobs: renderJobs(this.jobs),
     };
   }
