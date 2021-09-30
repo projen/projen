@@ -19,10 +19,10 @@ export interface GithubWorkflowOptions {
    */
   readonly force?: boolean;
   /**
-   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
    *
-   * @default disabled
-   * @experimental
+   * @default - disabled
+   * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
    */
   readonly concurrency?: string;
 }
