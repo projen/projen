@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { GitHub, GithubWorkflow, workflows } from './github';
+import { GITHUB_ACTIONS_USER, SET_GIT_IDENTITY_WORKFLOW_STEP } from './github/constants';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -17,8 +18,6 @@ const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const UBUNTU_LATEST = 'ubuntu-latest';
-const COMMIT_AUTHOR_NAME = 'Automation';
-const COMMIT_AUTHOR_EMAIL = 'github-actions@github.com';
 
 /**
  * Options for `UpgradeDependencies`.
@@ -79,6 +78,13 @@ export interface UpgradeDependenciesOptions {
    */
   readonly ignoreProjen?: boolean;
 
+  /**
+   * Add Signed-off-by line by the committer at the end of the commit log message.
+   *
+   * @default true
+   */
+  readonly signoff?: boolean;
+
 }
 
 /**
@@ -97,12 +103,18 @@ export class UpgradeDependencies extends Component {
 
   private readonly pullRequestTitle: string;
 
+  /**
+   * Whether or not projen is also upgraded in this workflow,
+   */
+  public readonly ignoresProjen: boolean;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
     this._project = project;
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
+    this.ignoresProjen = this.options.ignoreProjen ?? true;
 
     project.addDevDeps('npm-check-updates@^11');
 
@@ -123,7 +135,7 @@ export class UpgradeDependencies extends Component {
     });
 
     const exclude = this.options.exclude ?? [];
-    if (this.options.ignoreProjen ?? true) {
+    if (this.ignoresProjen) {
       exclude.push('projen');
     }
     const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];
@@ -189,6 +201,7 @@ export class UpgradeDependencies extends Component {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
+      SET_GIT_IDENTITY_WORKFLOW_STEP,
       ...this._project.installWorkflowSteps,
       {
         name: 'Upgrade dependencies',
@@ -258,11 +271,14 @@ export class UpgradeDependencies extends Component {
       `*Automatically created by projen via the "${workflow.name}" workflow*`,
     ].join('\n');
 
+    const comitter = `${GITHUB_ACTIONS_USER.name} <${GITHUB_ACTIONS_USER.email}>`;
+
     const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
       },
+      SET_GIT_IDENTITY_WORKFLOW_STEP,
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
@@ -285,8 +301,9 @@ export class UpgradeDependencies extends Component {
           'title': title,
           'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
           'body': description,
-          'author': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
-          'committer': `${COMMIT_AUTHOR_NAME} <${COMMIT_AUTHOR_EMAIL}>`,
+          'author': comitter,
+          'committer': comitter,
+          'signoff': this.options.signoff ?? true,
         },
       },
     ];

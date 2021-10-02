@@ -39,6 +39,27 @@ test('with major version filter', () => {
   expect(outdir).toMatchSnapshot();
 });
 
+test('with release tag prefix', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('build');
+
+  // WHEN
+  new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: '10.x',
+    majorVersion: 10,
+    releaseTagPrefix: 'prefix/',
+    releaseWorkflowName: 'release',
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir['.github/workflows/release.yml']).toBeDefined();
+  expect(outdir).toMatchSnapshot();
+});
+
 test('addBranch() can be used for additional release branches', () => {
   // GIVEN
   const project = new TestProject();
@@ -271,6 +292,28 @@ test('releaseBranches can be use to define additional branches', () => {
     releaseBranches: {
       '3.x': { majorVersion: 3 },
       'next': { majorVersion: 4, prerelease: 'pre' },
+    },
+  });
+
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
+
+test('releaseBranches can be defined with different tag prefixes to the same major version', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('build');
+
+  // WHEN
+  new Release(project, {
+    task: task,
+    versionFile: 'goo.json',
+    branch: 'firefox',
+    majorVersion: 1,
+    releaseWorkflowName: 'release-firefox',
+    releaseTagPrefix: 'firefox/',
+    releaseBranches: {
+      safari: { majorVersion: 1, tagPrefix: 'safari/' },
     },
   });
 

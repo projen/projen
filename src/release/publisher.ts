@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { workflows } from '../github';
+import { GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
@@ -8,7 +9,7 @@ const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
-const JSII_RELEASE_IMAGE = 'jsii/superchain';
+const JSII_RELEASE_IMAGE = 'jsii/superchain:node14';
 
 /**
  * Options for `Publisher`.
@@ -134,17 +135,18 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const versionFile = options.versionFile;
     const changelogFile = options.changelogFile;
+    const releaseTagFile = `${ARTIFACTS_DOWNLOAD_DIR}/${options.releaseTagFile}`;
 
     // create a github release
-    const getVersion = `v$(cat ${versionFile})`;
+    const releaseTag = `$(cat ${releaseTagFile})`;
 
     const ghRelease = [
-      `gh release create ${getVersion}`,
+      `gh release create ${releaseTag}`,
       '-R $GITHUB_REPOSITORY',
       `-F ${changelogFile}`,
-      `-t ${getVersion}`,
+      `-t ${releaseTag}`,
+      '--target $GITHUB_REF',
     ].join(' ');
 
     // release script that does not error when re-releasing a given version
@@ -167,6 +169,7 @@ export class Publisher extends Component {
       workflowEnv: {
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
         GITHUB_REPOSITORY: '${{ github.repository }}',
+        GITHUB_REF: '${{ github.ref }}',
       },
       run: idempotentRelease,
     });
@@ -284,8 +287,8 @@ export class Publisher extends Component {
       env: {
         GITHUB_REPO: options.githubRepo,
         GIT_BRANCH: options.gitBranch,
-        GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
-        GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
+        GIT_USER_NAME: options.gitUserName ?? GITHUB_ACTIONS_USER.name,
+        GIT_USER_EMAIL: options.gitUserEmail ?? GITHUB_ACTIONS_USER.email,
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
       workflowEnv: {
@@ -638,7 +641,7 @@ export interface GoPublishOptions {
 
   /**
    * The user name to use for the release git commit.
-   * @default "GitHub Actions"
+   * @default "github-actions"
    */
   readonly gitUserName?: string;
 
@@ -663,6 +666,13 @@ interface VersionArtifactOptions {
    * @example version.txt
    */
   readonly versionFile: string;
+
+  /**
+   * The location of a text file (relative to `dist/`) that contains the release tag.
+   *
+   * @example releasetag.txt
+   */
+  readonly releaseTagFile: string;
 
   /**
    * The location of an .md file (relative to `dist/`) that includes the changelog for the release.

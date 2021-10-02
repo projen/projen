@@ -6,7 +6,7 @@ This document describes how to set up a development environment and submit your
 contributions. Please read it carefully and let us know if it's not up-to date
 (or even better, submit a pull request with your corrections! :wink:).
 
-## Pre-requisites
+## Prerequisites
 
 ### Manually install tools
 
@@ -30,6 +30,10 @@ $ cd projen
 $ yarn # install dependencies
 $ yarn build # build projen
 ```
+
+## Code Organization
+
+Check out [this recording](https://www.youtube.com/watch?v=8dHwnuSND14) from a walkthrough of the projen codebase.
 
 ### Development workflow
 

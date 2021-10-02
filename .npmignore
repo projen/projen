@@ -22,3 +22,15 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 /tsconfig.eslint.json
 !.jsii
+/projen.bash
+/.markdownlint.json
+/.devcontainer.json
+/.all-contributorsrc
+/scripts/
+/ARCHITECTURE.md
+/CODE_OF_CONDUCT.md
+/CONTRIBUTING.md
+/VISION.md
+/SECURITY.md
+/.gitattributes
+/.gitpod.yml

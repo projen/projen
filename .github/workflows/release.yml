@@ -22,7 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name "Automation"
+          git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
@@ -43,7 +43,7 @@ jobs:
           name: dist
           path: dist
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -59,14 +59,15 @@ jobs:
           name: dist
           path: dist
       - name: Release
-        run: errout=$(mktemp); gh release create v$(cat dist/version.txt) -R
-          $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2>
-          $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q
-          "Release.tag_name already exists" $errout; then cat $errout; exit
-          $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
+          $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
+          --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode
+          -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then
+          cat $errout; exit $exitcode; fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF: ${{ github.ref }}
       - name: Extract Version
         if: ${{ failure() }}
         id: extract-version
@@ -117,7 +118,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -157,7 +158,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -192,4 +193,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     container:
-      image: jsii/superchain
+      image: jsii/superchain:node14

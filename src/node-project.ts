@@ -11,6 +11,7 @@ import { GitHubProject, GitHubProjectOptions } from './project';
 import { Release, ReleaseProjectOptions, Publisher } from './release';
 import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
+import { deepMerge } from './util';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
@@ -121,9 +122,9 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly workflowNodeVersion?: string;
 
   /**
-   * Include dependabot configuration.
+   * Use dependabot to handle dependency upgrades.
+   * Cannot be used in conjunction with `depsUpgrade`.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -131,17 +132,24 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   /**
    * Options for dependabot.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * How to handle dependency upgrades.
+   * Use github workflows to handle dependency upgrades.
+   * Cannot be used in conjunction with `dependabot`.
    *
-   * @default - DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
+   * @default true
    */
-  readonly depsUpgrade?: DependenciesUpgradeMechanism;
+  readonly depsUpgrade?: boolean;
+
+  /**
+   * Options for depsUpgrade.
+   *
+   * @default - default options
+   */
+  readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
 
   /**
    * Options for mergify
@@ -241,7 +249,7 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    *
    * @default - default content
    */
-  readonly pullRequestTemplateContents?: string;
+  readonly pullRequestTemplateContents?: string[];
 
   /**
    * Additional entries to .gitignore
@@ -522,7 +530,7 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    if (options.buildWorkflow ?? (this.parent ? false : true)) {
+    if (buildEnabled) {
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -693,7 +701,10 @@ export class NodeProject extends GitHubProject {
       });
     }
 
-    if (options.dependabot !== undefined && options.depsUpgrade) {
+    const dependabot = options.dependabot ?? false;
+    const depsUpgrade = options.depsUpgrade ?? !dependabot;
+
+    if (dependabot && depsUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
@@ -714,9 +725,17 @@ export class NodeProject extends GitHubProject {
 
     const autoApproveLabel = (condition: boolean) => (condition && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false)
-      ? DependenciesUpgradeMechanism.dependabot({ labels: autoApproveLabel(depsAutoApprove) })
-      : DependenciesUpgradeMechanism.githubWorkflow({
+    let ignoresProjen;
+    if (dependabot) {
+      const defaultOptions = {
+        labels: autoApproveLabel(depsAutoApprove),
+      };
+      const dependabotConf = this.github?.addDependabot(deepMerge([defaultOptions, options.dependabotOptions ?? {}]));
+      ignoresProjen = dependabotConf?.ignoresProjen;
+    }
+
+    if (depsUpgrade) {
+      const defaultOptions = {
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
@@ -727,12 +746,13 @@ export class NodeProject extends GitHubProject {
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
         },
-      });
+      };
+      const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
+      ignoresProjen = upgradeDependencies.ignoresProjen;
+    }
 
-    const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
-    dependenciesUpgrade.bind(this);
-
-    if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
+    // create a dedicated workflow to upgrade projen itself if needed
+    if (ignoresProjen && this.package.packageName !== 'projen') {
 
       new UpgradeDependencies(this, {
         include: ['projen'],
@@ -848,6 +868,14 @@ export class NodeProject extends GitHubProject {
         name: 'Setup Node.js',
         uses: 'actions/setup-node@v2.2.0',
         with: { 'node-version': this.nodeVersion },
+      });
+    }
+
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      install.push({
+        name: 'Setup pnpm',
+        uses: 'pnpm/action-setup@v2.0.1',
+        with: { version: '6.14.7' }, // current latest. Should probably become tunable.
       });
     }
 
@@ -1000,47 +1028,4 @@ export class NodeProject extends GitHubProject {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
-}
-
-/**
- * Dependencies upgrade mechanism.
- */
-export class DependenciesUpgradeMechanism {
-
-  /**
-   * Disable.
-   */
-  public static readonly NONE = new DependenciesUpgradeMechanism((_: NodeProject) => ({}), true);
-
-  /**
-   * Upgrade via dependabot.
-   */
-  public static dependabot(options: DependabotOptions = {}) {
-    return new DependenciesUpgradeMechanism((project: NodeProject) => {
-      project.github?.addDependabot(options);
-    }, options.ignoreProjen);
-  }
-
-  /**
-   * Upgrade via a custom github workflow.
-   */
-  public static githubWorkflow(options: UpgradeDependenciesOptions = {}) {
-    return new DependenciesUpgradeMechanism((project: NodeProject) => {
-      new UpgradeDependencies(project, options);
-    }, options.ignoreProjen);
-  }
-
-  private constructor(
-    private readonly binder: (project: NodeProject) => void,
-    private readonly _ignoresProjen?: boolean) {}
-
-  public get ignoresProjen(): boolean {
-    // we ignore projen by default because it requires 'workflow' permissions to run.
-    // nor depenedabot nor the default github token has those permissions.
-    return this._ignoresProjen ?? true;
-  }
-
-  public bind(project: NodeProject) {
-    this.binder(project);
-  }
 }

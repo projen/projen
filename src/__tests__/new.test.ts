@@ -7,6 +7,8 @@ import * as inventory from '../inventory';
 import { execCapture } from '../util';
 import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
 
+const MIN_NODE_VERSION_OPTION = '--min-node-version=10.17.0';
+
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
     withProjectDir(projectdir => {
@@ -42,7 +44,7 @@ test('projen new --from external', () => {
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-post']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -64,11 +66,58 @@ test('projen new --from external', () => {
   });
 });
 
+test('projen new --from external tarball', () => {
+  withProjectDir(projectdir => {
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    // downloads cdk-appsync-project-1.1.3.tgz
+    shell('npm pack cdk-appsync-project@1.1.3');
+
+    execProjenCLI(projectdir, ['new', '--from', './cdk-appsync-project-1.1.3.tgz', '--no-post', MIN_NODE_VERSION_OPTION]);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    expect(actual['package.json']).toMatchSnapshot();
+    expect(actual['.projenrc.js']).toMatchSnapshot();
+    expect(actual['schema.graphql']).toBeDefined();
+  });
+});
+
+test('projen new --from external dist tag', () => {
+  withProjectDir(projectdir => {
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@latest', '--no-post', MIN_NODE_VERSION_OPTION]);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [
+        '.git/**',
+        '.github/**',
+        'node_modules/**',
+        'yarn.lock',
+      ],
+    });
+
+    // Not doing a snapshot test because @latest is used
+    expect(actual['schema.graphql']).toBeDefined();
+  });
+});
+
 test('options are not overwritten when creating from external project types', () => {
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--no-synth', '--cdk-version', '1.63.0']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-synth', '--cdk-version', '1.63.0', MIN_NODE_VERSION_OPTION]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -88,7 +137,7 @@ test('can choose from one of multiple external project types', () => {
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.121', 'taimos-ts-lib', '--no-post']);
+    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.121', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -104,7 +153,7 @@ test('can choose from one of multiple external project types', () => {
       ],
     });
 
-    expect(actual).toMatchSnapshot();
+    expect(actual['.projenrc.js']).toContain('@taimos/projen@0.0.121');
   });
 });
 
@@ -156,7 +205,7 @@ test('projenrc-json creates node-project', () => {
 
 test('projenrc-json creates external project type', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.2', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth']);
+    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
 
     // exclude node_modules to work around bug where node_modules is generated AND one of the
     // dependencies includes a file with .json extension that isn't valid JSON

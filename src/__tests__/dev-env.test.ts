@@ -100,14 +100,14 @@ describe('dev environment docker options', () => {
     });
 
     // WHEN
-    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain'));
+    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain:node14'));
     project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/uberchain'));
 
 
     // THEN
     const outdir = synthSnapshot(project);
     const gitpodSnapshot = outdir[GITPOD_FILE];
-    expect(gitpodSnapshot).toContain('image: jsii/superchain');
+    expect(gitpodSnapshot).toContain('image: jsii/superchain:node14');
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({

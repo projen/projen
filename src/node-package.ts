@@ -8,7 +8,7 @@ import { DependencyType } from './deps';
 import { JsonFile } from './json';
 import { Project } from './project';
 import { Task } from './tasks';
-import { exec, sorted, isTruthy, writeFile } from './util';
+import { exec, isTruthy, sorted, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';
 const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
@@ -227,7 +227,7 @@ export interface NodePackageOptions {
 
   /**
    * License's SPDX identifier.
-   * See https://github.com/projen/projen/tree/master/license-text for a list of supported licenses.
+   * See https://github.com/projen/projen/tree/main/license-text for a list of supported licenses.
    * Use the `licensed` option if you want to no license to be specified.
    *
    * @default "Apache-2.0"
@@ -731,7 +731,7 @@ export class NodePackage extends Component {
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
-      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname),
+      npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
     };
