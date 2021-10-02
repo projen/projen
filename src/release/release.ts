@@ -268,7 +268,7 @@ export class Release extends Component {
       this.publisher.publishToGitHubReleases({
         changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
         versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-        releaseTagFile: this.version.releaseTagFileName,
+        releaseTagFile: join(this.artifactsDirectory, this.version.releaseTagFileName),
       });
     }
 

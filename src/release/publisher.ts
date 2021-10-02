@@ -136,7 +136,7 @@ export class Publisher extends Component {
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
     const changelogFile = options.changelogFile;
-    const releaseTagFile = `${ARTIFACTS_DOWNLOAD_DIR}/${options.releaseTagFile}`;
+    const releaseTagFile = options.releaseTagFile;
 
     // create a github release
     const releaseTag = `$(cat ${releaseTagFile})`;
