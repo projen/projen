@@ -37,7 +37,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
         run: projen release:10.x
@@ -99,7 +99,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:2.x
         run: projen release:2.x
@@ -161,7 +161,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -412,7 +412,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:foo
         run: projen release:foo
@@ -499,7 +499,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -751,7 +751,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -878,7 +878,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -1101,7 +1101,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -1257,7 +1257,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -1444,7 +1444,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -1618,7 +1618,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -1671,7 +1671,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
-          GIT_USER_NAME: GitHub Actions
+          GIT_USER_NAME: github-actions
           GIT_USER_EMAIL: github-actions@github.com
           GITHUB_TOKEN: \${{ secrets.GO_GITHUB_TOKEN }}
     container:
@@ -1801,7 +1801,7 @@ Object {
       "description": "Publish this package to GitHub",
       "env": Object {
         "GIT_USER_EMAIL": "github-actions@github.com",
-        "GIT_USER_NAME": "GitHub Actions",
+        "GIT_USER_NAME": "github-actions",
       },
       "name": "publish:golang",
       "requiredEnv": Array [
@@ -1945,7 +1945,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:firefox
         run: projen release:firefox
@@ -2007,7 +2007,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:safari
         run: projen release:safari
@@ -2235,7 +2235,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:3.x
         run: projen release:3.x
@@ -2297,7 +2297,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:next
         run: projen release:next
@@ -2359,7 +2359,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
         run: projen release
@@ -2610,7 +2610,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
         run: projen release:10.x
@@ -2808,7 +2808,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
         run: projen release:10.x

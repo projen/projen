@@ -43,7 +43,7 @@ jobs:
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
@@ -94,7 +94,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config user.name \\"Automation\\"
+          git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
@@ -185,6 +185,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -213,6 +217,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
@@ -253,8 +261,9 @@ jobs:
 
 
             *Automatically created by projen via the \\"upgrade\\" workflow*
-          author: Automation <github-actions@github.com>
-          committer: Automation <github-actions@github.com>
+          author: github-actions <github-actions@github.com>
+          committer: github-actions <github-actions@github.com>
+          signoff: true
       - name: Update status check
         if: steps.create-pr.outputs.pull-request-url != ''
         run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
