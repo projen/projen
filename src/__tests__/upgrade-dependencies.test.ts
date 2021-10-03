@@ -90,6 +90,22 @@ test('custom options', () => {
   expect(snapshot['.github/workflows/upgrade.yml']).toMatchSnapshot();
 });
 
+test('can upgrade multiple branches', () => {
+
+  const project = createProject({
+    projenUpgradeSecret: 'PROJEN_SECRET',
+    depsUpgradeOptions: {
+      workflowOptions: {
+        branches: ['branch1', 'branch2'],
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toMatchSnapshot();
+
+});
 
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {
   return new NodeProject({

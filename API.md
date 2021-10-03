@@ -10896,6 +10896,7 @@ Options for `UpgradeDependencies.workflowOptions`.
 
 Name | Type | Description 
 -----|------|-------------
+**branches**?🔹 | <code>Array<string></code> | List of branches to create PR's for.<br/>__*Default*__: Only the default branch.
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
 **rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
