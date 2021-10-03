@@ -138,15 +138,20 @@ export class UpgradeDependencies extends Component {
     if (this.ignoresProjen) {
       exclude.push('projen');
     }
-    const ncuCommand = ['npm-check-updates', '--upgrade', '--target=minor'];
-    if (exclude.length > 0) {
-      ncuCommand.push(`--reject='${exclude.join(',')}'`);
-    }
-    if (this.options.include) {
-      ncuCommand.push(`--filter='${this.options.include.join(',')}'`);
-    }
 
-    task.exec(ncuCommand.join(' '));
+    for (const dep of ['dev', 'optional', 'peer', 'prod', 'bundle']) {
+
+      const ncuCommand = ['npm-check-updates', '--dep', dep, '--upgrade', '--target=minor'];
+      if (exclude.length > 0) {
+        ncuCommand.push(`--reject='${exclude.join(',')}'`);
+      }
+      if (this.options.include) {
+        ncuCommand.push(`--filter='${this.options.include.join(',')}'`);
+      }
+
+      task.exec(ncuCommand.join(' '));
+
+    }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     task.exec(this._project.package.installAndUpdateLockfileCommand);
